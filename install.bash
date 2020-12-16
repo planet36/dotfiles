@@ -437,10 +437,10 @@ install_local_programs() {
     #if [[ ! -d st-sdw ]]
     #then
     #    git clone https://github.com/planet36/st-sdw
+    #    cd st-sdw
+    #    make
+    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
     #fi
-    #cd st-sdw
-    #make
-    #ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
     # }}}
 
     # {{{ st
@@ -448,14 +448,14 @@ install_local_programs() {
     if [[ ! -d st ]]
     then
         git clone https://git.suckless.org/st
+        cd st
+        if [[ -f "$XDG_DATA_HOME"/patches/st.diff ]]
+        then
+            git apply --verbose -- "$XDG_DATA_HOME"/patches/st.diff
+        fi
+        make
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
     fi
-    cd st
-    if [[ -f "$XDG_DATA_HOME"/patches/st.diff ]]
-    then
-        git apply --verbose -- "$XDG_DATA_HOME"/patches/st.diff
-    fi
-    make
-    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
     # }}}
 
     # {{{ scroll
@@ -463,14 +463,14 @@ install_local_programs() {
     #if [[ ! -d scroll ]]
     #then
     #    git clone https://git.suckless.org/scroll
+    #    cd scroll
+    #    if [[ -f "$XDG_DATA_HOME"/patches/scroll.diff ]]
+    #    then
+    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/scroll.diff
+    #    fi
+    #    make
+    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- scroll
     #fi
-    #cd scroll
-    #if [[ -f "$XDG_DATA_HOME"/patches/scroll.diff ]]
-    #then
-    #    git apply --verbose -- "$XDG_DATA_HOME"/patches/scroll.diff
-    #fi
-    #make
-    #ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- scroll
     # }}}
 
     # {{{ dwm
@@ -478,14 +478,14 @@ install_local_programs() {
     if [[ ! -d dwm ]]
     then
         git clone https://git.suckless.org/dwm
+        cd dwm
+        if [[ -f "$XDG_DATA_HOME"/patches/dwm.diff ]]
+        then
+            git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm.diff
+        fi
+        make
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
     fi
-    cd dwm
-    if [[ -f "$XDG_DATA_HOME"/patches/dwm.diff ]]
-    then
-        git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm.diff
-    fi
-    make
-    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
     # }}}
 
     # {{{ stw
@@ -493,14 +493,14 @@ install_local_programs() {
     if [[ ! -d stw ]]
     then
         git clone https://github.com/sineemore/stw.git
+        cd stw
+        if [[ -f "$XDG_DATA_HOME"/patches/stw.diff ]]
+        then
+            git apply --verbose -- "$XDG_DATA_HOME"/patches/stw.diff
+        fi
+        make
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
     fi
-    cd stw
-    if [[ -f "$XDG_DATA_HOME"/patches/stw.diff ]]
-    then
-        git apply --verbose -- "$XDG_DATA_HOME"/patches/stw.diff
-    fi
-    make
-    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
     # }}}
 
     # {{{ terminator
@@ -509,9 +509,9 @@ install_local_programs() {
     if [[ ! -d terminator ]]
     then
         git clone https://github.com/gnome-terminator/terminator.git
+        cd terminator
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- terminator
     fi
-    cd terminator
-    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- terminator
     # }}}
 
     # {{{ meld
@@ -520,9 +520,9 @@ install_local_programs() {
     if [[ ! -d meld ]]
     then
         git clone https://gitlab.gnome.org/GNOME/meld.git
+        cd meld/bin
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- meld
     fi
-    cd meld/bin
-    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- meld
     # }}}
 
     popd
