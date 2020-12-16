@@ -79,6 +79,7 @@ alias gccc="gcc $CFLAGS"
 alias gf='git log --oneline --decorate --color | fzf --no-sort --layout=reverse-list --preview "git show --color=always {1}"'
 alias gif2png='gif2png -m -n -s -O'
 alias gpp="g++ $CXXFLAGS"
+alias gr='g --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias jpegtran2='jpegtran -optimize -copy all'
 alias longest_line="awk 'length > l {r = NR; l = length} END{print r, l}'"
 alias lsd='lsd --classify --long --date relative --icon never --size short'
@@ -107,7 +108,6 @@ alias pwgen='tr -cd "0-9A-Za-z_" < /dev/urandom | head -c 16 ; echo'
 alias pylint='pylint --disable=pointless-string-statement'
 alias rdiff='diff --recursive --new-file'
 # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=42501
-alias rg='g --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias rm='rm --preserve-root --interactive'
 alias split='split --verbose --suffix-length=3 --numeric-suffixes'
 alias ssh_my='ssh_to $MY_WEBSITE'
