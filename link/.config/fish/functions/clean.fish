@@ -1,0 +1,5 @@
+
+function clean --description 'remove files ending with "~"'
+    find $argv \( -type f -or -type l \) \( -name '*~' -or -name '.*~' \) -print0 | xargs --null --no-run-if-empty 'rm' --verbose
+end
+

@@ -1,0 +1,9 @@
+# XONSH WIZARD START
+$AUTO_CD = '1'
+$AUTO_PUSHD = '1'
+$AUTO_SUGGEST_IN_COMPLETIONS = '1'
+$HISTCONTROL = "ignoredups"
+# XONSH WIZARD END
+$PROMPT='{ret_code_color}{ret_code:{} }{INTENSE_PURPLE}{localtime}{NO_COLOR} {env_name}{INTENSE_GREEN}{user}{NO_COLOR}@{GREEN}{hostname}{NO_COLOR}:{BLUE}{cwd_dir}{INTENSE_BLUE}{cwd_base}{branch_color}{gitstatus: {}}{NO_COLOR} {prompt_end} '
+$XONSH_COLOR_STYLE = 'default'
+xontrib load prompt_ret_code

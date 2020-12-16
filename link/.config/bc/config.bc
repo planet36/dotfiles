@@ -1,0 +1,1365 @@
+
+/*
+
+gnuplot built-in functions
+
+abs
+
+sin
+cos
+tan
+
+asin
+acos
+atan
+
+sinh
+cosh
+tanh
+
+asinh
+acosh
+atanh
+
+
+exp
+
+
+log
+log10
+
+
+
+arg
+atan2
+besj0
+besj1
+besy0
+besy1
+ceil
+erf
+erfc
+floor
+gamma
+ibeta
+igamma
+imag
+int
+inverf
+invnorm
+lambertw
+lgamma
+norm
+rand
+random
+real
+sgn
+sqrt
+
+
+
+
+*/
+
+
+
+
+scale = 50
+
+
+
+
+pi = a(1) * 4
+
+
+e = e(1)
+
+
+phi = (1 + sqrt(5)) / 2
+
+
+
+
+/*
+https://mathworld.wolfram.com/AbsoluteValue.html
+
+cat <<EOT | gnuplot -persist
+set xtics 1
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-3:3]
+#set yrange [0:]
+plot \
+abs(x)
+EOT
+
+*/
+define abs(x)
+{
+	if (x < 0)
+	{
+		return -x
+	} else
+	{
+		return x
+	}
+}
+
+
+# get the minimum value
+define min(x, y)
+{
+	if (x < y)
+	{
+		return x
+	} else
+	{
+		return y
+	}
+}
+
+
+# get the maximum value
+define max(x, y)
+{
+	if (x < y)
+	{
+		return y
+	} else
+	{
+		return x
+	}
+}
+
+
+# get the sign of the number
+# This is also called "signum" or "sgn".
+define sign(x)
+{
+	return (x > 0) - (x < 0)
+}
+
+
+
+/*
+https://mathworld.wolfram.com/Sine.html
+
+cat <<EOT | gnuplot -persist
+set xtics pi/4
+set ytics 1/sqrt(2)
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-2*pi:2*pi]
+set yrange [-1:1]
+plot \
+sin(x)
+EOT
+
+*/
+define sin(x)
+{
+	return s(x)
+}
+
+
+/*
+https://mathworld.wolfram.com/Cosine.html
+
+cat <<EOT | gnuplot -persist
+set xtics pi/4
+set ytics 1/sqrt(2)
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-2*pi:2*pi]
+set yrange [-1:1]
+plot \
+cos(x)
+EOT
+
+*/
+define cos(x)
+{
+	return c(x)
+}
+
+
+/*
+https://mathworld.wolfram.com/Tangent.html
+
+cat <<EOT | gnuplot -persist
+set xtics pi/4
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-2*pi:2*pi]
+set yrange [-5:5]
+plot \
+tan(x)
+EOT
+
+*/
+define tan(x)
+{
+	# definition
+	return sin(x) / cos(x)
+}
+
+
+
+
+/*
+https://mathworld.wolfram.com/InverseSine.html
+
+cat <<EOT | gnuplot -persist
+set xtics 1/sqrt(2)
+set ytics pi/4
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-1:1]
+set yrange [-pi/2:pi/2]
+#plot \
+#asin(x)
+plot \
+atan(x / sqrt(1 - x * x))
+EOT
+
+*/
+define asin(x)
+{
+	if (x == 1) return pi / 2
+	#if (x == 0) return 0
+	if (x == -1) return -pi / 2
+
+	##### need to prove this (shown on the mathworld website)
+	return atan(x / sqrt(1 - x * x))
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseCosine.html
+
+cat <<EOT | gnuplot -persist
+set xtics 1/sqrt(2)
+set ytics pi/4
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-1:1]
+set yrange [0:pi]
+#plot \
+#acos(x)
+plot \
+pi / 2 - asin(x)
+EOT
+
+*/
+define acos(x)
+{
+	return pi / 2 - asin(x)
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseTangent.html
+
+cat <<EOT | gnuplot -persist
+set xtics 1
+set ytics pi/4
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-5:5]
+set yrange [-pi/2:pi/2]
+plot \
+atan(x)
+EOT
+
+*/
+define atan(x)
+{
+	return a(x)
+}
+
+
+
+
+/*
+https://mathworld.wolfram.com/Cosecant.html
+
+##### not defined in gnuplot
+
+*/
+define csc(x)
+{
+	# definition
+	return 1 / sin(x)
+}
+
+
+/*
+https://mathworld.wolfram.com/Secant.html
+
+##### not defined in gnuplot
+
+*/
+define sec(x)
+{
+	# definition
+	return 1 / cos(x)
+}
+
+
+/*
+https://mathworld.wolfram.com/Cotangent.html
+
+##### not defined in gnuplot
+
+*/
+define cot(x)
+{
+	# definition
+	return 1 / tan(x)
+}
+
+
+
+
+/*
+https://mathworld.wolfram.com/InverseCosecant.html
+
+##### not defined in gnuplot
+
+*/
+define acsc(x)
+{
+	return asin(1 / x)
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseSecant.html
+
+##### not defined in gnuplot
+
+*/
+define asec(x)
+{
+	return acos(1 / x)
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseCotangent.html
+
+##### not defined in gnuplot
+
+*/
+define acot(x)
+{
+	##### is this true?
+	#return atan(1 / x)
+
+	if (x < 0)
+	{
+		return -pi / 2 - atan(x)
+	} else
+	{
+		return pi / 2 - atan(x)
+	}
+}
+
+
+
+
+/*
+https://mathworld.wolfram.com/HyperbolicSine.html
+
+##### need better tics
+
+cat <<EOT | gnuplot -persist
+#set xtics pi/4
+#set ytics 1/sqrt(2)
+set xtics 1
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-3:3]
+#set yrange [-10:10]
+plot \
+sinh(x)
+#plot \
+#(exp(x) - exp(-x)) / 2
+EOT
+
+*/
+define sinh(x)
+{
+	# definition
+	return (exp(x) - exp(-x)) / 2
+}
+
+
+/*
+https://mathworld.wolfram.com/HyperbolicCosine.html
+
+##### need better tics
+
+cat <<EOT | gnuplot -persist
+#set xtics pi/4
+#set ytics 1/sqrt(2)
+set xtics 1
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-3:3]
+#set yrange [0:]
+plot \
+cosh(x)
+#plot \
+#(exp(x) + exp(-x)) / 2
+EOT
+
+*/
+define cosh(x)
+{
+	# definition
+	return (exp(x) + exp(-x)) / 2
+}
+
+
+/*
+https://mathworld.wolfram.com/HyperbolicTangent.html
+
+##### need better tics
+
+cat <<EOT | gnuplot -persist
+#set xtics pi/4
+#set ytics 1/sqrt(2)
+set xtics 1
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-3:3]
+#set yrange [0:]
+plot \
+tanh(x)
+#plot \
+#sinh(x) / cosh(x)
+EOT
+
+*/
+define tanh(x)
+{
+	# definition
+	return sinh(x) / cosh(x)
+}
+
+
+
+
+/*
+https://mathworld.wolfram.com/InverseHyperbolicSine.html
+
+##### need better tics
+
+cat <<EOT | gnuplot -persist
+#set xtics pi/4
+#set ytics 1/sqrt(2)
+set xtics 1
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-5:5]
+#set yrange [0:]
+plot \
+asinh(x)
+#plot \
+#log(x + sqrt(x * x + 1))
+EOT
+
+*/
+define asinh(x)
+{
+	##### can this be represented in terms of atanh ???
+
+	# verified in gnuplot
+	return log(x + sqrt(x * x + 1))
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseHyperbolicCosine.html
+
+##### need better tics
+
+cat <<EOT | gnuplot -persist
+#set xtics pi/4
+#set ytics 1/sqrt(2)
+set xtics 1
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [0:5]
+#set yrange [0:]
+plot \
+acosh(x)
+#plot \
+#log(x + sqrt(x * x - 1))
+EOT
+
+*/
+define acosh(x)
+{
+	##### can this be represented in terms of atanh ???
+
+	# x >= 1
+
+	# verified in gnuplot
+	return log(x + sqrt(x * x - 1))
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseHyperbolicTangent.html
+
+##### need better tics
+
+cat <<EOT | gnuplot -persist
+#set xtics pi/4
+#set ytics 1/sqrt(2)
+set xtics 1
+set ytics 1
+set grid xtics ytics
+set xzeroaxis lt -1
+set yzeroaxis lt -1
+set xrange [-1:1]
+set yrange [-3:3]
+plot \
+atanh(x)
+#plot \
+#log((1 + x) / (1 - x)) / 2
+EOT
+
+*/
+define atanh(x)
+{
+	# (x > -1) && (x < 1)
+
+	# verified in gnuplot
+	return log((1 + x) / (1 - x)) / 2
+	#return (log(1 + x) - log(1 - x)) / 2
+}
+
+
+
+
+/*
+https://mathworld.wolfram.com/HyperbolicCosecant.html
+
+##### not defined in gnuplot
+
+*/
+define csch(x)
+{
+	# definition
+	return 1 / sinh(x)
+}
+
+
+/*
+https://mathworld.wolfram.com/HyperbolicSecant.html
+
+##### not defined in gnuplot
+
+*/
+define sech(x)
+{
+	# definition
+	return 1 / cosh(x)
+}
+
+
+/*
+https://mathworld.wolfram.com/HyperbolicCotangent.html
+
+##### not defined in gnuplot
+
+*/
+define coth(x)
+{
+	# definition
+	return 1 / tanh(x)
+}
+
+
+
+
+/*
+https://mathworld.wolfram.com/InverseHyperbolicCosecant.html
+
+##### not defined in gnuplot
+
+*/
+define acsch(x)
+{
+/*
+	# simplified
+	if (x < 0)
+	{
+		return log((1 - sqrt(1 + x * x)) / x)
+	} else
+	{
+		return log((1 + sqrt(1 + x * x)) / x)
+	}
+*/
+
+	# verified in gnuplot
+	#return log(1 / x + sqrt(1 / (x * x) + 1))
+	return asinh(1 / x)
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseHyperbolicSecant.html
+
+##### not defined in gnuplot
+
+*/
+define asech(x)
+{
+/*
+if (x < 0)
+{
+	return log((1 - sqrt(1 - x * x)) / x)
+} else
+{
+	return log((1 + sqrt(1 - x * x)) / x)
+}
+*/
+#plot \
+#log((1 - sqrt(1 - x * x)) / x), \
+#log((1 + sqrt(1 - x * x)) / x)
+
+	# verified in gnuplot
+
+
+
+
+	return log(1 / x + sqrt(1 / (x * x) - 1))
+	return acosh(1 / x)
+}
+
+
+/*
+https://mathworld.wolfram.com/InverseHyperbolicCotangent.html
+
+##### not defined in gnuplot
+
+*/
+define acoth(x)
+{
+	return atanh(1 / x)
+}
+
+
+
+
+/*
+log base e (natural logarithm)
+*/
+define log(x)
+{
+	return l(x)
+}
+
+
+/*
+log base 2
+
+##### not defined in gnuplot
+
+*/
+define log2(x)
+{
+	return log(x) / log(2)
+}
+
+
+/*
+log base 10
+*/
+define log10(x)
+{
+	return log(x) / log(10)
+}
+
+
+/*
+x to the power y
+*/
+define pow(x, y)
+{
+	# x ^ y does not work when the exponent has a fractional part
+	return exp(y * log(x))
+}
+
+
+/*
+cube root of x
+*/
+define cbrt(x)
+{
+	return pow(x, 1/3)
+}
+
+
+/*
+The bessel function (of integer order n) of x
+*/
+define bessel(n, x)
+{
+	return j(n, x)
+}
+
+
+
+
+/*
+e ^ x
+*/
+define exp(x)
+{
+	return e(x)
+}
+
+
+/*
+2 ^ x
+*/
+define exp2(x)
+{
+	return pow(2, x)
+}
+
+/*
+10 ^ x
+*/
+define exp10(x)
+{
+	return pow(10, x)
+}
+
+
+
+
+
+/*
+get the integer remainder
+*/
+define mod(x, y)
+{
+	auto s
+
+	# save the scale
+	s = scale
+
+	scale = 0
+
+	#x - (x / y) * y
+	x %= y
+
+	# restore the scale
+	scale = s
+
+	return x
+}
+
+
+/*
+get the factorial using a recursive algorithm
+*/
+define factorial_recursive(n)
+{
+	if (n <= 1)
+	{
+		return 1
+	} else
+	{
+		return factorial_recursive(n - 1) * n
+	}
+}
+
+
+/*
+get the factorial using an iterative algorithm
+*/
+define factorial_iterative(n)
+{
+	auto result
+
+	result = 1
+
+	for (i = 2; i <= n; ++i)
+	{
+		result *= i
+	}
+
+	return result
+}
+
+
+/*
+get the factorial
+*/
+define factorial(n)
+{
+	return factorial_iterative(n)
+}
+
+
+/*
+get the binomial coefficient
+https://mathworld.wolfram.com/BinomialCoefficient.html
+https://en.wikipedia.org/wiki/Binomial_coefficient
+*/
+define n_choose_k(n, k)
+{
+	if (n < 0) return 0
+	if (k < 0) return 0
+	if (n < k) return 0
+
+	return factorial(n) / (factorial(k) * factorial(n - k))
+}
+
+
+/*
+get the binomial probability
+p is the probability of success in the interval [0, 1]
+n is the number of trials
+k is the number of successes
+https://mathworld.wolfram.com/BinomialDistribution.html
+https://en.wikipedia.org/wiki/Binomial_probability
+*/
+define binomial_probability(p, n, k)
+{
+	auto q
+
+	if ((p < 0) || (p > 1))
+	{
+		return 0
+	}
+
+	q = (1 - p)
+
+	return n_choose_k(n, k) * (p ^ k) * (q ^ (n - k))
+}
+
+
+
+
+/*
+get the greatest common factor of two numbers
+*/
+define gcf(a, b)
+{
+	a = abs(a)
+
+	b = abs(b)
+
+	while (1)
+	{
+		if (a == 0)
+		{
+			return b
+		}
+
+		##### modulus operator doesn't work when the scale isn't 0
+		#b %= a
+		b = mod(b, a)
+
+		if (b == 0)
+		{
+			return a
+		}
+
+		##### modulus operator doesn't work when the scale isn't 0
+		#a %= b
+		a = mod(a, b)
+	}
+}
+
+
+/*
+get the least common multiple of two numbers
+*/
+define lcm(a, b)
+{
+	a = abs(a)
+
+	b = abs(b)
+
+	if ((a == 0) || (b == 0))
+	{
+		return 0
+	}
+
+	return int_part((a * b) / gcf(a, b))
+}
+
+
+
+
+##### this doesn't seem to be any faster than the one above
+define gcf_2(a, b)
+{
+	auto tmp
+
+	a = abs(a)
+
+	b = abs(b)
+
+	if (a == 0)
+	{
+		return b
+	}
+
+	if (b == 0)
+	{
+		return a
+	}
+
+	tmp = mod(a, b)
+
+	while (tmp != 0)
+	{
+		a = b
+		b = tmp
+		tmp = mod(a, b)
+	}
+
+	return b
+}
+
+
+
+
+/*
+get the integer part of the number
+*/
+define int_part(x)
+{
+	auto s
+
+	# save the scale
+	s = scale
+
+	scale = 0
+
+	# multiplication by 1 does not work
+	x /= 1
+
+	# restore the scale
+	scale = s
+
+	return x
+}
+
+
+/*
+get the fraction part of the number
+*/
+define frac_part(x)
+{
+	return x - int_part(x)
+}
+
+
+/*
+determine if the number is an integer
+*/
+define is_integer(x)
+{
+	return x == int_part(x)
+}
+
+
+
+
+define round_toward_zero(x)
+{
+	return int_part(x)
+}
+
+
+define round_away_from_zero(x)
+{
+	auto x2
+
+	x2 = int_part(x)
+
+	# if x is an integer
+	if (x == x2)
+	{
+		return x2
+	}
+
+	if (x2 < 0)
+	{
+		x2 -= 1
+	} else
+	{
+		x2 += 1
+	}
+
+	return x2
+}
+
+
+##### test this:
+define round_away_from_zero_2(x)
+{
+	auto f
+
+	f = frac_part(x)
+
+	if (f < 0)
+	{
+		return int_part(x - 1)
+	} else
+	if (f > 0)
+	{
+		return int_part(x + 1)
+	} else
+	{
+		return x
+	}
+}
+
+
+define round_toward_pos_infinity(x)
+{
+	if (x < 0)
+	{
+		return round_toward_zero(x)
+	} else
+	{
+		return round_away_from_zero(x)
+	}
+}
+
+
+define round_toward_neg_infinity(x)
+{
+	if (x < 0)
+	{
+		return round_away_from_zero(x)
+	} else
+	{
+		return round_toward_zero(x)
+	}
+}
+
+
+
+
+
+
+
+
+
+
+define trunc(x)
+{
+	return round_toward_zero(x)
+}
+
+
+define ceil(x)
+{
+	return round_toward_pos_infinity(x)
+}
+
+
+define floor(x)
+{
+	return round_toward_neg_infinity(x)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# round a number to the nearest integer with ties going away from zero (round-half-up)
+define round(x)
+{
+	#if (x < 0) return int_part(x -= 0.5) else return int_part(x + 0.5)
+	if (x < 0)
+	{
+		x -= 0.5
+	} else
+	{
+		x += 0.5
+	}
+
+	return int_part(x)
+}
+
+
+
+
+
+/*
+
+for (x = -2.0; x <= 2.0; x += 0.1)
+{
+	print "x: ", x, "\n"
+	print "round_toward_zero: ", round_toward_zero(x), "\n"
+	print "round_away_from_zero: ", round_away_from_zero(x), "\n"
+	print "round_toward_pos_infinity: ", round_toward_pos_infinity(x), "\n"
+	print "round_toward_neg_infinity: ", round_toward_neg_infinity(x), "\n"
+	print "\n"
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# acsch(2) == log(phi)
+
+
+
+
+
+
+/*
+
+x = 123.5
+print "x: ", x, "    int_part(x): ", int_part(x), "\n"
+
+x = -1.5
+print "x: ", x, "    int_part(x): ", int_part(x), "\n"
+
+x = -546.19684
+print "x: ", x, "    int_part(x): ", int_part(x), "\n"
+
+x = 0
+print "x: ", x, "    int_part(x): ", int_part(x), "\n"
+
+x = 1.5
+print "x: ", x, "    int_part(x): ", int_part(x), "\n"
+
+x = 987654231.6484684
+print "x: ", x, "    int_part(x): ", int_part(x), "\n"
+
+quit
+
+*/
+
+
+
+
+
+/*
+
+print factorial_recursive(-2), "\n"
+print factorial_recursive(-1), "\n"
+print factorial_recursive(0), "\n"
+print factorial_recursive(1), "\n"
+print factorial_recursive(2), "\n"
+print factorial_recursive(3), "\n"
+print factorial_recursive(4), "\n"
+print factorial_recursive(5), "\n"
+print "\n"
+
+print factorial_iterative(-2), "\n"
+print factorial_iterative(-1), "\n"
+print factorial_iterative(0), "\n"
+print factorial_iterative(1), "\n"
+print factorial_iterative(2), "\n"
+print factorial_iterative(3), "\n"
+print factorial_iterative(4), "\n"
+print factorial_iterative(5), "\n"
+print  "\n"
+
+
+
+print factorial_recursive(1000), "\n"
+print "\n"
+
+print factorial_iterative(1000), "\n"
+print  "\n"
+
+
+
+quit
+
+*/
+
+
+####    records contain these things:
+####    macro name : M_PI
+####    value : pi
+
+
+/*
+
+#f[0]=1;f[1]=4
+#f(a[])
+a[0]=1;a[1]=4
+
+print f
+#print [1 2 3]
+#arr [1 2 3]
+
+*/
+
+/*
+
+arr=array 1 2 3
+
+*/
+#print arr
+
+
+# BC_ENV_ARGS
+#        This is another mechanism to get arguments to bc.  The format is
+#        the  same  as  the  command line arguments.  These arguments are
+#        processed first, so any files listed in the environent arguments
+#        are  processed  before  any  command  line argument files.  This
+#        allows the user to set up "standard" options  and  files  to  be
+#        processed  at every invocation of bc.  The files in the environ-
+#        ment variables would typically contain function definitions  for
+#        functions the user wants defined every time bc is run.
+
+
+# $ echo $BC_ENV_ARGS
+# -q -l /home/gru/.bc/extensions.bc
+
+
+
+/*
+
+#M_EULER
+
+n=10000000;
+
+
+total=0;
+
+for (k = 1; k <= n; ++k)
+{
+	total += 1/k
+}
+
+total -= l(n)
+
+
+print "total: ", total, "\n"
+print "error: ", total-0.57721566490153286061, "\n"
+
+#0.577215664901532860606512090082402431042159335939923598, "\n"
+
+
+print "\n"
+
+halt
+*/

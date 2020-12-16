@@ -1,0 +1,310 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+##### TODO: maybe move this to bin
+
+# pylint: disable=C0103
+# pylint: disable=C0114
+# pylint: disable=C0301
+# pylint: disable=C0326
+# pylint: disable=C0330
+# pylint: disable=C0415
+# pylint: disable=R0911
+# pylint: disable=R0912
+# pylint: disable=R0914
+# pylint: disable=R0915
+# pylint: disable=R1705
+# pylint: disable=W0312
+
+import hashlib
+import sys
+
+__author__ = 'Steven Ward'
+__version__ = '2020-03-20'
+
+
+def get_pbkdf2_algorithms_available():
+	'''<https://docs.python.org/3/library/hashlib.html#hashlib.pbkdf2_hmac>'''
+
+	password = b''
+	salt = b''
+	iterations = 1
+	for hash_algorithm in hashlib.algorithms_available:
+		try:
+			hashlib.pbkdf2_hmac(hash_algorithm, password, salt, iterations)
+		# pylint: disable=W0612
+		except ValueError as err:
+			pass
+		else:
+			yield hash_algorithm
+
+
+# pylint: disable=C0116
+def main(argv = None):
+
+	import base64
+	import getopt
+	import getpass
+	import os.path
+	import signal
+
+
+	if argv is None:
+		argv = sys.argv
+
+
+	program_name = os.path.basename(argv[0])
+
+	program_authors = [__author__]
+
+
+	# valid values
+	valid_hash_algorithms = sorted(get_pbkdf2_algorithms_available())
+
+	# https://docs.python.org/3/library/base64.html
+	valid_formats = {
+			'b16' : base64.b16encode,
+			'b32' : base64.b32encode,
+			'b64-std' : base64.standard_b64encode,
+			'b64-url' : base64.urlsafe_b64encode,
+			'a85' : base64.a85encode,
+			'b85' : base64.b85encode,
+		}
+
+	# default values
+	default_verbose = False
+	default_hash_algorithm = 'sha1'
+	default_format = 'b64-url'
+	default_iterations = 1
+	default_silent = False
+
+	# mutable values
+	verbose = default_verbose
+	hash_algorithm = default_hash_algorithm
+	fmt = default_format
+	iterations = default_iterations
+	silent = default_silent
+
+
+	# pylint: disable=W0612
+	# pylint: disable=W0613
+	def signal_handler(signal_num, execution_frame):
+		print()
+		sys.exit(0)
+
+	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+
+
+	def print_version():
+		"""Print the version information and exit."""
+		print("{} {}".format(program_name, __version__))
+		print("Written by {}".format(', '.join(program_authors)))
+
+
+	def print_verbose(s):
+		"""Print the message if verbose mode is on."""
+		if verbose:
+			print(f"# {s}", file=sys.stderr)
+
+
+	def print_warning(s):
+		"""Print the warning message and continue."""
+		print("Warning: {}".format(s), file=sys.stderr)
+
+
+	def print_error(s):
+		"""Print the error message and exit."""
+		print("Error: {}".format(s), file=sys.stderr)
+		print("Try '{} --help' for more information.".format(program_name), file=sys.stderr)
+
+
+	def print_help():
+		"""Print the help message and exit."""
+
+		print("""Usage: {} [OPTION]...
+Hash a string from standard input and print its hash digest.
+
+OPTIONS
+
+-V, --version
+    Print the version information and exit.
+
+-h, --help
+    Print this message and exit.
+
+-v, --verbose
+    Print diagnostics.
+    (default: {})
+
+-a, --hash-algorithm=ALGORITHM
+    Use hash algorithm ALGORITHM to hash the string.
+    (default: {})
+    (valid: {})
+    <https://docs.python.org/3/library/hashlib.html>
+
+-f, --format=FORMAT
+    Print the hash in FORMAT encoding.
+    (default: {})
+    (valid: {})
+    <https://docs.python.org/3/library/base64.html>
+
+-n, --num-iterations=N
+    Iteratively hash the string N times.
+    (default: {})
+
+-s, --silent
+    Don't echo terminal input.
+    (default: {})""".format(
+			program_name,
+			default_verbose,
+			default_hash_algorithm,
+			','.join(sorted(valid_hash_algorithms)),
+			default_format,
+			','.join(sorted(valid_formats.keys())),
+			default_iterations,
+			default_silent))
+
+
+	short_options = 'Vhva:f:n:s'
+	long_options = ['version', 'help', 'verbose', 'hash-algorithm=', 'format=', 'num-iterations=', 'silent']
+
+	try:
+		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
+	except getopt.GetoptError as err:
+		print_error(err)
+		return 1
+
+	for (option, value) in options:
+		if option in ['-V', '--version']:
+			print_version()
+			return 0
+		elif option in ['-h', '--help']:
+			print_help()
+			return 0
+		elif option in ['-v', '--verbose']:
+			verbose = True
+		elif option in ['-a', '--hash-algorithm']:
+			hash_algorithm = value
+		elif option in ['-f', '--format']:
+			fmt = value
+		elif option in ['-n', '--num-iterations']:
+			iterations = value
+		elif option in ['-s', '--silent']:
+			silent = True
+		else:
+			print_error(f"Unhandled option: {option}")
+			return 1
+
+	# Validate hash_algorithm.
+
+	if hash_algorithm not in valid_hash_algorithms:
+		print_error("{} is not a valid hash algorithm.".format(hash_algorithm))
+		return 1
+
+	# Validate fmt.
+
+	if fmt not in valid_formats:
+		print_error("{} is not a valid format.".format(fmt))
+		return 1
+
+	# Validate iterations.
+
+	try:
+		iterations = int(iterations)
+	except ValueError as err:
+		print_error(err)
+		return 1
+
+
+	print_verbose(f'hash_algorithm={hash_algorithm}')
+	print_verbose(f'fmt={fmt}')
+	print_verbose(f'iterations={iterations}')
+	print_verbose(f'silent={silent}')
+
+
+	"""
+	http://www.doughellmann.com/PyMOTW/getpass/
+	"It is up to the caller to detect when the input stream is not a tty and use an alternate method for reading in that case."
+	"""
+
+	password_prompt = ''
+	salt_prompt = ''
+	if verbose:
+		password_prompt = 'Password: '
+		salt_prompt = 'Salt: '
+
+	if sys.stdin.isatty() and silent:
+		password = getpass.getpass(prompt=password_prompt)
+		salt = getpass.getpass(prompt=salt_prompt)
+	else:
+		print(password_prompt, end='', flush=True)
+		password = sys.stdin.readline().rstrip(os.linesep)
+		print(salt_prompt, end='', flush=True)
+		salt = sys.stdin.readline().rstrip(os.linesep)
+
+	print_verbose("password={}".format(password))
+	print_verbose("salt={}".format(salt))
+
+	try:
+		result = hashlib.pbkdf2_hmac(hash_algorithm, password.encode(), salt.encode(), iterations)
+		print(valid_formats[fmt](result).decode())
+	except ValueError as err:
+		print(err)
+
+
+
+if __name__ == '__main__':
+	sys.exit(main())
+
+
+
+'''
+Output:
+
+password
+salt
+blake2b
+unsupported hash type
+
+blake2s
+unsupported hash type
+
+md5
+8xr7bZMTktql4xMPR_mptg==
+
+sha1
+DGDID5YfDnHzqbUkr2ASBi_gN6Y=
+
+sha224
+PBmMvblGS3hXlmvQW3vJK8HMTm5jFV1OSQVX_Q==
+
+sha256
+Eg-2z_z4syxD5yJSVsT4N6hlSMkszDVICAWYfLcL4Xs=
+
+sha384
+wOFPBuSeMtc_n1Ld8dDFxxkWCSM2MdrddqVn20K3hnazj8gAzFPdtkL1x0RC5ivk
+
+sha3_224
+unsupported hash type
+
+sha3_256
+unsupported hash type
+
+sha3_384
+unsupported hash type
+
+sha3_512
+unsupported hash type
+
+sha512
+hn9wzxreAs_zdSWZo6U9xK80x6ZpgVrl1RNVThyM8lLALUcKKFoFAbrZmb_pQ8CPBQI119aLHaVeY_c7YKV_zg==
+
+shake_128
+unsupported hash type
+
+shake_256
+unsupported hash type
+
+'''

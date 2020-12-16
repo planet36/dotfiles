@@ -1,0 +1,637 @@
+diff --git a/Makefile b/Makefile
+index 470ac86..8c78ed4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -22,7 +22,7 @@ config.h:
+ 	$(CC) $(STCFLAGS) -c $<
+ 
+ st.o: config.h st.h win.h
+-x.o: arg.h config.h st.h win.h
++x.o: config.h st.h win.h
+ 
+ $(OBJ): config.h config.mk
+ 
+@@ -35,7 +35,7 @@ clean:
+ dist: clean
+ 	mkdir -p st-$(VERSION)
+ 	cp -R FAQ LEGACY TODO LICENSE Makefile README config.mk\
+-		config.def.h st.info st.1 arg.h st.h win.h $(SRC)\
++		config.def.h st.info st.1 st.h win.h $(SRC)\
+ 		st-$(VERSION)
+ 	tar -cf - st-$(VERSION) | gzip > st-$(VERSION).tar.gz
+ 	rm -rf st-$(VERSION)
+diff --git a/arg.h b/arg.h
+deleted file mode 100644
+index a22e019..0000000
+--- a/arg.h
++++ /dev/null
+@@ -1,50 +0,0 @@
+-/*
+- * Copy me if you can.
+- * by 20h
+- */
+-
+-#ifndef ARG_H__
+-#define ARG_H__
+-
+-extern char *argv0;
+-
+-/* use main(int argc, char *argv[]) */
+-#define ARGBEGIN	for (argv0 = *argv, argv++, argc--;\
+-					argv[0] && argv[0][0] == '-'\
+-					&& argv[0][1];\
+-					argc--, argv++) {\
+-				char argc_;\
+-				char **argv_;\
+-				int brk_;\
+-				if (argv[0][1] == '-' && argv[0][2] == '\0') {\
+-					argv++;\
+-					argc--;\
+-					break;\
+-				}\
+-				int i_;\
+-				for (i_ = 1, brk_ = 0, argv_ = argv;\
+-						argv[0][i_] && !brk_;\
+-						i_++) {\
+-					if (argv_ != argv)\
+-						break;\
+-					argc_ = argv[0][i_];\
+-					switch (argc_)
+-
+-#define ARGEND			}\
+-			}
+-
+-#define ARGC()		argc_
+-
+-#define EARGF(x)	((argv[0][i_+1] == '\0' && argv[1] == NULL)?\
+-				((x), abort(), (char *)0) :\
+-				(brk_ = 1, (argv[0][i_+1] != '\0')?\
+-					(&argv[0][i_+1]) :\
+-					(argc--, argv++, argv[0])))
+-
+-#define ARGF()		((argv[0][i_+1] == '\0' && argv[1] == NULL)?\
+-				(char *)0 :\
+-				(brk_ = 1, (argv[0][i_+1] != '\0')?\
+-					(&argv[0][i_+1]) :\
+-					(argc--, argv++, argv[0])))
+-
+-#endif
+diff --git a/config.def.h b/config.def.h
+index 6f05dce..7a3437f 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -3,9 +3,13 @@
+ /*
+  * appearance
+  *
+- * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
++ * font: see https://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
++static char *font = "monospace:size=10:antialias=true:autohint=true";
++
++static int allowbold = 0;
++static int allowitalic = 1;
++
+ static int borderpx = 2;
+ 
+ /*
+@@ -34,7 +38,7 @@ static float chscale = 1.0;
+  *
+  * More advanced example: L" `'\"()[]{}"
+  */
+-wchar_t *worddelimiters = L" ";
++wchar_t *worddelimiters = L" `'\"()[]{}:";
+ 
+ /* selection timeouts (in milliseconds) */
+ static unsigned int doubleclicktimeout = 300;
+@@ -96,33 +100,32 @@ unsigned int tabspaces = 8;
+ /* Terminal colors (16 first used in escape sequence) */
+ static const char *colorname[] = {
+ 	/* 8 normal colors */
+-	"black",
+-	"red3",
+-	"green3",
+-	"yellow3",
+-	"blue2",
+-	"magenta3",
+-	"cyan3",
+-	"gray90",
++	"#161616",
++	"#cc0000",
++	"#4e9a06",
++	"#c4a000",
++	"#3465a4",
++	"#75507b",
++	"#06989a",
++	"#d3d7cf",
+ 
+ 	/* 8 bright colors */
+-	"gray50",
+-	"red",
+-	"green",
+-	"yellow",
+-	"#5c5cff",
+-	"magenta",
+-	"cyan",
+-	"white",
++	"#555753",
++	"#ef2929",
++	"#8ae234",
++	"#fce94f",
++	"#729fcf",
++	"#ad7fa8",
++	"#34e2e2",
++	"#eeeeec",
+ 
+ 	[255] = 0,
+ 
+-	/* more colors can be added after 255 to use with DefaultXX */
++	/* more colors can be added after 255 to use with defaultXX */
+ 	"#cccccc",
+ 	"#555555",
+ };
+ 
+-
+ /*
+  * Default colors (colorname index)
+  * foreground, background, cursor, reverse cursor
+@@ -133,23 +136,29 @@ static unsigned int defaultcs = 256;
+ static unsigned int defaultrcs = 257;
+ 
+ /*
+- * Default shape of cursor
+- * 2: Block ("█")
+- * 4: Underline ("_")
+- * 6: Bar ("|")
+- * 7: Snowman ("☃")
++ * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
++ * Default style of cursor
++ * 0: blinking block
++ * 1: blinking block (default)
++ * 2: steady block ("█")
++ * 3: blinking underline
++ * 4: steady underline ("_")
++ * 5: blinking bar
++ * 6: steady bar ("|")
++ * 7: blinking st cursor
++ * 8: steady st cursor
+  */
+-static unsigned int cursorshape = 2;
++static unsigned int cursorstyle = 1;
++static Rune stcursor = 0x2603; /* snowman ("☃") (U+2603) */
+ 
+ /*
+  * Default columns and rows numbers
+  */
+-
+ static unsigned int cols = 80;
+ static unsigned int rows = 24;
+ 
+ /*
+- * Default colour and shape of the mouse cursor
++ * Default color and shape of the mouse cursor
+  */
+ static unsigned int mouseshape = XC_xterm;
+ static unsigned int mousefg = 7;
+@@ -173,12 +182,12 @@ static uint forcemousemod = ShiftMask;
+  * Beware that overloading Button1 will disable the selection.
+  */
+ static MouseShortcut mshortcuts[] = {
+-	/* mask                 button   function        argument       release */
+-	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
+-	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
+-	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+-	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
+-	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
++	/* mask             button   function    argument            release */
++	{ XK_ANY_MOD,       Button2, selpaste,   {.i = 0},           1 },
++	{ ShiftMask,        Button4, ttysend,    {.s = "\033[5;2~"}, 0 },
++	{ XK_ANY_MOD,       Button4, ttysend,    {.s = "\031"},      0 },
++	{ ShiftMask,        Button5, ttysend,    {.s = "\033[6;2~"}, 0 },
++	{ XK_ANY_MOD,       Button5, ttysend,    {.s = "\005"},      0 },
+ };
+ 
+ /* Internal keyboard shortcuts. */
+diff --git a/config.mk b/config.mk
+index c070a4a..4dc52bd 100644
+--- a/config.mk
++++ b/config.mk
+@@ -1,5 +1,6 @@
+ # st version
+ VERSION = 0.8.4
++VERSION := $(VERSION)-sdw
+ 
+ # Customize below to fit your system
+ 
+@@ -7,8 +8,8 @@ VERSION = 0.8.4
+ PREFIX = /usr/local
+ MANPREFIX = $(PREFIX)/share/man
+ 
+-X11INC = /usr/X11R6/include
+-X11LIB = /usr/X11R6/lib
++X11INC = /usr/include/X11
++X11LIB = /usr/lib
+ 
+ PKG_CONFIG = pkg-config
+ 
+@@ -21,6 +22,15 @@ LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
+        `$(PKG_CONFIG) --libs freetype2`
+ 
+ # flags
++CFLAGS += \
++		  -Wno-float-equal \
++		  -Wno-shadow \
++		  -Wno-sign-compare \
++		  -Wno-switch-default \
++		  -Wno-type-limits \
++		  -Wno-unused-parameter \
++		  -Os
++
+ STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
+ STCFLAGS = $(INCS) $(STCPPFLAGS) $(CPPFLAGS) $(CFLAGS)
+ STLDFLAGS = $(LIBS) $(LDFLAGS)
+diff --git a/st.c b/st.c
+index abbbe4b..054f3a0 100644
+--- a/st.c
++++ b/st.c
+@@ -833,6 +833,7 @@ ttyread(void)
+ 		exit(0);
+ 	case -1:
+ 		die("couldn't read from shell: %s\n", strerror(errno));
++		break;
+ 	default:
+ 		buflen += ret;
+ 		written = twrite(buf, buflen, 0);
+@@ -840,8 +841,9 @@ ttyread(void)
+ 		/* keep any incomplete UTF-8 byte sequence for the next call */
+ 		if (buflen > 0)
+ 			memmove(buf, buf + written, buflen);
+-		return ret;
++		break;
+ 	}
++	return ret;
+ }
+ 
+ void
+@@ -903,8 +905,8 @@ ttywriteraw(const char *s, size_t n)
+ 			 * default of 256. This seems to be a reasonable value
+ 			 * for a serial line. Bigger values might clog the I/O.
+ 			 */
+-			if ((r = write(cmdfd, s, (n < lim)? n : lim)) < 0)
+-				goto write_error;
++			if ((r = write(cmdfd, s, (n < lim) ? n : lim)) < 0)
++				die("write error on tty: %s\n", strerror(errno));
+ 			if (r < n) {
+ 				/*
+ 				 * We weren't able to write out everything.
+@@ -923,10 +925,6 @@ ttywriteraw(const char *s, size_t n)
+ 		if (FD_ISSET(cmdfd, &rfd))
+ 			lim = ttyread();
+ 	}
+-	return;
+-
+-write_error:
+-	die("write error on tty: %s\n", strerror(errno));
+ }
+ 
+ void
+diff --git a/x.c b/x.c
+index 120e495..e4d2d7d 100644
+--- a/x.c
++++ b/x.c
+@@ -15,8 +15,6 @@
+ #include <X11/Xft/Xft.h>
+ #include <X11/XKBlib.h>
+ 
+-char *argv0;
+-#include "arg.h"
+ #include "st.h"
+ #include "win.h"
+ 
+@@ -205,7 +203,7 @@ static void (*handler[LASTEvent])(XEvent *) = {
+  * Uncomment if you want the selection to disappear when you select something
+  * different in another window.
+  */
+-/*	[SelectionClear] = selclear_, */
++	[SelectionClear] = selclear_,
+ 	[SelectionNotify] = selnotify,
+ /*
+  * PropertyNotify is only turned on when there is some INCR transfer happening
+@@ -243,6 +241,8 @@ static char *usedfont = NULL;
+ static double usedfontsize = 0;
+ static double defaultfontsize = 0;
+ 
++static char *argv0;
++
+ static char *opt_class = NULL;
+ static char **opt_cmd  = NULL;
+ static char *opt_embed = NULL;
+@@ -253,6 +253,7 @@ static char *opt_name  = NULL;
+ static char *opt_title = NULL;
+ 
+ static int oldbutton = 3; /* button event on startup: 3 = release */
++static int cursorblinks = 0;
+ 
+ void
+ clipcopy(const Arg *dummy)
+@@ -828,7 +829,7 @@ xclear(int x1, int y1, int x2, int y2)
+ void
+ xhints(void)
+ {
+-	XClassHint class = {opt_name ? opt_name : termname,
++	XClassHint classhint = {opt_name ? opt_name : termname,
+ 	                    opt_class ? opt_class : termname};
+ 	XWMHints wm = {.flags = InputHint, .input = 1};
+ 	XSizeHints *sizeh;
+@@ -857,7 +858,7 @@ xhints(void)
+ 	}
+ 
+ 	XSetWMProperties(xw.dpy, xw.win, NULL, NULL, NULL, 0, sizeh, &wm,
+-			&class);
++			&classhint);
+ 	XFree(sizeh);
+ }
+ 
+@@ -966,7 +967,7 @@ xloadfonts(char *fontstr, double fontsize)
+ 	if (fontsize > 1) {
+ 		FcPatternDel(pattern, FC_PIXEL_SIZE);
+ 		FcPatternDel(pattern, FC_SIZE);
+-		FcPatternAddDouble(pattern, FC_PIXEL_SIZE, (double)fontsize);
++		FcPatternAddDouble(pattern, FC_PIXEL_SIZE, fontsize);
+ 		usedfontsize = fontsize;
+ 	} else {
+ 		if (FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &fontval) ==
+@@ -1002,12 +1003,16 @@ xloadfonts(char *fontstr, double fontsize)
+ 	win.ch = ceilf(dc.font.height * chscale);
+ 
+ 	FcPatternDel(pattern, FC_SLANT);
+-	FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
++	if (allowitalic) {
++		FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
++	}
+ 	if (xloadfont(&dc.ifont, pattern))
+ 		die("can't open font %s\n", fontstr);
+ 
+ 	FcPatternDel(pattern, FC_WEIGHT);
+-	FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
++	if (allowbold) {
++		FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
++	}
+ 	if (xloadfont(&dc.ibfont, pattern))
+ 		die("can't open font %s\n", fontstr);
+ 
+@@ -1113,7 +1118,7 @@ xinit(int cols, int rows)
+ 	if (!FcInit())
+ 		die("could not init fontconfig.\n");
+ 
+-	usedfont = (opt_font == NULL)? font : opt_font;
++	usedfont = (opt_font == NULL) ? font : opt_font;
+ 	xloadfonts(usedfont, 0);
+ 
+ 	/* colors */
+@@ -1527,29 +1532,44 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+ 	/* draw the new one */
+ 	if (IS_SET(MODE_FOCUSED)) {
+ 		switch (win.cursor) {
+-		case 7: /* st extension */
+-			g.u = 0x2603; /* snowman (U+2603) */
++		default:
++		case 0: /* blinking block */
++		case 1: /* blinking block (default) */
++			if (IS_SET(MODE_BLINK))
++				break;
+ 			/* FALLTHROUGH */
+-		case 0: /* Blinking Block */
+-		case 1: /* Blinking Block (Default) */
+-		case 2: /* Steady Block */
++		case 2: /* steady block */
+ 			xdrawglyph(g, cx, cy);
+ 			break;
+-		case 3: /* Blinking Underline */
+-		case 4: /* Steady Underline */
++		case 3: /* blinking underline */
++			if (IS_SET(MODE_BLINK))
++				break;
++			/* FALLTHROUGH */
++		case 4: /* steady underline */
+ 			XftDrawRect(xw.draw, &drawcol,
+ 					borderpx + cx * win.cw,
+ 					borderpx + (cy + 1) * win.ch - \
+ 						cursorthickness,
+ 					win.cw, cursorthickness);
+ 			break;
+-		case 5: /* Blinking bar */
+-		case 6: /* Steady bar */
++		case 5: /* blinking bar */
++			if (IS_SET(MODE_BLINK))
++				break;
++			/* FALLTHROUGH */
++		case 6: /* steady bar */
+ 			XftDrawRect(xw.draw, &drawcol,
+ 					borderpx + cx * win.cw,
+ 					borderpx + cy * win.ch,
+ 					cursorthickness, win.ch);
+ 			break;
++		case 7: /* blinking st cursor */
++			if (IS_SET(MODE_BLINK))
++				break;
++			/* FALLTHROUGH */
++		case 8: /* steady st cursor */
++			g.u = stcursor;
++			xdrawglyph(g, cx, cy);
++			break;
+ 		}
+ 	} else {
+ 		XftDrawRect(xw.draw, &drawcol,
+@@ -1616,18 +1636,18 @@ void
+ xdrawline(Line line, int x1, int y1, int x2)
+ {
+ 	int i, x, ox, numspecs;
+-	Glyph base, new;
++	Glyph base, newbase;
+ 	XftGlyphFontSpec *specs = xw.specbuf;
+ 
+ 	numspecs = xmakeglyphfontspecs(specs, &line[x1], x2 - x1, x1, y1);
+ 	i = ox = 0;
+ 	for (x = x1; x < x2 && i < numspecs; x++) {
+-		new = line[x];
+-		if (new.mode == ATTR_WDUMMY)
++		newbase = line[x];
++		if (newbase.mode == ATTR_WDUMMY)
+ 			continue;
+ 		if (selected(x, y1))
+-			new.mode ^= ATTR_REVERSE;
+-		if (i > 0 && ATTRCMP(base, new)) {
++			newbase.mode ^= ATTR_REVERSE;
++		if (i > 0 && ATTRCMP(base, newbase)) {
+ 			xdrawglyphfontspecs(specs, base, i, ox, y1);
+ 			specs += i;
+ 			numspecs -= i;
+@@ -1635,7 +1655,7 @@ xdrawline(Line line, int x1, int y1, int x2)
+ 		}
+ 		if (i == 0) {
+ 			ox = x;
+-			base = new;
++			base = newbase;
+ 		}
+ 		i++;
+ 	}
+@@ -1704,9 +1724,12 @@ xsetmode(int set, unsigned int flags)
+ int
+ xsetcursor(int cursor)
+ {
+-	if (!BETWEEN(cursor, 0, 7)) /* 7: st extension */
++	if (!BETWEEN(cursor, 0, 8)) /* 7-8: st extensions */
+ 		return 1;
+ 	win.cursor = cursor;
++	cursorblinks = win.cursor == 0 || win.cursor == 1 ||
++	               win.cursor == 3 || win.cursor == 5 ||
++	               win.cursor == 7;
+ 	return 0;
+ }
+ 
+@@ -1950,6 +1973,10 @@ run(void)
+ 		if (FD_ISSET(ttyfd, &rfd) || xev) {
+ 			if (!drawing) {
+ 				trigger = now;
++				if (IS_SET(MODE_BLINK)) {
++					win.mode ^= MODE_BLINK;
++				}
++				lastblink = now;
+ 				drawing = 1;
+ 			}
+ 			timeout = (maxlatency - TIMEDIFF(now, trigger)) \
+@@ -1960,7 +1987,7 @@ run(void)
+ 
+ 		/* idle detected or maxlatency exhausted -> draw */
+ 		timeout = -1;
+-		if (blinktimeout && tattrset(ATTR_BLINK)) {
++		if (blinktimeout && (cursorblinks || tattrset(ATTR_BLINK))) {
+ 			timeout = blinktimeout - TIMEDIFF(now, lastblink);
+ 			if (timeout <= 0) {
+ 				if (-timeout > blinktimeout) /* start visible */
+@@ -1981,7 +2008,7 @@ run(void)
+ void
+ usage(void)
+ {
+-	die("usage: %s [-aiv] [-c class] [-f font] [-g geometry]"
++	printf("usage: %s [-aiv] [-c class] [-f font] [-g geometry]"
+ 	    " [-n name] [-o file]\n"
+ 	    "          [-T title] [-t title] [-w windowid]"
+ 	    " [[-e] command [args ...]]\n"
+@@ -1994,55 +2021,69 @@ usage(void)
+ int
+ main(int argc, char *argv[])
+ {
++	int ch;
++	const char *optstring = "ac:ef:g:hil:n:o:T:t:v";
++
++	argv0 = argv[0];
+ 	xw.l = xw.t = 0;
+ 	xw.isfixed = False;
+-	xsetcursor(cursorshape);
+-
+-	ARGBEGIN {
+-	case 'a':
+-		allowaltscreen = 0;
+-		break;
+-	case 'c':
+-		opt_class = EARGF(usage());
+-		break;
+-	case 'e':
+-		if (argc > 0)
+-			--argc, ++argv;
+-		goto run;
+-	case 'f':
+-		opt_font = EARGF(usage());
+-		break;
+-	case 'g':
+-		xw.gm = XParseGeometry(EARGF(usage()),
+-				&xw.l, &xw.t, &cols, &rows);
+-		break;
+-	case 'i':
+-		xw.isfixed = 1;
+-		break;
+-	case 'o':
+-		opt_io = EARGF(usage());
+-		break;
+-	case 'l':
+-		opt_line = EARGF(usage());
+-		break;
+-	case 'n':
+-		opt_name = EARGF(usage());
+-		break;
+-	case 't':
+-	case 'T':
+-		opt_title = EARGF(usage());
+-		break;
+-	case 'w':
+-		opt_embed = EARGF(usage());
+-		break;
+-	case 'v':
+-		die("%s " VERSION "\n", argv0);
+-		break;
+-	default:
+-		usage();
+-	} ARGEND;
++	xsetcursor(cursorstyle);
++
++	while ((ch = getopt(argc, argv, optstring)) != -1) {
++		switch (ch) {
++		case 'a':
++			allowaltscreen = 0;
++			break;
++		case 'c':
++			opt_class = optarg;
++			break;
++		case 'e':
++			goto run;
++			break;
++		case 'f':
++			opt_font = optarg;
++			break;
++		case 'g':
++			xw.gm = XParseGeometry(optarg,
++			        &xw.l, &xw.t, &cols, &rows);
++			break;
++		case 'h':
++			usage();
++			return 0;
++			break;
++		case 'i':
++			xw.isfixed = 1;
++			break;
++		case 'l':
++			opt_line = optarg;
++			break;
++		case 'n':
++			opt_name = optarg;
++			break;
++		case 'o':
++			opt_io = optarg;
++			break;
++		case 'T':
++		case 't':
++			opt_title = optarg;
++			break;
++		case 'w':
++			opt_embed = optarg;
++			break;
++		case 'v':
++			printf("%s " VERSION "\n", argv0);
++			return 0;
++			break;
++		default:
++			usage();
++			return 1;
++			break;
++		}
++	}
+ 
+ run:
++	argc -= optind;
++	argv += optind;
+ 	if (argc > 0) /* eat all remaining arguments */
+ 		opt_cmd = argv;
+ 

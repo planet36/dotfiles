@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=C0103
+# pylint: disable=C0114
+
+from math import hypot
+import sys
+
+min_dpi = 96
+max_dpi = 400
+scale_dpi = 1.25
+
+try:
+    w = int(sys.argv[1]) # pixels
+    h = int(sys.argv[2]) # pixels
+    d = float(sys.argv[3]) # inches
+
+except IndexError as err:
+    print("must give 3 values: WIDTH (pixels), HEIGHT (pixels), and DIAGONAL (inches)")
+    raise
+
+except ValueError as err:
+    print("WIDTH and HEIGHT are type int")
+    print("DIAGONAL is type float")
+    raise
+
+assert w > 0, 'Invalid WIDTH'
+assert h > 0, 'Invalid HEIGHT'
+assert d > 0, 'Invalid DIAGONAL'
+
+dpi = hypot(w, h) / d * scale_dpi
+
+if dpi < min_dpi:
+    dpi = min_dpi
+elif dpi > max_dpi:
+    dpi = max_dpi
+
+# round() does round-half-even
+# Round-half-up is preferred, but this adequate
+dpi = round(dpi)
+print(f'{dpi}')

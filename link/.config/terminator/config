@@ -1,0 +1,80 @@
+[global_config]
+  dbus = False
+  focus = mouse
+  extra_styling = False
+  broadcast_default = off
+  inactive_color_offset = 1.0
+  enabled_plugins = ,
+[keybindings]
+  cycle_next = None
+  cycle_prev = None
+  go_next = None
+  go_prev = None
+  go_up = None
+  go_down = None
+  go_left = None
+  go_right = None
+  rotate_cw = None
+  rotate_ccw = None
+  split_horiz = None
+  split_vert = None
+  close_term = None
+  toggle_scrollbar = None
+  close_window = None
+  resize_up = None
+  resize_down = None
+  resize_left = None
+  resize_right = None
+  move_tab_right = None
+  move_tab_left = None
+  toggle_zoom = None
+  scaled_zoom = None
+  full_screen = None
+  reset = None
+  reset_clear = None
+  hide_window = None
+  group_all = None
+  group_all_toggle = None
+  ungroup_all = None
+  group_tab = None
+  group_tab_toggle = None
+  ungroup_tab = None
+  new_window = <Primary><Shift>n
+  new_terminator = None
+  broadcast_off = None
+  broadcast_group = None
+  broadcast_all = None
+  insert_number = None
+  insert_padded = None
+  edit_window_title = None
+  edit_tab_title = None
+  edit_terminal_title = None
+  layout_launcher = None
+  help = None
+[profiles]
+  [[default]]
+    allow_bold = False
+    icon_bell = False
+    background_color = "#161616"
+    backspace_binding = automatic
+    delete_binding = automatic
+    cursor_color = "#d3d7cf"
+    font = monospace 10
+    foreground_color = "#d3d7cf"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_lines = 2000
+    disable_mousewheel_zoom = True
+    palette = "#161616:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    word_chars = "-,./?%&#_=+@~"
+    use_system_font = False
+    bold_is_bright = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]

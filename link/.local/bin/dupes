@@ -1,0 +1,495 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=C0103
+# pylint: disable=C0114
+# pylint: disable=C0116
+# pylint: disable=C0301
+# pylint: disable=C0415
+# pylint: disable=W0311
+
+import collections
+import hashlib
+import os
+import pathlib
+import shlex
+import sys
+
+from hash_file import hash_file
+
+__version__ = '2020-12-03'
+
+
+File_Info = collections.namedtuple('File_Info', ('path', 'basename', 'name_quoted', 'size', 'mtime', 'ctime'))
+
+
+def remove_keys_with_single_values(d):
+	"""Remove keys with single values from the given dictionary."""
+
+	keys_to_delete = []
+
+	for key in d:
+		if len(d[key]) == 1:
+			keys_to_delete.append(key)
+
+	for key_to_delete in keys_to_delete:
+		del d[key_to_delete]
+
+
+##### TODO: the param to limit the depth should be named 'max_depth'
+def get_file_size_to_file_path_map(path, max_depth=sys.maxsize: int):
+	"""Get a map of file sizes to file names.
+Descend at most max_depth levels of directories below path."""
+
+	file_size_to_file_path_map = collections.defaultdict(list)
+
+	# https://docs.python.org/3.8/library/os.html#os.scandir
+	##### if shallow, use os.scandir (3.5+)
+	##### it would be better to give a max-depth option
+	# https://bugs.python.org/issue26781
+
+	'''
+	http://stackoverflow.com/a/28200572
+	def contained_dirs(dir):
+    return filter(os.path.isdir,
+                  [os.path.join(dir, f) for f in os.listdir(dir)])
+
+
+
+	filter(os.path.isfile, [os.path.join(path, f) for f in os.listdir(path)])
+	filter(lambda x: os.path.isfile(x) and not os.path.islink(x), [os.path.join(path, f) for f in os.listdir(path)])
+
+
+
+	https://docs.python.org/3/library/os.html#os.walk
+
+	When topdown is True, the caller can modify the dirnames list in-place
+	(perhaps using del or slice assignment), and walk() will only recurse into
+	the subdirectories whose names remain in dirnames; this can be used to prune
+	the search, impose a specific order of visiting, or even to inform walk()
+	about directories the caller creates or renames before it resumes walk()
+	again. Modifying dirnames when topdown is False is ineffective, because in
+	bottom-up mode the directories in dirnames are generated before dirpath
+	itself is generated.
+
+
+	'''
+
+	# https://docs.python.org/dev/library/os.html#os.walk
+	for (dir_path, dir_names, file_basenames) in os.walk(path):
+
+		dir_path = pathlib.Path(dir_path)
+
+		##### TODO: test this
+		cur_depth = str(dir_path.relative_to(path)).count(os.sep)+1
+
+		if cur_depth >= max_depth:
+			dir_names.clear()
+
+		for file_basename in file_basenames:
+
+			#file_path_joined = os.path.join(dir_path, file_basename)
+			file_path_joined = dir_path.joinpath(file_basename)
+
+			# Ignore symbolic links.
+			#if os.path.islink(file_path_joined):
+			if file_path_joined.is_symlink():
+				continue
+
+			#file_size = os.path.getsize(file_path_joined)
+			file_size = file_path_joined.stat().st_size
+
+			file_size_to_file_path_map[file_size].append(file_path_joined)
+
+	return file_size_to_file_path_map
+
+
+##### TODO: maybe add option to specify the type of hash algorithm
+
+def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: str):
+	"""Get a map of file hashes to file infos."""
+
+	file_hash_to_file_info_map = collections.defaultdict(list)
+
+	for file_size in file_size_to_file_path_map:
+
+		for file_path in file_size_to_file_path_map[file_size]:
+
+			##### TODO: test this
+			#file_hash = hash_file(file_path)
+			hash_object = hashlib.new(hash_algorithm)
+			#file_hash = hash_file(file_path, hashlib.sha1())
+			hash_file(file_path, hash_object)
+			file_hash = hash_object.digest()
+
+			file_basename = file_path.name
+
+			file_path_quoted = shlex.quote(str(file_path))
+			#file_mtime = os.path.getmtime(file_path)
+			file_mtime = file_path.stat().st_mtime
+			#file_ctime = os.path.getctime(file_path)
+			file_ctime = file_path.stat().st_ctime
+
+			file_info = File_Info(
+				file_path,
+				file_basename,
+				file_path_quoted,
+				file_size,
+				file_mtime,
+				file_ctime)
+
+			file_hash_to_file_info_map[file_hash].append(file_info)
+
+	return file_hash_to_file_info_map
+
+
+# pylint: disable=R0912
+# pylint: disable=R0914
+# pylint: disable=R0915
+def main(argv = None):
+
+	import datetime as dt
+	import getopt
+	import natcmp
+	import number_prefix
+	import signal
+	import stat
+
+
+	if argv is None:
+		argv = sys.argv
+
+
+	program_name = os.path.basename(sys.argv[0])
+
+	program_authors = ['Steven Ward']
+
+	# valid values
+	valid_hash_algorithms = hashlib.algorithms_guaranteed
+
+	# default values
+	default_verbose = False
+	default_max_depth = sys.maxsize
+	default_write_to_stdout = False
+	default_reverse_sort = False
+	default_sort_by_mtime = False
+	default_only_comment_first = False
+	default_print_size = False
+	default_add_confirm = False
+	default_hash_algorithm = 'md5'
+
+	# mutable values
+	verbose = default_verbose
+	max_depth = default_max_depth
+	write_to_stdout = default_write_to_stdout
+	reverse_sort = default_reverse_sort
+	sort_by_mtime = default_sort_by_mtime
+	only_comment_first = default_only_comment_first
+	print_size = default_print_size
+	add_confirm = default_add_confirm
+	hash_algorithm = default_hash_algorithm
+
+
+	# pylint: disable=W0613
+	def signal_handler(signal_num, execution_frame):
+		print()
+		sys.exit(0)
+
+	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+
+
+	def print_version():
+		"""Print the version information and exit."""
+		print(f"{program_name} {__version__}")
+		print("Written by {}".format(', '.join(program_authors)))
+
+
+	def print_verbose(s):
+		"""Print the message if verbose mode is on."""
+		if verbose:
+			print(f"# {s}")
+
+
+	def print_warning(s):
+		"""Print the warning message and continue."""
+		print(f"Warning: {s}", file=sys.stderr)
+
+
+	def print_error(s):
+		"""Print the error message and exit."""
+		print(f"Error: {s}"file=sys.stderr)
+		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+
+
+	def print_help():
+		"""Print the help message and exit."""
+		print(f"""Usage: {program_name} [OPTION]... [DIR]...
+Find duplicate files in DIR.  Output is written to a file named 'remove-duplicates.sh' in DIR.
+
+If DIR is absent, the current directory is used.
+
+OPTIONS
+
+-V, --version
+    Print the version information and exit.
+
+-h, --help
+    Print this message and exit.
+
+-v, --verbose
+    Print diagnostics.
+
+##### TODO: maybe make an option to follow links?
+
+-d, --maxdepth MAX_DEPTH
+    This behaves like the '-maxdepth' option of the 'find' command.
+    #Descend at most MAX_DEPTH levels of directories below DIR. ##### TODO-DOC
+    If not given, descend the full directory tree.
+    (default: {})
+
+-c, --stdout
+    Write the output to standard output.
+
+-r, --reverse-sort
+    Reverse the sort order within each group of duplicates. ##### TODO-DOC
+
+-m, --sort-by-mtime
+    Sort duplicate files by their modification times.
+
+##### TODO: change -f to -1, maybe
+-f, --only-comment-first
+    Only comment the first entry in a group of duplicates.
+
+-s, --print-size
+    Print the file size above each group of duplicates.
+
+--confirm
+    Add confirmation prompt to the output before the rm commands.
+
+-a, --hash-algorithm=ALGORITHM
+    Use hash algorithm ALGORITHM to hash the files.
+    (default: {default_hash_algorithm})
+    (valid: {','.join(sorted(valid_hash_algorithms))})
+    <https://docs.python.org/3/library/hashlib.html>
+
+""")
+
+
+	short_options = 'Vhvd:crmfsa:'
+	long_options = ['version', 'help', 'verbose',
+		'maxdepth=', 'stdout', 'reverse-sort', 'sort-by-mtime',
+		'only-comment-first', 'print-size', 'confirm', 'hash-algorithm=',
+		]
+
+	try:
+		(options, remaining_args) = getopt.getopt(sys.argv[1:], short_options, long_options)
+	except getopt.GetoptError as err:
+		print_error(err)
+		return 1
+
+	for (option, value) in options:
+		# pylint: disable=R1705
+		if option in ['-V', '--version']:
+			print_version()
+			return 0
+		elif option in ['-h', '--help']:
+			print_help()
+			return 0
+		elif option in ['-v', '--verbose']:
+			verbose = True
+		elif option in ['-d', '--maxdepth']:
+			max_depth = int(value)
+		elif option in ['-c', '--stdout']:
+			write_to_stdout = True
+		elif option in ['-r', '--reverse-sort']:
+			reverse_sort = True
+		elif option in ['-m', '--sort-by-mtime']:
+			sort_by_mtime = True
+		elif option in ['-f', '--only-comment-first']:
+			only_comment_first = True
+		elif option in ['-s', '--print-size']:
+			print_size = True
+		elif option in ['--confirm']:
+			add_confirm = True
+		elif option in ['-a', '--hash-algorithm']:
+			hash_algorithm = value
+			assert hash_algorithm in valid_hash_algorithms
+		else:
+			print_error(f"Unhandled option: {option}")
+			return 1
+
+
+	# No path was given.
+	if len(remaining_args) == 0:
+		remaining_args.append('.')
+
+	for path in remaining_args:
+
+		path_quoted = shlex.quote(path)
+
+		print_verbose('Finding duplicate files in {}'.format(path_quoted))
+
+
+		print_verbose('(get_file_size_to_file_path_map)')
+		file_size_to_file_path_map = get_file_size_to_file_path_map(path, max_depth)
+
+		print_verbose('(remove_keys_with_single_values)')
+		remove_keys_with_single_values(file_size_to_file_path_map)
+
+		if len(file_size_to_file_path_map) == 0:
+			print_warning("No files with duplicate sizes found in {}".format(path_quoted))
+			continue
+
+
+		print_verbose('(get_file_hash_to_file_info_map)')
+		file_hash_to_file_info_map = get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm)
+
+		print_verbose('(remove_keys_with_single_values)')
+		remove_keys_with_single_values(file_hash_to_file_info_map)
+
+		if len(file_hash_to_file_info_map) == 0:
+			print_warning("No files with duplicate hashes found in {}".format(path_quoted))
+			continue
+
+
+		print_verbose('(sorting values of file_hash_to_file_info_map)')
+
+		for file_hash in file_hash_to_file_info_map:
+
+			# Sort (in a natural order) by basename.
+			file_hash_to_file_info_map[file_hash].sort(key=lambda file_info : natcmp.key(file_info.basename), reverse=reverse_sort)
+
+			if sort_by_mtime:
+				# Sort by mtime.
+				file_hash_to_file_info_map[file_hash].sort(key=lambda file_info : file_info.mtime, reverse=reverse_sort)
+
+
+		output_lines = []
+
+		output_lines.append('#!/usr/bin/bash')
+		output_lines.append('')
+
+		if add_confirm:
+			output_lines.append('''
+# https://docs.python.org/3/library/configparser.html#configparser.ConfigParser.getboolean
+# https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+# Evaluate the given string as a boolean
+function getboolean
+{
+	local S="${1}"
+
+	S="${S%%+([[:space:]])}" # strip trailing whitespace
+
+	S="${S##+([[:space:]])}" # strip leading whitespace
+
+	S="${S,,}" # lowercase
+
+	if [[ -z "${S}" ]]
+	then
+		return 1 # fail
+	fi
+
+	case "${S}" in
+
+		1|yes|y|true|on)
+			return 0 # success
+			;;
+
+		0|no|n|false|off)
+			return 1 # fail
+			;;
+
+		null|nil|none|nan|undefined|-0)
+			return 1 # fail
+			;;
+
+		*)
+			return 0 # success
+			;;
+	esac
+}
+
+read -r -e -p "Continue? " CONTINUE
+
+if getboolean "${CONTINUE}"
+then
+	CONTINUE=true
+else
+	CONTINUE=false
+fi
+
+if ! ${CONTINUE}
+then
+	exit
+fi
+
+''')
+
+		# The keys of file_hash_to_file_info_map are sorted to maintain order among subsequent calls to this script.
+		for file_hash in sorted(file_hash_to_file_info_map):
+
+			max_file_path_quoted_len = 0
+
+			# If the for loop below is in its first iteration
+			first_iteration = True
+
+			# Get the longest file path (including quotes).
+			# This will be used to get the right amount of padding to align the comments after the rm command.
+			for file_info in file_hash_to_file_info_map[file_hash]:
+
+				max_file_path_quoted_len = max(len(file_info.name_quoted) - (only_comment_first and not first_iteration), max_file_path_quoted_len)
+
+				first_iteration = False
+
+			# If the for loop below is in its first iteration
+			first_iteration = True
+
+			for file_info in file_hash_to_file_info_map[file_hash]:
+
+				if print_size and first_iteration:
+					output_lines.append('# size= {} B'.format(file_info.size))
+
+					adjusted_size, prefix = number_prefix.get_binary_prefix(file_info.size)
+
+					if prefix['symbol']: # not empty
+						output_lines.append('# size= {} {}B'.format(round(adjusted_size, 1), prefix['symbol']))
+
+				padding_len = max_file_path_quoted_len - len(file_info.name_quoted) + (only_comment_first and not first_iteration)
+				padding = ' ' * padding_len
+
+				mtime_str = dt.datetime.fromtimestamp(file_info.mtime).isoformat()
+				ctime_str = dt.datetime.fromtimestamp(file_info.ctime).isoformat()
+
+
+				comment = '' if only_comment_first and not first_iteration else '#'
+
+				output_lines.append('{}rm -v {} {}# mtime= {} ; ctime= {}'.format(
+					comment, file_info.name_quoted, padding, mtime_str, ctime_str))
+
+				first_iteration = False
+
+			output_lines.append('')
+
+
+		if write_to_stdout:
+
+			print('\n'.join(output_lines))
+		else:
+			output_file_name = os.path.join(path, 'remove-duplicates.sh')
+
+			try:
+				with open(output_file_name, 'w') as output_file:
+					output_file.write('\n'.join(output_lines))
+
+				# Make the file executable (i.e. mode 0700).
+				os.chmod(output_file_name, stat.S_IRWXU)
+
+			except OSError as err:
+				print_error(err)
+				return err.errno
+
+
+if __name__ == '__main__':
+	sys.exit(main())

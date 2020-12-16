@@ -1,0 +1,33 @@
+[alias]
+	br = branch
+	ci = commit
+	co = checkout
+	f = fetch
+	info = remote -v show
+	lg = log --color --decorate --oneline --graph
+	lgg = log --color --decorate --oneline --graph --all
+	lggg = log --color --decorate --oneline --graph --all --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset %s%Cred%d%Creset %Cgreen%an%Creset' --date=short
+	ss = status -s
+	st = status
+	dt = difftool
+	d = diff
+[color]
+	ui = true
+[merge]
+	tool = kdiff3
+	conflictstyle = diff3
+[pack]
+	windowMemory = 1g
+	packSizeLimit = 1g
+[diff]
+	tool = meld
+[core]
+	editor = vim
+[include]
+	path = ~/.config/git/private.gitconfig
+[sendemail]
+	suppresscc = self
+[difftool]
+	prompt = false
+[pull]
+	rebase = false

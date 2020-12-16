@@ -1,0 +1,4 @@
+#include "Xft.dpi"
+
+Sxiv.background: Black
+Sxiv.foreground: Gray
