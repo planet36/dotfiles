@@ -144,8 +144,8 @@ fi
 
 # {{{ status bar / root window name
 
-#if command -v python > /dev/null && [ -f ~/.local/bin/perf-mon ]
-if command -v python > /dev/null && command -v perf-mon > /dev/null
+#if command -v python3 > /dev/null && [ -f ~/.local/bin/perf-mon ]
+if command -v python3 > /dev/null && command -v perf-mon > /dev/null
 then
     perf-mon -q -x --sep=' ┆ ' --sleep=2 \
         cpu_usage_pct \

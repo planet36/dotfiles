@@ -1,7 +1,7 @@
 
 function dir-files --description 'for every directory, print the number of files'
 
-	python -c '
+	python3 -c '
 import os
 import sys
 

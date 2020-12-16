@@ -673,8 +673,8 @@ main() {
             fc-cache
         fi
 
-        python    -m compileall ~/.local/lib/python/
-        python -O -m compileall ~/.local/lib/python/
+        python3    -m compileall ~/.local/lib/python/
+        python3 -O -m compileall ~/.local/lib/python/
 
         calculate_dpi
 
