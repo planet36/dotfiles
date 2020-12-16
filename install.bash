@@ -426,7 +426,9 @@ install_local_programs() {
     then
         if $DRY_RUN
         then
-            echo "# dir_is_empty: make install"
+            cat <<EOT
+            cd ~/.local/src/dir_is_empty && make install
+EOT
         else
             cd ~/.local/src/dir_is_empty && make install
         fi
@@ -500,28 +502,6 @@ install_local_programs() {
         fi
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
-    fi
-    # }}}
-
-    # {{{ terminator
-    ##### TODO: when terminator package is updated, remove this
-    cd ~/.local/src
-    if [[ ! -d terminator ]]
-    then
-        git clone https://github.com/gnome-terminator/terminator.git
-        cd terminator
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- terminator
-    fi
-    # }}}
-
-    # {{{ meld
-    ##### TODO: when meld package is updated, remove this
-    cd ~/.local/src
-    if [[ ! -d meld ]]
-    then
-        git clone https://gitlab.gnome.org/GNOME/meld.git
-        cd meld/bin
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- meld
     fi
     # }}}
 
