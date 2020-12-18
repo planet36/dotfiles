@@ -219,7 +219,7 @@ def main(argv = None):
 
 	def print_error(s):
 		"""Print the error message and exit."""
-		print(f"Error: {s}"file=sys.stderr)
+		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
 
