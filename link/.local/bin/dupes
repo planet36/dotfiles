@@ -38,7 +38,7 @@ def remove_keys_with_single_values(d):
 
 
 ##### TODO: the param to limit the depth should be named 'max_depth'
-def get_file_size_to_file_path_map(path, max_depth=sys.maxsize: int):
+def get_file_size_to_file_path_map(path, max_depth: int=sys.maxsize):
 	"""Get a map of file sizes to file names.
 Descend at most max_depth levels of directories below path."""
 
@@ -120,7 +120,7 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 			#file_hash = hash_file(file_path)
 			hash_object = hashlib.new(hash_algorithm)
 			#file_hash = hash_file(file_path, hashlib.sha1())
-			hash_file(file_path, hash_object)
+			hash_object = hash_file(file_path, hash_object)
 			file_hash = hash_object.digest()
 
 			file_basename = file_path.name
@@ -247,7 +247,6 @@ OPTIONS
     This behaves like the '-maxdepth' option of the 'find' command.
     #Descend at most MAX_DEPTH levels of directories below DIR. ##### TODO-DOC
     If not given, descend the full directory tree.
-    (default: {})
 
 -c, --stdout
     Write the output to standard output.
