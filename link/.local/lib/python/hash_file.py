@@ -35,23 +35,23 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 		hash_object = hashlib.md5()
 
 	#try:
-		with open(file_name, 'rb') as f:
+	with open(file_name, 'rb') as f:
 
-			while True:
+		while True:
 
-				file_data = f.read(block_size)
+			file_data = f.read(block_size)
 
-				if not file_data:
-					break
+			if not file_data:
+				break
 
-				hash_object.update(file_data)
+			hash_object.update(file_data)
 
 	#except OSError as err:
 	#	print("Error: {}".format(err), file=sys.stderr)
 		#return None
 
 	#return hash_object.digest()
-	#return hash_object
+	return hash_object
 
 
 # pylint: disable=C0415
@@ -216,7 +216,7 @@ OPTIONS
 			# Hash the file.
 
 			#hash_digest = hash_file(file_name, hash_object, block_size)
-			hash_file(file_name, hash_object, block_size)
+			hash_object = hash_file(file_name, hash_object, block_size)
 			#hash_digest = hash_file(file_name, hash_algorithm, block_size)
 
 		hash_digest = hash_object.digest()
