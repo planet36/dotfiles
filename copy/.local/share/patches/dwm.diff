@@ -1,5 +1,5 @@
 diff --git a/config.def.h b/config.def.h
-index 1c0b587..8d08bb7 100644
+index 1c0b587..aa0fb47 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -1,7 +1,7 @@
@@ -31,7 +31,7 @@ index 1c0b587..8d08bb7 100644
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
  static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 -static const char *termcmd[]  = { "st", NULL };
-+static const char *termcmd[]  = { "terminator", NULL };
++static const char *termcmd[]  = { "alacritty", NULL };
  
  static Key keys[] = {
  	/* modifier                     key        function        argument */
