@@ -178,6 +178,7 @@ def main(argv = None):
 	default_print_size = False
 	default_add_confirm = False
 	default_hash_algorithm = 'md5'
+	default_interactive_rm = False
 
 	# mutable values
 	verbose = default_verbose
@@ -189,6 +190,7 @@ def main(argv = None):
 	print_size = default_print_size
 	add_confirm = default_add_confirm
 	hash_algorithm = default_hash_algorithm
+	interactive_rm = default_interactive_rm
 
 
 	# pylint: disable=W0613
@@ -265,7 +267,7 @@ OPTIONS
     Print the file size above each group of duplicates.
 
 --confirm
-    Add confirmation prompt to the output before the rm commands.
+    Add confirmation prompt to the output before the 'rm' commands.
 
 -a, --hash-algorithm=ALGORITHM
     Use hash algorithm ALGORITHM to hash the files.
@@ -273,13 +275,16 @@ OPTIONS
     (valid: {','.join(sorted(valid_hash_algorithms))})
     <https://docs.python.org/3/library/hashlib.html>
 
+-i, --interactive
+    Make the 'rm' command interactive.
+
 """)
 
 
-	short_options = 'Vhvd:crmfsa:'
+	short_options = 'Vhvd:crmfsa:i'
 	long_options = ['version', 'help', 'verbose',
 		'maxdepth=', 'stdout', 'reverse-sort', 'sort-by-mtime',
-		'only-comment-first', 'print-size', 'confirm', 'hash-algorithm=',
+		'only-comment-first', 'print-size', 'confirm', 'hash-algorithm=', 'interactive',
 		]
 
 	try:
@@ -315,6 +320,8 @@ OPTIONS
 		elif option in ['-a', '--hash-algorithm']:
 			hash_algorithm = value
 			assert hash_algorithm in valid_hash_algorithms
+		elif option in ['-i', '--interactive']:
+			interactive_rm = True
 		else:
 			print_error(f"Unhandled option: {option}")
 			return 1
@@ -464,8 +471,7 @@ fi
 
 				comment = '' if only_comment_first and not first_iteration else '#'
 
-				output_lines.append('{}rm -v {} {}# mtime= {} ; ctime= {}'.format(
-					comment, file_info.name_quoted, padding, mtime_str, ctime_str))
+				output_lines.append(f'{comment}rm -v{" -i" if interactive_rm else ""} {file_info.name_quoted} {padding}# mtime= {mtime_str} ; ctime= {ctime_str}')
 
 				first_iteration = False
 
