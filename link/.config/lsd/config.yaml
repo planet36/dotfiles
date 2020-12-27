@@ -1,0 +1,8 @@
+date: relative
+
+icons:
+  when: never
+
+indicators: true
+
+symlink-arrow: ->
