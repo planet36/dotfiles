@@ -58,7 +58,8 @@ alias clda='cls ; da'
 alias cls='printf "\ec"' # tput clear
 alias cp='cp --archive --backup=numbered'
 alias ctags='ctags --recurse=yes --totals=yes --languages=C,C++'
-alias d='ls --human-readable -o --file-type --color'
+#alias d='ls --human-readable -o --file-type --color'
+alias d='lsd --long'
 alias da='d --almost-all'
 alias df='df --human-readable --print-type --exclude-type=squashfs'
 alias diff='diff --unified --color'
@@ -82,7 +83,6 @@ alias gpp="g++ $CXXFLAGS"
 alias gr='g --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias jpegtran2='jpegtran -optimize -copy all'
 alias longest_line="awk 'length > l {r = NR; l = length} END{print r, l}'"
-alias lsd='lsd --classify --long --date relative --icon never --size short'
 alias mirror2='wget --verbose --force-directories --no-host-directories --html-extension --mirror --convert-links --backup-converted --page-requisites --relative --no-parent'
 alias mirror='wget --verbose --mirror --page-requisites'
 alias mv='mv --backup=numbered'
