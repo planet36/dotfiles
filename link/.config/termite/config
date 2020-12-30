@@ -1,5 +1,5 @@
 [options]
-allow_bold = false
+#allow_bold = true
 #audible_bell = false
 #bold_is_bright = true
 #cell_height_scale = 1.0
@@ -57,16 +57,16 @@ background = #161616
 #highlight = #2f2f2f
 
 # Colors from color0 to color254 can be set
-color0  = #161616
-color1  = #cc0000
-color2  = #4e9a06
-color3  = #c4a000
-color4  = #3465a4
-color5  = #75507b
-color6  = #06989a
-color7  = #d3d7cf
-color8  = #555753
-color9  = #ef2929
+color0 = #161616
+color1 = #cc0000
+color2 = #4e9a06
+color3 = #c4a000
+color4 = #3465a4
+color5 = #75507b
+color6 = #06989a
+color7 = #d3d7cf
+color8 = #555753
+color9 = #ef2929
 color10 = #8ae234
 color11 = #fce94f
 color12 = #729fcf
@@ -85,4 +85,4 @@ color15 = #eeeeec
 #border_width = 0.5
 #roundness = 2.0
 
-# vim: ft=dosini cms=#%s:
+# vim: ft=dosini cms=#%s

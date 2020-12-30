@@ -53,7 +53,6 @@
   help = None
 [profiles]
   [[default]]
-    allow_bold = False
     icon_bell = False
     background_color = "#161616"
     backspace_binding = automatic
