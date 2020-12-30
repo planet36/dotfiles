@@ -77,7 +77,7 @@ index a22e019..0000000
 -
 -#endif
 diff --git a/config.def.h b/config.def.h
-index 6f05dce..7a3437f 100644
+index 6f05dce..0bf97ce 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -3,9 +3,13 @@
@@ -204,12 +204,12 @@ index 6f05dce..7a3437f 100644
 -	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
 -	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
 -	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
-+	/* mask             button   function    argument            release */
-+	{ XK_ANY_MOD,       Button2, selpaste,   {.i = 0},           1 },
-+	{ ShiftMask,        Button4, ttysend,    {.s = "\033[5;2~"}, 0 },
-+	{ XK_ANY_MOD,       Button4, ttysend,    {.s = "\031"},      0 },
-+	{ ShiftMask,        Button5, ttysend,    {.s = "\033[6;2~"}, 0 },
-+	{ XK_ANY_MOD,       Button5, ttysend,    {.s = "\005"},      0 },
++	/* mask                 button   function        argument            release */
++	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},           1 },
++	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"}, 0 },
++	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"},      0 },
++	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"}, 0 },
++	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"},      0 },
  };
  
  /* Internal keyboard shortcuts. */
