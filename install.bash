@@ -439,7 +439,10 @@ EOT
     #if [[ ! -d st-sdw ]]
     #then
     #    git clone https://github.com/planet36/st-sdw
+    #    #git clone git@github.com:planet36/st-sdw.git
     #    cd st-sdw
+    #    git remote add suckless https://git.suckless.org/st
+    #    git remote set-url --push suckless DISABLE
     #    make
     #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
     #fi
