@@ -77,7 +77,7 @@ index a22e019..0000000
 -
 -#endif
 diff --git a/config.def.h b/config.def.h
-index 6f05dce..0bf97ce 100644
+index 6f05dce..8ed04c3 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -3,9 +3,13 @@
@@ -90,7 +90,7 @@ index 6f05dce..0bf97ce 100644
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 +static char *font = "monospace:size=10:antialias=true:autohint=true";
 +
-+static int allowbold = 0;
++static int allowbold = 1;
 +static int allowitalic = 1;
 +
  static int borderpx = 2;
@@ -297,7 +297,7 @@ index abbbe4b..054f3a0 100644
  
  void
 diff --git a/x.c b/x.c
-index 120e495..e4d2d7d 100644
+index 120e495..850f506 100644
 --- a/x.c
 +++ b/x.c
 @@ -15,8 +15,6 @@
@@ -353,7 +353,44 @@ index 120e495..e4d2d7d 100644
  	XFree(sizeh);
  }
  
-@@ -966,7 +967,7 @@ xloadfonts(char *fontstr, double fontsize)
+@@ -883,7 +884,6 @@ xloadfont(Font *f, FcPattern *pattern)
+ 	FcPattern *match;
+ 	FcResult result;
+ 	XGlyphInfo extents;
+-	int wantattr, haveattr;
+ 
+ 	/*
+ 	 * Manually configure instead of calling XftMatchFont
+@@ -909,28 +909,6 @@ xloadfont(Font *f, FcPattern *pattern)
+ 		return 1;
+ 	}
+ 
+-	if ((XftPatternGetInteger(pattern, "slant", 0, &wantattr) ==
+-	    XftResultMatch)) {
+-		/*
+-		 * Check if xft was unable to find a font with the appropriate
+-		 * slant but gave us one anyway. Try to mitigate.
+-		 */
+-		if ((XftPatternGetInteger(f->match->pattern, "slant", 0,
+-		    &haveattr) != XftResultMatch) || haveattr < wantattr) {
+-			f->badslant = 1;
+-			fputs("font slant does not match\n", stderr);
+-		}
+-	}
+-
+-	if ((XftPatternGetInteger(pattern, "weight", 0, &wantattr) ==
+-	    XftResultMatch)) {
+-		if ((XftPatternGetInteger(f->match->pattern, "weight", 0,
+-		    &haveattr) != XftResultMatch) || haveattr != wantattr) {
+-			f->badweight = 1;
+-			fputs("font weight does not match\n", stderr);
+-		}
+-	}
+-
+ 	XftTextExtentsUtf8(xw.dpy, f->match,
+ 		(const FcChar8 *) ascii_printable,
+ 		strlen(ascii_printable), &extents);
+@@ -966,7 +944,7 @@ xloadfonts(char *fontstr, double fontsize)
  	if (fontsize > 1) {
  		FcPatternDel(pattern, FC_PIXEL_SIZE);
  		FcPatternDel(pattern, FC_SIZE);
@@ -362,7 +399,7 @@ index 120e495..e4d2d7d 100644
  		usedfontsize = fontsize;
  	} else {
  		if (FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &fontval) ==
-@@ -1002,12 +1003,16 @@ xloadfonts(char *fontstr, double fontsize)
+@@ -1002,12 +980,16 @@ xloadfonts(char *fontstr, double fontsize)
  	win.ch = ceilf(dc.font.height * chscale);
  
  	FcPatternDel(pattern, FC_SLANT);
@@ -381,7 +418,7 @@ index 120e495..e4d2d7d 100644
  	if (xloadfont(&dc.ibfont, pattern))
  		die("can't open font %s\n", fontstr);
  
-@@ -1113,7 +1118,7 @@ xinit(int cols, int rows)
+@@ -1113,7 +1095,7 @@ xinit(int cols, int rows)
  	if (!FcInit())
  		die("could not init fontconfig.\n");
  
@@ -390,7 +427,7 @@ index 120e495..e4d2d7d 100644
  	xloadfonts(usedfont, 0);
  
  	/* colors */
-@@ -1527,29 +1532,44 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+@@ -1527,29 +1509,44 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
  	/* draw the new one */
  	if (IS_SET(MODE_FOCUSED)) {
  		switch (win.cursor) {
@@ -444,7 +481,7 @@ index 120e495..e4d2d7d 100644
  		}
  	} else {
  		XftDrawRect(xw.draw, &drawcol,
-@@ -1616,18 +1636,18 @@ void
+@@ -1616,18 +1613,18 @@ void
  xdrawline(Line line, int x1, int y1, int x2)
  {
  	int i, x, ox, numspecs;
@@ -468,7 +505,7 @@ index 120e495..e4d2d7d 100644
  			xdrawglyphfontspecs(specs, base, i, ox, y1);
  			specs += i;
  			numspecs -= i;
-@@ -1635,7 +1655,7 @@ xdrawline(Line line, int x1, int y1, int x2)
+@@ -1635,7 +1632,7 @@ xdrawline(Line line, int x1, int y1, int x2)
  		}
  		if (i == 0) {
  			ox = x;
@@ -477,7 +514,7 @@ index 120e495..e4d2d7d 100644
  		}
  		i++;
  	}
-@@ -1704,9 +1724,12 @@ xsetmode(int set, unsigned int flags)
+@@ -1704,9 +1701,12 @@ xsetmode(int set, unsigned int flags)
  int
  xsetcursor(int cursor)
  {
@@ -491,7 +528,7 @@ index 120e495..e4d2d7d 100644
  	return 0;
  }
  
-@@ -1950,6 +1973,10 @@ run(void)
+@@ -1950,6 +1950,10 @@ run(void)
  		if (FD_ISSET(ttyfd, &rfd) || xev) {
  			if (!drawing) {
  				trigger = now;
@@ -502,7 +539,7 @@ index 120e495..e4d2d7d 100644
  				drawing = 1;
  			}
  			timeout = (maxlatency - TIMEDIFF(now, trigger)) \
-@@ -1960,7 +1987,7 @@ run(void)
+@@ -1960,7 +1964,7 @@ run(void)
  
  		/* idle detected or maxlatency exhausted -> draw */
  		timeout = -1;
@@ -511,7 +548,7 @@ index 120e495..e4d2d7d 100644
  			timeout = blinktimeout - TIMEDIFF(now, lastblink);
  			if (timeout <= 0) {
  				if (-timeout > blinktimeout) /* start visible */
-@@ -1981,7 +2008,7 @@ run(void)
+@@ -1981,7 +1985,7 @@ run(void)
  void
  usage(void)
  {
@@ -520,7 +557,7 @@ index 120e495..e4d2d7d 100644
  	    " [-n name] [-o file]\n"
  	    "          [-T title] [-t title] [-w windowid]"
  	    " [[-e] command [args ...]]\n"
-@@ -1994,55 +2021,69 @@ usage(void)
+@@ -1994,55 +1998,69 @@ usage(void)
  int
  main(int argc, char *argv[])
  {
