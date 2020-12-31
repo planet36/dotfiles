@@ -388,6 +388,7 @@ inoremap <c-s> <c-o>:update<CR>
 inoremap <C-f> <C-x><C-f>
 inoremap <C-l> <C-x><C-l>
 
+
 nnoremap <tab> %
 
 if has('jumplist')
@@ -453,6 +454,8 @@ nnoremap <Leader>' viW<esc>a'<esc>Bi'<esc>
 
 nnoremap <Leader>g :execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<CR>:copen<CR>
 
+
+vnoremap <tab> %
 
 " save my left pinky
 vnoremap <space> :
