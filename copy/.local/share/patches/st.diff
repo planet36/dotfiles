@@ -345,7 +345,7 @@ index abbbe4b..054f3a0 100644
  
  void
 diff --git a/x.c b/x.c
-index 120e495..9dc6021 100644
+index 120e495..e1c870d 100644
 --- a/x.c
 +++ b/x.c
 @@ -15,8 +15,6 @@
@@ -554,7 +554,19 @@ index 120e495..9dc6021 100644
  		}
  	} else {
  		XftDrawRect(xw.draw, &drawcol,
-@@ -1616,18 +1602,18 @@ void
+@@ -1574,7 +1560,10 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+ void
+ xsetenv(void)
+ {
+-	char buf[sizeof(long) * 8 + 1];
++	// ulong digits10 == ceil(CHAR_BIT*sizeof(long)*log10(2))
++	// log10(2) == 0.30103...
++	// 5/16 == 0.3125
++	char buf[(CHAR_BIT*sizeof(long)*5)/16 + 1] = {'\0'};
+ 
+ 	snprintf(buf, sizeof(buf), "%lu", xw.win);
+ 	setenv("WINDOWID", buf, 1);
+@@ -1616,18 +1605,18 @@ void
  xdrawline(Line line, int x1, int y1, int x2)
  {
  	int i, x, ox, numspecs;
@@ -578,7 +590,7 @@ index 120e495..9dc6021 100644
  			xdrawglyphfontspecs(specs, base, i, ox, y1);
  			specs += i;
  			numspecs -= i;
-@@ -1635,7 +1621,7 @@ xdrawline(Line line, int x1, int y1, int x2)
+@@ -1635,7 +1624,7 @@ xdrawline(Line line, int x1, int y1, int x2)
  		}
  		if (i == 0) {
  			ox = x;
@@ -587,7 +599,7 @@ index 120e495..9dc6021 100644
  		}
  		i++;
  	}
-@@ -1704,9 +1690,12 @@ xsetmode(int set, unsigned int flags)
+@@ -1704,9 +1693,12 @@ xsetmode(int set, unsigned int flags)
  int
  xsetcursor(int cursor)
  {
@@ -601,7 +613,7 @@ index 120e495..9dc6021 100644
  	return 0;
  }
  
-@@ -1851,7 +1840,7 @@ cmessage(XEvent *e)
+@@ -1851,7 +1843,7 @@ cmessage(XEvent *e)
  {
  	/*
  	 * See xembed specs
@@ -610,7 +622,7 @@ index 120e495..9dc6021 100644
  	 */
  	if (e->xclient.message_type == xw.xembed && e->xclient.format == 32) {
  		if (e->xclient.data.l[1] == XEMBED_FOCUS_IN) {
-@@ -1950,6 +1939,10 @@ run(void)
+@@ -1950,6 +1942,10 @@ run(void)
  		if (FD_ISSET(ttyfd, &rfd) || xev) {
  			if (!drawing) {
  				trigger = now;
@@ -621,7 +633,7 @@ index 120e495..9dc6021 100644
  				drawing = 1;
  			}
  			timeout = (maxlatency - TIMEDIFF(now, trigger)) \
-@@ -1960,7 +1953,7 @@ run(void)
+@@ -1960,7 +1956,7 @@ run(void)
  
  		/* idle detected or maxlatency exhausted -> draw */
  		timeout = -1;
@@ -630,7 +642,7 @@ index 120e495..9dc6021 100644
  			timeout = blinktimeout - TIMEDIFF(now, lastblink);
  			if (timeout <= 0) {
  				if (-timeout > blinktimeout) /* start visible */
-@@ -1981,7 +1974,7 @@ run(void)
+@@ -1981,7 +1977,7 @@ run(void)
  void
  usage(void)
  {
@@ -639,7 +651,7 @@ index 120e495..9dc6021 100644
  	    " [-n name] [-o file]\n"
  	    "          [-T title] [-t title] [-w windowid]"
  	    " [[-e] command [args ...]]\n"
-@@ -1994,55 +1987,69 @@ usage(void)
+@@ -1994,55 +1990,69 @@ usage(void)
  int
  main(int argc, char *argv[])
  {
