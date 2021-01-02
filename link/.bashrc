@@ -213,6 +213,13 @@ export MANPAGER='less -s -M +Gg'
 
 # }}}
 
+# {{{ zoxide
+
+#https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
+eval "$(zoxide init bash)"
+
+# }}}
+
 # {{{ git completion
 
 if [[ -f /usr/share/bash-completion/completions/git ]]

@@ -306,6 +306,13 @@ end
 
 # }}}
 
+# {{{ zoxide
+
+#https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
+zoxide init fish | source
+
+# }}}
+
 # {{{ source other config files
 
 if test -f (dirname (status filename))/private.fish
