@@ -120,7 +120,6 @@ alias watch='watch --differences'
 alias wc2='echo "  lines   words file" ; wc --lines --words'
 alias wc3='wc --lines --words ; echo "  lines   words"'
 alias xz='xz --verbose --threads=0'
-alias z='zoxide'
 alias zero-out='truncate --size=0 --no-create'
 
 alias blake2=b2sum
