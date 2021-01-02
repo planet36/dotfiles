@@ -197,8 +197,6 @@ end
 # https://www.linuxsecrets.com/archlinux-wiki/wiki.archlinux.org/index.php/Activating_Numlock_on_Bootup.html
 # https://forums.gentoo.org/viewtopic-t-1055442-view-previous.html
 
-#if string match --entire --regex --quiet '/dev/tty[0-9]+' (tty)
-##### TODO: see if this works without "--entire"
 if string match --regex --quiet '/dev/tty[0-9]+' (tty)
 
     # {{{ turn on numlock
