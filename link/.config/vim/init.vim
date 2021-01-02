@@ -213,7 +213,8 @@ autocmd BufRead,BufNewFile *.fish setfiletype sh
 " {{{ Syntax highlighting
 
 " :help syn-sync
-syntax sync minlines=300
+syntax sync fromstart
+"syntax sync minlines=300
 
 if has('termguicolors')
     set termguicolors
