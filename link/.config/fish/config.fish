@@ -216,8 +216,6 @@ if string match --regex --quiet '/dev/tty[0-9]+' (tty)
     # }}}
 end
 
-# }}}
-
 # {{{ interactive shell
 
 if status is-interactive
