@@ -218,6 +218,8 @@ end
 
 # }}}
 
+# {{{ interactive shell
+
 if status is-interactive
 
 # {{{ prevent st unknown escape sequence
@@ -329,3 +331,4 @@ end
 
 end
 
+# }}}
