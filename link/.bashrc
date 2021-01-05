@@ -209,14 +209,20 @@ export MANPAGER='less -s -M +Gg'
 
 # {{{ env_parallel
 
-[[ -f /usr/bin/env_parallel.bash ]] && source /usr/bin/env_parallel.bash
+if command -v env_parallel > /dev/null
+then
+    [[ -f /usr/bin/env_parallel.bash ]] && source /usr/bin/env_parallel.bash
+fi
 
 # }}}
 
 # {{{ zoxide
 
-#https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
-eval "$(zoxide init bash)"
+if command -v zoxide > /dev/null
+then
+    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
+    eval "$(zoxide init bash)"
+fi
 
 # }}}
 

@@ -306,8 +306,10 @@ end
 
 # {{{ zoxide
 
-#https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
-zoxide init fish | source
+if command --quiet zoxide
+    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
+    zoxide init fish | source
+end
 
 # }}}
 
