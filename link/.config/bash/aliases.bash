@@ -146,9 +146,8 @@ arch)
     alias sp='sudo pacman --color always'
 
     alias inst='sudo pacman --color always -S --needed'
-    alias yinst='yay --color always -S --needed --answerdiff None'
+    alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
     ##### XXX what about:
-    # --answerclean All
     # --answeredit None
     # --answerupgrade None
     # --cleanafter

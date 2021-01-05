@@ -104,7 +104,7 @@ case arch
     # --answeredit None
     # --answerupgrade None
     # --cleanafter
-    alias yinst='yay --color always -S --needed --answerdiff None'
+    alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
     alias uninst='sudo pacman --color always -Rs'
     ##### TODO: maybe use xargs
     alias autorm='pacman -Qdtq | sudo pacman --color always -Rs -' ##### TODO: test this
