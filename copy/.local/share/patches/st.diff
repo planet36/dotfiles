@@ -40,27 +40,43 @@ index 0f9609d..f5e848c 100644
  https://bugzilla.redhat.com/show_bug.cgi?id=1498269
  
 diff --git a/Makefile b/Makefile
-index 470ac86..8c78ed4 100644
+index 470ac86..d463eb8 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -22,7 +22,7 @@ config.h:
+@@ -4,6 +4,7 @@
+ 
+ include config.mk
+ 
++HDR = config.h st.h win.h
+ SRC = st.c x.c
+ OBJ = $(SRC:.c=.o)
+ 
+@@ -21,10 +22,7 @@ config.h:
+ .c.o:
  	$(CC) $(STCFLAGS) -c $<
  
- st.o: config.h st.h win.h
+-st.o: config.h st.h win.h
 -x.o: arg.h config.h st.h win.h
-+x.o: config.h st.h win.h
+-
+-$(OBJ): config.h config.mk
++$(OBJ): config.mk $(HDR)
  
- $(OBJ): config.h config.mk
+ st: $(OBJ)
+ 	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
+@@ -33,12 +31,7 @@ clean:
+ 	rm -f st $(OBJ) st-$(VERSION).tar.gz
  
-@@ -35,7 +35,7 @@ clean:
  dist: clean
- 	mkdir -p st-$(VERSION)
- 	cp -R FAQ LEGACY TODO LICENSE Makefile README config.mk\
+-	mkdir -p st-$(VERSION)
+-	cp -R FAQ LEGACY TODO LICENSE Makefile README config.mk\
 -		config.def.h st.info st.1 arg.h st.h win.h $(SRC)\
-+		config.def.h st.info st.1 st.h win.h $(SRC)\
- 		st-$(VERSION)
- 	tar -cf - st-$(VERSION) | gzip > st-$(VERSION).tar.gz
- 	rm -rf st-$(VERSION)
+-		st-$(VERSION)
+-	tar -cf - st-$(VERSION) | gzip > st-$(VERSION).tar.gz
+-	rm -rf st-$(VERSION)
++	git archive --prefix st-$(VERSION)/ HEAD | gzip > st-$(VERSION).tar.gz
+ 
+ install: st
+ 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 diff --git a/arg.h b/arg.h
 deleted file mode 100644
 index a22e019..0000000
