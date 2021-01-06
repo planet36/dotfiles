@@ -1,4 +1,6 @@
 
+# XXX: radar.weather.gov was redesigned and launched on 2020-12-17
+# These URLs are gone.
 function radar --description 'download and display a radar animation'
 
     cd -- "$XDG_CACHE_HOME" || return
