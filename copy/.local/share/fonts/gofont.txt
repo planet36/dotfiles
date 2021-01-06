@@ -2,7 +2,7 @@
 # https://blog.golang.org/go-fonts
 # https://go.googlesource.com/image/+/master/font/gofont/ttfs/
 
-wget https://go.googlesource.com/image/+archive/master/font/gofont/ttfs.tar.gz
+curl -O -L https://go.googlesource.com/image/+archive/master/font/gofont/ttfs.tar.gz
 
 # Files in ttfs.tar.gz have timestamps in the future
 # Use -m to not extract file modified times
