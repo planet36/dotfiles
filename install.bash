@@ -58,11 +58,10 @@ OPTIONS
   -p : In addition to dotfiles, also install the following:
        vim/nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
-         - st
+         - dir_is_empty
          - dwm
+         - st
          - stw
-         - terminator
-         - meld
 
   -n : Show what would be done without doing anything.
 
@@ -438,6 +437,10 @@ EOT
     #cd ~/.local/src
     #if [[ ! -d st-sdw ]]
     #then
+    #    if $DRY_RUN
+    #    then
+    #        echo '# install my st'
+    #    else
     #    git clone https://github.com/planet36/st-sdw
     #    #git clone git@github.com:planet36/st-sdw.git
     #    cd st-sdw
@@ -445,6 +448,7 @@ EOT
     #    git remote set-url --push suckless DISABLE
     #    make
     #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
+    #    fi
     #fi
     # }}}
 
@@ -452,6 +456,10 @@ EOT
     cd ~/.local/src
     if [[ ! -d st ]]
     then
+        if $DRY_RUN
+        then
+            echo '# install st'
+        else
         git clone https://git.suckless.org/st
         cd st
         if [[ -f "$XDG_DATA_HOME"/patches/st.diff ]]
@@ -460,6 +468,7 @@ EOT
         fi
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
+        fi
     fi
     # }}}
 
@@ -467,6 +476,10 @@ EOT
     #cd ~/.local/src
     #if [[ ! -d scroll ]]
     #then
+    #    if $DRY_RUN
+    #    then
+    #        echo '# install scroll'
+    #    else
     #    git clone https://git.suckless.org/scroll
     #    cd scroll
     #    if [[ -f "$XDG_DATA_HOME"/patches/scroll.diff ]]
@@ -475,6 +488,7 @@ EOT
     #    fi
     #    make
     #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- scroll
+    #    fi
     #fi
     # }}}
 
@@ -482,6 +496,10 @@ EOT
     cd ~/.local/src
     if [[ ! -d dwm ]]
     then
+        if $DRY_RUN
+        then
+            echo '# install dwm'
+        else
         git clone https://git.suckless.org/dwm
         cd dwm
         if [[ -f "$XDG_DATA_HOME"/patches/dwm.diff ]]
@@ -490,6 +508,7 @@ EOT
         fi
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
+        fi
     fi
     # }}}
 
@@ -497,6 +516,10 @@ EOT
     cd ~/.local/src
     if [[ ! -d stw ]]
     then
+        if $DRY_RUN
+        then
+            echo '# install stw'
+        else
         git clone https://github.com/sineemore/stw.git
         cd stw
         if [[ -f "$XDG_DATA_HOME"/patches/stw.diff ]]
@@ -505,6 +528,7 @@ EOT
         fi
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
+        fi
     fi
     # }}}
 
@@ -527,7 +551,7 @@ uninstall_local_programs() {
         fi
     done
 
-    for LINK in dwm meld st stw terminator
+    for LINK in dwm st stw
     do
         if [[ -L ~/.local/bin/"$LINK" ]]
         then
