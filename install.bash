@@ -398,9 +398,11 @@ uninstall_vim_nvim_plugins() {
     then
         if $DRY_RUN
         then
+            # shellcheck disable=SC2016
             echo \
             vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall
         else
+            # shellcheck disable=SC2016
             vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall
         fi
     fi
@@ -409,9 +411,11 @@ uninstall_vim_nvim_plugins() {
     then
         if $DRY_RUN
         then
+            # shellcheck disable=SC2016
             echo \
             nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall
         else
+            # shellcheck disable=SC2016
             nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall
         fi
     fi
@@ -434,7 +438,7 @@ EOT
     fi
 
     # {{{ my st
-    #cd ~/.local/src
+    #cd ~/.local/src || return
     #if [[ ! -d st-sdw ]]
     #then
     #    if $DRY_RUN
@@ -453,7 +457,7 @@ EOT
     # }}}
 
     # {{{ st
-    cd ~/.local/src
+    cd ~/.local/src || return
     if [[ ! -d st ]]
     then
         if $DRY_RUN
@@ -461,7 +465,7 @@ EOT
             echo '# install st'
         else
         git clone https://git.suckless.org/st
-        cd st
+        cd st || return
         if [[ -f "$XDG_DATA_HOME"/patches/st.diff ]]
         then
             git apply --verbose -- "$XDG_DATA_HOME"/patches/st.diff
@@ -473,7 +477,7 @@ EOT
     # }}}
 
     # {{{ scroll
-    #cd ~/.local/src
+    #cd ~/.local/src || return
     #if [[ ! -d scroll ]]
     #then
     #    if $DRY_RUN
@@ -481,7 +485,7 @@ EOT
     #        echo '# install scroll'
     #    else
     #    git clone https://git.suckless.org/scroll
-    #    cd scroll
+    #    cd scroll || return
     #    if [[ -f "$XDG_DATA_HOME"/patches/scroll.diff ]]
     #    then
     #        git apply --verbose -- "$XDG_DATA_HOME"/patches/scroll.diff
@@ -493,7 +497,7 @@ EOT
     # }}}
 
     # {{{ dwm
-    cd ~/.local/src
+    cd ~/.local/src || return
     if [[ ! -d dwm ]]
     then
         if $DRY_RUN
@@ -501,7 +505,7 @@ EOT
             echo '# install dwm'
         else
         git clone https://git.suckless.org/dwm
-        cd dwm
+        cd dwm || return
         if [[ -f "$XDG_DATA_HOME"/patches/dwm.diff ]]
         then
             git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm.diff
@@ -513,7 +517,7 @@ EOT
     # }}}
 
     # {{{ stw
-    cd ~/.local/src
+    cd ~/.local/src || return
     if [[ ! -d stw ]]
     then
         if $DRY_RUN
@@ -521,7 +525,7 @@ EOT
             echo '# install stw'
         else
         git clone https://github.com/sineemore/stw.git
-        cd stw
+        cd stw || return
         if [[ -f "$XDG_DATA_HOME"/patches/stw.diff ]]
         then
             git apply --verbose -- "$XDG_DATA_HOME"/patches/stw.diff
@@ -532,11 +536,12 @@ EOT
     fi
     # }}}
 
-    popd
+    popd || return
 }
 
 uninstall_local_programs() {
 
+    # shellcheck disable=SC2043
     for FILE in dir_is_empty
     do
         if [[ -f ~/.local/bin/"$FILE" ]]
@@ -564,6 +569,45 @@ uninstall_local_programs() {
             fi
         fi
     done
+}
+
+install_github_programs() {
+
+    pushd .
+
+    cd ~/.local/bin || return
+
+    if $DRY_RUN
+    then
+        bash get-all-programs.bash -n
+    else
+        bash get-all-programs.bash
+    fi
+
+    popd || return
+}
+
+uninstall_github_programs() {
+
+    pushd .
+
+    cd ~/.local/bin || return
+
+    for PROGRAM in $(bash get-all-programs.bash -n | cut -f1)
+    do
+        if [[ -f "$PROGRAM" ]]
+        then
+            if $DRY_RUN
+            then
+                echo \
+                rm --verbose -- "$PROGRAM"
+            else
+                rm --verbose -- "$PROGRAM"
+            fi
+        fi
+    done
+
+    popd || return
 }
 
 calculate_dpi() {
@@ -643,6 +687,7 @@ main() {
         then
             uninstall_vim_nvim_plugins
             uninstall_local_programs
+            uninstall_github_programs
         fi
 
         delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy
@@ -680,8 +725,11 @@ main() {
             fc-cache
         fi
 
-        python3    -m compileall ~/.local/lib/python/
-        python3 -O -m compileall ~/.local/lib/python/
+        if ! $DRY_RUN
+        then
+            python3    -m compileall ~/.local/lib/python/
+            python3 -O -m compileall ~/.local/lib/python/
+        fi
 
         calculate_dpi
 
@@ -689,6 +737,7 @@ main() {
         then
             install_vim_nvim_plugins
             install_local_programs
+            install_github_programs
         fi
     fi
 
