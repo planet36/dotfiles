@@ -10,7 +10,8 @@ function t-private --description 'tar private config files and .ssh folder'
 	mkdir --verbose -- "$TGT_DIR" || return
 
 	#find .config -type f -not -empty -name 'private.*' | xargs cp --verbose --target-directory $TGT_DIR || return
-	for FILE in (find .config -type f -not -empty -name 'private.*')
+	#for FILE in (find .config -type f -not -empty -name 'private.*')
+	for FILE in (find .config -type f -name 'private.*')
 		rsync -avR "$FILE" "$TGT_DIR" || return
 	end
 
