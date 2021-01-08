@@ -1,19 +1,18 @@
 
 function tfp --description 'tar format patch'
 
-	TGT_DIR=(string replace --regex --all '\W' '' (basename (pwd)))
+	set TGT_DIR (string replace --regex --all '\W' '' (basename (pwd))) || return
 
 	mkdir --verbose -- "$TGT_DIR" || return
 
-	git format-patch --keep-subject -o "$TGT_DIR" --progress origin/master..HEAD
+	git format-patch -o "$TGT_DIR" --keep-subject --base=auto --progress origin/master..HEAD || return
 
 	if dir_is_empty "$TGT_DIR"
 		rmdir --verbose -- "$TGT_DIR" || return
 	else
 		t "$TGT_DIR" && xz -9 -e "$TGT_DIR".tar && del "$TGT_DIR" || return
-		mv --verbose -- "$TGT_DIR".tar.xz ~/Downloads
-		#cd Downloads/
-		printf 'del %q\n' ~/Downloads/"$TGT_DIR".tar.xz
+		mv --verbose -- "$TGT_DIR".tar.xz ~/Downloads || return
+		printf 'del %s\n' ~/Downloads/"$TGT_DIR".tar.xz
 	end
 end
 
