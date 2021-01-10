@@ -40,6 +40,7 @@ Plug 'mkarmona/colorsbox'
 Plug 'vim-scripts/candycode.vim'
 Plug 'fneu/breezy'
 Plug 'mhartington/oceanic-next'
+Plug 'tekannor/ayu-vim'
 "Plug 'flazz/vim-colorschemes'
 
 call plug#end()
