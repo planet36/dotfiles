@@ -677,10 +677,15 @@ parse_options() {
 
 main() {
 
+    if [[ "$PWD" == "$(realpath -- "$SCRIPT_DIR")"* ]]
+    then
+        print_error 'May not install dotfiles within itself'
+    fi
+
     REL_DOTFILES_DIR="$(realpath --relative-to "$PWD" -- "$SCRIPT_DIR")"
     print_verbose 'REL_DOTFILES_DIR=%q' "$REL_DOTFILES_DIR"
 
-        setup_xdg_vars
+    setup_xdg_vars
 
     if $DELETE
     then
