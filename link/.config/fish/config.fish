@@ -49,7 +49,7 @@ setup_xdg_vars
 
 # {{{ compile options
 
-set -x BC_ENV_ARGS "$XDG_CONFIG_HOME"/bc/config.bc
+set -x BC_ENV_ARGS -l "$XDG_CONFIG_HOME"/bc/config.bc
 
 set -x CC gcc
 set -x CXX g++

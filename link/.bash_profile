@@ -47,7 +47,7 @@ setup_xdg_vars
 
 # {{{ compile options
 
-export BC_ENV_ARGS="$XDG_CONFIG_HOME"/bc/config.bc
+export BC_ENV_ARGS="-l $XDG_CONFIG_HOME/bc/config.bc"
 
 export CC=gcc
 export CXX=g++
