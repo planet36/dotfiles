@@ -15,7 +15,6 @@ SCRIPT_VERSION='2021-01-06'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
-VERBOSE_OPTION=''
 
 print_version() {
 
@@ -81,7 +80,7 @@ do
 
     h) print_help ; exit ;;
 
-    v) VERBOSE=true ; VERBOSE_OPTION='--verbose' ;;
+    v) VERBOSE=true ;;
 
     *)
         # Note: $OPTION is '?'
@@ -124,7 +123,7 @@ RELEASE_FILE="$(basename -- "$URL_LATEST_RELEASE_DOWNLOAD")"
 print_verbose 'RELEASE_FILE=%q' "$RELEASE_FILE"
 
 print_verbose '(download release file)'
-curl -s -L -o "$RELEASE_FILE" -- "$URL_LATEST_RELEASE_DOWNLOAD"
+curl -L -o "$RELEASE_FILE" -- "$URL_LATEST_RELEASE_DOWNLOAD"
 
 if tar -tf "$RELEASE_FILE" &> /dev/null
 then # it's a tar file
@@ -134,10 +133,10 @@ then # it's a tar file
 
     # Only extract the desired file
     # shellcheck disable=SC2086
-    tar $VERBOSE_OPTION -xf "$RELEASE_FILE" "$TAR_MEMBER"
+    tar --verbose -xf "$RELEASE_FILE" "$TAR_MEMBER"
 
     # shellcheck disable=SC2086
-    rm $VERBOSE_OPTION -- "$RELEASE_FILE"
+    rm --verbose -- "$RELEASE_FILE"
 
     TOP_FOLDER="$(dirname -- "$TAR_MEMBER")"
     print_verbose 'TOP_FOLDER=%q' "$TOP_FOLDER"
@@ -145,19 +144,19 @@ then # it's a tar file
     if [ "$TOP_FOLDER" != . ]
     then
         # shellcheck disable=SC2086
-        mv $VERBOSE_OPTION -- "$TAR_MEMBER" .
+        mv --verbose -- "$TAR_MEMBER" .
 
         # shellcheck disable=SC2086
-        rm $VERBOSE_OPTION -r -- "$TOP_FOLDER"
+        rmdir --verbose --parents -- "$TOP_FOLDER"
     fi
 else # it's not a tar file
 
     if [ "$RELEASE_FILE" != "$PROGRAM" ]
     then
         # shellcheck disable=SC2086
-        mv $VERBOSE_OPTION -- "$RELEASE_FILE" "$PROGRAM"
+        mv --verbose -- "$RELEASE_FILE" "$PROGRAM"
     fi
 
     # shellcheck disable=SC2086
-    chmod $VERBOSE_OPTION a+x -- "$PROGRAM"
+    chmod --verbose --changes a+x -- "$PROGRAM"
 fi
