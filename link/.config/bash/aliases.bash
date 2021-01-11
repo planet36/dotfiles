@@ -8,6 +8,7 @@
 alias -- -='cd - > /dev/null'
 alias amek=make
 alias amke=make
+alias blake2=b2sum
 alias cdl=cld
 alias clena=clean
 alias csl=cls
@@ -29,6 +30,7 @@ alias ip3=ipython3
 alias ipy3=ipython3
 alias m=man
 alias maek=make
+alias md5=md5sum
 alias medl=meld
 alias p2=python2
 alias p3=python3
@@ -39,6 +41,11 @@ alias reutrn=return
 alias s=sudo
 alias sctl=systemctl
 alias sdn='sudo shutdown now'
+alias sha1=sha1sum
+alias sha224=sha224sum
+alias sha256=sha256sum
+alias sha384=sha384sum
+alias sha512=sha512sum
 alias treu=true
 alias tyep=type
 alias v="$VISUAL"
@@ -49,7 +56,6 @@ alias xa='xargs -r'
 
 # {{{ alias
 
-alias bc='bc -l'
 alias chgrp='chgrp --preserve-root --changes'
 alias chmod='chmod --preserve-root --changes'
 alias chown='chown --preserve-root --changes'
@@ -121,15 +127,6 @@ alias wc2='echo "  lines   words file" ; wc --lines --words'
 alias wc3='wc --lines --words ; echo "  lines   words"'
 alias xz='xz --verbose --threads=0'
 alias zero-out='truncate --size=0 --no-create'
-
-alias blake2=b2sum
-alias md5=md5sum
-alias sha1=sha1sum
-alias sha224=sha224sum
-alias sha256=sha256sum
-alias sha384=sha384sum
-alias sha512=sha512sum
-
 
 # {{{ package management
 

@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-alias bc='bc -l'
 alias chgrp='chgrp --preserve-root --changes'
 alias chmod='chmod --preserve-root --changes'
 alias chown='chown --preserve-root --changes'
@@ -73,15 +72,6 @@ alias wc2='echo "  lines   words file" ; wc --lines --words'
 alias wc3='wc --lines --words ; echo "  lines   words"'
 alias xz='xz --verbose --threads=0'
 alias zero-out='truncate --size=0 --no-create'
-
-alias blake2=b2sum
-alias md5=md5sum
-alias sha1=sha1sum
-alias sha224=sha224sum
-alias sha256=sha256sum
-alias sha384=sha384sum
-alias sha512=sha512sum
-
 
 # {{{ package management
 
