@@ -423,7 +423,7 @@ uninstall_vim_nvim_plugins() {
 
 install_local_programs() {
 
-    pushd .
+    pushd . &> /dev/null
 
     if [[ -d ~/.local/src/dir_is_empty ]]
     then
@@ -536,7 +536,8 @@ EOT
     fi
     # }}}
 
-    popd || return
+    # shellcheck disable=SC2164
+    popd &> /dev/null
 }
 
 uninstall_local_programs() {
@@ -573,23 +574,24 @@ uninstall_local_programs() {
 
 install_github_programs() {
 
-    pushd .
+    pushd . &> /dev/null
 
     cd ~/.local/bin || return
 
     if $DRY_RUN
     then
-        bash get-all-programs.bash -n
+        bash get-all-programs.bash -v -n
     else
-        bash get-all-programs.bash
+        bash get-all-programs.bash -v
     fi
 
-    popd || return
+    # shellcheck disable=SC2164
+    popd &> /dev/null
 }
 
 uninstall_github_programs() {
 
-    pushd .
+    pushd . &> /dev/null
 
     cd ~/.local/bin || return
 
@@ -607,7 +609,8 @@ uninstall_github_programs() {
         fi
     done
 
-    popd || return
+    # shellcheck disable=SC2164
+    popd &> /dev/null
 }
 
 calculate_dpi() {
