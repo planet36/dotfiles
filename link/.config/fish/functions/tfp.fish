@@ -5,7 +5,7 @@ function tfp --description 'tar format patch'
 
 	mkdir --verbose -- "$TGT_DIR" || return
 
-	git format-patch -o "$TGT_DIR" --keep-subject --base=auto --progress origin/master..HEAD || return
+	git format-patch -o "$TGT_DIR" --keep-subject --base=auto --progress (git rev-parse --abbrev-ref HEAD@{upstream})..HEAD || return
 
 	if dir_is_empty "$TGT_DIR"
 		rmdir --verbose -- "$TGT_DIR" || return
