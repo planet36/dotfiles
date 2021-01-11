@@ -358,11 +358,22 @@ setup_xdg_vars() {
 
 create_vim_nvim_dirs() {
 
-    mkdir --verbose --parents -- \
-        "$XDG_DATA_HOME"/vim/{autoload,backup,colors,swap,undo}
+    if $DRY_RUN
+    then
+        echo \
+        mkdir --verbose --parents -- \
+            "$XDG_DATA_HOME"/vim/{autoload,backup,colors,swap,undo}
 
-    mkdir --verbose --parents -- \
-        "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo}
+        echo \
+        mkdir --verbose --parents -- \
+            "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo}
+    else
+        mkdir --verbose --parents -- \
+            "$XDG_DATA_HOME"/vim/{autoload,backup,colors,swap,undo}
+
+        mkdir --verbose --parents -- \
+            "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo}
+    fi
 }
 
 install_vim_nvim_plugins() {
@@ -615,23 +626,25 @@ uninstall_github_programs() {
 
 calculate_dpi() {
 
+    DPI=96
+
     if [[ -n "$DPY_W" ]] && [[ -n "$DPY_H" ]] && [[ -n "$DPY_D" ]]
     then
         DPI=$(~/.local/bin/calc-dpi "$DPY_W" "$DPY_H" "$DPY_D")
+    fi
 
-        # ~/.xprofile is sourced by some display managers
-        #printf "xrandr --dpi %s\n" "$DPI" >> $XDG_CONFIG_HOME/xorg/xprofile
+    # ~/.xprofile is sourced by some display managers
+    #printf "xrandr --dpi %d\n" "$DPI" >> $XDG_CONFIG_HOME/xorg/xprofile
 
-        if $DRY_RUN
-        then
-            cat <<EOT
-            #printf 'Xft.dpi: %s\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xresources
-            printf 'Xft.dpi: %s\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xft.dpi
+    if $DRY_RUN
+    then
+        cat <<EOT
+        #printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xresources
+        printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xft.dpi
 EOT
-        else
-            #printf 'Xft.dpi: %s\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xresources
-            printf 'Xft.dpi: %s\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xft.dpi
-        fi
+    else
+        #printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xresources
+        printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xft.dpi
     fi
 }
 
