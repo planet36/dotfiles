@@ -122,7 +122,6 @@ print_verbose 'URL_LATEST_RELEASE_DOWNLOAD=%q' "$URL_LATEST_RELEASE_DOWNLOAD"
 RELEASE_FILE="$(basename -- "$URL_LATEST_RELEASE_DOWNLOAD")"
 print_verbose 'RELEASE_FILE=%q' "$RELEASE_FILE"
 
-print_verbose '(download release file)'
 curl -L -o "$RELEASE_FILE" -- "$URL_LATEST_RELEASE_DOWNLOAD"
 
 if tar -tf "$RELEASE_FILE" &> /dev/null
@@ -132,10 +131,8 @@ then # it's a tar file
     print_verbose 'TAR_MEMBER=%q' "$TAR_MEMBER"
 
     # Only extract the desired file
-    # shellcheck disable=SC2086
     tar --verbose -xf "$RELEASE_FILE" "$TAR_MEMBER"
 
-    # shellcheck disable=SC2086
     rm --verbose -- "$RELEASE_FILE"
 
     TOP_FOLDER="$(dirname -- "$TAR_MEMBER")"
@@ -143,20 +140,16 @@ then # it's a tar file
 
     if [ "$TOP_FOLDER" != . ]
     then
-        # shellcheck disable=SC2086
         mv --verbose -- "$TAR_MEMBER" .
 
-        # shellcheck disable=SC2086
         rmdir --verbose --parents -- "$TOP_FOLDER"
     fi
 else # it's not a tar file
 
     if [ "$RELEASE_FILE" != "$PROGRAM" ]
     then
-        # shellcheck disable=SC2086
         mv --verbose -- "$RELEASE_FILE" "$PROGRAM"
     fi
 
-    # shellcheck disable=SC2086
     chmod --verbose --changes a+x -- "$PROGRAM"
 fi
