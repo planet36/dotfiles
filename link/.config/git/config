@@ -11,8 +11,6 @@
 	st = status
 	dt = difftool
 	d = diff
-[color]
-	ui = true
 [merge]
 	tool = kdiff3
 	conflictstyle = diff3
