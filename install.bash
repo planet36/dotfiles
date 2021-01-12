@@ -624,30 +624,6 @@ uninstall_github_programs() {
     popd &> /dev/null
 }
 
-calculate_dpi() {
-
-    DPI=96
-
-    if [[ -n "$DPY_W" ]] && [[ -n "$DPY_H" ]] && [[ -n "$DPY_D" ]]
-    then
-        DPI=$(~/.local/bin/calc-dpi "$DPY_W" "$DPY_H" "$DPY_D")
-    fi
-
-    # ~/.xprofile is sourced by some display managers
-    #printf "xrandr --dpi %d\n" "$DPI" >> $XDG_CONFIG_HOME/xorg/xprofile
-
-    if $DRY_RUN
-    then
-        cat <<EOT
-        #printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xresources
-        printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xft.dpi
-EOT
-    else
-        #printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xresources
-        printf 'Xft.dpi: %d\n' "$DPI" >> "$XDG_CONFIG_HOME"/xorg/Xft.dpi
-    fi
-}
-
 parse_options() {
 
     while getopts 'Vhvrcdpn' OPTION
@@ -724,8 +700,6 @@ main() {
         then
             fc-cache
         fi
-
-        # Xft.dpi is not reset.
     else
         mkdir --verbose --parents -- ~/.local/{bin,lib,src}
         mkdir --verbose --parents -- ~/Downloads
@@ -751,8 +725,6 @@ main() {
             python3    -m compileall ~/.local/lib/python/
             python3 -O -m compileall ~/.local/lib/python/
         fi
-
-        calculate_dpi
 
         if $INSTALL_PROGRAMS
         then
