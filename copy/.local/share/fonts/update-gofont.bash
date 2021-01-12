@@ -1,3 +1,8 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# Run this script from the target directory.
 
 # https://blog.golang.org/go-fonts
 # https://go.googlesource.com/image/+/master/font/gofont/ttfs/
