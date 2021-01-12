@@ -18,7 +18,7 @@ try:
     d = float(sys.argv[3]) # inches
 
 except IndexError as err:
-    print("must give 3 values: WIDTH (pixels), HEIGHT (pixels), and DIAGONAL (inches)")
+    print("Must give 3 values: WIDTH (pixels), HEIGHT (pixels), and DIAGONAL (inches)")
     raise
 
 except ValueError as err:
@@ -40,4 +40,4 @@ elif dpi > max_dpi:
 # round() does round-half-even
 # Round-half-up is preferred, but this adequate
 dpi = round(dpi)
-print(f'{dpi}')
+print(dpi)
