@@ -251,7 +251,7 @@ fi
 
 if [[ -d "$XDG_CONFIG_HOME"/bash ]]
 then
-    for f in "$XDG_CONFIG_HOME"/bash/*.bash
+    for f in "$XDG_CONFIG_HOME"/bash/*.bash "$XDG_CONFIG_HOME"/bash/functions/*.bash
     do
         if [[ -r "$f" ]]
         then
