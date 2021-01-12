@@ -113,7 +113,7 @@ function opt_ex_st
 {
     local -r -i EXIT_STATUS=$?
 
-    (( EXIT_STATUS != 0 )) && printf -- '?%d ' "$EXIT_STATUS"
+    ((EXIT_STATUS != 0)) && printf -- '?%d ' "$EXIT_STATUS"
 }
 
 function opt_jobs
@@ -173,6 +173,10 @@ then
 elif [[ -r /usr/share/git/completion/git-prompt.sh ]]
 then
     source /usr/share/git/completion/git-prompt.sh
+
+elif [[ -r /usr/share/git/git-prompt.sh ]]
+then
+    source /usr/share/git/git-prompt.sh
 
 elif [[ -r "$XDG_CONFIG_HOME"/git/git-prompt.sh ]]
 then
