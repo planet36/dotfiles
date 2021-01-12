@@ -46,6 +46,7 @@ function hex2rgb
 			continue
 		fi
 
+		# shellcheck disable=SC2059
 		printf "${MSG_FMT}" "${R}" "${G}" "${B}"
 		printf '\n'
 

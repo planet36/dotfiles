@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# shellcheck disable=SC2059
+
 # Tar the given path(s)
 function t
 {

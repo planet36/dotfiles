@@ -3,13 +3,15 @@
 
 function install_yay
 {
-	cd ~/.local/src/
+	pushd . &> /dev/null
+
+	cd ~/.local/src/ || return
 
 	if [ ! -d yay-bin ] ; then
 		git clone https://aur.archlinux.org/yay-bin.git
-		cd yay-bin
+		cd yay-bin || return
 	else
-		cd yay-bin
+		cd yay-bin || return
 		git pull --ff-only || return
 	fi
 
@@ -17,6 +19,9 @@ function install_yay
 	makepkg --install --syncdeps --noconfirm --needed || return
 	# Do not run yay as root
 
-	cd - > /dev/null
+	#cd - > /dev/null || return
+
+	# shellcheck disable=SC2164
+	popd &> /dev/null
 }
 

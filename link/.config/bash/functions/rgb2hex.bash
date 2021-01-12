@@ -40,6 +40,7 @@ function rgb2hex
 			B=255
 		fi
 
+		# shellcheck disable=SC2059
 		printf "${MSG_FMT}" "${R}" "${G}" "${B}"
 		printf '\n'
 

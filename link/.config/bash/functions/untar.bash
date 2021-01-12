@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# shellcheck disable=SC2059
+
 # Untar the given file(s)
 function untar
 {

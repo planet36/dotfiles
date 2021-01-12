@@ -12,7 +12,9 @@ alias blake2=b2sum
 alias cdl=cld
 alias clena=clean
 alias csl=cls
+# shellcheck disable=SC2139
 alias e="$EDITOR"
+# shellcheck disable=SC2139
 alias ed="$EDITOR"
 alias f=find
 alias ff=fzf
@@ -48,6 +50,7 @@ alias sha384=sha384sum
 alias sha512=sha512sum
 alias treu=true
 alias tyep=type
+# shellcheck disable=SC2139
 alias v="$VISUAL"
 alias whcih=which
 alias xa='xargs -r'
@@ -82,9 +85,11 @@ alias find-dangling-symlinks='find -xtype l'
 # We don't want an alias named "grep" with so many options
 #alias grep='grep --color --line-number --binary-files=without-match --directories=skip'
 alias g='grep --color --line-number --binary-files=without-match --directories=skip'
+# shellcheck disable=SC2139
 alias gccc="gcc $CFLAGS"
 alias gf='git log --oneline --decorate --color | fzf --no-sort --layout=reverse-list --preview "git show --color=always {1}"'
 alias gif2png='gif2png -m -n -s -O'
+# shellcheck disable=SC2139
 alias gpp="g++ $CXXFLAGS"
 alias gr='g --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias jpegtran2='jpegtran -optimize -copy all'
@@ -130,6 +135,7 @@ alias zero-out='truncate --size=0 --no-create'
 
 # {{{ package management
 
+# shellcheck disable=SC1091
 [[ -f /etc/os-release ]] && source /etc/os-release
 
 # $ID is set in /etc/os-release
