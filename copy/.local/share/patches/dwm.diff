@@ -1,41 +1,46 @@
 diff --git a/Makefile b/Makefile
-index 77bcbc0..edf926e 100644
+index 77bcbc0..457a828 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3,6 +3,7 @@
- 
+@@ -4,48 +4,43 @@
  include config.mk
  
-+HDR = config.h drw.h util.h
  SRC = drw.c dwm.c util.c
- OBJ = ${SRC:.c=.o}
+-OBJ = ${SRC:.c=.o}
++OBJ = $(SRC:.c=.o)
  
-@@ -10,31 +11,26 @@ all: options dwm
+ all: options dwm
  
  options:
  	@echo dwm build options:
 -	@echo "CFLAGS   = ${CFLAGS}"
 -	@echo "LDFLAGS  = ${LDFLAGS}"
-+	@echo "CFLAGS   = ${DWMCFLAGS}"
-+	@echo "LDFLAGS  = ${DWMLDFLAGS}"
- 	@echo "CC       = ${CC}"
+-	@echo "CC       = ${CC}"
++	@echo "CFLAGS  = $(CFLAGS)"
++	@echo "LDFLAGS = $(LDFLAGS)"
++	@echo "CC      = $(CC)"
++
++config.h:
++	cp config.def.h config.h
  
  .c.o:
 -	${CC} -c ${CFLAGS} $<
-+	${CC} -c ${DWMCFLAGS} $<
++	$(CC) $(CFLAGS) -c $<
  
 -${OBJ}: config.h config.mk
-+${OBJ}: ${HDR} config.mk
++$(OBJ): config.h config.mk drw.h util.h
  
- config.h:
- 	cp config.def.h $@
- 
- dwm: ${OBJ}
+-config.h:
+-	cp config.def.h $@
+-
+-dwm: ${OBJ}
 -	${CC} -o $@ ${OBJ} ${LDFLAGS}
-+	${CC} -o $@ ${OBJ} ${DWMLDFLAGS}
++dwm: $(OBJ)
++	$(CC) $^ -o $@ $(LDFLAGS)
  
  clean:
- 	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+-	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
++	rm -f dwm *.o dwm-$(VERSION).tar.gz
  
  dist: clean
 -	mkdir -p dwm-${VERSION}
@@ -44,10 +49,31 @@ index 77bcbc0..edf926e 100644
 -	tar -cf dwm-${VERSION}.tar dwm-${VERSION}
 -	gzip dwm-${VERSION}.tar
 -	rm -rf dwm-${VERSION}
-+	git archive --prefix dwm-${VERSION}/ HEAD | gzip > dwm-${VERSION}.tar.gz
+-
+-install: all
+-	mkdir -p ${DESTDIR}${PREFIX}/bin
+-	cp -f dwm ${DESTDIR}${PREFIX}/bin
+-	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
+-	mkdir -p ${DESTDIR}${MANPREFIX}/man1
+-	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
+-	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
++	git archive --prefix dwm-$(VERSION)/ HEAD | gzip > dwm-$(VERSION).tar.gz
++
++install: dwm
++	mkdir -p $(DESTDIR)$(PREFIX)/bin
++	cp -f dwm $(DESTDIR)$(PREFIX)/bin
++	chmod 755 $(DESTDIR)$(PREFIX)/bin/dwm
++	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
++	sed "s/VERSION/$(VERSION)/g" < dwm.1 > $(DESTDIR)$(MANPREFIX)/man1/dwm.1
++	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/dwm.1
  
- install: all
- 	mkdir -p ${DESTDIR}${PREFIX}/bin
+ uninstall:
+-	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
+-		${DESTDIR}${MANPREFIX}/man1/dwm.1
++	rm -f $(DESTDIR)$(PREFIX)/bin/dwm\
++		$(DESTDIR)$(MANPREFIX)/man1/dwm.1
+ 
+ .PHONY: all options clean dist install uninstall
 diff --git a/config.def.h b/config.def.h
 index 1c0b587..73e7db0 100644
 --- a/config.def.h
@@ -99,52 +125,65 @@ index 1c0b587..73e7db0 100644
  	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
  	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 diff --git a/config.mk b/config.mk
-index 7084c33..548ffe9 100644
+index 7084c33..b35de23 100644
 --- a/config.mk
 +++ b/config.mk
-@@ -1,5 +1,6 @@
+@@ -1,38 +1,30 @@
  # dwm version
  VERSION = 6.2
 +VERSION := $(VERSION)-sdw
  
  # Customize below to fit your system
  
-@@ -7,8 +8,8 @@ VERSION = 6.2
+ # paths
  PREFIX = /usr/local
- MANPREFIX = ${PREFIX}/share/man
- 
+-MANPREFIX = ${PREFIX}/share/man
+-
 -X11INC = /usr/X11R6/include
 -X11LIB = /usr/X11R6/lib
-+X11INC = /usr/include/X11
-+X11LIB = /usr/lib
++MANPREFIX = $(PREFIX)/share/man
  
  # Xinerama, comment if you don't want it
- XINERAMALIBS  = -lXinerama
-@@ -25,14 +26,19 @@ INCS = -I${X11INC} -I${FREETYPEINC}
- LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}
+-XINERAMALIBS  = -lXinerama
+-XINERAMAFLAGS = -DXINERAMA
+-
+-# freetype
+-FREETYPELIBS = -lfontconfig -lXft
+-FREETYPEINC = /usr/include/freetype2
+-# OpenBSD (uncomment)
+-#FREETYPEINC = ${X11INC}/freetype2
++#XINERAMALIBS  = -lXinerama
++#XINERAMAFLAGS = -DXINERAMA
+ 
+ # includes and libs
+-INCS = -I${X11INC} -I${FREETYPEINC}
+-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}
++INCS = \
++       `pkg-config --cflags fontconfig freetype2 x11 xft`
++LIBS = $(XINERAMALIBS) \
++       `pkg-config --libs fontconfig freetype2 x11 xft`
  
  # flags
 -CPPFLAGS = -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_POSIX_C_SOURCE=200809L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
 -#CFLAGS   = -g -std=c99 -pedantic -Wall -O0 ${INCS} ${CPPFLAGS}
 -CFLAGS   = -std=c99 -pedantic -Wall -Wno-deprecated-declarations -Os ${INCS} ${CPPFLAGS}
 -LDFLAGS  = ${LIBS}
-+CFLAGS  += \
+-
+-# Solaris
+-#CFLAGS = -fast ${INCS} -DVERSION=\"${VERSION}\"
+-#LDFLAGS = ${LIBS}
+-
+-# compiler and linker
+-CC = cc
++CFLAGS += \
 +		-Wno-deprecated-declarations \
 +		-Wno-shadow \
 +		-Wno-sign-compare \
 +		-Wno-unused-parameter \
 +		-Os
-+DWMCPPFLAGS = ${CPPFLAGS} -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}
-+DWMCFLAGS = ${CFLAGS} ${INCS} ${DWMCPPFLAGS}
-+DWMLDFLAGS = ${LDFLAGS} ${LIBS}
- 
- # Solaris
- #CFLAGS = -fast ${INCS} -DVERSION=\"${VERSION}\"
- #LDFLAGS = ${LIBS}
- 
- # compiler and linker
--CC = cc
-+# CC = cc
++CPPFLAGS += -DVERSION=\"$(VERSION)\" $(XINERAMAFLAGS)
++CFLAGS += $(INCS) $(CPPFLAGS)
++LDFLAGS += $(LIBS)
 diff --git a/drw.c b/drw.c
 index 4cdbcbe..8c16fd9 100644
 --- a/drw.c
