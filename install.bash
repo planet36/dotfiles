@@ -9,7 +9,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2020-12-15'
+SCRIPT_VERSION='2021-01-13'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
@@ -438,13 +438,13 @@ install_local_programs() {
 
     if [[ -d ~/.local/src/dir_is_empty ]]
     then
+        cd ~/.local/src/dir_is_empty || return
         if $DRY_RUN
         then
-            cat <<EOT
-            cd ~/.local/src/dir_is_empty && make install
-EOT
+            echo \
+            make install
         else
-            cd ~/.local/src/dir_is_empty && make install
+            make install
         fi
     fi
 
