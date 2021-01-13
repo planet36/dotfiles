@@ -34,7 +34,6 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 	if hash_object is None:
 		hash_object = hashlib.md5()
 
-	#try:
 	with open(file_name, 'rb') as f:
 
 		while True:
@@ -46,11 +45,6 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 
 			hash_object.update(file_data)
 
-	#except OSError as err:
-	#	print("Error: {}".format(err), file=sys.stderr)
-		#return None
-
-	#return hash_object.digest()
 	return hash_object
 
 
@@ -197,8 +191,7 @@ OPTIONS
 
 		hash_object = hashlib.new(hash_algorithm)
 
-		if file_name == '-':
-			# Hash standard input.
+		if file_name == '-': # Hash standard input.
 
 			while True:
 
@@ -210,14 +203,9 @@ OPTIONS
 
 				hash_object.update(file_data)
 
-			#hash_digest = hash_object.hexdigest()
+		else: # Hash the file.
 
-		else:
-			# Hash the file.
-
-			#hash_digest = hash_file(file_name, hash_object, block_size)
 			hash_object = hash_file(file_name, hash_object, block_size)
-			#hash_digest = hash_file(file_name, hash_algorithm, block_size)
 
 		hash_digest = hash_object.digest()
 		print('{}  {}'.format(valid_formats[fmt](hash_digest).decode(), file_name_quoted))
