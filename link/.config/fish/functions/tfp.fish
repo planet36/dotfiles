@@ -1,7 +1,7 @@
 
 function tfp --description 'tar format patch'
 
-	set TGT_DIR (string replace --regex --all '\W' '' (basename (pwd))) || return
+	set TGT_DIR patches-(string replace --regex --all '\W' '' (basename (pwd))) || return
 
 	mkdir --verbose -- "$TGT_DIR" || return
 
