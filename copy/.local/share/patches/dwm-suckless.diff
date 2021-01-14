@@ -133,10 +133,10 @@ index 1c0b587..a01705d 100644
  	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
  	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 diff --git a/config.mk b/config.mk
-index 7084c33..3f69678 100644
+index 7084c33..aed0282 100644
 --- a/config.mk
 +++ b/config.mk
-@@ -1,38 +1,30 @@
+@@ -1,38 +1,28 @@
  # dwm version
  VERSION = 6.2
 +VERSION := $(VERSION)-sdw
@@ -183,14 +183,12 @@ index 7084c33..3f69678 100644
 -
 -# compiler and linker
 -CC = cc
++CPPFLAGS += -DVERSION=\"$(VERSION)\" -DUSE_ROFI $(XINERAMAFLAGS)
 +CFLAGS += \
-+		-Wno-deprecated-declarations \
 +		-Wno-shadow \
 +		-Wno-sign-compare \
-+		-Wno-unused-parameter \
-+		-Os
-+CPPFLAGS += -DVERSION=\"$(VERSION)\" -DUSE_ROFI $(XINERAMAFLAGS)
-+CFLAGS += $(INCS) $(CPPFLAGS)
++		-Wno-unused-parameter
++CFLAGS += -Wno-deprecated-declarations -Os $(INCS) $(CPPFLAGS)
 +LDFLAGS += $(LIBS)
 diff --git a/drw.c b/drw.c
 index 4cdbcbe..8c16fd9 100644
@@ -223,8 +221,21 @@ index 4cdbcbe..8c16fd9 100644
  	if (w)
  		*w = ext.xOff;
  	if (h)
+diff --git a/dwm.1 b/dwm.1
+index ddc8321..3340791 100644
+--- a/dwm.1
++++ b/dwm.1
+@@ -33,7 +33,7 @@ dwm draws a small border around windows to indicate the focus state.
+ .SH OPTIONS
+ .TP
+ .B \-v
+-prints version information to stderr, then exits.
++prints version information to stdout, then exits.
+ .SH USAGE
+ .SS Status bar
+ .TP
 diff --git a/dwm.c b/dwm.c
-index 664c527..696b73e 100644
+index 664c527..841f5fa 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -59,7 +59,10 @@
@@ -336,3 +347,16 @@ index 664c527..696b73e 100644
  		perror(" failed");
  		exit(EXIT_SUCCESS);
  	}
+@@ -2130,8 +2137,10 @@ zoom(const Arg *arg)
+ int
+ main(int argc, char *argv[])
+ {
+-	if (argc == 2 && !strcmp("-v", argv[1]))
+-		die("dwm-"VERSION);
++	if (argc == 2 && strcmp("-v", argv[1]) == 0) {
++		puts("dwm-"VERSION);
++		return 0;
++	}
+ 	else if (argc != 1)
+ 		die("usage: dwm [-v]");
+ 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
