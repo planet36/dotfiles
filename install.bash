@@ -449,42 +449,42 @@ install_local_programs() {
     fi
 
     # {{{ my st
-    #cd ~/.local/src || return
-    #if [[ ! -d st-sdw ]]
-    #then
-    #    if $DRY_RUN
-    #    then
-    #        echo '# install my st'
-    #    else
-    #    git clone https://github.com/planet36/st-sdw
-    #    #git clone git@github.com:planet36/st-sdw.git
-    #    cd st-sdw
-    #    git remote add suckless https://git.suckless.org/st
-    #    git remote set-url --push suckless DISABLE
-    #    make
-    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
-    #    fi
-    #fi
-    # }}}
-
-    # {{{ st
     cd ~/.local/src || return
     if [[ ! -d st ]]
     then
         if $DRY_RUN
         then
-            echo '# install st'
+            echo '# install my st'
         else
-        git clone https://git.suckless.org/st
-        cd st || return
-        if [[ -f "$XDG_DATA_HOME"/patches/st.diff ]]
-        then
-            git apply --verbose -- "$XDG_DATA_HOME"/patches/st.diff
-        fi
+        git clone https://github.com/planet36/st.git
+        #git clone git@github.com:planet36/st.git
+        cd st
+        git remote add suckless https://git.suckless.org/st
+        git remote set-url --push suckless DISABLE
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
         fi
     fi
+    # }}}
+
+    # {{{ st
+    #cd ~/.local/src || return
+    #if [[ ! -d st ]]
+    #then
+    #    if $DRY_RUN
+    #    then
+    #        echo '# install st'
+    #    else
+    #    git clone https://git.suckless.org/st
+    #    cd st || return
+    #    if [[ -f "$XDG_DATA_HOME"/patches/st.diff ]]
+    #    then
+    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/st.diff
+    #    fi
+    #    make
+    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
+    #    fi
+    #fi
     # }}}
 
     # {{{ scroll
@@ -507,24 +507,43 @@ install_local_programs() {
     #fi
     # }}}
 
-    # {{{ dwm
+    # {{{ my dwm
     cd ~/.local/src || return
     if [[ ! -d dwm ]]
     then
         if $DRY_RUN
         then
-            echo '# install dwm'
+            echo '# install my dwm'
         else
-        git clone https://git.suckless.org/dwm
-        cd dwm || return
-        if [[ -f "$XDG_DATA_HOME"/patches/dwm.diff ]]
-        then
-            git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm.diff
-        fi
+        git clone https://github.com/planet36/dwm.git
+        #git clone git@github.com:planet36/dwm.git
+        cd dwm
+        git remote add suckless https://git.suckless.org/dwm
+        git remote set-url --push suckless DISABLE
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
         fi
     fi
+    # }}}
+
+    # {{{ dwm
+    #cd ~/.local/src || return
+    #if [[ ! -d dwm ]]
+    #then
+    #    if $DRY_RUN
+    #    then
+    #        echo '# install dwm'
+    #    else
+    #    git clone https://git.suckless.org/dwm
+    #    cd dwm || return
+    #    if [[ -f "$XDG_DATA_HOME"/patches/dwm.diff ]]
+    #    then
+    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm.diff
+    #    fi
+    #    make
+    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
+    #    fi
+    #fi
     # }}}
 
     # {{{ stw
