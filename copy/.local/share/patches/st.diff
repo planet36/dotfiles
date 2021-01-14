@@ -40,17 +40,23 @@ index 0f9609d..f5e848c 100644
  https://bugzilla.redhat.com/show_bug.cgi?id=1498269
  
 diff --git a/Makefile b/Makefile
-index 470ac86..2fdbf51 100644
+index 470ac86..a115c85 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1,6 +1,5 @@
+@@ -1,44 +1,36 @@
  # st - simple terminal
  # See LICENSE file for copyright and license details.
 -.POSIX:
  
  include config.mk
  
-@@ -11,34 +10,26 @@ all: options st
+-SRC = st.c x.c
+-OBJ = $(SRC:.c=.o)
++HDRS = $(filter-out config.def.h, config.h $(wildcard *.h))
++SRCS = $(wildcard *.c)
++OBJS = $(SRCS:.c=.o)
+ 
+ all: options st
  
  options:
  	@echo st build options:
@@ -63,18 +69,20 @@ index 470ac86..2fdbf51 100644
  config.h:
  	cp config.def.h config.h
  
- .c.o:
+-.c.o:
 -	$(CC) $(STCFLAGS) -c $<
++%.o: %.c
 +	$(CC) $(CFLAGS) -c $<
  
 -st.o: config.h st.h win.h
 -x.o: arg.h config.h st.h win.h
--
--$(OBJ): config.h config.mk
-+$(OBJ): config.h config.mk st.h win.h
++$(OBJS): config.mk $(HDRS)
  
- st: $(OBJ)
+-$(OBJ): config.h config.mk
+-
+-st: $(OBJ)
 -	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
++st: $(OBJS)
 +	$(CC) $^ -o $@ $(LDFLAGS)
  
  clean:
@@ -92,7 +100,7 @@ index 470ac86..2fdbf51 100644
  
  install: st
  	mkdir -p $(DESTDIR)$(PREFIX)/bin
-@@ -51,7 +42,7 @@ install: st
+@@ -51,7 +43,7 @@ install: st
  	@echo Please see the README file regarding the terminfo entry of st.
  
  uninstall:

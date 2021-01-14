@@ -1,13 +1,16 @@
 diff --git a/Makefile b/Makefile
-index 77bcbc0..457a828 100644
+index 77bcbc0..87ebcbc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -4,48 +4,43 @@
+@@ -3,49 +3,45 @@
+ 
  include config.mk
  
- SRC = drw.c dwm.c util.c
+-SRC = drw.c dwm.c util.c
 -OBJ = ${SRC:.c=.o}
-+OBJ = $(SRC:.c=.o)
++HDRS = $(filter-out config.def.h, config.h $(wildcard *.h))
++SRCS = $(filter-out transient.c, $(wildcard *.c))
++OBJS = $(SRCS:.c=.o)
  
  all: options dwm
  
@@ -19,23 +22,23 @@ index 77bcbc0..457a828 100644
 +	@echo "CFLAGS  = $(CFLAGS)"
 +	@echo "LDFLAGS = $(LDFLAGS)"
 +	@echo "CC      = $(CC)"
-+
+ 
+-.c.o:
+-	${CC} -c ${CFLAGS} $<
 +config.h:
 +	cp config.def.h config.h
  
- .c.o:
--	${CC} -c ${CFLAGS} $<
-+	$(CC) $(CFLAGS) -c $<
- 
 -${OBJ}: config.h config.mk
-+$(OBJ): config.h config.mk drw.h util.h
++%.o: %.c
++	$(CC) $(CFLAGS) -c $<
  
 -config.h:
 -	cp config.def.h $@
--
++$(OBJS): config.mk $(HDRS)
+ 
 -dwm: ${OBJ}
 -	${CC} -o $@ ${OBJ} ${LDFLAGS}
-+dwm: $(OBJ)
++dwm: $(OBJS)
 +	$(CC) $^ -o $@ $(LDFLAGS)
  
  clean:
