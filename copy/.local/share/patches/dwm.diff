@@ -78,7 +78,7 @@ index 77bcbc0..87ebcbc 100644
  
  .PHONY: all options clean dist install uninstall
 diff --git a/config.def.h b/config.def.h
-index 1c0b587..73e7db0 100644
+index 1c0b587..a01705d 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -1,7 +1,7 @@
@@ -112,11 +112,16 @@ index 1c0b587..73e7db0 100644
  };
  
  /* tagging */
-@@ -57,12 +66,13 @@ static const Layout layouts[] = {
+@@ -56,13 +65,18 @@ static const Layout layouts[] = {
+ 
  /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
++#ifdef USE_ROFI
++static const char *dmenucmd[] = { "rofi", "-show", "run", NULL };
++#else
  static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 -static const char *termcmd[]  = { "st", NULL };
++#endif
 +static const char *termcmd[]  = { "alacritty", NULL };
  
  static Key keys[] = {
@@ -128,7 +133,7 @@ index 1c0b587..73e7db0 100644
  	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
  	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 diff --git a/config.mk b/config.mk
-index 7084c33..b35de23 100644
+index 7084c33..3f69678 100644
 --- a/config.mk
 +++ b/config.mk
 @@ -1,38 +1,30 @@
@@ -184,7 +189,7 @@ index 7084c33..b35de23 100644
 +		-Wno-sign-compare \
 +		-Wno-unused-parameter \
 +		-Os
-+CPPFLAGS += -DVERSION=\"$(VERSION)\" $(XINERAMAFLAGS)
++CPPFLAGS += -DVERSION=\"$(VERSION)\" -DUSE_ROFI $(XINERAMAFLAGS)
 +CFLAGS += $(INCS) $(CPPFLAGS)
 +LDFLAGS += $(LIBS)
 diff --git a/drw.c b/drw.c
