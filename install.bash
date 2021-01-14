@@ -461,25 +461,26 @@ install_local_programs() {
         cd st
         git remote add suckless https://git.suckless.org/st
         git remote set-url --push suckless DISABLE
+        git fetch suckless
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
         fi
     fi
     # }}}
 
-    # {{{ st
+    # {{{ st-suckless
     #cd ~/.local/src || return
-    #if [[ ! -d st ]]
+    #if [[ ! -d st-suckless ]]
     #then
     #    if $DRY_RUN
     #    then
-    #        echo '# install st'
+    #        echo '# install st-suckless'
     #    else
-    #    git clone https://git.suckless.org/st
-    #    cd st || return
-    #    if [[ -f "$XDG_DATA_HOME"/patches/st.diff ]]
+    #    git clone https://git.suckless.org/st st-suckless
+    #    cd st-suckless || return
+    #    if [[ -f "$XDG_DATA_HOME"/patches/st-suckless.diff ]]
     #    then
-    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/st.diff
+    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/st-suckless.diff
     #    fi
     #    make
     #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
@@ -520,25 +521,26 @@ install_local_programs() {
         cd dwm
         git remote add suckless https://git.suckless.org/dwm
         git remote set-url --push suckless DISABLE
+        git fetch suckless
         make
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
         fi
     fi
     # }}}
 
-    # {{{ dwm
+    # {{{ dwm-suckless
     #cd ~/.local/src || return
-    #if [[ ! -d dwm ]]
+    #if [[ ! -d dwm-suckless ]]
     #then
     #    if $DRY_RUN
     #    then
-    #        echo '# install dwm'
+    #        echo '# install dwm-suckless'
     #    else
-    #    git clone https://git.suckless.org/dwm
-    #    cd dwm || return
-    #    if [[ -f "$XDG_DATA_HOME"/patches/dwm.diff ]]
+    #    git clone https://git.suckless.org/dwm-suckless
+    #    cd dwm-suckless || return
+    #    if [[ -f "$XDG_DATA_HOME"/patches/dwm-suckless.diff ]]
     #    then
-    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm.diff
+    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm-suckless.diff
     #    fi
     #    make
     #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
