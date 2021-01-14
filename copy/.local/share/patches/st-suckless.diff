@@ -311,7 +311,7 @@ index 6f05dce..ec439bb 100644
  
  /* Internal keyboard shortcuts. */
 diff --git a/config.mk b/config.mk
-index c070a4a..c393be8 100644
+index c070a4a..0712792 100644
 --- a/config.mk
 +++ b/config.mk
 @@ -1,5 +1,6 @@
@@ -321,7 +321,7 @@ index c070a4a..c393be8 100644
  
  # Customize below to fit your system
  
-@@ -7,29 +8,21 @@ VERSION = 0.8.4
+@@ -7,29 +8,20 @@ VERSION = 0.8.4
  PREFIX = /usr/local
  MANPREFIX = $(PREFIX)/share/man
  
@@ -355,16 +355,15 @@ index c070a4a..c393be8 100644
 -
 -# compiler and linker
 -# CC = c99
++CPPFLAGS += -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
 +CFLAGS += \
 +		-Wno-float-equal \
 +		-Wno-shadow \
 +		-Wno-sign-compare \
 +		-Wno-switch-default \
 +		-Wno-type-limits \
-+		-Wno-unused-parameter \
-+		-Os
-+CPPFLAGS += -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
-+CFLAGS += $(INCS) $(CPPFLAGS)
++		-Wno-unused-parameter
++CFLAGS += -Os $(INCS) $(CPPFLAGS)
 +LDFLAGS += $(LIBS)
 diff --git a/st.c b/st.c
 index abbbe4b..054f3a0 100644
