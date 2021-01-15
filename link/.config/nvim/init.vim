@@ -673,10 +673,6 @@ for c in s:colorscheme_list
 endfor
 
 
-"highlight Normal guibg=#000000
-"highlight Normal guibg=#000000 guifg=#ccffcc
-"highlight Normal guibg=#161616 guifg=#d3d7cf
-
 "highlight clear CursorLine
 "highlight LineNr guifg=#FFFFCC
 "highlight CursorLineNr guifg=#CC0088
