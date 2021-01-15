@@ -1,5 +1,6 @@
 # copied from
 # /usr/share/doc/alacritty/example/alacritty.yml
+
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
 # Import additional configuration files
@@ -178,11 +179,11 @@ font:
 draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night)
-colors:
+#colors:
   # Default colors
-  primary:
-    background: '#161616'
-    foreground: '#d3d7cf'
+  #primary:
+  #  background: '#1d1f21'
+  #  foreground: '#c5c8c6'
 
     # Bright and dim foreground colors
     #
@@ -251,26 +252,26 @@ colors:
   #  background: CellForeground
 
   # Normal colors
-  normal:
-    black:   '#161616'
-    red:     '#cc0000'
-    green:   '#4e9a06'
-    yellow:  '#c4a000'
-    blue:    '#3465a4'
-    magenta: '#75507b'
-    cyan:    '#06989a'
-    white:   '#d3d7cf'
+  #normal:
+  #  black:   '#1d1f21'
+  #  red:     '#cc6666'
+  #  green:   '#b5bd68'
+  #  yellow:  '#f0c674'
+  #  blue:    '#81a2be'
+  #  magenta: '#b294bb'
+  #  cyan:    '#8abeb7'
+  #  white:   '#c5c8c6'
 
   # Bright colors
-  bright:
-    black:   '#555753'
-    red:     '#ef2929'
-    green:   '#8ae234'
-    yellow:  '#fce94f'
-    blue:    '#729fcf'
-    magenta: '#ad7fa8'
-    cyan:    '#34e2e2'
-    white:   '#eeeeec'
+  #bright:
+  #  black:   '#666666'
+  #  red:     '#d54e53'
+  #  green:   '#b9ca4a'
+  #  yellow:  '#e7c547'
+  #  blue:    '#7aa6da'
+  #  magenta: '#c397d8'
+  #  cyan:    '#70c0b1'
+  #  white:   '#eaeaea'
 
   # Dim colors
   #
@@ -814,3 +815,35 @@ key_bindings:
 
   # Print all received window events.
   #print_events: false
+
+# https://raw.githubusercontent.com/srcery-colors/srcery-terminal/master/alacritty/srcery_alacritty.yml
+
+# Colors (Srcery)
+colors:
+  # Default colors
+  primary:
+    background: '0x1c1b19'
+    foreground: '0xfce8c3'
+
+  # Normal colors
+  normal:
+    black:   '0x1c1b19'
+    red:     '0xef2f27'
+    green:   '0x519f50'
+    yellow:  '0xfbb829'
+    blue:    '0x2c78bf'
+    magenta: '0xe02c6d'
+    cyan:    '0x0aaeb3'
+    white:   '0xd0bfa1'
+
+  # Bright colors
+  bright:
+    black:   '0x918175'
+    red:     '0xf75341'
+    green:   '0x98bc37'
+    yellow:  '0xfed06e'
+    blue:    '0x68a8e4'
+    magenta: '0xff5c8f'
+    cyan:    '0x53fde9'
+    white:   '0xfce8c3'
+
