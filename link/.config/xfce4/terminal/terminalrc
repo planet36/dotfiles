@@ -1,7 +1,8 @@
 [Configuration]
-ColorBackground=#161616
-ColorForeground=#d3d7cf
-ColorPalette=#161616;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#729fcf;#ad7fa8;#34e2e2;#eeeeec
+ColorBackground=#1c1c1b1b1919
+ColorCursor=#fcfce8e8c3c3
+ColorForeground=#fcfce8e8c3c3
+ColorPalette=#1c1c1b1b1919;#efef2f2f2727;#51519f9f5050;#fbfbb8b82929;#2c2c7878bfbf;#e0e02c2c6d6d;#0a0aaeaeb3b3;#d0d0bfbfa1a1;#919181817575;#f7f753534141;#9898bcbc3737;#fefed0d06e6e;#6868a8a8e4e4;#ffff5c5c8f8f;#5353fdfde9e9;#fcfce8e8c3c3
 FontName=monospace 10
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
