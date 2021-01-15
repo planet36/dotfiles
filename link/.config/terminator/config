@@ -3,6 +3,10 @@
   focus = mouse
   extra_styling = False
   broadcast_default = off
+  title_transmit_fg_color = "#fce8c3"
+  title_transmit_bg_color = "#1c1b19"
+  title_inactive_fg_color = "#fce8c3"
+  title_inactive_bg_color = "#2d2c29"
   inactive_color_offset = 1.0
   enabled_plugins = ,
 [keybindings]
@@ -54,15 +58,17 @@
 [profiles]
   [[default]]
     icon_bell = False
+    background_color = "#1c1b19"
     backspace_binding = automatic
     delete_binding = automatic
-    cursor_color = "#aaaaaa"
+    cursor_color = "#fce8c3"
     font = Monospace 10
+    foreground_color = "#fce8c3"
     show_titlebar = False
     scrollbar_position = hidden
     scrollback_lines = 2000
     disable_mousewheel_zoom = True
-    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    palette = "#1c1b19:#ef2f27:#519f50:#fbb829:#2c78bf:#e02c6d:#0aaeb3:#918175:#2d2c29:#f75341:#98bc37:#fed06e:#68a8e4:#ff5c8f:#53fde9:#fce8c3"
     word_chars = "-,./?%&#_=+@~"
     use_system_font = False
     bold_is_bright = True
