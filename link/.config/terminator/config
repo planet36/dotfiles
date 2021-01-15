@@ -54,17 +54,15 @@
 [profiles]
   [[default]]
     icon_bell = False
-    background_color = "#161616"
     backspace_binding = automatic
     delete_binding = automatic
-    cursor_color = "#d3d7cf"
-    font = monospace 10
-    foreground_color = "#d3d7cf"
+    cursor_color = "#aaaaaa"
+    font = Monospace 10
     show_titlebar = False
     scrollbar_position = hidden
     scrollback_lines = 2000
     disable_mousewheel_zoom = True
-    palette = "#161616:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
     word_chars = "-,./?%&#_=+@~"
     use_system_font = False
     bold_is_bright = True
