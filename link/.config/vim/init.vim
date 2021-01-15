@@ -675,7 +675,7 @@ endfor
 
 "highlight Normal guibg=#000000
 "highlight Normal guibg=#000000 guifg=#ccffcc
-highlight Normal guibg=#161616 guifg=#d3d7cf
+"highlight Normal guibg=#161616 guifg=#d3d7cf
 
 "highlight clear CursorLine
 "highlight LineNr guifg=#FFFFCC
@@ -686,8 +686,15 @@ highlight Normal guibg=#161616 guifg=#d3d7cf
 "highlight Number guifg=#FFCD22
 "highlight Number guifg=#FFDD00
 "highlight Number guifg=#FFCC44
-highlight Number guifg=#FFCC33
+"highlight Number guifg=#FFCC33
 "highlight Number guifg=#FFCC22
 "highlight Number guifg=#FFCC00
+
+" https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L28
+"highlight Constant guifg=#FBB829
+"highlight Character guifg=#FBB829
+"highlight Boolean guifg=#FBB829
+highlight Number guifg=#FBB829
+highlight Float guifg=#FBB829
 
 " }}}
