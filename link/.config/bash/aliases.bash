@@ -17,7 +17,6 @@ alias e="$EDITOR"
 # shellcheck disable=SC2139
 alias ed="$EDITOR"
 alias f=find
-alias ff=fzf
 alias gci='git commit'
 alias gcl='git clean'
 alias gco='git checkout'
@@ -79,6 +78,7 @@ alias du4='du --separate-dirs'
 alias du='du --bytes --human-readable'
 alias fd='fd -H'
 alias fe='fzf --print0 | xargs --null --no-run-if-empty --verbose --open-tty -- "$EDITOR"'
+alias ff='find -type f | fzf'
 alias file-dates='find -type f -printf "%T@\t%Tc\t%p\n"'
 alias file-lines='find -type f -print0 | wc --lines --files0-from=-'
 alias file-sizes='find -type f -printf "%s\t%p\n"'
