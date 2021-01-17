@@ -6,10 +6,29 @@
 # pylint: disable=C0114
 
 from math import hypot
-import sys
 
 min_dpi = 96
 max_dpi = 400
+
+def calcdpi(w: int, h: int, d: float) -> int:
+	global min_dpi
+	global max_dpi
+
+	dpi = hypot(w, h) / d * scale_dpi
+
+	if dpi < min_dpi:
+		dpi = min_dpi
+	elif dpi > max_dpi:
+		dpi = max_dpi
+
+	# round() does round-half-even
+	# Round-half-up is preferred, but this adequate
+	dpi = round(dpi)
+
+	return dpi
+
+import sys
+
 scale_dpi = 1.25
 
 try:
@@ -30,14 +49,4 @@ assert w > 0, 'Invalid WIDTH'
 assert h > 0, 'Invalid HEIGHT'
 assert d > 0, 'Invalid DIAGONAL'
 
-dpi = hypot(w, h) / d * scale_dpi
-
-if dpi < min_dpi:
-    dpi = min_dpi
-elif dpi > max_dpi:
-    dpi = max_dpi
-
-# round() does round-half-even
-# Round-half-up is preferred, but this adequate
-dpi = round(dpi)
-print(dpi)
+print(calcdpi(w, h, d))
