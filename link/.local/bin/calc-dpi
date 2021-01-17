@@ -7,13 +7,13 @@
 # pylint: disable=C0116
 # pylint: disable=W0311
 
-from math import hypot
+import math
 import sys
 
 __version__ = '2021-01-16'
 
 def calcdpi(width_px: int, height_px: int, diagonal_in: float) -> float:
-	return hypot(width_px, height_px) / diagonal_in
+	return math.hypot(width_px, height_px) / diagonal_in
 
 # pylint: disable=R0912
 # pylint: disable=R0914
@@ -38,7 +38,7 @@ def main(argv = None):
 	default_width_px = 1920
 	default_height_px = 1080
 	default_scale_factor = 1.0
-	default_min_dpi = 96
+	default_min_dpi = 72
 	default_max_dpi = 400
 
 	# mutable values
