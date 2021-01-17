@@ -4,49 +4,201 @@
 
 # pylint: disable=C0103
 # pylint: disable=C0114
+# pylint: disable=C0116
+# pylint: disable=W0311
 
 from math import hypot
+import sys
 
-min_dpi = 96
-max_dpi = 400
+__version__ = '2021-01-16'
 
-def calcdpi(w: int, h: int, d: float) -> int:
-	global min_dpi
-	global max_dpi
+def calcdpi(width_px: int, height_px: int, diagonal_in: float) -> float:
+	return hypot(width_px, height_px) / diagonal_in
 
-	dpi = hypot(w, h) / d * scale_dpi
+# pylint: disable=R0912
+# pylint: disable=R0914
+# pylint: disable=R0915
+# pylint: disable=R1710
+def main(argv = None):
+
+	# pylint: disable=C0415
+	import getopt
+	import os.path
+	#import signal
+
+	if argv is None:
+		argv = sys.argv
+
+	program_name = os.path.basename(sys.argv[0])
+
+	program_authors = ['Steven Ward']
+
+	# default values
+	default_verbose = False
+	default_width_px = 1920
+	default_height_px = 1080
+	default_scale_factor = 1.0
+	default_min_dpi = 96
+	default_max_dpi = 400
+
+	# mutable values
+	verbose = default_verbose
+	width_px = default_width_px
+	height_px = default_height_px
+	diagonal_in = None
+	scale_factor = default_scale_factor
+	min_dpi = default_min_dpi
+	max_dpi = default_max_dpi
+
+	# pylint: disable=W0613
+	#def signal_handler(signal_num, execution_frame):
+	#	print()
+	#	sys.exit(0)
+
+	#signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+	#signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+
+	def print_version():
+		"""Print the version information and exit."""
+		print(program_name, __version__)
+		print("Written by {}".format(', '.join(program_authors)))
+
+	def print_verbose(s):
+		"""Print the message if verbose mode is on."""
+		if verbose:
+			print('#', s)
+
+	# pylint: disable=W0612
+	def print_warning(s):
+		"""Print the warning message and continue."""
+		print('Warning:', s, file=sys.stderr)
+
+	def print_error(s):
+		"""Print the error message and exit."""
+		print('Error:', s, file=sys.stderr)
+		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+
+	def print_help():
+		"""Print the help message and exit."""
+		print(f"""Usage: {program_name} [OPTIONS] DIAGONAL_IN
+Calculate the DPI from the given display dimentions.
+
+DIAGONAL_IN is the diagonal size (in inches) of the display.
+It must be a positive real number.
+If absent, you will be prompted to enter a value for it.
+
+OPTIONS
+
+-V, --version
+    Print the version information and exit.
+
+--help
+    Print this message and exit.
+
+-v, --verbose
+    Print diagnostics.
+
+-w, --width WIDTH_PX
+    Specify the width (in pixels) of the display.
+    It must be a positive integer.
+    (default: {default_width_px})
+
+-h, --height HEIGHT_PX
+    Specify the height (in pixels) of the display.
+    It must be a positive integer.
+    (default: {default_height_px})
+
+-s, --scale SCALE_FACTOR
+    Specify the scale factor to apply to the DPI.
+    It must be a positive real number.
+    (default: {default_scale_factor})
+
+--min MIN_DPI
+    Specify the minimum DPI.
+    It must be a positive integer not greater than the maximum DPI.
+    (default: {default_min_dpi})
+
+--max MAX_DPI
+    Specify the maximum DPI.
+    It must be a positive integer not less than the minimum DPI.
+    (default: {default_max_dpi})
+""")
+
+	short_options = 'Vvw:h:s:'
+	long_options = ['version', 'help', 'verbose',
+		'width=', 'height=',
+		'scale=', 'min=', 'max=',
+		]
+
+	try:
+		(options, remaining_args) = getopt.getopt(sys.argv[1:], short_options, long_options)
+	except getopt.GetoptError as err:
+		print_error(err)
+		return 1
+
+	for (option, value) in options:
+		# pylint: disable=R1705
+		if option in ['-V', '--version']:
+			print_version()
+			return 0
+		elif option in ['--help']:
+			print_help()
+			return 0
+		elif option in ['-v', '--verbose']:
+			verbose = True
+		elif option in ['-w', '--width']:
+			width_px = int(value)
+		elif option in ['-h', '--height']:
+			height_px = int(value)
+		elif option in ['-s', '--scale']:
+			scale_factor = float(value)
+		elif option in ['--min']:
+			min_dpi = int(value)
+		elif option in ['--max']:
+			max_dpi = int(value)
+		else:
+			print_error(f"Unhandled option: {option}")
+			return 1
+
+	if not remaining_args: # empty
+		diagonal_in = input('Enter the diagonal size (in inches) of the display: ')
+	else:
+		diagonal_in = remaining_args[0]
+
+	diagonal_in = float(diagonal_in)
+
+	print_verbose(f'{width_px=}')
+	print_verbose(f'{height_px=}')
+	print_verbose(f'{diagonal_in=}')
+	print_verbose(f'{scale_factor=}')
+	print_verbose(f'{min_dpi=}')
+	print_verbose(f'{max_dpi=}')
+
+	assert width_px > 0, f'{width_px=} must be > 0'
+	assert height_px > 0, f'{height_px=} must be > 0'
+	assert diagonal_in > 0, f'{diagonal_in=} must be > 0'
+	assert scale_factor > 0, f'{scale_factor=} must be > 0'
+	assert min_dpi > 0, f'{min_dpi=} must be > 0'
+	assert max_dpi > 0, f'{max_dpi=} must be > 0'
+	assert min_dpi <= max_dpi, f'{min_dpi=} must be <= {max_dpi=}'
+
+	dpi = calcdpi(width_px, height_px, diagonal_in)
+	print_verbose(f'{dpi=}')
+
+	dpi *= scale_factor
+	print_verbose(f'{dpi=}')
+
+	# round() does round-half-even
+	# Round-half-up is preferred, but this adequate
+	dpi = round(dpi)
+	print_verbose(f'{dpi=}')
 
 	if dpi < min_dpi:
 		dpi = min_dpi
 	elif dpi > max_dpi:
 		dpi = max_dpi
 
-	# round() does round-half-even
-	# Round-half-up is preferred, but this adequate
-	dpi = round(dpi)
+	print(dpi)
 
-	return dpi
-
-import sys
-
-scale_dpi = 1.25
-
-try:
-    w = int(sys.argv[1]) # pixels
-    h = int(sys.argv[2]) # pixels
-    d = float(sys.argv[3]) # inches
-
-except IndexError as err:
-    print("Must give 3 values: WIDTH (pixels), HEIGHT (pixels), and DIAGONAL (inches)")
-    raise
-
-except ValueError as err:
-    print("WIDTH and HEIGHT are type int")
-    print("DIAGONAL is type float")
-    raise
-
-assert w > 0, 'Invalid WIDTH'
-assert h > 0, 'Invalid HEIGHT'
-assert d > 0, 'Invalid DIAGONAL'
-
-print(calcdpi(w, h, d))
+if __name__ == '__main__':
+	sys.exit(main())
