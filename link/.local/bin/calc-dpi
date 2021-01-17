@@ -190,7 +190,8 @@ OPTIONS
 
 	# round() does round-half-even
 	# Round-half-up is preferred, but this adequate
-	dpi = round(dpi)
+	#dpi = round(dpi)
+	dpi = math.ceil(dpi)
 	print_verbose(f'{dpi=}')
 
 	if dpi < min_dpi:
