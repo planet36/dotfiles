@@ -2,7 +2,7 @@
 
 Sxiv.background: Black
 Sxiv.foreground: Gray
-XTerm.vt100.faceName: monospace:size=10
+XTerm.vt100.faceName: monospace:size=12
 
 ! https://raw.githubusercontent.com/srcery-colors/srcery-terminal/master/xresources/srcery.xresources
 
