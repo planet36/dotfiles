@@ -1,7 +1,10 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-// $CXX -Os as_bool.cpp -o as_bool ; d as_bool
+/*
+time $CXX -Os as_bool.cpp -o as_bool-cpp ; d as_bool-cpp
+*/
+
 #include <regex>
 
 // Evaluate the given string as a boolean
