@@ -825,6 +825,11 @@ colors:
     background: '#1c1b19'
     foreground: '#fce8c3'
 
+  # Cursor colors
+  cursor:
+    text: CellBackground
+    cursor: '#fbb829'
+
   # Normal colors
   normal:
     black:   '#1c1b19'
