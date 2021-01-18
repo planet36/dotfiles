@@ -58,6 +58,7 @@ OPTIONS
   -p : In addition to dotfiles, also install the following:
        vim/nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
+         - as_bool
          - dir_is_empty
          - dwm
          - st
@@ -436,137 +437,116 @@ install_local_programs() {
 
     pushd . &> /dev/null
 
-    if [[ -d ~/.local/src/dir_is_empty ]]
-    then
-        cd ~/.local/src/dir_is_empty || return
-        if $DRY_RUN
-        then
-            echo \
-            make install
-        else
-            make install
-        fi
-    fi
-
-    # {{{ my st
     cd ~/.local/src || return
-    if [[ ! -d st ]]
+
+    if $DRY_RUN
     then
-        if $DRY_RUN
-        then
-            echo '# install my st'
-        else
-        git clone https://github.com/planet36/st.git
-        #git clone git@github.com:planet36/st.git
-        cd st
+        echo "# clone repos"
+    else
+        grep -E -o '^[^#]+' ~/.local/src/git-repos.txt | xargs -r -L 1 git clone
+
+        # My st is forked from suckless
+        cd st || return
         git remote add suckless https://git.suckless.org/st
         git remote set-url --push suckless DISABLE
         git fetch suckless
-        make
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
-        fi
-    fi
-    # }}}
+        cd - > /dev/null || return
 
-    # {{{ st-suckless
-    #cd ~/.local/src || return
-    #if [[ ! -d st-suckless ]]
-    #then
-    #    if $DRY_RUN
-    #    then
-    #        echo '# install st-suckless'
-    #    else
-    #    git clone https://git.suckless.org/st st-suckless
-    #    cd st-suckless || return
-    #    if [[ -f "$XDG_DATA_HOME"/patches/st-suckless.diff ]]
-    #    then
-    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/st-suckless.diff
-    #    fi
-    #    make
-    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
-    #    fi
-    #fi
-    # }}}
-
-    # {{{ scroll
-    #cd ~/.local/src || return
-    #if [[ ! -d scroll ]]
-    #then
-    #    if $DRY_RUN
-    #    then
-    #        echo '# install scroll'
-    #    else
-    #    git clone https://git.suckless.org/scroll
-    #    cd scroll || return
-    #    if [[ -f "$XDG_DATA_HOME"/patches/scroll.diff ]]
-    #    then
-    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/scroll.diff
-    #    fi
-    #    make
-    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- scroll
-    #    fi
-    #fi
-    # }}}
-
-    # {{{ my dwm
-    cd ~/.local/src || return
-    if [[ ! -d dwm ]]
-    then
-        if $DRY_RUN
-        then
-            echo '# install my dwm'
-        else
-        git clone https://github.com/planet36/dwm.git
-        #git clone git@github.com:planet36/dwm.git
-        cd dwm
+        # My dwm is forked from suckless
+        cd dwm || return
         git remote add suckless https://git.suckless.org/dwm
         git remote set-url --push suckless DISABLE
         git fetch suckless
-        make
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
-        fi
+        cd - > /dev/null || return
     fi
-    # }}}
 
-    # {{{ dwm-suckless
-    #cd ~/.local/src || return
-    #if [[ ! -d dwm-suckless ]]
-    #then
-    #    if $DRY_RUN
-    #    then
-    #        echo '# install dwm-suckless'
-    #    else
-    #    git clone https://git.suckless.org/dwm-suckless
-    #    cd dwm-suckless || return
-    #    if [[ -f "$XDG_DATA_HOME"/patches/dwm-suckless.diff ]]
-    #    then
-    #        git apply --verbose -- "$XDG_DATA_HOME"/patches/dwm-suckless.diff
-    #    fi
-    #    make
-    #    ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
-    #    fi
-    #fi
-    # }}}
-
-    # {{{ stw
-    cd ~/.local/src || return
-    if [[ ! -d stw ]]
+    cd as_bool || return
+    if $DRY_RUN
     then
-        if $DRY_RUN
-        then
-            echo '# install stw'
-        else
-        git clone https://github.com/sineemore/stw.git
-        cd stw || return
-        if [[ -f "$XDG_DATA_HOME"/patches/stw.diff ]]
-        then
-            git apply --verbose -- "$XDG_DATA_HOME"/patches/stw.diff
-        fi
-        make
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
-        fi
+        echo "# install" "$(basename -- "$PWD")"
+        echo \
+        make install
+    else
+        make install
     fi
-    # }}}
+    cd - > /dev/null || return
+
+    cd dir_is_empty || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+        echo \
+        make install
+    else
+        make install
+    fi
+    cd - > /dev/null || return
+
+    cd st || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+    else
+        make || return
+        [[ ! -e ~/.local/bin/st ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
+    fi
+    cd - > /dev/null || return
+
+    cd st-suckless || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+    else
+        make || return
+        [[ ! -e ~/.local/bin/st ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
+    fi
+    cd - > /dev/null || return
+
+    cd scroll || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+    else
+        make || return
+        [[ ! -e ~/.local/bin/scroll ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- scroll
+    fi
+    cd - > /dev/null || return
+
+    cd dwm || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+    else
+        make || return
+        [[ ! -e ~/.local/bin/dwm ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
+    fi
+    cd - > /dev/null || return
+
+    cd dwm-suckless || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+    else
+        make || return
+        [[ ! -e ~/.local/bin/dwm ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
+    fi
+    cd - > /dev/null || return
+
+    cd stw || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+    else
+        make || return
+        [[ ! -e ~/.local/bin/stw ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
+    fi
+    cd - > /dev/null || return
 
     # shellcheck disable=SC2164
     popd &> /dev/null
