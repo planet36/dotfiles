@@ -8,6 +8,7 @@
 alias -- -='cd - > /dev/null'
 alias amek=make
 alias amke=make
+alias bahs=bash
 alias blake2=b2sum
 alias cdl=cld
 alias clena=clean
