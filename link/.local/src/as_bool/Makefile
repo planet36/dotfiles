@@ -1,10 +1,10 @@
 
 INCS = 
 HDRS = $(wildcard *.h)
-SRCS = $(wildcard *.cpp)
-OBJS = $(SRCS:.cpp=.o)
+SRCS = $(wildcard *.c)
+OBJS = $(SRCS:.c=.o)
 
-CXXFLAGS += -Os $(INCS)
+CFLAGS += -Wno-cast-qual -Os $(INCS)
 #LDFLAGS += -lfmt
 
 EXECUTABLE = $(notdir $(PWD))
@@ -13,13 +13,13 @@ EXECUTABLE = $(notdir $(PWD))
 .PHONY: all
 all: $(EXECUTABLE)
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $^
+%.o: %.c
+	$(CC) $(CFLAGS) -c $^
 
 $(OBJS): $(HDRS)
 
 $(EXECUTABLE): $(OBJS)
-	$(CXX) $^ -o $@ $(LDFLAGS)
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 .PHONY: install
 install: $(EXECUTABLE)
