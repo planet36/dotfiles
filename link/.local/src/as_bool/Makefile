@@ -1,36 +1,33 @@
 
-INCS = 
-HDRS = $(wildcard *.h)
+INCS =
 SRCS = $(wildcard *.c)
+DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS += -Wno-cast-qual -Os $(INCS)
-#LDFLAGS += -lfmt
+DEPFLAGS += -MMD -MP
+#LDFLAGS +=
 
-EXECUTABLE = $(notdir $(PWD))
+BIN = $(notdir $(PWD))
 
-# https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: all
-all: $(EXECUTABLE)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $^
-
-$(OBJS): $(HDRS)
-
-$(EXECUTABLE): $(OBJS)
+$(BIN): $(OBJS)
 	$(CC) $^ -o $@ $(LDFLAGS)
 
+%.o: %.c
+	$(CC) $(DEPFLAGS) $(CFLAGS) -c $<
+
+# https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: install
-install: $(EXECUTABLE)
+install: $(BIN)
 	@mkdir --verbose --parents -- ~/.local/bin/
-	@cp --verbose --update -- $(EXECUTABLE) ~/.local/bin/
+	@cp --verbose --update -- $(BIN) ~/.local/bin/
 
 .PHONY: clean
 clean:
-	@$(RM) --verbose -- $(EXECUTABLE) *.o *~ core core.[[:digit:]]*
+	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS) *~ core core.[[:digit:]]*
 
 .PHONY: distclean
 distclean: clean
-	@$(RM) --verbose -- ~/.local/bin/$(EXECUTABLE)
+	@$(RM) --verbose -- ~/.local/bin/$(BIN)
 
+-include $(DEPS)

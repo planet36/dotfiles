@@ -1,35 +1,33 @@
 
-INCLUDE :=
-CXXFLAGS := -Wall -std=c++17 -Os
-DEBUG :=
-#LDFLAGS := -lfmt
-LDFLAGS :=
+INCS =
+SRCS = $(wildcard *.cpp)
+DEPS = $(SRCS:.cpp=.d)
+OBJS = $(SRCS:.cpp=.o)
 
-#HEADER := $(notdir $(PWD)).h
-HEADER :=
+CXXFLAGS += -std=c++17 -Os $(INCS)
+DEPFLAGS += -MMD -MP
+#LDFLAGS += -lfmt
 
-#SOURCE := $(notdir $(PWD)).cpp
-#EXECUTABLE := $(notdir $(PWD))
-EXECUTABLE := dir_is_empty
-SOURCE := $(EXECUTABLE).cpp
+BIN = $(notdir $(PWD))
+
+$(BIN): $(OBJS)
+	$(CXX) $^ -o $@ $(LDFLAGS)
+
+%.o: %.cpp
+	$(CXX) $(DEPFLAGS) $(CXXFLAGS) -c $<
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: all
-all: $(EXECUTABLE)
-
-$(EXECUTABLE): $(SOURCE) $(HEADER)
-	$(CXX) $(INCLUDE) $(CXXFLAGS) $(DEBUG) -o $@ $(SOURCE) $(LDFLAGS)
-
 .PHONY: install
-install: $(EXECUTABLE)
+install: $(BIN)
 	@mkdir --verbose --parents -- ~/.local/bin/
-	@cp --verbose --update -- $(EXECUTABLE) ~/.local/bin/
+	@cp --verbose --update -- $(BIN) ~/.local/bin/
 
 .PHONY: clean
 clean:
-	@$(RM) --verbose -- $(EXECUTABLE) *.o *~ core core.[[:digit:]]*
+	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS) *~ core core.[[:digit:]]*
 
 .PHONY: distclean
 distclean: clean
-	@$(RM) --verbose -- ~/.local/bin/$(EXECUTABLE)
+	@$(RM) --verbose -- ~/.local/bin/$(BIN)
 
+-include $(DEPS)
