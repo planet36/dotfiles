@@ -307,7 +307,7 @@ end
 # {{{ z
 
 set Z_CMD "j"
-set ZO_CMD "$Z_CMD"o
+#set ZO_CMD "$Z_CMD"o
 
 # }}}
 
