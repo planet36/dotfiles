@@ -157,6 +157,7 @@ then
 
 elif command -v xsetroot > /dev/null
 then
+    #xsetroot -name "$(date +'%a %b %d')"
     # https://wiki.archlinux.org/index.php/Dwm#Statusbar_configuration
     while true
     do
@@ -164,9 +165,21 @@ then
         xsetroot -name "$(date +'%a %b %d %R')"
         sleep 30s
     done &
+fi
 
-else
-    xsetroot -name "$(date +'%a %b %d')"
+# }}}
+
+# {{{ lock X
+
+if command -v xautolock > /dev/null
+then
+    if command -v slock > /dev/null
+    then
+        xautolock -time 15 -locker slock &
+
+    elif command -v xtrlock > /dev/null
+        xautolock -time 15 -locker xtrlock &
+    fi
 fi
 
 # }}}
