@@ -3,6 +3,8 @@ function boincmgr --description 'boincmgr with datadir specified' --wraps boincm
 
 	mkdir --verbose -- /media/sf_shared/boinc-data || return
 
-	command boincmgr --datadir=/media/sf_shared/boinc-data
+	cd /media/sf_shared/boinc-data || return
+
+	command boincmgr --datadir=/media/sf_shared/boinc-data $argv
 end
 
