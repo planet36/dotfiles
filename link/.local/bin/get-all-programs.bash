@@ -109,7 +109,7 @@ PROGRAMS=(
     'gotop'
     'lsd'
     'yay'
-    'zoxide'
+    #'zoxide'
 )
 
 declare -A PROGRAM_TO_USER_REPO
@@ -119,7 +119,7 @@ PROGRAM_TO_USER_REPO=(
     ['gotop']='xxxserxxx/gotop'
     ['lsd']='Peltoche/lsd'
     ['yay']='Jguer/yay'
-    ['zoxide']='ajeetdsouza/zoxide'
+    #['zoxide']='ajeetdsouza/zoxide'
 )
 
 declare -A PROGRAM_TO_PART_RELEASE_FILE
@@ -129,7 +129,7 @@ PROGRAM_TO_PART_RELEASE_FILE=(
     ['gotop']='linux_amd64'
     ['lsd']='x86_64-unknown-linux-gnu'
     ['yay']='x86_64'
-    ['zoxide']='x86_64-unknown-linux-gnu'
+    #['zoxide']='x86_64-unknown-linux-gnu'
 )
 
 if ${LIST_PROGRAMS}

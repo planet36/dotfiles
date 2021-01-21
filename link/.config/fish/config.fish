@@ -304,12 +304,19 @@ end
 
 # }}}
 
+# {{{ z
+
+set Z_CMD "j"
+set ZO_CMD "$Z_CMD"o
+
+# }}}
+
 # {{{ zoxide
 
-if command --quiet zoxide
-    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
-    zoxide init fish | source
-end
+#if command --quiet zoxide
+#    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
+#    zoxide init fish | source
+#end
 
 # }}}
 

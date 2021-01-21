@@ -625,6 +625,46 @@ uninstall_github_programs() {
     popd &> /dev/null
 }
 
+
+install_fish_plugins() {
+
+    if command -v fish > /dev/null
+    then
+        if $DRY_RUN
+        then
+            # https://github.com/jorgebucaran/fisher
+            echo  \
+            fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+
+            # https://github.com/jethrokuan/z
+            echo  \
+            fish -c 'fisher install jethrokuan/z'
+        else
+            # https://github.com/jorgebucaran/fisher
+            fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+
+            # https://github.com/jethrokuan/z
+            fish -c 'fisher install jethrokuan/z'
+        fi
+    fi
+}
+
+
+uninstall_fish_plugins() {
+
+    if command -v fish > /dev/null
+    then
+        if $DRY_RUN
+        then
+            echo  \
+            fish -c 'fisher list | fisher remove'
+        else
+            fish -c 'fisher list | fisher remove'
+        fi
+    fi
+}
+
+
 parse_options() {
 
     while getopts 'Vhvrcdpn' OPTION
@@ -686,6 +726,7 @@ main() {
             uninstall_vim_nvim_plugins
             uninstall_local_programs
             uninstall_github_programs
+            uninstall_fish_plugins
         fi
 
         delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy
@@ -732,6 +773,7 @@ main() {
             install_vim_nvim_plugins
             install_local_programs
             install_github_programs
+            install_fish_plugins
         fi
     fi
 
