@@ -172,6 +172,14 @@ key[Control-Right]="${terminfo[kRIT5]}"
 
 
 
+# {{{ z
+
+export _Z_CMD=j
+export _Z_DATA="${XDG_CACHE_HOME}"
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+
+# }}}
+
 
 # zsh -f /usr/share/zsh/functions/Misc/zkbd
 

@@ -216,13 +216,21 @@ fi
 
 # }}}
 
+# {{{ z
+
+export _Z_CMD=j
+export _Z_DATA="${XDG_CACHE_HOME}"
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+
+# }}}
+
 # {{{ zoxide
 
-if command -v zoxide > /dev/null
-then
-    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
-    eval "$(zoxide init bash)"
-fi
+#if command -v zoxide > /dev/null
+#then
+#    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
+#    eval "$(zoxide init bash)"
+#fi
 
 # }}}
 
