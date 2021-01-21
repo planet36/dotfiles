@@ -16,6 +16,7 @@ function cgp
 
 	#cd - > /dev/null || return
 
+	# https://github.com/koalaman/shellcheck/issues/613
 	# shellcheck disable=SC2164
 	popd &> /dev/null
 }
