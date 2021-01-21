@@ -89,7 +89,8 @@ then
     # https://wiki.archlinux.org/index.php/Xorg/Keyboard_configuration#One-click_key_functions
     #killall --quiet xcape
     #xcape -e 'Caps_Lock=Escape'
-    xcape -e 'Shift_L=Escape'
+    #xcape -e 'Shift_L=Escape'
+    xcape -e 'Control_L=Escape'
 fi
 
 # Must do xmodmap after setxkbmap
