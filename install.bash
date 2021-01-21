@@ -61,8 +61,13 @@ OPTIONS
          - as_bool
          - dir_is_empty
          - dwm
+         - scroll
          - st
          - stw
+       programs from github listed in the file "get-all-programs.bash"
+       fish plugins
+         - fisher
+         - z
 
   -n : Show what would be done without doing anything.
 
@@ -445,6 +450,8 @@ install_local_programs() {
     else
         grep -E -o '^[^#]+' ~/.local/src/git-repos.txt | xargs -r -L 1 git clone
 
+        # Add remotes to the suckless programs
+
         # My st is forked from suckless
         cd st || return
         git remote add suckless https://git.suckless.org/st
@@ -548,28 +555,39 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
+    # https://github.com/koalaman/shellcheck/issues/613
     # shellcheck disable=SC2164
     popd &> /dev/null
 }
 
 uninstall_local_programs() {
 
-    # shellcheck disable=SC2043
-    for FILE in dir_is_empty
+    for FILE in as_bool dir_is_empty
     do
-        if [[ -f ~/.local/bin/"$FILE" ]]
+        if [[ -d ~/.local/src/"$FILE" ]]
         then
+            cd ~/.local/src/"$FILE" || return
             if $DRY_RUN
             then
-                echo \
-                rm --verbose ~/.local/bin/"$FILE"
+                echo "# install" "$(basename -- "$PWD")"
             else
-                rm --verbose ~/.local/bin/"$FILE"
+                make distclean || return
             fi
         fi
+
+        #if [[ -f ~/.local/bin/"$FILE" ]]
+        #then
+        #    if $DRY_RUN
+        #    then
+        #        echo \
+        #        rm --verbose ~/.local/bin/"$FILE"
+        #    else
+        #        rm --verbose ~/.local/bin/"$FILE"
+        #    fi
+        #fi
     done
 
-    for LINK in dwm st stw
+    for LINK in dwm scroll st stw
     do
         if [[ -L ~/.local/bin/"$LINK" ]]
         then
@@ -597,6 +615,7 @@ install_github_programs() {
         bash get-all-programs.bash -v
     fi
 
+    # https://github.com/koalaman/shellcheck/issues/613
     # shellcheck disable=SC2164
     popd &> /dev/null
 }
@@ -621,6 +640,7 @@ uninstall_github_programs() {
         fi
     done
 
+    # https://github.com/koalaman/shellcheck/issues/613
     # shellcheck disable=SC2164
     popd &> /dev/null
 }
