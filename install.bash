@@ -67,6 +67,7 @@ OPTIONS
        programs from github listed in the file "get-all-programs.bash"
        fish plugins
          - fisher
+         - getopts
          - z
 
   -n : Show what would be done without doing anything.
@@ -656,12 +657,19 @@ install_fish_plugins() {
             echo  \
             fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
 
+            # https://github.com/jorgebucaran/getopts.fish
+            echo  \
+            fish -c 'fisher install jorgebucaran/getopts.fish'
+
             # https://github.com/jethrokuan/z
             echo  \
             fish -c 'fisher install jethrokuan/z'
         else
             # https://github.com/jorgebucaran/fisher
             fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+
+            # https://github.com/jorgebucaran/getopts.fish
+            fish -c 'fisher install jorgebucaran/getopts.fish'
 
             # https://github.com/jethrokuan/z
             fish -c 'fisher install jethrokuan/z'
@@ -775,6 +783,14 @@ main() {
             copy_dotfiles "$REL_DOTFILES_DIR"/link
         else
             link_dotfiles "$REL_DOTFILES_DIR"/link
+        fi
+
+        if ! $DRY_RUN
+        then
+            if command -v thefuck > /dev/null
+            then
+                thefuck --alias > "$XDG_CONFIG_HOME"/fish/functions/fuck.fish
+            fi
         fi
 
         if ! $DRY_RUN
