@@ -234,6 +234,16 @@ export _Z_DATA="${XDG_CACHE_HOME}"
 
 # }}}
 
+# {{{ command correction
+
+if command -v zoxide > /dev/null
+then
+    # https://github.com/nvbn/thefuck/wiki/Shell-aliases
+    eval "$(thefuck --alias)"
+fi
+
+# }}}
+
 # {{{ git completion
 
 if [[ -f /usr/share/bash-completion/completions/git ]]
