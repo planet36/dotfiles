@@ -127,8 +127,8 @@ fi
 
 #if command -v xcompmgr > /dev/null
 #then
-#    xcompmgr &
-#    #(sleep 1 && xcompmgr) &
+#    xcompmgr -c &
+#    #(sleep 1 && xcompmgr -c) &
 #fi
 
 if command -v stw > /dev/null
