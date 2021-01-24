@@ -657,10 +657,6 @@ install_fish_plugins() {
             echo  \
             fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
 
-            # https://github.com/PatrickF1/fzf.fish
-            echo  \
-            fish -c 'fisher install PatrickF1/fzf.fish'
-
             # https://github.com/jorgebucaran/getopts.fish
             echo  \
             fish -c 'fisher install jorgebucaran/getopts.fish'
@@ -671,9 +667,6 @@ install_fish_plugins() {
         else
             # https://github.com/jorgebucaran/fisher
             fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
-
-            # https://github.com/PatrickF1/fzf.fish
-            fish -c 'fisher install PatrickF1/fzf.fish'
 
             # https://github.com/jorgebucaran/getopts.fish
             fish -c 'fisher install jorgebucaran/getopts.fish'
