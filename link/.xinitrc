@@ -173,13 +173,13 @@ fi
 
 if command -v xautolock > /dev/null
 then
-    if command -v slock > /dev/null
+    if command -v xtrlock > /dev/null
+    then
+        xautolock -time 15 -locker xtrlock -b &
+
+    elif command -v slock > /dev/null
     then
         xautolock -time 15 -locker slock &
-
-    elif command -v xtrlock > /dev/null
-    then
-        xautolock -time 15 -locker xtrlock &
     fi
 fi
 
