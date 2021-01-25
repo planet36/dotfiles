@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=C0103
+# pylint: disable=C0114
+# pylint: disable=C0116
+# pylint: disable=W0311
+
+import sys
+
+__version__ = '2021-01-25'
+
+
+def sink(out_file_name, mode):
+	with open(out_file_name, mode) as out_file:
+		out_file.write(sys.stdin.read())
+
+
+# pylint: disable=R0914
+def main(argv = None):
+
+	# pylint: disable=C0415
+	import getopt
+	import os.path
+	import signal
+
+	if argv is None:
+		argv = sys.argv
+
+	program_name = os.path.basename(sys.argv[0])
+
+	program_authors = ['Steven Ward']
+
+	# default values
+	default_verbose = False
+	default_mode = 'w'
+
+	# mutable values
+	verbose = default_verbose
+	mode = default_mode
+
+	# pylint: disable=W0613
+	def signal_handler(signal_num, execution_frame):
+		print()
+		sys.exit(0)
+
+	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+
+	def print_version():
+		"""Print the version information and exit."""
+		print(program_name, __version__)
+		print('Written by', ', '.join(program_authors))
+
+	def print_verbose(s):
+		"""Print the message if verbose mode is on."""
+		if verbose:
+			print('#', s)
+
+	# pylint: disable=W0612
+	def print_warning(s):
+		"""Print the warning message and continue."""
+		print('Warning:', s, file=sys.stderr)
+
+	def print_error(s):
+		"""Print the error message and exit."""
+		print('Error:', s, file=sys.stderr)
+		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+
+	def print_help():
+		"""Print the help message and exit."""
+		print(f"""Usage: {program_name} [OPTIONS] FILE
+
+Redirect an input stream to a file.
+
+OPTIONS
+
+-V, --version
+    Print the version information and exit.
+
+-h, --help
+    Print this message and exit.
+
+-v, --verbose
+    Print diagnostics.
+
+-w
+    Open FILE for writing, truncating it first.
+    (This is the default behavior.)
+
+-x
+    Open FILE for exclusive creation, failing if it already exists.
+
+-a
+    Open FILE for writing, appending to the end of it if it exists.
+
+
+NOTES
+
+Inspired by the 'sink' program by Bernhard Voelker
+https://lists.gnu.org/archive/html/coreutils/2021-01/msg00067.html
+
+""")
+
+	short_options = 'Vhvwxa'
+	long_options = ['version', 'help', 'verbose',
+		]
+
+	try:
+		(options, remaining_args) = getopt.getopt(sys.argv[1:], short_options, long_options)
+	except getopt.GetoptError as err:
+		print_error(err)
+		return 1
+
+	for (option, value) in options:
+		# pylint: disable=R1705
+		if option in ['-V', '--version']:
+			print_version()
+			return 0
+		elif option in ['-h', '--help']:
+			print_help()
+			return 0
+		elif option in ['-v', '--verbose']:
+			verbose = True
+		elif option in ['-w']:
+			mode = 'w'
+		elif option in ['-x']:
+			mode = 'x'
+		elif option in ['-a']:
+			mode = 'a'
+		else:
+			print_error(f"Unhandled option: {option}")
+			return 1
+
+	if not remaining_args: # empty
+		print_error('Must give FILE')
+		return 1
+	else:
+		out_file_name = remaining_args[0]
+
+	print_verbose(f'{mode=}')
+
+	sink(out_file_name, mode)
+
+if __name__ == '__main__':
+	sys.exit(main())
