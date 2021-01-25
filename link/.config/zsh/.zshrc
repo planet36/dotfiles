@@ -175,7 +175,7 @@ key[Control-Right]="${terminfo[kRIT5]}"
 # {{{ z
 
 export _Z_CMD=j
-export _Z_DATA="${XDG_CACHE_HOME}"
+export _Z_DATA="${XDG_CACHE_HOME}"/z-data
 [[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
 
 # }}}
@@ -213,4 +213,3 @@ if [[ -f   /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlightin
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# vim: set foldmethod=marker foldlevel=0:
