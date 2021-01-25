@@ -1,10 +1,14 @@
 
 function boincmgr --description 'boincmgr with datadir specified' --wraps boincmgr
 
-	mkdir --verbose --parents -- /media/sf_shared/boinc-data || return
+	if not set -q BOINC_DATA_DIR
+		set -l BOINC_DATA_DIR /media/sf_shared/boinc-data
+	end
 
-	cd /media/sf_shared/boinc-data || return
+	mkdir --verbose --parents -- "$BOINC_DATA_DIR" || return
 
-	command boincmgr --datadir=/media/sf_shared/boinc-data $argv
+	cd "$BOINC_DATA_DIR" || return
+
+	command boincmgr --datadir="$BOINC_DATA_DIR" $argv
 end
 
