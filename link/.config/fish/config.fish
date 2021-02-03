@@ -58,6 +58,10 @@ set -x CXX g++
 # -Wpadded
 # -Wfloat-equal
 set -x GCC_COMMON_OPTIONS -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+set --append GCC_COMMON_OPTIONS -D_FORTIFY_SOURCE=2
+
+set -x EXTRACXXFLAGS -fchar8_t -fcoroutines -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
 
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 #OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
@@ -66,12 +70,12 @@ set -x GCC_COMMON_OPTIONS -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-a
 set -x OPTIMIZE_OPTIONS -O3 -flto -march=native
 
 set -x DEBUG_OPTIONS -Og -ggdb3
+# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
+set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
 
 set -x PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
 
 set -x PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
-
-set -x EXTRACXXFLAGS -fchar8_t -fcoroutines -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
 
 set -x CFLAGS $GCC_COMMON_OPTIONS -std=c2x
 set -x CXXFLAGS $GCC_COMMON_OPTIONS -std=c++20 $EXTRACXXFLAGS
