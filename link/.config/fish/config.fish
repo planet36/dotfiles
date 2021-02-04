@@ -60,6 +60,8 @@ set -x CXX g++
 set -x GCC_COMMON_OPTIONS -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
 # https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
 set --append GCC_COMMON_OPTIONS -D_FORTIFY_SOURCE=2
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+set --append GCC_COMMON_OPTIONS -fstack-protector
 
 set -x EXTRACXXFLAGS -fchar8_t -fcoroutines -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
 
