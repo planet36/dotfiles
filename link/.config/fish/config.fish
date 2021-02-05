@@ -30,11 +30,11 @@ function setup_xdg_vars
 
     # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
-    if not set -q XDG_CACHE_HOME  ; set -x -g XDG_CACHE_HOME  "$HOME"/.cache                ; end
-    if not set -q XDG_CONFIG_DIRS ; set -x -g XDG_CONFIG_DIRS /etc/xdg                      ; end
-    if not set -q XDG_CONFIG_HOME ; set -x -g XDG_CONFIG_HOME "$HOME"/.config               ; end
-    if not set -q XDG_DATA_DIRS   ; set -x -g XDG_DATA_DIRS   /usr/local/share/:/usr/share/ ; end
-    if not set -q XDG_DATA_HOME   ; set -x -g XDG_DATA_HOME   "$HOME"/.local/share          ; end
+    if not set -q XDG_CACHE_HOME  ; set --export XDG_CACHE_HOME  "$HOME"/.cache                ; end
+    if not set -q XDG_CONFIG_DIRS ; set --export XDG_CONFIG_DIRS /etc/xdg                      ; end
+    if not set -q XDG_CONFIG_HOME ; set --export XDG_CONFIG_HOME "$HOME"/.config               ; end
+    if not set -q XDG_DATA_DIRS   ; set --export XDG_DATA_DIRS   /usr/local/share/:/usr/share/ ; end
+    if not set -q XDG_DATA_HOME   ; set --export XDG_DATA_HOME   "$HOME"/.local/share          ; end
 
     mkdir --verbose --parents -- "$XDG_CACHE_HOME"
     mkdir --verbose --parents -- "$XDG_CONFIG_HOME"
@@ -47,52 +47,18 @@ setup_xdg_vars
 
 # {{{ env vars
 
-# {{{ compile options
-
-set -x BC_ENV_ARGS -l "$XDG_CONFIG_HOME"/bc/config.bc
-
-set -x CC gcc
-set -x CXX g++
-
-# Too many benign warnings:
-# -Wpadded
-# -Wfloat-equal
-set -x GCC_COMMON_OPTIONS -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
-# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
-set --append GCC_COMMON_OPTIONS -D_FORTIFY_SOURCE=2
-# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
-set --append GCC_COMMON_OPTIONS -fstack-protector
-
-set -x EXTRACXXFLAGS -fchar8_t -fcoroutines -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
-
-# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
-#OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
-# Using -fsigned-zeros disables associative-math
-#OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-set -x OPTIMIZE_OPTIONS -O3 -flto -march=native
-
-set -x DEBUG_OPTIONS -Og -ggdb3
-# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
-set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
-
-set -x PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
-
-set -x PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
-
-set -x CFLAGS $GCC_COMMON_OPTIONS -std=c2x
-set -x CXXFLAGS $GCC_COMMON_OPTIONS -std=c++20 $EXTRACXXFLAGS
-
-# }}}
+set --export CC gcc
+set --export CXX g++
 
 if command --quiet nvim
-    set -x EDITOR nvim
-    set -x VISUAL nvim
+    set --export EDITOR nvim
+    set --export VISUAL nvim
 else if command --quiet vim
-    set -x EDITOR vim
-    set -x VISUAL vim
+    set --export EDITOR vim
+    set --export VISUAL vim
 end
 
-set -x FZF_DEFAULT_OPTS '--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
+set --export FZF_DEFAULT_OPTS '--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
 
 if command --quiet highlight
     #FZF_DEFAULT_OPTS+=' --preview "highlight -- {} | head -n ${FZF_PREVIEW_LINES}"'
@@ -104,39 +70,40 @@ else
     set --append FZF_DEFAULT_OPTS '--preview "head -n $FZF_PREVIEW_LINES -- {}"'
 end
 
-set -x GIT_EDITOR "$EDITOR"
+set --export GIT_EDITOR "$EDITOR"
 
-set -x HIGHLIGHT_OPTIONS '--force -t 4 --out-format=ansi'
+set --export HIGHLIGHT_OPTIONS '--force -t 4 --out-format=ansi'
 
-set -x IPYTHONDIR "$XDG_DATA_HOME"/ipython
+set --export IPYTHONDIR "$XDG_DATA_HOME"/ipython
 
-#set -x LANG en_US.UTF-8
-#set -x LC_ALL en_US.UTF-8
+#set --export LANG en_US.UTF-8
+#set --export LC_ALL en_US.UTF-8
 
-#set -x LESS '--RAW-CONTROL-CHARS --quit-if-one-screen --no-init'
-set -x LESS '--RAW-CONTROL-CHARS --no-init'
-set -x LESSHISTFILE /dev/null
+#set --export LESS '--RAW-CONTROL-CHARS --quit-if-one-screen --no-init'
+set --export LESS '--RAW-CONTROL-CHARS --no-init'
+set --export LESSHISTFILE /dev/null
 
 # Inhibit these dbind warnings: Couldn't register with accessibility bus
 # https://wiki.archlinux.de/title/GNOME#Tipps_und_Tricks
 # https://askubuntu.com/a/318997
 # This affects meld.
-set -x NO_AT_BRIDGE 1
+set --export NO_AT_BRIDGE 1
 
 # https://www.reddit.com/r/linux/comments/12wxsl/whats_in_your_bashrc/c6z0y5g/
-#set -x JAVA_HOME (readlink -f -- (which javac) | sed 's|bin/javac||')
+#set --export JAVA_HOME (readlink -f -- (which javac) | sed 's|bin/javac||')
 
-set -x PS_FORMAT pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command
+set --export PS_FORMAT pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command
 
-set -x PYLINTHOME "$XDG_CACHE_HOME"/pylint.d
+set --export PYLINTHOME "$XDG_CACHE_HOME"/pylint.d
 
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH
-set -x PYTHONPATH "$HOME"/.local/lib/python
+set --export PYTHONPATH "$HOME"/.local/lib/python
 
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPYCACHEPREFIX
-set -x PYTHONPYCACHEPREFIX "$XDG_CACHE_HOME"/__pycache__
+set --export PYTHONPYCACHEPREFIX "$XDG_CACHE_HOME"/__pycache__
 
-set -x RSYNC_ARGS -v -c -u -p -t -r -z -h
+# XXX: must use 'string split' to use this interactively
+set --export RSYNC_ARGS -v -c -u -p -t -r -z -h
 #-v, --verbose               increase verbosity
 #-c, --checksum              always checksum
 #-u, --update                update only (don't overwrite newer files)
@@ -152,22 +119,22 @@ set -x RSYNC_ARGS -v -c -u -p -t -r -z -h
 #    --password-file=FILE    read daemon-access password from FILE
 
 # /usr/bin/time format similar to bash's time
-set -x TIME "real\t%E\nuser\t%U\nsys\t%S\n"
+set --export TIME "real\t%E\nuser\t%U\nsys\t%S\n"
 
-set -x TRASH_DIR "$XDG_DATA_HOME"/Trash
+set --export TRASH_DIR "$XDG_DATA_HOME"/Trash
 if not test -d "$TRASH_DIR"
     mkdir --verbose --mode=0700 -- "$TRASH_DIR"
 end
 
-set -x TZ 'America/New_York'
+set --export TZ 'America/New_York'
 
-set -x VCS_REPOS_MATCH '( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
-set -x VCS_REPOS_PRUNE "( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"
+#set --export VCS_REPOS_MATCH '( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
+#set --export VCS_REPOS_PRUNE "( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"
 
 if not test -d "$XDG_CACHE_HOME"/xorg
     mkdir --verbose --parents -- "$XDG_CACHE_HOME"/xorg
 end
-set -x XAUTHORITY "$XDG_CACHE_HOME"/xorg/Xauthority
+set --export XAUTHORITY "$XDG_CACHE_HOME"/xorg/Xauthority
 
 # {{{ Start X at login
 # https://wiki.archlinux.org/index.php/Fish#Start_X_at_login
@@ -239,7 +206,7 @@ end
 
 # convert from sh to fish syntax
 #eval (dircolors | sed -r -e 's/^([^=]+?)=(.*)/set \1 \2/' -e 's/^export .+//')
-#dircolors | sed -r -e 's/^([^=]+)=(.*)/set -x \1 \2/' -e 's/^export .+//' | source
+#dircolors | sed -r -e 's/^([^=]+)=(.*)/set --export \1 \2/' -e 's/^export .+//' | source
 
 #if test $TERM = linux
 #    # change dir color
@@ -280,25 +247,25 @@ end
 # 6 = cyan
 # 7 = white
 
-set -x LESS_TERMCAP_mb (tput bold; tput setaf 6) # turn on blinking
-set -x LESS_TERMCAP_md (tput bold; tput setaf 2) # turn on bold (extra bright) mode
-set -x LESS_TERMCAP_mh (tput dim) # turn on half-bright mode
-set -x LESS_TERMCAP_mr (tput rev) # turn on reverse video mode
-set -x LESS_TERMCAP_so (tput bold; tput rev; tput setaf 4) # begin standout mode
-set -x LESS_TERMCAP_ZN (tput ssubm) # Enter subscript mode
-set -x LESS_TERMCAP_ZO (tput ssupm) # Enter superscript mode
-set -x LESS_TERMCAP_us (tput smul; tput bold; tput setaf 3) # begin underline mode
-set -x LESS_TERMCAP_me (tput sgr0) # turn off all attributes
-set -x LESS_TERMCAP_se (tput rmso; tput sgr0) # exit standout mode
-set -x LESS_TERMCAP_ZV (tput rsubm) # End subscript mode
-set -x LESS_TERMCAP_ZW (tput rsupm) # End superscript mode
-set -x LESS_TERMCAP_ue (tput rmul; tput sgr0) # exit underline mode
+set --export LESS_TERMCAP_mb (tput bold; tput setaf 6) # turn on blinking
+set --export LESS_TERMCAP_md (tput bold; tput setaf 2) # turn on bold (extra bright) mode
+set --export LESS_TERMCAP_mh (tput dim) # turn on half-bright mode
+set --export LESS_TERMCAP_mr (tput rev) # turn on reverse video mode
+set --export LESS_TERMCAP_so (tput bold; tput rev; tput setaf 4) # begin standout mode
+set --export LESS_TERMCAP_ZN (tput ssubm) # Enter subscript mode
+set --export LESS_TERMCAP_ZO (tput ssupm) # Enter superscript mode
+set --export LESS_TERMCAP_us (tput smul; tput bold; tput setaf 3) # begin underline mode
+set --export LESS_TERMCAP_me (tput sgr0) # turn off all attributes
+set --export LESS_TERMCAP_se (tput rmso; tput sgr0) # exit standout mode
+set --export LESS_TERMCAP_ZV (tput rsubm) # End subscript mode
+set --export LESS_TERMCAP_ZW (tput rsupm) # End superscript mode
+set --export LESS_TERMCAP_ue (tput rmul; tput sgr0) # exit underline mode
 
 # For Konsole and Gnome-terminal
-#set -x GROFF_NO_SGR 1
+#set --export GROFF_NO_SGR 1
 
 # https://stackoverflow.com/a/19871578
-set -x MANPAGER 'less -s -M +Gg'
+set --export MANPAGER 'less -s -M +Gg'
 
 # }}}
 
@@ -323,6 +290,38 @@ set Z_CMD "j"
 #    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
 #    zoxide init fish | source
 #end
+
+# }}}
+
+# {{{ compile options
+
+# Too many benign warnings:
+# -Wpadded
+# -Wfloat-equal
+set --export GCC_COMMON_OPTIONS -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+set --append GCC_COMMON_OPTIONS -D_FORTIFY_SOURCE=2
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+set --append GCC_COMMON_OPTIONS -fstack-protector
+
+set --export EXTRACXXFLAGS -fchar8_t -fcoroutines -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
+
+# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+#OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
+# Using -fsigned-zeros disables associative-math
+#OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
+set --export OPTIMIZE_OPTIONS -O3 -flto -march=native
+
+set --export DEBUG_OPTIONS -Og -ggdb3
+# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
+set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
+
+set --export PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
+
+set --export PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
+
+set --export CFLAGS $GCC_COMMON_OPTIONS -std=c2x
+set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++20 $EXTRACXXFLAGS
 
 # }}}
 
