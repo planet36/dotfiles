@@ -175,7 +175,7 @@ if command -v xautolock > /dev/null
 then
     if command -v xtrlock > /dev/null
     then
-        xautolock -time 15 -locker xtrlock -b &
+        xautolock -time 15 -locker xtrlock &
 
     elif command -v slock > /dev/null
     then
