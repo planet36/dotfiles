@@ -1,19 +1,21 @@
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
 
 function install_yay
 
-	cd ~/.local/src/
+    cd ~/.local/src/
 
-	if not test -d yay-bin
-		git clone https://aur.archlinux.org/yay-bin.git
-		cd yay-bin
-	else
-		cd yay-bin
-		git pull --ff-only || return
-	end
+    if not test -d yay-bin
+        git clone https://aur.archlinux.org/yay-bin.git
+        cd yay-bin
+    else
+        cd yay-bin
+        git pull --ff-only || return
+    end
 
-	# Must enter sudo password
-	makepkg --install --syncdeps --noconfirm --needed || return
-	# Do not run yay as root
+    # Must enter sudo password
+    makepkg --install --syncdeps --noconfirm --needed || return
+    # Do not run yay as root
 
-	cd -
+    cd -
 end

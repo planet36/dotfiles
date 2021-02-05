@@ -3,17 +3,17 @@
 
 function version
 {
-	echo
+    echo
 
-	ls -l /etc/*-release
+    ls -l /etc/*-release
 
-	echo
+    echo
 
-	cat /etc/*-release
+    cat /etc/*-release
 
-	echo
+    echo
 
-	cat <<EOT
+    cat <<EOT
 kernel name:           $(uname --kernel-name)
 network node hostname: $(uname --nodename)
 kernel release:        $(uname --kernel-release)
@@ -24,8 +24,8 @@ hardware platform:     $(uname --hardware-platform)
 operating system:      $(uname --operating-system)
 EOT
 
-	echo
+    echo
 
-	uname --all
+    uname --all
 }
 

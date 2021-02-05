@@ -6,44 +6,44 @@
 # Tar the given path(s)
 function t
 {
-	(
-	# Change the priority of the subshell.
-	renice --priority 19 --pid $BASHPID > /dev/null
+    (
+    # Change the priority of the subshell.
+    renice --priority 19 --pid $BASHPID > /dev/null
 
-	declare -r SCRIPT_NAME="${FUNCNAME[0]}"
+    declare -r SCRIPT_NAME="${FUNCNAME[0]}"
 
-	declare -r SCRIPT_VERSION='2019-09-19'
+    declare -r SCRIPT_VERSION='2019-09-19'
 
-	declare -r SCRIPT_AUTHOR='Steven Ward'
+    declare -r SCRIPT_AUTHOR='Steven Ward'
 
-	VERBOSE=false
+    VERBOSE=false
 
-	INCLUDE_DATETIME=false
+    INCLUDE_DATETIME=false
 
-	BASENAME=''
+    BASENAME=''
 
-	FORCE=false
+    FORCE=false
 
-	EXTRA_INFO_FILES=false
+    EXTRA_INFO_FILES=false
 
-	PRESERVE_TIMESTAMP=false
+    PRESERVE_TIMESTAMP=false
 
-	SUFFIX=''
+    SUFFIX=''
 
-	declare -a TAR_OPTIONS
+    declare -a TAR_OPTIONS
 
 
-	function print_version
-	{
-		cat <<EOT
+    function print_version
+    {
+        cat <<EOT
 ${SCRIPT_NAME} ${SCRIPT_VERSION}
 Written by ${SCRIPT_AUTHOR}
 EOT
-	}
+    }
 
-	function print_help
-	{
-		cat <<EOT
+    function print_help
+    {
+        cat <<EOT
 Usage: ${SCRIPT_NAME} [OPTIONS] PATHNAME...
 
 Tar PATHNAME.  Create a tar file with the same name as PATHNAME but with the appropriate extension appended.
@@ -89,196 +89,196 @@ OPTIONS
   -t TAR_OPTION : Pass TAR_OPTION to the tar command.
 
 EOT
-	}
+    }
 
-	function print_warning
-	{
-		printf 'Warning: ' 1>&2
-		printf -- "${@}" 1>&2
-		printf '\n' 1>&2
-	}
+    function print_warning
+    {
+        printf 'Warning: ' 1>&2
+        printf -- "${@}" 1>&2
+        printf '\n' 1>&2
+    }
 
-	function print_error
-	{
-		printf 'Error: ' 1>&2
-		printf -- "${@}" 1>&2
-		printf '\n' 1>&2
+    function print_error
+    {
+        printf 'Error: ' 1>&2
+        printf -- "${@}" 1>&2
+        printf '\n' 1>&2
 
-		printf 'Try "%q -h" for more information.\n' "${SCRIPT_NAME}" 1>&2
-		exit 1
-	}
+        printf 'Try "%q -h" for more information.\n' "${SCRIPT_NAME}" 1>&2
+        exit 1
+    }
 
-	function print_verbose
-	{
-		${VERBOSE} && { printf -- "${@}" ; printf '\n' ; }
-	}
-
-
-	while getopts "Vhvb:dfips:t:" option
-	do
-		case "${option}" in
-
-			V) # version
-				print_version
-				exit
-			;;
-
-			h) # help
-				print_help
-				exit
-			;;
-
-			v) # verbose
-				VERBOSE=true
-			;;
-
-			b) # basename
-				BASENAME=$(basename -- "${OPTARG}")
-			;;
-
-			d) # include date-time
-				INCLUDE_DATETIME=true
-			;;
-
-			f) # force
-				FORCE=true
-			;;
-
-			i) # extra info files
-				EXTRA_INFO_FILES=true
-			;;
-
-			p)
-				PRESERVE_TIMESTAMP=true
-			;;
-
-			s) # suffix
-				SUFFIX="${OPTARG}"
-
-				# If the suffix is not empty, and it does not begin with ".",
-				if [[ -n "${SUFFIX}" &&  ${SUFFIX:0:1} != . ]]
-				then
-					# Prefix the suffix with ".".
-					SUFFIX=".${SUFFIX}"
-				fi
-			;;
-
-			t) # tar option
-				#echo "OPTARG: ${OPTARG}"
-				TAR_OPTIONS+=("${OPTARG}")
-				#echo "TAR_OPTIONS=(${TAR_OPTIONS[@]})"
-				#printf -- "TAR_OPTIONS=(${TAR_OPTIONS[@]})\n"
-			;;
-
-			*)
-				# Note: ${option} is '?'
-				print_error "Option is unknown."
-			;;
-
-		esac
-	done
-
-	shift $((OPTIND - 1)) || exit
-
-	print_verbose 'INCLUDE_DATETIME=%s' "${INCLUDE_DATETIME}"
-
-	print_verbose 'FORCE=%s' "${FORCE}"
-
-	print_verbose 'EXTRA_INFO_FILES=%s' "${EXTRA_INFO_FILES}"
-
-	print_verbose 'PRESERVE_TIMESTAMP=%s' "${PRESERVE_TIMESTAMP}"
-
-	print_verbose 'SUFFIX=%s' "${SUFFIX}"
-
-	print_verbose 'TAR_OPTIONS=(%s)' "${TAR_OPTIONS[*]}"
+    function print_verbose
+    {
+        ${VERBOSE} && { printf -- "${@}" ; printf '\n' ; }
+    }
 
 
-	for INFILE
-	do
-		if [[ ! -e "${INFILE}" ]]
-		then
-			print_error '%q does not exist.' "${INFILE}"
-		fi
+    while getopts "Vhvb:dfips:t:" option
+    do
+        case "${option}" in
 
-		# Remove duplicate leading slashes
-		# Remove trailing slashes
-		# Prefix leading '-' with './' (is this necessary?)
-		#INFILE=$(sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|' <<< "${INFILE}")
-		INFILE=$(sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' <<< "${INFILE}")
-		print_verbose 'INFILE=%q' "${INFILE}"
+            V) # version
+                print_version
+                exit
+            ;;
 
-		# The output file will be in the cwd.
+            h) # help
+                print_help
+                exit
+            ;;
 
-		if [[ -z "${BASENAME}" ]]
-		then
-			OUTFILE=$(basename -- "${INFILE}")
-		else
-			OUTFILE="${BASENAME}"
-		fi
-		print_verbose 'OUTFILE=%q' "${OUTFILE}"
+            v) # verbose
+                VERBOSE=true
+            ;;
 
-		if ${INCLUDE_DATETIME}
-		then
-			OUTFILE+=.$(date -u +'%Y%m%dT%H%M%SS%3N')
-			print_verbose 'OUTFILE=%q' "${OUTFILE}"
-		fi
+            b) # basename
+                BASENAME=$(basename -- "${OPTARG}")
+            ;;
 
-		if ${EXTRA_INFO_FILES}
-		then
-			if [[ -f "${INFILE}" ]]
-			then
-				print_verbose 'sha512sum -- %q > %q.sha512sum' "${INFILE}" "${OUTFILE}"
-				sha512sum -- "${INFILE}" > "${OUTFILE}".sha512sum || exit
+            d) # include date-time
+                INCLUDE_DATETIME=true
+            ;;
 
-				stat -- "${INFILE}" > "${OUTFILE}".stat || exit
-			fi
-		fi
+            f) # force
+                FORCE=true
+            ;;
 
-		OUTFILE+=".tar"
-		print_verbose 'OUTFILE=%q' "${OUTFILE}"
+            i) # extra info files
+                EXTRA_INFO_FILES=true
+            ;;
 
-		if [[ -n "${SUFFIX}" ]]
-		then
-			OUTFILE+="${SUFFIX}"
-			print_verbose 'OUTFILE=%q' "${OUTFILE}"
-		fi
+            p)
+                PRESERVE_TIMESTAMP=true
+            ;;
 
-		if [[ -e "${OUTFILE}" ]] && ! ${FORCE}
-		then
-			print_error '%q already exists.' "${OUTFILE}"
-			return 1
-			#continue
-		fi
+            s) # suffix
+                SUFFIX="${OPTARG}"
 
-		if [[ -L "${INFILE}" ]]
-		then
-			# Get the link target.
-			INFILE=$(readlink -- "${INFILE}")
-			print_verbose 'INFILE=%q' "${INFILE}"
-		fi
+                # If the suffix is not empty, and it does not begin with ".",
+                if [[ -n "${SUFFIX}" &&  ${SUFFIX:0:1} != . ]]
+                then
+                    # Prefix the suffix with ".".
+                    SUFFIX=".${SUFFIX}"
+                fi
+            ;;
 
-		#printf 'Tarring %q to %q\n' "${INFILE}" "${OUTFILE}"
-		printf '# %q => %q\n' "${INFILE}" "${OUTFILE}"
+            t) # tar option
+                #echo "OPTARG: ${OPTARG}"
+                TAR_OPTIONS+=("${OPTARG}")
+                #echo "TAR_OPTIONS=(${TAR_OPTIONS[@]})"
+                #printf -- "TAR_OPTIONS=(${TAR_OPTIONS[@]})\n"
+            ;;
 
-		# If there is a slash in the input file/folder name,
-		if [[ "${INFILE}" =~ / ]]
-		then
-			DIRNAME=$(dirname -- "${INFILE}")
+            *)
+                # Note: ${option} is '?'
+                print_error "Option is unknown."
+            ;;
 
-			BASENAME_2=$(basename -- "${INFILE}")
-			print_verbose 'BASENAME_2=%q' "${BASENAME_2}"
+        esac
+    done
 
-			tar --create --auto-compress --file="${OUTFILE}" "${TAR_OPTIONS[@]}" --directory "${DIRNAME}" -- "${BASENAME_2}" || exit
-		else
-			tar --create --auto-compress --file="${OUTFILE}" "${TAR_OPTIONS[@]}" -- "${INFILE}" || exit
-		fi
+    shift $((OPTIND - 1)) || exit
 
-		if ${PRESERVE_TIMESTAMP}
-		then
-			# Preserve the timestamp.
-			touch --reference="${INFILE}" -- "${OUTFILE}" || exit
-		fi
-	done
-	)
+    print_verbose 'INCLUDE_DATETIME=%s' "${INCLUDE_DATETIME}"
+
+    print_verbose 'FORCE=%s' "${FORCE}"
+
+    print_verbose 'EXTRA_INFO_FILES=%s' "${EXTRA_INFO_FILES}"
+
+    print_verbose 'PRESERVE_TIMESTAMP=%s' "${PRESERVE_TIMESTAMP}"
+
+    print_verbose 'SUFFIX=%s' "${SUFFIX}"
+
+    print_verbose 'TAR_OPTIONS=(%s)' "${TAR_OPTIONS[*]}"
+
+
+    for INFILE
+    do
+        if [[ ! -e "${INFILE}" ]]
+        then
+            print_error '%q does not exist.' "${INFILE}"
+        fi
+
+        # Remove duplicate leading slashes
+        # Remove trailing slashes
+        # Prefix leading '-' with './' (is this necessary?)
+        #INFILE=$(sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|' <<< "${INFILE}")
+        INFILE=$(sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' <<< "${INFILE}")
+        print_verbose 'INFILE=%q' "${INFILE}"
+
+        # The output file will be in the cwd.
+
+        if [[ -z "${BASENAME}" ]]
+        then
+            OUTFILE=$(basename -- "${INFILE}")
+        else
+            OUTFILE="${BASENAME}"
+        fi
+        print_verbose 'OUTFILE=%q' "${OUTFILE}"
+
+        if ${INCLUDE_DATETIME}
+        then
+            OUTFILE+=.$(date -u +'%Y%m%dT%H%M%SS%3N')
+            print_verbose 'OUTFILE=%q' "${OUTFILE}"
+        fi
+
+        if ${EXTRA_INFO_FILES}
+        then
+            if [[ -f "${INFILE}" ]]
+            then
+                print_verbose 'sha512sum -- %q > %q.sha512sum' "${INFILE}" "${OUTFILE}"
+                sha512sum -- "${INFILE}" > "${OUTFILE}".sha512sum || exit
+
+                stat -- "${INFILE}" > "${OUTFILE}".stat || exit
+            fi
+        fi
+
+        OUTFILE+=".tar"
+        print_verbose 'OUTFILE=%q' "${OUTFILE}"
+
+        if [[ -n "${SUFFIX}" ]]
+        then
+            OUTFILE+="${SUFFIX}"
+            print_verbose 'OUTFILE=%q' "${OUTFILE}"
+        fi
+
+        if [[ -e "${OUTFILE}" ]] && ! ${FORCE}
+        then
+            print_error '%q already exists.' "${OUTFILE}"
+            return 1
+            #continue
+        fi
+
+        if [[ -L "${INFILE}" ]]
+        then
+            # Get the link target.
+            INFILE=$(readlink -- "${INFILE}")
+            print_verbose 'INFILE=%q' "${INFILE}"
+        fi
+
+        #printf 'Tarring %q to %q\n' "${INFILE}" "${OUTFILE}"
+        printf '# %q => %q\n' "${INFILE}" "${OUTFILE}"
+
+        # If there is a slash in the input file/folder name,
+        if [[ "${INFILE}" =~ / ]]
+        then
+            DIRNAME=$(dirname -- "${INFILE}")
+
+            BASENAME_2=$(basename -- "${INFILE}")
+            print_verbose 'BASENAME_2=%q' "${BASENAME_2}"
+
+            tar --create --auto-compress --file="${OUTFILE}" "${TAR_OPTIONS[@]}" --directory "${DIRNAME}" -- "${BASENAME_2}" || exit
+        else
+            tar --create --auto-compress --file="${OUTFILE}" "${TAR_OPTIONS[@]}" -- "${INFILE}" || exit
+        fi
+
+        if ${PRESERVE_TIMESTAMP}
+        then
+            # Preserve the timestamp.
+            touch --reference="${INFILE}" -- "${OUTFILE}" || exit
+        fi
+    done
+    )
 }
 

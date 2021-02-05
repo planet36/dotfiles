@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
 
 function del --wraps mv --description 'delete (move to trash folder)'
 

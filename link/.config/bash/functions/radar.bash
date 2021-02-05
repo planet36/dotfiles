@@ -5,22 +5,22 @@
 # These URLs are gone.
 function radar
 {
-	(
-	# Change the priority of the subshell.
-	renice --priority 19 --pid $BASHPID > /dev/null
+    (
+    # Change the priority of the subshell.
+    renice --priority 19 --pid $BASHPID > /dev/null
 
-	local -r URL="https://radar.weather.gov/lite/N0R/MLB_loop.gif"
-	local OUTFILE
-	OUTFILE="$XDG_CACHE_HOME/$(basename -- "$URL")" || return
+    local -r URL="https://radar.weather.gov/lite/N0R/MLB_loop.gif"
+    local OUTFILE
+    OUTFILE="$XDG_CACHE_HOME/$(basename -- "$URL")" || return
 
-	if [[ ! -f "${OUTFILE}" ]]
-	then
-		curl --silent --output "${OUTFILE}"                          -- "${URL}" || return
-	else
-		curl --silent --output "${OUTFILE}" --time-cond "${OUTFILE}" -- "${URL}" || return
-	fi
+    if [[ ! -f "${OUTFILE}" ]]
+    then
+        curl --silent --output "${OUTFILE}"                          -- "${URL}" || return
+    else
+        curl --silent --output "${OUTFILE}" --time-cond "${OUTFILE}" -- "${URL}" || return
+    fi
 
-	sxiv -a -- "${OUTFILE}"
-	)
+    sxiv -a -- "${OUTFILE}"
+    )
 }
 

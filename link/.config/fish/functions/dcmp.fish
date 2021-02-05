@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
 
 # XXX: string replace was fixed on 2020-09-20 -- 3.2.0 should have it
 # https://github.com/fish-shell/fish-shell/issues/7343

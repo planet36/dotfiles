@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
 
 # XXX: radar.weather.gov was redesigned and launched on 2020-12-17
 # These URLs are gone.

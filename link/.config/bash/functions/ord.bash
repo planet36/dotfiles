@@ -5,6 +5,6 @@
 # converts ASCII character to its decimal value
 function ord
 {
-	LC_CTYPE=C printf '%d' "'${1}"
+    LC_CTYPE=C printf '%d' "'${1}"
 }
 

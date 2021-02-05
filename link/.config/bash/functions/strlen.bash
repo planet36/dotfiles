@@ -3,26 +3,26 @@
 
 function strlen
 {
-	local STR
+    local STR
 
-	if (( $# == 0 ))
-	then
-		# read from stdin
+    if (( $# == 0 ))
+    then
+        # read from stdin
 
-		while read -r STR
-		do
-			printf '%d\t%s\n' "${#STR}" "${STR}"
-		done
-	else
-		# read from input files
+        while read -r STR
+        do
+            printf '%d\t%s\n' "${#STR}" "${STR}"
+        done
+    else
+        # read from input files
 
-		for x
-		do
-			while read -r STR
-			do
-				printf '%d\t%s\n' "${#STR}" "${STR}"
-			done 0< "${x}"
-		done
-	fi
+        for x
+        do
+            while read -r STR
+            do
+                printf '%d\t%s\n' "${#STR}" "${STR}"
+            done 0< "${x}"
+        done
+    fi
 }
 

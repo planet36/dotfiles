@@ -3,16 +3,16 @@
 
 function psgrep
 {
-	if [[ -z "${1}" ]]
-	then
-		return 1
-	fi
+    if [[ -z "${1}" ]]
+    then
+        return 1
+    fi
 
-	local -a PROCESSES
-	mapfile -t PROCESSES < <(pgrep -- "${1}")
+    local -a PROCESSES
+    mapfile -t PROCESSES < <(pgrep -- "${1}")
 
-	((${#PROCESSES[@]} == 0)) && return
+    ((${#PROCESSES[@]} == 0)) && return
 
-	ps --sort pid --pid "${PROCESSES[@]}"
+    ps --sort pid --pid "${PROCESSES[@]}"
 }
 

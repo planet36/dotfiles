@@ -3,6 +3,6 @@
 
 function program_exists
 {
-	command -v "${@}" > /dev/null
+    command -v "${@}" > /dev/null
 }
 

@@ -7,27 +7,27 @@
 # Note: width must be a multiple of 3
 function rand_str
 {
-	# The given string
-	local -r S="${1}"
+    # The given string
+    local -r S="${1}"
 
-	# If no string was given,
-	if [[ -z "${S}" ]]
-	then
-		return
-	fi
+    # If no string was given,
+    if [[ -z "${S}" ]]
+    then
+        return
+    fi
 
-	# The length of the given string
-	local -r -i L=${#S}
+    # The length of the given string
+    local -r -i L=${#S}
 
-	# The number of characters to randonly select (default is 1)
-	local -i N="${2:-1}"
+    # The number of characters to randonly select (default is 1)
+    local -i N="${2:-1}"
 
-	while ((N-- > 0))
-	do
-		# Get a random index in the string.
-		local -i I=$((RANDOM % L))
+    while ((N-- > 0))
+    do
+        # Get a random index in the string.
+        local -i I=$((RANDOM % L))
 
-		printf -- '%s' "${S:${I}:1}"
-	done
+        printf -- '%s' "${S:${I}:1}"
+    done
 }
 

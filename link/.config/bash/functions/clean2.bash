@@ -3,6 +3,6 @@
 
 function clean2
 {
-	clean "${@}" -mindepth 2
+    clean "${@}" -mindepth 2
 }
 

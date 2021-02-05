@@ -5,8 +5,8 @@
 # converts decimal value to its ASCII character representation
 function chr2
 {
-	local val
-	printf -v val '%x' "${1}"
-	printf '%b' "\\u${val}"
+    local val
+    printf -v val '%x' "${1}"
+    printf '%b' "\\u${val}"
 }
 

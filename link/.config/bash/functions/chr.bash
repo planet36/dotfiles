@@ -5,9 +5,9 @@
 # converts decimal value to its ASCII character representation
 function chr
 {
-	local val
-	((${1} < 256)) || return 1
-	printf -v val '%03o' "${1}"
-	printf '%b' "\\${val}"
+    local val
+    ((${1} < 256)) || return 1
+    printf -v val '%03o' "${1}"
+    printf '%b' "\\${val}"
 }
 

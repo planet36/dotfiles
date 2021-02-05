@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
 
 function x11_color_names
     set --local rgb /usr/share/nvim/runtime/rgb.txt

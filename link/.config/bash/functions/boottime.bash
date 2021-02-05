@@ -5,6 +5,6 @@
 # sed '/^btime /!d; s///;q' /proc/stat
 function boottime
 {
-	date --date=@"$(awk '/^btime/{print $2}' /proc/stat)" +'%a, %F %T'
+    date --date=@"$(awk '/^btime/{print $2}' /proc/stat)" +'%a, %F %T'
 }
 

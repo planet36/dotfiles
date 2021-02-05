@@ -3,8 +3,8 @@
 
 function rtrim
 {
-	# \s matches newline
-	#perl -p -i~ -e 's/\s+$//' -- "${@}"
-	perl -p -i~ -e 's/[ \t]+$//' -- "${@}"
+    # \s matches newline
+    #perl -p -i~ -e 's/\s+$//' -- "${@}"
+    perl -p -i~ -e 's/[ \t]+$//' -- "${@}"
 }
 
