@@ -7,5 +7,5 @@ function cproto --wraps ctags --description 'Generate function prototypes for th
         return 1
     end
 
-    ctags --output-format=json --totals=no --extras=-F --fields=nP $argv | jq -r --slurp 'sort_by(.line) | .[].pattern | ltrimstr("/^") | rtrimstr("$/") | . + ";"'
+    ctags --output-format=json --totals=no --extras=-F --fields=nP $argv | jq -sr 'sort_by(.line) | .[].pattern | ltrimstr("/^") | rtrimstr("$/") | . + ";"'
 end
