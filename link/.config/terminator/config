@@ -62,6 +62,7 @@
     backspace_binding = automatic
     delete_binding = automatic
     cursor_color = "#fbb829"
+    cursor_color_fg = False
     font = Monospace 12
     foreground_color = "#fce8c3"
     show_titlebar = False
