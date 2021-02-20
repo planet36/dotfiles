@@ -816,7 +816,10 @@ key_bindings:
   # Print all received window events.
   #print_events: false
 
+# copied from
 # https://raw.githubusercontent.com/srcery-colors/srcery-terminal/master/alacritty/srcery_alacritty.yml
+
+# https://github.com/srcery-colors/srcery-terminal/
 
 # Colors (Srcery)
 colors:
@@ -851,4 +854,3 @@ colors:
     magenta: '#ff5c8f'
     cyan:    '#53fde9'
     white:   '#fce8c3'
-

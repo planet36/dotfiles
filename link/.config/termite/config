@@ -90,8 +90,10 @@ color15 = #ffffff
 
 # vim: ft=dosini cms=#%s
 
-# Copied from
+# copied from
 # https://raw.githubusercontent.com/srcery-colors/srcery-terminal/master/termite/srcery_termite.ini
+
+# https://github.com/srcery-colors/srcery-terminal/
 
 [colors]
 # If both of these are unset, cursor falls back to the foreground color,
