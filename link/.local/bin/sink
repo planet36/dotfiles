@@ -28,7 +28,7 @@ def main(argv = None):
 	if argv is None:
 		argv = sys.argv
 
-	program_name = os.path.basename(sys.argv[0])
+	program_name = os.path.basename(argv[0])
 
 	program_authors = ['Steven Ward']
 
@@ -108,7 +108,7 @@ https://lists.gnu.org/archive/html/coreutils/2021-01/msg00067.html
 		]
 
 	try:
-		(options, remaining_args) = getopt.getopt(sys.argv[1:], short_options, long_options)
+		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
 	except getopt.GetoptError as err:
 		print_error(err)
 		return 1
