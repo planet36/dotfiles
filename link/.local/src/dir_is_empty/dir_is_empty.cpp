@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-// $CXX -std=c++17 -Os dir_is_empty.cpp -o dir_is_empty
+// $CXX $CXXFLAGS -std=c++17 dir_is_empty.cpp -o dir_is_empty
 #include <cstdlib>
 #include <filesystem>
 

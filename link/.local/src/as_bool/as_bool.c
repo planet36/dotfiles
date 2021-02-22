@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: OSL-3.0
 
 /*
-time $CC $CFLAGS -Wno-cast-qual -Os as_bool.c -o as_bool-c ; d as_bool-c
+time $CC $CFLAGS -Wno-cast-qual as_bool.c -o as_bool-c ; d as_bool-c
 */
 
 #include <ctype.h>

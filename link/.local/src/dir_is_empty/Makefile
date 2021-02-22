@@ -5,7 +5,7 @@ DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
 DEPFLAGS += -MMD -MP
-CXXFLAGS += -std=c++17 -Os $(INCS) $(DEPFLAGS)
+CXXFLAGS += -std=c++17 $(INCS) $(DEPFLAGS)
 #LDFLAGS += -lfmt
 
 BIN = $(notdir $(PWD))

@@ -5,7 +5,7 @@ DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
 DEPFLAGS += -MMD -MP
-CFLAGS += -Wno-cast-qual -Os $(INCS) $(DEPFLAGS)
+CFLAGS += -Wno-cast-qual $(INCS) $(DEPFLAGS)
 #LDFLAGS +=
 
 BIN = $(notdir $(PWD))

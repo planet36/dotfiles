@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: OSL-3.0
 
 /*
-time $CXX -Os as_bool.cpp -o as_bool-cpp ; d as_bool-cpp
+time $CXX $CXXFLAGS as_bool.cpp -o as_bool-cpp ; d as_bool-cpp
 */
 
 #include <regex>
