@@ -126,7 +126,7 @@ if not test -d "$TRASH_DIR"
     mkdir --verbose --mode=0700 -- "$TRASH_DIR"
 end
 
-set --export TZ 'America/New_York'
+set --export TZ ':America/New_York'
 
 #set --export VCS_REPOS_MATCH '( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
 #set --export VCS_REPOS_PRUNE "( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"

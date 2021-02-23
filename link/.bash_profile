@@ -127,7 +127,7 @@ then
     mkdir --verbose --mode=0700 -- "$TRASH_DIR"
 fi
 
-export TZ='America/New_York'
+export TZ=':America/New_York'
 
 #export VCS_REPOS_MATCH='( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
 #export VCS_REPOS_PRUNE="( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"
