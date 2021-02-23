@@ -1,8 +1,6 @@
 [global_config]
   dbus = False
-  focus = mouse
   extra_styling = False
-  broadcast_default = off
   title_transmit_fg_color = "#fce8c3"
   title_transmit_bg_color = "#1c1b19"
   title_inactive_fg_color = "#fce8c3"
@@ -10,57 +8,54 @@
   inactive_color_offset = 1.0
   enabled_plugins = ,
 [keybindings]
-  cycle_next = None
-  cycle_prev = None
-  go_next = None
-  go_prev = None
-  go_up = None
-  go_down = None
-  go_left = None
-  go_right = None
-  rotate_cw = None
-  rotate_ccw = None
-  split_horiz = None
-  split_vert = None
-  close_term = None
-  toggle_scrollbar = None
-  close_window = None
-  resize_up = None
-  resize_down = None
-  resize_left = None
-  resize_right = None
-  move_tab_right = None
-  move_tab_left = None
-  toggle_zoom = None
-  scaled_zoom = None
-  full_screen = None
-  reset = None
-  reset_clear = None
-  hide_window = None
-  group_all = None
-  group_all_toggle = None
-  ungroup_all = None
-  group_tab = None
-  group_tab_toggle = None
-  ungroup_tab = None
+  zoom_in = ""
+  zoom_out = ""
+  zoom_normal = ""
+  cycle_next = ""
+  cycle_prev = ""
+  go_next = ""
+  go_prev = ""
+  go_up = ""
+  go_down = ""
+  go_left = ""
+  go_right = ""
+  rotate_cw = ""
+  rotate_ccw = ""
+  split_horiz = ""
+  split_vert = ""
+  close_term = ""
+  toggle_scrollbar = ""
+  search = ""
+  close_window = ""
+  resize_up = ""
+  resize_down = ""
+  resize_left = ""
+  resize_right = ""
+  move_tab_right = ""
+  move_tab_left = ""
+  toggle_zoom = ""
+  scaled_zoom = ""
+  full_screen = ""
+  reset = ""
+  reset_clear = ""
+  hide_window = ""
+  group_all = ""
+  ungroup_all = ""
+  group_tab = ""
+  ungroup_tab = ""
   new_window = <Primary><Shift>n
-  new_terminator = None
-  broadcast_off = None
-  broadcast_group = None
-  broadcast_all = None
-  insert_number = None
-  insert_padded = None
-  edit_window_title = None
-  edit_tab_title = None
-  edit_terminal_title = None
-  layout_launcher = None
-  help = None
+  new_terminator = ""
+  insert_number = ""
+  insert_padded = ""
+  edit_window_title = ""
+  edit_tab_title = ""
+  edit_terminal_title = ""
+  layout_launcher = ""
+  help = ""
 [profiles]
   [[default]]
     icon_bell = False
     background_color = "#1c1b19"
-    backspace_binding = automatic
-    delete_binding = automatic
     cursor_color = "#fbb829"
     cursor_color_fg = False
     font = Monospace 12
@@ -75,11 +70,10 @@
     bold_is_bright = True
 [layouts]
   [[default]]
-    [[[window0]]]
-      type = Window
-      parent = ""
     [[[child1]]]
       type = Terminal
       parent = window0
-      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
 [plugins]
