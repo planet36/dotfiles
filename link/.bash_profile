@@ -56,7 +56,11 @@ elif command -p -v vim > /dev/null
 then
     export EDITOR=vim
     export VISUAL=vim
+else
+    echo "Warning: No editor found.  Install nvim or vim."
 fi
+
+export DIFFPROG="$VISUAL -d"
 
 export FZF_DEFAULT_OPTS='--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
 

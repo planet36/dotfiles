@@ -56,7 +56,11 @@ if command --quiet nvim
 else if command --quiet vim
     set --export EDITOR vim
     set --export VISUAL vim
+else
+    echo "Warning: No editor found.  Install nvim or vim."
 end
+
+set --export DIFFPROG "$VISUAL -d"
 
 set --export FZF_DEFAULT_OPTS '--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
 
