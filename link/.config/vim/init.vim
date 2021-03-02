@@ -554,17 +554,28 @@ iabbrev amke make
 iabbrev cdl cld
 iabbrev clena clean
 iabbrev csl cls
+iabbrev dafeult default
+iabbrev deafult default
+iabbrev dfeualt default
 iabbrev ehre here
 iabbrev maek make
 iabbrev medl meld
 iabbrev reutrn return
+iabbrev soem some
+iabbrev soemthgin something
+iabbrev soemthign something
+iabbrev soemthing something
+iabbrev somethign something
 iabbrev TEh The
 iabbrev Teh The
 iabbrev teh the
 iabbrev THe The
 iabbrev TOOD TODO
+iabbrev TODOO TODO
 iabbrev treu true
 iabbrev whcih which
+iabbrev wiht with
+iabbrev witht with
 
 " }}}
 
