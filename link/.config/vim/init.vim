@@ -554,6 +554,7 @@ iabbrev amke make
 iabbrev cdl cld
 iabbrev clena clean
 iabbrev csl cls
+iabbrev daefult default
 iabbrev dafeult default
 iabbrev deafult default
 iabbrev dfeualt default
