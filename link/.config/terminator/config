@@ -70,10 +70,10 @@
     bold_is_bright = True
 [layouts]
   [[default]]
-    [[[child1]]]
-      type = Terminal
-      parent = window0
     [[[window0]]]
       type = Window
       parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
 [plugins]
