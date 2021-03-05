@@ -62,6 +62,7 @@ OPTIONS
          - dir_is_empty
          - dwm
          - scroll
+         - slstatus
          - st
          - stw
        programs from github listed in the file "get-all-programs.bash"
@@ -453,6 +454,13 @@ install_local_programs() {
 
         # Add remotes to the suckless programs
 
+        # My slstatus is forked from suckless
+        cd slstatus || return
+        git remote add suckless https://git.suckless.org/slstatus
+        git remote set-url --push suckless DISABLE
+        git fetch suckless
+        cd - > /dev/null || return
+
         # My st is forked from suckless
         cd st || return
         git remote add suckless https://git.suckless.org/st
@@ -523,6 +531,17 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
+    cd slstatus || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+    else
+        make || return
+        [[ ! -e ~/.local/bin/slstatus ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- slstatus
+    fi
+    cd - > /dev/null || return
+
     cd dwm || return
     if $DRY_RUN
     then
@@ -588,7 +607,7 @@ uninstall_local_programs() {
         #fi
     done
 
-    for LINK in dwm scroll st stw
+    for LINK in dwm scroll slstatus st stw
     do
         if [[ -L ~/.local/bin/"$LINK" ]]
         then
