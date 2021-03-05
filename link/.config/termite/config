@@ -96,8 +96,6 @@ color15 = #ffffff
 # https://github.com/srcery-colors/srcery-terminal/
 
 [colors]
-# If both of these are unset, cursor falls back to the foreground color,
-# and cursor_foreground falls back to the background color.
 cursor = #fbb829
 cursor_foreground = #1c1b19
 
@@ -105,7 +103,6 @@ foreground = #fce8c3
 foreground_bold = #fce8c3
 background = #1c1b19
 
-# Colors from color0 to color254 can be set
 color0 = #1c1b19
 color1 = #ef2f27
 color2 = #519f50
