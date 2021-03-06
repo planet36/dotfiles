@@ -454,6 +454,13 @@ install_local_programs() {
 
         # Add remotes to the suckless programs
 
+        # My dwm is forked from suckless
+        cd dwm || return
+        git remote add suckless https://git.suckless.org/dwm
+        git remote set-url --push suckless DISABLE
+        git fetch suckless
+        cd - > /dev/null || return
+
         # My slstatus is forked from suckless
         cd slstatus || return
         git remote add suckless https://git.suckless.org/slstatus
@@ -464,13 +471,6 @@ install_local_programs() {
         # My st is forked from suckless
         cd st || return
         git remote add suckless https://git.suckless.org/st
-        git remote set-url --push suckless DISABLE
-        git fetch suckless
-        cd - > /dev/null || return
-
-        # My dwm is forked from suckless
-        cd dwm || return
-        git remote add suckless https://git.suckless.org/dwm
         git remote set-url --push suckless DISABLE
         git fetch suckless
         cd - > /dev/null || return
@@ -498,25 +498,25 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
-    cd st || return
+    cd dwm || return
     if $DRY_RUN
     then
         echo "# install" "$(basename -- "$PWD")"
     else
         make || return
-        [[ ! -e ~/.local/bin/st ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
+        [[ ! -e ~/.local/bin/dwm ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
     fi
     cd - > /dev/null || return
 
-    cd st-suckless || return
+    cd dwm-suckless || return
     if $DRY_RUN
     then
         echo "# install" "$(basename -- "$PWD")"
     else
         make || return
-        [[ ! -e ~/.local/bin/st ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
+        [[ ! -e ~/.local/bin/dwm ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
     fi
     cd - > /dev/null || return
 
@@ -542,25 +542,25 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
-    cd dwm || return
+    cd st || return
     if $DRY_RUN
     then
         echo "# install" "$(basename -- "$PWD")"
     else
         make || return
-        [[ ! -e ~/.local/bin/dwm ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
+        [[ ! -e ~/.local/bin/st ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
     fi
     cd - > /dev/null || return
 
-    cd dwm-suckless || return
+    cd st-suckless || return
     if $DRY_RUN
     then
         echo "# install" "$(basename -- "$PWD")"
     else
         make || return
-        [[ ! -e ~/.local/bin/dwm ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
+        [[ ! -e ~/.local/bin/st ]] &&
+        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
     fi
     cd - > /dev/null || return
 
