@@ -741,6 +741,9 @@ key_bindings:
   #- { key: Slash,  mods: Shift,         mode: Vi|~Search, action: SearchBackward          }
   #- { key: N,                           mode: Vi|~Search, action: SearchNext              }
   #- { key: N,      mods: Shift,         mode: Vi|~Search, action: SearchPrevious          }
+  - { key: Q,                           mode: Vi|~Search, action: ToggleViMode            }
+  - { key: PageUp,                      mode: Vi|~Search, action: ScrollHalfPageUp        }
+  - { key: PageDown,                    mode: Vi|~Search, action: ScrollHalfPageDown      }
 
   # Search Mode
   #- { key: Return,                mode: Search|Vi,  action: SearchConfirm         }
