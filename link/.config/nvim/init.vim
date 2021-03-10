@@ -551,6 +551,7 @@ command! InsertDateTime normal! i<c-r>=strftime('%FT%T%z')<CR>
 
 iabbrev amek make
 iabbrev amke make
+iabbrev becuase because
 iabbrev cdl cld
 iabbrev clena clean
 iabbrev csl cls
