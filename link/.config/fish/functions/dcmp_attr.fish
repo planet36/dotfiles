@@ -23,4 +23,3 @@ function dcmp_attr --description 'meld compare file attributes of 2 directories'
 
     meld (find "$A" -type f -printf "$FIND_PRINTF_FMT" | sort | psub) (find "$B" -type f -printf "$FIND_PRINTF_FMT" | sort | psub)
 end
-

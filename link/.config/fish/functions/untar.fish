@@ -15,4 +15,3 @@ function untar --wraps tar --description 'untar a file and delete it'
         del -- "$INFILE" || return
     end
 end
-

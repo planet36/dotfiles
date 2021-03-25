@@ -10,4 +10,3 @@ function mount-cdrom --description 'mount /dev/cdrom to /media/$USER/cdrom/'
 
     sudo mount --read-only -t auto /dev/cdrom -- "/media/$USER/cdrom/"
 end
-

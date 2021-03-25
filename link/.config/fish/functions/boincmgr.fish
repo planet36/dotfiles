@@ -13,4 +13,3 @@ function boincmgr --description 'boincmgr with datadir specified' --wraps boincm
 
     command boincmgr --datadir="$BOINC_DATA_DIR" $argv
 end
-

@@ -59,4 +59,3 @@ function dcmp --description 'directory comparison' --argument-names A B
     string replace --regex -- '^Only in '"$B_escaped"'((?:/.+?)?): ([^/]+)$' '+ '"$B"'$1/$2'
 
 end
-

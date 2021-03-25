@@ -10,4 +10,3 @@ function cgp --description 'clean, get, and put code'
     put code || return
     popd || return
 end
-

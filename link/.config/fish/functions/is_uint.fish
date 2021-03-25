@@ -6,4 +6,3 @@ function is_uint
     set UINT_REGEX '^(?:[1-9][0-9]*|0)$'
     string match --regex --quiet $UINT_REGEX -- $argv[1]
 end
-

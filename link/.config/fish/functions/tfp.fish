@@ -18,4 +18,3 @@ function tfp --description 'tar format patch'
         t "$PATCHES_DIR" && del "$PATCHES_DIR" || return
     end
 end
-

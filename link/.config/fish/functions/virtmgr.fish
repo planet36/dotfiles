@@ -6,4 +6,3 @@ function virtmgr --wraps virt-manager
     # use the user's .Xauthority file
     XAUTHORITY=$HOME/.Xauthority sudo virt-manager "${@}"
 end
-

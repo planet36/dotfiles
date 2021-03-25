@@ -14,4 +14,3 @@ function hr --description 'Print a horizontal rule'
         end
     end
 end
-

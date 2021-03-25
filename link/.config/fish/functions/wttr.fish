@@ -9,4 +9,3 @@ function wttr
     [ (tput cols) -lt 125 ] && set --append request '?n'
     curl -H "Accept-Language: (string replace --regex '_.*' '' $LANG)" --compressed "$request"
 end
-

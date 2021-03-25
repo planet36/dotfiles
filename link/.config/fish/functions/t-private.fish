@@ -29,4 +29,3 @@ function t-private --description 'tar private config files and .ssh folder'
 
     popd || return
 end
-

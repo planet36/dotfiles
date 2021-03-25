@@ -42,4 +42,3 @@ function t --description 'tar a folder'
         end
     end
 end
-

@@ -10,4 +10,3 @@ function psgrep --argument-names NAME
 
     ps --sort pid --pid "$PROCESSES"
 end
-

@@ -21,4 +21,3 @@ function radar --description 'download and display a radar animation'
 
     cd -
 end
-

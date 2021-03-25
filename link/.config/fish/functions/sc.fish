@@ -31,4 +31,3 @@ function sc --description 'wrapper for scrypt'
         scrypt "$ENC_OR_DEC" "$INFILE" "$OUTFILE" || return
     end
 end
-

@@ -10,4 +10,3 @@ function mount-dvd --description 'mount /dev/dvd to /media/$USER/dvd/'
 
     sudo mount --read-only -t auto /dev/dvd -- "/media/$USER/dvd/"
 end
-
