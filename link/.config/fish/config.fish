@@ -196,6 +196,7 @@ if status is-interactive
 # https://github.com/fish-shell/fish-shell/issues/3425
 if string match -q "st-*" "$TERM"
     set -e VTE_VERSION
+    bind \e\[P delete-char
 end
 
 # }}}
