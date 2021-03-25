@@ -6,10 +6,6 @@
 
 ##### TODO: do syntax checking (fish -n config.fish)
 
-##### XXX: this will change in fish 3.2.0
-# https://github.com/fish-shell/fish-shell/pull/7265
-set fish_greeting
-
 ulimit -c unlimited
 
 # {{{ prepend user path
