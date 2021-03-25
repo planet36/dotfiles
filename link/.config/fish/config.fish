@@ -331,16 +331,16 @@ set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++20 $EXTRACXXFLAGS
 
 # {{{ source other config files
 
-if test -f (dirname (status filename))/private.fish
-    source (dirname (status filename))/private.fish
+if test -f (status dirname)/private.fish
+    source (status dirname)/private.fish
 end
 
-if test -f (dirname (status filename))/abbrs.fish
-    source (dirname (status filename))/abbrs.fish
+if test -f (status dirname)/abbrs.fish
+    source (status dirname)/abbrs.fish
 end
 
-if test -f (dirname (status filename))/aliases.fish
-    source (dirname (status filename))/aliases.fish
+if test -f (status dirname)/aliases.fish
+    source (status dirname)/aliases.fish
 end
 
 # }}}
