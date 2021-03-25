@@ -12,17 +12,15 @@ set fish_greeting
 
 ulimit -c unlimited
 
+# {{{ prepend user path
+
+fish_add_path "$HOME"/.local/bin
+
+# }}}
+
 # {{{ login shell
 
 if status is-login
-
-# {{{ prepend user path
-
-if test -d "$HOME"/.local/bin && not contains "$HOME"/.local/bin $fish_user_paths
-    set --global --prepend fish_user_paths "$HOME"/.local/bin $fish_user_paths
-end
-
-# }}}
 
 # {{{ XDG vars
 
