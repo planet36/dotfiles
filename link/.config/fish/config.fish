@@ -4,8 +4,6 @@
 ##### XXX: "add fish syntax highlighting"
 # https://github.com/vim/vim/issues/820
 
-##### TODO: do syntax checking (fish -n config.fish)
-
 ulimit -c unlimited
 
 # {{{ prepend user path
