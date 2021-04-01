@@ -24,7 +24,17 @@ import sys
 
 
 __author__ = 'Steven Ward'
-__version__ = '2020-11-25'
+__version__ = '2021-04-01'
+
+
+def clamp(x: float) -> float:
+
+	if x < 0:
+		return 0.0
+	elif x > 1:
+		return 1.0
+	else:
+		return x
 
 
 def get_pct(x: float) -> str:
@@ -34,11 +44,7 @@ def get_pct(x: float) -> str:
 	pct_fmt = '{:.0%}'
 	pct_rjust_width = len(pct_fmt.format(1.0))
 
-	# clamp x
-	if x < 0:
-		x = 0
-	elif x > 1:
-		x = 1
+	x = clamp(x)
 
 	#return f'{x: >6.1%}'
 	#return f'{x:.1%}'.rjust(pct_rjust_width)
@@ -58,11 +64,7 @@ def get_lower_blocks(x: float) -> str:
 
 	global lower_blocks
 
-	# clamp x
-	if x < 0:
-		x = 0
-	elif x > 1:
-		x = 1
+	x = clamp(x)
 
 	y = x * (len(lower_blocks)-1)
 	i = round(y)
@@ -74,11 +76,7 @@ def get_upper_blocks(x: float) -> str:
 
 	global upper_blocks
 
-	# clamp x
-	if x < 0:
-		x = 0
-	elif x > 1:
-		x = 1
+	x = clamp(x)
 
 	y = x * (len(upper_blocks)-1)
 	i = round(y)
@@ -90,11 +88,7 @@ def get_hor_lines(x: float) -> str:
 
 	global hor_lines
 
-	# clamp x
-	if x < 0:
-		x = 0
-	elif x > 1:
-		x = 1
+	x = clamp(x)
 
 	y = x * (len(hor_lines)-1)
 	i = round(y)
@@ -120,11 +114,7 @@ def get_left_blocks(x: float, n: int = 1) -> str:
 	if n < 1:
 		return ""
 
-	# clamp x
-	if x < 0:
-		x = 0
-	elif x > 1:
-		x = 1
+	x = clamp(x)
 
 	l_pad_n = int(x * n)
 	left = left_blocks[-1] * l_pad_n
@@ -148,11 +138,7 @@ def get_right_blocks(x: float, n: int = 1) -> str:
 	if n < 1:
 		return ""
 
-	# clamp x
-	if x < 0:
-		x = 0
-	elif x > 1:
-		x = 1
+	x = clamp(x)
 
 	r_pad_n = int(x * n)
 	right = right_blocks[-1] * r_pad_n
@@ -176,11 +162,7 @@ def get_ver_lines(x: float, n: int = 1) -> str:
 	if n < 1:
 		return ""
 
-	# clamp x
-	if x < 0:
-		x = 0
-	elif x > 1:
-		x = 1
+	x = clamp(x)
 
 	l_pad_n = int(x * n)
 	left = ' ' * l_pad_n
