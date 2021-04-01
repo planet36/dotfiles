@@ -27,6 +27,24 @@ __author__ = 'Steven Ward'
 __version__ = '2021-04-01'
 
 
+full_block = '█'
+
+lower_blocks = " ▁▂▃▄▅▆▇█"
+
+left_blocks = " ▏▎▍▌▋▊▉█"
+
+#ver_lines = " ▏🭰🭱🭲🭳🭴🭵▕"
+# space is omitted
+ver_lines = "▏🭰🭱🭲🭳🭴🭵▕"
+
+# space is omitted
+hor_lines = "▁🭻🭺🭹🭸🭷🭶▔"
+
+upper_blocks = " ▔🮂🮃▀🮄🮅🮆█"
+
+right_blocks = " ▕🮇🮈▐🮉🮊🮋█"
+
+
 def clamp(x: float) -> float:
 
 	if x < 0:
@@ -35,6 +53,48 @@ def clamp(x: float) -> float:
 		return 1.0
 	else:
 		return x
+
+
+# map the real number in the inverval [0, 1]
+# to an integer in the interval [0, b)
+# XXX: does not work for negative numbers
+def map_to_uint(x: float, b: int) -> int:
+
+	#return round(clamp(x) * (b - 1)) # does round-half-even
+	return int(clamp(x) * (b - 1) + 0.5)
+
+
+def calc_meter_segments(x: float, meter_width: int, blocks_len: int) -> tuple:
+
+	left_width = 0
+	blocks_index = -1
+	right_width = 0
+
+	meter_width = int(meter_width) # the width of the result string
+
+	if meter_width < 1:
+		return (left_width, blocks_index, right_width)
+
+	x = clamp(x)
+
+	left_width = int(x * meter_width)
+
+	if left_width == meter_width:
+		return (left_width, blocks_index, right_width)
+
+	# Using "blocks_len - 1" instead of "blocks_len" in the calculations
+	# produces a preferred distribution at the ends of the meter.
+
+	#y = x * meter_width * blocks_len
+	y = x * meter_width * (blocks_len - 1)
+	#i = round(y % (blocks_len-1)) # does round-half-even
+	#blocks_index = int(y % blocks_len)
+	blocks_index = int(y % (blocks_len - 1) + 0.5)
+
+	#if left_width + 1 < meter_width:
+	right_width = meter_width - (left_width + 1)
+
+	return (left_width, blocks_index, right_width)
 
 
 def get_pct(x: float) -> str:
@@ -53,129 +113,68 @@ def get_pct(x: float) -> str:
 	return pct_fmt.format(x).rjust(pct_rjust_width)
 
 
-lower_blocks = " ▁▂▃▄▅▆▇█"
-
-upper_blocks = " ▔🮂🮃▀🮄🮅🮆█"
-
-##### XXX: shouldn't the space be omitted too? just like ver_line
-hor_lines = " ▁🭻🭺🭹🭸🭷🭶▔"
-
-def get_lower_blocks(x: float) -> str:
+def lower_blocks_1(x: float) -> str:
 
 	global lower_blocks
 
-	x = clamp(x)
-
-	y = x * (len(lower_blocks)-1)
-	i = round(y)
-
-	return lower_blocks[i]
+	return lower_blocks[map_to_uint(x, len(lower_blocks))]
 
 
-def get_upper_blocks(x: float) -> str:
+def upper_blocks_1(x: float) -> str:
 
 	global upper_blocks
 
-	x = clamp(x)
-
-	y = x * (len(upper_blocks)-1)
-	i = round(y)
-
-	return upper_blocks[i]
+	return upper_blocks[map_to_uint(x, len(upper_blocks))]
 
 
-def get_hor_lines(x: float) -> str:
+def hor_lines_1(x: float) -> str:
 
 	global hor_lines
 
-	x = clamp(x)
-
-	y = x * (len(hor_lines)-1)
-	i = round(y)
-
-	return hor_lines[i]
+	return hor_lines[map_to_uint(x, len(hor_lines))]
 
 
-
-left_blocks = " ▏▎▍▌▋▊▉█"
-
-right_blocks = " ▕🮇🮈▐🮉🮊🮋█"
-
-#ver_lines = " ▏🭰🭱🭲🭳🭴🭵▕"
-# space is omitted
-ver_lines = "▏🭰🭱🭲🭳🭴🭵▕"
-
-def get_left_blocks(x: float, n: int = 1) -> str:
+def left_blocks_meter(x: float, meter_width: int) -> str:
 
 	global left_blocks
 
-	n = int(n) # the width of the result string
+	if meter_width == 0:
+		return ''
 
-	if n < 1:
-		return ""
+	(left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(left_blocks))
 
-	x = clamp(x)
-
-	l_pad_n = int(x * n)
-	left = left_blocks[-1] * l_pad_n
-
-	if l_pad_n == n:
-		return left
-
-	y = x * n * (len(left_blocks)-1)
-	i = round(y % (len(left_blocks)-1))
-	center = left_blocks[i]
-
-	return (left + center).ljust(n)
+	return left_width * full_block + (left_blocks[blocks_index] if blocks_index != -1 else '') + right_width * ' '
 
 
-def get_right_blocks(x: float, n: int = 1) -> str:
+def right_blocks_meter(x: float, meter_width: int) -> str:
 
 	global right_blocks
 
-	n = int(n) # the width of the result string
+	if meter_width == 0:
+		return ''
 
-	if n < 1:
-		return ""
+	(left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(right_blocks))
 
-	x = clamp(x)
-
-	r_pad_n = int(x * n)
-	right = right_blocks[-1] * r_pad_n
-
-	if r_pad_n == n:
-		return right
-
-	y = x * n * (len(right_blocks)-1)
-	i = round(y % (len(right_blocks)-1))
-	center = right_blocks[i]
-
-	return (center + right).rjust(n)
+	# left_width and right_width are swapped
+	return right_width * ' ' + (right_blocks[blocks_index] if blocks_index != -1 else '') + left_width * full_block
 
 
-def get_ver_lines(x: float, n: int = 1) -> str:
+def ver_lines_meter(x: float, meter_width: int) -> str:
 
 	global ver_lines
 
-	n = int(n) # the width of the result string
+	if meter_width == 0:
+		return ''
 
-	if n < 1:
-		return ""
+	(left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(ver_lines))
 
-	x = clamp(x)
+	if left_width == meter_width:
+		# Special case when the vertical line will be at the right end
 
-	l_pad_n = int(x * n)
-	left = ' ' * l_pad_n
+		return ver_lines[-1].rjust(meter_width)
+	else:
+		return left_width * ' ' + (ver_lines[blocks_index] if blocks_index != -1 else '') + right_width * ' '
 
-	if l_pad_n == n:
-		return ver_lines[-1].rjust(n)
-
-	y = x * n * (len(ver_lines)-1)
-	i = round(y % (len(ver_lines)-1))
-	center = ver_lines[i]
-
-	return (left + center).ljust(n)
-	#return center.rjust(l_pad_n+1).ljust(n) # pad left, then pad right
 
 
 
@@ -190,19 +189,19 @@ n = 100
 
 for x in range(0, 200+1):
     print("{:.3f} '".format(x/200), end='')
-    print(get_left_blocks(x/200, n), end='')
+    print(left_blocks_meter(x/200, n), end='')
     print("'")
 
 for x in range(0, 200+1):
     print("{:.3f} '".format(x/200), end='')
-    print(get_right_blocks(x/200, n), end='')
+    print(right_blocks_meter(x/200, n), end='')
     print("'")
 
 n=10
 
 for x in range(0, 200+1):
     print("{:.3f} '".format(x/200), end='')
-    print(get_ver_lines(x/200, n), end='')
+    print(right_blocks_meter(x/200, n), end='')
     print("'")
 
 
@@ -941,164 +940,164 @@ Valid metrics:
 		if 'cpu_idle_pct' in formatted_metrics:
 			formatted_metrics['cpu_idle_pct'] = get_pct(cpu_idle[-1])
 		if 'cpu_idle_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_lower_blocks'] = get_lower_blocks(cpu_idle)
+			#formatted_metrics['cpu_idle_lower_blocks'] = lower_blocks_1(cpu_idle)
 			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['cpu_idle_lower_blocks'] = ''.join(get_lower_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
+			formatted_metrics['cpu_idle_lower_blocks'] = ''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
 		if 'cpu_idle_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_upper_blocks'] = get_upper_blocks(cpu_idle)
+			#formatted_metrics['cpu_idle_upper_blocks'] = upper_blocks_1(cpu_idle)
 			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['cpu_idle_upper_blocks'] = ''.join(get_upper_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
+			formatted_metrics['cpu_idle_upper_blocks'] = ''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
 		if 'cpu_idle_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_idle_hor_lines'] = get_hor_lines(cpu_idle)
+			#formatted_metrics['cpu_idle_hor_lines'] = hor_lines_1(cpu_idle)
 			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['cpu_idle_hor_lines'] = ''.join(get_hor_lines(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
+			formatted_metrics['cpu_idle_hor_lines'] = ''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
 		if 'cpu_idle_left_blocks' in formatted_metrics:
-			formatted_metrics['cpu_idle_left_blocks'] = get_left_blocks(cpu_idle[-1], hbar_len)
+			formatted_metrics['cpu_idle_left_blocks'] = left_blocks_meter(cpu_idle[-1], hbar_len)
 		if 'cpu_idle_right_blocks' in formatted_metrics:
-			formatted_metrics['cpu_idle_right_blocks'] = get_right_blocks(cpu_idle[-1], hbar_len)
+			formatted_metrics['cpu_idle_right_blocks'] = right_blocks_meter(cpu_idle[-1], hbar_len)
 		if 'cpu_idle_ver_lines' in formatted_metrics:
-			formatted_metrics['cpu_idle_ver_lines'] = get_ver_lines(cpu_idle[-1], hbar_len)
+			formatted_metrics['cpu_idle_ver_lines'] = right_blocks_meter(cpu_idle[-1], hbar_len)
 
 		if 'cpu_usage_pct' in formatted_metrics:
 			formatted_metrics['cpu_usage_pct'] = get_pct(cpu_usage[-1])
 		if 'cpu_usage_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_lower_blocks'] = get_lower_blocks(cpu_usage[-1])
+			#formatted_metrics['cpu_usage_lower_blocks'] = lower_blocks_1(cpu_usage[-1])
 			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['cpu_usage_lower_blocks'] = ''.join(get_lower_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
+			formatted_metrics['cpu_usage_lower_blocks'] = ''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
 		if 'cpu_usage_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_upper_blocks'] = get_upper_blocks(cpu_usage[-1])
+			#formatted_metrics['cpu_usage_upper_blocks'] = upper_blocks_1(cpu_usage[-1])
 			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['cpu_usage_upper_blocks'] = ''.join(get_upper_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
+			formatted_metrics['cpu_usage_upper_blocks'] = ''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
 		if 'cpu_usage_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_usage_hor_lines'] = get_hor_lines(cpu_usage[-1])
+			#formatted_metrics['cpu_usage_hor_lines'] = hor_lines_1(cpu_usage[-1])
 			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['cpu_usage_hor_lines'] = ''.join(get_hor_lines(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
+			formatted_metrics['cpu_usage_hor_lines'] = ''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
 		if 'cpu_usage_left_blocks' in formatted_metrics:
-			formatted_metrics['cpu_usage_left_blocks'] = get_left_blocks(cpu_usage[-1], hbar_len)
+			formatted_metrics['cpu_usage_left_blocks'] = left_blocks_meter(cpu_usage[-1], hbar_len)
 		if 'cpu_usage_right_blocks' in formatted_metrics:
-			formatted_metrics['cpu_usage_right_blocks'] = get_right_blocks(cpu_usage[-1], hbar_len)
+			formatted_metrics['cpu_usage_right_blocks'] = right_blocks_meter(cpu_usage[-1], hbar_len)
 		if 'cpu_usage_ver_lines' in formatted_metrics:
-			formatted_metrics['cpu_usage_ver_lines'] = get_ver_lines(cpu_usage[-1], hbar_len)
+			formatted_metrics['cpu_usage_ver_lines'] = right_blocks_meter(cpu_usage[-1], hbar_len)
 
 		if 'cpu_idle_each_pct' in formatted_metrics:
 			# adjacent percentages should be separated by a space
 			formatted_metrics['cpu_idle_each_pct'] = ' '.join(get_pct(cpu_idle_i) for cpu_idle_i in cpu_idle_each[-1])
 		if 'cpu_idle_each_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_each_lower_blocks'] = ''.join(get_lower_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
+			#formatted_metrics['cpu_idle_each_lower_blocks'] = ''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
 			# adjacent lower_blocks groups should be separated by a space
 			# adjacent lower_blocks shouldn't be separated
 			##### TODO: TEST THIS
-			#formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(get_lower_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
-			formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(get_lower_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
+			#formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
+			formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
 		if 'cpu_idle_each_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_each_upper_blocks'] = ''.join(get_upper_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
+			#formatted_metrics['cpu_idle_each_upper_blocks'] = ''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
 			# adjacent upper_blocks groups should be separated by a space
 			# adjacent upper_blocks shouldn't be separated
 			##### TODO: TEST THIS
-			#formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(get_upper_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
-			formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(get_upper_blocks(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
+			#formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
+			formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
 		if 'cpu_idle_each_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_idle_each_hor_lines'] = ''.join(get_hor_lines(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
+			#formatted_metrics['cpu_idle_each_hor_lines'] = ''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
 			# adjacent hor_lines groups should be separated by a space
 			# adjacent hor_lines shouldn't be separated
 			##### TODO: TEST THIS
-			#formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(get_hor_lines(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
-			formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(get_hor_lines(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
+			#formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
+			formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
 
 		if 'cpu_idle_each_left_blocks' in formatted_metrics:
 			##### TODO: TEST THIS
 			# adjacent left_blockss should be separated by a space
-			formatted_metrics['cpu_idle_each_left_blocks'] = ' '.join(get_left_blocks(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
+			formatted_metrics['cpu_idle_each_left_blocks'] = ' '.join(left_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
 		if 'cpu_idle_each_right_blocks' in formatted_metrics:
 			##### TODO: TEST THIS
 			# adjacent right_blockss should be separated by a space
-			formatted_metrics['cpu_idle_each_right_blocks'] = ' '.join(get_right_blocks(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
+			formatted_metrics['cpu_idle_each_right_blocks'] = ' '.join(right_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
 		if 'cpu_idle_each_ver_lines' in formatted_metrics:
 			##### TODO: TEST THIS
 			# adjacent ver_liness should be separated by a space
-			formatted_metrics['cpu_idle_each_ver_lines'] = ' '.join(get_ver_lines(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
+			formatted_metrics['cpu_idle_each_ver_lines'] = ' '.join(right_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
 
 		if 'cpu_usage_each_pct' in formatted_metrics:
 			# adjacent percentages should be separated by a space
 			formatted_metrics['cpu_usage_each_pct'] = ' '.join(get_pct(cpu_usage_i) for cpu_usage_i in cpu_usage_each[-1])
 		if 'cpu_usage_each_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_each_lower_blocks'] = ''.join(get_lower_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
+			#formatted_metrics['cpu_usage_each_lower_blocks'] = ''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
 			# adjacent lower_blocks groups should be separated by a space
 			# adjacent lower_blocks shouldn't be separated
-			#formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(get_lower_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
-			formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(get_lower_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
+			#formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
+			formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
 		if 'cpu_usage_each_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_each_upper_blocks'] = ''.join(get_upper_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
+			#formatted_metrics['cpu_usage_each_upper_blocks'] = ''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
 			# adjacent upper_blocks groups should be separated by a space
 			# adjacent upper_blocks shouldn't be separated
-			#formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(get_upper_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
-			formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(get_upper_blocks(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
+			#formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
+			formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
 		if 'cpu_usage_each_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_usage_each_hor_lines'] = ''.join(get_hor_lines(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
+			#formatted_metrics['cpu_usage_each_hor_lines'] = ''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
 			# adjacent hor_lines groups should be separated by a space
 			# adjacent hor_lines shouldn't be separated
-			#formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(get_hor_lines(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
-			formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(get_hor_lines(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
+			#formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
+			formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
 
 
 		if 'cpu_usage_each_left_blocks' in formatted_metrics:
 			##### TODO: TEST THIS
 			# adjacent left_blockss should be separated by a space
-			formatted_metrics['cpu_usage_each_left_blocks'] = ' '.join(get_left_blocks(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
+			formatted_metrics['cpu_usage_each_left_blocks'] = ' '.join(left_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
 		if 'cpu_usage_each_right_blocks' in formatted_metrics:
 			##### TODO: TEST THIS
 			# adjacent right_blockss should be separated by a space
-			formatted_metrics['cpu_usage_each_right_blocks'] = ' '.join(get_right_blocks(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
+			formatted_metrics['cpu_usage_each_right_blocks'] = ' '.join(right_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
 		if 'cpu_usage_each_ver_lines' in formatted_metrics:
 			##### TODO: TEST THIS
 			# adjacent ver_liness should be separated by a space
-			formatted_metrics['cpu_usage_each_ver_lines'] = ' '.join(get_ver_lines(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
+			formatted_metrics['cpu_usage_each_ver_lines'] = ' '.join(right_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
 
 		if 'mem_avail_bytes' in formatted_metrics:
 			formatted_metrics['mem_avail_bytes'] = human_scale(mem_avail_bytes, si_unit_prefix_base) + 'B'
 		if 'mem_avail_pct' in formatted_metrics:
 			formatted_metrics['mem_avail_pct'] = get_pct(mem_avail[-1])
 		if 'mem_avail_lower_blocks' in formatted_metrics:
-			#formatted_metrics['mem_avail_lower_blocks'] = get_lower_blocks(mem_avail)
+			#formatted_metrics['mem_avail_lower_blocks'] = lower_blocks_1(mem_avail)
 			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['mem_avail_lower_blocks'] = ''.join(get_lower_blocks(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
+			formatted_metrics['mem_avail_lower_blocks'] = ''.join(lower_blocks_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
 		if 'mem_avail_upper_blocks' in formatted_metrics:
-			#formatted_metrics['mem_avail_upper_blocks'] = get_upper_blocks(mem_avail)
+			#formatted_metrics['mem_avail_upper_blocks'] = upper_blocks_1(mem_avail)
 			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['mem_avail_upper_blocks'] = ''.join(get_upper_blocks(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
+			formatted_metrics['mem_avail_upper_blocks'] = ''.join(upper_blocks_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
 		if 'mem_avail_hor_lines' in formatted_metrics:
-			#formatted_metrics['mem_avail_hor_lines'] = get_hor_lines(mem_avail)
+			#formatted_metrics['mem_avail_hor_lines'] = hor_lines_1(mem_avail)
 			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['mem_avail_hor_lines'] = ''.join(get_hor_lines(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
+			formatted_metrics['mem_avail_hor_lines'] = ''.join(hor_lines_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
 		if 'mem_avail_left_blocks' in formatted_metrics:
-			formatted_metrics['mem_avail_left_blocks'] = get_left_blocks(mem_avail[-1], hbar_len)
+			formatted_metrics['mem_avail_left_blocks'] = left_blocks_meter(mem_avail[-1], hbar_len)
 		if 'mem_avail_right_blocks' in formatted_metrics:
-			formatted_metrics['mem_avail_right_blocks'] = get_right_blocks(mem_avail[-1], hbar_len)
+			formatted_metrics['mem_avail_right_blocks'] = right_blocks_meter(mem_avail[-1], hbar_len)
 		if 'mem_avail_ver_lines' in formatted_metrics:
-			formatted_metrics['mem_avail_ver_lines'] = get_ver_lines(mem_avail[-1], hbar_len)
+			formatted_metrics['mem_avail_ver_lines'] = right_blocks_meter(mem_avail[-1], hbar_len)
 
 		if 'mem_used_bytes' in formatted_metrics:
 			formatted_metrics['mem_used_bytes'] = human_scale(mem_used_bytes, si_unit_prefix_base) + 'B'
 		if 'mem_used_pct' in formatted_metrics:
 			formatted_metrics['mem_used_pct'] = get_pct(mem_used[-1])
 		if 'mem_used_lower_blocks' in formatted_metrics:
-			#formatted_metrics['mem_used_lower_blocks'] = get_lower_blocks(mem_used)
+			#formatted_metrics['mem_used_lower_blocks'] = lower_blocks_1(mem_used)
 			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['mem_used_lower_blocks'] = ''.join(get_lower_blocks(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
+			formatted_metrics['mem_used_lower_blocks'] = ''.join(lower_blocks_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
 		if 'mem_used_upper_blocks' in formatted_metrics:
-			#formatted_metrics['mem_used_upper_blocks'] = get_upper_blocks(mem_used)
+			#formatted_metrics['mem_used_upper_blocks'] = upper_blocks_1(mem_used)
 			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['mem_used_upper_blocks'] = ''.join(get_upper_blocks(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
+			formatted_metrics['mem_used_upper_blocks'] = ''.join(upper_blocks_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
 		if 'mem_used_hor_lines' in formatted_metrics:
-			#formatted_metrics['mem_used_hor_lines'] = get_hor_lines(mem_used)
+			#formatted_metrics['mem_used_hor_lines'] = hor_lines_1(mem_used)
 			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['mem_used_hor_lines'] = ''.join(get_hor_lines(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
+			formatted_metrics['mem_used_hor_lines'] = ''.join(hor_lines_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
 		if 'mem_used_left_blocks' in formatted_metrics:
-			formatted_metrics['mem_used_left_blocks'] = get_left_blocks(mem_used[-1], hbar_len)
+			formatted_metrics['mem_used_left_blocks'] = left_blocks_meter(mem_used[-1], hbar_len)
 		if 'mem_used_right_blocks' in formatted_metrics:
-			formatted_metrics['mem_used_right_blocks'] = get_right_blocks(mem_used[-1], hbar_len)
+			formatted_metrics['mem_used_right_blocks'] = right_blocks_meter(mem_used[-1], hbar_len)
 		if 'mem_used_ver_lines' in formatted_metrics:
-			formatted_metrics['mem_used_ver_lines'] = get_ver_lines(mem_used[-1], hbar_len)
+			formatted_metrics['mem_used_ver_lines'] = right_blocks_meter(mem_used[-1], hbar_len)
 
 		if 'rx_rate_bytes_per_sec' in formatted_metrics:
 			formatted_metrics['rx_rate_bytes_per_sec'] = human_scale(rx_rate_bytes_per_sec, si_unit_prefix_base) + 'B/s ▼'
