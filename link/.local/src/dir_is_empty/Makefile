@@ -26,7 +26,10 @@ clean:
 distclean: clean
 	@$(RM) --verbose -- ~/.local/bin/$(BIN)
 
+lint:
+	clang-tidy --quiet $(SRCS) -- $(CXXFLAGS) $(LDFLAGS)
+
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: install clean distclean
+.PHONY: install clean distclean lint
 
 -include $(DEPS)
