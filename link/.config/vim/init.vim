@@ -563,6 +563,7 @@ iabbrev ehre here
 iabbrev maek make
 iabbrev medl meld
 iabbrev reutrn return
+iabbrev reurn return
 iabbrev soem some
 iabbrev soemthgin something
 iabbrev soemthign something
