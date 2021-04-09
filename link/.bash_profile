@@ -97,7 +97,8 @@ export NO_AT_BRIDGE=1
 # https://www.reddit.com/r/linux/comments/12wxsl/whats_in_your_bashrc/c6z0y5g/
 #export JAVA_HOME="$(readlink -f -- "$(which javac)" | sed 's|bin/javac||')"
 
-export PS_FORMAT='pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command'
+#export PS_FORMAT='pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command'
+export PS_FORMAT='pid,nice,pri,user,stime,etime,cputimes,%cpu,%mem,rss,args'
 
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint.d
 
