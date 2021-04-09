@@ -68,6 +68,7 @@
     word_chars = "-,./?%&#_=+@~"
     use_system_font = False
     bold_is_bright = True
+    copy_on_selection = True
 [layouts]
   [[default]]
     [[[window0]]]
