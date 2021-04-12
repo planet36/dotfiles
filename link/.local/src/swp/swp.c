@@ -10,7 +10,12 @@
 
 int main(int argc, char* argv[])
 {
-	if (argc < 2)
+	if (argc < 1)
+	{
+		fprintf(stderr, "missing file operands\n");
+		return EXIT_FAILURE;
+	}
+	else if (argc < 2)
 	{
 		fprintf(stderr, "%s: missing file operands\n", argv[0]);
 		return EXIT_FAILURE;
