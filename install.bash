@@ -65,6 +65,7 @@ OPTIONS
          - slstatus
          - st
          - stw
+         - swp
        programs from github listed in the file "get-all-programs.bash"
        fish plugins
          - fisher
@@ -572,6 +573,17 @@ install_local_programs() {
         make || return
         [[ ! -e ~/.local/bin/stw ]] &&
         ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
+    fi
+    cd - > /dev/null || return
+
+    cd swp || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+        echo \
+        make install
+    else
+        make install
     fi
     cd - > /dev/null || return
 
