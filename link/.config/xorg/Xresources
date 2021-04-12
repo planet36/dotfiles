@@ -5,6 +5,9 @@ Sxiv.foreground: Gray
 
 
 XTerm.vt100.faceName: monospace:size=12
+XTerm.vt100.fastScroll: true
+XTerm.vt100.jumpScroll: true
+XTerm.vt100.multiScroll: true
 XTerm.vt100.saveLines: 10000
 XTerm.vt100.selectToClipboard: true
 
