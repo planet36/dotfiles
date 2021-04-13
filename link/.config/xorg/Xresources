@@ -4,6 +4,7 @@ Sxiv.background: Black
 Sxiv.foreground: Gray
 
 
+XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
 XTerm.vt100.faceName: monospace:size=12
 XTerm.vt100.fastScroll: true
 XTerm.vt100.jumpScroll: true
