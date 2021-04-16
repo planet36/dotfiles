@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: OSL-3.0
 
 #include <ctype.h>
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w15e"; // date +'%yw%Ua'
+const char program_version[] = "21w15f"; // date +'%yw%Ua'
 
 /// unit of time
 enum UT
@@ -20,6 +21,16 @@ enum UT
 	UT_WEEK,
 	UT_YEAR,
 };
+
+int strtoi(const char* s)
+{
+	long i = strtol(s, NULL, 0);
+
+	if (i < INT_MIN) i = INT_MIN;
+	else if (i > INT_MAX) i = INT_MAX;
+
+	return (int)i;
+}
 
 void my_div_i(
 		const unsigned long x, const unsigned long y,
@@ -37,6 +48,7 @@ const unsigned long seconds_per_year = 31556952UL; // seconds_per_day * 365.2425
 
 void durfmt(
 		unsigned long seconds,
+		const int width,
 		const enum UT most_sig,
 		const bool print_zero_values,
 		const bool suppress_newline)
@@ -56,7 +68,10 @@ void durfmt(
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%luy", years);
+			if (width > 1)
+				printf("%0*luy", width, years);
+			else
+				printf("%0luy", years);
 			printed_something = true;
 		}
 	}
@@ -69,7 +84,10 @@ void durfmt(
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%luw", weeks);
+			if (width > 1)
+				printf("%0*luw", width, weeks);
+			else
+				printf("%0luw", weeks);
 			printed_something = true;
 		}
 	}
@@ -82,7 +100,10 @@ void durfmt(
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%lud", days);
+			if (width > 1)
+				printf("%0*lud", width, days);
+			else
+				printf("%0lud", days);
 			printed_something = true;
 		}
 	}
@@ -95,7 +116,10 @@ void durfmt(
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%luh", hours);
+			if (width > 1)
+				printf("%0*luh", width, hours);
+			else
+				printf("%0luh", hours);
 			printed_something = true;
 		}
 	}
@@ -108,7 +132,10 @@ void durfmt(
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%lum", minutes);
+			if (width > 1)
+				printf("%0*lum", width, minutes);
+			else
+				printf("%0lum", minutes);
 			printed_something = true;
 		}
 	}
@@ -119,7 +146,10 @@ void durfmt(
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%lus", seconds);
+			if (width > 1)
+				printf("%0*lus", width, seconds);
+			else
+				printf("%0lus", seconds);
 			printed_something = true;
 		}
 	}
@@ -146,8 +176,16 @@ void print_usage(const char* argv0)
 	printf("  -V       Print the version information and exit.\n");
 	printf("  -h       Print this message and exit.\n");
 	printf("  -l UNIT  Specify the least significant unit of time to be printed.\n");
+	printf("           UNIT must not be greater than the most significant unit of time.\n");
+	printf("           The default value is 's'.\n");
 	printf("  -m UNIT  Specify the most significant unit of time to be printed.\n");
+	printf("           UNIT must not be less than the least significant unit of time.\n");
+	printf("           The default value is 'y'.\n");
 	printf("  -n       Do not print a trailing newline character.\n");
+	printf("  -w WIDTH Specify the minimum field width.\n");
+	printf("           If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
+	printf("           WIDTH must be a non-negative integer.\n");
+	printf("           The default value is 1.\n");
 	printf("  -0       Print values of zero.\n");
 	printf("\n");
 
@@ -171,12 +209,13 @@ void print_option_err(const char* argv0, const char* msg, const int o)
 
 int main(int argc, char* argv[])
 {
+	int width = 1;
 	bool print_zero_values = false;
 	enum UT least_sig = UT_SECOND;
 	enum UT most_sig = UT_YEAR;
 	bool suppress_newline = false;
 	unsigned long round_mult = 1;
-	const char* short_options = "+:Vhl:m:n0";
+	const char* short_options = "+:Vhl:m:nw:0";
 	int oc;
 
 	opterr = 0;
@@ -226,6 +265,12 @@ int main(int argc, char* argv[])
 			suppress_newline = true;
 			break;
 
+		case 'w':
+			width = strtoi(optarg);
+			if (width < 0) width = 0;
+			if (width > 20) width = 20;
+			break;
+
 		case '0':
 			print_zero_values = true;
 			break;
@@ -272,7 +317,7 @@ int main(int argc, char* argv[])
 		unsigned long seconds = strtoul(line, NULL, 0);
 		if (round_mult > 1)
 			seconds -= (seconds % round_mult);
-		durfmt(seconds, most_sig, print_zero_values, suppress_newline);
+		durfmt(seconds, width, most_sig, print_zero_values, suppress_newline);
 		free(line);
 		line = NULL;
 		n = 0;
