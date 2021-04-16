@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w15c"; // date +'%yw%Ua'
+const char program_version[] = "21w15d"; // date +'%yw%Ua'
 
 void my_div_i(
 		const unsigned long x, const unsigned long y,
@@ -117,6 +117,14 @@ void print_usage(const char* argv0)
 	printf("\n");
 }
 
+void print_option_err(const char* argv0, const char* msg, const int o)
+{
+	if (isprint(o))
+		fprintf(stderr, "%s: %s: '%c'\n", argv0, msg, o);
+	else
+		fprintf(stderr, "%s: %s: '\\x%x'\n", argv0, msg, o);
+}
+
 int main(int argc, char* argv[])
 {
 	bool print_zero_seconds = false;
@@ -155,26 +163,35 @@ int main(int argc, char* argv[])
 			case 'H': case 'h': round_mult = seconds_per_hour  ; break;
 			case 'M': case 'm': round_mult = seconds_per_minute; break;
 			default:
+				print_option_err(argv[0], "Unknown option value", optarg[0]);
+				/*
 				if (isprint(optarg[0]))
 					fprintf(stderr, "%s: Unknown option value: '%c'\n", argv[0], optarg[0]);
 				else
 					fprintf(stderr, "%s: Unknown option value: '\\x%x'\n", argv[0], optarg[0]);
+				*/
 				return 1;
 			}
 			break;
 
 		case '?':
+			print_option_err(argv[0], "Unknown option", optopt);
+			/*
 			if (isprint(optopt))
 				fprintf(stderr, "%s: Unknown option: '%c'\n", argv[0], optopt);
 			else
 				fprintf(stderr, "%s: Unknown option: '\\x%x'\n", argv[0], optopt);
+			*/
 			return 1;
 
 		case ':':
+			print_option_err(argv[0], "Option requires a value", optopt);
+			/*
 			if (isprint(optopt))
 				fprintf(stderr, "%s: Option requires a value: '%c'\n", argv[0], optopt);
 			else
 				fprintf(stderr, "%s: Option requires a value: '\\x%x'\n", argv[0], optopt);
+			*/
 			return 1;
 
 		default:
