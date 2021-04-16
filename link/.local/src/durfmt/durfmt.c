@@ -8,7 +8,18 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w15d"; // date +'%yw%Ua'
+const char program_version[] = "21w15e"; // date +'%yw%Ua'
+
+/// unit of time
+enum UT
+{
+	UT_SECOND,
+	UT_MINUTE,
+	UT_HOUR,
+	UT_DAY,
+	UT_WEEK,
+	UT_YEAR,
+};
 
 void my_div_i(
 		const unsigned long x, const unsigned long y,
@@ -26,6 +37,7 @@ const unsigned long seconds_per_year = 31556952UL; // seconds_per_day * 365.2425
 
 void durfmt(
 		unsigned long seconds,
+		const enum UT most_sig,
 		const bool print_zero_values,
 		const bool suppress_newline)
 {
@@ -36,6 +48,7 @@ void durfmt(
 	unsigned long hours = 0;
 	unsigned long minutes = 0;
 
+	if (most_sig >= UT_YEAR)
 	{
 		my_div_i(seconds, seconds_per_year, &years, &seconds);
 
@@ -48,6 +61,7 @@ void durfmt(
 		}
 	}
 
+	if (most_sig >= UT_WEEK)
 	{
 		my_div_i(seconds, seconds_per_week, &weeks, &seconds);
 
@@ -60,6 +74,7 @@ void durfmt(
 		}
 	}
 
+	if (most_sig >= UT_DAY)
 	{
 		my_div_i(seconds, seconds_per_day, &days, &seconds);
 
@@ -72,6 +87,7 @@ void durfmt(
 		}
 	}
 
+	if (most_sig >= UT_HOUR)
 	{
 		my_div_i(seconds, seconds_per_hour, &hours, &seconds);
 
@@ -84,6 +100,7 @@ void durfmt(
 		}
 	}
 
+	if (most_sig >= UT_MINUTE)
 	{
 		my_div_i(seconds, seconds_per_minute, &minutes, &seconds);
 
@@ -96,6 +113,7 @@ void durfmt(
 		}
 	}
 
+	//if (most_sig >= UT_SECOND)
 	{
 		if (seconds > 0 || print_zero_values)
 		{
@@ -128,6 +146,7 @@ void print_usage(const char* argv0)
 	printf("  -V       Print the version information and exit.\n");
 	printf("  -h       Print this message and exit.\n");
 	printf("  -l UNIT  Specify the least significant unit of time to be printed.\n");
+	printf("  -m UNIT  Specify the most significant unit of time to be printed.\n");
 	printf("  -n       Do not print a trailing newline character.\n");
 	printf("  -0       Print values of zero.\n");
 	printf("\n");
@@ -153,9 +172,11 @@ void print_option_err(const char* argv0, const char* msg, const int o)
 int main(int argc, char* argv[])
 {
 	bool print_zero_values = false;
+	enum UT least_sig = UT_SECOND;
+	enum UT most_sig = UT_YEAR;
 	bool suppress_newline = false;
 	unsigned long round_mult = 1;
-	const char* short_options = "+:Vhl:n0";
+	const char* short_options = "+:Vhl:m:n0";
 	int oc;
 
 	opterr = 0;
@@ -174,12 +195,27 @@ int main(int argc, char* argv[])
 		case 'l':
 			switch (optarg[0])
 			{
-			case 'Y': case 'y': round_mult = seconds_per_year  ; break;
-			case 'W': case 'w': round_mult = seconds_per_week  ; break;
-			case 'D': case 'd': round_mult = seconds_per_day   ; break;
-			case 'H': case 'h': round_mult = seconds_per_hour  ; break;
-			case 'M': case 'm': round_mult = seconds_per_minute; break;
-			case 'S': case 's': round_mult =                  1; break;
+			case 'Y': case 'y': least_sig = UT_YEAR  ; break;
+			case 'W': case 'w': least_sig = UT_WEEK  ; break;
+			case 'D': case 'd': least_sig = UT_DAY   ; break;
+			case 'H': case 'h': least_sig = UT_HOUR  ; break;
+			case 'M': case 'm': least_sig = UT_MINUTE; break;
+			case 'S': case 's': least_sig = UT_SECOND; break;
+			default:
+				print_option_err(argv[0], "Unknown option value", optarg[0]);
+				return 1;
+			}
+			break;
+
+		case 'm':
+			switch (optarg[0])
+			{
+			case 'Y': case 'y': most_sig = UT_YEAR  ; break;
+			case 'W': case 'w': most_sig = UT_WEEK  ; break;
+			case 'D': case 'd': most_sig = UT_DAY   ; break;
+			case 'H': case 'h': most_sig = UT_HOUR  ; break;
+			case 'M': case 'm': most_sig = UT_MINUTE; break;
+			case 'S': case 's': most_sig = UT_SECOND; break;
 			default:
 				print_option_err(argv[0], "Unknown option value", optarg[0]);
 				return 1;
@@ -207,8 +243,25 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	if (most_sig < least_sig)
+	{
+		fprintf(stderr, "%s: Invalid option values: -m UNIT may not be less than -l UNIT\n", argv[0]);
+		return 1;
+	}
+
 	//argc -= optind;
 	//argv += optind;
+
+	switch (least_sig)
+	{
+	case UT_YEAR  : round_mult = seconds_per_year  ; break;
+	case UT_WEEK  : round_mult = seconds_per_week  ; break;
+	case UT_DAY   : round_mult = seconds_per_day   ; break;
+	case UT_HOUR  : round_mult = seconds_per_hour  ; break;
+	case UT_MINUTE: round_mult = seconds_per_minute; break;
+	case UT_SECOND: round_mult =                  1; break;
+	default: __builtin_unreachable(); break;
+	}
 
 	char* line = NULL;
 	size_t n = 0;
@@ -219,7 +272,7 @@ int main(int argc, char* argv[])
 		unsigned long seconds = strtoul(line, NULL, 0);
 		if (round_mult > 1)
 			seconds -= (seconds % round_mult);
-		durfmt(seconds, print_zero_values, suppress_newline);
+		durfmt(seconds, most_sig, print_zero_values, suppress_newline);
 		free(line);
 		line = NULL;
 		n = 0;
