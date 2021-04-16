@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w15a"; // date +'%yw%Ua'
+const char program_version[] = "21w15b"; // date +'%yw%Ua'
 
 void my_div_i(
 		const unsigned long x, const unsigned long y,
@@ -101,20 +101,23 @@ void print_usage(const char* argv0)
 {
 	printf("Usage: %s [OPTIONS]\n\n", argv0);
 	printf("Read a non-negative duration (in seconds) from stdin.\n");
-	printf("Convert the value to a human-friendly format of whole numbers of:\n");
-	printf("    years, weeks, days, hours, minutes, and seconds.\n\n");
+	printf("Break down the value into whole numbers of\n");
+	printf("  years, weeks, days, hours, minutes, and seconds.\n\n");
 	printf("OPTIONS\n");
 	printf("  -V    Print the version information and exit.\n");
 	printf("  -h    Print this message and exit.\n");
 	printf("  -0    Print zero seconds if nothing else was printed.\n");
+	printf("  -r[ywdhm]\n");
+	printf("        Round the duration down to the nearest multiple of\n");
+	printf("          [y]ears, [w]eeks, [d]ays, [h]ours, or [m]inutes.\n");
 	printf("\n");
-
 }
 
 int main(int argc, char* argv[])
 {
 	bool print_zero_seconds = false;
-	const char* short_options = "+:Vh0";
+	unsigned long round_mult = 0;
+	const char* short_options = "+:Vh0r:";
 	int oc;
 
 	opterr = 0;
@@ -134,12 +137,28 @@ int main(int argc, char* argv[])
 			print_zero_seconds = true;
 			break;
 
+		case 'r':
+			switch (optarg[0])
+			{
+			case 'Y': case 'y': round_mult = seconds_per_year  ; break;
+			case 'W': case 'w': round_mult = seconds_per_week  ; break;
+			case 'D': case 'd': round_mult = seconds_per_day   ; break;
+			case 'H': case 'h': round_mult = seconds_per_hour  ; break;
+			case 'M': case 'm': round_mult = seconds_per_minute; break;
+			default:
+				if (isprint(optarg[0]))
+					fprintf(stderr, "%s: Unknown option value: '%c'\n", argv[0], optarg[0]);
+				else
+					fprintf(stderr, "%s: Unknown option value: '\\x%x'\n", argv[0], optarg[0]);
+				return 1;
+			}
+			break;
+
 		case '?':
 			if (isprint(optopt))
 				fprintf(stderr, "%s: Unknown option: '%c'\n", argv[0], optopt);
 			else
 				fprintf(stderr, "%s: Unknown option: '\\x%x'\n", argv[0], optopt);
-
 			return 1;
 
 		case ':':
@@ -147,7 +166,6 @@ int main(int argc, char* argv[])
 				fprintf(stderr, "%s: Option requires a value: '%c'\n", argv[0], optopt);
 			else
 				fprintf(stderr, "%s: Option requires a value: '\\x%x'\n", argv[0], optopt);
-
 			return 1;
 
 		default:
@@ -165,6 +183,8 @@ int main(int argc, char* argv[])
 	while (getline(&line, &n, stdin) != EOF)
 	{
 		unsigned long seconds = strtoul(line, NULL, 0);
+		if (round_mult != 0)
+			seconds -= (seconds % round_mult);
 		durfmt(seconds, print_zero_seconds);
 		free(line);
 		line = NULL;
