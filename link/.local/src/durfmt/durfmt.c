@@ -36,58 +36,74 @@ void durfmt(
 	unsigned long hours = 0;
 	unsigned long minutes = 0;
 
-	my_div_i(seconds, seconds_per_year, &years, &seconds);
-	my_div_i(seconds, seconds_per_week, &weeks, &seconds);
-	my_div_i(seconds, seconds_per_day, &days, &seconds);
-	my_div_i(seconds, seconds_per_hour, &hours, &seconds);
-	my_div_i(seconds, seconds_per_minute, &minutes, &seconds);
-
-	if (years > 0)
 	{
-		if (printed_something)
-			putchar(' ');
-		printf("%luy", years);
-		printed_something = true;
+		my_div_i(seconds, seconds_per_year, &years, &seconds);
+
+		if (years > 0 || print_zero_values)
+		{
+			if (printed_something)
+				putchar(' ');
+			printf("%luy", years);
+			printed_something = true;
+		}
 	}
 
-	if (weeks > 0)
 	{
-		if (printed_something)
-			putchar(' ');
-		printf("%luw", weeks);
-		printed_something = true;
+		my_div_i(seconds, seconds_per_week, &weeks, &seconds);
+
+		if (weeks > 0 || print_zero_values)
+		{
+			if (printed_something)
+				putchar(' ');
+			printf("%luw", weeks);
+			printed_something = true;
+		}
 	}
 
-	if (days > 0)
 	{
-		if (printed_something)
-			putchar(' ');
-		printf("%lud", days);
-		printed_something = true;
+		my_div_i(seconds, seconds_per_day, &days, &seconds);
+
+		if (days > 0 || print_zero_values)
+		{
+			if (printed_something)
+				putchar(' ');
+			printf("%lud", days);
+			printed_something = true;
+		}
 	}
 
-	if (hours > 0)
 	{
-		if (printed_something)
-			putchar(' ');
-		printf("%luh", hours);
-		printed_something = true;
+		my_div_i(seconds, seconds_per_hour, &hours, &seconds);
+
+		if (hours > 0 || print_zero_values)
+		{
+			if (printed_something)
+				putchar(' ');
+			printf("%luh", hours);
+			printed_something = true;
+		}
 	}
 
-	if (minutes > 0)
 	{
-		if (printed_something)
-			putchar(' ');
-		printf("%lum", minutes);
-		printed_something = true;
+		my_div_i(seconds, seconds_per_minute, &minutes, &seconds);
+
+		if (minutes > 0 || print_zero_values)
+		{
+			if (printed_something)
+				putchar(' ');
+			printf("%lum", minutes);
+			printed_something = true;
+		}
 	}
 
-	if (seconds > 0 || (print_zero_values && !printed_something))
 	{
-		if (printed_something)
-			putchar(' ');
-		printf("%lus", seconds);
-		printed_something = true;
+		if (seconds > 0 || print_zero_values)
+		{
+			if (printed_something)
+				putchar(' ');
+			printf("%lus", seconds);
+			printed_something = true;
+		}
 	}
 
 	if (printed_something && !suppress_newline)
@@ -105,15 +121,24 @@ void print_usage(const char* argv0)
 	printf("Usage: %s [OPTIONS]\n\n", argv0);
 	printf("Read a non-negative duration (in seconds) from stdin.\n");
 	printf("Break down the duration into whole numbers of\n");
-	printf("  years, weeks, days, hours, minutes, and seconds.\n\n");
+	printf("  years, weeks, days, hours, minutes, and seconds.\n");
+	printf("Values of zero are not printed by default.\n\n");
+
 	printf("OPTIONS\n");
 	printf("  -V       Print the version information and exit.\n");
 	printf("  -h       Print this message and exit.\n");
-	printf("  -0       Print zero seconds if nothing else was printed.\n");
+	printf("  -l UNIT  Specify the least significant unit of time to be printed.\n");
 	printf("  -n       Do not print a trailing newline character.\n");
-	printf("  -r[ywdhm]\n");
-	printf("           Round the duration down to the nearest multiple of\n");
-	printf("             [y]ears, [w]eeks, [d]ays, [h]ours, or [m]inutes.\n");
+	printf("  -0       Print values of zero.\n");
+	printf("\n");
+
+	printf("  UNIT is a character representing one of the following units of time.\n");
+	printf("    y = years\n");
+	printf("    w = weeks\n");
+	printf("    d = days\n");
+	printf("    h = hours\n");
+	printf("    m = minutes\n");
+	printf("    s = seconds\n");
 	printf("\n");
 }
 
@@ -130,7 +155,7 @@ int main(int argc, char* argv[])
 	bool print_zero_values = false;
 	bool suppress_newline = false;
 	unsigned long round_mult = 1;
-	const char* short_options = "+:Vhr:n0";
+	const char* short_options = "+:Vhl:n0";
 	int oc;
 
 	opterr = 0;
@@ -146,7 +171,7 @@ int main(int argc, char* argv[])
 			print_usage(argv[0]);
 			return 0;
 
-		case 'r':
+		case 'l':
 			switch (optarg[0])
 			{
 			case 'Y': case 'y': round_mult = seconds_per_year  ; break;
@@ -154,6 +179,7 @@ int main(int argc, char* argv[])
 			case 'D': case 'd': round_mult = seconds_per_day   ; break;
 			case 'H': case 'h': round_mult = seconds_per_hour  ; break;
 			case 'M': case 'm': round_mult = seconds_per_minute; break;
+			case 'S': case 's': round_mult =                  1; break;
 			default:
 				print_option_err(argv[0], "Unknown option value", optarg[0]);
 				return 1;
