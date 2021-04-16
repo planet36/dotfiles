@@ -18,15 +18,15 @@ void my_div_i(
 	*rem = (x % y);
 }
 
-const unsigned long seconds_per_minute = 60U;
-const unsigned long seconds_per_hour = seconds_per_minute * 60U;
-const unsigned long seconds_per_day = seconds_per_hour * 24U;
-const unsigned long seconds_per_week = seconds_per_day * 7U;
-const unsigned long seconds_per_year = 31556952U; // seconds_per_day * 365.2425
+const unsigned long seconds_per_minute = 60UL;
+const unsigned long seconds_per_hour = seconds_per_minute * 60UL;
+const unsigned long seconds_per_day = seconds_per_hour * 24UL;
+const unsigned long seconds_per_week = seconds_per_day * 7UL;
+const unsigned long seconds_per_year = 31556952UL; // seconds_per_day * 365.2425
 
 void durfmt(
 		unsigned long seconds,
-		const bool print_zero_seconds,
+		const bool print_zero_values,
 		const bool suppress_newline)
 {
 	bool printed_something = false;
@@ -82,7 +82,7 @@ void durfmt(
 		printed_something = true;
 	}
 
-	if (seconds > 0 || (print_zero_seconds && !printed_something))
+	if (seconds > 0 || (print_zero_values && !printed_something))
 	{
 		if (printed_something)
 			putchar(' ');
@@ -104,16 +104,16 @@ void print_usage(const char* argv0)
 {
 	printf("Usage: %s [OPTIONS]\n\n", argv0);
 	printf("Read a non-negative duration (in seconds) from stdin.\n");
-	printf("Break down the value into whole numbers of\n");
+	printf("Break down the duration into whole numbers of\n");
 	printf("  years, weeks, days, hours, minutes, and seconds.\n\n");
 	printf("OPTIONS\n");
-	printf("  -V    Print the version information and exit.\n");
-	printf("  -h    Print this message and exit.\n");
-	printf("  -0    Print zero seconds if nothing else was printed.\n");
-	printf("  -n    Do not print a trailing newline character.\n");
+	printf("  -V       Print the version information and exit.\n");
+	printf("  -h       Print this message and exit.\n");
+	printf("  -0       Print zero seconds if nothing else was printed.\n");
+	printf("  -n       Do not print a trailing newline character.\n");
 	printf("  -r[ywdhm]\n");
-	printf("        Round the duration down to the nearest multiple of\n");
-	printf("          [y]ears, [w]eeks, [d]ays, [h]ours, or [m]inutes.\n");
+	printf("           Round the duration down to the nearest multiple of\n");
+	printf("             [y]ears, [w]eeks, [d]ays, [h]ours, or [m]inutes.\n");
 	printf("\n");
 }
 
@@ -127,10 +127,10 @@ void print_option_err(const char* argv0, const char* msg, const int o)
 
 int main(int argc, char* argv[])
 {
-	bool print_zero_seconds = false;
+	bool print_zero_values = false;
 	bool suppress_newline = false;
-	unsigned long round_mult = 0;
-	const char* short_options = "+:Vh0nr:";
+	unsigned long round_mult = 1;
+	const char* short_options = "+:Vhr:n0";
 	int oc;
 
 	opterr = 0;
@@ -146,14 +146,6 @@ int main(int argc, char* argv[])
 			print_usage(argv[0]);
 			return 0;
 
-		case '0':
-			print_zero_seconds = true;
-			break;
-
-		case 'n':
-			suppress_newline = true;
-			break;
-
 		case 'r':
 			switch (optarg[0])
 			{
@@ -164,34 +156,24 @@ int main(int argc, char* argv[])
 			case 'M': case 'm': round_mult = seconds_per_minute; break;
 			default:
 				print_option_err(argv[0], "Unknown option value", optarg[0]);
-				/*
-				if (isprint(optarg[0]))
-					fprintf(stderr, "%s: Unknown option value: '%c'\n", argv[0], optarg[0]);
-				else
-					fprintf(stderr, "%s: Unknown option value: '\\x%x'\n", argv[0], optarg[0]);
-				*/
 				return 1;
 			}
 			break;
 
+		case 'n':
+			suppress_newline = true;
+			break;
+
+		case '0':
+			print_zero_values = true;
+			break;
+
 		case '?':
 			print_option_err(argv[0], "Unknown option", optopt);
-			/*
-			if (isprint(optopt))
-				fprintf(stderr, "%s: Unknown option: '%c'\n", argv[0], optopt);
-			else
-				fprintf(stderr, "%s: Unknown option: '\\x%x'\n", argv[0], optopt);
-			*/
 			return 1;
 
 		case ':':
 			print_option_err(argv[0], "Option requires a value", optopt);
-			/*
-			if (isprint(optopt))
-				fprintf(stderr, "%s: Option requires a value: '%c'\n", argv[0], optopt);
-			else
-				fprintf(stderr, "%s: Option requires a value: '\\x%x'\n", argv[0], optopt);
-			*/
 			return 1;
 
 		default:
@@ -209,9 +191,9 @@ int main(int argc, char* argv[])
 	while (getline(&line, &n, stdin) != EOF)
 	{
 		unsigned long seconds = strtoul(line, NULL, 0);
-		if (round_mult != 0)
+		if (round_mult > 1)
 			seconds -= (seconds % round_mult);
-		durfmt(seconds, print_zero_seconds, suppress_newline);
+		durfmt(seconds, print_zero_values, suppress_newline);
 		free(line);
 		line = NULL;
 		n = 0;
