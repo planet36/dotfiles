@@ -71,7 +71,7 @@ void durfmt(
 			if (width > 1)
 				printf("%0*luy", width, years);
 			else
-				printf("%0luy", years);
+				printf("%luy", years);
 			printed_something = true;
 		}
 	}
@@ -87,7 +87,7 @@ void durfmt(
 			if (width > 1)
 				printf("%0*luw", width, weeks);
 			else
-				printf("%0luw", weeks);
+				printf("%luw", weeks);
 			printed_something = true;
 		}
 	}
@@ -103,7 +103,7 @@ void durfmt(
 			if (width > 1)
 				printf("%0*lud", width, days);
 			else
-				printf("%0lud", days);
+				printf("%lud", days);
 			printed_something = true;
 		}
 	}
@@ -119,7 +119,7 @@ void durfmt(
 			if (width > 1)
 				printf("%0*luh", width, hours);
 			else
-				printf("%0luh", hours);
+				printf("%luh", hours);
 			printed_something = true;
 		}
 	}
@@ -135,7 +135,7 @@ void durfmt(
 			if (width > 1)
 				printf("%0*lum", width, minutes);
 			else
-				printf("%0lum", minutes);
+				printf("%lum", minutes);
 			printed_something = true;
 		}
 	}
@@ -149,7 +149,7 @@ void durfmt(
 			if (width > 1)
 				printf("%0*lus", width, seconds);
 			else
-				printf("%0lus", seconds);
+				printf("%lus", seconds);
 			printed_something = true;
 		}
 	}
