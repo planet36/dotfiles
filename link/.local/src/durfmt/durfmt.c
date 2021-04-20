@@ -88,19 +88,11 @@ struct durfmt_opts
 
 void durfmt_opts_init(struct durfmt_opts* opts)
 {
-	opts->width[UT_SECOND] = 1;
-	opts->width[UT_MINUTE] = 1;
-	opts->width[UT_HOUR  ] = 1;
-	opts->width[UT_DAY   ] = 1;
-	opts->width[UT_WEEK  ] = 1;
-	opts->width[UT_YEAR  ] = 1;
-
-	opts->print[UT_SECOND] = false;
-	opts->print[UT_MINUTE] = false;
-	opts->print[UT_HOUR  ] = false;
-	opts->print[UT_DAY   ] = false;
-	opts->print[UT_WEEK  ] = false;
-	opts->print[UT_YEAR  ] = false;
+	for (enum UT ut = UT_SECOND; ut <= UT_YEAR; ++ut)
+	{
+		opts->width[ut] = 1;
+		opts->print[ut] = false;
+	}
 
 	opts->print_inter_zero_values = false;
 	opts->print_all_zero_values = false;
@@ -113,94 +105,30 @@ void durfmt(unsigned long duration, const struct durfmt_opts* opts)
 	enum UT last_ut = -1;
 	unsigned long vals[UT_MAX] = {0};
 
-	     if (opts->print[UT_SECOND]) last_ut = UT_SECOND;
-	else if (opts->print[UT_MINUTE]) last_ut = UT_MINUTE;
-	else if (opts->print[UT_HOUR  ]) last_ut = UT_HOUR  ;
-	else if (opts->print[UT_DAY   ]) last_ut = UT_DAY   ;
-	else if (opts->print[UT_WEEK  ]) last_ut = UT_WEEK  ;
-	else if (opts->print[UT_YEAR  ]) last_ut = UT_YEAR  ;
-
-	if (opts->print[UT_YEAR])
+	for (enum UT ut = UT_SECOND; ut <= UT_YEAR; ++ut)
 	{
-		my_div_i(duration, seconds_per[UT_YEAR], &vals[UT_YEAR], &duration);
-
-		if (vals[UT_YEAR] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_YEAR) && opts->print_inter_zero_values))
+		if (opts->print[ut])
 		{
-			if (printed_something)
-				putchar(' ');
-			printf("%0*lu", opts->width[UT_YEAR], vals[UT_YEAR]);
-			putchar(ut_abbr[UT_YEAR]);
-			printed_something = true;
+			last_ut = ut;
+			break;
 		}
 	}
 
-	if (opts->print[UT_WEEK])
+	// the controlling expression must consider unsigned integer wrap around
+	for (enum UT ut = UT_YEAR; ut >= UT_SECOND && ut <= UT_YEAR; --ut)
 	{
-		my_div_i(duration, seconds_per[UT_WEEK], &vals[UT_WEEK], &duration);
-
-		if (vals[UT_WEEK] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_WEEK) && opts->print_inter_zero_values))
+		if (opts->print[ut])
 		{
-			if (printed_something)
-				putchar(' ');
-			printf("%0*lu", opts->width[UT_WEEK], vals[UT_WEEK]);
-			putchar(ut_abbr[UT_WEEK]);
-			printed_something = true;
-		}
-	}
+			my_div_i(duration, seconds_per[ut], &vals[ut], &duration);
 
-	if (opts->print[UT_DAY])
-	{
-		my_div_i(duration, seconds_per[UT_DAY], &vals[UT_DAY], &duration);
-
-		if (vals[UT_DAY] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_DAY) && opts->print_inter_zero_values))
-		{
-			if (printed_something)
-				putchar(' ');
-			printf("%0*lu", opts->width[UT_DAY], vals[UT_DAY]);
-			putchar(ut_abbr[UT_DAY]);
-			printed_something = true;
-		}
-	}
-
-	if (opts->print[UT_HOUR])
-	{
-		my_div_i(duration, seconds_per[UT_HOUR], &vals[UT_HOUR], &duration);
-
-		if (vals[UT_HOUR] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_HOUR) && opts->print_inter_zero_values))
-		{
-			if (printed_something)
-				putchar(' ');
-			printf("%0*lu", opts->width[UT_HOUR], vals[UT_HOUR]);
-			putchar(ut_abbr[UT_HOUR]);
-			printed_something = true;
-		}
-	}
-
-	if (opts->print[UT_MINUTE])
-	{
-		my_div_i(duration, seconds_per[UT_MINUTE], &vals[UT_MINUTE], &duration);
-
-		if (vals[UT_MINUTE] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_MINUTE) && opts->print_inter_zero_values))
-		{
-			if (printed_something)
-				putchar(' ');
-			printf("%0*lu", opts->width[UT_MINUTE], vals[UT_MINUTE]);
-			putchar(ut_abbr[UT_MINUTE]);
-			printed_something = true;
-		}
-	}
-
-	if (opts->print[UT_SECOND])
-	{
-		my_div_i(duration, seconds_per[UT_SECOND], &vals[UT_SECOND], &duration);
-
-		if (vals[UT_SECOND] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_SECOND) && opts->print_inter_zero_values))
-		{
-			if (printed_something)
-				putchar(' ');
-			printf("%0*lu", opts->width[UT_SECOND], vals[UT_SECOND]);
-			putchar(ut_abbr[UT_SECOND]);
-			printed_something = true;
+			if (vals[ut] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
+			{
+				if (printed_something)
+					putchar(' ');
+				printf("%0*lu", opts->width[ut], vals[ut]);
+				putchar(ut_abbr[ut]);
+				printed_something = true;
+			}
 		}
 	}
 
