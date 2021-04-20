@@ -23,6 +23,43 @@ enum UT
 	UT_MAX, // must be last
 };
 
+char c_from_ut(const enum UT ut)
+{
+	char c = -1;
+
+	switch (ut)
+	{
+	case UT_SECOND: c = 's'; break;
+	case UT_MINUTE: c = 'm'; break;
+	case UT_HOUR  : c = 'h'; break;
+	case UT_DAY   : c = 'd'; break;
+	case UT_WEEK  : c = 'w'; break;
+	case UT_YEAR  : c = 'y'; break;
+	case UT_MAX: break;
+	default: break;
+	}
+
+	return c;
+}
+
+enum UT ut_from_c(const char c)
+{
+	enum UT ut = -1;
+
+	switch (tolower(c))
+	{
+	case 's': ut = UT_SECOND; break;
+	case 'm': ut = UT_MINUTE; break;
+	case 'h': ut = UT_HOUR  ; break;
+	case 'd': ut = UT_DAY   ; break;
+	case 'w': ut = UT_WEEK  ; break;
+	case 'y': ut = UT_YEAR  ; break;
+	default: break;
+	}
+
+	return ut;
+}
+
 int strtoi(const char* s)
 {
 	long i = strtol(s, NULL, 0);
@@ -56,13 +93,6 @@ struct durfmt_opts
 	int w_w;
 	int w_y;
 
-	char u_s;
-	char u_m;
-	char u_h;
-	char u_d;
-	char u_w;
-	char u_y;
-
 	bool p_s;
 	bool p_m;
 	bool p_h;
@@ -84,13 +114,6 @@ void durfmt_opts_init(struct durfmt_opts* opts)
 	opts->w_w = 1;
 	opts->w_y = 1;
 
-	opts->u_s = 's';
-	opts->u_m = 'm';
-	opts->u_h = 'h';
-	opts->u_d = 'd';
-	opts->u_w = 'w';
-	opts->u_y = 'y';
-
 	opts->p_s = false;
 	opts->p_m = false;
 	opts->p_h = false;
@@ -106,25 +129,30 @@ void durfmt_opts_init(struct durfmt_opts* opts)
 void durfmt(unsigned long seconds, const struct durfmt_opts* opts)
 {
 	bool printed_something = false;
+	enum UT last_ut = -1;
 	unsigned long years = 0;
 	unsigned long weeks = 0;
 	unsigned long days = 0;
 	unsigned long hours = 0;
 	unsigned long minutes = 0;
 
+	     if (opts->p_s) last_ut = UT_SECOND;
+	else if (opts->p_m) last_ut = UT_MINUTE;
+	else if (opts->p_h) last_ut = UT_HOUR  ;
+	else if (opts->p_d) last_ut = UT_DAY   ;
+	else if (opts->p_w) last_ut = UT_WEEK  ;
+	else if (opts->p_y) last_ut = UT_YEAR  ;
+
 	if (opts->p_y)
 	{
 		my_div_i(seconds, seconds_per_year, &years, &seconds);
 
-		if (years > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
+		if (years > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_YEAR) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (opts->w_y > 1)
-				printf("%0*lu", opts->w_y, years);
-			else
-				printf("%lu", years);
-			putchar(opts->u_y);
+			printf("%0*lu", opts->w_y, years);
+			putchar(c_from_ut(UT_YEAR));
 			printed_something = true;
 		}
 	}
@@ -133,15 +161,12 @@ void durfmt(unsigned long seconds, const struct durfmt_opts* opts)
 	{
 		my_div_i(seconds, seconds_per_week, &weeks, &seconds);
 
-		if (weeks > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
+		if (weeks > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_WEEK) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (opts->w_w > 1)
-				printf("%0*lu", opts->w_w, weeks);
-			else
-				printf("%lu", weeks);
-			putchar(opts->u_w);
+			printf("%0*lu", opts->w_w, weeks);
+			putchar(c_from_ut(UT_WEEK));
 			printed_something = true;
 		}
 	}
@@ -150,15 +175,12 @@ void durfmt(unsigned long seconds, const struct durfmt_opts* opts)
 	{
 		my_div_i(seconds, seconds_per_day, &days, &seconds);
 
-		if (days > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
+		if (days > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_DAY) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (opts->w_d > 1)
-				printf("%0*lu", opts->w_d, days);
-			else
-				printf("%lu", days);
-			putchar(opts->u_d);
+			printf("%0*lu", opts->w_d, days);
+			putchar(c_from_ut(UT_DAY));
 			printed_something = true;
 		}
 	}
@@ -167,15 +189,12 @@ void durfmt(unsigned long seconds, const struct durfmt_opts* opts)
 	{
 		my_div_i(seconds, seconds_per_hour, &hours, &seconds);
 
-		if (hours > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
+		if (hours > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_HOUR) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (opts->w_h > 1)
-				printf("%0*lu", opts->w_h, hours);
-			else
-				printf("%lu", hours);
-			putchar(opts->u_h);
+			printf("%0*lu", opts->w_h, hours);
+			putchar(c_from_ut(UT_HOUR));
 			printed_something = true;
 		}
 	}
@@ -184,30 +203,24 @@ void durfmt(unsigned long seconds, const struct durfmt_opts* opts)
 	{
 		my_div_i(seconds, seconds_per_minute, &minutes, &seconds);
 
-		if (minutes > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
+		if (minutes > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_MINUTE) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (opts->w_m > 1)
-				printf("%0*lu", opts->w_m, minutes);
-			else
-				printf("%lu", minutes);
-			putchar(opts->u_m);
+			printf("%0*lu", opts->w_m, minutes);
+			putchar(c_from_ut(UT_MINUTE));
 			printed_something = true;
 		}
 	}
 
 	if (opts->p_s)
 	{
-		if (seconds > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
+		if (seconds > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_SECOND) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (opts->w_s > 1)
-				printf("%0*lu", opts->w_s, seconds);
-			else
-				printf("%lu", seconds);
-			putchar(opts->u_s);
+			printf("%0*lu", opts->w_s, seconds);
+			putchar(c_from_ut(UT_SECOND));
 			printed_something = true;
 		}
 	}
