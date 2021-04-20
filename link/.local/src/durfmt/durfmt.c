@@ -91,12 +91,12 @@ void durfmt_opts_init(struct durfmt_opts* opts)
 	opts->u_w = 'w';
 	opts->u_y = 'y';
 
-	opts->p_s = true;
-	opts->p_m = true;
-	opts->p_h = true;
-	opts->p_d = true;
-	opts->p_w = true;
-	opts->p_y = true;
+	opts->p_s = false;
+	opts->p_m = false;
+	opts->p_h = false;
+	opts->p_d = false;
+	opts->p_w = false;
+	opts->p_y = false;
 
 	opts->print_inter_zero_values = false;
 	opts->print_all_zero_values = false;
@@ -233,13 +233,11 @@ void print_usage(const char* argv0)
 	printf("OPTIONS\n");
 	printf("  -V       Print the version information and exit.\n");
 	printf("  -h       Print this message and exit.\n");
-	printf("  -l UNIT  Specify the least significant unit of time to be printed.\n");
-	printf("           UNIT must not be greater than the most significant unit of time.\n");
-	printf("           The default value is 's'.\n");
-	printf("  -m UNIT  Specify the most significant unit of time to be printed.\n");
-	printf("           UNIT must not be less than the least significant unit of time.\n");
-	printf("           The default value is 'y'.\n");
 	printf("  -n       Do not print a trailing newline character.\n");
+	printf("  -p UNITS Specify the units of time to be printed.\n");
+	printf("           Units of time not given are not printed.\n");
+	printf("           If this option is given more than once, only the last occurrence is respected.\n");
+	printf("           The default value is 'ywdhms'.\n");
 	printf("  -w WIDTH Specify the minimum field width for hours, minutes, and seconds values.\n");
 	printf("           If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
 	printf("           WIDTH must be a non-negative integer.\n");
@@ -271,9 +269,8 @@ int main(int argc, char* argv[])
 {
 	struct durfmt_opts opts;
 	int width = 1;
-	enum UT least_sig = UT_SECOND;
-	enum UT most_sig = UT_YEAR;
-	const char* short_options = "+:Vhl:m:nw:0";
+	const char* ut_to_print = "ywdhms";
+	const char* short_options = "+:Vhnp:w:0";
 	int oc;
 
 	durfmt_opts_init(&opts);
@@ -291,62 +288,23 @@ int main(int argc, char* argv[])
 			print_usage(argv[0]);
 			return 0;
 
-		case 'l':
-			switch (optarg[0])
-			{
-			case 'S': case 's': least_sig = UT_SECOND; break;
-			case 'M': case 'm': least_sig = UT_MINUTE; break;
-			case 'H': case 'h': least_sig = UT_HOUR  ; break;
-			case 'D': case 'd': least_sig = UT_DAY   ; break;
-			case 'W': case 'w': least_sig = UT_WEEK  ; break;
-			case 'Y': case 'y': least_sig = UT_YEAR  ; break;
-			default:
-				print_option_err(argv[0], "Unknown option value", optarg[0]);
-				return 1;
-			}
-			break;
-
-		case 'm':
-			switch (optarg[0])
-			{
-			case 'S': case 's': most_sig = UT_SECOND; break;
-			case 'M': case 'm': most_sig = UT_MINUTE; break;
-			case 'H': case 'h': most_sig = UT_HOUR  ; break;
-			case 'D': case 'd': most_sig = UT_DAY   ; break;
-			case 'W': case 'w': most_sig = UT_WEEK  ; break;
-			case 'Y': case 'y': most_sig = UT_YEAR  ; break;
-			default:
-				print_option_err(argv[0], "Unknown option value", optarg[0]);
-				return 1;
-			}
-			break;
-
 		case 'n':
 			opts.suppress_newline = true;
+			break;
+
+		case 'p':
+			ut_to_print = optarg;
 			break;
 
 		case 'w':
 			width = strtoi(optarg);
 			if (width < 0) width = 0;
 			if (width > 20) width = 20;
-
-			opts.w_s = width;
-			opts.w_m = width;
-			opts.w_h = width;
-			//opts.w_d = width;
-			//opts.w_w = width;
-			//opts.w_y = width;
 			break;
 
 		case '0':
-			if (opts.print_inter_zero_values)
-			{
-				opts.print_all_zero_values = true;
-			}
-			else
-			{
-				opts.print_inter_zero_values = true;
-			}
+			opts.print_all_zero_values = opts.print_inter_zero_values;
+			opts.print_inter_zero_values = true;
 			break;
 
 		case '?':
@@ -362,21 +320,33 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	if (most_sig < least_sig)
-	{
-		fprintf(stderr, "%s: Invalid option values: -m UNIT may not be less than -l UNIT\n", argv[0]);
-		return 1;
-	}
-
 	//argc -= optind;
 	//argv += optind;
 
-	opts.p_s = least_sig <= UT_SECOND && most_sig >= UT_SECOND;
-	opts.p_m = least_sig <= UT_MINUTE && most_sig >= UT_MINUTE;
-	opts.p_h = least_sig <= UT_HOUR   && most_sig >= UT_HOUR  ;
-	opts.p_d = least_sig <= UT_DAY    && most_sig >= UT_DAY   ;
-	opts.p_w = least_sig <= UT_WEEK   && most_sig >= UT_WEEK  ;
-	opts.p_y = least_sig <= UT_YEAR   && most_sig >= UT_YEAR  ;
+	opts.w_s = width;
+	opts.w_m = width;
+	opts.w_h = width;
+	//opts.w_d = width;
+	//opts.w_w = width;
+	//opts.w_y = width;
+
+	while (*ut_to_print)
+	{
+		switch (tolower(*ut_to_print))
+		{
+		case 's': opts.p_s = true; break;
+		case 'm': opts.p_m = true; break;
+		case 'h': opts.p_h = true; break;
+		case 'd': opts.p_d = true; break;
+		case 'w': opts.p_w = true; break;
+		case 'y': opts.p_y = true; break;
+		default:
+			print_option_err(argv[0], "Invalid option value", *ut_to_print);
+			return 1;
+		}
+
+		++ut_to_print;
+	}
 
 	char* line = NULL;
 	size_t n = 0;
