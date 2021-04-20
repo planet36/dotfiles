@@ -70,12 +70,9 @@ struct durfmt_opts
 	bool p_w;
 	bool p_y;
 
-	bool p_0s;
-	bool p_0m;
-	bool p_0h;
-	bool p_0d;
-	bool p_0w;
-	bool p_0y;
+	bool print_inter_zero_values;
+	bool print_all_zero_values;
+	bool suppress_newline;
 };
 
 void durfmt_opts_init(struct durfmt_opts* opts)
@@ -101,22 +98,12 @@ void durfmt_opts_init(struct durfmt_opts* opts)
 	opts->p_w = true;
 	opts->p_y = true;
 
-	opts->p_0s = false;
-	opts->p_0m = false;
-	opts->p_0h = false;
-	opts->p_0d = false;
-	opts->p_0w = false;
-	opts->p_0y = false;
+	opts->print_inter_zero_values = false;
+	opts->print_all_zero_values = false;
+	opts->suppress_newline = false;
 }
 
-void durfmt(
-		unsigned long seconds,
-		const int width,
-		const enum UT least_sig,
-		const enum UT most_sig,
-		const bool print_all_zero_values,
-		const bool print_inter_zero_values,
-		const bool suppress_newline)
+void durfmt(unsigned long seconds, const struct durfmt_opts* opts)
 {
 	bool printed_something = false;
 	unsigned long years = 0;
@@ -125,101 +112,107 @@ void durfmt(
 	unsigned long hours = 0;
 	unsigned long minutes = 0;
 
-	if (least_sig <= UT_YEAR && most_sig >= UT_YEAR)
+	if (opts->p_y)
 	{
 		my_div_i(seconds, seconds_per_year, &years, &seconds);
 
-		if (years > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
+		if (years > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (width > 1)
-				printf("%0*luy", width, years);
+			if (opts->w_y > 1)
+				printf("%0*lu", opts->w_y, years);
 			else
-				printf("%luy", years);
+				printf("%lu", years);
+			putchar(opts->u_y);
 			printed_something = true;
 		}
 	}
 
-	if (least_sig <= UT_WEEK && most_sig >= UT_WEEK)
+	if (opts->p_w)
 	{
 		my_div_i(seconds, seconds_per_week, &weeks, &seconds);
 
-		if (weeks > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
+		if (weeks > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (width > 1)
-				printf("%0*luw", width, weeks);
+			if (opts->w_w > 1)
+				printf("%0*lu", opts->w_w, weeks);
 			else
-				printf("%luw", weeks);
+				printf("%lu", weeks);
+			putchar(opts->u_w);
 			printed_something = true;
 		}
 	}
 
-	if (least_sig <= UT_DAY && most_sig >= UT_DAY)
+	if (opts->p_d)
 	{
 		my_div_i(seconds, seconds_per_day, &days, &seconds);
 
-		if (days > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
+		if (days > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (width > 1)
-				printf("%0*lud", width, days);
+			if (opts->w_d > 1)
+				printf("%0*lu", opts->w_d, days);
 			else
-				printf("%lud", days);
+				printf("%lu", days);
+			putchar(opts->u_d);
 			printed_something = true;
 		}
 	}
 
-	if (least_sig <= UT_HOUR && most_sig >= UT_HOUR)
+	if (opts->p_h)
 	{
 		my_div_i(seconds, seconds_per_hour, &hours, &seconds);
 
-		if (hours > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
+		if (hours > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (width > 1)
-				printf("%0*luh", width, hours);
+			if (opts->w_h > 1)
+				printf("%0*lu", opts->w_h, hours);
 			else
-				printf("%luh", hours);
+				printf("%lu", hours);
+			putchar(opts->u_h);
 			printed_something = true;
 		}
 	}
 
-	if (least_sig <= UT_MINUTE && most_sig >= UT_MINUTE)
+	if (opts->p_m)
 	{
 		my_div_i(seconds, seconds_per_minute, &minutes, &seconds);
 
-		if (minutes > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
+		if (minutes > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (width > 1)
-				printf("%0*lum", width, minutes);
+			if (opts->w_m > 1)
+				printf("%0*lu", opts->w_m, minutes);
 			else
-				printf("%lum", minutes);
+				printf("%lu", minutes);
+			putchar(opts->u_m);
 			printed_something = true;
 		}
 	}
 
-	if (least_sig <= UT_SECOND && most_sig >= UT_SECOND)
+	if (opts->p_s)
 	{
-		if (seconds > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
+		if (seconds > 0 || opts->print_all_zero_values || (printed_something && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			if (width > 1)
-				printf("%0*lus", width, seconds);
+			if (opts->w_s > 1)
+				printf("%0*lu", opts->w_s, seconds);
 			else
-				printf("%lus", seconds);
+				printf("%lu", seconds);
+			putchar(opts->u_s);
 			printed_something = true;
 		}
 	}
 
-	if (printed_something && !suppress_newline)
+	if (printed_something && !opts->suppress_newline)
 		putchar('\n');
 }
 
@@ -247,7 +240,7 @@ void print_usage(const char* argv0)
 	printf("           UNIT must not be less than the least significant unit of time.\n");
 	printf("           The default value is 'y'.\n");
 	printf("  -n       Do not print a trailing newline character.\n");
-	printf("  -w WIDTH Specify the minimum field width.\n");
+	printf("  -w WIDTH Specify the minimum field width for hours, minutes, and seconds values.\n");
 	printf("           If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
 	printf("           WIDTH must be a non-negative integer.\n");
 	printf("           The default value is 1.\n");
@@ -276,14 +269,14 @@ void print_option_err(const char* argv0, const char* msg, const int o)
 
 int main(int argc, char* argv[])
 {
+	struct durfmt_opts opts;
 	int width = 1;
-	bool print_inter_zero_values = false;
-	bool print_all_zero_values = false;
 	enum UT least_sig = UT_SECOND;
 	enum UT most_sig = UT_YEAR;
-	bool suppress_newline = false;
 	const char* short_options = "+:Vhl:m:nw:0";
 	int oc;
+
+	durfmt_opts_init(&opts);
 
 	opterr = 0;
 	while ((oc = getopt(argc, argv, short_options)) != -1)
@@ -301,12 +294,12 @@ int main(int argc, char* argv[])
 		case 'l':
 			switch (optarg[0])
 			{
-			case 'Y': case 'y': least_sig = UT_YEAR  ; break;
-			case 'W': case 'w': least_sig = UT_WEEK  ; break;
-			case 'D': case 'd': least_sig = UT_DAY   ; break;
-			case 'H': case 'h': least_sig = UT_HOUR  ; break;
-			case 'M': case 'm': least_sig = UT_MINUTE; break;
 			case 'S': case 's': least_sig = UT_SECOND; break;
+			case 'M': case 'm': least_sig = UT_MINUTE; break;
+			case 'H': case 'h': least_sig = UT_HOUR  ; break;
+			case 'D': case 'd': least_sig = UT_DAY   ; break;
+			case 'W': case 'w': least_sig = UT_WEEK  ; break;
+			case 'Y': case 'y': least_sig = UT_YEAR  ; break;
 			default:
 				print_option_err(argv[0], "Unknown option value", optarg[0]);
 				return 1;
@@ -316,12 +309,12 @@ int main(int argc, char* argv[])
 		case 'm':
 			switch (optarg[0])
 			{
-			case 'Y': case 'y': most_sig = UT_YEAR  ; break;
-			case 'W': case 'w': most_sig = UT_WEEK  ; break;
-			case 'D': case 'd': most_sig = UT_DAY   ; break;
-			case 'H': case 'h': most_sig = UT_HOUR  ; break;
-			case 'M': case 'm': most_sig = UT_MINUTE; break;
 			case 'S': case 's': most_sig = UT_SECOND; break;
+			case 'M': case 'm': most_sig = UT_MINUTE; break;
+			case 'H': case 'h': most_sig = UT_HOUR  ; break;
+			case 'D': case 'd': most_sig = UT_DAY   ; break;
+			case 'W': case 'w': most_sig = UT_WEEK  ; break;
+			case 'Y': case 'y': most_sig = UT_YEAR  ; break;
 			default:
 				print_option_err(argv[0], "Unknown option value", optarg[0]);
 				return 1;
@@ -329,23 +322,30 @@ int main(int argc, char* argv[])
 			break;
 
 		case 'n':
-			suppress_newline = true;
+			opts.suppress_newline = true;
 			break;
 
 		case 'w':
 			width = strtoi(optarg);
 			if (width < 0) width = 0;
 			if (width > 20) width = 20;
+
+			opts.w_s = width;
+			opts.w_m = width;
+			opts.w_h = width;
+			//opts.w_d = width;
+			//opts.w_w = width;
+			//opts.w_y = width;
 			break;
 
 		case '0':
-			if (print_inter_zero_values)
+			if (opts.print_inter_zero_values)
 			{
-				print_all_zero_values = true;
+				opts.print_all_zero_values = true;
 			}
 			else
 			{
-				print_inter_zero_values = true;
+				opts.print_inter_zero_values = true;
 			}
 			break;
 
@@ -371,6 +371,13 @@ int main(int argc, char* argv[])
 	//argc -= optind;
 	//argv += optind;
 
+	opts.p_s = least_sig <= UT_SECOND && most_sig >= UT_SECOND;
+	opts.p_m = least_sig <= UT_MINUTE && most_sig >= UT_MINUTE;
+	opts.p_h = least_sig <= UT_HOUR   && most_sig >= UT_HOUR  ;
+	opts.p_d = least_sig <= UT_DAY    && most_sig >= UT_DAY   ;
+	opts.p_w = least_sig <= UT_WEEK   && most_sig >= UT_WEEK  ;
+	opts.p_y = least_sig <= UT_YEAR   && most_sig >= UT_YEAR  ;
+
 	char* line = NULL;
 	size_t n = 0;
 	//ssize_t bytes_read = 0;
@@ -378,7 +385,7 @@ int main(int argc, char* argv[])
 	while (getline(&line, &n, stdin) != EOF)
 	{
 		unsigned long seconds = strtoul(line, NULL, 0);
-		durfmt(seconds, width, least_sig, most_sig, print_all_zero_values, print_inter_zero_values, suppress_newline);
+		durfmt(seconds, &opts);
 		free(line);
 		line = NULL;
 		n = 0;
