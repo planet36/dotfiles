@@ -51,6 +51,7 @@ void durfmt(
 		const int width,
 		const enum UT most_sig,
 		const bool print_all_zero_values,
+		const bool print_inter_zero_values,
 		const bool suppress_newline)
 {
 	bool printed_something = false;
@@ -64,7 +65,7 @@ void durfmt(
 	{
 		my_div_i(seconds, seconds_per_year, &years, &seconds);
 
-		if (years > 0 || print_all_zero_values)
+		if (years > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
@@ -80,7 +81,7 @@ void durfmt(
 	{
 		my_div_i(seconds, seconds_per_week, &weeks, &seconds);
 
-		if (weeks > 0 || print_all_zero_values)
+		if (weeks > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
@@ -96,7 +97,7 @@ void durfmt(
 	{
 		my_div_i(seconds, seconds_per_day, &days, &seconds);
 
-		if (days > 0 || print_all_zero_values)
+		if (days > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
@@ -112,7 +113,7 @@ void durfmt(
 	{
 		my_div_i(seconds, seconds_per_hour, &hours, &seconds);
 
-		if (hours > 0 || print_all_zero_values)
+		if (hours > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
@@ -128,7 +129,7 @@ void durfmt(
 	{
 		my_div_i(seconds, seconds_per_minute, &minutes, &seconds);
 
-		if (minutes > 0 || print_all_zero_values)
+		if (minutes > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
@@ -140,9 +141,9 @@ void durfmt(
 		}
 	}
 
-	//if (most_sig >= UT_SECOND)
+	if (most_sig >= UT_SECOND)
 	{
-		if (seconds > 0 || print_all_zero_values)
+		if (seconds > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
@@ -187,6 +188,8 @@ void print_usage(const char* argv0)
 	printf("           WIDTH must be a non-negative integer.\n");
 	printf("           The default value is 1.\n");
 	printf("  -0       Print values of zero.\n");
+	printf("           One -0 prints intermediate values of zero (occurring after the most significant printed value).\n");
+	printf("           Two -0 prints all values of zero.\n");
 	printf("\n");
 
 	printf("  UNIT is a character representing one of the following units of time.\n");
@@ -210,6 +213,7 @@ void print_option_err(const char* argv0, const char* msg, const int o)
 int main(int argc, char* argv[])
 {
 	int width = 1;
+	bool print_inter_zero_values = false;
 	bool print_all_zero_values = false;
 	enum UT least_sig = UT_SECOND;
 	enum UT most_sig = UT_YEAR;
@@ -272,7 +276,14 @@ int main(int argc, char* argv[])
 			break;
 
 		case '0':
-			print_all_zero_values = true;
+			if (print_inter_zero_values)
+			{
+				print_all_zero_values = true;
+			}
+			else
+			{
+				print_inter_zero_values = true;
+			}
 			break;
 
 		case '?':
@@ -317,7 +328,7 @@ int main(int argc, char* argv[])
 		unsigned long seconds = strtoul(line, NULL, 0);
 		if (round_mult > 1)
 			seconds -= (seconds % round_mult);
-		durfmt(seconds, width, most_sig, print_all_zero_values, suppress_newline);
+		durfmt(seconds, width, most_sig, print_all_zero_values, print_inter_zero_values, suppress_newline);
 		free(line);
 		line = NULL;
 		n = 0;
