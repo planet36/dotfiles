@@ -77,6 +77,37 @@ struct durfmt_opts
 	bool p_0s;
 };
 
+void durfmt_opts_init(struct durfmt_opts* opts)
+{
+	opts->w_y = 1;
+	opts->w_w = 1;
+	opts->w_d = 1;
+	opts->w_h = 1;
+	opts->w_m = 1;
+	opts->w_s = 1;
+
+	opts->u_y = 'y';
+	opts->u_w = 'w';
+	opts->u_d = 'd';
+	opts->u_h = 'h';
+	opts->u_m = 'm';
+	opts->u_s = 's';
+
+	opts->p_y = true;
+	opts->p_w = true;
+	opts->p_d = true;
+	opts->p_h = true;
+	opts->p_m = true;
+	opts->p_s = true;
+
+	opts->p_0y = false;
+	opts->p_0w = false;
+	opts->p_0d = false;
+	opts->p_0h = false;
+	opts->p_0m = false;
+	opts->p_0s = false;
+}
+
 void durfmt(
 		unsigned long seconds,
 		const int width,
