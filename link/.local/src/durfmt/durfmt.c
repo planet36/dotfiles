@@ -46,6 +46,37 @@ const unsigned long seconds_per_day = seconds_per_hour * 24UL;
 const unsigned long seconds_per_week = seconds_per_day * 7UL;
 const unsigned long seconds_per_year = 31556952UL; // seconds_per_day * 365.2425
 
+struct durfmt_opts
+{
+	int w_y;
+	int w_w;
+	int w_d;
+	int w_h;
+	int w_m;
+	int w_s;
+
+	char u_y;
+	char u_w;
+	char u_d;
+	char u_h;
+	char u_m;
+	char u_s;
+
+	bool p_y;
+	bool p_w;
+	bool p_d;
+	bool p_h;
+	bool p_m;
+	bool p_s;
+
+	bool p_0y;
+	bool p_0w;
+	bool p_0d;
+	bool p_0h;
+	bool p_0m;
+	bool p_0s;
+};
+
 void durfmt(
 		unsigned long seconds,
 		const int width,
