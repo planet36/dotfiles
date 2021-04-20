@@ -16,11 +16,11 @@ enum UT
 {
 	UT_SECOND,
 	UT_MINUTE,
-	UT_HOUR,
-	UT_DAY,
-	UT_WEEK,
-	UT_YEAR,
-	UT_MAX, // must be last
+	UT_HOUR  ,
+	UT_DAY   ,
+	UT_WEEK  ,
+	UT_YEAR  ,
+	UT_MAX   , // must be last
 };
 
 char c_from_ut(const enum UT ut)
@@ -247,8 +247,7 @@ void print_usage(const char* argv0)
 	printf("  -V       Print the version information and exit.\n");
 	printf("  -h       Print this message and exit.\n");
 	printf("  -n       Do not print a trailing newline character.\n");
-	printf("  -p UNITS Specify the units of time to be printed.\n");
-	printf("           Units of time not given are not printed.\n");
+	printf("  -p UNITS Specify the units of time to be printed.  Omitted units of time are not printed.\n");
 	printf("           If this option is given more than once, only the last occurrence is respected.\n");
 	printf("           The default value is 'ywdhms'.\n");
 	printf("  -w WIDTH Specify the minimum field width for hours, minutes, and seconds values.\n");
