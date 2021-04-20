@@ -49,6 +49,7 @@ const unsigned long seconds_per_year = 31556952UL; // seconds_per_day * 365.2425
 void durfmt(
 		unsigned long seconds,
 		const int width,
+		const enum UT least_sig,
 		const enum UT most_sig,
 		const bool print_all_zero_values,
 		const bool print_inter_zero_values,
@@ -61,7 +62,7 @@ void durfmt(
 	unsigned long hours = 0;
 	unsigned long minutes = 0;
 
-	if (most_sig >= UT_YEAR)
+	if (least_sig <= UT_YEAR && most_sig >= UT_YEAR)
 	{
 		my_div_i(seconds, seconds_per_year, &years, &seconds);
 
@@ -77,7 +78,7 @@ void durfmt(
 		}
 	}
 
-	if (most_sig >= UT_WEEK)
+	if (least_sig <= UT_WEEK && most_sig >= UT_WEEK)
 	{
 		my_div_i(seconds, seconds_per_week, &weeks, &seconds);
 
@@ -93,7 +94,7 @@ void durfmt(
 		}
 	}
 
-	if (most_sig >= UT_DAY)
+	if (least_sig <= UT_DAY && most_sig >= UT_DAY)
 	{
 		my_div_i(seconds, seconds_per_day, &days, &seconds);
 
@@ -109,7 +110,7 @@ void durfmt(
 		}
 	}
 
-	if (most_sig >= UT_HOUR)
+	if (least_sig <= UT_HOUR && most_sig >= UT_HOUR)
 	{
 		my_div_i(seconds, seconds_per_hour, &hours, &seconds);
 
@@ -125,7 +126,7 @@ void durfmt(
 		}
 	}
 
-	if (most_sig >= UT_MINUTE)
+	if (least_sig <= UT_MINUTE && most_sig >= UT_MINUTE)
 	{
 		my_div_i(seconds, seconds_per_minute, &minutes, &seconds);
 
@@ -141,7 +142,7 @@ void durfmt(
 		}
 	}
 
-	if (most_sig >= UT_SECOND)
+	if (least_sig <= UT_SECOND && most_sig >= UT_SECOND)
 	{
 		if (seconds > 0 || print_all_zero_values || (printed_something && print_inter_zero_values))
 		{
@@ -218,7 +219,6 @@ int main(int argc, char* argv[])
 	enum UT least_sig = UT_SECOND;
 	enum UT most_sig = UT_YEAR;
 	bool suppress_newline = false;
-	unsigned long round_mult = 1;
 	const char* short_options = "+:Vhl:m:nw:0";
 	int oc;
 
@@ -308,17 +308,6 @@ int main(int argc, char* argv[])
 	//argc -= optind;
 	//argv += optind;
 
-	switch (least_sig)
-	{
-	case UT_YEAR  : round_mult = seconds_per_year  ; break;
-	case UT_WEEK  : round_mult = seconds_per_week  ; break;
-	case UT_DAY   : round_mult = seconds_per_day   ; break;
-	case UT_HOUR  : round_mult = seconds_per_hour  ; break;
-	case UT_MINUTE: round_mult = seconds_per_minute; break;
-	case UT_SECOND: round_mult =                  1; break;
-	default: __builtin_unreachable(); break;
-	}
-
 	char* line = NULL;
 	size_t n = 0;
 	//ssize_t bytes_read = 0;
@@ -326,9 +315,7 @@ int main(int argc, char* argv[])
 	while (getline(&line, &n, stdin) != EOF)
 	{
 		unsigned long seconds = strtoul(line, NULL, 0);
-		if (round_mult > 1)
-			seconds -= (seconds % round_mult);
-		durfmt(seconds, width, most_sig, print_all_zero_values, print_inter_zero_values, suppress_newline);
+		durfmt(seconds, width, least_sig, most_sig, print_all_zero_values, print_inter_zero_values, suppress_newline);
 		free(line);
 		line = NULL;
 		n = 0;
