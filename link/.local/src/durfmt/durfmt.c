@@ -79,20 +79,8 @@ const unsigned long seconds_per[UT_MAX] = {
 
 struct durfmt_opts
 {
-	int w_s;
-	int w_m;
-	int w_h;
-	int w_d;
-	int w_w;
-	int w_y;
-
-	bool p_s;
-	bool p_m;
-	bool p_h;
-	bool p_d;
-	bool p_w;
-	bool p_y;
-
+	int width[UT_MAX];
+	bool print[UT_MAX];
 	bool print_inter_zero_values;
 	bool print_all_zero_values;
 	bool suppress_newline;
@@ -100,119 +88,117 @@ struct durfmt_opts
 
 void durfmt_opts_init(struct durfmt_opts* opts)
 {
-	opts->w_s = 1;
-	opts->w_m = 1;
-	opts->w_h = 1;
-	opts->w_d = 1;
-	opts->w_w = 1;
-	opts->w_y = 1;
+	opts->width[UT_SECOND] = 1;
+	opts->width[UT_MINUTE] = 1;
+	opts->width[UT_HOUR  ] = 1;
+	opts->width[UT_DAY   ] = 1;
+	opts->width[UT_WEEK  ] = 1;
+	opts->width[UT_YEAR  ] = 1;
 
-	opts->p_s = false;
-	opts->p_m = false;
-	opts->p_h = false;
-	opts->p_d = false;
-	opts->p_w = false;
-	opts->p_y = false;
+	opts->print[UT_SECOND] = false;
+	opts->print[UT_MINUTE] = false;
+	opts->print[UT_HOUR  ] = false;
+	opts->print[UT_DAY   ] = false;
+	opts->print[UT_WEEK  ] = false;
+	opts->print[UT_YEAR  ] = false;
 
 	opts->print_inter_zero_values = false;
 	opts->print_all_zero_values = false;
 	opts->suppress_newline = false;
 }
 
-void durfmt(unsigned long seconds, const struct durfmt_opts* opts)
+void durfmt(unsigned long duration, const struct durfmt_opts* opts)
 {
 	bool printed_something = false;
 	enum UT last_ut = -1;
-	unsigned long years = 0;
-	unsigned long weeks = 0;
-	unsigned long days = 0;
-	unsigned long hours = 0;
-	unsigned long minutes = 0;
+	unsigned long vals[UT_MAX] = {0};
 
-	     if (opts->p_s) last_ut = UT_SECOND;
-	else if (opts->p_m) last_ut = UT_MINUTE;
-	else if (opts->p_h) last_ut = UT_HOUR  ;
-	else if (opts->p_d) last_ut = UT_DAY   ;
-	else if (opts->p_w) last_ut = UT_WEEK  ;
-	else if (opts->p_y) last_ut = UT_YEAR  ;
+	     if (opts->print[UT_SECOND]) last_ut = UT_SECOND;
+	else if (opts->print[UT_MINUTE]) last_ut = UT_MINUTE;
+	else if (opts->print[UT_HOUR  ]) last_ut = UT_HOUR  ;
+	else if (opts->print[UT_DAY   ]) last_ut = UT_DAY   ;
+	else if (opts->print[UT_WEEK  ]) last_ut = UT_WEEK  ;
+	else if (opts->print[UT_YEAR  ]) last_ut = UT_YEAR  ;
 
-	if (opts->p_y)
+	if (opts->print[UT_YEAR])
 	{
-		my_div_i(seconds, seconds_per[UT_YEAR], &years, &seconds);
+		my_div_i(duration, seconds_per[UT_YEAR], &vals[UT_YEAR], &duration);
 
-		if (years > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_YEAR) && opts->print_inter_zero_values))
+		if (vals[UT_YEAR] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_YEAR) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%0*lu", opts->w_y, years);
+			printf("%0*lu", opts->width[UT_YEAR], vals[UT_YEAR]);
 			putchar(ut_abbr[UT_YEAR]);
 			printed_something = true;
 		}
 	}
 
-	if (opts->p_w)
+	if (opts->print[UT_WEEK])
 	{
-		my_div_i(seconds, seconds_per[UT_WEEK], &weeks, &seconds);
+		my_div_i(duration, seconds_per[UT_WEEK], &vals[UT_WEEK], &duration);
 
-		if (weeks > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_WEEK) && opts->print_inter_zero_values))
+		if (vals[UT_WEEK] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_WEEK) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%0*lu", opts->w_w, weeks);
+			printf("%0*lu", opts->width[UT_WEEK], vals[UT_WEEK]);
 			putchar(ut_abbr[UT_WEEK]);
 			printed_something = true;
 		}
 	}
 
-	if (opts->p_d)
+	if (opts->print[UT_DAY])
 	{
-		my_div_i(seconds, seconds_per[UT_DAY], &days, &seconds);
+		my_div_i(duration, seconds_per[UT_DAY], &vals[UT_DAY], &duration);
 
-		if (days > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_DAY) && opts->print_inter_zero_values))
+		if (vals[UT_DAY] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_DAY) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%0*lu", opts->w_d, days);
+			printf("%0*lu", opts->width[UT_DAY], vals[UT_DAY]);
 			putchar(ut_abbr[UT_DAY]);
 			printed_something = true;
 		}
 	}
 
-	if (opts->p_h)
+	if (opts->print[UT_HOUR])
 	{
-		my_div_i(seconds, seconds_per[UT_HOUR], &hours, &seconds);
+		my_div_i(duration, seconds_per[UT_HOUR], &vals[UT_HOUR], &duration);
 
-		if (hours > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_HOUR) && opts->print_inter_zero_values))
+		if (vals[UT_HOUR] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_HOUR) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%0*lu", opts->w_h, hours);
+			printf("%0*lu", opts->width[UT_HOUR], vals[UT_HOUR]);
 			putchar(ut_abbr[UT_HOUR]);
 			printed_something = true;
 		}
 	}
 
-	if (opts->p_m)
+	if (opts->print[UT_MINUTE])
 	{
-		my_div_i(seconds, seconds_per[UT_MINUTE], &minutes, &seconds);
+		my_div_i(duration, seconds_per[UT_MINUTE], &vals[UT_MINUTE], &duration);
 
-		if (minutes > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_MINUTE) && opts->print_inter_zero_values))
+		if (vals[UT_MINUTE] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_MINUTE) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%0*lu", opts->w_m, minutes);
+			printf("%0*lu", opts->width[UT_MINUTE], vals[UT_MINUTE]);
 			putchar(ut_abbr[UT_MINUTE]);
 			printed_something = true;
 		}
 	}
 
-	if (opts->p_s)
+	if (opts->print[UT_SECOND])
 	{
-		if (seconds > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_SECOND) && opts->print_inter_zero_values))
+		my_div_i(duration, seconds_per[UT_SECOND], &vals[UT_SECOND], &duration);
+
+		if (vals[UT_SECOND] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == UT_SECOND) && opts->print_inter_zero_values))
 		{
 			if (printed_something)
 				putchar(' ');
-			printf("%0*lu", opts->w_s, seconds);
+			printf("%0*lu", opts->width[UT_SECOND], vals[UT_SECOND]);
 			putchar(ut_abbr[UT_SECOND]);
 			printed_something = true;
 		}
@@ -328,23 +314,23 @@ int main(int argc, char* argv[])
 	//argc -= optind;
 	//argv += optind;
 
-	opts.w_s = width;
-	opts.w_m = width;
-	opts.w_h = width;
-	//opts.w_d = width;
-	//opts.w_w = width;
-	//opts.w_y = width;
+	opts.width[UT_SECOND] = width;
+	opts.width[UT_MINUTE] = width;
+	opts.width[UT_HOUR  ] = width;
+	//opts.width[UT_DAY   ] = width;
+	//opts.width[UT_WEEK  ] = width;
+	//opts.width[UT_YEAR  ] = width;
 
 	while (*ut_to_print)
 	{
 		switch (tolower(*ut_to_print))
 		{
-		case 's': opts.p_s = true; break;
-		case 'm': opts.p_m = true; break;
-		case 'h': opts.p_h = true; break;
-		case 'd': opts.p_d = true; break;
-		case 'w': opts.p_w = true; break;
-		case 'y': opts.p_y = true; break;
+		case 's': opts.print[UT_SECOND] = true; break;
+		case 'm': opts.print[UT_MINUTE] = true; break;
+		case 'h': opts.print[UT_HOUR  ] = true; break;
+		case 'd': opts.print[UT_DAY   ] = true; break;
+		case 'w': opts.print[UT_WEEK  ] = true; break;
+		case 'y': opts.print[UT_YEAR  ] = true; break;
 		default:
 			print_option_err(argv[0], "Invalid option value", *ut_to_print);
 			return 1;
