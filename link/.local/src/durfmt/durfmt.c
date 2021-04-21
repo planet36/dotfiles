@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w16a"; // date +'%yw%Ua'
+const char program_version[] = "21w16b"; // date +'%yw%Ua'
 
 /// unit of time
 enum UT
@@ -31,6 +31,22 @@ const char ut_abbr[UT_MAX] = {
 	[UT_WEEK  ] = 'w',
 	[UT_YEAR  ] = 'y',
 };
+
+bool valid_ut_abbr(const char c)
+{
+	switch (tolower(c))
+	{
+	case 's':
+	case 'm':
+	case 'h':
+	case 'd':
+	case 'w':
+	case 'y':
+		return true;
+	default:
+		return false;
+	}
+}
 
 enum UT ut_from_c(const char c)
 {
@@ -101,9 +117,9 @@ void durfmt_opts_init(struct durfmt_opts* opts)
 
 void durfmt(unsigned long duration, const struct durfmt_opts* opts)
 {
-	bool printed_something = false;
 	enum UT last_ut = -1;
 	unsigned long vals[UT_MAX] = {0};
+	bool printed_something = false;
 
 	for (enum UT ut = UT_SECOND; ut <= UT_YEAR; ++ut)
 	{
@@ -187,13 +203,13 @@ void print_option_err(const char* argv0, const char* msg, const int o)
 int main(int argc, char* argv[])
 {
 	struct durfmt_opts opts;
-	int width = 1;
 	const char* ut_to_print = "ywdhms";
-	const char* short_options = "+:Vhnp:w:0";
-	int oc;
+	int width = 1;
 
 	durfmt_opts_init(&opts);
 
+	int oc;
+	const char* short_options = "+:Vhnp:w:0";
 	opterr = 0;
 	while ((oc = getopt(argc, argv, short_options)) != -1)
 	{
@@ -219,6 +235,7 @@ int main(int argc, char* argv[])
 			width = strtoi(optarg);
 			if (width < 0) width = 0;
 			if (width > 20) width = 20;
+			opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = width;
 			break;
 
 		case '0':
@@ -242,29 +259,15 @@ int main(int argc, char* argv[])
 	//argc -= optind;
 	//argv += optind;
 
-	opts.width[UT_SECOND] = width;
-	opts.width[UT_MINUTE] = width;
-	opts.width[UT_HOUR  ] = width;
-	//opts.width[UT_DAY   ] = width;
-	//opts.width[UT_WEEK  ] = width;
-	//opts.width[UT_YEAR  ] = width;
-
-	while (*ut_to_print)
+	for (size_t i = 0; ut_to_print[i]; ++i)
 	{
-		switch (tolower(*ut_to_print))
+		if (!valid_ut_abbr(ut_to_print[i]))
 		{
-		case 's': opts.print[UT_SECOND] = true; break;
-		case 'm': opts.print[UT_MINUTE] = true; break;
-		case 'h': opts.print[UT_HOUR  ] = true; break;
-		case 'd': opts.print[UT_DAY   ] = true; break;
-		case 'w': opts.print[UT_WEEK  ] = true; break;
-		case 'y': opts.print[UT_YEAR  ] = true; break;
-		default:
-			print_option_err(argv[0], "Invalid option value", *ut_to_print);
+			print_option_err(argv[0], "Invalid option value", ut_to_print[i]);
 			return 1;
 		}
 
-		++ut_to_print;
+		opts.print[ut_from_c(ut_to_print[i])] = true;
 	}
 
 	char* line = NULL;
