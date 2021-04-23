@@ -50,4 +50,4 @@ except (IndexError, ValueError):
 	sys.exit(1)
 
 for line in sys.stdin:
-	print(shortenpath(line, n))
+	print(shortenpath(line.rstrip(os.linesep), n))
