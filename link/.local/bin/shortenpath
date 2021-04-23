@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=line-too-long
+# pylint: disable=missing-module-docstring
+# pylint: disable=no-else-return
+
+import os
+import sys
+
+def shortenpath(path: str, maxlen: int) -> str:
+	'''Shorten path by trimming the largest parts of it.  Horizontal ellipsis (…) replace the trimmed characters.
+The result length might be more than maxlen because the path parts will not be trimmed below a certain length.'''
+
+	HOME = os.environ['HOME']
+	sep = os.sep
+
+	if path == HOME:
+		return '~'
+	elif path.startswith(HOME + sep):
+		path = '~' + path[len(HOME):]
+
+	num_to_remove = len(path) - maxlen
+
+	if num_to_remove <= 0:
+		return path
+
+	# Each path part becomes a list of chars
+	parts = [list(part) for part in path.split(sep)]
+
+	while num_to_remove > 0:
+
+		longest_part = max(reversed(parts), key=len)
+
+		if len(longest_part) <= 2:
+			# Do not trim any more
+			break
+
+		longest_part.pop()
+		longest_part[-1] = '…'
+		num_to_remove -= 1
+
+	return sep.join(''.join(part) for part in parts)
+
+try:
+	n = int(sys.argv[1])
+except (IndexError, ValueError):
+	print(f"{sys.argv[0]}: Must give integer for maximum length", file=sys.stderr)
+	sys.exit(1)
+
+for line in sys.stdin:
+	print(shortenpath(line, n))
