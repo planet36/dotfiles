@@ -59,6 +59,7 @@ OPTIONS
        vim/nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
          - as_bool
+         - durfmt
          - dir_is_empty
          - dwm
          - scroll
@@ -499,6 +500,17 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
+    cd durfmt || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+        echo \
+        make install
+    else
+        make install
+    fi
+    cd - > /dev/null || return
+
     cd dwm || return
     if $DRY_RUN
     then
@@ -594,7 +606,7 @@ install_local_programs() {
 
 uninstall_local_programs() {
 
-    for FILE in as_bool dir_is_empty
+    for FILE in as_bool dir_is_empty durfmt swp
     do
         if [[ -d ~/.local/src/"$FILE" ]]
         then
