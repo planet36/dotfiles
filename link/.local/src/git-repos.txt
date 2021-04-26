@@ -1,5 +1,4 @@
 https://git.suckless.org/dwm dwm-suckless
-https://git.suckless.org/scroll
 https://git.suckless.org/slstatus slstatus-suckless
 https://git.suckless.org/st st-suckless
 https://github.com/planet36/arch-install.git

@@ -62,7 +62,6 @@ OPTIONS
          - durfmt
          - dir_is_empty
          - dwm
-         - scroll
          - slstatus
          - st
          - stw
@@ -533,17 +532,6 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
-    cd scroll || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-    else
-        make || return
-        [[ ! -e ~/.local/bin/scroll ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- scroll
-    fi
-    cd - > /dev/null || return
-
     cd slstatus || return
     if $DRY_RUN
     then
@@ -631,7 +619,7 @@ uninstall_local_programs() {
         #fi
     done
 
-    for LINK in dwm scroll slstatus st stw
+    for LINK in dwm slstatus st stw
     do
         if [[ -L ~/.local/bin/"$LINK" ]]
         then
