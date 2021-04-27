@@ -312,7 +312,7 @@ set --export EXTRACXXFLAGS -fchar8_t -fdiagnostics-show-template-tree -Wctor-dto
 #OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
 set --export OPTIMIZE_OPTIONS -O3 -flto -march=native
 
-set --export DEBUG_OPTIONS -Og -ggdb3
+set --export DEBUG_OPTIONS -Og -g3
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
 set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
 

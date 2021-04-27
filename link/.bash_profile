@@ -166,7 +166,7 @@ export EXTRACXXFLAGS='-fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-pri
 #OPTIMIZE_OPTIONS='-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
 export OPTIMIZE_OPTIONS='-O3 -flto -march=native'
 
-export DEBUG_OPTIONS='-Og -ggdb3'
+export DEBUG_OPTIONS='-Og -g3'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
 DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR'
 
