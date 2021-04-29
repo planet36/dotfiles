@@ -1,15 +1,16 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+#include "util.h"
+
 #include <ctype.h>
-#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w16b"; // date +'%yw%Ua'
+const char program_version[] = "21w17b"; // date +'%yw%Ua'
 
 /// unit of time
 enum UT
@@ -64,24 +65,6 @@ enum UT ut_from_c(const char c)
 	}
 
 	return ut;
-}
-
-int strtoi(const char* s)
-{
-	long i = strtol(s, NULL, 0);
-
-	if (i < INT_MIN) i = INT_MIN;
-	else if (i > INT_MAX) i = INT_MAX;
-
-	return (int)i;
-}
-
-void my_div_i(
-		const unsigned long x, const unsigned long y,
-		unsigned long* quo, unsigned long* rem)
-{
-	*quo = (x / y);
-	*rem = (x % y);
 }
 
 const unsigned long seconds_per[UT_MAX] = {
