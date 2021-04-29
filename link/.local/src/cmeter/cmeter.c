@@ -1,8 +1,9 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+#include "util.h"
+
 #include <ctype.h>
-#include <limits.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -10,29 +11,12 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w17a"; // date +'%yw%Ua'
+const char program_version[] = "21w17b"; // date +'%yw%Ua'
 
 const char default_fill = '#';
 const char default_unfill = ' ';
 const unsigned short default_width = 10;
 const unsigned short max_width = 1000;
-
-unsigned short strtous(const char* s)
-{
-	unsigned long i = strtoul(s, NULL, 0);
-
-	if (i > USHRT_MAX) i = USHRT_MAX;
-
-	return (unsigned short)i;
-}
-
-// https://stackoverflow.com/a/16659263
-double clamp(double x, double min, double max)
-{
-	double xx = x < min ? min : x;
-	return xx > max ? max : xx;
-	//return fmin(fmax(x, min), max);
-}
 
 struct meter_opts
 {
@@ -61,16 +45,16 @@ void print_cmeter(double x, const struct meter_opts* opts)
 
 	if (opts->left_to_right)
 	{
-		for (size_t i = 0; i < num_filled; ++i)
+		for (unsigned int i = 0; i < num_filled; ++i)
 			putchar(opts->fill);
-		for (size_t i = 0; i < num_unfilled; ++i)
+		for (unsigned int i = 0; i < num_unfilled; ++i)
 			putchar(opts->unfill);
 	}
 	else
 	{
-		for (size_t i = 0; i < num_unfilled; ++i)
+		for (unsigned int i = 0; i < num_unfilled; ++i)
 			putchar(opts->unfill);
-		for (size_t i = 0; i < num_filled; ++i)
+		for (unsigned int i = 0; i < num_filled; ++i)
 			putchar(opts->fill);
 	}
 
