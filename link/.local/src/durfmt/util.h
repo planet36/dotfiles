@@ -5,5 +5,5 @@
 
 int strtoi(const char* s);
 void my_div_i(
-		const unsigned long x, const unsigned long y,
+		unsigned long x, unsigned long y,
 		unsigned long* quo, unsigned long* rem);
