@@ -630,11 +630,11 @@ install_local_programs() {
 
 uninstall_local_programs() {
 
-    for FILE in as_bool cmeter cpuavgd dir_is_empty durfmt nettxavgd swp
+    for DIR in as_bool cmeter cpuavgd dir_is_empty durfmt nettxavgd swp
     do
-        if [[ -d ~/.local/src/"$FILE" ]]
+        if [[ -d ~/.local/src/"$DIR" ]]
         then
-            cd ~/.local/src/"$FILE" || return
+            cd ~/.local/src/"$DIR" || return
             if $DRY_RUN
             then
                 echo "# install" "$(basename -- "$PWD")"
