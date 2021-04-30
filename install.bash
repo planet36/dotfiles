@@ -457,183 +457,49 @@ install_local_programs() {
     else
         grep -E -o '^[^#]+' ~/.local/src/git-repos.txt | xargs -r -L 1 git clone
 
-        # Add remotes to the suckless programs
+        # These programs were forked from suckless
+        for PROGRAM in dwm slstatus st
+        do
+            # Add remotes to the suckless programs
 
-        # My dwm is forked from suckless
-        cd dwm || return
-        git remote add suckless https://git.suckless.org/dwm
-        git remote set-url --push suckless DISABLE
-        git fetch suckless
+            cd "$PROGRAM" || return
+            git remote add suckless https://git.suckless.org/"$PROGRAM"
+            git remote set-url --push suckless DISABLE
+            git fetch suckless
+            cd - > /dev/null || return
+        done
+    fi
+
+    for DIR in as_bool cmeter cpuavgd dir_is_empty durfmt netrxavgd nettxavgd swp
+    do
+        if [[ -d "$DIR" ]]
+        then
+            cd "$DIR" || return
+            if $DRY_RUN
+            then
+                echo "# install" "$(basename -- "$PWD")"
+                echo \
+                make install
+            else
+                make install
+            fi
+            cd - > /dev/null || return
+        fi
+    done
+
+    for PROGRAM in dwm slstatus st stw
+    do
+        cd "$PROGRAM" || return
+        if $DRY_RUN
+        then
+            echo "# install" "$(basename -- "$PWD")"
+        else
+            make || return
+            [[ ! -e ~/.local/bin/"$PROGRAM" ]] &&
+            ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- "$PROGRAM"
+        fi
         cd - > /dev/null || return
-
-        # My slstatus is forked from suckless
-        cd slstatus || return
-        git remote add suckless https://git.suckless.org/slstatus
-        git remote set-url --push suckless DISABLE
-        git fetch suckless
-        cd - > /dev/null || return
-
-        # My st is forked from suckless
-        cd st || return
-        git remote add suckless https://git.suckless.org/st
-        git remote set-url --push suckless DISABLE
-        git fetch suckless
-        cd - > /dev/null || return
-    fi
-
-    cd as_bool || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
-
-    cd cmeter || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
-
-    cd cpuavgd || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
-
-    cd dir_is_empty || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
-
-    cd durfmt || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
-
-    cd dwm || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-    else
-        make || return
-        [[ ! -e ~/.local/bin/dwm ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
-    fi
-    cd - > /dev/null || return
-
-    cd dwm-suckless || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-    else
-        make || return
-        [[ ! -e ~/.local/bin/dwm ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- dwm
-    fi
-    cd - > /dev/null || return
-
-    cd netrxavgd || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
-
-    cd nettxavgd || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
-
-    cd slstatus || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-    else
-        make || return
-        [[ ! -e ~/.local/bin/slstatus ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- slstatus
-    fi
-    cd - > /dev/null || return
-
-    cd st || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-    else
-        make || return
-        [[ ! -e ~/.local/bin/st ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
-    fi
-    cd - > /dev/null || return
-
-    cd st-suckless || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-    else
-        make || return
-        [[ ! -e ~/.local/bin/st ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- st
-    fi
-    cd - > /dev/null || return
-
-    cd stw || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-    else
-        make || return
-        [[ ! -e ~/.local/bin/stw ]] &&
-        ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- stw
-    fi
-    cd - > /dev/null || return
-
-    cd swp || return
-    if $DRY_RUN
-    then
-        echo "# install" "$(basename -- "$PWD")"
-        echo \
-        make install
-    else
-        make install
-    fi
-    cd - > /dev/null || return
+    done
 
     # https://github.com/koalaman/shellcheck/issues/613
     # shellcheck disable=SC2164
@@ -649,7 +515,9 @@ uninstall_local_programs() {
             cd ~/.local/src/"$DIR" || return
             if $DRY_RUN
             then
-                echo "# install" "$(basename -- "$PWD")"
+                echo "# uninstall" "$(basename -- "$PWD")"
+                echo \
+                make distclean
             else
                 make distclean || return
             fi
