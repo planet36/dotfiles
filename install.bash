@@ -60,6 +60,7 @@ OPTIONS
        programs to ~/.local/bin
          - as_bool
          - cmeter
+         - cpuavgd
          - dir_is_empty
          - durfmt
          - dwm
@@ -500,6 +501,17 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
+    cd cpuavgd || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+        echo \
+        make install
+    else
+        make install
+    fi
+    cd - > /dev/null || return
+
     cd dir_is_empty || return
     if $DRY_RUN
     then
@@ -606,7 +618,7 @@ install_local_programs() {
 
 uninstall_local_programs() {
 
-    for FILE in as_bool cmeter dir_is_empty durfmt swp
+    for FILE in as_bool cmeter cpuavgd dir_is_empty durfmt swp
     do
         if [[ -d ~/.local/src/"$FILE" ]]
         then
