@@ -64,6 +64,7 @@ OPTIONS
          - dir_is_empty
          - durfmt
          - dwm
+         - nettxavgd
          - slstatus
          - st
          - stw
@@ -556,6 +557,17 @@ install_local_programs() {
     fi
     cd - > /dev/null || return
 
+    cd nettxavgd || return
+    if $DRY_RUN
+    then
+        echo "# install" "$(basename -- "$PWD")"
+        echo \
+        make install
+    else
+        make install
+    fi
+    cd - > /dev/null || return
+
     cd slstatus || return
     if $DRY_RUN
     then
@@ -618,7 +630,7 @@ install_local_programs() {
 
 uninstall_local_programs() {
 
-    for FILE in as_bool cmeter cpuavgd dir_is_empty durfmt swp
+    for FILE in as_bool cmeter cpuavgd dir_is_empty durfmt nettxavgd swp
     do
         if [[ -d ~/.local/src/"$FILE" ]]
         then
