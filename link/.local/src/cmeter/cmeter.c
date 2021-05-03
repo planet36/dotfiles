@@ -11,7 +11,7 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w17b"; // date +'%yw%Ua'
+const char program_version[] = "1.0.0";
 
 const char default_fill = '#';
 const char default_unfill = ' ';

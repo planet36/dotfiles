@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w17a"; // date +'%yw%Ua'
+const char program_version[] = "1.0.0";
 
 const unsigned int default_init_delay_ms = 2000;
 const unsigned int default_interval_ms = 2000;
