@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+#include <err.h>
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
@@ -12,24 +13,20 @@ int main(int argc, char* argv[])
 {
 	if (argc < 1)
 	{
-		fprintf(stderr, "missing file operands\n");
-		return EXIT_FAILURE;
+		errx(EXIT_FAILURE, "missing file operands");
 	}
 	else if (argc < 2)
 	{
-		fprintf(stderr, "%s: missing file operands\n", argv[0]);
-		return EXIT_FAILURE;
+		errx(EXIT_FAILURE, "missing file operands");
 	}
 	else if (argc < 3)
 	{
-		fprintf(stderr, "%s: missing file operand after \"%s\"\n", argv[0], argv[1]);
-		return EXIT_FAILURE;
+		errx(EXIT_FAILURE, "missing file operand after \"%s\"", argv[1]);
 	}
 
 	if (renameat2(AT_FDCWD, argv[1], AT_FDCWD, argv[2], RENAME_EXCHANGE) < 0)
 	{
-		perror("renameat2");
-		return EXIT_FAILURE;
+		err(EXIT_FAILURE, "renameat2");
 	}
 
 	return EXIT_SUCCESS;
