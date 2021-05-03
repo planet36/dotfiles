@@ -10,7 +10,9 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+// Not re-entrant
 char* escape_char(int ch)
 {
 	static char buf[32] = {'\0'};
@@ -24,6 +26,14 @@ unsigned int strtou(const char* s)
 	if (i > UINT_MAX)
 		i = UINT_MAX;
 	return (unsigned int)i;
+}
+
+int scandir_filter(const struct dirent *dirent)
+{
+	// Exclude these names
+	return strcmp(dirent->d_name, ".") != 0 &&
+	       strcmp(dirent->d_name, "..") != 0 &&
+	       strcmp(dirent->d_name, "lo") != 0;
 }
 
 // {{{ copied from my slstatus
