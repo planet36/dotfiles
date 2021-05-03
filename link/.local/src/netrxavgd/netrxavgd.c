@@ -15,10 +15,11 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "21w17a"; // date +'%yw%Ua'
+const char program_version[] = "1.1.0";
 
 const unsigned int default_init_delay_ms = 2000;
 const unsigned int default_interval_ms = 2000;
+char default_net_iface[NAME_MAX+1] = {'\0'};
 
 FILE* dest_fp = NULL;
 const char* dest_path = NULL;
@@ -26,8 +27,7 @@ const char* dest_path = NULL;
 volatile sig_atomic_t done = 0;
 volatile sig_atomic_t reset_alarm = 1;
 
-void
-signal_handler(int signum)
+void signal_handler(int signum)
 {
 	switch (signum)
 	{
@@ -65,6 +65,27 @@ void cleanup()
 	}
 }
 
+void set_default_net_iface()
+{
+	struct dirent **namelist;
+	int n;
+
+	n = scandir("/sys/class/net/", &namelist, scandir_filter, alphasort);
+	if (n == -1)
+	{
+		err(EXIT_FAILURE, "scandir");
+	}
+
+	(void)strncpy(default_net_iface, namelist[0]->d_name, sizeof (default_net_iface));
+	default_net_iface[sizeof (default_net_iface) - 1] = '\0';
+
+	while (n--)
+	{
+		free(namelist[n]);
+	}
+	free(namelist);
+}
+
 void print_version(const char* argv0)
 {
 	printf("%s %s\n", argv0, program_version);
@@ -73,32 +94,39 @@ void print_version(const char* argv0)
 
 void print_usage(const char* argv0)
 {
-	printf("Usage: %s [OPTIONS] NETWORK_INTERFACE\n", argv0);
+	printf("Usage: %s [OPTIONS]\n", argv0);
 	printf("\n");
 	printf("Continuously measure the average network receive speed at a regular interval, and write the measurement to stdout or a temporary file.\n");
 	printf("\n");
 	printf("The unit of measurement of network speed is bytes/second.\n");
 	printf("\n");
-	printf("NETWORK_INTERFACE is a name found in /sys/class/net/.\n");
-	printf("\n");
 
 	printf("OPTIONS\n");
 	printf("  -V       Print the version information and exit.\n");
+	printf("\n");
 	printf("  -h       Print this message and exit.\n");
+	printf("\n");
 	printf("  -f FILE  Specify the temporary output file.\n");
 	printf("           FILE must not exist when this daemon starts.\n");
 	printf("           FILE is truncated before every measurement is written.\n");
 	printf("           FILE is removed when this daemon exits successfully.\n");
+	printf("\n");
 	printf("  -i MSEC  Specify the interval (in milliseconds) between measurements.\n");
 	printf("           MSEC must be a positive integer.\n");
 	printf("           The default value is %u.\n", default_interval_ms);
+	printf("\n");
+	printf("  -n NET   Specify the network interface.\n");
+	printf("           NET is a name found in /sys/class/net/.\n");
+	printf("           The default value is \"%s\".\n", default_net_iface);
 	printf("\n");
 }
 
 int main(int argc, char* const argv[])
 {
+	set_default_net_iface();
 	unsigned int init_delay_ms = default_init_delay_ms;
 	unsigned int interval_ms = default_interval_ms;
+	char* net_iface = default_net_iface;
 
 	int oc;
 	const char* short_options = "+:Vhf:i:";
@@ -129,6 +157,10 @@ int main(int argc, char* const argv[])
 			init_delay_ms = interval_ms;
 			break;
 
+		case 'n':
+			net_iface = optarg;
+			break;
+
 		case '?':
 			errx(EXIT_FAILURE, "unknown option: '%s'", escape_char(optopt));
 			break;
@@ -143,23 +175,32 @@ int main(int argc, char* const argv[])
 		}
 	}
 
-	if (optind >= argc)
-	{
-		errx(EXIT_FAILURE, "missing NETWORK_INTERFACE operand");
-	}
-
 	// {{{ adapted from my slstatus
 	// https://github.com/planet36/slstatus/blob/master/components/netspeeds.c
-	char net_interface_path[PATH_MAX] = {'\0'};
-	int n = snprintf(net_interface_path, sizeof (net_interface_path),
-	                 "/sys/class/net/%s/statistics/rx_bytes", argv[optind]);
+	char net_iface_path[PATH_MAX] = {'\0'};
+	int n = snprintf(net_iface_path, sizeof (net_iface_path),
+	                 "/sys/class/net/%s/statistics/rx_bytes", net_iface);
 
-	if (n < 0 || (size_t)n >= sizeof (net_interface_path))
+	if (n < 0 || (size_t)n >= sizeof (net_iface_path))
 	{
 		errx(EXIT_FAILURE, "snprintf");
 		return -1;
 	}
 	// }}}
+
+	// Test if file is readable
+	{
+		FILE *fp;
+		if ((fp = fopen(net_iface_path, "r")) == NULL)
+		{
+			err(EXIT_FAILURE, "%s", net_iface_path);
+		}
+
+		if (fclose(fp) < 0)
+		{
+			err(EXIT_FAILURE, "fclose");
+		}
+	}
 
 	atexit(cleanup);
 
@@ -239,7 +280,7 @@ int main(int argc, char* const argv[])
 
 	bool first_iteration = true;
 	double prev_now_s = 0;
-	uintmax_t prev_rxbytes = 0;
+	uintmax_t prev_rx_bytes = 0;
 
 	do
 	{
@@ -261,11 +302,11 @@ int main(int argc, char* const argv[])
 
 		const double now_s = timespec_to_double(&now_ts);
 
-		uintmax_t rxbytes = 0;
+		uintmax_t rx_bytes = 0;
 
-		if (pscanf(net_interface_path, "%ju", &rxbytes) != 1)
+		if (pscanf(net_iface_path, "%ju", &rx_bytes) != 1)
 		{
-			errx(EXIT_FAILURE, "error scanning '%s'", net_interface_path);
+			errx(EXIT_FAILURE, "error scanning '%s'", net_iface_path);
 		}
 
 		if (first_iteration)
@@ -276,16 +317,16 @@ int main(int argc, char* const argv[])
 		{
 			const double delta_time_s = now_s - prev_now_s;
 
-			uintmax_t rxbytes_per_s = 0;
+			uintmax_t rx_bytes_per_s = 0;
 
 			if (delta_time_s != 0)
 			{
 				// round to nearest int
-				rxbytes_per_s = (uintmax_t)(((rxbytes - prev_rxbytes) / delta_time_s) + 0.5);
+				rx_bytes_per_s = (uintmax_t)(((rx_bytes - prev_rx_bytes) / delta_time_s) + 0.5);
 			}
 
 			char dest_buf[32] = {'\0'};
-			(void)snprintf(dest_buf, sizeof (dest_buf), "%ju", rxbytes_per_s);
+			(void)snprintf(dest_buf, sizeof (dest_buf), "%ju", rx_bytes_per_s);
 
 			if (dest_path != NULL)
 			{
@@ -316,7 +357,7 @@ int main(int argc, char* const argv[])
 		}
 
 		prev_now_s = now_s;
-		prev_rxbytes = rxbytes;
+		prev_rx_bytes = rx_bytes;
 
 		if (!done)
 		{
