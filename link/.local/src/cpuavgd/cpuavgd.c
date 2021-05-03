@@ -81,11 +81,14 @@ void print_usage(const char* argv0)
 
 	printf("OPTIONS\n");
 	printf("  -V       Print the version information and exit.\n");
+	printf("\n");
 	printf("  -h       Print this message and exit.\n");
+	printf("\n");
 	printf("  -f FILE  Specify the temporary output file.\n");
 	printf("           FILE must not exist when this daemon starts.\n");
 	printf("           FILE is truncated before every measurement is written.\n");
 	printf("           FILE is removed when this daemon exits successfully.\n");
+	printf("\n");
 	printf("  -i MSEC  Specify the interval (in milliseconds) between measurements.\n");
 	printf("           MSEC must be a positive integer.\n");
 	printf("           The default value is %u.\n", default_interval_ms);
