@@ -16,6 +16,9 @@ The result length might be more than maxlen because the path parts will not be t
 	HOME = os.environ['HOME']
 	sep = os.sep
 
+	while '//' in path:
+		path = path.replace('//', '/')
+
 	if path == HOME:
 		return '~'
 	elif path.startswith(HOME + sep):
