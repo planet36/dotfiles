@@ -56,6 +56,7 @@
   [[default]]
     icon_bell = False
     background_color = "#1c1b19"
+    cursor_blink = False
     cursor_color = "#fbb829"
     cursor_color_fg = False
     font = Monospace 12
