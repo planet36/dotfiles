@@ -9,7 +9,7 @@
 #cell_width_scale = 1.0
 #clickable_url = true
 #dynamic_title = true
-font = monospace 12
+font = monospace 13
 #fullscreen = true
 #icon_name = terminal
 #mouse_autohide = false

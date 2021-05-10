@@ -3,10 +3,10 @@
 Sxiv.background: Black
 Sxiv.foreground: Gray
 
-URxvt.font: xft:monospace:size=12
+URxvt.font: xft:monospace:size=13
 
 XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
-XTerm.vt100.faceName: monospace:size=12
+XTerm.vt100.faceName: monospace:size=13
 XTerm.vt100.fastScroll: true
 XTerm.vt100.jumpScroll: true
 XTerm.vt100.multiScroll: true
@@ -22,9 +22,10 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 Zutty.altScroll:  true
 Zutty.autoCopy:   true
 Zutty.boldColors: true
-Zutty.border:     1
+Zutty.border:     2
 Zutty.geometry:   239x65
-Zutty.font:       Go-Mono
+Zutty.font:       Hack
+Zutty.fontpath:   /usr/share/fonts/TTF
 Zutty.fontsize:   14
 Zutty.saveLines:  10000
 Zutty.fg:         #fce8c3

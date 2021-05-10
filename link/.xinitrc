@@ -136,7 +136,7 @@ then
     # alpha only works when xcompmgr is running
     #stw -x +50 -y +50 -B 20 -f '#dddddd' -A 0 --
     #stw -x +50 -y +50 -B 20 -f '#dddddd' -b '#003355' --
-    stw -x +50 -y +50 -B 20 -f '#dddddd' -b "$BGCOLOR" -F "monospace:size=12" -- \
+    stw -x +50 -y +50 -B 20 -f '#dddddd' -b "$BGCOLOR" -F "monospace:size=13" -- \
         sh -c 'top -b -n 1 -o %CPU | head -n 12 ; echo ; echo ; free -h ; echo ; echo ; df -h -T -x squashfs -x tmpfs -x devtmpfs -x vboxsf' &
         # -u $USER
 fi
