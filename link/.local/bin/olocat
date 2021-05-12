@@ -24,12 +24,17 @@
 from decimal import Decimal as D, ROUND_HALF_UP
 from enum import Enum, auto, unique
 import math
+import re
 import sys
 
 import hsluv
 from xterm_color import xterm_color_num_to_rgb_string
 
-__version__ = '2020-11-25'
+__version__ = '2021-05-12'
+
+
+# https://stackoverflow.com/a/14693789
+ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
 
 
 # https://stackoverflow.com/a/7267280
@@ -453,6 +458,8 @@ OPTIONS
 	rows = itertools.cycle(indexes)
 
 	for line in sys.stdin:
+
+		line = ansi_escape.sub('', line)
 
 		has_trailing_nl = line.endswith(os.linesep)
 
