@@ -39,6 +39,8 @@ setup_xdg_vars
 
 # {{{ env vars
 
+set --export ACKRC "$XDG_CONFIG_HOME"/ack/ackrc
+
 set --export CC gcc
 set --export CXX g++
 
@@ -68,6 +70,8 @@ end
 
 set --export GIT_EDITOR "$EDITOR"
 
+set --export GNUPGHOME "$XDG_DATA_HOME"/gnupg
+
 set --export HIGHLIGHT_OPTIONS '--force -t 4 --out-format=ansi'
 
 set --export IPYTHONDIR "$XDG_DATA_HOME"/ipython
@@ -87,6 +91,10 @@ set --export NO_AT_BRIDGE 1
 
 # https://www.reddit.com/r/linux/comments/12wxsl/whats_in_your_bashrc/c6z0y5g/
 #set --export JAVA_HOME (readlink -f -- (which javac) | sed 's|bin/javac||')
+
+set --export PARALLEL_HOME "$XDG_CONFIG_HOME"/parallel
+
+set --export PASSWORD_STORE_DIR "$XDG_DATA_HOME"/pass
 
 #set --export PS_FORMAT pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command
 set --export PS_FORMAT pid,nice,pri,user,stime,etime,cputimes,%cpu,%mem,rss,args
@@ -114,6 +122,8 @@ set --export RSYNC_ARGS -v -c -u -p -t -r -z -h
 #    --progress              show progress during transfer
 #-i, --itemize-changes       output a change-summary for all updates
 #    --password-file=FILE    read daemon-access password from FILE
+
+set --export SCREENRC "$XDG_CONFIG_HOME"/screen/screenrc
 
 # /usr/bin/time format similar to bash's time
 set --export TIME "real\t%E\nuser\t%U\nsys\t%S\n"
@@ -288,6 +298,15 @@ set Z_CMD "j"
 #    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
 #    zoxide init fish | source
 #end
+
+# }}}
+
+# {{{ command not found function
+
+# https://github.com/fish-shell/fish-shell/issues/7841
+function fish_command_not_found
+    __fish_default_command_not_found_handler $argv
+end
 
 # }}}
 

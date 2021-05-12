@@ -45,6 +45,8 @@ setup_xdg_vars
 
 # {{{ env vars
 
+export ACKRC="$XDG_CONFIG_HOME"/ack/ackrc
+
 export CC=gcc
 export CXX=g++
 
@@ -77,6 +79,8 @@ fi
 
 export GIT_EDITOR="$EDITOR"
 
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+
 export HIGHLIGHT_OPTIONS='--force -t 4 --out-format=ansi'
 
 export IPYTHONDIR="$XDG_DATA_HOME"/ipython
@@ -96,6 +100,10 @@ export NO_AT_BRIDGE=1
 
 # https://www.reddit.com/r/linux/comments/12wxsl/whats_in_your_bashrc/c6z0y5g/
 #export JAVA_HOME="$(readlink -f -- "$(which javac)" | sed 's|bin/javac||')"
+
+export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
+
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 
 #export PS_FORMAT='pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command'
 export PS_FORMAT='pid,nice,pri,user,stime,etime,cputimes,%cpu,%mem,rss,args'
@@ -122,6 +130,8 @@ export RSYNC_ARGS='-v -c -u -p -t -r -z -h'
 #    --progress              show progress during transfer
 #-i, --itemize-changes       output a change-summary for all updates
 #    --password-file=FILE    read daemon-access password from FILE
+
+export SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
 
 # /usr/bin/time format similar to bash's time
 export TIME="real\t%E\nuser\t%U\nsys\t%S\n"
