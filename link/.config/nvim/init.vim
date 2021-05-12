@@ -382,6 +382,8 @@ inoremap jj <esc>
 "inoremap kkk <esc>
 nnoremap H 0
 nnoremap L $
+vnoremap H 0
+vnoremap L $
 inoremap <c-d> <esc>ddi
 inoremap <c-s> <c-o>:update<CR>
 
