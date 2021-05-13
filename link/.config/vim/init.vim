@@ -566,6 +566,8 @@ iabbrev ehre here
 iabbrev fpritnf fprintf
 iabbrev maek make
 iabbrev medl meld
+iabbrev onece once
+iabbrev pramga pragma
 iabbrev pritn print
 iabbrev pritnf printf
 iabbrev reurn return
