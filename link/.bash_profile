@@ -162,11 +162,9 @@ export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 # -Wfloat-equal
 export GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
 # https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
-GCC_COMMON_OPTIONS+=' -D_FORTIFY_SOURCE=2'
+GCC_COMMON_OPTIONS+=' -D_GNU_SOURCE -D_FORTIFY_SOURCE=2'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
-GCC_COMMON_OPTIONS+=' -fstack-protector'
-# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
-GCC_COMMON_OPTIONS+=' -D_GNU_SOURCE'
+GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
 
 export EXTRACXXFLAGS='-fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant'
 
