@@ -339,7 +339,7 @@ set --export PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -f
 set --export PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
 
 set --export CFLAGS $GCC_COMMON_OPTIONS -std=c2x
-set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++20 $EXTRACXXFLAGS
+set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS
 
 # }}}
 
