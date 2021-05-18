@@ -8,7 +8,7 @@ OBJS = $(SRCS:.c=.o)
 
 DEPFLAGS += -MMD -MP
 CFLAGS += $(INCS) $(DEPFLAGS)
-#LDFLAGS += -lm
+#LDFLAGS +=
 
 BIN = $(notdir $(CURDIR))
 
