@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
 
 INCS =
 SRCS = $(wildcard *.c)
@@ -8,7 +10,7 @@ DEPFLAGS += -MMD -MP
 CFLAGS += $(INCS) $(DEPFLAGS)
 #LDFLAGS += -lm
 
-BIN = $(notdir $(PWD))
+BIN = $(notdir $(CURDIR))
 
 $(BIN): $(OBJS)
 	$(CC) $^ -o $@ $(LDFLAGS)
