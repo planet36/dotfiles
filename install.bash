@@ -9,7 +9,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2021-01-13'
+SCRIPT_VERSION='2021-05-18'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
@@ -447,6 +447,14 @@ uninstall_vim_nvim_plugins() {
 
 install_local_programs() {
 
+    if $DRY_RUN
+    then
+        echo \
+        make -C "$SCRIPT_DIR"/build install
+    else
+        make -C "$SCRIPT_DIR"/build install || return
+    fi
+
     pushd . &> /dev/null
 
     cd ~/.local/src || return
@@ -470,23 +478,6 @@ install_local_programs() {
         done
     fi
 
-    for DIR in as_bool cmeter cpuavgd dir_is_empty durfmt netrxavgd nettxavgd swp
-    do
-        if [[ -d "$DIR" ]]
-        then
-            cd "$DIR" || return
-            if $DRY_RUN
-            then
-                echo "# install" "$(basename -- "$PWD")"
-                echo \
-                make install
-            else
-                make install
-            fi
-            cd - > /dev/null || return
-        fi
-    done
-
     for PROGRAM in dwm slstatus st stw
     do
         cd "$PROGRAM" || return
@@ -508,32 +499,14 @@ install_local_programs() {
 
 uninstall_local_programs() {
 
-    for DIR in as_bool cmeter cpuavgd dir_is_empty durfmt netrxavgd nettxavgd swp
-    do
-        if [[ -d ~/.local/src/"$DIR" ]]
-        then
-            cd ~/.local/src/"$DIR" || return
-            if $DRY_RUN
-            then
-                echo "# uninstall" "$(basename -- "$PWD")"
-                echo \
-                make distclean
-            else
-                make distclean || return
-            fi
-        fi
 
-        #if [[ -f ~/.local/bin/"$FILE" ]]
-        #then
-        #    if $DRY_RUN
-        #    then
-        #        echo \
-        #        rm --verbose ~/.local/bin/"$FILE"
-        #    else
-        #        rm --verbose ~/.local/bin/"$FILE"
-        #    fi
-        #fi
-    done
+    if $DRY_RUN
+    then
+        echo \
+        make -C "$SCRIPT_DIR"/build distclean
+    else
+        make -C "$SCRIPT_DIR"/build distclean || return
+    fi
 
     for LINK in dwm slstatus st stw
     do
