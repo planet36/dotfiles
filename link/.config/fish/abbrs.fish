@@ -28,6 +28,7 @@ abbr --add --global hist history
 abbr --add --global ip3 ipython3
 abbr --add --global ipy3 ipython3
 abbr --add --global m man
+abbr --add --global m. meld .
 abbr --add --global maek make
 abbr --add --global md5 md5sum
 abbr --add --global medl meld

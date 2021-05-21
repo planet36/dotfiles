@@ -31,6 +31,7 @@ alias hist=history
 alias ip3=ipython3
 alias ipy3=ipython3
 alias m=man
+alias m.='meld .'
 alias maek=make
 alias md5=md5sum
 alias medl=meld
