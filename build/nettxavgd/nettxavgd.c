@@ -51,19 +51,13 @@ void atexit_cleanup()
 	if (dest_fp != NULL)
 	{
 		if (fclose(dest_fp) < 0)
-		{
 			perror("fclose");
-		}
 		dest_fp = NULL;
 	}
 
 	if (dest_path != NULL && done)
-	{
 		if (remove(dest_path) < 0)
-		{
 			perror("remove");
-		}
-	}
 }
 
 void set_default_net_iface()
@@ -73,9 +67,7 @@ void set_default_net_iface()
 
 	n = scandir("/sys/class/net/", &namelist, scandir_filter, alphasort);
 	if (n == -1)
-	{
 		err(EXIT_FAILURE, "scandir");
-	}
 
 	(void)strncpy(default_net_iface, namelist[0]->d_name, sizeof (default_net_iface));
 	default_net_iface[sizeof (default_net_iface) - 1] = '\0';
@@ -151,9 +143,7 @@ int main(int argc, char* const argv[])
 		case 'i':
 			interval_ms = strtou(optarg);
 			if (interval_ms == 0)
-			{
 				errx(EXIT_FAILURE, "invalid interval: %u", interval_ms);
-			}
 
 			// There is no option for specifying the initial delay.
 			init_delay_ms = interval_ms;
@@ -194,14 +184,10 @@ int main(int argc, char* const argv[])
 	{
 		FILE *fp;
 		if ((fp = fopen(net_iface_path, "r")) == NULL)
-		{
 			err(EXIT_FAILURE, "%s", net_iface_path);
-		}
 
 		if (fclose(fp) < 0)
-		{
 			err(EXIT_FAILURE, "fclose");
-		}
 	}
 
 	atexit(atexit_cleanup);
@@ -212,9 +198,7 @@ int main(int argc, char* const argv[])
 		(void)umask(new_mask);
 
 		if ((dest_fp = fopen(dest_path, "wx")) == NULL)
-		{
 			err(EXIT_FAILURE, "%s", dest_path);
-		}
 
 		if (fclose(dest_fp) < 0)
 		{
@@ -230,9 +214,7 @@ int main(int argc, char* const argv[])
 	signal_action.sa_handler = signal_handler;
 
 	if (sigfillset(&signal_action.sa_mask) < 0)
-	{
 		err(EXIT_FAILURE, "sigfillset");
-	}
 
 	const int signals_to_handle[] = {
 		SIGALRM,
@@ -248,29 +230,21 @@ int main(int argc, char* const argv[])
 	for (size_t i = 0; i < sizeof (signals_to_handle) / sizeof (signals_to_handle[0]); ++i)
 	{
 		if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
-		{
 			err(EXIT_FAILURE, "sigaction");
-		}
 	}
 
 	sigset_t empty_mask;
 	if (sigemptyset(&empty_mask) < 0)
-	{
 		err(EXIT_FAILURE, "sigemptyset");
-	}
 
 	sigset_t full_mask;
 	if (sigfillset(&full_mask) < 0)
-	{
 		err(EXIT_FAILURE, "sigfillset");
-	}
 
 	sigset_t orig_mask;
 	// block everything and save current signal mask
 	if (sigprocmask(SIG_BLOCK, &full_mask, &orig_mask) < 0)
-	{
 		err(EXIT_FAILURE, "sigprocmask");
-	}
 
 	const struct timeval init_delay = milliseconds_to_timeval(init_delay_ms);
 	const struct timeval interval = milliseconds_to_timeval(interval_ms);
@@ -289,32 +263,24 @@ int main(int argc, char* const argv[])
 		if (reset_alarm)
 		{
 			if (setitimer(ITIMER_REAL, &itv, NULL) < 0)
-			{
 				err(EXIT_FAILURE, "setitimer");
-			}
 			reset_alarm = 0;
 		}
 
 		struct timespec now_ts;
 
 		if (clock_gettime(CLOCK_MONOTONIC, &now_ts) < 0)
-		{
 			err(EXIT_FAILURE, "clock_gettime");
-		}
 
 		const double now_s = timespec_to_double(&now_ts);
 
 		uintmax_t tx_bytes = 0;
 
 		if (pscanf(net_iface_path, "%ju", &tx_bytes) != 1)
-		{
 			errx(EXIT_FAILURE, "error scanning '%s'", net_iface_path);
-		}
 
 		if (first_iteration)
-		{
 			first_iteration = 0;
-		}
 		else
 		{
 			const double delta_time_s = now_s - prev_now_s;
@@ -322,10 +288,8 @@ int main(int argc, char* const argv[])
 			uintmax_t tx_bytes_per_s = 0;
 
 			if (delta_time_s != 0)
-			{
 				// round to nearest int
 				tx_bytes_per_s = (uintmax_t)(((tx_bytes - prev_tx_bytes) / delta_time_s) + 0.5);
-			}
 
 			char dest_buf[32] = {'\0'};
 			(void)snprintf(dest_buf, sizeof (dest_buf), "%ju", tx_bytes_per_s);
@@ -333,14 +297,10 @@ int main(int argc, char* const argv[])
 			if (dest_path != NULL)
 			{
 				if ((dest_fp = fopen(dest_path, "w")) == NULL)
-				{
 					err(EXIT_FAILURE, "%s", dest_path);
-				}
 
 				if (fputs(dest_buf, dest_fp) < 0)
-				{
 					err(EXIT_FAILURE, "fputs");
-				}
 
 				if (fclose(dest_fp) < 0)
 				{
@@ -350,28 +310,20 @@ int main(int argc, char* const argv[])
 				dest_fp = NULL;
 			}
 			else
-			{
 				if (puts(dest_buf) < 0)
-				{
 					err(EXIT_FAILURE, "puts");
-				}
-			}
 		}
 
 		prev_now_s = now_s;
 		prev_tx_bytes = tx_bytes;
 
 		if (!done)
-		{
 			(void)sigsuspend(&empty_mask);
-		}
 
 	} while (!done);
 
 	if (sigprocmask(SIG_SETMASK, &orig_mask, NULL) < 0)
-	{
 		err(EXIT_FAILURE, "sigprocmask");
-	}
 
 	return EXIT_SUCCESS;
 }
