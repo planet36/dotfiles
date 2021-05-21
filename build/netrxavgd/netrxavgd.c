@@ -187,7 +187,11 @@ int main(int argc, char* const argv[])
 			err(EXIT_FAILURE, "%s", net_iface_path);
 
 		if (fclose(fp) < 0)
+		{
+			fp = NULL;
 			err(EXIT_FAILURE, "fclose");
+		}
+		fp = NULL;
 	}
 
 	atexit(atexit_cleanup);
