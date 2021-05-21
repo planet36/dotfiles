@@ -25,8 +25,7 @@ const char* dest_path = NULL;
 volatile sig_atomic_t done = 0;
 volatile sig_atomic_t reset_alarm = 1;
 
-void
-signal_handler(int signum)
+void signal_handler(int signum)
 {
 	switch (signum)
 	{
@@ -45,7 +44,7 @@ signal_handler(int signum)
 	}
 }
 
-void cleanup()
+void atexit_cleanup()
 {
 	if (dest_fp != NULL)
 	{
@@ -53,6 +52,7 @@ void cleanup()
 		{
 			perror("fclose");
 		}
+		dest_fp = NULL;
 	}
 
 	if (dest_path != NULL && done)
@@ -125,6 +125,7 @@ int main(int argc, char* const argv[])
 			{
 				errx(EXIT_FAILURE, "invalid interval: %u", interval_ms);
 			}
+
 			// There is no option for specifying the initial delay.
 			init_delay_ms = interval_ms;
 			break;
@@ -143,7 +144,7 @@ int main(int argc, char* const argv[])
 		}
 	}
 
-	atexit(cleanup);
+	atexit(atexit_cleanup);
 
 	if (dest_path != NULL)
 	{
