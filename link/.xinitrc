@@ -108,6 +108,11 @@ then
     xcape -e 'Shift_L=F13'
 fi
 
+if command -v sxhkd > /dev/null
+then
+    sxhkd &
+fi
+
 if command -v numlockx > /dev/null
 then
     numlockx on
