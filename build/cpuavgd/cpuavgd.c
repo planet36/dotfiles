@@ -14,12 +14,11 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "1.0.0";
+const char program_version[] = "1.1.0";
 
 const unsigned int default_init_delay_ms = 2000;
 const unsigned int default_interval_ms = 2000;
 
-FILE* dest_fp = NULL;
 const char* dest_path = NULL;
 
 volatile sig_atomic_t done = 0;
@@ -46,16 +45,26 @@ void signal_handler(int signum)
 
 void atexit_cleanup()
 {
-	if (dest_fp != NULL)
-	{
-		if (fclose(dest_fp) < 0)
-			perror("fclose");
-		dest_fp = NULL;
-	}
-
 	if (dest_path != NULL && done)
 		if (remove(dest_path) < 0)
 			perror("remove");
+}
+
+// https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
+// automatically close file stream
+#define ACFILE(varname) __attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
+
+void cleanup_close_file(FILE** fpp)
+{
+	if (*fpp != NULL)
+	{
+		if (fclose(*fpp) < 0)
+		{
+			*fpp = NULL;
+			err(EXIT_FAILURE, "fclose");
+		}
+		*fpp = NULL;
+	}
 }
 
 void print_version(const char* argv0)
@@ -143,15 +152,10 @@ int main(int argc, char* const argv[])
 		const mode_t new_mask = 0133; // rw-r--r--
 		(void)umask(new_mask);
 
+		ACFILE(dest_fp);
+
 		if ((dest_fp = fopen(dest_path, "wx")) == NULL)
 			err(EXIT_FAILURE, "%s", dest_path);
-
-		if (fclose(dest_fp) < 0)
-		{
-			dest_fp = NULL;
-			err(EXIT_FAILURE, "fclose");
-		}
-		dest_fp = NULL;
 	}
 
 	struct sigaction signal_action;
@@ -233,18 +237,13 @@ int main(int argc, char* const argv[])
 
 			if (dest_path != NULL)
 			{
+				ACFILE(dest_fp);
+
 				if ((dest_fp = fopen(dest_path, "w")) == NULL)
 					err(EXIT_FAILURE, "%s", dest_path);
 
 				if (fputs(dest_buf, dest_fp) < 0)
 					err(EXIT_FAILURE, "fputs");
-
-				if (fclose(dest_fp) < 0)
-				{
-					dest_fp = NULL;
-					err(EXIT_FAILURE, "fclose");
-				}
-				dest_fp = NULL;
 			}
 			else
 				if (puts(dest_buf) < 0)
