@@ -84,16 +84,6 @@ then
     setxkbmap -option ctrl:nocaps
 fi
 
-if command -v xcape > /dev/null
-then
-    # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#One-click_key_functions
-    #killall --quiet xcape
-    #xcape -e 'Caps_Lock=Escape'
-    #xcape -e 'Shift_L=Escape'
-    xcape -e 'Control_L=Escape'
-    xcape -e 'Shift_L=F13'
-fi
-
 # Must do xmodmap after setxkbmap
 
 if command -v xmodmap > /dev/null
@@ -106,6 +96,16 @@ then
 
     # Map F13 to an unused KeyCode
     xmodmap -e 'keycode 253 = F13'
+fi
+
+if command -v xcape > /dev/null
+then
+    # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#One-click_key_functions
+    #killall --quiet xcape
+    #xcape -e 'Caps_Lock=Escape'
+    #xcape -e 'Shift_L=Escape'
+    xcape -e 'Control_L=Escape'
+    xcape -e 'Shift_L=F13'
 fi
 
 if command -v numlockx > /dev/null
@@ -169,7 +169,7 @@ then
 elif command -v xsetroot > /dev/null
 then
     #xsetroot -name "$(date +'%a %b %d')"
-    # https://wiki.archlinux.org/index.php/Dwm#Statusbar_configuration
+    # https://wiki.archlinux.org/title/Dwm#Statusbar_configuration
     while true
     do
         #xsetroot -name "$(date +'%F %R')"
