@@ -91,6 +91,7 @@ then
     #xcape -e 'Caps_Lock=Escape'
     #xcape -e 'Shift_L=Escape'
     xcape -e 'Control_L=Escape'
+    xcape -e 'Shift_L=F13'
 fi
 
 # Must do xmodmap after setxkbmap
