@@ -86,7 +86,7 @@ fi
 
 if command -v xcape > /dev/null
 then
-    # https://wiki.archlinux.org/index.php/Xorg/Keyboard_configuration#One-click_key_functions
+    # https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#One-click_key_functions
     #killall --quiet xcape
     #xcape -e 'Caps_Lock=Escape'
     #xcape -e 'Shift_L=Escape'
@@ -99,6 +99,12 @@ if command -v xmodmap > /dev/null
 then
     # Swap Grave Accent and Tilde
     xmodmap -e 'keycode 49 = asciitilde grave'
+
+    # Look for unused KeyCodes
+    #xmodmap -pk
+
+    # Map F13 to an unused KeyCode
+    xmodmap -e 'keycode 253 = F13'
 fi
 
 if command -v numlockx > /dev/null
@@ -114,7 +120,7 @@ fi
 BGCOLOR='#004466'
 
 # NOTE: if xcompmgr will be run, use hsetroot
-# https://wiki.archlinux.org/index.php/Xcompmgr#Background_turns_light_gray_briefly_after_logging_in_(e.g._in_Openbox)
+# https://wiki.archlinux.org/title/Xcompmgr#Background_turns_light_gray_briefly_after_logging_in_(e.g._in_Openbox)
 if command -v hsetroot > /dev/null
 then
     hsetroot -solid "$BGCOLOR"
