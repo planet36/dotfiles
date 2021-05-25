@@ -161,7 +161,7 @@ copy_dotfiles() {
             else
                 if [[ ! -d "$DST_DIR" ]]
                 then
-                    mkdir --verbose --parents -- "$DST_DIR"
+                    mkdir --verbose --parents -- "$DST_DIR" || return
                 fi
             fi
         fi
@@ -171,7 +171,7 @@ copy_dotfiles() {
             echo \
             cp --preserve --verbose --backup=numbered --target-directory "$DST_DIR" -- "$SRC_DIR/$FILE"
         else
-            cp --preserve --verbose --backup=numbered --target-directory "$DST_DIR" -- "$SRC_DIR/$FILE"
+            cp --preserve --verbose --backup=numbered --target-directory "$DST_DIR" -- "$SRC_DIR/$FILE" || return
         fi
     done
 }
@@ -211,7 +211,7 @@ delete_copied_dotfiles() {
             echo \
             rm --verbose -- "$FILE"
         else
-            rm --verbose -- "$FILE"
+            rm --verbose -- "$FILE" || return
         fi
 
         if [[ "$DST_DIR" != . ]]
@@ -221,7 +221,7 @@ delete_copied_dotfiles() {
                 echo \
                 rmdir --verbose --parents --ignore-fail-on-non-empty -- "$DST_DIR"
             else
-                rmdir --verbose --parents --ignore-fail-on-non-empty -- "$DST_DIR"
+                rmdir --verbose --parents --ignore-fail-on-non-empty -- "$DST_DIR" || return
             fi
         fi
     done
@@ -268,7 +268,7 @@ link_dotfiles() {
             else
                 if [[ ! -d "$DST_DIR" ]]
                 then
-                    mkdir --verbose --parents -- "$DST_DIR"
+                    mkdir --verbose --parents -- "$DST_DIR" || return
                 fi
             fi
         fi
@@ -280,7 +280,7 @@ link_dotfiles() {
                 echo \
                 ln --symbolic --verbose --backup=numbered --target-directory "$DST_DIR" --relative -- "$SRC_DIR/$FILE"
             else
-                ln --symbolic --verbose --backup=numbered --target-directory "$DST_DIR" --relative -- "$SRC_DIR/$FILE"
+                ln --symbolic --verbose --backup=numbered --target-directory "$DST_DIR" --relative -- "$SRC_DIR/$FILE" || return
             fi
         else
             if $DRY_RUN
@@ -288,7 +288,7 @@ link_dotfiles() {
                 echo \
                 ln --symbolic --verbose --backup=numbered --target-directory "$DST_DIR" -- "$(realpath -- "$SRC_DIR/$FILE")"
             else
-                ln --symbolic --verbose --backup=numbered --target-directory "$DST_DIR" -- "$(realpath -- "$SRC_DIR/$FILE")"
+                ln --symbolic --verbose --backup=numbered --target-directory "$DST_DIR" -- "$(realpath -- "$SRC_DIR/$FILE")" || return
             fi
         fi
     done
@@ -329,7 +329,7 @@ delete_linked_dotfiles () {
             echo \
             rm --verbose -- "$FILE"
         else
-            rm --verbose -- "$FILE"
+            rm --verbose -- "$FILE" || return
         fi
 
         if [[ "$DST_DIR" != . ]]
@@ -339,7 +339,7 @@ delete_linked_dotfiles () {
                 echo \
                 rmdir --verbose --parents --ignore-fail-on-non-empty -- "$DST_DIR"
             else
-                rmdir --verbose --parents --ignore-fail-on-non-empty -- "$DST_DIR"
+                rmdir --verbose --parents --ignore-fail-on-non-empty -- "$DST_DIR" || return
             fi
         fi
     done
@@ -382,10 +382,10 @@ create_vim_nvim_dirs() {
             "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo}
     else
         mkdir --verbose --parents -- \
-            "$XDG_DATA_HOME"/vim/{autoload,backup,colors,swap,undo}
+            "$XDG_DATA_HOME"/vim/{autoload,backup,colors,swap,undo} || return
 
         mkdir --verbose --parents -- \
-            "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo}
+            "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo} || return
     fi
 }
 
@@ -399,7 +399,7 @@ install_vim_nvim_plugins() {
             echo \
             vim -c PlugInstall -c qall
         else
-            vim -c PlugInstall -c qall
+            vim -c PlugInstall -c qall || return
         fi
     fi
 
@@ -411,7 +411,7 @@ install_vim_nvim_plugins() {
             echo \
             nvim -c PlugInstall -c qall
         else
-            nvim -c PlugInstall -c qall
+            nvim -c PlugInstall -c qall || return
         fi
     fi
 }
@@ -427,7 +427,7 @@ uninstall_vim_nvim_plugins() {
             vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall
         else
             # shellcheck disable=SC2016
-            vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall
+            vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall || return
         fi
     fi
 
@@ -440,7 +440,7 @@ uninstall_vim_nvim_plugins() {
             nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall
         else
             # shellcheck disable=SC2016
-            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall
+            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall || return
         fi
     fi
 }
@@ -463,7 +463,7 @@ install_local_programs() {
     then
         echo "# clone repos"
     else
-        grep -E -o '^[^#]+' ~/.local/src/git-repos.txt | xargs -r -L 1 git clone
+        grep -E -o '^[^#]+' ~/.local/src/git-repos.txt | xargs -r -L 1 git clone || return
 
         # These programs were forked from suckless
         for PROGRAM in dwm slstatus st
@@ -486,8 +486,10 @@ install_local_programs() {
             echo "# install" "$(basename -- "$PWD")"
         else
             make || return
-            [[ ! -e ~/.local/bin/"$PROGRAM" ]] &&
-            ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- "$PROGRAM"
+            if [[ ! -e ~/.local/bin/"$PROGRAM" ]]
+            then
+                ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- "$PROGRAM" || return
+            fi
         fi
         cd - > /dev/null || return
     done
@@ -517,7 +519,7 @@ uninstall_local_programs() {
                 echo \
                 rm --verbose ~/.local/bin/"$LINK"
             else
-                rm --verbose ~/.local/bin/"$LINK"
+                rm --verbose ~/.local/bin/"$LINK" || return
             fi
         fi
     done
@@ -533,7 +535,7 @@ install_github_programs() {
     then
         bash get-all-programs.bash -v -n
     else
-        bash get-all-programs.bash -v
+        bash get-all-programs.bash -v    || return
     fi
 
     # https://github.com/koalaman/shellcheck/issues/613
@@ -556,7 +558,7 @@ uninstall_github_programs() {
                 echo \
                 rm --verbose -- "$PROGRAM"
             else
-                rm --verbose -- "$PROGRAM"
+                rm --verbose -- "$PROGRAM" || return
             fi
         fi
     done
@@ -586,13 +588,13 @@ install_fish_plugins() {
             fish -c 'fisher install jethrokuan/z'
         else
             # https://github.com/jorgebucaran/fisher
-            fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+            fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher' || return
 
             # https://github.com/jorgebucaran/getopts.fish
-            fish -c 'fisher install jorgebucaran/getopts.fish'
+            fish -c 'fisher install jorgebucaran/getopts.fish' || return
 
             # https://github.com/jethrokuan/z
-            fish -c 'fisher install jethrokuan/z'
+            fish -c 'fisher install jethrokuan/z' || return
         fi
     fi
 }
@@ -607,7 +609,7 @@ uninstall_fish_plugins() {
             echo  \
             fish -c 'fisher list | fisher remove'
         else
-            fish -c 'fisher list | fisher remove'
+            fish -c 'fisher list | fisher remove' || return
         fi
     fi
 }
@@ -663,7 +665,7 @@ main() {
     REL_DOTFILES_DIR="$(realpath --relative-to "$PWD" -- "$SCRIPT_DIR")"
     print_verbose 'REL_DOTFILES_DIR=%q' "$REL_DOTFILES_DIR"
 
-    setup_xdg_vars
+    setup_xdg_vars || return
 
     if $DELETE
     then
@@ -671,65 +673,65 @@ main() {
 
         if $INSTALL_PROGRAMS
         then
-            uninstall_vim_nvim_plugins
-            uninstall_local_programs
-            uninstall_github_programs
-            uninstall_fish_plugins
+            uninstall_vim_nvim_plugins || return
+            uninstall_local_programs   || return
+            uninstall_github_programs  || return
+            uninstall_fish_plugins     || return
         fi
 
-        delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy
+        delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy || return
 
         if $COPY_ALL
         then
-            delete_copied_dotfiles "$REL_DOTFILES_DIR"/link
+            delete_copied_dotfiles "$REL_DOTFILES_DIR"/link || return
         else
-            delete_linked_dotfiles "$REL_DOTFILES_DIR"/link
+            delete_linked_dotfiles "$REL_DOTFILES_DIR"/link || return
         fi
 
         if ! $DRY_RUN
         then
-            fc-cache
+            fc-cache || return
         fi
     else
-        mkdir --verbose --parents -- ~/.local/{bin,lib,src}
-        mkdir --verbose --parents -- ~/Downloads
+        mkdir --verbose --parents -- ~/.local/{bin,lib,src} || return
+        mkdir --verbose --parents -- ~/Downloads || return
 
-        create_vim_nvim_dirs
+        create_vim_nvim_dirs || return
 
-        copy_dotfiles "$REL_DOTFILES_DIR"/copy
+        copy_dotfiles "$REL_DOTFILES_DIR"/copy || return
 
         if $COPY_ALL
         then
-            copy_dotfiles "$REL_DOTFILES_DIR"/link
+            copy_dotfiles "$REL_DOTFILES_DIR"/link || return
         else
-            link_dotfiles "$REL_DOTFILES_DIR"/link
+            link_dotfiles "$REL_DOTFILES_DIR"/link || return
         fi
 
         if ! $DRY_RUN
         then
             if command -v thefuck > /dev/null
             then
-                thefuck --alias > "$XDG_CONFIG_HOME"/fish/functions/fuck.fish
+                thefuck --alias > "$XDG_CONFIG_HOME"/fish/functions/fuck.fish || return
             fi
         fi
 
         if ! $DRY_RUN
         then
-            fc-cache
+            fc-cache || return
         fi
 
         if ! $DRY_RUN
         then
-            python3    -m compileall ~/.local/lib/python/
-            python3 -O -m compileall ~/.local/lib/python/
+            python3    -m compileall ~/.local/lib/python/ || return
+            python3 -O -m compileall ~/.local/lib/python/ || return
         fi
 
         if $INSTALL_PROGRAMS
         then
-            install_vim_nvim_plugins
-            install_local_programs
-            install_github_programs
-            install_fish_plugins
+            install_vim_nvim_plugins || return
+            install_local_programs   || return
+            install_github_programs  || return
+            install_fish_plugins     || return
         fi
     fi
 
