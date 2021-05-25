@@ -14,13 +14,12 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "1.1.0";
+const char program_version[] = "1.2.0";
 
 const unsigned int default_init_delay_ms = 2000;
 const unsigned int default_interval_ms = 2000;
 char default_net_iface[NAME_MAX+1] = {'\0'};
 
-FILE* dest_fp = NULL;
 const char* dest_path = NULL;
 
 volatile sig_atomic_t done = 0;
@@ -47,13 +46,6 @@ void signal_handler(int signum)
 
 void atexit_cleanup()
 {
-	if (dest_fp != NULL)
-	{
-		if (fclose(dest_fp) < 0)
-			perror("fclose");
-		dest_fp = NULL;
-	}
-
 	if (dest_path != NULL && done)
 		if (remove(dest_path) < 0)
 			perror("remove");
@@ -181,16 +173,10 @@ int main(int argc, char* const argv[])
 
 	// Test if file is readable
 	{
-		FILE *fp;
+		ACFILE(fp);
+
 		if ((fp = fopen(net_iface_path, "r")) == NULL)
 			err(EXIT_FAILURE, "%s", net_iface_path);
-
-		if (fclose(fp) < 0)
-		{
-			fp = NULL;
-			err(EXIT_FAILURE, "fclose");
-		}
-		fp = NULL;
 	}
 
 	atexit(atexit_cleanup);
@@ -200,15 +186,10 @@ int main(int argc, char* const argv[])
 		const mode_t new_mask = 0133; // rw-r--r--
 		(void)umask(new_mask);
 
+		ACFILE(dest_fp);
+
 		if ((dest_fp = fopen(dest_path, "wx")) == NULL)
 			err(EXIT_FAILURE, "%s", dest_path);
-
-		if (fclose(dest_fp) < 0)
-		{
-			dest_fp = NULL;
-			err(EXIT_FAILURE, "fclose");
-		}
-		dest_fp = NULL;
 	}
 
 	struct sigaction signal_action;
@@ -299,18 +280,13 @@ int main(int argc, char* const argv[])
 
 			if (dest_path != NULL)
 			{
+				ACFILE(dest_fp);
+
 				if ((dest_fp = fopen(dest_path, "w")) == NULL)
 					err(EXIT_FAILURE, "%s", dest_path);
 
 				if (fputs(dest_buf, dest_fp) < 0)
 					err(EXIT_FAILURE, "fputs");
-
-				if (fclose(dest_fp) < 0)
-				{
-					dest_fp = NULL;
-					err(EXIT_FAILURE, "fclose");
-				}
-				dest_fp = NULL;
 			}
 			else
 				if (puts(dest_buf) < 0)
