@@ -49,7 +49,7 @@ int scandir_filter(const struct dirent *dirent)
 }
 
 // {{{ copied from my slstatus
-// https://github.com/planet36/slstatus/blob/master/util.c
+// https://github.com/planet36/slstatus/blob/main/util.c
 
 int
 pscanf(const char *path, const char *fmt, ...)

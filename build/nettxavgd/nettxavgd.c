@@ -159,7 +159,7 @@ int main(int argc, char* const argv[])
 	}
 
 	// {{{ adapted from my slstatus
-	// https://github.com/planet36/slstatus/blob/master/components/netspeeds.c
+	// https://github.com/planet36/slstatus/blob/main/components/netspeeds.c
 	char net_iface_path[PATH_MAX] = {'\0'};
 	int n = snprintf(net_iface_path, sizeof (net_iface_path),
 	                 "/sys/class/net/%s/statistics/tx_bytes", net_iface);

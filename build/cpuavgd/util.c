@@ -40,7 +40,7 @@ void cleanup_close_file(FILE** fpp)
 }
 
 // {{{ copied from my slstatus
-// https://github.com/planet36/slstatus/blob/master/util.c
+// https://github.com/planet36/slstatus/blob/main/util.c
 
 int
 pscanf(const char *path, const char *fmt, ...)
@@ -79,7 +79,7 @@ milliseconds_to_timeval(unsigned int milliseconds)
 // }}}
 
 // {{{ copied from my slstatus
-// https://github.com/planet36/slstatus/blob/master/components/cpu.c
+// https://github.com/planet36/slstatus/blob/main/components/cpu.c
 
 int
 calc_idle(uintmax_t *idle, uintmax_t *sum)
