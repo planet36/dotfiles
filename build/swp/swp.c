@@ -2,9 +2,6 @@
 // SPDX-License-Identifier: OSL-3.0
 
 #include <err.h>
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE
-#endif
 #include <fcntl.h>           /* Definition of AT_* constants */
 #include <stdio.h>
 #include <stdlib.h>

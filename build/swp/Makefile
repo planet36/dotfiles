@@ -8,6 +8,7 @@ OBJS = $(SRCS:.c=.o)
 
 DEPFLAGS += -MMD -MP
 CFLAGS += $(INCS) $(DEPFLAGS)
+CFLAGS += -D_GNU_SOURCE
 #LDFLAGS +=
 
 BIN = $(notdir $(CURDIR))
