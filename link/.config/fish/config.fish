@@ -331,6 +331,8 @@ set --export EXTRACXXFLAGS -fchar8_t -fdiagnostics-show-template-tree -Wctor-dto
 set --export OPTIMIZE_OPTIONS -O3 -flto -march=native
 
 set --export DEBUG_OPTIONS -Og -g3
+# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
+set --append DEBUG_OPTIONS -UNDEBUG
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
 set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
 
