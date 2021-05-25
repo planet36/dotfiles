@@ -8,7 +8,6 @@
 #include <limits.h>
 #include <math.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -26,6 +25,19 @@ unsigned int strtou(const char* s)
 	if (i > UINT_MAX)
 		i = UINT_MAX;
 	return (unsigned int)i;
+}
+
+void cleanup_close_file(FILE** fpp)
+{
+	if (*fpp != NULL)
+	{
+		if (fclose(*fpp) < 0)
+		{
+			*fpp = NULL;
+			err(EXIT_FAILURE, "fclose");
+		}
+		*fpp = NULL;
+	}
 }
 
 int scandir_filter(const struct dirent *dirent)
