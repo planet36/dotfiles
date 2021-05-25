@@ -10,6 +10,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+// Not re-entrant
 char* escape_char(int ch)
 {
 	static char buf[32] = {'\0'};
