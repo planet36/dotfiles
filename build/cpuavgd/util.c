@@ -26,6 +26,19 @@ unsigned int strtou(const char* s)
 	return (unsigned int)i;
 }
 
+void cleanup_close_file(FILE** fpp)
+{
+	if (*fpp != NULL)
+	{
+		if (fclose(*fpp) < 0)
+		{
+			*fpp = NULL;
+			err(EXIT_FAILURE, "fclose");
+		}
+		*fpp = NULL;
+	}
+}
+
 // {{{ copied from my slstatus
 // https://github.com/planet36/slstatus/blob/master/util.c
 

@@ -50,23 +50,6 @@ void atexit_cleanup()
 			perror("remove");
 }
 
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
-// automatically close file stream
-#define ACFILE(varname) __attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
-
-void cleanup_close_file(FILE** fpp)
-{
-	if (*fpp != NULL)
-	{
-		if (fclose(*fpp) < 0)
-		{
-			*fpp = NULL;
-			err(EXIT_FAILURE, "fclose");
-		}
-		*fpp = NULL;
-	}
-}
-
 void print_version(const char* argv0)
 {
 	printf("%s %s\n", argv0, program_version);
