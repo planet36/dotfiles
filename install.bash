@@ -450,9 +450,9 @@ install_local_programs() {
     if $DRY_RUN
     then
         echo \
-        make -C "$SCRIPT_DIR"/build install
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build install
     else
-        make -C "$SCRIPT_DIR"/build install || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build install || return
     fi
 
     pushd . &> /dev/null
@@ -461,38 +461,10 @@ install_local_programs() {
 
     if $DRY_RUN
     then
-        echo "# clone repos"
+        echo "# clone and build repos"
     else
-        grep -E -o '^[^#]+' ~/.local/src/git-repos.txt | xargs -r -L 1 git clone || return
-
-        # These programs were forked from suckless
-        for PROGRAM in dwm slstatus st
-        do
-            # Add remotes to the suckless programs
-
-            cd "$PROGRAM" || return
-            git remote add suckless https://git.suckless.org/"$PROGRAM"
-            git remote set-url --push suckless DISABLE
-            git fetch suckless
-            cd - > /dev/null || return
-        done
+        bash clone-build-repos.bash || return
     fi
-
-    for PROGRAM in dwm slstatus st stw
-    do
-        cd "$PROGRAM" || return
-        if $DRY_RUN
-        then
-            echo "# install" "$(basename -- "$PWD")"
-        else
-            make || return
-            if [[ ! -e ~/.local/bin/"$PROGRAM" ]]
-            then
-                ln --verbose --symbolic --relative --backup=numbered --target-directory ~/.local/bin/ -- "$PROGRAM" || return
-            fi
-        fi
-        cd - > /dev/null || return
-    done
 
     # https://github.com/koalaman/shellcheck/issues/613
     # shellcheck disable=SC2164
@@ -501,13 +473,12 @@ install_local_programs() {
 
 uninstall_local_programs() {
 
-
     if $DRY_RUN
     then
         echo \
-        make -C "$SCRIPT_DIR"/build distclean
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build distclean
     else
-        make -C "$SCRIPT_DIR"/build distclean || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build distclean || return
     fi
 
     for LINK in dwm slstatus st stw
