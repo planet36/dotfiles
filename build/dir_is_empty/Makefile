@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: OSL-3.0
 
 # default install paths
-PREFIX = /usr/local
+PREFIX ?= /usr/local
 MANPREFIX = $(PREFIX)/share/man
 
 INCS =
