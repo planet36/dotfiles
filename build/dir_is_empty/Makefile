@@ -26,11 +26,12 @@ clean:
 	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS) *~ core core.[[:digit:]]*
 
 install: $(BIN)
-	@mkdir --verbose --parents -- ~/.local/bin/
-	@cp --verbose --update -- $(BIN) ~/.local/bin/
+	@mkdir --verbose --parents -- "$(DESTDIR)$(PREFIX)/bin"
+	@cp --verbose --update -- $(BIN) "$(DESTDIR)$(PREFIX)/bin"
+	@chmod --changes --preserve-root -- 755 "$(DESTDIR)$(PREFIX)/bin/$(BIN)"
 
-uninstall: clean
-	@$(RM) --verbose -- ~/.local/bin/$(BIN)
+uninstall:
+	@$(RM) --verbose -- "$(DESTDIR)$(PREFIX)/bin/$(BIN)"
 
 lint:
 	clang-tidy --quiet $(SRCS) -- $(CXXFLAGS) $(LDFLAGS)
