@@ -43,7 +43,7 @@ do
 	if [[ ! "$REPO" == https://git.suckless.org/* ]]
 	then
 		cd "$DIR" || exit
-		make PREFIX="$HOME"/.local install || exit
+		make install || exit
 		cd - > /dev/null || exit
 	fi
 done

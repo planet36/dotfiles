@@ -21,6 +21,6 @@ do
 
 	if [[ -d "$DIR" ]]
 	then
-		make PREFIX="$HOME"/.local -C "$DIR" clean uninstall || exit
+		make -C "$DIR" clean uninstall || exit
 	fi
 done

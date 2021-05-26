@@ -96,6 +96,8 @@ set --export PARALLEL_HOME "$XDG_CONFIG_HOME"/parallel
 
 set --export PASSWORD_STORE_DIR "$XDG_DATA_HOME"/pass
 
+set --export PREFIX "$HOME"/.local
+
 #set --export PS_FORMAT pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command
 set --export PS_FORMAT pid,nice,pri,user,stime,etime,cputimes,%cpu,%mem,rss,args
 
