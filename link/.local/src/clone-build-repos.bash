@@ -16,14 +16,10 @@ https://github.com/sineemore/stw.git
 
 for REPO in "${REPOS[@]}"
 do
-	#echo "REPO=$REPO"
-
 	DIR="$(basename -s .git -- "$REPO")" || exit
-	#echo "DIR=$DIR"
 
 	if [[ ! -d "$DIR" ]]
 	then
-
 		if [[ ! "$REPO" =~ https://git.suckless.org/* ]]
 		then
 			git clone "$REPO" || exit
@@ -54,10 +50,7 @@ do
 	if [[ ! "$REPO" =~ https://git.suckless.org/* ]]
 	then
 		cd "$DIR" || exit
-		make PREFIX=~/.local install || exit
+		make PREFIX="$HOME"/.local install || exit
 		cd - > /dev/null || exit
 	fi
-
-	#echo
 done
-
