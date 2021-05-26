@@ -9,7 +9,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2021-05-18'
+SCRIPT_VERSION='2021-05-25'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
@@ -481,19 +481,20 @@ uninstall_local_programs() {
         make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build uninstall || return
     fi
 
-    for LINK in dwm slstatus st stw
-    do
-        if [[ -L ~/.local/bin/"$LINK" ]]
-        then
-            if $DRY_RUN
-            then
-                echo \
-                rm --verbose ~/.local/bin/"$LINK"
-            else
-                rm --verbose ~/.local/bin/"$LINK" || return
-            fi
-        fi
-    done
+    pushd . &> /dev/null
+
+    cd ~/.local/src || return
+
+    if $DRY_RUN
+    then
+        echo "# clean repos"
+    else
+        bash clean-repos.bash || return
+    fi
+
+    # https://github.com/koalaman/shellcheck/issues/613
+    # shellcheck disable=SC2164
+    popd &> /dev/null
 }
 
 install_github_programs() {
