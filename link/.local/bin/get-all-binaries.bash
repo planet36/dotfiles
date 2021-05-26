@@ -12,7 +12,7 @@ SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
 DRY_RUN=false
-LIST_PROGRAMS=false
+LIST_BINARIES=false
 VERBOSE_OPTION=''
 
 print_version() {
@@ -87,7 +87,7 @@ do
 
     n) DRY_RUN=true ;;
 
-    l) LIST_PROGRAMS=true ;;
+    l) LIST_BINARIES=true ;;
 
     *)
         # Note: $OPTION is '?'
@@ -102,8 +102,8 @@ shift $((OPTIND - 1))
 
 print_verbose 'DRY_RUN=%s' "$DRY_RUN"
 
-declare -a PROGRAMS
-PROGRAMS=(
+declare -a BINARIES
+BINARIES=(
     'btm'
     'delta'
     'gotop'
@@ -112,8 +112,8 @@ PROGRAMS=(
     #'zoxide'
 )
 
-declare -A PROGRAM_TO_USER_REPO
-PROGRAM_TO_USER_REPO=(
+declare -A BINARY_TO_USER_REPO
+BINARY_TO_USER_REPO=(
     ['btm']='ClementTsang/bottom'
     ['delta']='dandavison/delta'
     ['gotop']='xxxserxxx/gotop'
@@ -122,8 +122,8 @@ PROGRAM_TO_USER_REPO=(
     #['zoxide']='ajeetdsouza/zoxide'
 )
 
-declare -A PROGRAM_TO_PART_RELEASE_FILE
-PROGRAM_TO_PART_RELEASE_FILE=(
+declare -A BINARY_TO_PART_RELEASE_FILE
+BINARY_TO_PART_RELEASE_FILE=(
     ['btm']='x86_64-unknown-linux-gnu'
     ['delta']='x86_64-unknown-linux-gnu'
     ['gotop']='linux_amd64'
@@ -132,34 +132,34 @@ PROGRAM_TO_PART_RELEASE_FILE=(
     #['zoxide']='x86_64-unknown-linux-gnu'
 )
 
-if ${LIST_PROGRAMS}
+if ${LIST_BINARIES}
 then
-    for PROGRAM in "${PROGRAMS[@]}"
+    for BINARY in "${BINARIES[@]}"
     do
-        USER_REPO="${PROGRAM_TO_USER_REPO[${PROGRAM}]}"
-        PART_RELEASE_FILE="${PROGRAM_TO_PART_RELEASE_FILE[${PROGRAM}]}"
-        printf '%q\t%q\t%q\n' "$PROGRAM" "$USER_REPO" "$PART_RELEASE_FILE"
+        USER_REPO="${BINARY_TO_USER_REPO[${BINARY}]}"
+        PART_RELEASE_FILE="${BINARY_TO_PART_RELEASE_FILE[${BINARY}]}"
+        printf '%q\t%q\t%q\n' "$BINARY" "$USER_REPO" "$PART_RELEASE_FILE"
     done
     exit
 fi
 
-for PROGRAM in "${PROGRAMS[@]}"
+for BINARY in "${BINARIES[@]}"
 do
-    print_verbose 'PROGRAM=%q' "$PROGRAM"
+    print_verbose 'BINARY=%q' "$BINARY"
 
-    USER_REPO="${PROGRAM_TO_USER_REPO[${PROGRAM}]}"
+    USER_REPO="${BINARY_TO_USER_REPO[${BINARY}]}"
     print_verbose 'USER_REPO=%q' "$USER_REPO"
 
-    PART_RELEASE_FILE="${PROGRAM_TO_PART_RELEASE_FILE[${PROGRAM}]}"
+    PART_RELEASE_FILE="${BINARY_TO_PART_RELEASE_FILE[${BINARY}]}"
     print_verbose 'PART_RELEASE_FILE=%q' "$PART_RELEASE_FILE"
 
     if $DRY_RUN
     then
         # shellcheck disable=SC2086
         echo \
-        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${PROGRAM}" "${USER_REPO}" "${PART_RELEASE_FILE}"
+        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${BINARY}" "${USER_REPO}" "${PART_RELEASE_FILE}"
     else
         # shellcheck disable=SC2086
-        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${PROGRAM}" "${USER_REPO}" "${PART_RELEASE_FILE}"
+        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${BINARY}" "${USER_REPO}" "${PART_RELEASE_FILE}"
     fi
 done

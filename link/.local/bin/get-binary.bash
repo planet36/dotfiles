@@ -26,7 +26,7 @@ EOT
 
 print_help() {
 
-    printf 'Usage: %q [OPTIONS] PROGRAM USER_REPO PART_RELEASE_FILE\n' "$SCRIPT_NAME"
+    printf 'Usage: %q [OPTIONS] BINARY USER_REPO PART_RELEASE_FILE\n' "$SCRIPT_NAME"
     cat <<EOT
 
 Get the program from github.  Run this script from the target directory.
@@ -99,8 +99,8 @@ then
 fi
 
 # name of the executable
-PROGRAM="$1"
-print_verbose 'PROGRAM=%q' "$PROGRAM"
+BINARY="$1"
+print_verbose 'BINARY=%q' "$BINARY"
 
 # github user and repo name separated by slash
 USER_REPO="$2"
@@ -127,7 +127,7 @@ curl -L -o "$RELEASE_FILE" -- "$URL_LATEST_RELEASE_DOWNLOAD"
 if tar -tf "$RELEASE_FILE" &> /dev/null
 then # it's a tar file
 
-    TAR_MEMBER="$(tar --list -f "$RELEASE_FILE" | grep -E -- "^(.+/)?$PROGRAM\$")"
+    TAR_MEMBER="$(tar --list -f "$RELEASE_FILE" | grep -E -- "^(.+/)?$BINARY\$")"
     print_verbose 'TAR_MEMBER=%q' "$TAR_MEMBER"
 
     # Only extract the desired file
@@ -146,10 +146,10 @@ then # it's a tar file
     fi
 else # it's not a tar file
 
-    if [ "$RELEASE_FILE" != "$PROGRAM" ]
+    if [ "$RELEASE_FILE" != "$BINARY" ]
     then
-        mv --verbose -- "$RELEASE_FILE" "$PROGRAM"
+        mv --verbose -- "$RELEASE_FILE" "$BINARY"
     fi
 
-    chmod --verbose --changes a+x -- "$PROGRAM"
+    chmod --verbose --changes a+x -- "$BINARY"
 fi
