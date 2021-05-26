@@ -23,12 +23,12 @@ $(BIN): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 
+clean:
+	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS) *~ core core.[[:digit:]]*
+
 install: $(BIN)
 	@mkdir --verbose --parents -- ~/.local/bin/
 	@cp --verbose --update -- $(BIN) ~/.local/bin/
-
-clean:
-	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS) *~ core core.[[:digit:]]*
 
 uninstall: clean
 	@$(RM) --verbose -- ~/.local/bin/$(BIN)
