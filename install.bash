@@ -476,9 +476,9 @@ uninstall_local_programs() {
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build distclean
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build uninstall
     else
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build distclean || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build uninstall || return
     fi
 
     for LINK in dwm slstatus st stw

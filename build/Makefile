@@ -6,8 +6,8 @@ SUBDIRS=$(sort $(wildcard */))
 build:
 	$(foreach DIR, $(SUBDIRS), $(MAKE) -C $(DIR);)
 
-install clean distclean lint:
+install clean uninstall lint:
 	$(foreach DIR, $(SUBDIRS), $(MAKE) -C $(DIR) $@;)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: build install clean distclean lint
+.PHONY: build install clean uninstall lint
