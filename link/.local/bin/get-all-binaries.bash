@@ -157,9 +157,9 @@ do
     then
         # shellcheck disable=SC2086
         echo \
-        bash "${SCRIPT_DIR}"/get-program.bash ${VERBOSE_OPTION} "${PROGRAM}" "${USER_REPO}" "${PART_RELEASE_FILE}"
+        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${PROGRAM}" "${USER_REPO}" "${PART_RELEASE_FILE}"
     else
         # shellcheck disable=SC2086
-        bash "${SCRIPT_DIR}"/get-program.bash ${VERBOSE_OPTION} "${PROGRAM}" "${USER_REPO}" "${PART_RELEASE_FILE}"
+        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${PROGRAM}" "${USER_REPO}" "${PART_RELEASE_FILE}"
     fi
 done

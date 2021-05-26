@@ -70,7 +70,7 @@ OPTIONS
          - st
          - stw
          - swp
-       programs from github listed in the file "get-all-programs.bash"
+       binaries from github listed in the file "get-all-binaries.bash"
        fish plugins
          - fisher
          - getopts
@@ -533,9 +533,9 @@ install_github_programs() {
 
     if $DRY_RUN
     then
-        bash get-all-programs.bash -v -n
+        bash get-all-binaries.bash -v -n
     else
-        bash get-all-programs.bash -v    || return
+        bash get-all-binaries.bash -v    || return
     fi
 
     # https://github.com/koalaman/shellcheck/issues/613
@@ -549,7 +549,7 @@ uninstall_github_programs() {
 
     cd ~/.local/bin || return
 
-    for PROGRAM in $(bash get-all-programs.bash -n | cut -f1)
+    for PROGRAM in $(bash get-all-binaries.bash -n | cut -f1)
     do
         if [[ -f "$PROGRAM" ]]
         then
