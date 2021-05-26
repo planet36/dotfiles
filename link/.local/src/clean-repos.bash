@@ -1,24 +1,20 @@
 #!/usr/bin/bash
 
-declare -a REPOS=(
-https://github.com/planet36/arch-install.git
-https://github.com/planet36/dwm.git
-#git@github.com:planet36/dwm.git
-https://github.com/planet36/slstatus.git
-#git@github.com:planet36/slstatus.git
-https://github.com/planet36/st.git
-#git@github.com:planet36/st.git
-https://git.suckless.org/dwm
-https://git.suckless.org/slstatus
-https://git.suckless.org/st
-https://github.com/sineemore/stw.git
-)
+mapfile -t REPOS < git-repos.txt
 
 for REPO in "${REPOS[@]}"
 do
+	echo "REPO=$REPO"
+
+	if [[ "$REPO" == '#'* ]]
+	then
+		echo "##### skip"
+		continue
+	fi
+
 	DIR="$(basename -s .git -- "$REPO")" || exit
 
-	if [[ "$REPO" =~ https://git.suckless.org/* ]]
+	if [[ "$REPO" == https://git.suckless.org/* ]]
 	then
 		DIR="$DIR"-suckless
 	fi

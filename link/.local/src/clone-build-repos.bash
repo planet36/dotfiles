@@ -1,26 +1,19 @@
 #!/usr/bin/bash
 
-declare -a REPOS=(
-https://github.com/planet36/arch-install.git
-https://github.com/planet36/dwm.git
-#git@github.com:planet36/dwm.git
-https://github.com/planet36/slstatus.git
-#git@github.com:planet36/slstatus.git
-https://github.com/planet36/st.git
-#git@github.com:planet36/st.git
-https://git.suckless.org/dwm
-https://git.suckless.org/slstatus
-https://git.suckless.org/st
-https://github.com/sineemore/stw.git
-)
+mapfile -t REPOS < git-repos.txt
 
 for REPO in "${REPOS[@]}"
 do
+	if [[ "$REPO" == #* ]]
+	then
+		continue
+	fi
+
 	DIR="$(basename -s .git -- "$REPO")" || exit
 
 	if [[ ! -d "$DIR" ]]
 	then
-		if [[ ! "$REPO" =~ https://git.suckless.org/* ]]
+		if [[ ! "$REPO" == https://git.suckless.org/* ]]
 		then
 			git clone "$REPO" || exit
 		else
@@ -28,7 +21,7 @@ do
 		fi
 
 		# My repos
-		if [[ "$REPO" =~ https://github.com/planet36/* ]]
+		if [[ "$REPO" == https://github.com/planet36/* ]]
 		then
 			case "$DIR" in
 				# These repos were forked from suckless
@@ -47,7 +40,7 @@ do
 	fi
 
 	# Do not install suckless programs
-	if [[ ! "$REPO" =~ https://git.suckless.org/* ]]
+	if [[ ! "$REPO" == https://git.suckless.org/* ]]
 	then
 		cd "$DIR" || exit
 		make PREFIX="$HOME"/.local install || exit
