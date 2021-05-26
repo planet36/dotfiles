@@ -1,6 +1,6 @@
-https://git.suckless.org/dwm dwm-suckless
-https://git.suckless.org/slstatus slstatus-suckless
-https://git.suckless.org/st st-suckless
+https://git.suckless.org/dwm
+https://git.suckless.org/slstatus
+https://git.suckless.org/st
 https://github.com/planet36/arch-install.git
 https://github.com/planet36/dwm.git
 #git@github.com:planet36/dwm.git
