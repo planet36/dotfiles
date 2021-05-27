@@ -1,0 +1,15 @@
+#!/usr/bin/sh
+while true
+do
+{
+    clear
+    top -b -n 1 -o %CPU | head -n 12
+    echo
+    echo
+    free -h
+    echo
+    echo
+    df -h -T -x squashfs -x tmpfs -x devtmpfs -x vboxsf
+} | sponge || break
+sleep 4.5s
+done
