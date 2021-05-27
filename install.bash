@@ -455,20 +455,13 @@ install_local_programs() {
         make -C "$SCRIPT_DIR"/build install || return
     fi
 
-    pushd . &> /dev/null
-
-    cd ~/.local/src || return
-
     if $DRY_RUN
     then
-        echo "# clone and build repos"
+        echo \
+        make -C ~/.local/src install
     else
-        bash clone-build-repos.bash || return
+        make -C ~/.local/src install || return
     fi
-
-    # https://github.com/koalaman/shellcheck/issues/613
-    # shellcheck disable=SC2164
-    popd &> /dev/null
 }
 
 uninstall_local_programs() {
@@ -481,20 +474,13 @@ uninstall_local_programs() {
         make -C "$SCRIPT_DIR"/build uninstall || return
     fi
 
-    pushd . &> /dev/null
-
-    cd ~/.local/src || return
-
     if $DRY_RUN
     then
-        echo "# clean repos"
+        echo \
+        make -C ~/.local/src uninstall
     else
-        bash clean-repos.bash || return
+        make -C ~/.local/src uninstall || return
     fi
-
-    # https://github.com/koalaman/shellcheck/issues/613
-    # shellcheck disable=SC2164
-    popd &> /dev/null
 }
 
 install_github_programs() {
