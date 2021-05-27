@@ -669,7 +669,8 @@ main() {
         then
             if command -v thefuck > /dev/null
             then
-                thefuck --alias > "$XDG_CONFIG_HOME"/fish/functions/fuck.fish || return
+                TF_SHELL=bash thefuck --alias > "$XDG_CONFIG_HOME"/bash/functions/fuck.bash || return
+                TF_SHELL=fish thefuck --alias > "$XDG_CONFIG_HOME"/fish/functions/fuck.fish || return
             fi
         fi
 
