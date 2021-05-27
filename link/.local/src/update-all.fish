@@ -6,6 +6,8 @@ for DIR in (find . -type d -name .git -printf '%h\n' | sort --version-sort)
   if test -d .git
     git fetch || break
     git pull || break
+    git fsck || break
+    git gc || break
   else
     echo "Not a git repo"
   end

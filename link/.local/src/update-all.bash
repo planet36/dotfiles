@@ -10,6 +10,8 @@ do
   then
     git fetch || break
     git pull || break
+    git fsck || break
+    git gc || break
   else
     echo "Not a git repo"
   fi
