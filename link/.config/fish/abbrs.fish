@@ -9,6 +9,7 @@ abbr --add --global amek make
 abbr --add --global amke make
 abbr --add --global bahs bash
 abbr --add --global blake2 b2sum
+abbr --add --global c clear
 abbr --add --global cdl cld
 abbr --add --global clena clean
 abbr --add --global csl cls
