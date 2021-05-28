@@ -8,23 +8,14 @@
 
 int main(int argc, char* argv[])
 {
-	if (argc < 1)
-	{
+	if (argc < 2)
 		errx(EXIT_FAILURE, "missing file operands");
-	}
-	else if (argc < 2)
-	{
-		errx(EXIT_FAILURE, "missing file operands");
-	}
-	else if (argc < 3)
-	{
+
+	if (argc == 2)
 		errx(EXIT_FAILURE, "missing file operand after \"%s\"", argv[1]);
-	}
 
 	if (renameat2(AT_FDCWD, argv[1], AT_FDCWD, argv[2], RENAME_EXCHANGE) < 0)
-	{
 		err(EXIT_FAILURE, "renameat2");
-	}
 
 	return EXIT_SUCCESS;
 }
