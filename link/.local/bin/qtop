@@ -3,12 +3,10 @@ while true
 do
 {
     clear
-    top -b -n 1 -o %CPU | head -n 12
-    echo
-    echo
+    LINES=12 top -b -c -n 1 -o %CPU -w
+    printf '\n\n'
     free -h
-    echo
-    echo
+    printf '\n\n'
     df -h -T -x squashfs -x tmpfs -x devtmpfs -x vboxsf
 } | sponge || break
 sleep 4.5s
