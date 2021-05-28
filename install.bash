@@ -450,17 +450,17 @@ install_local_programs() {
     if $DRY_RUN
     then
         echo \
-        make -C "$SCRIPT_DIR"/build install
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build install
     else
-        make -C "$SCRIPT_DIR"/build install || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build install || return
     fi
 
     if $DRY_RUN
     then
         echo \
-        make -C ~/.local/src install
+        make PREFIX="$HOME"/.local -C ~/.local/src install
     else
-        make -C ~/.local/src install || return
+        make PREFIX="$HOME"/.local -C ~/.local/src install || return
     fi
 }
 
@@ -469,17 +469,17 @@ uninstall_local_programs() {
     if $DRY_RUN
     then
         echo \
-        make -C "$SCRIPT_DIR"/build uninstall
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build uninstall
     else
-        make -C "$SCRIPT_DIR"/build uninstall || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build uninstall || return
     fi
 
     if $DRY_RUN
     then
         echo \
-        make -C ~/.local/src uninstall
+        make PREFIX="$HOME"/.local -C ~/.local/src uninstall
     else
-        make -C ~/.local/src uninstall || return
+        make PREFIX="$HOME"/.local -C ~/.local/src uninstall || return
     fi
 }
 
