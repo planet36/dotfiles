@@ -8,9 +8,10 @@ URxvt.font: xft:monospace:size=13
 XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
 XTerm.vt100.faceName: monospace:size=13
 XTerm.vt100.fastScroll: true
-XTerm.vt100.jumpScroll: true
 XTerm.vt100.multiScroll: true
 XTerm.vt100.saveLines: 10000
+XTerm.vt100.scrollKey: true
+XTerm.vt100.scrollTtyOutput: false
 XTerm.vt100.selectToClipboard: true
 
 XTerm.vt100.translations: #override \n\
