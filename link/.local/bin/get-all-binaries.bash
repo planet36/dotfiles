@@ -118,6 +118,7 @@ BINARY_TO_USER_REPO=(
     ['delta']='dandavison/delta'
     ['gotop']='xxxserxxx/gotop'
     #['lsd']='Peltoche/lsd'
+    ['paru']='Morganamilo/paru'
     ['yay']='Jguer/yay'
     #['zoxide']='ajeetdsouza/zoxide'
 )
@@ -128,6 +129,7 @@ BINARY_TO_PART_RELEASE_FILE=(
     ['delta']='x86_64-unknown-linux-gnu'
     ['gotop']='linux_amd64'
     #['lsd']='x86_64-unknown-linux-gnu'
+    ['paru']='x86_64'
     ['yay']='x86_64'
     #['zoxide']='x86_64-unknown-linux-gnu'
 )
