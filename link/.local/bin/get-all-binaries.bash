@@ -108,6 +108,7 @@ BINARIES=(
     'delta'
     'gotop'
     #'lsd'
+    'paru'
     'yay'
     #'zoxide'
 )
