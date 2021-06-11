@@ -58,19 +58,12 @@ OPTIONS
   -p : In addition to dotfiles, also install the following:
        vim/nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
-         - as_bool
-         - cmeter
-         - cpuavgd
-         - dir_is_empty
-         - durfmt
+         - ${SCRIPT_DIR}/build/*
          - dwm
-         - netrxavgd
-         - nettxavgd
          - slstatus
          - st
          - stw
-         - swp
-       binaries from github listed in the file "get-all-binaries.bash"
+         - binaries from github listed in the file "get-all-binaries.bash"
        fish plugins
          - fisher
          - getopts
