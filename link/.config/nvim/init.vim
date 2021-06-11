@@ -530,6 +530,7 @@ endfunction
 "vnoremap <Leader>' c''<Esc>P
 "vnoremap <Leader>" c""<Esc>P
 
+vnoremap <Leader>` :<c-u>call <SID>VisualSurround(visualmode(), "`")<CR>
 vnoremap <Leader>' :<c-u>call <SID>VisualSurround(visualmode(), "'")<CR>
 vnoremap <Leader>" :<c-u>call <SID>VisualSurround(visualmode(), '"')<CR>
 vnoremap <Leader>( :<c-u>call <SID>VisualSurround(visualmode(), '(', ')')<CR>
