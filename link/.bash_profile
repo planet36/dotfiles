@@ -118,6 +118,8 @@ export PYTHONPATH="$HOME"/.local/lib/python
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPYCACHEPREFIX
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/__pycache__
 
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME"/ripgrep/ripgreprc
+
 export RSYNC_ARGS='-v -c -u -p -t -r -z -h'
 #-v, --verbose               increase verbosity
 #-c, --checksum              always checksum

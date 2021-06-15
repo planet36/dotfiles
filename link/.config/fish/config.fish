@@ -109,6 +109,8 @@ set --export PYTHONPATH "$HOME"/.local/lib/python
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPYCACHEPREFIX
 set --export PYTHONPYCACHEPREFIX "$XDG_CACHE_HOME"/__pycache__
 
+set --export RIPGREP_CONFIG_PATH "$XDG_CONFIG_HOME"/ripgrep/ripgreprc
+
 # XXX: must use 'string split' to use this interactively
 set --export RSYNC_ARGS -v -c -u -p -t -r -z -h
 #-v, --verbose               increase verbosity
