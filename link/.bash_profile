@@ -189,6 +189,9 @@ export PERF_TEST_OPTIONS="$OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-ds
 
 export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
 
+# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
+export CPPFLAGS="-iquote $HOME/.local/include"
+
 export CFLAGS="$GCC_COMMON_OPTIONS -std=c2x"
 export CXXFLAGS="$GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS"
 

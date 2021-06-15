@@ -344,6 +344,9 @@ set --export PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -f
 
 set --export PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
 
+# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
+set --export CPPFLAGS -iquote "$HOME"/.local/include
+
 set --export CFLAGS $GCC_COMMON_OPTIONS -std=c2x
 set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS
 
