@@ -91,11 +91,11 @@ alias find-dangling-symlinks='find -xtype l'
 #alias grep='grep --color --line-number --binary-files=without-match --directories=skip'
 alias g='grep --color --line-number --binary-files=without-match --directories=skip'
 # shellcheck disable=SC2139
-alias gccc="gcc $CFLAGS"
+alias gccc="gcc $CPPFLAGS $CFLAGS"
 alias gf='git log --oneline --decorate --color | fzf --no-sort --layout=reverse-list --preview "git show --color=always {1}"'
 alias gif2png='gif2png -m -n -s -O'
 # shellcheck disable=SC2139
-alias gpp="g++ $CXXFLAGS"
+alias gpp="g++ $CPPFLAGS $CXXFLAGS"
 alias gr='g --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias jpegtran2='jpegtran -optimize -copy all'
 alias longest_line="awk 'length > l {r = NR; l = length} END{print r, l}'"

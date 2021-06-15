@@ -20,7 +20,7 @@ $(BIN): $(OBJS)
 	$(CC) $^ -o $@ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $<
 
 clean:
 	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS) *~ core core.[[:digit:]]*
@@ -34,7 +34,7 @@ uninstall:
 	@$(RM) --verbose -- "$(DESTDIR)$(PREFIX)/bin/$(BIN)"
 
 lint:
-	clang-tidy --quiet $(SRCS) -- $(CFLAGS) $(LDFLAGS)
+	clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS) $(LDFLAGS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: install clean uninstall lint
