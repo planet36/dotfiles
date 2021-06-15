@@ -5,13 +5,12 @@
 PREFIX ?= /usr/local
 MANPREFIX = $(PREFIX)/share/man
 
-INCS =
 SRCS = $(wildcard *.c)
 DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
 DEPFLAGS += -MMD -MP
-CFLAGS += -Wno-cast-qual $(INCS) $(DEPFLAGS)
+CFLAGS += -Wno-cast-qual $(DEPFLAGS)
 #LDFLAGS +=
 
 BIN = $(notdir $(CURDIR))

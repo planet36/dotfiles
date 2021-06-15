@@ -5,13 +5,12 @@
 PREFIX ?= /usr/local
 MANPREFIX = $(PREFIX)/share/man
 
-INCS =
 SRCS = $(wildcard *.c)
 DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
 DEPFLAGS += -MMD -MP
-CFLAGS += $(INCS) $(DEPFLAGS)
+CFLAGS += $(DEPFLAGS)
 CFLAGS += -D_GNU_SOURCE
 #LDFLAGS +=
 

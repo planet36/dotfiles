@@ -5,13 +5,12 @@
 PREFIX ?= /usr/local
 MANPREFIX = $(PREFIX)/share/man
 
-INCS =
 SRCS = $(wildcard *.cpp)
 DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
 DEPFLAGS += -MMD -MP
-CXXFLAGS += -std=c++17 $(INCS) $(DEPFLAGS)
+CXXFLAGS += -std=c++17 $(DEPFLAGS)
 #LDFLAGS += -lfmt
 
 BIN = $(notdir $(CURDIR))
