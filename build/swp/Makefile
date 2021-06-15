@@ -9,8 +9,7 @@ SRCS = $(wildcard *.c)
 DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
-DEPFLAGS += -MMD -MP
-CFLAGS += $(DEPFLAGS)
+CPPFLAGS += -MMD -MP
 CFLAGS += -D_GNU_SOURCE
 #LDFLAGS +=
 

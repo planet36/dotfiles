@@ -9,8 +9,8 @@ SRCS = $(wildcard *.cpp)
 DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
-DEPFLAGS += -MMD -MP
-CXXFLAGS += -std=c++17 $(DEPFLAGS)
+CPPFLAGS += -MMD -MP
+CXXFLAGS += -std=c++17
 #LDFLAGS += -lfmt
 
 BIN = $(notdir $(CURDIR))
