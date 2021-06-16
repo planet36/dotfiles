@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <filesystem>
 
-int main(const int argc, const char* const argv[])
+int main(int argc, char* argv[])
 {
 	int result = EXIT_SUCCESS;
 

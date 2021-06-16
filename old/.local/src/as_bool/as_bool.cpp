@@ -8,7 +8,7 @@ time $CXX $CXXFLAGS as_bool.cpp -o as_bool-cpp ; d as_bool-cpp
 #include <regex>
 
 // Evaluate the given string as a boolean
-int main(const int argc, const char* const argv[])
+int main(int argc, char* argv[])
 {
 	const auto regex_flavor = std::regex::ECMAScript;
 
