@@ -16,16 +16,16 @@ SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
 
-print_version() {
-
+function print_version
+{
     cat <<EOT
 $SCRIPT_NAME $SCRIPT_VERSION
 Written by $SCRIPT_AUTHOR
 EOT
 }
 
-print_help() {
-
+function print_help
+{
     printf 'Usage: %q [OPTIONS] BINARY USER_REPO PART_RELEASE_FILE\n' "$SCRIPT_NAME"
     cat <<EOT
 
@@ -42,16 +42,16 @@ OPTIONS
 EOT
 }
 
-print_warning() {
-
+function print_warning
+{
     printf 'Warning: ' 1>&2
     # shellcheck disable=SC2059
     printf -- "$@" 1>&2
     printf '\n' 1>&2
 }
 
-print_error() {
-
+function print_error
+{
     printf 'Error: ' 1>&2
     # shellcheck disable=SC2059
     printf -- "$@" 1>&2
@@ -61,8 +61,8 @@ print_error() {
     exit 1
 }
 
-print_verbose() {
-
+function print_verbose
+{
     if $VERBOSE
     then
         printf '# '

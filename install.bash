@@ -19,16 +19,16 @@ DELETE=false
 INSTALL_PROGRAMS=false
 DRY_RUN=false
 
-print_version() {
-
+function print_version
+{
     cat <<EOT
 $SCRIPT_NAME $SCRIPT_VERSION
 Written by $SCRIPT_AUTHOR
 EOT
 }
 
-print_help() {
-
+function print_help
+{
     printf 'Usage: %q [OPTIONS]\n' "${BASH_SOURCE[0]}"
     cat <<EOT
 
@@ -58,7 +58,7 @@ OPTIONS
   -p : In addition to dotfiles, also install the following:
        vim/nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
-         - ${SCRIPT_DIR}/build/*
+         - $SCRIPT_DIR/build/*
          - dwm
          - slstatus
          - st
@@ -74,15 +74,15 @@ OPTIONS
 EOT
 }
 
-print_warning() {
-
+function print_warning
+{
     printf 'Warning: ' 1>&2
     printf -- "$@" 1>&2
     printf '\n' 1>&2
 }
 
-print_error() {
-
+function print_error
+{
     printf 'Error: ' 1>&2
     printf -- "$@" 1>&2
     printf '\n' 1>&2
@@ -91,8 +91,8 @@ print_error() {
     exit 1
 }
 
-print_verbose() {
-
+function print_verbose
+{
     if $VERBOSE
     then
         printf '# '
@@ -101,8 +101,8 @@ print_verbose() {
     fi
 }
 
-copy_dotfiles() {
-
+function copy_dotfiles
+{
     SRC_DIR="$1"
     print_verbose 'SRC_DIR=%q' "$SRC_DIR"
 
@@ -169,8 +169,8 @@ copy_dotfiles() {
     done
 }
 
-delete_copied_dotfiles() {
-
+function delete_copied_dotfiles
+{
     SRC_DIR="$1"
     print_verbose 'SRC_DIR=%q' "$SRC_DIR"
 
@@ -220,8 +220,8 @@ delete_copied_dotfiles() {
     done
 }
 
-link_dotfiles() {
-
+function link_dotfiles
+{
     SRC_DIR="$1"
     print_verbose 'SRC_DIR=%q' "$SRC_DIR"
 
@@ -287,8 +287,8 @@ link_dotfiles() {
     done
 }
 
-delete_linked_dotfiles () {
-
+function delete_linked_dotfiles
+{
     SRC_DIR="$1"
     print_verbose 'SRC_DIR=%q' "$SRC_DIR"
 
@@ -338,8 +338,8 @@ delete_linked_dotfiles () {
     done
 }
 
-setup_xdg_vars() {
-
+function setup_xdg_vars
+{
     # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
     : "${XDG_CACHE_HOME:=$HOME/.cache}"
@@ -362,8 +362,8 @@ setup_xdg_vars() {
     # XDG base directories have been created
 }
 
-create_vim_nvim_dirs() {
-
+function create_vim_nvim_dirs
+{
     if $DRY_RUN
     then
         echo \
@@ -382,8 +382,8 @@ create_vim_nvim_dirs() {
     fi
 }
 
-install_vim_nvim_plugins() {
-
+function install_vim_nvim_plugins
+{
     if command -v vim > /dev/null
     then
         #vim +PlugUpgrade +PlugInstall +qall
@@ -409,8 +409,8 @@ install_vim_nvim_plugins() {
     fi
 }
 
-uninstall_vim_nvim_plugins() {
-
+function uninstall_vim_nvim_plugins
+{
     if command -v vim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/vim/plugins-empty.vim ]]
     then
         if $DRY_RUN
@@ -438,8 +438,8 @@ uninstall_vim_nvim_plugins() {
     fi
 }
 
-install_local_programs() {
-
+function install_local_programs
+{
     if $DRY_RUN
     then
         echo \
@@ -457,8 +457,8 @@ install_local_programs() {
     fi
 }
 
-uninstall_local_programs() {
-
+function uninstall_local_programs
+{
     if $DRY_RUN
     then
         echo \
@@ -476,8 +476,8 @@ uninstall_local_programs() {
     fi
 }
 
-install_github_programs() {
-
+function install_github_programs
+{
     pushd . &> /dev/null
 
     cd ~/.local/bin || return
@@ -494,8 +494,8 @@ install_github_programs() {
     popd &> /dev/null
 }
 
-uninstall_github_programs() {
-
+function uninstall_github_programs
+{
     pushd . &> /dev/null
 
     cd ~/.local/bin || return
@@ -520,8 +520,8 @@ uninstall_github_programs() {
 }
 
 
-install_fish_plugins() {
-
+function install_fish_plugins
+{
     if command -v fish > /dev/null
     then
         if $DRY_RUN
@@ -551,8 +551,8 @@ install_fish_plugins() {
 }
 
 
-uninstall_fish_plugins() {
-
+function uninstall_fish_plugins
+{
     if command -v fish > /dev/null
     then
         if $DRY_RUN
@@ -566,8 +566,8 @@ uninstall_fish_plugins() {
 }
 
 
-parse_options() {
-
+function parse_options
+{
     while getopts 'Vhvrcdpn' OPTION
     do
         case "$OPTION" in
@@ -606,8 +606,8 @@ parse_options() {
     print_verbose 'DRY_RUN=%s' "$DRY_RUN"
 }
 
-main() {
-
+function main
+{
     if [[ "$PWD" == "$(realpath -- "$SCRIPT_DIR")"* ]]
     then
         print_error 'May not install dotfiles within itself'
