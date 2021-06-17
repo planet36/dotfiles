@@ -1,0 +1,70 @@
+#!/bin/sh
+
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# Force overwriting the output image if it already exists
+DEFAULT_FORCE=false
+# POW should be in the interval [1.0, 4.0]
+# lower is more dense
+# higher is less dense
+DEFAULT_POW=2.5
+DEFAULT_RES=1920x1080
+DEFAULT_VERBOSE=false
+
+: "${POW:=$DEFAULT_POW}"
+: "${RES:=$DEFAULT_RES}"
+: "${FORCE:=$DEFAULT_FORCE}"
+: "${VERBOSE:=$DEFAULT_VERBOSE}"
+
+while getopts 'fp:r:v' OPTION
+do
+	case $OPTION in
+		f) FORCE=true ;;
+		p) POW="$OPTARG" ;;
+		r) RES="$OPTARG" ;;
+		v) VERBOSE=true ;;
+		\?) exit 1 ;;
+		*) ;;
+	esac
+done
+
+shift $((OPTIND - 1)) || exit
+
+OUTFILE="$1"
+
+if [ -z "$OUTFILE" ]
+then
+	echo 'Error: output image path not given' 1>&2
+	exit 1
+fi
+
+if [ -e "$OUTFILE" ]
+then
+	if ! $FORCE
+	then
+		echo 'Error: output image path already exists' 1>&2
+		exit 1
+	fi
+fi
+
+if ! command -v convert > /dev/null
+then
+	echo 'Error: "convert" command not found' 1>&2
+	exit 1
+fi
+
+if $VERBOSE
+then
+	set -x
+fi
+
+convert \
+	-size "$RES" \
+	canvas:black \
+	-colorspace Gray \
+	+noise Laplacian \
+	-evaluate Pow "$POW" \
+	-normalize \
+	-depth 4 \
+	"$OUTFILE"
