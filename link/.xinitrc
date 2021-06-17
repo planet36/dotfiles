@@ -124,6 +124,7 @@ fi
 # {{{ background
 
 BGCOLOR='#004466'
+FGCOLOR='#dddddd'
 
 # NOTE: if xcompmgr will be run, use hsetroot
 # https://wiki.archlinux.org/title/Xcompmgr#Background_turns_light_gray_briefly_after_logging_in_(e.g._in_Openbox)
@@ -146,9 +147,9 @@ fi
 if command -v stw > /dev/null
 then
     # alpha only works when xcompmgr is running
-    #stw -x +50 -y +50 -B 20 -f '#dddddd' -A 0 --
-    #stw -x +50 -y +50 -B 20 -f '#dddddd' -b '#003355' --
-    stw -x +50 -y +50 -B 20 -f '#dddddd' -b "$BGCOLOR" -F "monospace:size=13" -- \
+    #stw -x +50 -y +50 -B 20 -f "$FGCOLOR" -A 0 --
+    #stw -x +50 -y +50 -B 20 -f "$FGCOLOR" -b '#003355' --
+    stw -x +50 -y +50 -B 20 -f "$FGCOLOR" -b "$BGCOLOR" -F "monospace:size=13" -- \
         sh -c 'top -b -n 1 -o %CPU | head -n 12 ; echo ; echo ; free -h ; echo ; echo ; df -h -T -x squashfs -x tmpfs -x devtmpfs -x vboxsf' &
         # -u $USER
 fi
