@@ -9,6 +9,10 @@ function screenshot --description 'Take a screenshot'
 
         import -window root ~/screenshot-$DATETIME.png
 
+    if command --quiet maim
+
+        maim --window root ~/screenshot-$DATETIME.png
+
     else if command --quiet xwd
 
         xwd -root -out ~/screenshot-$DATETIME.xwd || return
@@ -16,7 +20,5 @@ function screenshot --description 'Take a screenshot'
         convert ~/screenshot-$DATETIME.xwd ~/screenshot-$DATETIME.png || return
 
         rm --force -- ~/screenshot-$DATETIME.xwd
-
     end
-
 end
