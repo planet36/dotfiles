@@ -20,5 +20,9 @@ function screenshot --description 'Take a screenshot'
         convert ~/screenshot-$DATETIME.xwd ~/screenshot-$DATETIME.png || return
 
         rm --force -- ~/screenshot-$DATETIME.xwd
+
+    else
+        echo "Error: No tool to get screenshot" 1>&2
+        return 1
     end
 end
