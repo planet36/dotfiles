@@ -21,7 +21,7 @@ function sc --description 'wrapper for scrypt'
         end
 
         if test -e "$OUTFILE"
-            echo "Error: File already exists: $OUTFILE"
+            echo "Error: File already exists: $OUTFILE" 1>&2
             return 1
         end
 

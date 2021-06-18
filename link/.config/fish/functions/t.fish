@@ -19,7 +19,7 @@ function t --description 'tar a folder'
         set OUTFILE (basename -- "$INDIR").tar
 
         if test -e "$OUTFILE"
-            echo "Error: File already exists: $OUTFILE"
+            echo "Error: File already exists: $OUTFILE" 1>&2
             return 1
         end
 
