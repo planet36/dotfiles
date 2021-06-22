@@ -87,21 +87,21 @@ switch "$ID"
 # https://www.archlinux.org/pacman/pacman.8.html
 case arch
     abbr --add --global cu checkupdates
-    abbr --add --global sp sudo pacman --color always
+    abbr --add --global sp sudo pacman
 
-    alias inst='sudo pacman --color always -S --needed'
+    alias inst='sudo pacman -S --needed'
     ##### XXX what about:
     # --answerclean All
     # --answeredit None
     # --answerupgrade None
     # --cleanafter
     alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
-    alias uninst='sudo pacman --color always -Rs'
+    alias uninst='sudo pacman -Rs'
     ##### TODO: maybe use xargs
-    alias autorm='pacman -Qdtq | sudo pacman --color always -Rs -' ##### TODO: test this
-    alias upd='sudo pacman --color always -Syw'
-    alias upg='sudo pacman --color always -Syu'
-    alias pf="pacman -Sl | fzf --preview 'pacman --color always -Si {2}'"
+    alias autorm='pacman -Qdtq | sudo pacman -Rs -' ##### TODO: test this
+    alias upd='sudo pacman -Syw'
+    alias upg='sudo pacman -Syu'
+    alias pf="pacman -Sl | fzf --preview 'pacman -Si {2}'"
 
 # https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Browsing_packages
 # pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'

@@ -150,19 +150,19 @@ case "${ID}" in
 # https://www.archlinux.org/pacman/pacman.8.html
 arch)
     alias cu='checkupdates'
-    alias sp='sudo pacman --color always'
+    alias sp='sudo pacman'
 
-    alias inst='sudo pacman --color always -S --needed'
+    alias inst='sudo pacman -S --needed'
     alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
     ##### XXX what about:
     # --answeredit None
     # --answerupgrade None
     # --cleanafter
-    alias uninst='sudo pacman --color always -Rs'
+    alias uninst='sudo pacman -Rs'
     ##### TODO: maybe use xargs
-    alias autorm='pacman -Qdtq | sudo pacman --color always -Rs -' ##### TODO: test this
-    alias upd='sudo pacman --color always -Syw'
-    alias upg='sudo pacman --color always -Syu'
+    alias autorm='pacman -Qdtq | sudo pacman -Rs -' ##### TODO: test this
+    alias upd='sudo pacman -Syw'
+    alias upg='sudo pacman -Syu'
     ;;
 
 fedora)
