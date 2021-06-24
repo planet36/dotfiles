@@ -10,10 +10,18 @@
 # All circular angles are in degrees.
 
 import math
-import os
 import sys
 
 from ellipsoid import geodetic_to_ecef, WGS84
+
+__version__ = '2021-06-24'
+
+
+# https://mathworld.wolfram.com/Haversine.html
+# https://en.wikipedia.org/wiki/Haversine_formula
+def hav_rad(a_rad: float) -> float:
+	'''Return the haversine of the given angle (radians).'''
+	return math.sin(a_rad/2)**2
 
 
 def normalize_angle_deg_signed(a_deg: float) -> float:
@@ -53,11 +61,14 @@ def angle_deg_diff(a1_deg: float, a2_deg: float) -> float:
 	return normalize_angle_deg_signed(a2_deg - a1_deg)
 
 
+# TODO: maybe allow user to specify radius
+# https://en.wikipedia.org/wiki/Earth_radius
+
 # https://en.wikipedia.org/wiki/Haversine_formula
 # http://www.movable-type.co.uk/scripts/latlong.html
 def haversine_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_deg: float) -> float:
 	# pylint: disable=redefined-outer-name
-	'''Get the haversine distance between 2 geodetic coordinates.'''
+	'''Calculate the haversine distance (in meters) between 2 geodetic coordinates (in degrees).'''
 
 	sin_lat1 = math.sin(math.radians(lat1_deg))
 	cos_lat1 = math.cos(math.radians(lat1_deg))
@@ -73,7 +84,7 @@ def haversine_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_d
 	lon_diff_rad = math.radians(angle_deg_diff(lon1_deg, lon2_deg))
 
 	# a is the square of half the chord length between the points
-	a = math.sin(lat_diff_rad/2)**2 + cos_lat1 * cos_lat2 * math.sin(lon_diff_rad/2)**2
+	a = hav_rad(lat_diff_rad) + cos_lat1 * cos_lat2 * hav_rad(lon_diff_rad)
 
 	# c is the angular distance in radians
 	c = 2 * math.asin(math.sqrt(a))
@@ -81,22 +92,156 @@ def haversine_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_d
 	return R * c
 
 
+# https://en.wikipedia.org/wiki/Euclidean_distance
 def euclidian_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_deg: float) -> float:
 	# pylint: disable=redefined-outer-name
-	'''Get the Euclidian distance between 2 geodetic coordinates.'''
+	'''Calculate the Euclidian distance (in meters) between 2 geodetic coordinates (in degrees).'''
 	(x1, y1, z1) = geodetic_to_ecef(WGS84, lat1_deg, lon1_deg, 0)
 	(x2, y2, z2) = geodetic_to_ecef(WGS84, lat2_deg, lon2_deg, 0)
 	return math.dist((x1, y1, z1), (x2, y2, z2))
 
 
-for line in sys.stdin:
-	(lat1_deg, lon1_deg, lat2_deg, lon2_deg) = map(float, line.strip(os.linesep).split())
-	(lat1_deg, lon1_deg) = normalize_geodetic_deg(lat1_deg, lon1_deg)
-	(lat2_deg, lon2_deg) = normalize_geodetic_deg(lat2_deg, lon2_deg)
+# pylint: disable=R0914
+def main(argv = None):
 
-	result_haversine = haversine_deg_dist(lat1_deg, lon1_deg, lat2_deg, lon2_deg)
-	result_euclid = euclidian_deg_dist(lat1_deg, lon1_deg, lat2_deg, lon2_deg)
+	# pylint: disable=C0415
+	import getopt
+	import os.path
+	import signal
 
-	print(f'{result_haversine=}')
-	print(f'{result_euclid=}')
+	if argv is None:
+		argv = sys.argv
 
+	program_name = os.path.basename(argv[0])
+
+	program_authors = ['Steven Ward']
+
+	# possible values
+	possible_dist_funcs = {
+			'euclidian': euclidian_deg_dist,
+			'haversine': haversine_deg_dist,
+			}
+
+	# default values
+	default_verbose = False
+	default_method = 'haversine'
+
+	# mutable values
+	verbose = default_verbose
+	method = default_method
+
+	# pylint: disable=W0613
+	def signal_handler(signal_num, execution_frame):
+		print()
+		sys.exit(0)
+
+	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+
+	def print_version():
+		"""Print the version information and exit."""
+		print(program_name, __version__)
+		print('Written by', ', '.join(program_authors))
+
+	def print_verbose(s):
+		"""Print the message if verbose mode is on."""
+		if verbose:
+			print('#', s)
+
+	# pylint: disable=W0612
+	def print_warning(s):
+		"""Print the warning message and continue."""
+		print('Warning:', s, file=sys.stderr)
+
+	def print_error(s):
+		"""Print the error message and exit."""
+		print('Error:', s, file=sys.stderr)
+		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+
+	def print_help():
+		"""Print the help message and exit."""
+		print(f"""Usage: {program_name} [OPTIONS]
+
+Calculate the distance (in meters) between geodetic coordinates (in decimal degrees).
+
+Pairs of geodetic coordinates, separated by whitespace on the same line, are read from stdin.
+The coordinates are in the following order:
+LAT1 LON1 LAT2 LON2
+
+OPTIONS
+
+-V, --version
+    Print the version information and exit.
+
+-h, --help
+    Print this message and exit.
+
+-v, --verbose
+    Print diagnostics.
+
+-m, --method METHOD
+    Specify the method for calculating distance.
+    (valid: {', '.join(possible_dist_funcs.keys())})
+    (default: {default_method})
+
+
+EXAMPLES
+
+cat <<EOT | geodist --method haversine
+40.056667 -78.905833 38.889722 -77.008889
+40.056667 -78.905833 38.8977 -77.0365
+38.889722 -77.008889 38.8977 -77.0365
+EOT
+
+cat <<EOT | geodist --method euclidian
+40.056667 -78.905833 38.889722 -77.008889
+40.056667 -78.905833 38.8977 -77.0365
+38.889722 -77.008889 38.8977 -77.0365
+EOT
+
+""")
+
+	short_options = 'Vhvm:'
+	long_options = ['version', 'help', 'verbose',
+		'method=',
+		]
+
+	try:
+		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
+	except getopt.GetoptError as err:
+		print_error(err)
+		return 1
+
+	for (option, value) in options:
+		# pylint: disable=R1705
+		if option in ['-V', '--version']:
+			print_version()
+			return 0
+		elif option in ['-h', '--help']:
+			print_help()
+			return 0
+		elif option in ['-v', '--verbose']:
+			verbose = True
+		elif option in ['-m', '--method']:
+			method = value
+		else:
+			print_error(f"Unhandled option: {option}")
+			return 1
+
+	print_verbose(f'{method=}')
+
+	dist_func = possible_dist_funcs[method]
+
+	for line in sys.stdin:
+		(lat1_deg, lon1_deg, lat2_deg, lon2_deg) = map(float, line.strip(os.linesep).split()[0:4])
+		(lat1_deg, lon1_deg) = normalize_geodetic_deg(lat1_deg, lon1_deg)
+		(lat2_deg, lon2_deg) = normalize_geodetic_deg(lat2_deg, lon2_deg)
+
+		print_verbose(f'{lat1_deg=} {lon1_deg=}')
+		print_verbose(f'{lat2_deg=} {lon2_deg=}')
+
+		distance = dist_func(lat1_deg, lon1_deg, lat2_deg, lon2_deg)
+		print(f'{distance:.1f}')
+
+if __name__ == '__main__':
+	sys.exit(main())
