@@ -34,6 +34,7 @@ abbr --add --global m. meld .
 abbr --add --global maek make
 abbr --add --global md5 md5sum
 abbr --add --global medl meld
+abbr --add --global mkae make
 abbr --add --global p2 python2
 abbr --add --global p3 python3
 abbr --add --global py2 python2

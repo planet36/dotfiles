@@ -37,6 +37,7 @@ alias m.='meld .'
 alias maek=make
 alias md5=md5sum
 alias medl=meld
+alias mkae=make
 alias p2=python2
 alias p3=python3
 alias py2=python2
