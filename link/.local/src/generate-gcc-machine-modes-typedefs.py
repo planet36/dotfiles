@@ -14,7 +14,7 @@ import subprocess
 now = dt.datetime.now(dt.timezone.utc)
 author = 'Steven Ward'
 license = 'OSL-3.0'
-brief_description = 'This file defines typedefs for GCC machine modes'
+brief_description = 'typedefs for GCC machine modes'
 generated_by_file_name = os.path.basename(__file__)
 generated_datetime = now.isoformat(timespec='seconds')
 system_info = platform.platform()

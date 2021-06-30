@@ -343,7 +343,7 @@ constexpr T
 now = dt.datetime.now(dt.timezone.utc)
 author = 'Steven Ward'
 this_license = 'OSL-3.0'
-brief_description = 'math constants library'
+brief_description = 'math constants'
 generated_by_file_name = os.path.basename(__file__)
 generated_datetime = now.isoformat(timespec='seconds')
 system_info = platform.platform()
