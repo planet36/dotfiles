@@ -19,6 +19,7 @@ alias e="$EDITOR"
 # shellcheck disable=SC2139
 alias ed="$EDITOR"
 alias f=find
+alias fiel=file
 alias gci='git commit'
 alias gcl='git clean'
 alias gco='git checkout'

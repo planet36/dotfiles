@@ -16,6 +16,7 @@ abbr --add --global csl cls
 abbr --add --global e "$EDITOR"
 abbr --add --global ed "$EDITOR"
 abbr --add --global f find
+abbr --add --global fiel file
 abbr --add --global gci git commit
 abbr --add --global gcl git clean
 abbr --add --global gco git checkout
