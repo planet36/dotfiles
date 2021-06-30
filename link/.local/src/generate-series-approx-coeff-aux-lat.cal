@@ -13,17 +13,11 @@ https://geographiclib.sourceforge.io/html/auxlat.html
 
 */
 
-
-/*******************************************************************/
-
 read -once "wgs84-const.cal"
 
 read -once "series-approx-coeff-aux-lat.cal"
 
 read -once "utils.cal"
-
-
-/*******************************************************************/
 
 /* print the values of a matrix column for use in a C++ array declaration */
 define mat_print_col(A, c, indent_num = 0, indent_char = "\t") {
@@ -36,7 +30,6 @@ define mat_print_col(A, c, indent_num = 0, indent_char = "\t") {
 	}
 }
 
-
 /* print the values of a matrix row for use in a C++ array declaration */
 define mat_print_row(A, r, indent_num = 0, indent_char = "\t") {
 	local j;
@@ -47,9 +40,6 @@ define mat_print_row(A, r, indent_num = 0, indent_char = "\t") {
 		printf("%sT(%eL),\n", indent_str, A[r,j]);
 	}
 }
-
-
-/*******************************************************************/
 
 /* print the values of a matrix column as a C++ array declaration */
 define mat_print_col_as_cpp_array(s, A, c = 0, indent_num = 0, indent_char = "\t") {
@@ -63,7 +53,6 @@ define mat_print_col_as_cpp_array(s, A, c = 0, indent_num = 0, indent_char = "\t
 	printf("%s};\n\n", indent_str);
 }
 
-
 /* print the values of a matrix column as a C++ static constexpr array declaration */
 define mat_print_col_as_cpp_static_constexpr_array(s, A, c = 0, indent_num = 0, indent_char = "\t") {
 	local indent_str = indent_char * indent_num;
@@ -73,7 +62,6 @@ define mat_print_col_as_cpp_static_constexpr_array(s, A, c = 0, indent_num = 0, 
 	mat_print_col(A, c, indent_num+1);
 	printf("%s};\n\n", indent_str);
 }
-
 
 /* print the values of a matrix column as a static C++ array declaration */
 define mat_print_col_as_cpp_static_array(s, A, c = 0, indent_num = 0, indent_char = "\t") {
@@ -85,7 +73,6 @@ define mat_print_col_as_cpp_static_array(s, A, c = 0, indent_num = 0, indent_cha
 	printf("%s};\n\n", indent_str);
 }
 
-
 /* print the values of a matrix column as a C++ static const valarray declaration */
 define mat_print_col_as_cpp_static_const_valarray(s, A, c = 0, indent_num = 0, indent_char = "\t") {
 	local indent_str = indent_char * indent_num;
@@ -95,13 +82,7 @@ define mat_print_col_as_cpp_static_const_valarray(s, A, c = 0, indent_num = 0, i
 	printf("%s};\n\n", indent_str);
 }
 
-
-/*******************************************************************/
-
 mat n81[8,1] = {n^1, n^2, n^3, n^4, n^5, n^6, n^7, n^8}
-
-
-/*******************************************************************/
 
 parametric_from_geodetic   = mat_ut(parametric_from_geodetic_arr  ) * n81;
 geodetic_from_parametric   = mat_ut(geodetic_from_parametric_arr  ) * n81;
@@ -134,9 +115,6 @@ rectifying_from_authalic   = mat_ut(rectifying_from_authalic_arr  ) * n81;
 authalic_from_conformal    = mat_ut(authalic_from_conformal_arr   ) * n81;
 conformal_from_authalic    = mat_ut(conformal_from_authalic_arr   ) * n81;
 
-
-/*******************************************************************/
-
 script_author = "Steven Ward"
 script_license = "OSL-3.0"
 script_name = "generate-series-approx-coeff-aux-lat.cal"
@@ -144,7 +122,6 @@ script_description = "Auxiliary latitude conversions"
 
 print_cpp_file_header(
 	script_author, script_license, script_name, script_description);
-
 
 printf("
 /*
@@ -156,9 +133,7 @@ https://geographiclib.sourceforge.io/html/auxlat.html
 #include <valarray>
 #include \"angle.hpp\"
 #include \"ellipsoid-wgs84.hpp\"
-
 ");
-
 
 define print_iota_valarray(num_elems, val = 0, inc = 1) {
 	local i;
@@ -190,14 +165,12 @@ printf("\n");
 print_iota_valarray(8, 2, 2);
 printf("\n");
 
-
 define print_conv_cpp_func(s, A) {
 	local indent_num = 1;
 	local indent_char = "\t";
 	local indent_str = indent_char * indent_num;
 	local num_elems = matmax(A,1)-matmin(A,1)+1;
 
-	printf("\n");
 	printf("template <angle_unit U, typename T>\n");
 	printf("requires std::is_floating_point_v<T>\n");
 	printf("auto %s_approx(const angle<U, T>& a)\n{\n", s);
@@ -208,7 +181,6 @@ define print_conv_cpp_func(s, A) {
 
 	printf("}\n\n");
 }
-
 
 print_conv_cpp_func("parametric_from_geodetic"  , parametric_from_geodetic  )
 print_conv_cpp_func("geodetic_from_parametric"  , geodetic_from_parametric  )
@@ -241,9 +213,7 @@ print_conv_cpp_func("rectifying_from_authalic"  , rectifying_from_authalic  )
 print_conv_cpp_func("authalic_from_conformal"   , authalic_from_conformal   )
 print_conv_cpp_func("conformal_from_authalic"   , conformal_from_authalic   )
 
-
-printf("
-template <angle_unit U, typename T>
+printf("template <angle_unit U, typename T>
 requires std::is_floating_point_v<T>
 constexpr auto geocentric_from_geodetic_exact(const angle<U, T>& a)
 {
@@ -270,7 +240,6 @@ constexpr auto geodetic_from_geocentric_exact(const angle<U, T>& a)
 	return a_atan(tan(a) / (1 - WGS84<T>.e2));
 #endif
 }
-
 
 template <angle_unit U, typename T>
 requires std::is_floating_point_v<T>
@@ -300,7 +269,6 @@ constexpr auto geodetic_from_parametric_exact(const angle<U, T>& a)
 #endif
 }
 
-
 template <angle_unit U, typename T>
 requires std::is_floating_point_v<T>
 constexpr auto geocentric_from_parametric_exact(const angle<U, T>& a)
@@ -328,7 +296,4 @@ constexpr auto parametric_from_geocentric_exact(const angle<U, T>& a)
 	return a_atan(tan(a) / (1 - WGS84<T>.f));
 #endif
 }
-
-
 ");
-

@@ -44,30 +44,23 @@ _9 = gmpy2.mpfr(9)
 _10 = gmpy2.mpfr(10)
 _11 = gmpy2.mpfr(11)
 
-
 # https://www.boost.org/doc/libs/1_74_0/libs/math/doc/html/math_toolkit/constants.html
-
 
 # https://en.wikipedia.org/wiki/List_of_mathematical_constants
 # https://en.wikipedia.org/wiki/Mathematical_constant#Basic_mathematical_constants
-
 
 #pi = gmpy2.const_pi()
 # https://oeis.org/A000796/constant
 pi = gmpy2.mpfr('3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214')
 
-
 #e = gmpy2.exp(1)
 # https://oeis.org/A001113/constant
 e = gmpy2.mpfr('2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746')
 
-
 # imaginary unit
 i = gmpy2.mpc(1j)
 
-
 # https://en.wikipedia.org/wiki/Mathematical_constant#Constants_in_advanced_mathematics
-
 
 # Feigenbaum constants
 # https://oeis.org/A006890/constant
@@ -75,17 +68,14 @@ feigenbaum_1 = gmpy2.mpfr('4.669201609102990671853203820466201617258185577475768
 # https://oeis.org/A006891/constant
 feigenbaum_2 = gmpy2.mpfr('2.50290787509589282228390287321821578638127137672714997733619205677923546317959020670329964974643383412959')
 
-
 # Apéry's constant
 #apery = zeta(3)
 # https://oeis.org/A002117/constant
 apery = gmpy2.mpfr('1.20205690315959428539973816151144999076498629234049888179227155534183820578631309018645587360933525814619915')
 
-
 # golden ratio
 #phi = (1 + sqrt(5)) / 2
 phi = gmpy2.mpfr('1.61803398874989484820458683436563811772030917980576286213544862270526046281890244970720720418939113748475')
-
 
 # Euler–Mascheroni constant
 # https://oeis.org/A001620/constant
@@ -104,12 +94,10 @@ khinchin = gmpy2.mpfr('2.6854520010653064453097148354817956938203822939944629530
 # https://oeis.org/A074962/constant
 glaisher = gmpy2.mpfr('1.28242712910062263687534256886979172776768892732500119206374002174040630885882646112973649195820237439420646120')
 
-
 # Catalan's constant
 # https://oeis.org/A006752/constant
 #catalan = gmpy2.const_catalan() # Catalan's constant
 catalan = gmpy2.mpfr('.915965594177219015054603514932384110774149374281672134266498119621763019776254769479356512926115106248574')
-
 
 math_expr_list = (
 	'pi', # math.h (M_PI)
@@ -263,7 +251,6 @@ def math_expr_to_c_identifier(s):
 
 	return 'M_' + s.strip('_')
 
-
 # TODO: maybe generalize this to support more types
 '''
 mpz integer
@@ -292,7 +279,6 @@ binary128_digits10 = int(gmpy2.ceil(log10_of_2 * gmpy2.ieee(128).precision))
 # 35
 binary64_digits10 = int(gmpy2.ceil(log10_of_2 * gmpy2.ieee(64).precision))
 # 16
-
 
 def generate_math_const(x):
 	'''Generate a C/C++ declaration of a math constant'''
@@ -353,8 +339,6 @@ def generate_math_const(x):
 requires std::is_floating_point_v<T>
 constexpr T
 {name} = T({hex_str}L);''')
-	print()
-
 
 now = dt.datetime.now(dt.timezone.utc)
 author = 'Steven Ward'
@@ -378,8 +362,8 @@ print(f'''// SPDX-FileCopyrightText: {author}
 
 #pragma once
 
-#include <type_traits>
-''')
+#include <type_traits>''')
 
 for math_expr in math_expr_list:
+	print()
 	generate_math_const(math_expr)
