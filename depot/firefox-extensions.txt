@@ -1,0 +1,3 @@
+https://addons.mozilla.org/en-US/firefox/addon/copy-all-tabs/
+https://addons.mozilla.org/en-US/firefox/addon/tab-session-manager/
+https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
