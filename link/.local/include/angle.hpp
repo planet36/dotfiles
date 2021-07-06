@@ -12,7 +12,7 @@
 #include <string_view>
 
 #include "angle-utils.hpp"
-#include "sincos.hpp"
+#include "sin_cos.hpp"
 
 /// the fundamental unit of measurement of an angle
 /**
@@ -1073,12 +1073,12 @@ constexpr T tan(const angle<U, T>& a)
 	return std::tan(a.to_rad());
 }
 
-/// sincos
+/// sin_cos
 template <angle_unit U, typename T>
 requires std::is_floating_point_v<T>
-constexpr void sincos(const angle<U, T>& a, T& s, T& c)
+constexpr void sin_cos(const angle<U, T>& a, T& s, T& c)
 {
-	sincos(a.to_rad(), s, c);
+	sin_cos(a.to_rad(), s, c);
 }
 
 /// inverse sin
@@ -1383,10 +1383,10 @@ constexpr bool atan2_boundary_case(const T y, const T x)
 	return atan_boundary_case(y) || atan_boundary_case(x);
 }
 
-/// sincos with argument reduction
+/// sin_cos with argument reduction
 template <angle_unit U, typename T>
 requires std::is_floating_point_v<T>
-constexpr void sincos_r(angle<U, T> a, T& s, T& c)
+constexpr void sin_cos_r(angle<U, T> a, T& s, T& c)
 {
 	int quo = 0;
 
@@ -1394,7 +1394,7 @@ constexpr void sincos_r(angle<U, T> a, T& s, T& c)
 
 	T _s{};
 	T _c{};
-	sincos(a, _s, _c);
+	sin_cos(a, _s, _c);
 
 	switch (quo % 4U) // 360/90 == 4
 	{
@@ -1473,7 +1473,7 @@ constexpr T tan_r(const angle<U, T>& a)
 {
 	T s = 0;
 	T c = 0;
-	sincos_r(a, s, c);
+	sin_cos_r(a, s, c);
 
 	return s / c;
 }
