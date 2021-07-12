@@ -56,6 +56,8 @@ end
 
 set --export DIFFPROG "$VISUAL -d"
 
+set --export DOTNET_CLI_TELEMETRY_OPTOUT 1
+
 set --export FZF_DEFAULT_OPTS '--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
 
 if command --quiet highlight
