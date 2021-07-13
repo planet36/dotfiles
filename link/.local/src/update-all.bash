@@ -10,8 +10,8 @@ do
     cd "$DIR" || break
     git fetch || break
     git pull || break
-    git fsck || break
-    git gc || break
+    #git fsck || break
+    #git gc || break
     cd - &> /dev/null || break
   else
     echo "Not a git repo"
