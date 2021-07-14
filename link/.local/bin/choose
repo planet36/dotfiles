@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-module-docstring
+
+# Inspired by https://github.com/theryangeary/choose
+
+import os
+import re
+import sys
+
+def str_to_slice(s: str) -> slice:
+	start = None
+	stop = None
+	step = None
+
+	l = [None if not i else int(i) for i in s.split(':', maxsplit=3)]
+
+	if len(l) == 3:
+		start = l[0]
+		stop = l[1]
+		step = l[2]
+	elif len(l) == 2:
+		start = l[0]
+		stop = l[1]
+	elif len(l) == 1:
+		start = l[0]
+
+	if start is not None:
+		if start > 0:
+			start -= 1 # Python has 0-based index for start
+
+	if stop is not None:
+		if stop < 0:
+			if stop == -1:
+				stop = None
+			else:
+				stop += 1
+
+	return slice(start, stop, step)
+
+in_delim = re.compile(r'\s')
+out_delim = '\t'
+
+choices = []
+
+for arg in sys.argv[1:]:
+	if ':' in arg:
+		choices.append(str_to_slice(arg))
+	else:
+		i = int(arg)
+		if i > 0:
+			i -= 1 # Python has 0-based index for start
+		choices.append(i)
+
+print(f'{choices=}')
+
+for line in sys.stdin:
+	print(f'{line=}')
+	in_fields = in_delim.split(line.rstrip(os.linesep))
+	print(f'{in_fields=}')
+	out_fields = []
+	for choice in choices:
+		print(f'{choice=}')
+		print(f'{in_fields[choice]=}')
+		if isinstance(choice, slice):
+			out_fields.extend(in_fields[choice])
+		else:
+			out_fields.append(in_fields[choice])
+	print(f'{out_fields=}')
+	print(out_delim.join(out_fields))
