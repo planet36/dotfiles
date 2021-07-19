@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=missing-module-docstring
+
+import sys
+
+# https://en.wikipedia.org/wiki/Wind_direction
+
+degrees_to_cardinal = {
+		0   : 'N',
+		45  : 'NE',
+		90  : 'E',
+		135 : 'SE',
+		180 : 'S',
+		225 : 'SW',
+		270 : 'W',
+		315 : 'NW',
+		360 : 'N',
+		}
+
+cardinal_to_arrow = {
+		'N'  : '🢃',
+		'NE' : '🢇',
+		'E'  : '🢀',
+		'SE' : '🢄',
+		'S'  : '🢁',
+		'SW' : '🢅',
+		'W'  : '🢂',
+		'NW' : '🢆',
+		}
+
+def closest(x, l):
+	'''Find the closest value to x in l.'''
+	return min(l, key=lambda y:abs(y - x))
+
+for line in sys.stdin:
+	wind_dir_deg = int(line) % 360
+	wind_dir_deg = closest(wind_dir_deg, degrees_to_cardinal.keys())
+	wind_dir_card = degrees_to_cardinal[wind_dir_deg]
+	arrow = cardinal_to_arrow[wind_dir_card]
+	print(arrow)
