@@ -72,7 +72,7 @@ EOT
         $VERBOSE && { printf -- "$@" ; printf '\n' ; }
     }
 
-    while getopts "Vhvkt:" option
+    while getopts "Vhvkt:" OPTION
     do
         case "$OPTION" in
 
