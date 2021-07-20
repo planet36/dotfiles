@@ -4,17 +4,17 @@
 ##### XXX: "add fish syntax highlighting"
 # https://github.com/vim/vim/issues/820
 
-ulimit -c unlimited
+#ulimit -c unlimited
+
+# {{{ login shell
+
+if status is-login
 
 # {{{ prepend user path
 
 fish_add_path "$HOME"/.local/bin
 
 # }}}
-
-# {{{ login shell
-
-if status is-login
 
 # {{{ XDG vars
 
@@ -149,83 +149,53 @@ if not test -d "$XDG_CACHE_HOME"/xorg
 end
 set --export XAUTHORITY "$XDG_CACHE_HOME"/xorg/Xauthority
 
-# {{{ Start X at login
-# https://wiki.archlinux.org/index.php/Fish#Start_X_at_login
-#if status is-login
-    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
-        #exec startx -- -keeptty
-        :
-    end
-#end
-# }}}
+# {{{ compile options
+
+# Too many benign warnings:
+# -Wpadded
+# -Wfloat-equal
+set --export GCC_COMMON_OPTIONS -O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+set --append GCC_COMMON_OPTIONS -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__
+set --append GCC_COMMON_OPTIONS -D_GNU_SOURCE -D_FORTIFY_SOURCE=2
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+set --append GCC_COMMON_OPTIONS -fstack-protector -fstack-clash-protection
+
+set --export EXTRACXXFLAGS -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
+
+# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+#OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
+# Using -fsigned-zeros disables associative-math
+#OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
+set --export OPTIMIZE_OPTIONS -O3 -flto -march=native
+
+set --export DEBUG_OPTIONS -Og -g3
+# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
+set --append DEBUG_OPTIONS -UNDEBUG
+# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
+set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
+
+set --export PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
+
+set --export PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
+
+# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
+set --export CPPFLAGS -iquote "$HOME"/.local/include
+
+set --export CFLAGS $GCC_COMMON_OPTIONS -std=c2x
+set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS
 
 # }}}
 
-end
+# {{{ my location
 
-# }}}
-
-# {{{ change terminal line settings
-
-# disable sending of start/stop characters
-#stty -ixoff
-
-# disable XON/XOFF flow control
-#stty -ixon
-
-# https://stackoverflow.com/a/19248775
-# disable control backslash (^\) as quit
-#stty quit undef
-
-# }}}
-
-# https://wiki.archlinux.org/index.php/Activating_numlock_on_bootup#Extending_getty.40.service
-# https://www.linuxsecrets.com/archlinux-wiki/wiki.archlinux.org/index.php/Activating_Numlock_on_Bootup.html
-# https://forums.gentoo.org/viewtopic-t-1055442-view-previous.html
-
-if string match --regex --quiet '/dev/tty[0-9]+' (tty)
-
-    # {{{ turn on numlock
-    setleds -D +num
-    # }}}
-
-    # {{{ set console font
-    if command --quiet setfont
-        # To print the character set of the active font: showconsolefont
-
-        # Fonts are in:
-        # /usr/share/kbd/consolefonts (arch)
-        # /lib/kbd/consolefonts (fedora)
-
-        setfont Lat2-Terminus16
-    end
-    # }}}
-end
-
-# {{{ interactive shell
-
-if status is-interactive
-
-# {{{ prevent st unknown escape sequence
-
-# https://github.com/fish-shell/fish-shell/issues/3425
-if string match -q "st-*" "$TERM"
-    set -e VTE_VERSION
-    bind \e\[P delete-char
-end
-
-# }}}
-
-# {{{ ls colors
-
-# convert from sh to fish syntax
-#eval (dircolors | sed -r -e 's/^([^=]+?)=(.*)/set \1 \2/' -e 's/^export .+//')
-#dircolors | sed -r -e 's/^([^=]+)=(.*)/set --export \1 \2/' -e 's/^export .+//' | source
-
-#if test $TERM = linux
-#    # change dir color
-#    set --append --export --path LS_COLORS 'di=0;33'
-#end
+#set MY_LOCATION (curl -s -f 'http://ip-api.com/json/?fields=lat,lon')
+set MY_LOCATION (curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
+#set --export LAT (echo "$MY_LOCATION" | jq -r '.lat')
+#set --export LON (echo "$MY_LOCATION" | jq -r '.lon')
+set --export LAT $MY_LOCATION[1]
+set --export LON $MY_LOCATION[2]
+set -e MY_LOCATION
 
 # }}}
 
@@ -283,6 +253,96 @@ set --export MANPAGER 'less -s -M +Gg'
 
 # }}}
 
+# }}}
+
+# {{{ interactive shell
+
+if status is-interactive
+
+# {{{ change terminal line settings
+
+# disable sending of start/stop characters
+#stty -ixoff
+
+# disable XON/XOFF flow control
+#stty -ixon
+
+# https://stackoverflow.com/a/19248775
+# disable control backslash (^\) as quit
+#stty quit undef
+
+# }}}
+
+# https://wiki.archlinux.org/index.php/Activating_numlock_on_bootup#Extending_getty.40.service
+# https://www.linuxsecrets.com/archlinux-wiki/wiki.archlinux.org/index.php/Activating_Numlock_on_Bootup.html
+# https://forums.gentoo.org/viewtopic-t-1055442-view-previous.html
+
+if string match --regex --quiet '/dev/tty[0-9]+' (tty)
+
+    # {{{ turn on numlock
+    setleds -D +num
+    # }}}
+
+    # {{{ set console font
+    if command --quiet setfont
+        # To print the character set of the active font: showconsolefont
+
+        # Fonts are in:
+        # /usr/share/kbd/consolefonts (arch)
+        # /lib/kbd/consolefonts (fedora)
+
+        setfont Lat2-Terminus16
+    end
+    # }}}
+end
+
+end
+
+# }}}
+
+end
+
+# }}}
+
+# {{{ interactive shell
+
+if status is-interactive
+
+# {{{ Start X at login
+
+# https://wiki.archlinux.org/index.php/Fish#Start_X_at_login
+#if status is-login
+    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+        #exec startx -- -keeptty
+        :
+    end
+#end
+
+# }}}
+
+# {{{ prevent st unknown escape sequence
+
+# https://github.com/fish-shell/fish-shell/issues/3425
+if string match -q "st-*" "$TERM"
+    set -e VTE_VERSION
+    bind \e\[P delete-char
+end
+
+# }}}
+
+# {{{ ls colors
+
+# convert from sh to fish syntax
+#eval (dircolors | sed -r -e 's/^([^=]+?)=(.*)/set \1 \2/' -e 's/^export .+//')
+#dircolors | sed -r -e 's/^([^=]+)=(.*)/set --export \1 \2/' -e 's/^export .+//' | source
+
+#if test $TERM = linux
+#    # change dir color
+#    set --append --export --path LS_COLORS 'di=0;33'
+#end
+
+# }}}
+
 # {{{ env_parallel
 
 if command --quiet env_parallel
@@ -313,44 +373,6 @@ set Z_CMD "j"
 function fish_command_not_found
     __fish_default_command_not_found_handler $argv
 end
-
-# }}}
-
-# {{{ compile options
-
-# Too many benign warnings:
-# -Wpadded
-# -Wfloat-equal
-set --export GCC_COMMON_OPTIONS -O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
-# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
-set --append GCC_COMMON_OPTIONS -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__
-set --append GCC_COMMON_OPTIONS -D_GNU_SOURCE -D_FORTIFY_SOURCE=2
-# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
-set --append GCC_COMMON_OPTIONS -fstack-protector -fstack-clash-protection
-
-set --export EXTRACXXFLAGS -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
-
-# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
-#OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
-# Using -fsigned-zeros disables associative-math
-#OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-set --export OPTIMIZE_OPTIONS -O3 -flto -march=native
-
-set --export DEBUG_OPTIONS -Og -g3
-# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
-set --append DEBUG_OPTIONS -UNDEBUG
-# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
-set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
-
-set --export PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
-
-set --export PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
-
-# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
-set --export CPPFLAGS -iquote "$HOME"/.local/include
-
-set --export CFLAGS $GCC_COMMON_OPTIONS -std=c2x
-set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS
 
 # }}}
 

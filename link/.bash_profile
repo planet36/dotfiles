@@ -159,8 +159,6 @@ then
 fi
 export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 
-# }}}
-
 # {{{ compile options
 
 # Too many benign warnings:
@@ -196,6 +194,88 @@ export CPPFLAGS="-iquote $HOME/.local/include"
 
 export CFLAGS="$GCC_COMMON_OPTIONS -std=c2x"
 export CXXFLAGS="$GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS"
+
+# }}}
+
+# {{{ my location
+
+#MY_LOCATION="$(curl -s -f 'http://ip-api.com/json/?fields=lat,lon')"
+declare -a MY_LOCATION=($(curl -s -f 'http://ip-api.com/line/?fields=lat,lon'))
+#export LAT="$(echo "$MY_LOCATION" | jq -r '.lat')"
+#export LON="$(echo "$MY_LOCATION" | jq -r '.lon')"
+export LAT="${MY_LOCATION[0]}"
+export LON="${MY_LOCATION[1]}"
+unset MY_LOCATION
+
+# }}}
+
+# {{{ pager colors
+
+# https://unix.stackexchange.com/a/147
+
+# man 5 terminfo
+# http://man7.org/linux/man-pages/man5/terminfo.5.html
+
+# man terminfo | grep -A 1 -E '\<(mb|md|me|so|se|us|ue|mr|mh|ZN|ZV|ZO|ZW)\>'
+
+# enter_blink_mode            blink     mb     turn on blinking
+# enter_bold_mode             bold      md     turn on bold (extra bright) mode
+# enter_dim_mode              dim       mh     turn on half-bright mode
+# enter_reverse_mode          rev       mr     turn on reverse video mode
+# enter_standout_mode         smso      so     begin standout mode
+# enter_subscript_mode        ssubm     ZN     Enter subscript mode
+# enter_superscript_mode      ssupm     ZO     Enter superscript mode
+# enter_underline_mode        smul      us     begin underline mode
+# exit_attribute_mode         sgr0      me     turn off all attributes
+# exit_standout_mode          rmso      se     exit standout mode
+# exit_subscript_mode         rsubm     ZV     End subscript mode
+# exit_superscript_mode       rsupm     ZW     End superscript mode
+# exit_underline_mode         rmul      ue     exit underline mode
+
+export LESS_TERMCAP_mb
+export LESS_TERMCAP_md
+export LESS_TERMCAP_mh
+export LESS_TERMCAP_mr
+export LESS_TERMCAP_so
+export LESS_TERMCAP_ZN
+export LESS_TERMCAP_ZO
+export LESS_TERMCAP_us
+export LESS_TERMCAP_me
+export LESS_TERMCAP_se
+export LESS_TERMCAP_ZV
+export LESS_TERMCAP_ZW
+export LESS_TERMCAP_ue
+
+# 0 = black
+# 1 = red
+# 2 = green
+# 3 = yellow
+# 4 = blue
+# 5 = magenta
+# 6 = cyan
+# 7 = white
+
+LESS_TERMCAP_mb=$(tput bold; tput setaf 6) # turn on blinking
+LESS_TERMCAP_md=$(tput bold; tput setaf 2) # turn on bold (extra bright) mode
+LESS_TERMCAP_mh=$(tput dim) # turn on half-bright mode
+LESS_TERMCAP_mr=$(tput rev) # turn on reverse video mode
+LESS_TERMCAP_so=$(tput bold; tput rev; tput setaf 4) # begin standout mode
+LESS_TERMCAP_ZN=$(tput ssubm) # Enter subscript mode
+LESS_TERMCAP_ZO=$(tput ssupm) # Enter superscript mode
+LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 3) # begin underline mode
+LESS_TERMCAP_me=$(tput sgr0) # turn off all attributes
+LESS_TERMCAP_se=$(tput rmso; tput sgr0) # exit standout mode
+LESS_TERMCAP_ZV=$(tput rsubm) # End subscript mode
+LESS_TERMCAP_ZW=$(tput rsupm) # End superscript mode
+LESS_TERMCAP_ue=$(tput rmul; tput sgr0) # exit underline mode
+
+# For Konsole and Gnome-terminal
+#export GROFF_NO_SGR=1
+
+# https://stackoverflow.com/a/19871578
+export MANPAGER='less -s -M +Gg'
+
+# }}}
 
 # }}}
 
