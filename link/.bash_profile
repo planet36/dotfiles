@@ -200,7 +200,8 @@ export CXXFLAGS="$GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS"
 # {{{ my location
 
 #MY_LOCATION="$(curl -s -f 'http://ip-api.com/json/?fields=lat,lon')"
-declare -a MY_LOCATION=($(curl -s -f 'http://ip-api.com/line/?fields=lat,lon'))
+#declare -a MY_LOCATION=($(curl -s -f 'http://ip-api.com/line/?fields=lat,lon'))
+mapfile -t MY_LOCATION < <(curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
 #export LAT="$(echo "$MY_LOCATION" | jq -r '.lat')"
 #export LON="$(echo "$MY_LOCATION" | jq -r '.lon')"
 export LAT="${MY_LOCATION[0]}"
