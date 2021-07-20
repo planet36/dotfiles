@@ -29,11 +29,9 @@ alias find-dangling-symlinks='find -xtype l'
 # We don't want an alias named "grep" with so many options
 #alias grep='grep --color --line-number --binary-files=without-match --directories=skip'
 alias g='grep --color --line-number --binary-files=without-match --directories=skip'
-alias gccc="gcc $CPPFLAGS $CFLAGS"
 alias gf='git log --oneline --decorate --color | fzf --no-sort --layout=reverse-list --preview "git show --color=always {1}"'
 alias gif2png='gif2png -m -n -s -O'
 alias gr='g --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
-alias gpp="g++ $CPPFLAGS $CXXFLAGS"
 alias jpegtran2='jpegtran -optimize -copy all'
 alias longest_line="awk 'length > l {r = NR; l = length} END{print r, l}'"
 alias mirror2='wget --verbose --force-directories --no-host-directories --html-extension --mirror --convert-links --backup-converted --page-requisites --relative --no-parent'
