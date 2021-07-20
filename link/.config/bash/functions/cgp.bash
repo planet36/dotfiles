@@ -20,4 +20,3 @@ function cgp
     # shellcheck disable=SC2164
     popd &> /dev/null
 }
-

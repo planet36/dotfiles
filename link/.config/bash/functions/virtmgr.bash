@@ -7,4 +7,3 @@ function virtmgr
     # use the user's .Xauthority file
     XAUTHORITY=$HOME/.Xauthority sudo virt-manager "${@}"
 }
-

@@ -5,4 +5,3 @@ function is_prime
 {
     factor -- "${1}" | grep --perl-regexp --count '^([[:digit:]]+): \1$'
 }
-

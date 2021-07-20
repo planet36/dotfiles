@@ -35,4 +35,3 @@ function git-diff-summary
         printf '\n'
     done
 }
-

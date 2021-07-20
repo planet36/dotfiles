@@ -10,4 +10,3 @@ function fix_resolution
     #xrandr --output VGA-1 --mode 1920x1200
     xrandr --output "${OUTPUT}" --auto
 }
-

@@ -38,4 +38,3 @@ function dbd
 
     echo $(( ((D2 - D1) + SECONDS_PER_HALF_DAY) / SECONDS_PER_DAY ))
 }
-

@@ -16,4 +16,3 @@ function nonascii_chars
         od --address-radix=n -c "${FILE}" | grep --extended-regexp --word-regexp --context 2 --color "${PATTERN}"
     done
 }
-

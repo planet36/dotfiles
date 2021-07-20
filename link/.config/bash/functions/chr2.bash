@@ -9,4 +9,3 @@ function chr2
     printf -v val '%x' "${1}"
     printf '%b' "\\u${val}"
 }
-

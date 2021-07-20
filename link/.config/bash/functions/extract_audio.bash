@@ -26,4 +26,3 @@ function extract_audio
         touch --reference "${INFILE}" -- "${OUTFILE}" || return
     done
 }
-

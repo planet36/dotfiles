@@ -25,4 +25,3 @@ function install_yay
     # shellcheck disable=SC2164
     popd &> /dev/null
 }
-

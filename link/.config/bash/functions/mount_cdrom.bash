@@ -7,4 +7,3 @@ function mount_cdrom
 {
     sudo mkdir --verbose --parents "/media/${USER}/cdrom" && sudo mount --read-only -t auto /dev/cdrom "/media/${USER}/cdrom/"
 }
-

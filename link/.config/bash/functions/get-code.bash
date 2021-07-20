@@ -5,4 +5,3 @@ function get-code
 {
     wget -- "${CODE_ARCHIVE_URL}/code-latest.tar.xz"
 }
-

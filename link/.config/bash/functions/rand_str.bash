@@ -30,4 +30,3 @@ function rand_str
         printf -- '%s' "${S:${I}:1}"
     done
 }
-

@@ -56,4 +56,3 @@ function dcmp
     --expression "s${DELIMITER}${PATTERN2}${DELIMITER}${REPLACEMENT2}${DELIMITER}" \
     --expression "s${DELIMITER}${PATTERN3}${DELIMITER}${REPLACEMENT3}${DELIMITER}"
 }
-

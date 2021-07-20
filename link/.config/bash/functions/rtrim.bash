@@ -7,4 +7,3 @@ function rtrim
     #perl -p -i~ -e 's/\s+$//' -- "${@}"
     perl -p -i~ -e 's/[ \t]+$//' -- "${@}"
 }
-

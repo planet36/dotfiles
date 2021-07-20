@@ -19,4 +19,3 @@ function lsoldkernels
 
     #sudo apt-get purge $(dpkg --get-selections 'linux-*' | grep --perl-regexp '^linux-(headers|image|image-extra)-[0-9\.\-]+')
 }
-

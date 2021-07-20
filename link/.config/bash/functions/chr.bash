@@ -10,4 +10,3 @@ function chr
     printf -v val '%03o' "${1}"
     printf '%b' "\\${val}"
 }
-

@@ -5,4 +5,3 @@ function bc
 {
     command bc --mathlib --quiet "$XDG_CONFIG_HOME"/bc/config.bc "${@}"
 }
-

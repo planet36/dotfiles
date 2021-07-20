@@ -28,4 +28,3 @@ function intersect
 
     sort <(sort --uniq -- "${FILE1}") <(sort --uniq -- "${FILE2}") | uniq --repeated
 }
-

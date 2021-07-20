@@ -53,4 +53,3 @@ function sc
         touch --reference "${INFILE}" -- "${OUTFILE}" || return
     done
 }
-

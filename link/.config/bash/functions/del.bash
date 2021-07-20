@@ -8,4 +8,3 @@ function del
     #mv --verbose --backup=simple --suffix=.$(date -u +"%Y%m%dT%H%M%SS%3N") --target-directory "$TRASH_DIR"
     mv --verbose --backup=simple --suffix="$(date -u +.%Y%m%dT%H%M%SS%3N)" --target-directory "$TRASH_DIR" "${@}"
 }
-

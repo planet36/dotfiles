@@ -7,4 +7,3 @@ function ord
 {
     LC_CTYPE=C printf '%d' "'${1}"
 }
-

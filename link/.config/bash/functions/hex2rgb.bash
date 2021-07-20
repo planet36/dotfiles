@@ -56,4 +56,3 @@ function hex2rgb
         B=''
     done
 }
-

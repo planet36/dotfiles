@@ -5,4 +5,3 @@ function program_exists
 {
     command -v "${@}" > /dev/null
 }
-

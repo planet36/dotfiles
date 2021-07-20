@@ -15,4 +15,3 @@ function psgrep
 
     ps --sort pid --pid "${PROCESSES[@]}"
 }
-

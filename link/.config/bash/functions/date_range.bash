@@ -25,4 +25,3 @@ function date_range
         D1=$(date --date="${D1} +1 day" +'%F')
     done
 }
-

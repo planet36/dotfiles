@@ -15,4 +15,3 @@
 # How to replace text using grep and perl...
 # rg -l -P -- 'OLD' | xargs perl -p -i.bak -e 's|OLD|NEW|g;'
 # rg -l -P -- 'OLD' | xargs perl -p -i~ -e 's|OLD|NEW|g;'
-

@@ -5,4 +5,3 @@ function clean1
 {
     clean "${@}" -maxdepth 1
 }
-
