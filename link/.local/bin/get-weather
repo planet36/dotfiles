@@ -1,0 +1,79 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+if [[ -z "$LAT" ]] && [[ -z "$LON" ]]
+then
+	declare -r IP_URI='http://ip-api.com/line/?fields=lat,lon'
+
+	mapfile -t MY_LOCATION < <(curl -s -f "$IP_URI") || exit
+	LAT="${MY_LOCATION[0]}"
+	LON="${MY_LOCATION[1]}"
+	unset MY_LOCATION
+fi
+
+# https://openweathermap.org/current#data
+# Possible values: standard, metric, imperial
+declare -r UNITS=imperial
+
+declare -r WEATHER_JSON="$XDG_RUNTIME_DIR"/weather.json
+
+if [[ ! -f "$WEATHER_JSON" ]] || (( $(date -r "$WEATHER_JSON" +%s) < $(date -d '10 minutes ago' +%s) ))
+then
+	if [[ -z "$OPENWEATHERMAP_API_KEY" ]]
+	then
+		echo 'Error: Must have OpenWeather API key'
+		echo 'https://openweathermap.org/api'
+		exit 1
+	fi
+
+	declare -r WEATHER_URI="https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&units=${UNITS}&appid=${OPENWEATHERMAP_API_KEY}"
+
+	curl -s -f "$WEATHER_URI" > "$WEATHER_JSON" || exit
+fi
+
+MAIN=$(jq -r '.weather[0].main' < "$WEATHER_JSON")
+
+DESCRIPTION=$(jq -r '.weather[0].description' < "$WEATHER_JSON")
+
+TEMP=$(jq '.main.temp' < "$WEATHER_JSON")
+
+FEELS_LIKE=$(jq '.main.feels_like' < "$WEATHER_JSON")
+
+PRESSURE=$(jq '.main.pressure' < "$WEATHER_JSON")
+
+HUMIDITY=$(jq '.main.humidity' < "$WEATHER_JSON")
+
+TEMP_MIN=$(jq '.main.temp_min' < "$WEATHER_JSON")
+
+TEMP_MAX=$(jq '.main.temp_max' < "$WEATHER_JSON")
+
+WIND_SPEED=$(jq '.wind.speed' < "$WEATHER_JSON")
+
+WIND_DIR="$(jq '.wind.deg' < "$WEATHER_JSON")"
+
+if command -v wind-dir > /dev/null
+then
+	WIND_DIR="$(wind-dir <<< "$WIND_DIR")" || exit
+else
+	WIND_DIR+='°'
+fi
+
+CLOUDINESS=$(jq '.clouds.all' < "$WEATHER_JSON")
+
+SUNRISE=$(date --date="@$(jq '.sys.sunrise' < "$WEATHER_JSON")" +'%H:%M')
+
+SUNSET=$(date --date="@$(jq '.sys.sunset' < "$WEATHER_JSON")" +'%H:%M')
+
+[[ -n "$MAIN" && -n "$DESCRIPTION"  ]] && printf '%s (%s)' "$MAIN" "$DESCRIPTION"
+[[ -n "$TEMP"                       ]] && printf '  %.0f°F' "$TEMP"
+[[ -n "$FEELS_LIKE"                 ]] && printf ' (feels like %.0f°F)' "$FEELS_LIKE"
+[[ -n "$TEMP_MIN" && -n "$TEMP_MAX" ]] && printf ' [%.0f°F, %.0f°F]' "$TEMP_MIN" "$TEMP_MAX"
+[[ -n "$HUMIDITY"                   ]] && printf '  %d%% humid' "$HUMIDITY"
+[[ -n "$WIND_SPEED"                 ]] && printf '  %.0f mph' "$WIND_SPEED"
+[[ -n "$WIND_DIR"                   ]] && printf ' %s' "$WIND_DIR"
+[[ -n "$CLOUDINESS"                 ]] && printf '  %d%% cloudy' "$CLOUDINESS"
+[[ -n "$PRESSURE"                   ]] && printf '  %d hPa' "$PRESSURE"
+[[ -n "$SUNRISE"                    ]] && printf '  %s↥' "$SUNRISE"
+[[ -n "$SUNSET"                     ]] && printf ' %s⤓' "$SUNSET"
+printf '\n'
