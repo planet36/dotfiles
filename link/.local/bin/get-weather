@@ -50,13 +50,21 @@ TEMP_MAX=$(jq '.main.temp_max' < "$WEATHER_JSON")
 
 WIND_SPEED=$(jq '.wind.speed' < "$WEATHER_JSON")
 
-WIND_DIR="$(jq '.wind.deg' < "$WEATHER_JSON")"
+WIND_DIR=''
 
-if command -v wind-dir > /dev/null
+# https://www.weather.gov/pqr/wind
+declare -r MIN_WIND_SPEED='3.5'
+
+if (( $(bc -q <<< "$WIND_SPEED >= $MIN_WIND_SPEED") == 1 ))
 then
-	WIND_DIR="$(wind-dir <<< "$WIND_DIR")" || exit
-else
-	WIND_DIR+='°'
+	WIND_DIR="$(jq '.wind.deg' < "$WEATHER_JSON")"
+
+	if command -v wind-dir > /dev/null
+	then
+		WIND_DIR="$(wind-dir <<< "$WIND_DIR")" || exit
+	else
+		WIND_DIR+='°'
+	fi
 fi
 
 CLOUDINESS=$(jq '.clouds.all' < "$WEATHER_JSON")
