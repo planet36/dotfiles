@@ -74,6 +74,6 @@ SUNSET=$(date --date="@$(jq '.sys.sunset' < "$WEATHER_JSON")" +'%H:%M')
 [[ -n "$WIND_DIR"                   ]] && printf ' %s' "$WIND_DIR"
 [[ -n "$CLOUDINESS"                 ]] && printf '  %d%% cloudy' "$CLOUDINESS"
 [[ -n "$PRESSURE"                   ]] && printf '  %d hPa' "$PRESSURE"
-[[ -n "$SUNRISE"                    ]] && printf '  %s↥' "$SUNRISE"
-[[ -n "$SUNSET"                     ]] && printf ' %s⤓' "$SUNSET"
+[[ -n "$SUNRISE"                    ]] && printf '  %s▵̲' "$SUNRISE"
+[[ -n "$SUNSET"                     ]] && printf ' %s▿̲' "$SUNSET"
 printf '\n'
