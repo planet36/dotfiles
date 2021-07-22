@@ -61,6 +61,8 @@ fi
 
 CLOUDINESS=$(jq '.clouds.all' < "$WEATHER_JSON")
 
+DT=$(date --date="@$(jq '.dt' < "$WEATHER_JSON")" +'%FT%T')
+
 SUNRISE=$(date --date="@$(jq '.sys.sunrise' < "$WEATHER_JSON")" +'%H:%M')
 
 SUNSET=$(date --date="@$(jq '.sys.sunset' < "$WEATHER_JSON")" +'%H:%M')
@@ -76,4 +78,5 @@ SUNSET=$(date --date="@$(jq '.sys.sunset' < "$WEATHER_JSON")" +'%H:%M')
 [[ -n "$PRESSURE"                   ]] && printf '  %d hPa' "$PRESSURE"
 [[ -n "$SUNRISE"                    ]] && printf '  %s▵̲' "$SUNRISE"
 [[ -n "$SUNSET"                     ]] && printf ' %s▿̲' "$SUNSET"
+[[ -n "$DT"                         ]] && printf '  (%s)' "$DT"
 printf '\n'
