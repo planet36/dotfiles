@@ -82,8 +82,8 @@ for line in sys.stdin:
 	in_fields = in_delim.split(line.rstrip(os.linesep))
 	out_fields = []
 	for choice in choices:
-		if isinstance(choice, slice):
-			out_fields.extend(in_fields[choice])
-		else:
+		if isinstance(choice, int):
 			out_fields.append(in_fields[choice])
+		else:
+			out_fields.extend(in_fields[choice])
 	print(out_delim.join(out_fields))
