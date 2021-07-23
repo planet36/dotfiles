@@ -64,7 +64,7 @@ def slice0_to_slice1(sl: slice) -> slice:
 
 	return slice(start, stop, step)
 
-in_delim = re.compile(r'\s')
+in_delim = re.compile(r' +|\t')
 out_delim = '\t'
 
 choices = []
