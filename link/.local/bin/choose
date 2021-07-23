@@ -17,7 +17,6 @@ def str_to_slice0(s: str) -> slice:
 	step = None
 
 	l = [None if not i else int(i) for i in s.split(':', maxsplit=3)]
-	print(f'{l=}')
 
 	if len(l) == 3:
 		start = l[0]
@@ -31,7 +30,6 @@ def str_to_slice0(s: str) -> slice:
 
 	return slice(start, stop, step)
 
-
 def slice0_to_slice1(sl: slice) -> slice:
 
 	start = sl.start
@@ -40,8 +38,6 @@ def slice0_to_slice1(sl: slice) -> slice:
 
 	if step is None:
 		step = 1
-
-	print(f'before {start=} {stop=} {step=}')
 
 	if start is not None:
 		# Make start be 1-based
@@ -66,10 +62,7 @@ def slice0_to_slice1(sl: slice) -> slice:
 			elif step < 0:
 				stop -= 1
 
-	print(f'after {start=} {stop=} {step=}')
-
 	return slice(start, stop, step)
-
 
 in_delim = re.compile(r'\s')
 out_delim = '\t'
@@ -85,19 +78,12 @@ for arg in sys.argv[1:]:
 			i -= 1 # Python has 0-based index for start
 		choices.append(i)
 
-print(f'{choices=}')
-
 for line in sys.stdin:
-	print(f'{line=}')
 	in_fields = in_delim.split(line.rstrip(os.linesep))
-	print(f'{in_fields=}')
 	out_fields = []
 	for choice in choices:
-		print(f'{choice=}')
-		print(f'{in_fields[choice]=}')
 		if isinstance(choice, slice):
 			out_fields.extend(in_fields[choice])
 		else:
 			out_fields.append(in_fields[choice])
-	print(f'{out_fields=}')
 	print(out_delim.join(out_fields))
