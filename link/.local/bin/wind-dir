@@ -8,6 +8,9 @@ import sys
 
 # https://en.wikipedia.org/wiki/Wind_direction
 
+# https://en.wikipedia.org/wiki/Cardinal_direction
+card_dir = ('N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW')
+
 degrees_to_cardinal = {
 		0   : 'N',
 		45  : 'NE',
@@ -19,6 +22,9 @@ degrees_to_cardinal = {
 		315 : 'NW',
 		360 : 'N',
 		}
+
+# https://www.unicode.org/charts/PDF/U1F800.pdf
+arrows = ('🢃', '🢇', '🢀', '🢄', '🢁', '🢅', '🢂', '🢆')
 
 cardinal_to_arrow = {
 		'N'  : '🢃',
@@ -36,8 +42,6 @@ def closest(x, l):
 	return min(l, key=lambda y:abs(y - x))
 
 for line in sys.stdin:
-	wind_dir_deg = int(line) % 360
-	wind_dir_deg = closest(wind_dir_deg, degrees_to_cardinal.keys())
+	wind_dir_deg = closest(int(line) % 360, degrees_to_cardinal.keys())
 	wind_dir_card = degrees_to_cardinal[wind_dir_deg]
-	arrow = cardinal_to_arrow[wind_dir_card]
-	print(arrow)
+	print(cardinal_to_arrow[wind_dir_card])
