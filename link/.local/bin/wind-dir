@@ -8,40 +8,17 @@ import sys
 
 # https://en.wikipedia.org/wiki/Wind_direction
 
+# Adapted from
+# https://github.com/clieg/pwy/blob/84189c2a74e5efbc836c877b9ccad2cdf8874631/pwy/__main__.py#L132
+def get_wind_dir(deg: float) -> int:
+	'''Convert deg to an int representing the cardinal direction.'''
+	return int((deg + 11.25) / 45) % 8
+
 # https://en.wikipedia.org/wiki/Cardinal_direction
 card_dir = ('N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW')
-
-degrees_to_cardinal = {
-		0   : 'N',
-		45  : 'NE',
-		90  : 'E',
-		135 : 'SE',
-		180 : 'S',
-		225 : 'SW',
-		270 : 'W',
-		315 : 'NW',
-		360 : 'N',
-		}
 
 # https://www.unicode.org/charts/PDF/U1F800.pdf
 arrows = ('🢃', '🢇', '🢀', '🢄', '🢁', '🢅', '🢂', '🢆')
 
-cardinal_to_arrow = {
-		'N'  : '🢃',
-		'NE' : '🢇',
-		'E'  : '🢀',
-		'SE' : '🢄',
-		'S'  : '🢁',
-		'SW' : '🢅',
-		'W'  : '🢂',
-		'NW' : '🢆',
-		}
-
-def closest(x, l):
-	'''Find the closest value to x in l.'''
-	return min(l, key=lambda y:abs(y - x))
-
 for line in sys.stdin:
-	wind_dir_deg = closest(int(line) % 360, degrees_to_cardinal.keys())
-	wind_dir_card = degrees_to_cardinal[wind_dir_deg]
-	print(cardinal_to_arrow[wind_dir_card])
+	print(arrows[get_wind_dir(int(line))])
