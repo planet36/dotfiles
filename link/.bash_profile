@@ -122,21 +122,6 @@ export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/__pycache__
 
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME"/ripgrep/ripgreprc
 
-export RSYNC_ARGS='-v -c -u -p -t -r -z -h'
-#-v, --verbose               increase verbosity
-#-c, --checksum              always checksum
-#-u, --update                update only (don't overwrite newer files)
-#-p, --perms                 preserve permissions
-#-t, --times                 preserve times
-#-n, --dry-run               show what would have been transferred
-#-r, --recursive             recurse into directories
-#-z, --compress              compress file data during the transfer
-#-C, --cvs-exclude           auto ignore files in the same way CVS does
-#-h, --human-readable        output numbers in a human-readable format
-#    --progress              show progress during transfer
-#-i, --itemize-changes       output a change-summary for all updates
-#    --password-file=FILE    read daemon-access password from FILE
-
 export SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
 
 # /usr/bin/time format similar to bash's time
