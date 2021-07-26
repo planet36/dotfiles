@@ -149,14 +149,12 @@ export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 # Too many benign warnings:
 # -Wpadded
 # -Wfloat-equal
-export GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
+GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
 # https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
 GCC_COMMON_OPTIONS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__'
 GCC_COMMON_OPTIONS+=' -D_GNU_SOURCE -D_FORTIFY_SOURCE=2'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
 GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
-
-export EXTRACXXFLAGS='-fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant'
 
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 #OPTIMIZE_OPTIONS='-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
@@ -178,7 +176,7 @@ export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
 export CPPFLAGS="-iquote $HOME/.local/include"
 
 export CFLAGS="$GCC_COMMON_OPTIONS -std=c2x"
-export CXXFLAGS="$GCC_COMMON_OPTIONS -std=c++23 $EXTRACXXFLAGS"
+export CXXFLAGS="$GCC_COMMON_OPTIONS -std=c++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
 
 # }}}
 
