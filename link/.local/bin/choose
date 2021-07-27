@@ -20,8 +20,7 @@ out_delim = '\t'
 class Choice:
 	'''A Choice is either an index or a slice.
 Indexes are 0-based, just like in Python.
-Slices have the same syntax as in Python.
-'''
+Slices have the same syntax as in Python.'''
 
 	def __init__(self, s: str):
 		'''Convert s to a Choice.'''
