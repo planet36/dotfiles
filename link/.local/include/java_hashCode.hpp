@@ -3,6 +3,7 @@
 
 /// constexpr Java string.hashCode() function for string_view
 /**
+\file
 \author Steven Ward
 \sa https://bugs.java.com/bugdatabase/view_bug.do?bug_id=4045622
 \sa https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#hashCode()

@@ -1,6 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+/// get the current year
+/**
+\file
+\author Steven Ward
+*/
+
 #pragma once
 
 #include <ctime>

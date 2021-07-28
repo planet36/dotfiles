@@ -3,6 +3,7 @@
 
 /// constexpr FNV hash functions for string_view
 /**
+\file
 \author Steven Ward
 \sa http://www.isthe.com/chongo/tech/comp/fnv/index.html
 \sa https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function

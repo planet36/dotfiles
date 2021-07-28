@@ -3,6 +3,7 @@
 
 /// angle utilities
 /**
+\file
 \author Steven Ward
 */
 
