@@ -1,6 +1,13 @@
 #!/usr/bin/bash
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
 set -e
+
+cd "$SCRIPT_DIR"
 
 OUT_DIR="$HOME"/.local/include
 
