@@ -32,20 +32,36 @@ then
 	curl -s -f "$WEATHER_URI" > "$WEATHER_JSON" || exit
 fi
 
-MAIN=$(jq -r '.weather[0].main' < "$WEATHER_JSON")
-DESCRIPTION=$(jq -r '.weather[0].description' < "$WEATHER_JSON")
-TEMP=$(jq '.main.temp' < "$WEATHER_JSON")
-FEELS_LIKE=$(jq '.main.feels_like' < "$WEATHER_JSON")
-PRESSURE=$(jq '.main.pressure' < "$WEATHER_JSON")
-HUMIDITY=$(jq '.main.humidity' < "$WEATHER_JSON")
-TEMP_MIN=$(jq '.main.temp_min' < "$WEATHER_JSON")
-TEMP_MAX=$(jq '.main.temp_max' < "$WEATHER_JSON")
-WIND_SPEED=$(jq '.wind.speed' < "$WEATHER_JSON")
-WIND_DIR="$(jq '.wind.deg' < "$WEATHER_JSON")"
-CLOUDINESS=$(jq '.clouds.all' < "$WEATHER_JSON")
-DT=$(jq '.dt' < "$WEATHER_JSON")
-SUNRISE=$(jq '.sys.sunrise' < "$WEATHER_JSON")
-SUNSET=$(jq '.sys.sunset' < "$WEATHER_JSON")
+mapfile -t WEATHER_FIELDS < <(jq -r '
+.weather[0].main,
+.weather[0].description,
+.main.temp,
+.main.feels_like,
+.main.pressure,
+.main.humidity,
+.main.temp_min,
+.main.temp_max,
+.wind.speed,
+.wind.deg,
+.clouds.all,
+.dt,
+.sys.sunrise,
+.sys.sunset' < "$WEATHER_JSON")
+
+MAIN="${WEATHER_FIELDS[0]}"
+DESCRIPTION="${WEATHER_FIELDS[1]}"
+TEMP="${WEATHER_FIELDS[2]}"
+FEELS_LIKE="${WEATHER_FIELDS[3]}"
+PRESSURE="${WEATHER_FIELDS[4]}"
+HUMIDITY="${WEATHER_FIELDS[5]}"
+TEMP_MIN="${WEATHER_FIELDS[6]}"
+TEMP_MAX="${WEATHER_FIELDS[7]}"
+WIND_SPEED="${WEATHER_FIELDS[8]}"
+WIND_DIR="${WEATHER_FIELDS[9]}"
+CLOUDINESS="${WEATHER_FIELDS[10]}"
+DT="${WEATHER_FIELDS[11]}"
+SUNRISE="${WEATHER_FIELDS[12]}"
+SUNSET="${WEATHER_FIELDS[13]}"
 
 # https://www.weather.gov/pqr/wind
 declare -r MIN_WIND_SPEED='3.5'
