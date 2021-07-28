@@ -52,6 +52,14 @@ WIND_SPEED=$(jq '.wind.speed' < "$WEATHER_JSON")
 
 WIND_DIR="$(jq '.wind.deg' < "$WEATHER_JSON")"
 
+CLOUDINESS=$(jq '.clouds.all' < "$WEATHER_JSON")
+
+DT=$(jq '.dt' < "$WEATHER_JSON")
+
+SUNRISE=$(jq '.sys.sunrise' < "$WEATHER_JSON")
+
+SUNSET=$(jq '.sys.sunset' < "$WEATHER_JSON")
+
 # https://www.weather.gov/pqr/wind
 declare -r MIN_WIND_SPEED='3.5'
 
@@ -66,14 +74,6 @@ then
 else
 	WIND_DIR=''
 fi
-
-CLOUDINESS=$(jq '.clouds.all' < "$WEATHER_JSON")
-
-DT=$(jq '.dt' < "$WEATHER_JSON")
-
-SUNRISE=$(jq '.sys.sunrise' < "$WEATHER_JSON")
-
-SUNSET=$(jq '.sys.sunset' < "$WEATHER_JSON")
 
 DT=$(date --date="@$DT" +'%FT%T')
 SUNRISE=$(date --date="@$SUNRISE" +'%H:%M')
