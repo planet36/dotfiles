@@ -33,31 +33,18 @@ then
 fi
 
 MAIN=$(jq -r '.weather[0].main' < "$WEATHER_JSON")
-
 DESCRIPTION=$(jq -r '.weather[0].description' < "$WEATHER_JSON")
-
 TEMP=$(jq '.main.temp' < "$WEATHER_JSON")
-
 FEELS_LIKE=$(jq '.main.feels_like' < "$WEATHER_JSON")
-
 PRESSURE=$(jq '.main.pressure' < "$WEATHER_JSON")
-
 HUMIDITY=$(jq '.main.humidity' < "$WEATHER_JSON")
-
 TEMP_MIN=$(jq '.main.temp_min' < "$WEATHER_JSON")
-
 TEMP_MAX=$(jq '.main.temp_max' < "$WEATHER_JSON")
-
 WIND_SPEED=$(jq '.wind.speed' < "$WEATHER_JSON")
-
 WIND_DIR="$(jq '.wind.deg' < "$WEATHER_JSON")"
-
 CLOUDINESS=$(jq '.clouds.all' < "$WEATHER_JSON")
-
 DT=$(jq '.dt' < "$WEATHER_JSON")
-
 SUNRISE=$(jq '.sys.sunrise' < "$WEATHER_JSON")
-
 SUNSET=$(jq '.sys.sunset' < "$WEATHER_JSON")
 
 # https://www.weather.gov/pqr/wind
