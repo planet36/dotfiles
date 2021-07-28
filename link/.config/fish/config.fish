@@ -14,6 +14,11 @@ if status is-login
 
 fish_add_path "$HOME"/.local/bin
 
+# https://gcc.gnu.org/onlinedocs/gcc/Environment-Variables.html
+#if not contains "$HOME"/.local/lib $LIBRARY_PATH
+#    set --export --universal --prepend LIBRARY_PATH "$HOME"/.local/lib
+#end
+
 # }}}
 
 # {{{ XDG vars
@@ -22,11 +27,11 @@ function setup_xdg_vars
 
     # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
-    if not set -q XDG_CACHE_HOME  ; set --export --global XDG_CACHE_HOME  "$HOME"/.cache                ; end
-    if not set -q XDG_CONFIG_DIRS ; set --export --global XDG_CONFIG_DIRS /etc/xdg                      ; end
-    if not set -q XDG_CONFIG_HOME ; set --export --global XDG_CONFIG_HOME "$HOME"/.config               ; end
-    if not set -q XDG_DATA_DIRS   ; set --export --global XDG_DATA_DIRS   /usr/local/share/:/usr/share/ ; end
-    if not set -q XDG_DATA_HOME   ; set --export --global XDG_DATA_HOME   "$HOME"/.local/share          ; end
+    if not set --query XDG_CACHE_HOME  ; set --export --global XDG_CACHE_HOME  "$HOME"/.cache                ; end
+    if not set --query XDG_CONFIG_DIRS ; set --export --global XDG_CONFIG_DIRS /etc/xdg                      ; end
+    if not set --query XDG_CONFIG_HOME ; set --export --global XDG_CONFIG_HOME "$HOME"/.config               ; end
+    if not set --query XDG_DATA_DIRS   ; set --export --global XDG_DATA_DIRS   /usr/local/share/:/usr/share/ ; end
+    if not set --query XDG_DATA_HOME   ; set --export --global XDG_DATA_HOME   "$HOME"/.local/share          ; end
 
     mkdir --verbose --parents -- "$XDG_CACHE_HOME"
     mkdir --verbose --parents -- "$XDG_CONFIG_HOME"
@@ -180,7 +185,7 @@ set MY_LOCATION (curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
 #set --export LON (echo "$MY_LOCATION" | jq -r '.lon')
 set --export LAT $MY_LOCATION[1]
 set --export LON $MY_LOCATION[2]
-set -e MY_LOCATION
+set --erase MY_LOCATION
 
 # }}}
 
@@ -308,8 +313,8 @@ if status is-interactive
 # {{{ prevent st unknown escape sequence
 
 # https://github.com/fish-shell/fish-shell/issues/3425
-if string match -q "st-*" "$TERM"
-    set -e VTE_VERSION
+if string match --quiet "st-*" "$TERM"
+    set --erase VTE_VERSION
     bind \e\[P delete-char
 end
 
