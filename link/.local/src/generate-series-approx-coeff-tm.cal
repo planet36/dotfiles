@@ -59,8 +59,7 @@ define array_print_as_cpp_valarray(s, arr) {
 	*/
 	printf("const std::valarray<T> %s {\n", s);
 	array_print_from_min(arr, 1);
-	print "};";
-	print
+	printf("};\n\n");
 }
 
 /* print the value as a C++ declaration */
@@ -68,28 +67,21 @@ define val_print_as_cpp_var(s, x) {
 	printf("template <typename T>\n");
 	printf("requires std::is_floating_point_v<T>\n");
 	printf("constexpr T %s = T(%eL);\n", s, x)
-
 }
 
 script_author = "Steven Ward"
 script_license = "OSL-3.0"
 script_name = "generate-series-approx-coeff-tm.cal"
-script_description = "Transverse Mercator conversions"
+script_brief_description = "Transverse Mercator conversions"
+script_detailed_description = "\\sa https://geographiclib.sourceforge.io/html/transversemercator.html#tmseries\n\\sa https://geographiclib.sourceforge.io/html/tmseries30.html"
 
-print_cpp_file_header(
-	script_author, script_license, script_name, script_description);
+print_cpp_file_header(script_author, script_license, script_name,
+	script_brief_description, script_detailed_description);
 
 printf("
-/*
-https://geographiclib.sourceforge.io/html/transversemercator.html#tmseries
-https://geographiclib.sourceforge.io/html/tmseries30.html
-*/
-
 #include <type_traits>
 #include <valarray>
-");
 
-printf("
 /// Geodetic constants
 namespace Geodetic_const
 {
@@ -99,9 +91,7 @@ constexpr int max_lat =  90; // (degrees)
 constexpr int min_lon = -180; // (degrees)
 constexpr int max_lon =  180; // (degrees)
 }
-");
 
-printf("
 /// transverse Mercator constants
 namespace TM_const
 {
@@ -112,9 +102,8 @@ print
 array_print_as_cpp_valarray("alpha", alpha)
 array_print_as_cpp_valarray("beta", beta)
 
-print("}")
+printf("}
 
-printf("
 /// polar stereographic constants
 namespace PS_const
 {
@@ -147,9 +136,7 @@ constexpr int false_northing[2] = {10'000'000, 0}; // [south, north] northing at
 constexpr int min_northing[2] = {300'000, 0}; // [south, north] (meters)
 constexpr int max_northing[2] = {10'000'000, 9'700'000}; // [south, north] (meters)
 }
-");
 
-printf("
 /// Universal Polar Stereographic constants
 namespace UPS_const
 {
@@ -163,9 +150,7 @@ constexpr int false_easting_northing = 2'000'000; // easting/northing at pole (m
 constexpr int min_easting_northing[2] = {800'000, 1'300'000}; // [south, north] (meters)
 constexpr int max_easting_northing[2] = {3'200'000, 2'700'000}; // [south, north] (meters)
 }
-");
 
-printf("
 /// Military Grid Reference System constants
 namespace MGRS_const
 {
