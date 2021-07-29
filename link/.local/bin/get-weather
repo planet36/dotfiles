@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-if [[ -z "$LAT" ]] && [[ -z "$LON" ]]
+if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
 then
 	declare -r IP_URI='http://ip-api.com/line/?fields=lat,lon'
 
