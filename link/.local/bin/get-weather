@@ -81,10 +81,6 @@ else
 	WIND_DIR=''
 fi
 
-DT=$(date --date="@$DT" +'%FT%T')
-SUNRISE=$(date --date="@$SUNRISE" +'%H:%M')
-SUNSET=$(date --date="@$SUNSET" +'%H:%M')
-
 [[ -n "$MAIN" && -n "$DESCRIPTION"  ]] && printf '%s (%s)' "$MAIN" "$DESCRIPTION"
 [[ -n "$TEMP"                       ]] && printf '  %.0f°F' "$TEMP"
 [[ -n "$FEELS_LIKE"                 ]] && printf ' (feels like %.0f°F)' "$FEELS_LIKE"
@@ -94,7 +90,7 @@ SUNSET=$(date --date="@$SUNSET" +'%H:%M')
 [[ -n "$WIND_DIR"                   ]] && printf ' %s' "$WIND_DIR"
 [[ -n "$CLOUDINESS"                 ]] && printf '  %d%% cloudy' "$CLOUDINESS"
 [[ -n "$PRESSURE"                   ]] && printf '  %d hPa' "$PRESSURE"
-[[ -n "$SUNRISE"                    ]] && printf '  %s▵̲' "$SUNRISE"
-[[ -n "$SUNSET"                     ]] && printf ' %s▿̲' "$SUNSET"
-[[ -n "$DT"                         ]] && printf '  (%s)' "$DT"
+[[ -n "$SUNRISE"                    ]] && printf '  %(%H:%M)T▵̲' "$SUNRISE"
+[[ -n "$SUNSET"                     ]] && printf ' %(%H:%M)T▿̲' "$SUNSET"
+[[ -n "$DT"                         ]] && printf '  (%(%FT%T)T)' "$DT"
 printf '\n'
