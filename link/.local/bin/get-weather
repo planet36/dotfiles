@@ -18,7 +18,10 @@ declare -r UNITS=imperial
 
 declare -r WEATHER_JSON="$XDG_RUNTIME_DIR"/weather.json
 
-if [[ ! -f "$WEATHER_JSON" ]] || (( $(date -r "$WEATHER_JSON" +%s) < $(date -d '10 minutes ago' +%s) ))
+# https://openweathermap.org/appid
+# Weather data is updated every 10 minutes or so.
+#if [[ ! -f "$WEATHER_JSON" ]] || (( $(date -r "$WEATHER_JSON" +%s) < $(date -d '10 minutes ago' +%s) ))
+if [[ ! -f "$WEATHER_JSON" ]] || (( $(stat --printf %Y -- "$WEATHER_JSON") < $EPOCHSECONDS-60*10 ))
 then
 	if [[ -z "$OPENWEATHERMAP_API_KEY" ]]
 	then
