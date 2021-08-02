@@ -78,6 +78,23 @@ class Ellipsoid:
 		d = math.sqrt(d2)
 		return self.a * (1 - self.e2) / (d2 * d)
 
+	def get_gamma(self, sin_lat):
+		d2 = 1 - self.e2 * sin_lat * sin_lat
+		d = math.sqrt(d2)
+		return self.gamma_e * (1 + self.k * sin_lat * sin_lat) / d
+
+	def get_gamma_h(self, sin_lat, ht):
+		return self.get_gamma(sin_lat) * (1
+				- 2 * ht * (1 + self.f + self.m - 2 * self.f * sin_lat * sin_lat) / self.a
+				+ 3 * ht * ht / self.a2)
+
+	def get_ht(self, w, z, sin_lat, cos_lat, Rn):
+		# https://www.gnu.org/software/libc/manual/html_node/Mathematical-Constants.html
+		# cos(45 deg) == 1/sqrt(2)
+		if cos_lat > 1 / math.sqrt(2): # Equatorial
+			return w / cos_lat - Rn
+		else: # Polar
+			return z / sin_lat - Rn * (1 - self.e2)
 
 def geodetic_to_ecef(ell: Ellipsoid, lat_deg: float, lon_deg: float, ht: float) -> tuple:
 
