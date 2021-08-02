@@ -16,6 +16,19 @@ fi
 
 # }}}
 
+# {{{ my location
+
+#MY_LOCATION="$(curl -s -f 'http://ip-api.com/json/?fields=lat,lon')"
+#declare -a MY_LOCATION=($(curl -s -f 'http://ip-api.com/line/?fields=lat,lon'))
+mapfile -t MY_LOCATION < <(curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
+#export LAT="$(echo "$MY_LOCATION" | jq -r '.lat')"
+#export LON="$(echo "$MY_LOCATION" | jq -r '.lon')"
+export LAT="${MY_LOCATION[0]}"
+export LON="${MY_LOCATION[1]}"
+unset MY_LOCATION
+
+# }}}
+
 # {{{ XDG vars
 
 setup_xdg_vars() {
@@ -144,55 +157,6 @@ then
 fi
 export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 
-# {{{ compile options
-
-# Too many benign warnings:
-# -Wpadded
-# -Wfloat-equal
-GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
-# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
-GCC_COMMON_OPTIONS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ __STDC_WANT_IEC_60559_EXT__'
-GCC_COMMON_OPTIONS+=' -D_GNU_SOURCE -D_FORTIFY_SOURCE=2'
-# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
-GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
-
-# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
-#OPTIMIZE_OPTIONS='-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
-# Using -fsigned-zeros disables associative-math
-#OPTIMIZE_OPTIONS='-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-export OPTIMIZE_OPTIONS='-O3 -flto -march=native'
-
-export DEBUG_OPTIONS='-Og -g3'
-# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
-DEBUG_OPTIONS+=' -UNDEBUG'
-# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
-DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR'
-
-export PERF_TEST_OPTIONS="$OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre"
-
-export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
-
-# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
-export CPPFLAGS="-iquote $HOME/.local/include"
-
-export CFLAGS="$GCC_COMMON_OPTIONS -std=c2x"
-export CXXFLAGS="$GCC_COMMON_OPTIONS -std=c++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
-
-# }}}
-
-# {{{ my location
-
-#MY_LOCATION="$(curl -s -f 'http://ip-api.com/json/?fields=lat,lon')"
-#declare -a MY_LOCATION=($(curl -s -f 'http://ip-api.com/line/?fields=lat,lon'))
-mapfile -t MY_LOCATION < <(curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
-#export LAT="$(echo "$MY_LOCATION" | jq -r '.lat')"
-#export LON="$(echo "$MY_LOCATION" | jq -r '.lon')"
-export LAT="${MY_LOCATION[0]}"
-export LON="${MY_LOCATION[1]}"
-unset MY_LOCATION
-
-# }}}
-
 # {{{ pager colors
 
 # https://unix.stackexchange.com/a/147
@@ -260,6 +224,93 @@ LESS_TERMCAP_ue=$(tput rmul; tput sgr0) # exit underline mode
 export MANPAGER='less -s -M +Gg'
 
 # }}}
+
+# {{{ compile options
+
+# Too many benign warnings:
+# -Wpadded
+# -Wfloat-equal
+GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+GCC_COMMON_OPTIONS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ __STDC_WANT_IEC_60559_EXT__'
+GCC_COMMON_OPTIONS+=' -D_GNU_SOURCE -D_FORTIFY_SOURCE=2'
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
+
+# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+#OPTIMIZE_OPTIONS='-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
+# Using -fsigned-zeros disables associative-math
+#OPTIMIZE_OPTIONS='-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
+export OPTIMIZE_OPTIONS='-O3 -flto -march=native'
+
+export DEBUG_OPTIONS='-Og -g3'
+# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
+DEBUG_OPTIONS+=' -UNDEBUG'
+# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
+DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR'
+
+export PERF_TEST_OPTIONS="$OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre"
+
+export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
+
+# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
+export CPPFLAGS="-iquote $HOME/.local/include"
+
+export CFLAGS="$GCC_COMMON_OPTIONS -std=c2x"
+export CXXFLAGS="$GCC_COMMON_OPTIONS -std=c++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
+
+# }}}
+
+# }}}
+
+# {{{ interactive shell
+
+# https://unix.stackexchange.com/a/26782
+if [[ $- == *i* ]]
+then
+
+    # https://wiki.archlinux.org/index.php/Activating_numlock_on_bootup#Extending_getty.40.service
+    # https://www.linuxsecrets.com/archlinux-wiki/wiki.archlinux.org/index.php/Activating_Numlock_on_Bootup.html
+    # https://forums.gentoo.org/viewtopic-t-1055442-view-previous.html
+
+    # https://mywiki.wooledge.org/BashFAQ/100#Checking_for_substrings
+    TTY_REGEX='^/dev/tty[0-9]+$'
+    if [[ "$(tty)" =~ $TTY_REGEX ]]
+    then
+        # {{{ turn on numlock
+        setleds -D +num
+        # }}}
+
+        # {{{ set console font
+        if command -v setfont > /dev/null
+        then
+            # To print the character set of the active font: showconsolefont
+
+            # Fonts are in:
+            # /usr/share/kbd/consolefonts (arch)
+            # /lib/kbd/consolefonts (fedora)
+
+            setfont Lat2-Terminus16
+        fi
+        # }}}
+    fi
+
+    # {{{ Start X at login
+
+    # https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login
+    if command -v systemctl > /dev/null
+    then
+        #if systemctl -q is-active graphical.target && [[ ! ${DISPLAY} && ${XDG_VTNR} -eq 1 ]]
+        if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]
+        then
+            #exec startx
+            :
+        fi
+    fi
+
+    # }}}
+
+fi # interactive shell
 
 # }}}
 
