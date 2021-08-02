@@ -16,8 +16,20 @@ fish_add_path "$HOME"/.local/bin
 
 # https://gcc.gnu.org/onlinedocs/gcc/Environment-Variables.html
 #if not contains "$HOME"/.local/lib $LIBRARY_PATH
-#    set --export --universal --prepend LIBRARY_PATH "$HOME"/.local/lib
+#    set --export --prepend LIBRARY_PATH "$HOME"/.local/lib:
 #end
+
+# }}}
+
+# {{{ my location
+
+#set MY_LOCATION (curl -s -f 'http://ip-api.com/json/?fields=lat,lon')
+set MY_LOCATION (curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
+#set --export LAT (echo "$MY_LOCATION" | jq -r '.lat')
+#set --export LON (echo "$MY_LOCATION" | jq -r '.lon')
+set --export LAT $MY_LOCATION[1]
+set --export LON $MY_LOCATION[2]
+set --erase MY_LOCATION
 
 # }}}
 
@@ -138,57 +150,6 @@ if not test -d "$XDG_CACHE_HOME"/xorg
 end
 set --export XAUTHORITY "$XDG_CACHE_HOME"/xorg/Xauthority
 
-# {{{ compile options
-
-# XXX: The universal variables are thus so that when they are expanded unquoted
-# in interactive mode, they will be split about spaces like in bash.
-
-# Too many benign warnings:
-# -Wpadded
-# -Wfloat-equal
-set GCC_COMMON_OPTIONS -O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
-# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
-set --append GCC_COMMON_OPTIONS -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ __STDC_WANT_IEC_60559_EXT__
-set --append GCC_COMMON_OPTIONS -D_GNU_SOURCE -D_FORTIFY_SOURCE=2
-# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
-set --append GCC_COMMON_OPTIONS -fstack-protector -fstack-clash-protection
-
-# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
-#OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
-# Using -fsigned-zeros disables associative-math
-#OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-set --export --universal OPTIMIZE_OPTIONS -O3 -flto -march=native
-
-set --export --universal DEBUG_OPTIONS -Og -g3
-# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
-set --append DEBUG_OPTIONS -UNDEBUG
-# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
-set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
-
-set --export --universal PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
-
-set --export --universal PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
-
-# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
-set --export --universal CPPFLAGS -iquote "$HOME"/.local/include
-
-set --export --universal CFLAGS $GCC_COMMON_OPTIONS -std=c2x
-set --export --universal CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
-
-# }}}
-
-# {{{ my location
-
-#set MY_LOCATION (curl -s -f 'http://ip-api.com/json/?fields=lat,lon')
-set MY_LOCATION (curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
-#set --export LAT (echo "$MY_LOCATION" | jq -r '.lat')
-#set --export LON (echo "$MY_LOCATION" | jq -r '.lon')
-set --export LAT $MY_LOCATION[1]
-set --export LON $MY_LOCATION[2]
-set --erase MY_LOCATION
-
-# }}}
-
 # {{{ pager colors
 
 # https://unix.stackexchange.com/a/147
@@ -286,18 +247,6 @@ if string match --regex --quiet '/dev/tty[0-9]+' (tty)
     # }}}
 end
 
-end
-
-# }}}
-
-end
-
-# }}}
-
-# {{{ interactive shell
-
-if status is-interactive
-
 # {{{ Start X at login
 
 # https://wiki.archlinux.org/index.php/Fish#Start_X_at_login
@@ -309,6 +258,63 @@ if status is-interactive
 #end
 
 # }}}
+
+end # status is-interactive
+
+# }}}
+
+end # status is-login
+
+# }}}
+
+# {{{ compile options
+# XXX: These variables must be set in every shell because fish can't
+# reconstruct lists from variables it imports.
+# If these were set in the is-login or is-interactive blocks, then when used in
+# a nested shell, they would be expanded to a single string.
+
+# XXX: The universal variables are thus so that when they are expanded unquoted
+# in interactive mode, they will be split about spaces like in bash.
+# XXX: Universal variables will be removed from fish in the future.
+# https://github.com/fish-shell/fish-shell/issues/7379
+
+# Too many benign warnings:
+# -Wpadded
+# -Wfloat-equal
+set GCC_COMMON_OPTIONS -O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+set --append GCC_COMMON_OPTIONS -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ __STDC_WANT_IEC_60559_EXT__
+set --append GCC_COMMON_OPTIONS -D_GNU_SOURCE -D_FORTIFY_SOURCE=2
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
+set --append GCC_COMMON_OPTIONS -fstack-protector -fstack-clash-protection
+
+# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+#OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
+# Using -fsigned-zeros disables associative-math
+#OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
+set --export --universal OPTIMIZE_OPTIONS -O3 -flto -march=native
+
+set --export --universal DEBUG_OPTIONS -Og -g3
+# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
+set --append DEBUG_OPTIONS -UNDEBUG
+# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
+set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
+
+set --export --universal PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
+
+set --export --universal PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
+
+# https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
+set --export --universal CPPFLAGS -iquote "$HOME"/.local/include
+
+set --export --universal CFLAGS $GCC_COMMON_OPTIONS -std=c2x
+set --export --universal CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
+
+# }}}
+
+# {{{ interactive shell
+
+if status is-interactive
 
 # {{{ prevent st unknown escape sequence
 
@@ -382,6 +388,6 @@ end
 
 # }}}
 
-end
+end # status is-interactive
 
 # }}}
