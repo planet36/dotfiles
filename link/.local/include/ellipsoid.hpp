@@ -106,11 +106,11 @@ struct Ellipsoid
 
 	// derived physical constants
 
-	/// normal gravity at the equator (on the ellipsoid)
-	const T gamma_e = 9.7803253359L; // (m/s^2)
+	/// normal gravity at the equator (on the ellipsoid) (m/s^2)
+	const T gamma_e = 9.7803253359L;
 
-	/// normal gravity at the poles (on the ellipsoid)
-	const T gamma_p = 9.8321849379L; // (m/s^2)
+	/// normal gravity at the poles (on the ellipsoid) (m/s^2)
+	const T gamma_p = 9.8321849379L;
 
 	/// Somigliana's Formula - normal gravity formula constant
 	const T k = (1 - f) * gamma_p / gamma_e - 1;
@@ -203,9 +203,6 @@ struct Ellipsoid
 	*/
 	auto get_gamma_h(const T sin_lat, const T ht) const
 	{
-		const auto d2 = 1 - e2 * sin_lat * sin_lat;
-		const auto d = std::sqrt(d2);
-
 		return get_gamma(sin_lat) * (1
 				- 2 * ht * (1 + f + m - 2 * f * sin_lat * sin_lat) / a
 				+ 3 * ht * ht / a2);
@@ -239,13 +236,9 @@ struct Ellipsoid
 		// https://www.gnu.org/software/libc/manual/html_node/Mathematical-Constants.html
 		// cos(45 deg) == 1/sqrt(2)
 		if (cos_lat > M_SQRT1_2) // Equatorial
-		{
 			return w / cos_lat - Rn;
-		}
 		else // Polar
-		{
 			return z / sin_lat - Rn * (1 - e2);
-		}
 	}
 
 	/// get the height above the ellipsoid (meters)
