@@ -5,6 +5,8 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
+# pylint: disable=no-else-return
+# pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-locals
 
@@ -14,22 +16,25 @@ class Ellipsoid:
 
 	def __init__(self, _a, _f_recip):
 
-		a = _a ## semi-major axis (equatorial radius of the earth) (meters)
-		f = 1 / _f_recip ## (a-b)/a ## flattening factor of the earth
-		b = a*(1-f) ## semi-minor axis (meters)
-		a2 = a*a ## a squared
-		b2 = b*b ## b squared
-		fp = f/(1-f) ## (a-b)/b ## second flattening
-		n = f/(2-f) ## (a-b)/(a+b) ## third flattening
-		e2 = f*(2-f) ## (a2-b2)/a2 ## first eccentricity squared
-		e = math.sqrt(e2) ## first eccentricity
-		ep2 = e2/(1-e2) ## (a2-b2)/b2 ## second eccentricity squared
-		ep = math.sqrt(ep2) ## second eccentricity
-		epp2 = e2/(2-e2) ## (a2-b2)/(a2+b2) ## third eccentricity squared
-		epp = math.sqrt(epp2) ## third eccentricity
-		c2 = a2 - b2 ## linear eccentricity squared
-		c = math.sqrt(c2) ## linear eccentricity
-		alpha = math.asin(e) ## angular eccentricity ## acos(b/a)
+		# defining parameters
+		a = _a # semi-major axis (equatorial radius of the earth) (meters)
+		f = 1 / _f_recip # (a-b)/a # flattening factor of the earth
+
+		# derived geometric constants
+		b = a*(1-f) # semi-minor axis (meters)
+		a2 = a*a # a squared
+		b2 = b*b # b squared
+		fp = f/(1-f) # (a-b)/b # second flattening
+		n = f/(2-f) # (a-b)/(a+b) # third flattening
+		e2 = f*(2-f) # (a2-b2)/a2 # first eccentricity squared
+		e = math.sqrt(e2) # first eccentricity
+		ep2 = e2/(1-e2) # (a2-b2)/b2 # second eccentricity squared
+		ep = math.sqrt(ep2) # second eccentricity
+		epp2 = e2/(2-e2) # (a2-b2)/(a2+b2) # third eccentricity squared
+		epp = math.sqrt(epp2) # third eccentricity
+		c2 = a2 - b2 # linear eccentricity squared
+		c = math.sqrt(c2) # linear eccentricity
+		alpha = math.asin(e) # angular eccentricity # acos(b/a)
 
 		self.a     = a
 		self.f     = f
