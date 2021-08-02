@@ -189,7 +189,7 @@ augroup backup_extension_timestamp
     autocmd!
     if exists('*strftime')
         " String which is appended to a file name to make the name of the backup file.
-        autocmd BufWritePre * let &backupext = '-' . strftime('%Y%m%dT%H%M%S') . '~'
+        autocmd BufWritePre * let &backupext = '~' . strftime('%Y%m%dT%H%M%S') . '~'
     else
         set backupext&
     endif
