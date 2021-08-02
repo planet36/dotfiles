@@ -14,11 +14,13 @@ import math
 
 class Ellipsoid:
 
-	def __init__(self, _a, _f_recip):
+	def __init__(self, _a, _f_recip, _GM = 3.986004418E14, _omega = 7.292115E-5):
 
 		# defining parameters
 		a = _a # semi-major axis (equatorial radius of the earth) (meters)
 		f = 1 / _f_recip # (a-b)/a # flattening factor of the earth
+		GM = _GM # geocentric gravitational constant (m^3/s^2)
+		omega = _omega # nominal mean angular velocity of the earth (rad/s)
 
 		# derived geometric constants
 		b = a*(1-f) # semi-minor axis (meters)
@@ -36,22 +38,32 @@ class Ellipsoid:
 		c = math.sqrt(c2) # linear eccentricity
 		alpha = math.asin(e) # angular eccentricity # acos(b/a)
 
-		self.a     = a
-		self.f     = f
-		self.b     = b
-		self.a2    = a2
-		self.b2    = b2
-		self.fp    = fp
-		self.n     = n
-		self.e2    = e2
-		self.e     = e
-		self.ep2   = ep2
-		self.ep    = ep
-		self.epp2  = epp2
-		self.epp   = epp
-		self.c2    = c2
-		self.c     = c
-		self.alpha = alpha
+		# derived physical constants
+		gamma_e = 9.7803253359 # normal gravity at the equator (on the ellipsoid) (m/s^2)
+		gamma_p = 9.8321849379 # normal gravity at the poles (on the ellipsoid) (m/s^2)
+		k = (1 - f) * gamma_p / gamma_e - 1 # Somigliana's Formula - normal gravity formula constant
+		m = omega * omega * a2 * b / GM # normal gravity formula constant
+
+		self.a       = a
+		self.f       = f
+		self.b       = b
+		self.a2      = a2
+		self.b2      = b2
+		self.fp      = fp
+		self.n       = n
+		self.e2      = e2
+		self.e       = e
+		self.ep2     = ep2
+		self.ep      = ep
+		self.epp2    = epp2
+		self.epp     = epp
+		self.c2      = c2
+		self.c       = c
+		self.alpha   = alpha
+		self.gamma_e = gamma_e
+		self.gamma_p = gamma_p
+		self.k       = k
+		self.m       = m
 
 	def get_Rn(self, sin_lat):
 		d2 = 1 - self.e2 * sin_lat * sin_lat
