@@ -58,7 +58,7 @@ OPTIONS
   -p : In addition to dotfiles, also install the following:
        vim/nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
-         - $SCRIPT_DIR/build/*
+         - $SCRIPT_DIR/other/build/*
          - dwm
          - slstatus
          - st
@@ -443,9 +443,9 @@ function install_local_programs
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build install
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build install
     else
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build install || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build install || return
     fi
 
     if $DRY_RUN
@@ -462,9 +462,9 @@ function uninstall_local_programs
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build uninstall
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build uninstall
     else
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/build uninstall || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build uninstall || return
     fi
 
     if $DRY_RUN
