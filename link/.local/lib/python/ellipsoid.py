@@ -14,7 +14,7 @@ import math
 
 class Ellipsoid:
 
-	def __init__(self, _a, _f_recip, _GM = 3.986004418E14, _omega = 7.292115E-5):
+	def __init__(self, _a: float, _f_recip: float, _GM: float = 3.986004418E14, _omega: float = 7.292115E-5):
 
 		# defining parameters
 		a = _a # semi-major axis (equatorial radius of the earth) (meters)
@@ -65,30 +65,30 @@ class Ellipsoid:
 		self.k       = k
 		self.m       = m
 
-	def get_Rn(self, sin_lat):
+	def get_Rn(self, sin_lat: float) -> float:
 		d2 = 1 - self.e2 * sin_lat * sin_lat
 		d = math.sqrt(d2)
 		return self.a / d
 
-	def get_R(self, sin_lat):
+	def get_R(self, sin_lat: float) -> float:
 		return self.get_Rn(sin_lat) * math.sqrt(1 - self.e2 * sin_lat * sin_lat * (2 - self.e2))
 
-	def get_Rm(self, sin_lat):
+	def get_Rm(self, sin_lat: float) -> float:
 		d2 = 1 - self.e2 * sin_lat * sin_lat
 		d = math.sqrt(d2)
 		return self.a * (1 - self.e2) / (d2 * d)
 
-	def get_gamma(self, sin_lat):
+	def get_gamma(self, sin_lat: float) -> float:
 		d2 = 1 - self.e2 * sin_lat * sin_lat
 		d = math.sqrt(d2)
 		return self.gamma_e * (1 + self.k * sin_lat * sin_lat) / d
 
-	def get_gamma_h(self, sin_lat, ht):
+	def get_gamma_h(self, sin_lat: float, ht: float) -> float:
 		return self.get_gamma(sin_lat) * (1
 				- 2 * ht * (1 + self.f + self.m - 2 * self.f * sin_lat * sin_lat) / self.a
 				+ 3 * ht * ht / self.a2)
 
-	def get_ht(self, w, z, sin_lat, cos_lat, Rn):
+	def get_ht(self, w: float, z: float, sin_lat: float, cos_lat: float, Rn: float) -> float:
 		# https://www.gnu.org/software/libc/manual/html_node/Mathematical-Constants.html
 		# cos(45 deg) == 1/sqrt(2)
 		if cos_lat > 1 / math.sqrt(2): # Equatorial
@@ -96,90 +96,88 @@ class Ellipsoid:
 		else: # Polar
 			return z / sin_lat - Rn * (1 - self.e2)
 
-def geodetic_to_ecef(ell: Ellipsoid, lat_deg: float, lon_deg: float, ht: float) -> tuple:
+	def geodetic_to_ecef(self, lat_deg: float, lon_deg: float, ht: float) -> tuple:
 
-	lat_rad = math.radians(lat_deg)
-	lon_rad = math.radians(lon_deg)
+		lat_rad = math.radians(lat_deg)
+		lon_rad = math.radians(lon_deg)
 
-	sin_lat = math.sin(lat_rad)
-	cos_lat = math.cos(lat_rad)
+		sin_lat = math.sin(lat_rad)
+		cos_lat = math.cos(lat_rad)
 
-	sin_lon = math.sin(lon_rad)
-	cos_lon = math.cos(lon_rad)
+		sin_lon = math.sin(lon_rad)
+		cos_lon = math.cos(lon_rad)
 
-	Rn = ell.get_Rn(sin_lat)
+		Rn = self.get_Rn(sin_lat)
 
-	x = (Rn + ht) * cos_lat * cos_lon
-	y = (Rn + ht) * cos_lat * sin_lon
-	z = (Rn * (1 - ell.e2) + ht) * sin_lat
+		x = (Rn + ht) * cos_lat * cos_lon
+		y = (Rn + ht) * cos_lat * sin_lon
+		z = (Rn * (1 - self.e2) + ht) * sin_lat
 
-	return (x, y, z)
+		return (x, y, z)
 
-
-def ecef_to_geodetic(ell: Ellipsoid, x: float, y: float, z: float) -> tuple:
-	'''
+	def ecef_to_geodetic(self, x: float, y: float, z: float) -> tuple:
+		'''
 D. K. Olson, "Converting Earth-centered, Earth-fixed coordinates to geodetic coordinates," in IEEE Transactions on Aerospace and Electronic Systems, vol. 32, no. 1, pp. 473-476, Jan. 1996, doi: 10.1109/7.481290.
 URL: https://ieeexplore.ieee.org/document/481290
 
 Converted to Python and modified by Steven Ward.  No rights reserved.
 '''
 
-	w2 = x * x + y * y
-	w = math.sqrt(w2)
-	z2 = z * z
-	lon_rad = math.atan2(y, x)
+		w2 = x * x + y * y
+		w = math.sqrt(w2)
+		z2 = z * z
+		lon_rad = math.atan2(y, x)
 
-	a1 = ell.a * ell.e2
-	a2 = a1 * a1
-	a3 = a1 * ell.e2 / 2
-	a4 = 2.5 * a2
-	a5 = a1 + a3
-	#a6 = (1 - ell.e2)
+		a1 = self.a * self.e2
+		a2 = a1 * a1
+		a3 = a1 * self.e2 / 2
+		a4 = 2.5 * a2
+		a5 = a1 + a3
+		#a6 = (1 - self.e2)
 
-	r2 = w2 + z2
-	r = math.sqrt(r2)
+		r2 = w2 + z2
+		r = math.sqrt(r2)
 
-	s2 = z2 / r2
-	c2 = w2 / r2
-	u = a2 / r
-	v = a3 - a4 / r
+		s2 = z2 / r2
+		c2 = w2 / r2
+		u = a2 / r
+		v = a3 - a4 / r
 
-	s = 0
-	c = 0
-	ss = 0
+		s = 0
+		c = 0
+		ss = 0
 
-	# cos(45 deg)^2 == 0.5
-	if c2 > 0.5: # Equatorial
-		s = (z / r) * (1 + c2 * (a1 + u + s2 * v) / r)
-		lat_rad = math.asin(s)
-		ss = s * s
-		c = math.sqrt(1 - ss)
-	else: # Polar
-		c = (w / r) * (1 - s2 * (a5 - u - c2 * v) / r)
-		lat_rad = math.acos(c)
-		ss = 1 - c * c
-		s = math.sqrt(ss)
+		# cos(45 deg)^2 == 0.5
+		if c2 > 0.5: # Equatorial
+			s = (z / r) * (1 + c2 * (a1 + u + s2 * v) / r)
+			lat_rad = math.asin(s)
+			ss = s * s
+			c = math.sqrt(1 - ss)
+		else: # Polar
+			c = (w / r) * (1 - s2 * (a5 - u - c2 * v) / r)
+			lat_rad = math.acos(c)
+			ss = 1 - c * c
+			s = math.sqrt(ss)
 
-		if z < 0:
-			lat_rad = -lat_rad
-			s = -s
+			if z < 0:
+				lat_rad = -lat_rad
+				s = -s
 
-	d2 = 1 - ell.e2 * ss
-	Rn = ell.a / math.sqrt(d2)
-	Rm = (1 - ell.e2) * Rn / d2
-	rf = (1 - ell.e2) * Rn
-	u = w - Rn * c
-	v = z - rf * s
-	f = c * u + s * v
-	m = c * v - s * u
-	p = m / (Rm + f)
+		d2 = 1 - self.e2 * ss
+		Rn = self.a / math.sqrt(d2)
+		Rm = (1 - self.e2) * Rn / d2
+		rf = (1 - self.e2) * Rn
+		u = w - Rn * c
+		v = z - rf * s
+		f = c * u + s * v
+		m = c * v - s * u
+		p = m / (Rm + f)
 
-	lat_rad += p
+		lat_rad += p
 
-	ht = f + m * p / 2
+		ht = f + m * p / 2
 
-	return (math.degrees(lat_rad), math.degrees(lon_rad), ht)
-
+		return (math.degrees(lat_rad), math.degrees(lon_rad), ht)
 
 '''
 Source:
