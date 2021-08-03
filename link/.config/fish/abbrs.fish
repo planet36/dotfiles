@@ -15,6 +15,7 @@ abbr --add --global clena clean
 abbr --add --global csl cls
 abbr --add --global e "$EDITOR"
 abbr --add --global ed "$EDITOR"
+abbr --add --global emld meld
 abbr --add --global f find
 abbr --add --global fiel file
 abbr --add --global gci git commit

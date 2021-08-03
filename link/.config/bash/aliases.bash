@@ -18,6 +18,7 @@ alias csl=cls
 alias e="$EDITOR"
 # shellcheck disable=SC2139
 alias ed="$EDITOR"
+alias emld=meld
 alias f=find
 alias fiel=file
 alias gci='git commit'
