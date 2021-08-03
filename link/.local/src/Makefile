@@ -12,7 +12,7 @@ build: clone
 
 clone: | $(REPO_DIRS)
 
-clean lint install uninstall: clone
+clean install lint uninstall: clone
 	$(foreach DIR, $(REPO_DIRS), $(MAKE) -C $(DIR) $@;)
 
 # My repos
@@ -31,4 +31,4 @@ stw:
 	git clone https://github.com/sineemore/stw.git
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: build clone clean lint install uninstall
+.PHONY: build clone clean install lint uninstall
