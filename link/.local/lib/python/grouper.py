@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# pylint: disable=missing-module-docstring
+
 from itertools import zip_longest
 
 # identical to
