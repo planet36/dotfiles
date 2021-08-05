@@ -104,8 +104,7 @@ then
     #killall --quiet xcape
     #xcape -e 'Caps_Lock=Escape'
     #xcape -e 'Shift_L=Escape'
-    xcape -e 'Control_L=Escape'
-    xcape -e 'Shift_L=F13'
+    xcape -e 'Control_L=Escape;Shift_L=F13'
 fi
 
 if command -v sxhkd > /dev/null
