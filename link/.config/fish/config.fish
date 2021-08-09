@@ -292,23 +292,23 @@ set --append GCC_COMMON_OPTIONS -fstack-protector -fstack-clash-protection
 #OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
 # Using -fsigned-zeros disables associative-math
 #OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-set --export --universal OPTIMIZE_OPTIONS -O3 -flto -march=native
+set --export OPTIMIZE_OPTIONS -O3 -flto -march=native
 
-set --export --universal DEBUG_OPTIONS -Og -g3
+set --export DEBUG_OPTIONS -Og -g3
 # https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
 set --append DEBUG_OPTIONS -UNDEBUG
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
 set --append DEBUG_OPTIONS -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR
 
-set --export --universal PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
+set --export PERF_TEST_OPTIONS $OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre
 
-set --export --universal PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
+set --export PROFILE_OPTIONS $PERF_TEST_OPTIONS -pg
 
 # https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
-set --export --universal CPPFLAGS -iquote "$HOME"/.local/include
+set --export CPPFLAGS -iquote "$HOME"/.local/include
 
-set --export --universal CFLAGS $GCC_COMMON_OPTIONS -std=c2x
-set --export --universal CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
+set --export CFLAGS $GCC_COMMON_OPTIONS -std=c2x
+set --export CXXFLAGS $GCC_COMMON_OPTIONS -std=c++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant
 
 # }}}
 
