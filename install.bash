@@ -67,6 +67,7 @@ OPTIONS
        fish plugins
          - fisher
          - getopts
+         - spark
          - z
 
   -n : Show what would be done without doing anything.
@@ -534,6 +535,10 @@ function install_fish_plugins
             echo  \
             fish -c 'fisher install jorgebucaran/getopts.fish'
 
+            # https://github.com/jorgebucaran/spark.fish
+            echo  \
+            fish -c 'fisher install jorgebucaran/spark.fish'
+
             # https://github.com/jethrokuan/z
             echo  \
             fish -c 'fisher install jethrokuan/z'
@@ -543,6 +548,9 @@ function install_fish_plugins
 
             # https://github.com/jorgebucaran/getopts.fish
             fish -c 'fisher install jorgebucaran/getopts.fish' || return
+
+            # https://github.com/jorgebucaran/spark.fish
+            fish -c 'fisher install jorgebucaran/spark.fish' || return
 
             # https://github.com/jethrokuan/z
             fish -c 'fisher install jethrokuan/z' || return
