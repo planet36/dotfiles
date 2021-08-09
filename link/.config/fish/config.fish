@@ -17,7 +17,7 @@ fish_add_path --move "$HOME"/.local/bin
 
 # https://gcc.gnu.org/onlinedocs/gcc/Environment-Variables.html
 #if not contains "$HOME"/.local/lib $LIBRARY_PATH
-#    set --export --prepend LIBRARY_PATH "$HOME"/.local/lib:
+#    set --export --path --prepend LIBRARY_PATH "$HOME"/.local/lib
 #end
 
 # }}}
