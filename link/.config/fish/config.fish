@@ -12,7 +12,8 @@ if status is-login
 
 # {{{ prepend user path
 
-fish_add_path "$HOME"/.local/bin
+# Move ~/.local/bin to the front of PATH.
+fish_add_path --move "$HOME"/.local/bin
 
 # https://gcc.gnu.org/onlinedocs/gcc/Environment-Variables.html
 #if not contains "$HOME"/.local/lib $LIBRARY_PATH
