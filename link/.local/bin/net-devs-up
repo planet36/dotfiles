@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-class-net
+grep -F -l -x -- up /sys/class/net/*/operstate | sed -E -e 's|^/sys/class/net/([^/]+)/operstate$|\1|'
