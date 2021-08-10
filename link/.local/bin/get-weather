@@ -2,38 +2,9 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
-then
-	declare -r IP_URI='http://ip-api.com/line/?fields=lat,lon'
-
-	mapfile -t MY_LOCATION < <(curl -s -f "$IP_URI") || exit
-	LAT="${MY_LOCATION[0]}"
-	LON="${MY_LOCATION[1]}"
-	unset MY_LOCATION
-fi
-
-# https://openweathermap.org/current#data
-# Possible values: standard, metric, imperial
-declare -r UNITS=imperial
-
 declare -r WEATHER_JSON="$XDG_RUNTIME_DIR"/weather.json
 
-# https://openweathermap.org/appid
-# Weather data is updated every 10 minutes or so.
-#if [[ ! -f "$WEATHER_JSON" ]] || (( $(date -r "$WEATHER_JSON" +%s) < $(date -d '10 minutes ago' +%s) ))
-if [[ ! -f "$WEATHER_JSON" ]] || (( $(stat --printf %Y -- "$WEATHER_JSON") < $EPOCHSECONDS-60*10 ))
-then
-	if [[ -z "$OPENWEATHERMAP_API_KEY" ]]
-	then
-		echo 'Error: Must have OpenWeather API key'
-		echo 'https://openweathermap.org/api'
-		exit 1
-	fi
-
-	declare -r WEATHER_URI="https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&units=${UNITS}&appid=${OPENWEATHERMAP_API_KEY}"
-
-	curl -s -f "$WEATHER_URI" > "$WEATHER_JSON" || exit
-fi
+update-weather || exit
 
 mapfile -t WEATHER_FIELDS < <(jq -r '
 .weather[0].main,
