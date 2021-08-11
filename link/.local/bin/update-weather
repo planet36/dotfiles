@@ -2,14 +2,12 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+declare -r LOCATION_SH="$XDG_RUNTIME_DIR"/location.sh
+
 if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
 then
-	declare -r IP_URI='http://ip-api.com/line/?fields=lat,lon'
-
-	mapfile -t MY_LOCATION < <(curl -s -f "$IP_URI") || exit
-	LAT="${MY_LOCATION[0]}"
-	LON="${MY_LOCATION[1]}"
-	unset MY_LOCATION
+	update-location || exit
+	source "$LOCATION_SH" || exit
 
 	if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
 	then
