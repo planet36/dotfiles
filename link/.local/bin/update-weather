@@ -10,6 +10,12 @@ then
 	LAT="${MY_LOCATION[0]}"
 	LON="${MY_LOCATION[1]}"
 	unset MY_LOCATION
+
+	if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
+	then
+		echo 'Error: Both LAT and LON must be set'
+		exit 1
+	fi
 fi
 
 # https://openweathermap.org/current#data
