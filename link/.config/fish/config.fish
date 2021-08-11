@@ -22,18 +22,6 @@ fish_add_path --move "$HOME"/.local/bin
 
 # }}}
 
-# {{{ my location
-
-#set MY_LOCATION (curl -s -f 'http://ip-api.com/json/?fields=lat,lon')
-set MY_LOCATION (curl -s -f 'http://ip-api.com/line/?fields=lat,lon')
-#set --export LAT (echo "$MY_LOCATION" | jq -r '.lat')
-#set --export LON (echo "$MY_LOCATION" | jq -r '.lon')
-set --export LAT $MY_LOCATION[1]
-set --export LON $MY_LOCATION[2]
-set --erase MY_LOCATION
-
-# }}}
-
 # {{{ XDG vars
 
 function setup_xdg_vars
