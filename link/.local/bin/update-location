@@ -5,7 +5,7 @@
 # https://man7.org/linux/man-pages/man1/bash.1.html#SHELL_BUILTIN_COMMANDS
 set -o pipefail
 
-readonly LOCATION_SH="$XDG_RUNTIME_DIR"/location.sh
+declare -r LOCATION_SH="$XDG_RUNTIME_DIR"/location.sh
 
 function cleanup
 {
@@ -15,7 +15,7 @@ function cleanup
 
 if [[ -z "$LAT" || -z "$LON" ]] && [[ ! -f "$LOCATION_SH" ]]
 then
-	readonly IP_URI='http://ip-api.com/line/?fields=lat,lon'
+	declare -r IP_URI='http://ip-api.com/line/?fields=lat,lon'
 	# The following sed command is equivalent to the awk command below.
 	# sed -n -e '1s/^/export LAT=/p' -e '2s/^/export LON=/p' -e '3q'
 	curl -s -f "$IP_URI" | awk 'NR==1{print "export LAT=" $0} NR==2{print "export LON=" $0; exit}' > "$LOCATION_SH" || cleanup "${PIPESTATUS[0]}"
