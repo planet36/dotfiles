@@ -148,6 +148,28 @@ struct Ellipsoid
 		return a / d;
 	}
 
+	/**
+	* Derivation of ellipsoid radius:
+	*
+	* https://en.wikipedia.org/wiki/Ellipse#Polar_form_relative_to_center
+	*
+	* R(θ) = b / sqrt(1 - e2 * cos(θ)**2)
+	*
+	* https://en.wikipedia.org/wiki/Latitude#Geocentric_latitude
+	*
+	* θ(φ) = atan(tan(φ) * (1 - e2))
+	*
+	* https://www.wolframalpha.com/input/?i=simplify+cos%28atan%28x%29%29**2
+	*
+	* cos(atan(x))**2 = 1 / (x**2 + 1)
+	*
+	* cos(θ)**2 = cos(φ)**2 / ((1 - e2)**2 * sin(φ)**2 + cos(φ)**2)
+	*
+	* R(φ) = b / sqrt(1 - e2 * cos(φ)**2 / ((1 - e2)**2 * sin(φ)**2 + cos(φ)**2))
+	*      = R_N * sqrt((1 - e2)**2 * sin(φ)**2 + cos(φ)**2)
+	*      = R_N * sqrt(1 - e2 * sin(φ)**2 * (2 - e2))
+	*/
+
 	/// get the ellipsoid radius (meters)
 	/**
 	\sa https://www.oc.nps.edu/oc2902w/geodesy/radiigeo.pdf
@@ -208,9 +230,10 @@ struct Ellipsoid
 				+ 3 * ht * ht / a2);
 	}
 
-	// Source: Rapp, page 122 (132)
 	/// get the height above the ellipsoid (meters)
 	/**
+	Source: Rapp, page 122 (132)
+
 	\verbatim
 	Original equations:
 	z = (Rn * (1-e2) + h) * sin
