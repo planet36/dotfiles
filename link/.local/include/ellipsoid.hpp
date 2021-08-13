@@ -256,6 +256,23 @@ struct Ellipsoid
 		return get_ht(w, z, sin_lat, cos_lat, get_Rn(sin_lat));
 	}
 
+	/// get the height above the ellipsoid (meters)
+	/**
+	\param w distance from the rotational (i.e. Z) axis (meters)
+	\param z distance above the equatorial (i.e. X-Y) plane (meters)
+	\param lat_rad geodetic latitude (radians)
+	\return the height above the ellipsoid (meters)
+	*/
+	auto get_ht(
+		const T w, const T z,
+		const T lat_rad) const
+	{
+		const auto sin_lat = std::sin(lat_rad);
+		const auto cos_lat = std::cos(lat_rad);
+
+		return get_ht(w, z, sin_lat, cos_lat);
+	}
+
 	bool operator==(const Ellipsoid& that) const
 	{
 		return
