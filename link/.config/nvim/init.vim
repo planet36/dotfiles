@@ -445,6 +445,9 @@ augroup END
 nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
+" :help CTRL-^
+nnoremap <leader><leader> <c-^>
+
 " double quote a word
 " single quote a word
 "nnoremap <Leader>" viw<esc>a"<esc>hbi"<esc>lel
