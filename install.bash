@@ -444,17 +444,17 @@ function install_local_programs
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local install
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local install clean
     else
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local install || return
+        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local install clean || return
     fi
 
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C ~/.local/src install
+        make PREFIX="$HOME"/.local -C ~/.local/src install clean
     else
-        make PREFIX="$HOME"/.local -C ~/.local/src install || return
+        make PREFIX="$HOME"/.local -C ~/.local/src install clean || return
     fi
 }
 
