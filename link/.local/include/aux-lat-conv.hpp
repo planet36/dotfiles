@@ -12,12 +12,12 @@
 
 #pragma once
 
+#include "angle.hpp"
+#include "ellipsoid-wgs84.hpp"
+
 #include <cmath>
 #include <type_traits>
 #include <valarray>
-
-#include "angle.hpp"
-#include "ellipsoid-wgs84.hpp"
 
 template <typename T>
 requires std::is_floating_point_v<T>

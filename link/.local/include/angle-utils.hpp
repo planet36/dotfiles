@@ -9,9 +9,9 @@
 
 #pragma once
 
-#include <cmath>
-
 #include "math-const.hpp"
+
+#include <cmath>
 
 /// milliradians per radian
 constexpr int mrad_per_rad = 1'000;

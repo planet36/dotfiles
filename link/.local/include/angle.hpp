@@ -9,10 +9,10 @@
 
 #pragma once
 
-#include <string_view>
-
 #include "angle-utils.hpp"
 #include "sin_cos.hpp"
+
+#include <string_view>
 
 /// the fundamental unit of measurement of an angle
 /**

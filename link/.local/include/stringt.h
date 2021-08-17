@@ -3,11 +3,11 @@
 
 # pragma once
 
+#include "likely.h"
+
 #include <stdint.h>
 #include <string.h>
 #include <wchar.h>
-
-#include "likely.h"
 
 inline static size_t
 _strtcat_helper(char* restrict dest, const char* restrict src, size_t dest_sz, size_t dest_len)
