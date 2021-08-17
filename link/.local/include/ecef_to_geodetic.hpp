@@ -1,6 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+/// ECEF-to-Geodetic coordinate conversion
+/**
+\file
+\author Steven Ward
+*/
+
 #pragma once
 
 #include "angle.hpp"

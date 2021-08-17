@@ -1,6 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+/// safe strncat, strncpy, wcsncat, wcsncpy (without truncation)
+/**
+\file
+\author Steven Ward
+*/
+
 # pragma once
 
 #include "likely.h"
@@ -25,8 +31,8 @@ _strtcat_helper(char* restrict dest, const char* restrict src, size_t dest_sz, s
 	return 0;
 }
 
-/** String concatenate without truncation
- *
+/// String concatenate without truncation
+/**
  * DESCRIPTION
  *   Concatenate src to dest, including the terminating NUL character.
  *
@@ -51,8 +57,8 @@ strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
 	return _strtcat_helper(dest, src, dest_sz, strlen(dest));
 }
 
-/** String copy without truncation
- *
+/// String copy without truncation
+/**
  * DESCRIPTION
  *   Copy src to dest, including the terminating NUL character.
  *
@@ -92,8 +98,8 @@ _wstrtcat_helper(wchar_t* restrict dest, const wchar_t* restrict src, size_t des
 	return 0;
 }
 
-/** Wide string concatenate without truncation
- *
+/// Wide string concatenate without truncation
+/**
  * DESCRIPTION
  *   Concatenate src to dest, including the terminating NUL wide character.
  *
@@ -118,8 +124,8 @@ wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 	return _wstrtcat_helper(dest, src, dest_sz, wcslen(dest));
 }
 
-/** Wide string copy without truncation
- *
+/// Wide string copy without truncation
+/**
  * DESCRIPTION
  *   Copy src to dest, including the terminating NUL wide character.
  *

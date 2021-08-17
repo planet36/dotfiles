@@ -1,6 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+/// Macros wrapping __builtin_expect
+/**
+\file
+\author Steven Ward
+*/
+
 # pragma once
 
 // https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-_005f_005fbuiltin_005fexpect

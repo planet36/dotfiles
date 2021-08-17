@@ -1,6 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+/// character meter
+/**
+\file
+\author Steven Ward
+*/
+
 #pragma once
 
 #include <stdint.h>

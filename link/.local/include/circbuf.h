@@ -1,6 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+/// circular buffer
+/**
+\file
+\author Steven Ward
+*/
+
 # pragma once
 
 // inspired by
