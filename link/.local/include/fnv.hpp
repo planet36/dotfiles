@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include <string>
+#include <string_view>
 
 constexpr uint32_t fnv_prime_32 = UINT32_C(16'777'619); // = 2**24 + 2**8 + 0x93
 constexpr uint64_t fnv_prime_64 = UINT64_C(1'099'511'628'211); // = 2**40 + 2**8 + 0xB3
