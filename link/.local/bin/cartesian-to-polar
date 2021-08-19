@@ -2,9 +2,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-'''
-Convert Cartesian coordinates (x, y) to Polar coordinates (r, theta (degrees)).
-'''
+'''Convert Cartesian coordinates (x, y) to Polar coordinates (r, theta (degrees)).'''
 
 from cmath import polar
 from math import degrees
