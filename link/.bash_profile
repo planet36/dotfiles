@@ -3,45 +3,7 @@
 
 # shellcheck shell=bash disable=SC1090
 
-umask 022
-
 ulimit -c unlimited
-
-# {{{ prepend user path
-
-if [[ -d "$HOME/.local/bin" ]]
-then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# }}}
-
-# {{{ XDG vars
-
-setup_xdg_vars() {
-
-    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-
-    : "${XDG_CACHE_HOME:=$HOME/.cache}"
-    : "${XDG_CONFIG_DIRS:=/etc/xdg}"
-    : "${XDG_CONFIG_HOME:=$HOME/.config}"
-    : "${XDG_DATA_DIRS:=/usr/local/share/:/usr/share/}"
-    : "${XDG_DATA_HOME:=$HOME/.local/share}"
-
-    export XDG_CACHE_HOME
-    export XDG_CONFIG_DIRS
-    export XDG_CONFIG_HOME
-    export XDG_DATA_DIRS
-    export XDG_DATA_HOME
-
-    mkdir --verbose --parents -- "$XDG_CACHE_HOME"
-    mkdir --verbose --parents -- "$XDG_CONFIG_HOME"
-    mkdir --verbose --parents -- "$XDG_DATA_HOME"
-}
-
-setup_xdg_vars
-
-# }}}
 
 # {{{ env vars
 
@@ -128,20 +90,12 @@ export SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
 export TIME="real\t%E\nuser\t%U\nsys\t%S\n"
 
 export TRASH_DIR="$XDG_DATA_HOME"/Trash
-if [[ ! -d "$TRASH_DIR" ]]
-then
-    mkdir --verbose --mode=0700 -- "$TRASH_DIR"
-fi
 
 export TZ=':America/New_York'
 
 #export VCS_REPOS_MATCH='( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
 #export VCS_REPOS_PRUNE="( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"
 
-if [[ ! -d "$XDG_CACHE_HOME"/xorg ]]
-then
-    mkdir --verbose --parents -- "$XDG_CACHE_HOME"/xorg
-fi
 export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 
 # {{{ pager colors
@@ -267,23 +221,9 @@ then
         # {{{ turn on numlock
         setleds -D +num
         # }}}
-
-        # {{{ set console font
-        if command -v setfont > /dev/null
-        then
-            # To print the character set of the active font: showconsolefont
-
-            # Fonts are in:
-            # /usr/share/kbd/consolefonts (arch)
-            # /lib/kbd/consolefonts (fedora)
-
-            setfont Lat2-Terminus16
-        fi
-        # }}}
     fi
 
     # {{{ Start X at login
-
     # https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login
     if command -v systemctl > /dev/null
     then
@@ -294,7 +234,6 @@ then
             :
         fi
     fi
-
     # }}}
 
 fi # interactive shell
