@@ -26,10 +26,6 @@
 # https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-HISTCONTROL
 HISTCONTROL=ignoreboth:erasedups
 
-if [[ ! -d "$XDG_DATA_HOME"/bash ]]
-then
-    mkdir --verbose --parents -- "$XDG_DATA_HOME"/bash
-fi
 HISTFILE="$XDG_DATA_HOME"/bash/history
 HISTFILESIZE=9999
 HISTSIZE=9999
