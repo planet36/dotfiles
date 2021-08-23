@@ -11,36 +11,10 @@
 if status is-login
 
 # {{{ prepend user path
-
-# Move ~/.local/bin to the front of PATH.
-fish_add_path --move "$HOME"/.local/bin
-
 # https://gcc.gnu.org/onlinedocs/gcc/Environment-Variables.html
 #if not contains "$HOME"/.local/lib $LIBRARY_PATH
 #    set --export --path --prepend LIBRARY_PATH "$HOME"/.local/lib
 #end
-
-# }}}
-
-# {{{ XDG vars
-
-function setup_xdg_vars
-
-    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-
-    if not set --query XDG_CACHE_HOME  ; set --export --global XDG_CACHE_HOME  "$HOME"/.cache                ; end
-    if not set --query XDG_CONFIG_DIRS ; set --export --global XDG_CONFIG_DIRS /etc/xdg                      ; end
-    if not set --query XDG_CONFIG_HOME ; set --export --global XDG_CONFIG_HOME "$HOME"/.config               ; end
-    if not set --query XDG_DATA_DIRS   ; set --export --global XDG_DATA_DIRS   /usr/local/share/:/usr/share/ ; end
-    if not set --query XDG_DATA_HOME   ; set --export --global XDG_DATA_HOME   "$HOME"/.local/share          ; end
-
-    mkdir --verbose --parents -- "$XDG_CACHE_HOME"
-    mkdir --verbose --parents -- "$XDG_CONFIG_HOME"
-    mkdir --verbose --parents -- "$XDG_DATA_HOME"
-end
-
-setup_xdg_vars
-
 # }}}
 
 # {{{ env vars
@@ -125,18 +99,12 @@ set --export SCREENRC "$XDG_CONFIG_HOME"/screen/screenrc
 set --export TIME "real\t%E\nuser\t%U\nsys\t%S\n"
 
 set --export TRASH_DIR "$XDG_DATA_HOME"/Trash
-if not test -d "$TRASH_DIR"
-    mkdir --verbose --mode=0700 -- "$TRASH_DIR"
-end
 
 set --export TZ ':America/New_York'
 
 #set --export VCS_REPOS_MATCH '( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
 #set --export VCS_REPOS_PRUNE "( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"
 
-if not test -d "$XDG_CACHE_HOME"/xorg
-    mkdir --verbose --parents -- "$XDG_CACHE_HOME"/xorg
-end
 set --export XAUTHORITY "$XDG_CACHE_HOME"/xorg/Xauthority
 
 # {{{ pager colors
@@ -223,17 +191,6 @@ if string match --regex --quiet '/dev/tty[0-9]+' (tty)
     setleds -D +num
     # }}}
 
-    # {{{ set console font
-    if command --quiet setfont
-        # To print the character set of the active font: showconsolefont
-
-        # Fonts are in:
-        # /usr/share/kbd/consolefonts (arch)
-        # /lib/kbd/consolefonts (fedora)
-
-        setfont Lat2-Terminus16
-    end
-    # }}}
 end
 
 # {{{ Start X at login
