@@ -371,7 +371,7 @@ OPTIONS
 
 		output_lines = []
 
-		output_lines.append('#!/usr/bin/bash')
+		output_lines.append('#!/usr/bin/sh')
 		output_lines.append('')
 
 		if add_confirm:
