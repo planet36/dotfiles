@@ -59,7 +59,6 @@ public:
 	auto slope() const
 	{
 		const auto S_xx = x_stats.variance() * (n - 1);
-
 		return S_xy / S_xx;
 	}
 
