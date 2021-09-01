@@ -21,4 +21,4 @@ DECIMAL_PLACES = [
 		]
 
 def round_half_up(x) -> decimal.Decimal:
-	return decimal.Decimal(x).quantize(exp=DECIMAL_PLACES[0], rounding=decimal.ROUND_HALF_UP)
+	return decimal.Decimal(x).quantize(exp=decimal.Decimal(1), rounding=decimal.ROUND_HALF_UP)
