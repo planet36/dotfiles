@@ -173,7 +173,6 @@ def main(argv = None):
 	default_sort_by_mtime = False
 	default_only_comment_first = False
 	default_print_size = False
-	default_add_confirm = False
 	default_hash_algorithm = 'md5'
 	default_interactive_rm = False
 
@@ -185,7 +184,6 @@ def main(argv = None):
 	sort_by_mtime = default_sort_by_mtime
 	only_comment_first = default_only_comment_first
 	print_size = default_print_size
-	add_confirm = default_add_confirm
 	hash_algorithm = default_hash_algorithm
 	interactive_rm = default_interactive_rm
 
@@ -263,9 +261,6 @@ OPTIONS
 -s, --print-size
     Print the file size above each group of duplicates.
 
---confirm
-    Add confirmation prompt to the output before the 'rm' commands.
-
 -a, --hash-algorithm=ALGORITHM
     Use hash algorithm ALGORITHM to hash the files.
     (default: {default_hash_algorithm})
@@ -281,7 +276,7 @@ OPTIONS
 	short_options = 'Vhvd:crmfsa:i'
 	long_options = ['version', 'help', 'verbose',
 		'maxdepth=', 'stdout', 'reverse-sort', 'sort-by-mtime',
-		'only-comment-first', 'print-size', 'confirm', 'hash-algorithm=', 'interactive',
+		'only-comment-first', 'print-size', 'hash-algorithm=', 'interactive',
 		]
 
 	try:
@@ -312,8 +307,6 @@ OPTIONS
 			only_comment_first = True
 		elif option in ['-s', '--print-size']:
 			print_size = True
-		elif option in ['--confirm']:
-			add_confirm = True
 		elif option in ['-a', '--hash-algorithm']:
 			hash_algorithm = value
 			assert hash_algorithm in valid_hash_algorithms
@@ -373,62 +366,6 @@ OPTIONS
 
 		output_lines.append('#!/usr/bin/sh')
 		output_lines.append('')
-
-		if add_confirm:
-			output_lines.append('''
-# https://docs.python.org/3/library/configparser.html#configparser.ConfigParser.getboolean
-# https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-# Evaluate the given string as a boolean
-function getboolean
-{
-	local S="${1}"
-
-	S="${S%%+([[:space:]])}" # strip trailing whitespace
-
-	S="${S##+([[:space:]])}" # strip leading whitespace
-
-	S="${S,,}" # lowercase
-
-	if [[ -z "${S}" ]]
-	then
-		return 1 # fail
-	fi
-
-	case "${S}" in
-
-		1|yes|y|true|on)
-			return 0 # success
-			;;
-
-		0|no|n|false|off)
-			return 1 # fail
-			;;
-
-		null|nil|none|nan|undefined|-0)
-			return 1 # fail
-			;;
-
-		*)
-			return 0 # success
-			;;
-	esac
-}
-
-read -r -e -p "Continue? " CONTINUE
-
-if getboolean "${CONTINUE}"
-then
-	CONTINUE=true
-else
-	CONTINUE=false
-fi
-
-if ! ${CONTINUE}
-then
-	exit
-fi
-
-''')
 
 		# The keys of file_hash_to_file_info_map are sorted to maintain order among subsequent calls to this script.
 		for file_hash in sorted(file_hash_to_file_info_map):
