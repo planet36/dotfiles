@@ -124,12 +124,12 @@ print_cpp_file_header(script_author, script_license, script_name,
 	script_brief_description, script_detailed_description);
 
 printf("
+#include \"angle.hpp\"
+#include \"ellipsoid-wgs84.hpp\"
+
 #include <cmath>
 #include <concepts>
 #include <valarray>
-
-#include \"angle.hpp\"
-#include \"ellipsoid-wgs84.hpp\"
 ");
 
 define print_iota_valarray(num_elems, val = 0, inc = 1) {
