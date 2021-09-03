@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include <cassert>
 #include <charconv>
 #include <string>
 
