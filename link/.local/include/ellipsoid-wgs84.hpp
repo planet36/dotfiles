@@ -25,6 +25,7 @@ Version 1.0.0
 
 #include "ellipsoid.hpp"
 
-template <typename T>
-requires std::is_floating_point_v<T>
+#include <concepts>
+
+template <std::floating_point T>
 constexpr Ellipsoid<T> WGS84{6'378'137.0L, 298.257223563L};

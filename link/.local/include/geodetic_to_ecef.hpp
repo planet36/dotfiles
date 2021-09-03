@@ -13,7 +13,7 @@
 #include "ellipsoid.hpp"
 
 #include <cmath>
-#include <type_traits>
+#include <concepts>
 
 /// convert from geodetic to ECEF
 /**
@@ -27,8 +27,7 @@ Equation (4-14)
 \param[out] y Y coordinate (meters)
 \param[out] z Z coordinate (meters)
 */
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 void geodetic_to_ecef(const Ellipsoid<T>& ell,
                       const T lat_rad, const T lon_rad, const T ht,
                       T& x, T& y, T& z)
@@ -58,8 +57,7 @@ Equation (4-14)
 \param[out] y Y coordinate (meters)
 \param[out] z Z coordinate (meters)
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 void geodetic_to_ecef(const Ellipsoid<T>& ell,
                       const angle<U, T>& lat, const angle<U, T>& lon, const T ht,
                       T& x, T& y, T& z)

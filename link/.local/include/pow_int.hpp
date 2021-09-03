@@ -12,11 +12,9 @@ Inspired by https://web.archive.org/web/20200629174939/http://timmurphy.org/2013
 
 #include <cstdint>
 #include <limits>
-//#include <type_traits>
 
 /// Raise base \a B to the power of exponent \a E
 template <typename T, T B, int8_t E>
-//requires std::is_integral_v<T>
 consteval T pow_int_func()
 {
 	if constexpr (E < 0)
@@ -54,7 +52,6 @@ consteval T pow_int_func()
 
 /// Raise base \a B to the power of exponent \a E
 template <typename T, T B, uint8_t E>
-//requires std::is_integral_v<T>
 consteval T pow_uint_func()
 {
 	if constexpr (E == 0)

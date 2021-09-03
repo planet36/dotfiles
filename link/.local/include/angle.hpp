@@ -12,6 +12,7 @@
 #include "angle-utils.hpp"
 #include "sin_cos.hpp"
 
+#include <concepts>
 #include <string_view>
 
 /// the fundamental unit of measurement of an angle
@@ -97,8 +98,7 @@ constexpr angle_unit next()
 * \param x the given angle value
 * \return \a x converted to \a To units from \a From units
 */
-template <angle_unit To, angle_unit From, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit To, angle_unit From, std::floating_point T>
 constexpr T convert_to(const T& x)
 {
 	// convert same angle unit (i.e. do nothing)
@@ -139,22 +139,19 @@ constexpr T convert_to(const T& x)
 * \param x the given angle value
 * \return \a x converted from \a From units to \a To units
 */
-template <angle_unit From, angle_unit To, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit From, angle_unit To, std::floating_point T>
 constexpr T convert_from(const T& x)
 {
 	return convert_to<To, From>(x);
 }
 
 /// an angle class where the scalar value and unit of measurement are preserved
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 class angle
 {
 	/*
 	/// Every angle<U2, T2> is a friend of this.
-	template <angle_unit U2, typename T2>
-	requires std::is_floating_point_v<T2>
+	template <angle_unit U2, std::floating_point T2>
 	friend class angle;
 	*/
 
@@ -175,8 +172,7 @@ public:
 	angle(const angle&) = default;
 
 	/// conversion ctor
-	template <angle_unit U2, typename T2>
-	requires std::is_floating_point_v<T2>
+	template <angle_unit U2, std::floating_point T2>
 	constexpr angle(const angle<U2, T2>& a) :
 		value(convert_from<U2, U>(a.scalar()))
 	{}
@@ -206,8 +202,7 @@ public:
 	constexpr angle_unit units() const { return U; }
 
 	/// convert to a different data type
-	template <typename T2>
-	requires std::is_floating_point_v<T2>
+	template <std::floating_point T2>
 	constexpr auto to() const { return angle<U, T2>{*this}; }
 
 	/// convert to a different angle unit
@@ -215,86 +210,73 @@ public:
 	constexpr auto to() const { return angle<U2, T>{*this}; }
 
 	/// convert to a different angle unit and data type
-	template <angle_unit U2, typename T2>
-	requires std::is_floating_point_v<T2>
+	template <angle_unit U2, std::floating_point T2>
 	constexpr auto to() const { return angle<U2, T2>{*this}; }
 };
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using ang_mrad = angle<angle_unit::milliradian, T>;
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using ang_rad = angle<angle_unit::radian, T>;
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using ang_rev = angle<angle_unit::revolution, T>;
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using ang_deg = angle<angle_unit::degree, T>;
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using ang_arcmin = angle<angle_unit::arcminute, T>;
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using ang_arcsec = angle<angle_unit::arcsecond, T>;
 
 // factory functions
 
 /// create angle<angle_unit::milliradian, T>
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto make_ang_mrad(const T x)
 {
 	return ang_mrad<T>{x};
 }
 
 /// create angle<angle_unit::radian, T>
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto make_ang_rad(const T x)
 {
 	return ang_rad<T>{x};
 }
 
 /// create angle<angle_unit::revolution, T>
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto make_ang_rev(const T x)
 {
 	return ang_rev<T>{x};
 }
 
 /// create angle<angle_unit::degree, T>
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto make_ang_deg(const T x)
 {
 	return ang_deg<T>{x};
 }
 
 /// create angle<angle_unit::arcminute, T>
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto make_ang_arcmin(const T x)
 {
 	return ang_arcmin<T>{x};
 }
 
 /// create angle<angle_unit::arcsecond, T>
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto make_ang_arcsec(const T x)
 {
 	return ang_arcsec<T>{x};
@@ -459,13 +441,11 @@ constexpr auto operator "" _arcsec(const unsigned long long int x)
 }
 
 /// primary template
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 struct const_angle;
 
 /// partial specialization for milliradians
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 struct const_angle<angle_unit::milliradian, T>
 {
 	using angle = ang_mrad<T>;
@@ -479,13 +459,11 @@ struct const_angle<angle_unit::milliradian, T>
 };
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using const_ang_mrad = const_angle<angle_unit::milliradian, T>;
 
 /// partial specialization for radians
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 struct const_angle<angle_unit::radian, T>
 {
 	using angle = ang_rad<T>;
@@ -499,13 +477,11 @@ struct const_angle<angle_unit::radian, T>
 };
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using const_ang_rad = const_angle<angle_unit::radian, T>;
 
 /// partial specialization for revolutions
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 struct const_angle<angle_unit::revolution, T>
 {
 	using angle = ang_rev<T>;
@@ -519,13 +495,11 @@ struct const_angle<angle_unit::revolution, T>
 };
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using const_ang_rev = const_angle<angle_unit::revolution, T>;
 
 /// partial specialization for degrees
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 struct const_angle<angle_unit::degree, T>
 {
 	using angle = ang_deg<T>;
@@ -539,13 +513,11 @@ struct const_angle<angle_unit::degree, T>
 };
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using const_ang_deg = const_angle<angle_unit::degree, T>;
 
 /// partial specialization for arcminutes
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 struct const_angle<angle_unit::arcminute, T>
 {
 	using angle = ang_arcmin<T>;
@@ -559,13 +531,11 @@ struct const_angle<angle_unit::arcminute, T>
 };
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using const_ang_arcmin = const_angle<angle_unit::arcminute, T>;
 
 /// partial specialization for arcseconds
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 struct const_angle<angle_unit::arcsecond, T>
 {
 	using angle = ang_arcsec<T>;
@@ -579,8 +549,7 @@ struct const_angle<angle_unit::arcsecond, T>
 };
 
 /// alias template
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 using const_ang_arcsec = const_angle<angle_unit::arcsecond, T>;
 
 constexpr int quadrants_per_rev = 4;
@@ -591,112 +560,98 @@ constexpr int binary_degrees_per_rev = 256;
 constexpr int gradians_per_rev = 400;
 
 /// convert to angle from quadrants
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto convert_from_quadrant(const T x_quadrant)
 {
 	return ang_rev<T>{x_quadrant / quadrants_per_rev};
 }
 
 /// convert to quadrants from angle
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto convert_to_quadrant(const angle<U, T>& a)
 {
 	return quadrants_per_rev * a.to_rev();
 }
 
 /// convert to angle from sextants
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto convert_from_sextant(const T x_sextant)
 {
 	return ang_rev<T>{x_sextant / sextants_per_rev};
 }
 
 /// convert to sextants from angle
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto convert_to_sextant(const angle<U, T>& a)
 {
 	return sextants_per_rev * a.to_rev();
 }
 
 /// convert to angle from octants
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto convert_from_octant(const T x_octant)
 {
 	return ang_rev<T>{x_octant / octants_per_rev};
 }
 
 /// convert to octants from angle
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto convert_to_octant(const angle<U, T>& a)
 {
 	return octants_per_rev * a.to_rev();
 }
 
 /// convert to angle from hexacontades
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto convert_from_hexacontade(const T x_hexacontade)
 {
 	return ang_rev<T>{x_hexacontade / hexacontades_per_rev};
 }
 
 /// convert to hexacontades from angle
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto convert_to_hexacontade(const angle<U, T>& a)
 {
 	return hexacontades_per_rev * a.to_rev();
 }
 
 /// convert to angle from binary degrees
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto convert_from_binary_degree(const T x_binary_degree)
 {
 	return ang_rev<T>{x_binary_degree / binary_degrees_per_rev};
 }
 
 /// convert to binary degrees from angle
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto convert_to_binary_degree(const angle<U, T>& a)
 {
 	return binary_degrees_per_rev * a.to_rev();
 }
 
 /// convert to angle from gradians
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto convert_from_gradian(const T x_gradian)
 {
 	return ang_rev<T>{x_gradian / gradians_per_rev};
 }
 
 /// convert to gradians from angle
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto convert_to_gradian(const angle<U, T>& a)
 {
 	return gradians_per_rev * a.to_rev();
 }
 
 /// angle<U, T> == angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool operator==(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return a1.scalar() == a2.scalar();
 }
 
 /// angle<U, T> < angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool operator<(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return a1.scalar() < a2.scalar();
@@ -706,48 +661,42 @@ constexpr bool operator<(const angle<U, T>& a1, const angle<U, T>& a2)
 // terms of the ones above.
 
 /// angle<U, T> != angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool operator!=(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return a1.scalar() != a2.scalar();
 }
 
 /// angle<U, T> > angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool operator>(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return a1.scalar() > a2.scalar();
 }
 
 /// angle<U, T> <= angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool operator<=(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return a1.scalar() <= a2.scalar();
 }
 
 /// angle<U, T> >= angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool operator>=(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return a1.scalar() >= a2.scalar();
 }
 
 /// angle<U, T> == angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr bool operator==(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	return a1.scalar() == a2.scalar();
 }
 
 /// angle<U, T> < angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr bool operator<(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	return a1.scalar() < a2.scalar();
@@ -757,128 +706,112 @@ constexpr bool operator<(const angle<U, T>& a1, const angle<U, T2>& a2)
 // terms of the ones above.
 
 /// angle<U, T> != angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr bool operator!=(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	return a1.scalar() != a2.scalar();
 }
 
 /// angle<U, T> > angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr bool operator>(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	return a1.scalar() > a2.scalar();
 }
 
 /// angle<U, T> <= angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr bool operator<=(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	return a1.scalar() <= a2.scalar();
 }
 
 /// angle<U, T> >= angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr bool operator>=(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	return a1.scalar() >= a2.scalar();
 }
 
 /// angle<U, T> == angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr bool operator==(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 == a2.template to<U>();
 }
 
 /// angle<U, T> < angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr bool operator<(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 < a2.template to<U>();
 }
 
 /// angle<U, T> != angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr bool operator!=(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 != a2.template to<U>();
 }
 
 /// angle<U, T> > angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr bool operator>(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 > a2.template to<U>();
 }
 
 /// angle<U, T> <= angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr bool operator<=(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 <= a2.template to<U>();
 }
 
 /// angle<U, T> >= angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr bool operator>=(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 >= a2.template to<U>();
 }
 
 /// unary plus (positive operator)
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto operator+(const angle<U, T>& a)
 {
 	return angle<U, T>{+a.scalar()};
 }
 
 /// unary minus (negative operator)
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto operator-(const angle<U, T>& a)
 {
 	return angle<U, T>{-a.scalar()};
 }
 
 /// angle<U, T> + angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto operator+(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return angle<U, T>{a1.scalar() + a2.scalar()};
 }
 
 /// angle<U, T> - angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto operator-(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return angle<U, T>{a1.scalar() - a2.scalar()};
 }
 
 /// angle<U, T> / angle<U, T>
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto operator/(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return a1.scalar() / a2.scalar();
 }
 
 /// angle<U, T> + angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr auto operator+(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -886,8 +819,7 @@ constexpr auto operator+(const angle<U, T>& a1, const angle<U, T2>& a2)
 }
 
 /// angle<U, T> - angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr auto operator-(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -895,8 +827,7 @@ constexpr auto operator-(const angle<U, T>& a1, const angle<U, T2>& a2)
 }
 
 /// angle<U, T> * T2
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_arithmetic_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr auto operator*(const angle<U, T>& a, const T2& x)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -904,8 +835,7 @@ constexpr auto operator*(const angle<U, T>& a, const T2& x)
 }
 
 /// T2 * angle<U, T>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_arithmetic_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr auto operator*(const T2& x, const angle<U, T>& a)
 {
 	// commutative property
@@ -913,8 +843,7 @@ constexpr auto operator*(const T2& x, const angle<U, T>& a)
 }
 
 /// angle<U, T> / T2
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_arithmetic_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr auto operator/(const angle<U, T>& a, const T2& x)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -922,32 +851,28 @@ constexpr auto operator/(const angle<U, T>& a, const T2& x)
 }
 
 /// angle<U, T> / angle<U, T2>
-template <angle_unit U, typename T, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, std::floating_point T2>
 constexpr auto operator/(const angle<U, T>& a1, const angle<U, T2>& a2)
 {
 	return a1.scalar() / a2.scalar();
 }
 
 /// angle<U, T> + angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr auto operator+(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 + a2.template to<U>();
 }
 
 /// angle<U, T> - angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr auto operator-(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 - a2.template to<U>();
 }
 
 /// angle<U, T> / angle<U2, T2>
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr auto operator/(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	return a1 / a2.template to<U>();
@@ -957,8 +882,7 @@ constexpr auto operator/(const angle<U, T>& a1, const angle<U2, T2>& a2)
 /**
 \sa https://mathworld.wolfram.com/AcuteAngle.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool is_acute(const angle<U, T>& a)
 {
 	return a < const_angle<U, T>::quarter_turn;
@@ -968,8 +892,7 @@ constexpr bool is_acute(const angle<U, T>& a)
 /**
 \sa https://mathworld.wolfram.com/RightAngle.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool is_right(const angle<U, T>& a)
 {
 	return a == const_angle<U, T>::quarter_turn;
@@ -979,8 +902,7 @@ constexpr bool is_right(const angle<U, T>& a)
 /**
 \sa https://mathworld.wolfram.com/ObtuseAngle.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool is_obtuse(const angle<U, T>& a)
 {
 	return (a > const_angle<U, T>::quarter_turn) && (a < const_angle<U, T>::half_turn);
@@ -990,8 +912,7 @@ constexpr bool is_obtuse(const angle<U, T>& a)
 /**
 \sa https://mathworld.wolfram.com/StraightAngle.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool is_straight(const angle<U, T>& a)
 {
 	return a == const_angle<U, T>::half_turn;
@@ -1001,8 +922,7 @@ constexpr bool is_straight(const angle<U, T>& a)
 /**
 \sa https://mathworld.wolfram.com/ReflexAngle.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool is_reflex(const angle<U, T>& a)
 {
 	return a > const_angle<U, T>::half_turn;
@@ -1012,8 +932,7 @@ constexpr bool is_reflex(const angle<U, T>& a)
 /**
 \sa https://mathworld.wolfram.com/FullAngle.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool is_full(const angle<U, T>& a)
 {
 	return a == const_angle<U, T>::full_turn;
@@ -1023,8 +942,7 @@ constexpr bool is_full(const angle<U, T>& a)
 /**
 \sa https://mathworld.wolfram.com/ComplementaryAngles.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool are_complementary(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return is_right(a1 + a2);
@@ -1034,80 +952,70 @@ constexpr bool are_complementary(const angle<U, T>& a1, const angle<U, T>& a2)
 /**
 \sa https://mathworld.wolfram.com/SupplementaryAngles.html
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr bool are_supplementary(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return is_straight(a1 + a2);
 }
 
 /// get the absolute value of the angle
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto abs(const angle<U, T>& a)
 {
 	return angle<U, T>{std::abs(a.scalar())};
 }
 
 /// sin
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T sin(const angle<U, T>& a)
 {
 	return std::sin(a.to_rad());
 }
 
 /// cos
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T cos(const angle<U, T>& a)
 {
 	return std::cos(a.to_rad());
 }
 
 /// tan
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T tan(const angle<U, T>& a)
 {
 	return std::tan(a.to_rad());
 }
 
 /// sin_cos
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr void sin_cos(const angle<U, T>& a, T& s, T& c)
 {
 	sin_cos(a.to_rad(), s, c);
 }
 
 /// inverse sin
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_asin(const T x)
 {
 	return ang_rad<T>{std::asin(x)};
 }
 
 /// inverse cos
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_acos(const T x)
 {
 	return ang_rad<T>{std::acos(x)};
 }
 
 /// inverse tan
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_atan(const T x)
 {
 	return ang_rad<T>{std::atan(x)};
 }
 
 /// inverse tan2
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_atan2(const T y, const T x)
 {
 	return ang_rad<T>{std::atan2(y, x)};
@@ -1116,48 +1024,42 @@ constexpr auto a_atan2(const T y, const T x)
 // XXX: hyperbolic functions don't really deal with circular angles
 
 /// sinh
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T sinh(const angle<U, T>& a)
 {
 	return std::sinh(a.to_rad());
 }
 
 /// cosh
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T cosh(const angle<U, T>& a)
 {
 	return std::cosh(a.to_rad());
 }
 
 /// tanh
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T tanh(const angle<U, T>& a)
 {
 	return std::tanh(a.to_rad());
 }
 
 /// inverse sinh
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_asinh(const T x)
 {
 	return ang_rad<T>{std::asinh(x)};
 }
 
 /// inverse cosh
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_acosh(const T x)
 {
 	return ang_rad<T>{std::acosh(x)};
 }
 
 /// inverse tanh
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_atanh(const T x)
 {
 	return ang_rad<T>{std::atanh(x)};
@@ -1168,8 +1070,7 @@ constexpr auto a_atanh(const T x)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto ieee_remainder(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return angle<U, T>{std::remainder(a1.scalar(), a2.scalar())};
@@ -1180,8 +1081,7 @@ constexpr auto ieee_remainder(const angle<U, T>& a1, const angle<U, T>& a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr auto ieee_remainder(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -1193,8 +1093,7 @@ constexpr auto ieee_remainder(const angle<U, T>& a1, const angle<U2, T2>& a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto fmod_remainder(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return angle<U, T>{std::fmod(a1.scalar(), a2.scalar())};
@@ -1205,8 +1104,7 @@ constexpr auto fmod_remainder(const angle<U, T>& a1, const angle<U, T>& a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr auto fmod_remainder(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -1218,8 +1116,7 @@ constexpr auto fmod_remainder(const angle<U, T>& a1, const angle<U2, T2>& a2)
 The result will be in the interval [-0.5, 0.5] revolutions.
 \param[in,out] a the angle
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr void normalize_angle_signed(angle<U, T>& a)
 {
 	a = ieee_remainder(a, const_angle<U, T>::full_turn);
@@ -1230,8 +1127,7 @@ constexpr void normalize_angle_signed(angle<U, T>& a)
 The result will be in the interval [0, 1] revolutions.
 \param[in,out] a the angle
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr void normalize_angle_unsigned(angle<U, T>& a)
 {
 	normalize_angle_signed(a);
@@ -1247,8 +1143,7 @@ constexpr void normalize_angle_unsigned(angle<U, T>& a)
 The result will be in the interval [-90, 90] degrees.
 \param[in,out] lat the geodetic latitude
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr void normalize_latitude(angle<U, T>& lat)
 {
 	normalize_angle_signed(lat);
@@ -1268,8 +1163,7 @@ constexpr void normalize_latitude(angle<U, T>& lat)
 The result will be in the interval [-180, 180] degrees.
 \param[in,out] lon the geodetic longitude
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr void normalize_longitude(angle<U, T>& lon)
 {
 	normalize_angle_signed(lon);
@@ -1280,8 +1174,7 @@ constexpr void normalize_longitude(angle<U, T>& lon)
 \param[in,out] lat the geodetic latitude
 \param[in,out] lon the geodetic longitude
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr void normalize_geodetic(angle<U, T>& lat, angle<U, T>& lon)
 {
 	normalize_angle_signed(lat);
@@ -1309,8 +1202,7 @@ constexpr void normalize_geodetic(angle<U, T>& lat, angle<U, T>& lon)
 \retval 2 for quadrant III
 \retval 3 for quadrant IV
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto get_quadrant(angle<U, T> a)
 {
 	normalize_angle_unsigned(a);
@@ -1322,8 +1214,7 @@ constexpr auto get_quadrant(angle<U, T> a)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto angle_diff(angle<U, T> a1, angle<U, T> a2)
 {
 	a2 -= a1;
@@ -1336,8 +1227,7 @@ constexpr auto angle_diff(angle<U, T> a1, angle<U, T> a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, typename T, angle_unit U2, typename T2>
-requires std::is_floating_point_v<T> && std::is_floating_point_v<T2>
+template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
 constexpr auto angle_diff(angle<U, T> a1, angle<U2, T2> a2)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -1349,8 +1239,7 @@ constexpr auto angle_diff(angle<U, T> a1, angle<U2, T2> a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto remquo(const angle<U, T>& a1, const angle<U, T>& a2, int& quo)
 {
 	return angle<U, T>{std::remquo(a1.scalar(), a2.scalar(), &quo)};
@@ -1358,8 +1247,7 @@ constexpr auto remquo(const angle<U, T>& a1, const angle<U, T>& a2, int& quo)
 
 // XXX: this seems like more trouble than it's worth
 
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr bool atan_boundary_case(const T y)
 {
 	switch (std::fpclassify(y))
@@ -1376,16 +1264,14 @@ constexpr bool atan_boundary_case(const T y)
 	}
 }
 
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr bool atan2_boundary_case(const T y, const T x)
 {
 	return atan_boundary_case(y) || atan_boundary_case(x);
 }
 
 /// sin_cos with argument reduction
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr void sin_cos_r(angle<U, T> a, T& s, T& c)
 {
 	int quo = 0;
@@ -1407,8 +1293,7 @@ constexpr void sin_cos_r(angle<U, T> a, T& s, T& c)
 }
 
 /// sin with argument reduction
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T sin_r(angle<U, T> a)
 {
 	int quo = 0;
@@ -1437,8 +1322,7 @@ constexpr T sin_r(angle<U, T> a)
 }
 
 /// cos with argument reduction
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T cos_r(angle<U, T> a)
 {
 	int quo = 0;
@@ -1467,8 +1351,7 @@ constexpr T cos_r(angle<U, T> a)
 }
 
 /// tan with argument reduction
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr T tan_r(const angle<U, T>& a)
 {
 	T s = 0;
@@ -1479,8 +1362,7 @@ constexpr T tan_r(const angle<U, T>& a)
 }
 
 /// atan2 with argument reduction
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_atan2_r(T y, T x)
 {
 	if (atan2_boundary_case(y, x))
@@ -1525,8 +1407,7 @@ constexpr auto a_atan2_r(T y, T x)
 }
 
 /// atan with argument reduction
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr auto a_atan_r(const T y)
 {
 	if (atan_boundary_case(y))

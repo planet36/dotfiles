@@ -335,8 +335,7 @@ def generate_math_const(x):
 		print(f'/// {expr_replaced} = {dec_str}')
 	if desc:
 		print(f'/** {desc} */')
-	print(f'''template <typename T>
-requires std::is_floating_point_v<T>
+	print(f'''template <std::floating_point T>
 constexpr T
 {name} = T({hex_str}L);''')
 
@@ -364,7 +363,7 @@ print(f'''// SPDX-FileCopyrightText: {author}
 
 #pragma once
 
-#include <type_traits>''')
+#include <concepts>''')
 
 for math_expr in math_expr_list:
 	print()

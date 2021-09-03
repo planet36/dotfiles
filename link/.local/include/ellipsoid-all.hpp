@@ -26,6 +26,7 @@ Version 1.0.0
 #include "ellipsoid.hpp"
 
 #include <array>
+#include <concepts>
 #include <string_view>
 
 /// Reference Ellipsoid ID Codes enum
@@ -128,8 +129,7 @@ Used for Datum Transformations*
 *** Through adoption of a new yard to meter conversion factor in the referenced country.
 \endverbatim
 */
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 constexpr std::array<Ellipsoid<T>, 25> reference_ellipsoids {
 	/*AA*/ Ellipsoid<T>{6'377'563.396L, 299.3249646L  },
 	/*AN*/ Ellipsoid<T>{6'378'160.0L  , 298.25L       },

@@ -15,11 +15,10 @@ This affects the behavior of functions std::fmin, std::fmax.
 #pragma once
 
 #include <cmath>
+#include <concepts>
 #include <limits>
-#include <type_traits>
 
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 class running_stats
 {
 private:
@@ -157,8 +156,7 @@ public:
 		return _max_abs;
 	}
 
-	template <typename T2>
-	requires std::is_floating_point_v<T2>
+	template <std::floating_point T2>
 	friend running_stats<T2> operator+(const running_stats<T2>& a, const running_stats<T2>& b);
 
 	running_stats<T>& operator+=(const running_stats<T>& that)
@@ -169,8 +167,7 @@ public:
 	}
 };
 
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 running_stats<T> operator+(const running_stats<T>& a, const running_stats<T>& b)
 {
 	running_stats<T> combined;

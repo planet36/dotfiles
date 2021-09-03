@@ -24,7 +24,7 @@ Version 1.0.0
 #pragma once
 
 #include <cmath>
-#include <type_traits>
+#include <concepts>
 
 /// An ellipsoid and all its defining parameters and derived geometric constants
 /**
@@ -42,8 +42,7 @@ Table 3.4 Special WGS 84 Parameters
 
 Table 3.7 WGS 84 Derived Moments of Inertia
 */
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 struct Ellipsoid
 {
 	// defining parameters

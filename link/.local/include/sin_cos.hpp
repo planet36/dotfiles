@@ -11,7 +11,7 @@
 #pragma once
 
 #include <cmath>
-#include <type_traits>
+#include <concepts>
 
 #if defined(sincosf) && defined(sincos) && defined(sincosl)
 
@@ -21,8 +21,7 @@ void sin_cos(const long double x_rad, long double& s, long double& c) { ::sincos
 
 #else
 
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 void sin_cos(const T x_rad, T& s, T& c) { s = std::sin(x_rad); c = std::cos(x_rad); }
 
 #endif

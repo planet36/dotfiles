@@ -13,8 +13,9 @@
 
 #include "running_stats.hpp"
 
-template <typename T>
-requires std::is_floating_point_v<T>
+#include <concepts>
+
+template <std::floating_point T>
 class running_regression
 {
 private:
@@ -73,8 +74,7 @@ public:
 		return S_xy / ((n - 1) * t);
 	}
 
-	template <typename T2>
-	requires std::is_floating_point_v<T2>
+	template <std::floating_point T2>
 	friend running_regression<T2> operator+(const running_regression<T2>& a, const running_regression<T2>& b);
 
 	running_regression<T>& operator+=(const running_regression<T>& that)
@@ -85,8 +85,7 @@ public:
 	}
 };
 
-template <typename T>
-requires std::is_floating_point_v<T>
+template <std::floating_point T>
 running_regression<T> operator+(const running_regression<T>& a, const running_regression<T>& b)
 {
 	running_regression<T> combined;

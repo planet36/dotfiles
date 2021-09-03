@@ -27,7 +27,7 @@ define array_print_from_min_to_max(arr, min_i, max_i) {
 
 	/* for every element */
 	for (i = min_i; i <= max_i; i++) {
-		printf("%sT(%eL),\n", indent_char, arr[i]);
+		printf("%sT{%eL},\n", indent_char, arr[i]);
 	}
 }
 
@@ -51,11 +51,10 @@ define array_print_as_cpp_valarray(s, arr) {
 	local indent_char = "\t";
 
 	/* Ignore the first element of the array (it's 0). */
-	printf("template <typename T>\n");
-	printf("requires std::is_floating_point_v<T>\n");
+	printf("template <std::floating_point T>\n");
 	/*
 	printf("constexpr std::array<T, %d+1> %s {\n", size(arr)-1, s);
-	printf("%sT(0), // This array is indexed starting at 1.\n", indent_char);
+	printf("%sT{0}, // This array is indexed starting at 1.\n", indent_char);
 	*/
 	printf("const std::valarray<T> %s {\n", s);
 	array_print_from_min(arr, 1);
@@ -64,9 +63,8 @@ define array_print_as_cpp_valarray(s, arr) {
 
 /* print the value as a C++ declaration */
 define val_print_as_cpp_var(s, x) {
-	printf("template <typename T>\n");
-	printf("requires std::is_floating_point_v<T>\n");
-	printf("constexpr T %s = T(%eL);\n", s, x)
+	printf("template <std::floating_point T>\n");
+	printf("constexpr T %s = T{%eL};\n", s, x)
 }
 
 script_author = "Steven Ward"
@@ -79,7 +77,7 @@ print_cpp_file_header(script_author, script_license, script_name,
 	script_brief_description, script_detailed_description);
 
 printf("
-#include <type_traits>
+#include <concepts>
 #include <valarray>
 
 /// Geodetic constants
@@ -108,9 +106,8 @@ printf("}
 namespace PS_const
 {
 /// (1-f)*exp(e*atanh(e)) == sqrt((1+e)^(1+e) * (1-e)^(1-e))
-template <typename T>
-requires std::is_floating_point_v<T>
-constexpr T k90 = T(%fL);
+template <std::floating_point T>
+constexpr T k90 = T{%fL};
 }
 ", (1-f)*exp(e*atanh(e)));
 
@@ -124,9 +121,8 @@ constexpr int zone_width = 6; // (degrees)
 constexpr int half_zone_width = zone_width / 2; // (degrees)
 
 /// central meridian scale factor (unitless)
-template <typename T>
-requires std::is_floating_point_v<T>
-constexpr T k0 = T(0.9996L);
+template <std::floating_point T>
+constexpr T k0 = T{0.9996L};
 
 constexpr int false_easting = 500'000; // easting at central meridian (meters)
 constexpr int min_easting = 100'000; // (meters)
@@ -141,9 +137,8 @@ constexpr int max_northing[2] = {10'000'000, 9'700'000}; // [south, north] (mete
 namespace UPS_const
 {
 /// central meridian scale factor (unitless)
-template <typename T>
-requires std::is_floating_point_v<T>
-constexpr T k0 = T(0.994L);
+template <std::floating_point T>
+constexpr T k0 = T{0.994L};
 
 // Note: The easting and northing are symmetric and have the same constraints.
 constexpr int false_easting_northing = 2'000'000; // easting/northing at pole (meters)

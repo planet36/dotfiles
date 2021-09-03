@@ -26,7 +26,7 @@ define mat_print_col(A, c, indent_num = 0, indent_char = "\t") {
 
 	/* for every row */
 	for (i = matmin(A,1); i <= matmax(A,1); i++) {
-		printf("%sT(%eL),\n", indent_str, A[i,c]);
+		printf("%sT{%eL},\n", indent_str, A[i,c]);
 	}
 }
 
@@ -37,7 +37,7 @@ define mat_print_row(A, r, indent_num = 0, indent_char = "\t") {
 
 	/* for every col */
 	for (j = matmin(A,2); j <= matmax(A,2); j++) {
-		printf("%sT(%eL),\n", indent_str, A[r,j]);
+		printf("%sT{%eL},\n", indent_str, A[r,j]);
 	}
 }
 
@@ -46,9 +46,8 @@ define mat_print_col_as_cpp_array(s, A, c = 0, indent_num = 0, indent_char = "\t
 	local indent_str = indent_char * indent_num;
 
 	printf("%stemplate <typename T>\n", indent_str);
-	printf("%srequires std::is_floating_point_v<T>\n", indent_str);
 	printf("%sconstexpr std::array<T, %d+1> %s {\n", indent_str, matmax(A,1)-matmin(A,1)+1, s);
-	printf("%s%sT(0), // This array is indexed starting at 1.\n", indent_str, indent_char);
+	printf("%s%sT{0}, // This array is indexed starting at 1.\n", indent_str, indent_char);
 	mat_print_col(A, c, indent_num+1);
 	printf("%s};\n\n", indent_str);
 }
@@ -68,7 +67,7 @@ define mat_print_col_as_cpp_static_array(s, A, c = 0, indent_num = 0, indent_cha
 	local indent_str = indent_char * indent_num;
 
 	printf("%sstatic constexpr std::array<T, %d+1> %s {\n", indent_str, matmax(A,1)-matmin(A,1)+1, s);
-	printf("%s%sT(0), // This array is indexed starting at 1.\n", indent_str, indent_char);
+	printf("%s%sT{0}, // This array is indexed starting at 1.\n", indent_str, indent_char);
 	mat_print_col(A, c, indent_num+1);
 	printf("%s};\n\n", indent_str);
 }
@@ -126,7 +125,7 @@ print_cpp_file_header(script_author, script_license, script_name,
 
 printf("
 #include <cmath>
-#include <type_traits>
+#include <concepts>
 #include <valarray>
 
 #include \"angle.hpp\"
@@ -136,8 +135,7 @@ printf("
 define print_iota_valarray(num_elems, val = 0, inc = 1) {
 	local i;
 
-	printf("template <typename T>\n");
-	printf("requires std::is_floating_point_v<T>\n");
+	printf("template <std::floating_point T>\n");
 	printf("const std::valarray<T> iota_%d_%d {", val, inc);
 	for (i = 0; i < num_elems; ++i) {
 		printf("%d, ", val);
@@ -169,8 +167,7 @@ define print_conv_cpp_func(s, A) {
 	local indent_str = indent_char * indent_num;
 	local num_elems = matmax(A,1)-matmin(A,1)+1;
 
-	printf("template <angle_unit U, typename T>\n");
-	printf("requires std::is_floating_point_v<T>\n");
+	printf("template <angle_unit U, std::floating_point T>\n");
 	printf("auto %s_approx(const angle<U, T>& a)\n{\n", s);
 
 	mat_print_col_as_cpp_static_const_valarray("coeff", A, 0, indent_num, indent_char);
@@ -211,8 +208,7 @@ print_conv_cpp_func("rectifying_from_authalic"  , rectifying_from_authalic  )
 print_conv_cpp_func("authalic_from_conformal"   , authalic_from_conformal   )
 print_conv_cpp_func("conformal_from_authalic"   , conformal_from_authalic   )
 
-printf("template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+printf("template <angle_unit U, std::floating_point T>
 constexpr auto geocentric_from_geodetic_exact(const angle<U, T>& a)
 {
 #if 0
@@ -225,8 +221,7 @@ constexpr auto geocentric_from_geodetic_exact(const angle<U, T>& a)
 #endif
 }
 
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto geodetic_from_geocentric_exact(const angle<U, T>& a)
 {
 #if 0
@@ -239,8 +234,7 @@ constexpr auto geodetic_from_geocentric_exact(const angle<U, T>& a)
 #endif
 }
 
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto parametric_from_geodetic_exact(const angle<U, T>& a)
 {
 #if 0
@@ -253,8 +247,7 @@ constexpr auto parametric_from_geodetic_exact(const angle<U, T>& a)
 #endif
 }
 
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto geodetic_from_parametric_exact(const angle<U, T>& a)
 {
 #if 0
@@ -267,8 +260,7 @@ constexpr auto geodetic_from_parametric_exact(const angle<U, T>& a)
 #endif
 }
 
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto geocentric_from_parametric_exact(const angle<U, T>& a)
 {
 #if 0
@@ -281,8 +273,7 @@ constexpr auto geocentric_from_parametric_exact(const angle<U, T>& a)
 #endif
 }
 
-template <angle_unit U, typename T>
-requires std::is_floating_point_v<T>
+template <angle_unit U, std::floating_point T>
 constexpr auto parametric_from_geocentric_exact(const angle<U, T>& a)
 {
 #if 0

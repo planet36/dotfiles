@@ -11,7 +11,6 @@
 
 #include <concepts>
 #include <cstdint>
-#include <type_traits>
 
 static_assert(sizeof (uint32_t) == sizeof (float));
 static_assert(sizeof (uint64_t) == sizeof (double));
