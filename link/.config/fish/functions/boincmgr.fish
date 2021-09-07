@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function boincmgr --description 'boincmgr with datadir specified' --wraps boincmgr
+function boincmgr --wraps boincmgr --description 'boincmgr with datadir specified'
 
     if not set -q BOINC_DATA_DIR
         #set BOINC_DATA_DIR /media/sf_shared/boinc-data
