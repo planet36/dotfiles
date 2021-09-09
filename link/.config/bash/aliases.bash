@@ -103,7 +103,7 @@ alias mirror2='wget --verbose --force-directories --no-host-directories --html-e
 alias mirror='wget --verbose --mirror --page-requisites'
 alias mv='mv --backup=numbered'
 alias my_ip='curl ipinfo.io'
-alias num-file-extensions="f \( -type f -or -type l \) -printf '%f\n' | awk --field-separator . '{print \$NF}' | sort | uniq --count"
+alias num-file-extensions="find \( -type f -or -type l \) -printf '%f\n' | awk --field-separator . '{print \$NF}' | sort | uniq --count"
 # XXX: version sort doesn't do case folding
 # List all directories in the current working directory.
 alias only-dirs='find . -maxdepth 1 -type d -not -name ".*" -printf "%f\0" | xargs --null --no-run-if-empty ls --human-readable -o --file-type --color --directory'
