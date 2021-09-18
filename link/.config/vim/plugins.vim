@@ -34,13 +34,12 @@ Plug 'chrisbra/unicode.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " color schemes
-Plug 'srcery-colors/srcery-vim'
-Plug 'morhetz/gruvbox'
-Plug 'mkarmona/colorsbox'
+Plug 'srcery-colors/srcery-vim' " srcery
 Plug 'vim-scripts/candycode.vim'
 Plug 'fneu/breezy'
-Plug 'mhartington/oceanic-next'
-Plug 'tekannor/ayu-vim'
+Plug 'mhartington/oceanic-next' " OceanicNext
+Plug 'projekt0n/github-nvim-theme' " github_dark_default
+Plug 'morhetz/gruvbox'
 "Plug 'flazz/vim-colorschemes'
 
 call plug#end()
