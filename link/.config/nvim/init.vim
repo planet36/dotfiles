@@ -686,11 +686,11 @@ set background=dark
 
 let s:colorscheme_list = [
             \ 'srcery',
-            \ 'gruvbox',
             \ 'candycode',
             \ 'breezy',
             \ 'OceanicNext',
-            \ 'colorsbox-steighties',
+            \ 'github_dark_default',
+            \ 'gruvbox',
             \ 'murphy',
             \ ]
 
