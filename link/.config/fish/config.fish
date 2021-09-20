@@ -165,7 +165,7 @@ set --export MANPAGER 'less -s -M +Gg'
 
 # {{{ interactive shell
 
-if status is-interactive
+#if status is-interactive
 
 # {{{ change terminal line settings
 
@@ -185,27 +185,27 @@ if status is-interactive
 # https://www.linuxsecrets.com/archlinux-wiki/wiki.archlinux.org/index.php/Activating_Numlock_on_Bootup.html
 # https://forums.gentoo.org/viewtopic-t-1055442-view-previous.html
 
-if string match --regex --quiet '/dev/tty[0-9]+' (tty)
-
-    # {{{ turn on numlock
-    setleds -D +num
-    # }}}
-
-end
+#if string match --regex --quiet '/dev/tty[0-9]+' (tty)
+#
+#    # {{{ turn on numlock
+#    setleds -D +num
+#    # }}}
+#
+#end
 
 # {{{ Start X at login
 
 # https://wiki.archlinux.org/index.php/Fish#Start_X_at_login
 #if status is-login
-    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
-        #exec startx -- -keeptty
-        :
-    end
+#    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+#        #exec startx -- -keeptty
+#        :
+#    end
 #end
 
 # }}}
 
-end # status is-interactive
+#end # status is-interactive
 
 # }}}
 
