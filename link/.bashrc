@@ -152,9 +152,24 @@ fi
 # https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
 #[[ -f /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh
 
+if [[ -f "$XDG_CONFIG_HOME"/bash/private.bash ]]
+then
+    source "$XDG_CONFIG_HOME"/bash/private.bash
+fi
+
+if [[ -f "$XDG_CONFIG_HOME"/bash/aliases.bash ]]
+then
+    source "$XDG_CONFIG_HOME"/bash/aliases.bash
+fi
+
+if [[ -f "$XDG_CONFIG_HOME"/bash/prompt.bash ]]
+then
+    source "$XDG_CONFIG_HOME"/bash/prompt.bash
+fi
+
 if [[ -d "$XDG_CONFIG_HOME"/bash ]]
 then
-    for f in "$XDG_CONFIG_HOME"/bash/*.bash "$XDG_CONFIG_HOME"/bash/functions/*.bash
+    for f in "$XDG_CONFIG_HOME"/bash/functions/*.bash
     do
         if [[ -r "$f" ]]
         then
