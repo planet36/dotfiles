@@ -197,6 +197,12 @@ augroup END
 
 " }}}
 
+" {{{ Include path
+
+set path+=~/.local/include
+
+" }}}
+
 " {{{ Line numbers
 
 set number
