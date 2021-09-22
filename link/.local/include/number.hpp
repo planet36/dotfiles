@@ -7,7 +7,7 @@
 \author Steven Ward
 \sa https://en.cppreference.com/w/cpp/language/types
 \sa https://en.cppreference.com/w/cpp/types/is_arithmetic
-\sa https://en.cppreference.com/w/cpp/concepts/same_as
+\sa https://en.cppreference.com/w/cpp/types/is_same
 */
 
 #pragma once
