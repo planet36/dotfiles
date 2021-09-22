@@ -10,6 +10,7 @@
 #pragma once
 
 #include "angle-utils.hpp"
+#include "number.hpp"
 #include "sin_cos.hpp"
 
 #include <concepts>
@@ -827,7 +828,7 @@ constexpr auto operator-(const angle<U, T>& a1, const angle<U, T2>& a2)
 }
 
 /// angle<U, T> * T2
-template <angle_unit U, std::floating_point T, std::floating_point T2>
+template <angle_unit U, std::floating_point T, number T2>
 constexpr auto operator*(const angle<U, T>& a, const T2& x)
 {
 	using result_type = typename std::common_type_t<T, T2>;
@@ -835,7 +836,7 @@ constexpr auto operator*(const angle<U, T>& a, const T2& x)
 }
 
 /// T2 * angle<U, T>
-template <angle_unit U, std::floating_point T, std::floating_point T2>
+template <angle_unit U, std::floating_point T, number T2>
 constexpr auto operator*(const T2& x, const angle<U, T>& a)
 {
 	// commutative property
@@ -843,7 +844,7 @@ constexpr auto operator*(const T2& x, const angle<U, T>& a)
 }
 
 /// angle<U, T> / T2
-template <angle_unit U, std::floating_point T, std::floating_point T2>
+template <angle_unit U, std::floating_point T, number T2>
 constexpr auto operator/(const angle<U, T>& a, const T2& x)
 {
 	using result_type = typename std::common_type_t<T, T2>;
