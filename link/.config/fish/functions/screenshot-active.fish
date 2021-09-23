@@ -22,7 +22,7 @@ function screenshot-active --description 'Take a screenshot of the active window
 
         import -window $WIN_ID ~/screenshot-$DATETIME.png
 
-    if command --quiet maim
+    else if command --quiet maim
 
         maim --window $WIN_ID ~/screenshot-$DATETIME.png
 

@@ -9,7 +9,7 @@ function screenshot --description 'Take a screenshot'
 
         import -window root ~/screenshot-$DATETIME.png
 
-    if command --quiet maim
+    else if command --quiet maim
 
         maim --window root ~/screenshot-$DATETIME.png
 
