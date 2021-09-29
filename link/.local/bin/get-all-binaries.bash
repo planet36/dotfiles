@@ -104,9 +104,9 @@ print_verbose 'DRY_RUN=%s' "$DRY_RUN"
 
 declare -a BINARIES
 BINARIES=(
-    'btm'
+    #'btm'
     'choose'
-    'delta'
+    #'delta'
     'gotop'
     #'lsd'
     'paru'
@@ -116,9 +116,9 @@ BINARIES=(
 
 declare -A BINARY_TO_USER_REPO
 BINARY_TO_USER_REPO=(
-    ['btm']='ClementTsang/bottom'
+    #['btm']='ClementTsang/bottom'
     ['choose']='theryangeary/choose'
-    ['delta']='dandavison/delta'
+    #['delta']='dandavison/delta'
     ['gotop']='xxxserxxx/gotop'
     #['lsd']='Peltoche/lsd'
     ['paru']='Morganamilo/paru'
@@ -128,9 +128,9 @@ BINARY_TO_USER_REPO=(
 
 declare -A BINARY_TO_PART_RELEASE_FILE
 BINARY_TO_PART_RELEASE_FILE=(
-    ['btm']='x86_64-unknown-linux-gnu'
+    #['btm']='x86_64-unknown-linux-gnu'
     ['choose']='x86_64-unknown-linux-gnu'
-    ['delta']='x86_64-unknown-linux-gnu'
+    #['delta']='x86_64-unknown-linux-gnu'
     ['gotop']='linux_amd64'
     #['lsd']='x86_64-unknown-linux-gnu'
     ['paru']='x86_64'
