@@ -99,7 +99,7 @@ case arch
     alias autorm='pacman -Qdtq | sudo pacman -Rs -' ##### TODO: test this
     alias upd='sudo pacman -Syw'
     alias upg='sudo pacman -Syu'
-    alias pf="pacman -Sl | fzf --preview 'pacman -Si {2}'"
+    alias pf="pacman -Sl | fzf --nth 2.. --preview 'pacman -Si {2}'"
 
 # https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Browsing_packages
 # pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
