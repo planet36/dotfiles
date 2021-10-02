@@ -11,7 +11,6 @@
 #pragma once
 
 #include <bit>
-#include <concepts>
 #include <cstdint>
 
 // https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html
@@ -70,7 +69,7 @@ constexpr bool h_is_le()
 	return std::endian::native == std::endian::little;
 }
 
-template <std::unsigned_integral T>
+template <typename T>
 constexpr T h_to_be(const T x)
 {
 	if constexpr (h_is_be())
@@ -79,7 +78,7 @@ constexpr T h_to_be(const T x)
 		return rev_bytes(x);
 }
 
-template <std::unsigned_integral T>
+template <typename T>
 constexpr T h_to_le(const T x)
 {
 	if constexpr (h_is_le())
@@ -88,7 +87,7 @@ constexpr T h_to_le(const T x)
 		return rev_bytes(x);
 }
 
-template <std::unsigned_integral T>
+template <typename T>
 constexpr T be_to_h(const T x)
 {
 	if constexpr (h_is_be())
@@ -97,7 +96,7 @@ constexpr T be_to_h(const T x)
 		return rev_bytes(x);
 }
 
-template <std::unsigned_integral T>
+template <typename T>
 constexpr T le_to_h(const T x)
 {
 	if constexpr (h_is_le())
