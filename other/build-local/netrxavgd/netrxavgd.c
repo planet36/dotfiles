@@ -256,7 +256,7 @@ int main(int argc, char* const argv[])
 		if (clock_gettime(CLOCK_MONOTONIC, &now_ts) < 0)
 			err(EXIT_FAILURE, "clock_gettime");
 
-		const double now_s = timespec_to_double(&now_ts);
+		const double now_s = timespec_to_sec(&now_ts);
 
 		uintmax_t rx_bytes = 0;
 
