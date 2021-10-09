@@ -152,7 +152,7 @@ my_fmod(double x, double y)
 }
 
 static void
-clamp(double *x)
+clamp(double* x)
 {
 	if (*x < 0)
 		*x = 0;
@@ -179,7 +179,7 @@ map_to_uint(double x, size_t b)
  */
 static void
 calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
-                    size_t *left_width, size_t *blocks_index, size_t *right_width)
+                    size_t* left_width, size_t* blocks_index, size_t* right_width)
 {
 	*left_width = 0;
 	*blocks_index = -1;
@@ -242,7 +242,7 @@ upper_blocks_1(double x)
  * It is the caller's responsibility to null-terminate the meter buffer.
  */
 static void
-left_blocks_meter(double x, wchar_t *meter, size_t meter_width)
+left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
 	size_t left_width, blocks_index, right_width, i;
 
@@ -266,7 +266,7 @@ left_blocks_meter(double x, wchar_t *meter, size_t meter_width)
  * The position of the filled character is proportional to x, starting at the left.
  */
 static void
-ver_lines_meter(double x, wchar_t *meter, size_t meter_width)
+ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 {
 	size_t left_width, blocks_index, right_width, i;
 
@@ -299,7 +299,7 @@ ver_lines_meter(double x, wchar_t *meter, size_t meter_width)
  * The filled region is proportional to x, starting at the right.
  */
 static void
-right_blocks_meter(double x, wchar_t *meter, size_t meter_width)
+right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
 	size_t left_width, blocks_index, right_width, i;
 

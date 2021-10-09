@@ -15,7 +15,7 @@
 char* escape_char(int ch);
 unsigned int strtou(const char* s);
 void cleanup_close_file(FILE** fpp);
-int scandir_filter(const struct dirent *dirent);
-int pscanf(const char *path, const char *fmt, ...);
-double timespec_to_double(const struct timespec *ts);
+int scandir_filter(const struct dirent* dirent);
+int pscanf(const char* path, const char* fmt, ...);
+double timespec_to_double(const struct timespec* ts);
 struct timeval milliseconds_to_timeval(unsigned int milliseconds);

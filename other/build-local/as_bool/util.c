@@ -17,11 +17,11 @@
  *
  * Returns a pointer to the first non-whitespace character in @str.
  */
-char *skip_spaces(const char *str)
+char* skip_spaces(const char* str)
 {
 	while (isspace(*str))
 		++str;
-	return (char *)str;
+	return (char*)str;
 }
 
 /**
@@ -32,10 +32,10 @@ char *skip_spaces(const char *str)
  * in the given string @s. Returns a pointer to the first non-whitespace
  * character in @s.
  */
-char *strim(char *s)
+char* strim(char* s)
 {
 	size_t size;
-	char *end;
+	char* end;
 
 	size = strlen(s);
 	if (!size)
@@ -51,5 +51,5 @@ char *strim(char *s)
 
 void strtolower(char* s)
 {
-	for (; *s; ++s) { *s = tolower(*s); }
+	for (; *s; ++s) {*s = tolower(*s);}
 }

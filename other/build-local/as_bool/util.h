@@ -3,6 +3,6 @@
 
 #pragma once
 
-char *skip_spaces(const char *str);
-char *strim(char *s);
+char* skip_spaces(const char* str);
+char* strim(char* s);
 void strtolower(char* s);

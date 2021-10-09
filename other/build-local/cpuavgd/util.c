@@ -43,9 +43,9 @@ void cleanup_close_file(FILE** fpp)
 // https://github.com/planet36/slstatus/blob/main/util.c
 
 int
-pscanf(const char *path, const char *fmt, ...)
+pscanf(const char* path, const char* fmt, ...)
 {
-	FILE *fp;
+	FILE* fp;
 	va_list ap;
 	int n;
 
@@ -62,7 +62,7 @@ pscanf(const char *path, const char *fmt, ...)
 }
 
 double
-timespec_to_double(const struct timespec *ts)
+timespec_to_double(const struct timespec* ts)
 {
 	return ts->tv_sec + copysign(ts->tv_nsec, ts->tv_sec) / 1E9;
 }
@@ -82,11 +82,11 @@ milliseconds_to_timeval(unsigned int milliseconds)
 // https://github.com/planet36/slstatus/blob/main/components/cpu.c
 
 int
-calc_idle(uintmax_t *idle, uintmax_t *sum)
+calc_idle(uintmax_t* idle, uintmax_t* sum)
 {
 	uintmax_t a[6];
 
-	/* cpu user nice system idle iowait irq softirq */
+	// cpu user nice system idle iowait irq softirq
 	if (pscanf("/proc/stat", "%*s %ju %ju %ju %ju %*s %ju %ju",
 	           &a[0], &a[1], &a[2], &a[3], &a[4], &a[5]) != 6) {
 		return -1;

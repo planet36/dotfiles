@@ -40,7 +40,7 @@ void cleanup_close_file(FILE** fpp)
 	}
 }
 
-int scandir_filter(const struct dirent *dirent)
+int scandir_filter(const struct dirent* dirent)
 {
 	// Exclude these names
 	return strcmp(dirent->d_name, ".") != 0 &&
@@ -52,9 +52,9 @@ int scandir_filter(const struct dirent *dirent)
 // https://github.com/planet36/slstatus/blob/main/util.c
 
 int
-pscanf(const char *path, const char *fmt, ...)
+pscanf(const char* path, const char* fmt, ...)
 {
-	FILE *fp;
+	FILE* fp;
 	va_list ap;
 	int n;
 
@@ -71,7 +71,7 @@ pscanf(const char *path, const char *fmt, ...)
 }
 
 double
-timespec_to_double(const struct timespec *ts)
+timespec_to_double(const struct timespec* ts)
 {
 	return ts->tv_sec + copysign(ts->tv_nsec, ts->tv_sec) / 1E9;
 }
