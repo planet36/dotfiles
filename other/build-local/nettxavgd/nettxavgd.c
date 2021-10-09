@@ -16,8 +16,8 @@
 const char program_author[] = "Steven Ward";
 const char program_version[] = "1.2.0";
 
-const unsigned int default_init_delay_ms = 2000;
-const unsigned int default_interval_ms = 2000;
+const unsigned int default_init_delay_msec = 2000;
+const unsigned int default_interval_msec = 2000;
 char default_net_iface[NAME_MAX+1] = {'\0'};
 
 const char* dest_path = NULL;
@@ -97,7 +97,7 @@ void print_usage(const char* argv0)
 	printf("\n");
 	printf("  -i MSEC  Specify the interval (in milliseconds) between measurements.\n");
 	printf("           MSEC must be a positive integer.\n");
-	printf("           The default value is %u.\n", default_interval_ms);
+	printf("           The default value is %u.\n", default_interval_msec);
 	printf("\n");
 	printf("  -n NET   Specify the network interface.\n");
 	printf("           NET is a name found in /sys/class/net/.\n");
@@ -108,8 +108,8 @@ void print_usage(const char* argv0)
 int main(int argc, char* const argv[])
 {
 	set_default_net_iface();
-	unsigned int init_delay_ms = default_init_delay_ms;
-	unsigned int interval_ms = default_interval_ms;
+	unsigned int init_delay_msec = default_init_delay_msec;
+	unsigned int interval_msec = default_interval_msec;
 	char* net_iface = default_net_iface;
 
 	int oc;
@@ -132,12 +132,12 @@ int main(int argc, char* const argv[])
 			break;
 
 		case 'i':
-			interval_ms = strtou(optarg);
-			if (interval_ms == 0)
-				errx(EXIT_FAILURE, "invalid interval: %u", interval_ms);
+			interval_msec = strtou(optarg);
+			if (interval_msec == 0)
+				errx(EXIT_FAILURE, "invalid interval: %u", interval_msec);
 
 			// There is no option for specifying the initial delay.
-			init_delay_ms = interval_ms;
+			init_delay_msec = interval_msec;
 			break;
 
 		case 'n':
@@ -230,8 +230,8 @@ int main(int argc, char* const argv[])
 	if (sigprocmask(SIG_BLOCK, &full_mask, &orig_mask) < 0)
 		err(EXIT_FAILURE, "sigprocmask");
 
-	const struct timeval init_delay = milliseconds_to_timeval(init_delay_ms);
-	const struct timeval interval = milliseconds_to_timeval(interval_ms);
+	const struct timeval init_delay = msec_to_timeval(init_delay_msec);
+	const struct timeval interval = msec_to_timeval(interval_msec);
 
 	const struct itimerval itv = {
 		.it_interval = interval,

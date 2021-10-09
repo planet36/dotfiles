@@ -16,5 +16,5 @@ unsigned int strtou(const char* s);
 void cleanup_close_file(FILE** fpp);
 int pscanf(const char* path, const char* fmt, ...);
 double timespec_to_sec(const struct timespec* ts);
-struct timeval milliseconds_to_timeval(unsigned int milliseconds);
+struct timeval msec_to_timeval(unsigned int msec);
 int calc_idle(uintmax_t* idle, uintmax_t* sum);

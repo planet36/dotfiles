@@ -68,11 +68,11 @@ timespec_to_sec(const struct timespec* ts)
 }
 
 struct timeval
-milliseconds_to_timeval(unsigned int milliseconds)
+msec_to_timeval(unsigned int msec)
 {
 	return (struct timeval){
-		.tv_sec = milliseconds / 1000U,
-		.tv_usec = (milliseconds % 1000U) * 1000U,
+		.tv_sec = msec / 1000U,
+		.tv_usec = (msec % 1000U) * 1000U,
 	};
 }
 
