@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# inspired by
+# https://github.com/bakfile/bak
+
+# pylint: disable=C0114
+# pylint: disable=C0116
+# pylint: disable=R1705
+
+import os.path
+import re
+import sys
+
+__version__ = '2021-10-11'
+
+def get_bak_path(path: str) -> str:
+
+	basename, ext = os.path.splitext(path)
+	match = re.fullmatch(r'\.bak([0-9]+)', ext)
+	if match:
+		bak_n = int(match.groups(1)[0])
+	else:
+		bak_n = 1
+
+	while True:
+		bak_path = basename + ".bak" + str(bak_n)
+		if not os.path.exists(bak_path):
+			break
+		bak_n += 1
+
+	return bak_path
+
+def get_unbak_path(path: str) -> str:
+
+	basename, ext = os.path.splitext(path)
+	match = re.fullmatch(r'\.bak([0-9]+)', ext)
+	if match:
+		return basename
+	else:
+		return path
+
+# pylint: disable=R0914
+def main(argv = None):
+
+	# pylint: disable=C0415
+	import getopt
+	#import signal
+	import shlex
+
+	if argv is None:
+		argv = sys.argv
+
+	program_name = os.path.basename(argv[0])
+
+	program_authors = ['Steven Ward']
+
+	# default values
+	default_verbose = False
+	default_move = False
+	default_unbak = False
+
+	# mutable values
+	verbose = default_verbose
+	move = default_move
+	unbak = default_unbak
+
+	# pylint: disable=W0613
+	#def signal_handler(signal_num, execution_frame):
+	#	print()
+	#	sys.exit(0)
+
+	#signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+	#signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+
+	def print_version():
+		"""Print the version information and exit."""
+		print(program_name, __version__)
+		print(f"Written by {', '.join(program_authors)}")
+
+	# pylint: disable=W0612
+	def print_verbose(s):
+		"""Print the message if verbose mode is on."""
+		if verbose:
+			print(f'# {s}')
+
+	# pylint: disable=W0612
+	def print_warning(s):
+		"""Print the warning message and continue."""
+		print(f'Warning: {s}', file=sys.stderr)
+
+	def print_error(s):
+		"""Print the error message and exit."""
+		print(f'Error: {s}', file=sys.stderr)
+		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+
+	def print_help():
+		"""Print the help message and exit."""
+		print(f"""Usage: {program_name} [OPTIONS] FILE...
+Print a command to create a backup of the given input file.
+The extension ".bakN" (where "N" is a positive integer) is appended to the backup file name.
+
+OPTIONS
+
+-V, --version
+    Print the version information and exit.
+
+--help
+    Print this message and exit.
+
+-v, --verbose
+    Print diagnostics.
+
+-m, --move
+    Print 'mv' instead of 'cp'.
+
+-u, --unbak
+    Print a command to restore the original file from the given backup file.
+""")
+
+	short_options = 'Vhvmu'
+	long_options = ['version', 'help', 'verbose',
+		'move', 'unbak'
+		]
+
+	try:
+		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
+	except getopt.GetoptError as err:
+		print_error(err)
+		return 1
+
+	# pylint: disable=W0612
+	for (option, value) in options:
+		# pylint: disable=R1705
+		if option in ['-V', '--version']:
+			print_version()
+			return 0
+		elif option in ['--help']:
+			print_help()
+			return 0
+		elif option in ['-v', '--verbose']:
+			verbose = True
+		elif option in ['-m', '--move']:
+			move = True
+		elif option in ['-u', '--unbak']:
+			unbak = True
+		else:
+			print_error(f"Unhandled option: {option}")
+			return 1
+
+	if not remaining_args: # empty
+		print_error('Must give FILE')
+		return 1
+
+	cmd = 'mv' if move else 'cp'
+	bak_func = get_unbak_path if unbak else get_bak_path
+
+	for in_file_name in remaining_args:
+
+		out_file_name = bak_func(in_file_name)
+
+		if in_file_name != out_file_name:
+			print(shlex.join((cmd, in_file_name, out_file_name)))
+
+	return 0
+
+if __name__ == '__main__':
+	sys.exit(main())
