@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include <iterator>
 #include <string_view>
 
 constexpr uint32_t fnv_prime_32 = UINT32_C(16'777'619); // = 2**24 + 2**8 + 0x93
@@ -25,7 +26,7 @@ constexpr uint32_t fnv1_32(const std::string_view& s)
 {
 	uint32_t result = fnv_offset_basis_32;
 
-	for (const unsigned char octet : s)
+	for (const uint8_t octet : s)
 	{
 		result *= fnv_prime_32;
 		result ^= octet;
@@ -39,7 +40,7 @@ constexpr uint32_t fnv1a_32(const std::string_view& s)
 {
 	uint32_t result = fnv_offset_basis_32;
 
-	for (const unsigned char octet : s)
+	for (const uint8_t octet : s)
 	{
 		result ^= octet;
 		result *= fnv_prime_32;
@@ -53,7 +54,7 @@ constexpr uint64_t fnv1_64(const std::string_view& s)
 {
 	uint64_t result = fnv_offset_basis_64;
 
-	for (const unsigned char octet : s)
+	for (const uint8_t octet : s)
 	{
 		result *= fnv_prime_64;
 		result ^= octet;
@@ -67,10 +68,78 @@ constexpr uint64_t fnv1a_64(const std::string_view& s)
 {
 	uint64_t result = fnv_offset_basis_64;
 
-	for (const unsigned char octet : s)
+	for (const uint8_t octet : s)
 	{
 		result ^= octet;
 		result *= fnv_prime_64;
+	}
+
+	return result;
+}
+
+/// FNV-1 32-bit hash
+template <std::input_iterator Iter>
+requires (sizeof (std::iter_value_t<Iter>) == 1)
+constexpr uint32_t fnv1_32(Iter first, const Iter last)
+{
+	uint32_t result = fnv_offset_basis_32;
+
+	while (first != last)
+	{
+		result *= fnv_prime_32;
+		result ^= static_cast<uint8_t>(*first);
+		++first;
+	}
+
+	return result;
+}
+
+/// FNV-1a 32-bit hash
+template <std::input_iterator Iter>
+requires (sizeof (std::iter_value_t<Iter>) == 1)
+constexpr uint32_t fnv1a_32(Iter first, const Iter last)
+{
+	uint32_t result = fnv_offset_basis_32;
+
+	while (first != last)
+	{
+		result ^= static_cast<uint8_t>(*first);
+		result *= fnv_prime_32;
+		++first;
+	}
+
+	return result;
+}
+
+/// FNV-1 64-bit hash
+template <std::input_iterator Iter>
+requires (sizeof (std::iter_value_t<Iter>) == 1)
+constexpr uint64_t fnv1_64(Iter first, const Iter last)
+{
+	uint64_t result = fnv_offset_basis_64;
+
+	while (first != last)
+	{
+		result *= fnv_prime_64;
+		result ^= static_cast<uint8_t>(*first);
+		++first;
+	}
+
+	return result;
+}
+
+/// FNV-1a 64-bit hash
+template <std::input_iterator Iter>
+requires (sizeof (std::iter_value_t<Iter>) == 1)
+constexpr uint64_t fnv1a_64(Iter first, const Iter last)
+{
+	uint64_t result = fnv_offset_basis_64;
+
+	while (first != last)
+	{
+		result ^= static_cast<uint8_t>(*first);
+		result *= fnv_prime_64;
+		++first;
 	}
 
 	return result;
