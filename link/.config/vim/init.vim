@@ -616,6 +616,15 @@ iabbrev witht with
 nnoremap <M-Up> [c
 nnoremap <M-Down> ]c
 
+" Change colorscheme to default when entering diff mode
+augroup ChangeColorsInDiff
+    autocmd!
+    " https://vi.stackexchange.com/a/13395
+    autocmd VimEnter,FilterWritePre * if &diff | colorscheme default | endif
+    " https://vi.stackexchange.com/a/12852
+    autocmd OptionSet diff colorscheme default
+augroup END
+
 " }}}
 
 " {{{ Restore cursor
