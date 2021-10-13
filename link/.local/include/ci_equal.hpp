@@ -19,7 +19,7 @@ bool ci_equal(const CharT& c1, const CharT& c2)
 	return (c1 == c2) || (std::toupper(c1) == std::toupper(c2));
 }
 
-/// case-insensitive equal characters
+/// case-insensitive equal characters (with locale)
 template <class CharT>
 bool ci_equal(const CharT& c1, const CharT& c2, const std::locale& loc)
 {
@@ -43,7 +43,7 @@ bool ci_equal(
 			);
 }
 
-/// case-insensitive equal strings
+/// case-insensitive equal strings (with locale)
 template<
 	class CharT,
 	class Traits = std::char_traits<CharT>,
