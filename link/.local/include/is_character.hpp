@@ -41,3 +41,12 @@ std::bool_constant<is_narrow_character_v<T> || is_wide_character_v<T>>{};
 
 template <typename T>
 inline constexpr bool is_character_v = is_character<T>::value;
+
+template <typename T>
+concept narrow_character = is_narrow_character_v<T>;
+
+template <typename T>
+concept wide_character = is_wide_character_v<T>;
+
+template <typename T>
+concept character = narrow_character<T> || wide_character<T>;
