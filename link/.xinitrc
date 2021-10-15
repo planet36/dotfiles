@@ -95,7 +95,10 @@ then
     #xmodmap -pk
 
     # Map F13 to an unused KeyCode
-    xmodmap -e 'keycode 253 = F13'
+    xmodmap -e 'keycode 183 = F13'
+
+    # Map F14 to an unused KeyCode
+    xmodmap -e 'keycode 184 = F14'
 fi
 
 if command -v xcape > /dev/null
@@ -104,7 +107,7 @@ then
     #killall --quiet xcape
     #xcape -e 'Caps_Lock=Escape'
     #xcape -e 'Shift_L=Escape'
-    xcape -e 'Control_L=Escape;Shift_L=F13'
+    xcape -e 'Control_L=Escape;Shift_L=F13;Shift_R=F14'
 fi
 
 if command -v sxhkd > /dev/null
