@@ -570,6 +570,7 @@ iabbrev csl cls
 iabbrev daefult default
 iabbrev dafeult default
 iabbrev deafult default
+iabbrev delctype decltype
 iabbrev dfeualt default
 iabbrev dpritnf dprintf
 iabbrev ehre here
