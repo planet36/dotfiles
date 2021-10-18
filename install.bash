@@ -444,17 +444,17 @@ function install_local_programs
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local install clean
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local install clean
     else
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local install clean || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local install clean || return
     fi
 
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C ~/.local/src install clean
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src install clean
     else
-        make PREFIX="$HOME"/.local -C ~/.local/src install clean || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src install clean || return
     fi
 }
 
@@ -463,17 +463,17 @@ function uninstall_local_programs
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local uninstall
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local uninstall
     else
-        make PREFIX="$HOME"/.local -C "$SCRIPT_DIR"/other/build-local uninstall || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local uninstall || return
     fi
 
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -C ~/.local/src uninstall
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src uninstall
     else
-        make PREFIX="$HOME"/.local -C ~/.local/src uninstall || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src uninstall || return
     fi
 }
 
