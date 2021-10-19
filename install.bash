@@ -9,7 +9,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2021-05-25'
+SCRIPT_VERSION='2021-10-18'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
@@ -385,6 +385,25 @@ function create_vim_nvim_dirs
 
 function install_vim_nvim_plugins
 {
+    # install vim-plug
+    # https://github.com/junegunn/vim-plug#installation
+
+    if $DRY_RUN
+    then
+        echo \
+        curl -fLo /tmp/plug.vim \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        echo \
+        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim -- /tmp/plug.vim
+        echo \
+        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/vim/autoload/plug.vim       -- /tmp/plug.vim
+    else
+        curl -fLo /tmp/plug.vim \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return
+        cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim -- /tmp/plug.vim || return
+        cp --verbose --target-directory "$XDG_DATA_HOME"/vim/autoload/plug.vim       -- /tmp/plug.vim || return
+    fi
+
     if command -v vim > /dev/null
     then
         #vim +PlugUpgrade +PlugInstall +qall
