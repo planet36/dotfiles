@@ -111,6 +111,7 @@ BINARIES=(
     #'lsd'
     'paru'
     'yay'
+    'yt-dlp'
     #'zoxide'
 )
 
@@ -123,6 +124,7 @@ BINARY_TO_USER_REPO=(
     #['lsd']='Peltoche/lsd'
     ['paru']='Morganamilo/paru'
     ['yay']='Jguer/yay'
+    ['yt-dlp']='yt-dlp/yt-dlp'
     #['zoxide']='ajeetdsouza/zoxide'
 )
 
@@ -135,6 +137,7 @@ BINARY_TO_PART_RELEASE_FILE=(
     #['lsd']='x86_64-unknown-linux-gnu'
     ['paru']='x86_64'
     ['yay']='x86_64'
+    ['yt-dlp']=''
     #['zoxide']='x86_64-unknown-linux-gnu'
 )
 
@@ -163,9 +166,9 @@ do
     then
         # shellcheck disable=SC2086
         echo \
-        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${BINARY}" "${USER_REPO}" "${PART_RELEASE_FILE}"
+        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "$BINARY" "$USER_REPO" "$PART_RELEASE_FILE"
     else
         # shellcheck disable=SC2086
-        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "${BINARY}" "${USER_REPO}" "${PART_RELEASE_FILE}"
+        bash "${SCRIPT_DIR}"/get-binary.bash ${VERBOSE_OPTION} "$BINARY" "$USER_REPO" "$PART_RELEASE_FILE"
     fi
 done
