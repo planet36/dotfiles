@@ -115,8 +115,13 @@ print_verbose 'URL_LATEST_RELEASE_API_PAGE=%q' "$URL_LATEST_RELEASE_API_PAGE"
 # latest tag:
 # curl -s "$URL_LATEST_RELEASE_API_PAGE" | jq -r .tag_name
 
-# https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c#gistcomment-2652792
-URL_LATEST_RELEASE_DOWNLOAD="$(curl -s "$URL_LATEST_RELEASE_API_PAGE" | jq --arg PART_RELEASE_FILE "$PART_RELEASE_FILE" -r '.assets[] | select(.name | contains($PART_RELEASE_FILE)).browser_download_url')"
+if [[ -z "$PART_RELEASE_FILE" ]]
+then
+    URL_LATEST_RELEASE_DOWNLOAD="$(curl -s "$URL_LATEST_RELEASE_API_PAGE" | jq --arg BINARY "$BINARY" -r '.assets[] | select(.name==$BINARY).browser_download_url')"
+else
+    # https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c#gistcomment-2652792
+    URL_LATEST_RELEASE_DOWNLOAD="$(curl -s "$URL_LATEST_RELEASE_API_PAGE" | jq --arg PART_RELEASE_FILE "$PART_RELEASE_FILE" -r '.assets[] | select(.name | contains($PART_RELEASE_FILE)).browser_download_url')"
+fi
 print_verbose 'URL_LATEST_RELEASE_DOWNLOAD=%q' "$URL_LATEST_RELEASE_DOWNLOAD"
 
 RELEASE_FILE="$(basename -- "$URL_LATEST_RELEASE_DOWNLOAD")"
