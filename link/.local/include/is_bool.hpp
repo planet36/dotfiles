@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Checks if a type is a bool type
+/// Type trait for bool type
 /**
 \file
 \author Steven Ward

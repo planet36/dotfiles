@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// is_const_iterator concept
+/// Concept for const iterator type
 /**
 \file
 \author Steven Ward
