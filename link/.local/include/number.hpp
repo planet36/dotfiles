@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "is_character.hpp"
+#include "character.hpp"
 #include <type_traits>
 
 // adapted from

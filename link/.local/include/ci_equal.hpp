@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "is_character.hpp"
+#include "character.hpp"
 #include <cctype>
 #include <locale>
 
