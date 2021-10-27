@@ -566,6 +566,7 @@ iabbrev amke make
 iabbrev becuase because
 iabbrev cdl cld
 iabbrev clena clean
+iabbrev constepxr constexpr
 iabbrev csl cls
 iabbrev daefult default
 iabbrev dafeult default
