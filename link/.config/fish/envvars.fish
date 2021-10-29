@@ -170,7 +170,7 @@ set --append GCC_COMMON_OPTIONS -fstack-protector -fstack-clash-protection
 #OPTIMIZE_OPTIONS '-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
 # Using -fsigned-zeros disables associative-math
 #OPTIMIZE_OPTIONS '-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-set --export OPTIMIZE_OPTIONS -O3 -flto -march=native -fno-math-errno -funsafe-math-optimizations
+set --export OPTIMIZE_OPTIONS -O3 -flto -march=native
 
 set --export DEBUG_OPTIONS -Og -g3
 # https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
