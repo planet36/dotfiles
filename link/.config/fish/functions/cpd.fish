@@ -2,5 +2,5 @@
 # SPDX-License-Identifier: OSL-3.0
 
 function cpd --wraps cp
-    cp $argv && cd $argv[-1]
+    command cp $argv && cd $argv[-1]
 end
