@@ -25,6 +25,7 @@ alias ff='find -type f | fzf'
 alias file-dates='find -type f -printf "%T@\t%Tc\t%p\n"'
 alias file-lines='find -type f -print0 | wc --lines --files0-from=-'
 alias file-sizes='find -type f -printf "%s\t%p\n"'
+alias file-times=file-dates
 alias find-dangling-symlinks='find -xtype l'
 # We don't want an alias named "grep" with so many options
 #alias grep='grep --color --line-number --binary-files=without-match --directories=skip'
