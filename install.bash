@@ -394,14 +394,14 @@ function install_vim_nvim_plugins
         curl -fLo /tmp/plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         echo \
-        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim -- /tmp/plug.vim
+        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim
         echo \
-        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/vim/autoload/plug.vim       -- /tmp/plug.vim
+        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/vim/autoload/       -- /tmp/plug.vim
     else
         curl -fLo /tmp/plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return
-        cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim -- /tmp/plug.vim || return
-        cp --verbose --target-directory "$XDG_DATA_HOME"/vim/autoload/plug.vim       -- /tmp/plug.vim || return
+        cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim || return
+        cp --verbose --target-directory "$XDG_DATA_HOME"/vim/autoload/       -- /tmp/plug.vim || return
     fi
 
     if command -v vim > /dev/null
