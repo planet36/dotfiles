@@ -19,8 +19,8 @@ clean install lint uninstall: clone
 # These repos were forked from suckless
 # Add remotes to the suckless repos
 dwm slstatus st:
-	#git@github.com:planet36/$@.git
-	git clone https://github.com/planet36/$@.git
+	git clone git@github.com:planet36/$@.git
+	#git clone https://github.com/planet36/$@.git
 	cd $@ ; \
 	git remote add suckless https://git.suckless.org/$@ ; \
 	git remote set-url --push suckless DISABLE ; \
