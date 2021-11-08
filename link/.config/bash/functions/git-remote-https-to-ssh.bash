@@ -6,7 +6,7 @@ function git-remote-https-to-ssh
     echo "# Before"
     git remote --verbose
 
-    git remote set-url origin "$(git remote get-url --all origin | sed -e 's|https://([^/]+)/|git@\1.com:|')"
+    git remote set-url origin "$(git remote get-url --all origin | sed -E -e 's|https://([^/]+)/|git@\1.com:|')"
     echo
 
     echo "# After"
