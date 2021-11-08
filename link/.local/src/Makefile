@@ -1,25 +1,23 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-REPO_DIRS = \
+BUILD_DIRS = \
 dwm \
 slstatus \
 st \
 stw
 
 build: clone
-	$(foreach DIR, $(REPO_DIRS), $(MAKE) -C $(DIR);)
+	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR);)
 
-clone: | $(REPO_DIRS)
+clone: | $(BUILD_DIRS)
 
 clean install lint uninstall: clone
-	$(foreach DIR, $(REPO_DIRS), $(MAKE) -C $(DIR) $@;)
+	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-# My repos
-# These repos were forked from suckless
-# Add remotes to the suckless repos
+# My repos (forked from suckless)
+# Clone and add remotes to the respective suckless repos
 dwm slstatus st:
-	#git@github.com:planet36/$@.git
 	git clone https://github.com/planet36/$@.git
 	cd $@ ; \
 	git remote add suckless https://git.suckless.org/$@ ; \
