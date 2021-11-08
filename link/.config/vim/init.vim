@@ -573,6 +573,7 @@ iabbrev dafeult default
 iabbrev deafult default
 iabbrev delctype decltype
 iabbrev dfeualt default
+iabbrev doen done
 iabbrev dpritnf dprintf
 iabbrev ehre here
 iabbrev fpritnf fprintf
