@@ -1,5 +1,0 @@
-# grep -E -o '^[^#]+' git-repos.txt | xargs -r -L 1 git clone
-https://git.suckless.org/dwm dwm-suckless
-https://git.suckless.org/slstatus slstatus-suckless
-https://git.suckless.org/st st-suckless
-https://github.com/planet36/arch-install.git
