@@ -23,23 +23,23 @@ clean install lint uninstall: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
 arch-install:
-	git clone https://github.com/planet36/arch-install.git
+	git clone --quiet https://github.com/planet36/arch-install.git
 
 # My repos (forked from suckless)
 # Clone and add remotes to the respective suckless repos
 dwm slstatus st:
-	git clone https://github.com/planet36/$@.git
+	git clone --quiet https://github.com/planet36/$@.git
 	cd $@ ; \
 	git remote add suckless https://git.suckless.org/$@ ; \
 	git remote set-url --push suckless DISABLE ; \
-	git fetch suckless ; \
+	git fetch --quiet suckless ; \
 	cd - > /dev/null
 
 stw:
-	git clone https://github.com/sineemore/stw.git
+	git clone --quiet https://github.com/sineemore/stw.git
 
 dwm-suckless slstatus-suckless st-suckless:
-	git clone https://git.suckless.org/$(subst -suckless,,$@) $@
+	git clone --quiet https://git.suckless.org/$(subst -suckless,,$@) $@
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: build clone clean install lint uninstall
