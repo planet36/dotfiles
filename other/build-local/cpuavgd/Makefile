@@ -11,12 +11,12 @@ OBJS = $(SRCS:.c=.o)
 
 CPPFLAGS += -MMD -MP
 #CFLAGS +=
-#LDFLAGS +=
+#LDLIBS +=
 
 BIN = $(notdir $(CURDIR))
 
 $(BIN): $(OBJS)
-	$(CC) $^ -o $@ $(LDFLAGS)
+	$(CC) $^ -o $@ $(LDLIBS)
 
 %.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $<
@@ -33,7 +33,7 @@ uninstall:
 	@$(RM) --verbose -- "$(DESTDIR)$(PREFIX)/bin/$(BIN)"
 
 lint:
-	clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS) $(LDFLAGS)
+	clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS) $(LDLIBS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: install clean uninstall lint
