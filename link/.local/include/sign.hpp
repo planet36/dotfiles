@@ -31,11 +31,13 @@ Two numbers have the same sign if both are non-positive or non-negative.
 #include <concepts>
 #include <type_traits>
 
+constexpr
 int sign(const std::unsigned_integral auto x)
 {
 	return x > 0;
 }
 
+constexpr
 int sign(const std::signed_integral auto x)
 {
 	return (x > 0) - (x < 0);
@@ -43,8 +45,10 @@ int sign(const std::signed_integral auto x)
 
 #if 1
 template <std::floating_point T>
+constexpr
 T sign(const T x)
 #else
+constexpr
 auto sign(const std::floating_point auto x) -> decltype(x)
 #endif
 {
@@ -57,30 +61,35 @@ auto sign(const std::floating_point auto x) -> decltype(x)
 	return (x > 0) - (x < 0);
 }
 
+constexpr
 bool same_sign([[gnu::unused]] const std::unsigned_integral auto x,
                [[gnu::unused]] const std::unsigned_integral auto y)
 {
 	return true;
 }
 
+constexpr
 bool same_sign(const std::unsigned_integral auto x,
                const std::signed_integral auto y)
 {
 	return ((x == 0) && (y <= 0)) || (y >= 0);
 }
 
+constexpr
 bool same_sign(const std::signed_integral auto x,
                const std::unsigned_integral auto y)
 {
 	return ((x <= 0) && (y == 0)) || (x >= 0);
 }
 
+constexpr
 bool same_sign(const std::signed_integral auto x,
                const std::signed_integral auto y)
 {
 	return ((x <= 0) && (y <= 0)) || ((x >= 0) && (y >= 0));
 }
 
+constexpr
 bool same_sign(const std::floating_point auto x,
                const std::floating_point auto y)
 {
