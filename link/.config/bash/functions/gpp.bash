@@ -4,5 +4,5 @@
 function gpp
 {
     # shellcheck disable=SC2086
-    command g++ $CPPFLAGS $CXXFLAGS "${@}"
+    command g++ $CPPFLAGS $CXXFLAGS "${@}" -lfmt
 }
