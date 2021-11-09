@@ -44,17 +44,9 @@ int sign(const std::signed_integral auto x)
 #if 1
 template <std::floating_point T>
 T sign(const T x)
-{
-	if (std::isnan(x))
-		return x;
-
-	if (x == 0)
-		return x;
-
-	return (x > 0) - (x < 0);
-}
 #else
 auto sign(const std::floating_point auto x) -> decltype(x)
+#endif
 {
 	if (std::isnan(x))
 		return x;
@@ -64,7 +56,6 @@ auto sign(const std::floating_point auto x) -> decltype(x)
 
 	return (x > 0) - (x < 0);
 }
-#endif
 
 bool same_sign([[gnu::unused]] const std::unsigned_integral auto x,
                [[gnu::unused]] const std::unsigned_integral auto y)
