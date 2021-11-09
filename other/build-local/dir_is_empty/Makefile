@@ -11,7 +11,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 CPPFLAGS += -MMD -MP
 CXXFLAGS += -std=c++17
-#LDLIBS += -lfmt
+#LDLIBS +=
 
 BIN = $(notdir $(CURDIR))
 
