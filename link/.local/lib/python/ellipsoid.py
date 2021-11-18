@@ -115,6 +115,20 @@ class Ellipsoid:
 
 		return (x, y, z)
 
+	def geodetic_2d_to_ecef(self, lat_deg: float, ht: float) -> tuple:
+
+		lat_rad = math.radians(lat_deg)
+
+		sin_lat = math.sin(lat_rad)
+		cos_lat = math.cos(lat_rad)
+
+		Rn = self.get_Rn(sin_lat)
+
+		w = (Rn + ht) * cos_lat
+		z = (Rn * (1 - self.e2) + ht) * sin_lat
+
+		return (w, z)
+
 	def ecef_to_geodetic(self, x: float, y: float, z: float) -> tuple:
 		'''
 D. K. Olson, "Converting Earth-centered, Earth-fixed coordinates to geodetic coordinates," in IEEE Transactions on Aerospace and Electronic Systems, vol. 32, no. 1, pp. 473-476, Jan. 1996, doi: 10.1109/7.481290.
@@ -178,6 +192,68 @@ Converted to Python and modified by Steven Ward.  No rights reserved.
 		ht = f + m * p / 2
 
 		return (math.degrees(lat_rad), math.degrees(lon_rad), ht)
+
+	def ecef_2d_to_geodetic(self, w: float, z: float) -> tuple:
+		'''
+D. K. Olson, "Converting Earth-centered, Earth-fixed coordinates to geodetic coordinates," in IEEE Transactions on Aerospace and Electronic Systems, vol. 32, no. 1, pp. 473-476, Jan. 1996, doi: 10.1109/7.481290.
+URL: https://ieeexplore.ieee.org/document/481290
+
+Converted to Python and modified by Steven Ward.  No rights reserved.
+'''
+
+		w2 = w * w
+		z2 = z * z
+
+		a1 = self.a * self.e2
+		a2 = a1 * a1
+		a3 = a1 * self.e2 / 2
+		a4 = 2.5 * a2
+		a5 = a1 + a3
+		#a6 = (1 - self.e2)
+
+		r2 = w2 + z2
+		r = math.sqrt(r2)
+
+		s2 = z2 / r2
+		c2 = w2 / r2
+		u = a2 / r
+		v = a3 - a4 / r
+
+		s = 0
+		c = 0
+		ss = 0
+
+		# cos(45 deg)^2 == 0.5
+		if c2 > 0.5: # Equatorial
+			s = (z / r) * (1 + c2 * (a1 + u + s2 * v) / r)
+			lat_rad = math.asin(s)
+			ss = s * s
+			c = math.sqrt(1 - ss)
+		else: # Polar
+			c = (w / r) * (1 - s2 * (a5 - u - c2 * v) / r)
+			lat_rad = math.acos(c)
+			ss = 1 - c * c
+			s = math.sqrt(ss)
+
+			if z < 0:
+				lat_rad = -lat_rad
+				s = -s
+
+		d2 = 1 - self.e2 * ss
+		Rn = self.a / math.sqrt(d2)
+		Rm = (1 - self.e2) * Rn / d2
+		rf = (1 - self.e2) * Rn
+		u = w - Rn * c
+		v = z - rf * s
+		f = c * u + s * v
+		m = c * v - s * u
+		p = m / (Rm + f)
+
+		lat_rad += p
+
+		ht = f + m * p / 2
+
+		return (math.degrees(lat_rad), ht)
 
 '''
 Source:
