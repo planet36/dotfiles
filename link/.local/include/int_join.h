@@ -11,6 +11,15 @@
 
 #include <stdint.h>
 
+uint16_t int8_join(const uint8_t hi, const uint8_t lo)
+{
+	const union {
+		uint16_t whole;
+		uint8_t parts[2];
+	} u = {.parts = {lo, hi}};
+	return u.whole;
+}
+
 uint32_t int16_join(const uint16_t hi, const uint16_t lo)
 {
 	const union {
