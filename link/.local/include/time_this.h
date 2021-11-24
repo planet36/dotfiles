@@ -21,8 +21,10 @@ trailing newline) to stderr.
 #include <sys/resource.h>
 #include <time.h>
 
+#ifdef __cplusplus
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wredundant-tags"
+#endif
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
 #ifdef __cplusplus
@@ -108,4 +110,6 @@ print_timerdata_now_diff(const struct timerdata* t0)
 			TIMEVAL_TO_SEC(diff.stime));
 }
 
+#ifdef __cplusplus
 #pragma GCC diagnostic pop
+#endif
