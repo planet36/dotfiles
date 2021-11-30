@@ -62,8 +62,8 @@ auto sign(const std::floating_point auto x) -> decltype(x)
 }
 
 constexpr
-bool same_sign([[gnu::unused]] const std::unsigned_integral auto x,
-               [[gnu::unused]] const std::unsigned_integral auto y)
+bool same_sign([[maybe_unused]] const std::unsigned_integral auto x,
+               [[maybe_unused]] const std::unsigned_integral auto y)
 {
 	return true;
 }
