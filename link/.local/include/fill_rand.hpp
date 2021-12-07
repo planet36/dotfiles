@@ -29,3 +29,15 @@ void fill_rand(std::array<T, N>& arr)
 			arr[i] = int_join(rd(), rd());
 	}
 }
+
+template <std::unsigned_integral T>
+void fill_rand(T& x)
+{
+	std::random_device rd;
+	// std::random_device::result_type is unsigned int
+	// https://en.cppreference.com/w/cpp/numeric/random/random_device
+	if constexpr (sizeof (T) <= sizeof (typename std::random_device::result_type))
+		x = rd();
+	else
+		x = int_join(rd(), rd());
+}
