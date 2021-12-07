@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Join smaller ints into larger ints
+/// Join smaller unsigned ints into larger unsigned ints
 /**
 \file
 \author Steven Ward
