@@ -59,6 +59,9 @@ constexpr T rev_bytes(T x)
 }
 #endif
 
+static_assert(std::endian::native == std::endian::little ||
+              std::endian::native == std::endian::big);
+
 constexpr bool h_is_be()
 {
 	return std::endian::native == std::endian::big;
