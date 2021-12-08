@@ -15,24 +15,24 @@
 #include <concepts>
 
 /// milliradians per radian
-constexpr int mrad_per_rad = 1'000;
+inline constexpr int mrad_per_rad = 1'000;
 
 /// radians per revolution
 template <std::floating_point T>
-constexpr T rad_per_rev = M_2_pi<T>;
+inline constexpr T rad_per_rev = M_2_pi<T>;
 
 /// degrees per revolution
-constexpr int deg_per_rev = 360;
+inline constexpr int deg_per_rev = 360;
 
 /// arcminutes per degree
-constexpr int arcmin_per_deg = 60;
+inline constexpr int arcmin_per_deg = 60;
 
 /// arcseconds per arcminute
-constexpr int arcsec_per_arcmin = 60;
+inline constexpr int arcsec_per_arcmin = 60;
 
 /// degrees per radian
 template <std::floating_point T>
-constexpr T deg_per_rad = 180 / M_pi<T>;
+inline constexpr T deg_per_rad = 180 / M_pi<T>;
 
 /// convert to radians from milliradians
 template <std::floating_point T>

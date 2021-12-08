@@ -15,11 +15,11 @@
 #include <iterator>
 #include <string_view>
 
-constexpr uint32_t fnv_prime_32 = UINT32_C(16'777'619); // = 2**24 + 2**8 + 0x93
-constexpr uint64_t fnv_prime_64 = UINT64_C(1'099'511'628'211); // = 2**40 + 2**8 + 0xB3
+inline constexpr uint32_t fnv_prime_32 = UINT32_C(16'777'619); // = 2**24 + 2**8 + 0x93
+inline constexpr uint64_t fnv_prime_64 = UINT64_C(1'099'511'628'211); // = 2**40 + 2**8 + 0xB3
 
-constexpr uint32_t fnv_offset_basis_32 = UINT32_C(2'166'136'261);
-constexpr uint64_t fnv_offset_basis_64 = UINT64_C(14'695'981'039'346'656'037);
+inline constexpr uint32_t fnv_offset_basis_32 = UINT32_C(2'166'136'261);
+inline constexpr uint64_t fnv_offset_basis_64 = UINT64_C(14'695'981'039'346'656'037);
 
 /// FNV-1 32-bit hash
 constexpr uint32_t fnv1_32(const std::string_view& s)
