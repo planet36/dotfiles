@@ -575,6 +575,7 @@ iabbrev delctype decltype
 iabbrev dfeualt default
 iabbrev doen done
 iabbrev dpritnf dprintf
+iabbrev ecoh echo
 iabbrev ehre here
 iabbrev fpritnf fprintf
 iabbrev ifle file
