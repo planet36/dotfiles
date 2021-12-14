@@ -577,6 +577,7 @@ iabbrev doen done
 iabbrev dpritnf dprintf
 iabbrev ehre here
 iabbrev fpritnf fprintf
+iabbrev ifle file
 iabbrev maek make
 iabbrev medl meld
 iabbrev onece once
