@@ -7,16 +7,6 @@
 # shellcheck disable=SC1091
 # shellcheck disable=SC2034
 
-
-# 0 = black
-# 1 = red
-# 2 = green
-# 3 = yellow
-# 4 = blue
-# 5 = magenta
-# 6 = cyan
-# 7 = white
-
 BOLD=$(tput bold)
 DIM=$(tput dim)
 ITALIC=$(tput sitm)
@@ -27,14 +17,23 @@ SUB=$(tput ssubm)
 SUP=$(tput ssupm)
 UL=$(tput smul)
 
-BLACK=$(tput setaf 0)
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-MAGENTA=$(tput setaf 5)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
+FG_BLACK=$(tput setaf 0)
+FG_RED=$(tput setaf 1)
+FG_GREEN=$(tput setaf 2)
+FG_YELLOW=$(tput setaf 3)
+FG_BLUE=$(tput setaf 4)
+FG_MAGENTA=$(tput setaf 5)
+FG_CYAN=$(tput setaf 6)
+FG_WHITE=$(tput setaf 7)
+
+BG_BLACK=$(tput setab 0)
+BG_RED=$(tput setab 1)
+BG_GREEN=$(tput setab 2)
+BG_YELLOW=$(tput setab 3)
+BG_BLUE=$(tput setab 4)
+BG_MAGENTA=$(tput setab 5)
+BG_CYAN=$(tput setab 6)
+BG_WHITE=$(tput setab 7)
 
 :<<EOT
 
@@ -54,6 +53,42 @@ echo -e "BOLD ITALIC    ${S}${BOLD}${ITALIC}${S}${RESET}"; \
 echo -e "     ITALIC UL ${S}${ITALIC}${UL}${S}${RESET}"; \
 echo -e "BOLD ITALIC UL ${S}${BOLD}${ITALIC}${UL}${S}${RESET}"; \
 echo
+
+S='XXX'
+
+for COLOR in  \
+"$FG_BLACK" \
+"$FG_RED" \
+"$FG_GREEN" \
+"$FG_YELLOW" \
+"$FG_BLUE" \
+"$FG_MAGENTA" \
+"$FG_CYAN" \
+"$FG_WHITE" \
+"$BG_BLACK" \
+"$BG_RED" \
+"$BG_GREEN" \
+"$BG_YELLOW" \
+"$BG_BLUE" \
+"$BG_MAGENTA" \
+"$BG_CYAN" \
+"$BG_WHITE"
+do
+echo -e "BOLD     ${COLOR}${S}${BOLD}${S}${RESET}"; \
+echo -e "DIM      ${COLOR}${S}${DIM}${S}${RESET}"; \
+echo -e "ITALIC   ${COLOR}${S}${ITALIC}${S}${RESET}"; \
+echo -e "RESET    ${COLOR}${S}${RESET}${S}${RESET}"; \
+echo -e "REV      ${COLOR}${S}${REV}${S}${RESET}"; \
+echo -e "STANDOUT ${COLOR}${S}${STANDOUT}${S}${RESET}"; \
+echo -e "SUB      ${COLOR}${S}${SUB}${S}${RESET}"; \
+echo -e "SUP      ${COLOR}${S}${SUP}${S}${RESET}"; \
+echo -e "UL       ${COLOR}${S}${UL}${S}${RESET}"; \
+echo -e "BOLD        UL ${COLOR}${S}${BOLD}${UL}${S}${RESET}"; \
+echo -e "BOLD ITALIC    ${COLOR}${S}${BOLD}${ITALIC}${S}${RESET}"; \
+echo -e "     ITALIC UL ${COLOR}${S}${ITALIC}${UL}${S}${RESET}"; \
+echo -e "BOLD ITALIC UL ${COLOR}${S}${BOLD}${ITALIC}${UL}${S}${RESET}"; \
+echo
+done
 
 EOT
 
@@ -153,14 +188,14 @@ PS0='$(preexec_timer_begin)'
 # https://stackoverflow.com/a/24716445/1892784
 PS1=''
 PS1+='$(precmd_timer_end)'
-PS1+='\[${BOLD}${RED}\]$(opt_ex_st)\[${RESET}\]'
-PS1+='\[${BOLD}${MAGENTA}\]$(opt_jobs)\[${RESET}\]'
-PS1+='\[${BOLD}${YELLOW}\]$(opt_shlvl)\[${RESET}\]'
+PS1+='\[${BOLD}${FG_RED}\]$(opt_ex_st)\[${RESET}\]'
+PS1+='\[${BOLD}${FG_MAGENTA}\]$(opt_jobs)\[${RESET}\]'
+PS1+='\[${BOLD}${FG_YELLOW}\]$(opt_shlvl)\[${RESET}\]'
 # shellcheck disable=SC2154
 #PS1+='${debian_chroot:+($debian_chroot)}'
-PS1+='\[${BOLD}${GREEN}\]\u@\h\[${RESET}\]'
+PS1+='\[${BOLD}${FG_GREEN}\]\u@\h\[${RESET}\]'
 PS1+=':'
-PS1+='\[${BOLD}${BLUE}\]\w\[${RESET}\]'
+PS1+='\[${BOLD}${FG_BLUE}\]\w\[${RESET}\]'
 
 if [[ -r /usr/lib/git-core/git-sh-prompt ]]
 then
@@ -195,7 +230,7 @@ GIT_PS1_SHOWSTASHSTATE=1
 #GIT_PS1_SHOWUNTRACKEDFILES=1 # slow
 GIT_PS1_SHOWUPSTREAM=verbose
 
-type -p __git_ps1 && PS1+='\[${YELLOW}\]$(__git_ps1)\[${RESET}\]'
+type -p __git_ps1 && PS1+='\[${FG_YELLOW}\]$(__git_ps1)\[${RESET}\]'
 PS1+=' \$ '
 
 # https://en.wikipedia.org/wiki/ANSI_escape_code#Escape_sequences
