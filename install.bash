@@ -701,8 +701,9 @@ function main
 
         if ! $DRY_RUN
         then
-            python3    -m compileall ~/.local/lib/python/ || return
-            python3 -O -m compileall ~/.local/lib/python/ || return
+            python3     -m compileall ~/.local/lib/python/ || return
+            python3 -O  -m compileall ~/.local/lib/python/ || return
+            python3 -OO -m compileall ~/.local/lib/python/ || return
         fi
 
         if $INSTALL_PROGRAMS
