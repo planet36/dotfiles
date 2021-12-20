@@ -14,22 +14,22 @@
 #include <cstdlib>
 #include <string>
 
-ssize_t getline(std::string& line, FILE* stream)
+ssize_t getline(std::string& line, FILE* stream, char delim)
 {
 	char* line_ptr = nullptr;
 	size_t buf_size = 0;
-	const ssize_t bytes_read = getline(&line_ptr, &buf_size, stream);
+	const ssize_t bytes_read = getdelim(&line_ptr, &buf_size, delim, stream);
 	if (bytes_read >= 0)
 		line.assign(line_ptr, bytes_read);
 	std::free(line_ptr);
 	return bytes_read;
 }
 
-ssize_t getline(std::string& line, FILE* stream, char delim)
+ssize_t getline(std::string& line, FILE* stream)
 {
 	char* line_ptr = nullptr;
 	size_t buf_size = 0;
-	const ssize_t bytes_read = getdelim(&line_ptr, &buf_size, delim, stream);
+	const ssize_t bytes_read = getline(&line_ptr, &buf_size, stream);
 	if (bytes_read >= 0)
 		line.assign(line_ptr, bytes_read);
 	std::free(line_ptr);
