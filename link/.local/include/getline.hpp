@@ -6,6 +6,7 @@
 \file
 \author Steven Ward
 \sa https://www.man7.org/linux/man-pages/man3/getline.3.html
+\sa https://en.cppreference.com/w/c/experimental/dynamic/getline
 */
 
 #pragma once
@@ -16,11 +17,11 @@
 
 ssize_t getline(std::string& line, FILE* stream, char delim = '\n')
 {
-	char* line_ptr = nullptr;
+	char* buf = nullptr;
 	size_t buf_size = 0;
-	const ssize_t bytes_read = getdelim(&line_ptr, &buf_size, delim, stream);
+	const ssize_t bytes_read = getdelim(&buf, &buf_size, delim, stream);
 	if (bytes_read >= 0)
-		line.assign(line_ptr, bytes_read);
-	std::free(line_ptr);
+		line.assign(buf, bytes_read);
+	std::free(buf);
 	return bytes_read;
 }
