@@ -29,6 +29,92 @@ static constexpr result_type min() { return std::numeric_limits<result_type>::mi
 static constexpr result_type max() { return std::numeric_limits<result_type>::max(); } \
 result_type operator()() { return next(); }
 
+#define DEF_JUMP \
+void jump() \
+{ \
+	decltype(s) new_s; \
+	new_s.fill(0); \
+	for (const auto x : JUMP) \
+	{ \
+		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		{ \
+			if (x & (T{1} << b)) \
+				for (size_t i = 0; i < s.size(); i++) \
+				{ \
+					new_s[i] ^= s[i]; \
+				} \
+			(void) next(); \
+		} \
+	} \
+	s = new_s; \
+}
+
+#define DEF_LONG_JUMP \
+void long_jump() \
+{ \
+	decltype(s) new_s; \
+	new_s.fill(0); \
+	for (const auto x : LONG_JUMP) \
+	{ \
+		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		{ \
+			if (x & (T{1} << b)) \
+				for (size_t i = 0; i < s.size(); i++) \
+				{ \
+					new_s[i] ^= s[i]; \
+				} \
+			(void) next(); \
+		} \
+	} \
+	s = new_s; \
+}
+
+#define DEF_JUMP_2 \
+void jump() \
+{ \
+	decltype(s) new_s; \
+	new_s.fill(0); \
+	for (const auto x : JUMP) \
+	{ \
+		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		{ \
+			if (x & (T{1} << b)) \
+				for (size_t i = 0; i < s.size(); i++) \
+				{ \
+					new_s[i] ^= s[(i + p) % s.size()]; \
+				} \
+			(void) next(); \
+		} \
+	} \
+	for (size_t i = 0; i < s.size(); i++) \
+	{ \
+		s[(i + p) % s.size()] = new_s[i]; \
+	} \
+}
+
+#define DEF_LONG_JUMP_2 \
+void long_jump() \
+{ \
+	decltype(s) new_s; \
+	new_s.fill(0); \
+	for (const auto x : LONG_JUMP) \
+	{ \
+		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		{ \
+			if (x & (T{1} << b)) \
+				for (size_t i = 0; i < s.size(); i++) \
+				{ \
+					new_s[i] ^= s[(i + p) % s.size()]; \
+				} \
+			(void) next(); \
+		} \
+	} \
+	for (size_t i = 0; i < s.size(); i++) \
+	{ \
+		s[(i + p) % s.size()] = new_s[i]; \
+	} \
+}
+
 /** This is xoroshiro64* 1.0, our best and fastest 32-bit small-state generator
  * for 32-bit floating-point numbers. We suggest to use its upper bits for
  * floating-point generation, as it is slightly faster than xoroshiro64**. It
@@ -166,52 +252,14 @@ public:
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-	void jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[i];
-					}
-				(void) next();
-			}
-		}
-
-		s = new_s;
-	}
+DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-	void long_jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : LONG_JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[i];
-					}
-				(void) next();
-			}
-		}
-
-		s = new_s;
-	}
+DEF_LONG_JUMP
 };
 
 /** This is xoroshiro128++ 1.0, one of our all-purpose, rock-solid, small-state
@@ -261,52 +309,14 @@ public:
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-	void jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[i];
-					}
-				(void) next();
-			}
-		}
-
-		s = new_s;
-	}
+DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-	void long_jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : LONG_JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[i];
-					}
-				(void) next();
-			}
-		}
-
-		s = new_s;
-	}
+DEF_LONG_JUMP
 };
 
 /** This is xoroshiro128** 1.0, one of our all-purpose, rock-solid, small-state
@@ -356,52 +366,14 @@ public:
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-	void jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[i];
-					}
-				(void) next();
-			}
-		}
-
-		s = new_s;
-	}
+DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-	void long_jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : LONG_JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[i];
-					}
-				(void) next();
-			}
-		}
-
-		s = new_s;
-	}
+DEF_LONG_JUMP
 };
 
 /** This is xoroshiro1024++ 1.0, one of our all-purpose, rock-solid,
@@ -463,58 +435,14 @@ public:
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-	void jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[(i + p) % s.size()];
-					}
-				(void) next();
-			}
-		}
-
-		for (size_t i = 0; i < s.size(); i++)
-		{
-			s[(i + p) % s.size()] = new_s[i];
-		}
-	}
+DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-	void long_jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : LONG_JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[(i + p) % s.size()];
-					}
-				(void) next();
-			}
-		}
-
-		for (size_t i = 0; i < s.size(); i++)
-		{
-			s[(i + p) % s.size()] = new_s[i];
-		}
-	}
+DEF_LONG_JUMP_2
 };
 
 /** This is xoroshiro1024* 1.0, our large-state generator for floating-point
@@ -582,58 +510,14 @@ public:
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-	void jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[(i + p) % s.size()];
-					}
-				(void) next();
-			}
-		}
-
-		for (size_t i = 0; i < s.size(); i++)
-		{
-			s[(i + p) % s.size()] = new_s[i];
-		}
-	}
+DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-	void long_jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : LONG_JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[(i + p) % s.size()];
-					}
-				(void) next();
-			}
-		}
-
-		for (size_t i = 0; i < s.size(); i++)
-		{
-			s[(i + p) % s.size()] = new_s[i];
-		}
-	}
+DEF_LONG_JUMP_2
 };
 
 /** This is xoroshiro1024** 1.0, one of our all-purpose, rock-solid,
@@ -695,58 +579,18 @@ public:
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-	void jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[(i + p) % s.size()];
-					}
-				(void) next();
-			}
-		}
-
-		for (size_t i = 0; i < s.size(); i++)
-		{
-			s[(i + p) % s.size()] = new_s[i];
-		}
-	}
+DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-	void long_jump()
-	{
-		decltype(s) new_s;
-		new_s.fill(0);
-
-		for (const auto x : LONG_JUMP)
-		{
-			for (int b = 0; b < std::numeric_limits<T>::digits; b++)
-			{
-				if (x & (T{1} << b))
-					for (size_t i = 0; i < s.size(); i++)
-					{
-						new_s[i] ^= s[(i + p) % s.size()];
-					}
-				(void) next();
-			}
-		}
-
-		for (size_t i = 0; i < s.size(); i++)
-		{
-			s[(i + p) % s.size()] = new_s[i];
-		}
-	}
+DEF_LONG_JUMP_2
 };
 
 #undef NAMED_REQ_URBG
+#undef DEF_JUMP
+#undef DEF_LONG_JUMP
+#undef DEF_JUMP_2
+#undef DEF_LONG_JUMP_2
