@@ -9,29 +9,24 @@
 
 #pragma once
 
-#include "fast_sqrt.h"
+#include "sse_sqrt.h"
 
-namespace fast
+namespace sse
 {
 
 float sqrt(float x)
 {
-	return fast_sqrtf(x);
+	return sse_sqrtf(x);
 }
 
 double sqrt(double x)
 {
-	return fast_sqrt(x);
+	return sse_sqrt(x);
 }
 
 float rsqrt(float x)
 {
-	return fast_rsqrtf(x);
-}
-
-double rsqrt(double x)
-{
-	return 1 / fast_sqrt(x);
+	return sse_rsqrtf(x);
 }
 
 }
