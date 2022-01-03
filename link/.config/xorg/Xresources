@@ -1,5 +1,7 @@
 #include "Xresources-xft"
 
+! xrdb -merge Xresources
+
 Sxiv.background: Black
 Sxiv.foreground: Gray
 
@@ -22,7 +24,7 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
 Zutty.altScroll:  true
 Zutty.autoCopy:   true
-Zutty.boldColors: true
+Zutty.boldColors: false
 Zutty.border:     2
 Zutty.geometry:   239x65
 Zutty.font:       Hack
