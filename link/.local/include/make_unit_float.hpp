@@ -52,7 +52,7 @@ float make_unit_float(const uint32_t x)
 	if constexpr (__BYTE_ORDER__ == __FLOAT_WORD_ORDER__)
 		return bits_to_float(UINT32_C(0x7F) << 23 | x >> 9) - 1;
 	else
-		return(x >> 9) / 0x1p+23f;
+		return (x >> 9) / 0x1p+23f;
 }
 
 double make_unit_float(const uint64_t x)
