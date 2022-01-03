@@ -18,6 +18,7 @@ uint16_t int8_join(const uint8_t hi, const uint8_t lo)
 		uint8_t parts[2];
 	} u = {.parts = {lo, hi}};
 	return u.whole;
+	_Static_assert(sizeof (u.whole) == sizeof (u.parts));
 }
 
 uint32_t int16_join(const uint16_t hi, const uint16_t lo)
@@ -27,6 +28,7 @@ uint32_t int16_join(const uint16_t hi, const uint16_t lo)
 		uint16_t parts[2];
 	} u = {.parts = {lo, hi}};
 	return u.whole;
+	_Static_assert(sizeof (u.whole) == sizeof (u.parts));
 }
 
 uint64_t int32_join(const uint32_t hi, const uint32_t lo)
@@ -36,4 +38,5 @@ uint64_t int32_join(const uint32_t hi, const uint32_t lo)
 		uint32_t parts[2];
 	} u = {.parts = {lo, hi}};
 	return u.whole;
+	_Static_assert(sizeof (u.whole) == sizeof (u.parts));
 }
