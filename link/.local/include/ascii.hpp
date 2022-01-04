@@ -27,3 +27,323 @@ constexpr std::array<char, 128> ascii_array {
 const std::string ascii_string{ascii_array.cbegin(), ascii_array.cend()};
 
 constexpr std::string_view ascii_string_view{ascii_array.cbegin(), ascii_array.cend()};
+
+/**
+\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence
+\sa https://eel.is/c++draft/gram.lex#:simple-escape-sequence
+\sa https://en.cppreference.com/w/cpp/string/byte/iscntrl
+\sa https://en.cppreference.com/w/cpp/string/byte/isprint
+Python snippet to generate the array
+\code{.py}
+def isprint(i: int):
+    return i >= 32 and i < 127
+
+simple_escape_sequence_dict = {
+    ord('\a'): r'\\a', # alert
+    ord('\b'): r'\\b', # backspace
+    ord('\t'): r'\\t', # horizontal tab
+    ord('\n'): r'\\n', # new line
+    ord('\v'): r'\\v', # vertical tab
+    ord('\f'): r'\\f', # form feed
+    ord('\r'): r'\\r', # carriage return
+}
+
+for i in range(128):
+    if i in simple_escape_sequence_dict:
+        print(f'"{simple_escape_sequence_dict[i]}",')
+    elif not isprint(i):
+        print(fr'"\\{i:03o}",')
+    else:
+        print('"",')
+\endcode
+*/
+constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_oct {
+	"\\000",
+	"\\001",
+	"\\002",
+	"\\003",
+	"\\004",
+	"\\005",
+	"\\006",
+	"\\a",
+	"\\b",
+	"\\t",
+	"\\n",
+	"\\v",
+	"\\f",
+	"\\r",
+	"\\016",
+	"\\017",
+	"\\020",
+	"\\021",
+	"\\022",
+	"\\023",
+	"\\024",
+	"\\025",
+	"\\026",
+	"\\027",
+	"\\030",
+	"\\031",
+	"\\032",
+	"\\033",
+	"\\034",
+	"\\035",
+	"\\036",
+	"\\037",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"\\177",
+};
+
+/**
+\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence
+\sa https://eel.is/c++draft/gram.lex#:simple-escape-sequence
+\sa https://en.cppreference.com/w/cpp/string/byte/iscntrl
+\sa https://en.cppreference.com/w/cpp/string/byte/isprint
+Python snippet to generate the array
+\code{.py}
+def isprint(i: int):
+    return i >= 32 and i < 127
+
+simple_escape_sequence_dict = {
+    ord('\a'): r'\\a', # alert
+    ord('\b'): r'\\b', # backspace
+    ord('\t'): r'\\t', # horizontal tab
+    ord('\n'): r'\\n', # new line
+    ord('\v'): r'\\v', # vertical tab
+    ord('\f'): r'\\f', # form feed
+    ord('\r'): r'\\r', # carriage return
+}
+
+for i in range(128):
+    if i in simple_escape_sequence_dict:
+        print(f'"{simple_escape_sequence_dict[i]}",')
+    elif not isprint(i):
+        print(fr'"\\x{i:02x}",')
+    else:
+        print('"",')
+\endcode
+*/
+constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_hex {
+	"\\x00",
+	"\\x01",
+	"\\x02",
+	"\\x03",
+	"\\x04",
+	"\\x05",
+	"\\x06",
+	"\\a",
+	"\\b",
+	"\\t",
+	"\\n",
+	"\\v",
+	"\\f",
+	"\\r",
+	"\\x0e",
+	"\\x0f",
+	"\\x10",
+	"\\x11",
+	"\\x12",
+	"\\x13",
+	"\\x14",
+	"\\x15",
+	"\\x16",
+	"\\x17",
+	"\\x18",
+	"\\x19",
+	"\\x1a",
+	"\\x1b",
+	"\\x1c",
+	"\\x1d",
+	"\\x1e",
+	"\\x1f",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
+	"\\x7f",
+};
