@@ -12,8 +12,8 @@
 #include <concepts>
 #include <cstdint>
 
-static_assert(sizeof (uint32_t) == sizeof (float));
-static_assert(sizeof (uint64_t) == sizeof (double));
+static_assert(sizeof(uint32_t) == sizeof(float));
+static_assert(sizeof(uint64_t) == sizeof(double));
 
 template <unsigned int N>
 union float_bits_union;
@@ -33,15 +33,15 @@ union float_bits_union<8>
 };
 
 template <std::floating_point T>
-requires (sizeof (T) == 4 || sizeof (T) == 8)
+requires (sizeof(T) == 4 || sizeof(T) == 8)
 auto float_to_bits(const T x)
 {
-	return float_bits_union<sizeof (T)>{.f = x}.i;
+	return float_bits_union<sizeof(T)>{.f = x}.i;
 }
 
 template <std::unsigned_integral T>
-requires (sizeof (T) == 4 || sizeof (T) == 8)
+requires (sizeof(T) == 4 || sizeof(T) == 8)
 auto bits_to_float(const T x)
 {
-	return float_bits_union<sizeof (T)>{.i = x}.f;
+	return float_bits_union<sizeof(T)>{.i = x}.f;
 }

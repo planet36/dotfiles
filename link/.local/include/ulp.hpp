@@ -30,7 +30,7 @@ T ulp(T x)
 	if (std::isinf(x))
 		return x;
 
-	float_bits_union<sizeof (T)> u{.f = x};
+	float_bits_union<sizeof(T)> u{.f = x};
 	u.i ^= 1;
 
 	return u.i & 1 ? u.f - x : x - u.f;

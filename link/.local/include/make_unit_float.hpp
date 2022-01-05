@@ -21,11 +21,11 @@ Inspired by <https://prng.di.unimi.it/>
 #include <limits>
 
 template <std::unsigned_integral T>
-requires (sizeof (T) == 4 || sizeof (T) == 8)
+requires (sizeof(T) == 4 || sizeof(T) == 8)
 auto make_unit_float(const T x)
 {
-	using f_t = float_bytes<sizeof (x)>;
-	static_assert(sizeof (f_t) == sizeof (T));
+	using f_t = float_bytes<sizeof(x)>;
+	static_assert(sizeof(f_t) == sizeof(T));
 
 	// float: 23
 	// double: 52

@@ -23,28 +23,28 @@ constexpr unsigned __int128 rev_16_bytes(unsigned __int128 x) { return __builtin
 #endif
 
 template <typename T>
-requires (sizeof (T) == 1)
+requires (sizeof(T) == 1)
 constexpr T rev_bytes(T x)
 {
 	return x;
 }
 
 template <typename T>
-requires (sizeof (T) == 2)
+requires (sizeof(T) == 2)
 constexpr T rev_bytes(T x)
 {
 	return std::bit_cast<T>(rev_2_bytes(std::bit_cast<uint16_t>(x)));
 }
 
 template <typename T>
-requires (sizeof (T) == 4)
+requires (sizeof(T) == 4)
 constexpr T rev_bytes(T x)
 {
 	return std::bit_cast<T>(rev_4_bytes(std::bit_cast<uint32_t>(x)));
 }
 
 template <typename T>
-requires (sizeof (T) == 8)
+requires (sizeof(T) == 8)
 constexpr T rev_bytes(T x)
 {
 	return std::bit_cast<T>(rev_8_bytes(std::bit_cast<uint64_t>(x)));
@@ -52,7 +52,7 @@ constexpr T rev_bytes(T x)
 
 #if defined(__int128)
 template <typename T>
-requires (sizeof (T) == 16)
+requires (sizeof(T) == 16)
 constexpr T rev_bytes(T x)
 {
 	return std::bit_cast<T>(rev_16_bytes(std::bit_cast<unsigned __int128>(x)));

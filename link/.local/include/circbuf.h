@@ -61,7 +61,7 @@ circbuf_free(circbuf* cbuf)
 // automatically deallocate circbuf
 #define CIRCBUF(varname, num_elems, type) \
 __attribute__((cleanup(circbuf_free))) \
-circbuf varname = circbuf_init(num_elems, sizeof (type));
+circbuf varname = circbuf_init(num_elems, sizeof(type));
 
 static bool
 circbuf_empty(const circbuf* cbuf)

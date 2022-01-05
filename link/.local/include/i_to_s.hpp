@@ -25,9 +25,9 @@ std::string i_to_s(const std::integral auto x,
 	// x=18446744073709551615  base=2  size=64  result="1111111111111111111111111111111111111111111111111111111111111111"
 
 	// For signed integer types, std::numeric_limits<decltype(x)>::digits is
-	// CHAR_BIT * sizeof (x) - 1
-	// We don't want to subtract 1, so we use CHAR_BIT * sizeof (x)
-	constexpr int buf_size = CHAR_BIT * sizeof (x) +
+	// CHAR_BIT * sizeof(x) - 1
+	// We don't want to subtract 1, so we use CHAR_BIT * sizeof(x)
+	constexpr int buf_size = CHAR_BIT * sizeof(x) +
 	                         std::numeric_limits<decltype(x)>::is_signed;
 
 	char buf[buf_size] = {'\0'};

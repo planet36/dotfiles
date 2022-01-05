@@ -17,6 +17,6 @@ template <std::unsigned_integral T>
 union int_parts
 {
 	T parts[2];
-	uint_bytes<sizeof (T) * 2> whole;
-	static_assert(sizeof (parts) == sizeof (whole));
+	uint_bytes<sizeof(T) * 2> whole;
+	static_assert(sizeof(parts) == sizeof(whole));
 };

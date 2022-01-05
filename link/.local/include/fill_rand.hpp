@@ -23,7 +23,7 @@ void fill_rand(std::array<T, N>& arr)
 	{
 		// std::random_device::result_type is unsigned int
 		// https://en.cppreference.com/w/cpp/numeric/random/random_device
-		if constexpr (sizeof (T) <= sizeof (typename std::random_device::result_type))
+		if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
 			arr[i] = rd();
 		else
 			arr[i] = int_join(rd(), rd());
@@ -36,7 +36,7 @@ void fill_rand(T& x)
 	std::random_device rd;
 	// std::random_device::result_type is unsigned int
 	// https://en.cppreference.com/w/cpp/numeric/random/random_device
-	if constexpr (sizeof (T) <= sizeof (typename std::random_device::result_type))
+	if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
 		x = rd();
 	else
 		x = int_join(rd(), rd());
