@@ -65,8 +65,8 @@ bool contains_shell_special_chars(const std::string& s)
 	return false;
 }
 
-std::string quote(const std::string& s, const char delim = '"',
-                  const char escape = '\\')
+std::string quote(const std::string& s, const char delim = double_quote,
+                  const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -81,8 +81,8 @@ std::string quote(const std::string& s, const char delim = '"',
 	return result;
 }
 
-std::string quote(const std::string_view& s, const char delim = '"',
-                  const char escape = '\\')
+std::string quote(const std::string_view& s, const char delim = double_quote,
+                  const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -97,8 +97,8 @@ std::string quote(const std::string_view& s, const char delim = '"',
 	return result;
 }
 
-std::string quote(const char* s, const char delim = '"',
-                  const char escape = '\\')
+std::string quote(const char* s, const char delim = double_quote,
+                  const char escape = backslash)
 {
 	std::string result;
 	result.push_back(delim);
