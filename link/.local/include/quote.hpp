@@ -13,6 +13,58 @@
 #include <string>
 #include <string_view>
 
+namespace
+{
+constexpr char backslash = '\\';
+constexpr char single_quote = '\'';
+constexpr char double_quote = '"';
+
+// single quote, backslash, single quote, single quote
+constexpr std::string_view single_quote_escaped{R"('\'')"};
+}
+
+bool isword(const char c)
+{
+	return std::isalnum(c) || c == '_';
+}
+
+/**
+\sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
+*/
+bool contains_shell_special_chars(const std::string& s)
+{
+	for (const char c : s)
+	{
+		if (
+			(c == '\t') ||
+			(c == '\n') ||
+			(c == ' ' ) ||
+			(c == '"' ) ||
+			(c == '#' ) ||
+			(c == '$' ) ||
+			(c == '%' ) ||
+			(c == '&' ) ||
+			(c == '\'') ||
+			(c == '(' ) ||
+			(c == ')' ) ||
+			(c == '*' ) ||
+			(c == ';' ) ||
+			(c == '<' ) ||
+			(c == '=' ) ||
+			(c == '>' ) ||
+			(c == '\?') ||
+			(c == '[' ) ||
+			(c == '\\') ||
+			(c == '`' ) ||
+			(c == '|' ) ||
+			(c == '~' )
+			)
+			return true;
+	}
+
+	return false;
+}
+
 std::string quote(const std::string& s, const char delim = '"',
                   const char escape = '\\')
 {
