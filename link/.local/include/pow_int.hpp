@@ -22,7 +22,8 @@ consteval T pow_int_func()
 		// https://mathworld.wolfram.com/DivisionbyZero.html
 		static_assert(B != 0, "undefined");
 
-		static_assert(E != std::numeric_limits<decltype(E)>::min(), "signed integer underflow");
+		static_assert(E != std::numeric_limits<decltype(E)>::min(),
+		              "signed integer underflow");
 
 		// https://en.wikipedia.org/wiki/Exponentiation#Negative_exponents
 		return 1 / pow_int_func<T, B, -E>();
@@ -48,7 +49,8 @@ consteval T pow_int_func()
 }
 
 /// Helper macro
-#define POW_INT(BASE, EXPONENT) pow_int_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
+#define POW_INT(BASE, EXPONENT) \
+pow_int_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
 
 /// Raise base \a B to the power of exponent \a E
 template <typename T, T B, uint8_t E>
@@ -75,4 +77,5 @@ consteval T pow_uint_func()
 }
 
 /// Helper macro
-#define POW_UINT(BASE, EXPONENT) pow_uint_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
+#define POW_UINT(BASE, EXPONENT) \
+pow_uint_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()

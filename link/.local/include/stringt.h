@@ -16,9 +16,11 @@
 #include <wchar.h>
 
 inline static size_t
-_strtcat_helper(char* restrict dest, const char* restrict src, size_t dest_sz, size_t dest_len)
+_strtcat_helper(char* restrict dest, const char* restrict src,
+                size_t dest_sz, size_t dest_len)
 {
-	const size_t src_sz = strlen(src) + 1; // includes terminating NUL character
+	// includes terminating NUL character
+	const size_t src_sz = strlen(src) + 1;
 
 	if (unlikely(dest_len > SIZE_MAX - src_sz))
 		// dest_len + src_sz overflows
@@ -43,13 +45,15 @@ _strtcat_helper(char* restrict dest, const char* restrict src, size_t dest_sz, s
  *
  * CAVEATS
  *   If the strings overlap, the behavior is undefined.
- *   If dest_sz is insufficient, the operation will not be performed, and a positive integer will be returned.
+ *   If dest_sz is insufficient, the operation will not be performed, and a
+ *   positive integer will be returned.
  *
  * RETURN VALUE
  *   0  : Success
  *   >0 : Failure
  *     The operation was not performed because dest_sz was insufficient.
- *     The returned value is the number of characters dest must be enlarged by for the operation to be performed.
+ *     The returned value is the number of characters dest must be enlarged by
+ *     for the operation to be performed.
  */
 static size_t
 strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
@@ -68,13 +72,15 @@ strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
  *
  * CAVEATS
  *   If the strings overlap, the behavior is undefined.
- *   If dest_sz is insufficient, the operation will not be performed, and a positive integer will be returned.
+ *   If dest_sz is insufficient, the operation will not be performed, and a
+ *   positive integer will be returned.
  *
  * RETURN VALUE
  *   0  : Success
  *   >0 : Failure
  *     The operation was not performed because dest_sz was insufficient.
- *     The returned value is the number of characters dest must be enlarged by for the operation to be performed.
+ *     The returned value is the number of characters dest must be enlarged by
+ *     for the operation to be performed.
  */
 static size_t
 strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
@@ -83,9 +89,11 @@ strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
 }
 
 inline static size_t
-_wstrtcat_helper(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz, size_t dest_len)
+_wstrtcat_helper(wchar_t* restrict dest, const wchar_t* restrict src,
+                 size_t dest_sz, size_t dest_len)
 {
-	const size_t src_sz = wcslen(src) + 1; // includes terminating NUL wide character
+	// includes terminating NUL wide character
+	const size_t src_sz = wcslen(src) + 1;
 
 	if (unlikely(dest_len > SIZE_MAX - src_sz))
 		// dest_len + src_sz overflows
@@ -110,13 +118,15 @@ _wstrtcat_helper(wchar_t* restrict dest, const wchar_t* restrict src, size_t des
  *
  * CAVEATS
  *   If the strings overlap, the behavior is undefined.
- *   If dest_sz is insufficient, the operation will not be performed, and a positive integer will be returned.
+ *   If dest_sz is insufficient, the operation will not be performed, and a
+ *   positive integer will be returned.
  *
  * RETURN VALUE
  *   0  : Success
  *   >0 : Failure
  *     The operation was not performed because dest_sz was insufficient.
- *     The returned value is the number of wide characters dest must be enlarged by for the operation to be performed.
+ *     The returned value is the number of wide characters dest must be
+ *     enlarged by for the operation to be performed.
  */
 static size_t
 wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
@@ -135,13 +145,15 @@ wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
  *
  * CAVEATS
  *   If the strings overlap, the behavior is undefined.
- *   If dest_sz is insufficient, the operation will not be performed, and a positive integer will be returned.
+ *   If dest_sz is insufficient, the operation will not be performed, and a
+ *   positive integer will be returned.
  *
  * RETURN VALUE
  *   0  : Success
  *   >0 : Failure
  *     The operation was not performed because dest_sz was insufficient.
- *     The returned value is the number of wide characters dest must be enlarged by for the operation to be performed.
+ *     The returned value is the number of wide characters dest must be
+ *     enlarged by for the operation to be performed.
  */
 static size_t
 wstrtcpy(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)

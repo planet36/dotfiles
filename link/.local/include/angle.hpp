@@ -78,18 +78,12 @@ template <angle_unit U, angle_unit U2>
 constexpr angle_unit next()
 {
 	if constexpr (U == U2)
-	{
 		return U;
-	}
 
 	if constexpr (U < U2)
-	{
 		return fwd<U>();
-	}
 	else
-	{
 		return rev<U>();
-	}
 }
 
 /// convert \a x to \a To units from \a From units
@@ -157,12 +151,10 @@ class angle
 	*/
 
 private:
-
 	/// the angle's value (in angle units)
 	T value{};
 
 public:
-
 	/// default ctor
 	angle() = default;
 
@@ -455,8 +447,8 @@ struct const_angle<angle_unit::milliradian, T>
 	static constexpr angle quarter_turn{mrad_per_rad * M_pi_over_2<T>};
 	static constexpr angle half_turn{mrad_per_rad * M_pi<T>};
 	static constexpr angle full_turn{mrad_per_rad * M_2_pi<T>};
-	static constexpr angle inf{T(INFINITY)};
-	static constexpr angle nan{T(NAN)};
+	static constexpr angle inf{T{INFINITY}};
+	static constexpr angle nan{T{NAN}};
 };
 
 /// alias template
@@ -473,8 +465,8 @@ struct const_angle<angle_unit::radian, T>
 	static constexpr angle quarter_turn{M_pi_over_2<T>};
 	static constexpr angle half_turn{M_pi<T>};
 	static constexpr angle full_turn{M_2_pi<T>};
-	static constexpr angle inf{T(INFINITY)};
-	static constexpr angle nan{T(NAN)};
+	static constexpr angle inf{T{INFINITY}};
+	static constexpr angle nan{T{NAN}};
 };
 
 /// alias template
@@ -487,12 +479,12 @@ struct const_angle<angle_unit::revolution, T>
 {
 	using angle = ang_rev<T>;
 	static constexpr angle zero{};
-	static constexpr angle eighth_turn{T(0.125)};
-	static constexpr angle quarter_turn{T(0.25)};
-	static constexpr angle half_turn{T(0.5)};
-	static constexpr angle full_turn{T(1)};
-	static constexpr angle inf{T(INFINITY)};
-	static constexpr angle nan{T(NAN)};
+	static constexpr angle eighth_turn{T{0.125}};
+	static constexpr angle quarter_turn{T{0.25}};
+	static constexpr angle half_turn{T{0.5}};
+	static constexpr angle full_turn{T{1}};
+	static constexpr angle inf{T{INFINITY}};
+	static constexpr angle nan{T{NAN}};
 };
 
 /// alias template
@@ -505,12 +497,12 @@ struct const_angle<angle_unit::degree, T>
 {
 	using angle = ang_deg<T>;
 	static constexpr angle zero{};
-	static constexpr angle eighth_turn{T(45)};
-	static constexpr angle quarter_turn{T(90)};
-	static constexpr angle half_turn{T(180)};
-	static constexpr angle full_turn{T(360)};
-	static constexpr angle inf{T(INFINITY)};
-	static constexpr angle nan{T(NAN)};
+	static constexpr angle eighth_turn{T{45}};
+	static constexpr angle quarter_turn{T{90}};
+	static constexpr angle half_turn{T{180}};
+	static constexpr angle full_turn{T{360}};
+	static constexpr angle inf{T{INFINITY}};
+	static constexpr angle nan{T{NAN}};
 };
 
 /// alias template
@@ -523,12 +515,12 @@ struct const_angle<angle_unit::arcminute, T>
 {
 	using angle = ang_arcmin<T>;
 	static constexpr angle zero{};
-	static constexpr angle eighth_turn{T(2700)};
-	static constexpr angle quarter_turn{T(5400)};
-	static constexpr angle half_turn{T(10'800)};
-	static constexpr angle full_turn{T(21'600)};
-	static constexpr angle inf{T(INFINITY)};
-	static constexpr angle nan{T(NAN)};
+	static constexpr angle eighth_turn{T{2700}};
+	static constexpr angle quarter_turn{T{5400}};
+	static constexpr angle half_turn{T{10'800}};
+	static constexpr angle full_turn{T{21'600}};
+	static constexpr angle inf{T{INFINITY}};
+	static constexpr angle nan{T{NAN}};
 };
 
 /// alias template
@@ -541,12 +533,12 @@ struct const_angle<angle_unit::arcsecond, T>
 {
 	using angle = ang_arcsec<T>;
 	static constexpr angle zero{};
-	static constexpr angle eighth_turn{T(162'000)};
-	static constexpr angle quarter_turn{T(324'000)};
-	static constexpr angle half_turn{T(648'000)};
-	static constexpr angle full_turn{T(1'296'000)};
-	static constexpr angle inf{T(INFINITY)};
-	static constexpr angle nan{T(NAN)};
+	static constexpr angle eighth_turn{T{162'000}};
+	static constexpr angle quarter_turn{T{324'000}};
+	static constexpr angle half_turn{T{648'000}};
+	static constexpr angle full_turn{T{1'296'000}};
+	static constexpr angle inf{T{INFINITY}};
+	static constexpr angle nan{T{NAN}};
 };
 
 /// alias template
@@ -1134,9 +1126,7 @@ constexpr void normalize_angle_unsigned(angle<U, T>& a)
 	normalize_angle_signed(a);
 
 	if (a.scalar() < 0)
-	{
 		a += const_angle<U, T>::full_turn;
-	}
 }
 
 /// normalize the geodetic latitude
@@ -1150,13 +1140,9 @@ constexpr void normalize_latitude(angle<U, T>& lat)
 	normalize_angle_signed(lat);
 
 	if (lat < -const_angle<U, T>::quarter_turn)
-	{
 		lat = -const_angle<U, T>::half_turn - lat;
-	}
 	else if (lat > const_angle<U, T>::quarter_turn)
-	{
 		lat = const_angle<U, T>::half_turn - lat;
-	}
 }
 
 /// normalize the geodetic longitude
@@ -1367,9 +1353,7 @@ template <std::floating_point T>
 constexpr auto a_atan2_r(T y, T x)
 {
 	if (atan2_boundary_case(y, x))
-	{
 		return a_atan2(y, x);
-	}
 
 	int q = 0;
 	//auto a = a_atan2_r_helper(y, x, q);
@@ -1412,9 +1396,7 @@ template <std::floating_point T>
 constexpr auto a_atan_r(const T y)
 {
 	if (atan_boundary_case(y))
-	{
 		return a_atan(y);
-	}
 
-	return a_atan2_r(y, T(1));
+	return a_atan2_r(y, T{1});
 }

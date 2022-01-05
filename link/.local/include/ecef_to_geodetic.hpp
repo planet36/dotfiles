@@ -17,7 +17,9 @@
 
 /// convert from ECEF to geodetic
 /**
-D. K. Olson, "Converting Earth-centered, Earth-fixed coordinates to geodetic coordinates," in IEEE Transactions on Aerospace and Electronic Systems, vol. 32, no. 1, pp. 473-476, Jan. 1996, doi: 10.1109/7.481290.
+D. K. Olson, "Converting Earth-centered, Earth-fixed coordinates to geodetic
+coordinates," in IEEE Transactions on Aerospace and Electronic Systems, vol.
+32, no. 1, pp. 473-476, Jan. 1996, doi: 10.1109/7.481290.
 
 U.S. Government work, U.S. copyright does not apply.
 
@@ -106,7 +108,9 @@ void ecef_to_geodetic(const Ellipsoid<T>& ell,
 
 /// convert from ECEF to geodetic
 /**
-D. K. Olson, "Converting Earth-centered, Earth-fixed coordinates to geodetic coordinates," in IEEE Transactions on Aerospace and Electronic Systems, vol. 32, no. 1, pp. 473-476, Jan. 1996, doi: 10.1109/7.481290.
+D. K. Olson, "Converting Earth-centered, Earth-fixed coordinates to geodetic
+coordinates," in IEEE Transactions on Aerospace and Electronic Systems, vol.
+32, no. 1, pp. 473-476, Jan. 1996, doi: 10.1109/7.481290.
 
 U.S. Government work, U.S. copyright does not apply.
 

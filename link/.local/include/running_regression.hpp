@@ -75,7 +75,8 @@ public:
 	}
 
 	template <std::floating_point T2>
-	friend running_regression<T2> operator+(const running_regression<T2>& a, const running_regression<T2>& b);
+	friend running_regression<T2> operator+(const running_regression<T2>& a,
+	                                        const running_regression<T2>& b);
 
 	running_regression<T>& operator+=(const running_regression<T>& that)
 	{
@@ -86,7 +87,8 @@ public:
 };
 
 template <std::floating_point T>
-running_regression<T> operator+(const running_regression<T>& a, const running_regression<T>& b)
+running_regression<T> operator+(const running_regression<T>& a,
+                                const running_regression<T>& b)
 {
 	running_regression<T> combined;
 

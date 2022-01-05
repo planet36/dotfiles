@@ -36,7 +36,9 @@ NGA.STND.0036_1.0.0_WGS84 2014-07-08
 
 Page C-2
 \verbatim
-To facilitate correct referencing, a standardized two letter code is also included to identify the different ellipsoids and/or their “versions” pertaining to the different values of the semi-major axis (a).
+To facilitate correct referencing, a standardized two letter code is also
+included to identify the different ellipsoids and/or their “versions”
+pertaining to the different values of the semi-major axis (a).
 \endverbatim
 
 Page C-3
@@ -47,7 +49,8 @@ Used for Datum Transformations*
 
 * Refer to Appendices D, E, and F.
 ** As accepted by NGA.
-*** Through adoption of a new yard to meter conversion factor in the referenced country.
+*** Through adoption of a new yard to meter conversion factor in the referenced
+country.
 \endverbatim
 */
 enum class ELLIPSOID_ID_CODE : unsigned short
@@ -80,7 +83,8 @@ enum class ELLIPSOID_ID_CODE : unsigned short
 };
 
 /// Convert the Reference Ellipsoid ID Code to a string
-constexpr std::string_view ellipsoid_id_code_to_str(const ELLIPSOID_ID_CODE ell_id_code)
+constexpr std::string_view
+ellipsoid_id_code_to_str(const ELLIPSOID_ID_CODE ell_id_code)
 {
 	switch (ell_id_code)
 	{
@@ -126,7 +130,8 @@ Used for Datum Transformations*
 
 * Refer to Appendices D, E, and F.
 ** As accepted by NGA.
-*** Through adoption of a new yard to meter conversion factor in the referenced country.
+*** Through adoption of a new yard to meter conversion factor in the referenced
+country.
 \endverbatim
 */
 template <std::floating_point T>
@@ -171,7 +176,8 @@ Used for Datum Transformations*
 
 * Refer to Appendices D, E, and F.
 ** As accepted by NGA.
-*** Through adoption of a new yard to meter conversion factor in the referenced country.
+*** Through adoption of a new yard to meter conversion factor in the referenced
+country.
 \endverbatim
 */
 constexpr std::array<std::string_view, 25> reference_ellipsoid_names {
