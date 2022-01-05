@@ -141,7 +141,7 @@ int main(int argc, char* const argv[])
 	}
 
 	struct sigaction signal_action;
-	(void)memset(&signal_action, 0, sizeof (signal_action));
+	(void)memset(&signal_action, 0, sizeof(signal_action));
 	signal_action.sa_flags = SA_RESTART;
 	signal_action.sa_handler = signal_handler;
 
@@ -159,7 +159,7 @@ int main(int argc, char* const argv[])
 		SIGUSR2,
 	};
 
-	for (size_t i = 0; i < sizeof (signals_to_handle) / sizeof (signals_to_handle[0]); ++i)
+	for (size_t i = 0; i < sizeof(signals_to_handle) / sizeof(signals_to_handle[0]); ++i)
 	{
 		if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
 			err(EXIT_FAILURE, "sigaction");
@@ -215,7 +215,7 @@ int main(int argc, char* const argv[])
 				cpu_usage = 1 - (double)(idle_ticks - prev_idle_ticks) / (sum_ticks - prev_sum_ticks);
 
 			char dest_buf[32] = {'\0'};
-			(void)snprintf(dest_buf, sizeof (dest_buf), "%.6f", cpu_usage);
+			(void)snprintf(dest_buf, sizeof(dest_buf), "%.6f", cpu_usage);
 
 			if (dest_path != NULL)
 			{

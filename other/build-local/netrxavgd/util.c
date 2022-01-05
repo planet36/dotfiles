@@ -15,7 +15,7 @@
 char* escape_char(int ch)
 {
 	static char buf[32] = {'\0'};
-	(void)snprintf(buf, sizeof (buf), isprint(ch) ? "%c" : "%#X", ch);
+	(void)snprintf(buf, sizeof(buf), isprint(ch) ? "%c" : "%#X", ch);
 	return buf;
 }
 

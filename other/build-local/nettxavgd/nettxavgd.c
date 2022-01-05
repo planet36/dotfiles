@@ -60,8 +60,8 @@ void set_default_net_iface()
 	if (n == -1)
 		err(EXIT_FAILURE, "scandir");
 
-	(void)strncpy(default_net_iface, namelist[0]->d_name, sizeof (default_net_iface));
-	default_net_iface[sizeof (default_net_iface) - 1] = '\0';
+	(void)strncpy(default_net_iface, namelist[0]->d_name, sizeof(default_net_iface));
+	default_net_iface[sizeof(default_net_iface) - 1] = '\0';
 
 	while (n--)
 	{
@@ -161,10 +161,10 @@ int main(int argc, char* const argv[])
 	// {{{ adapted from my slstatus
 	// https://github.com/planet36/slstatus/blob/main/components/netspeeds.c
 	char net_iface_path[PATH_MAX] = {'\0'};
-	int n = snprintf(net_iface_path, sizeof (net_iface_path),
+	int n = snprintf(net_iface_path, sizeof(net_iface_path),
 	                 "/sys/class/net/%s/statistics/tx_bytes", net_iface);
 
-	if (n < 0 || (size_t)n >= sizeof (net_iface_path))
+	if (n < 0 || (size_t)n >= sizeof(net_iface_path))
 	{
 		errx(EXIT_FAILURE, "snprintf");
 		return -1;
@@ -193,7 +193,7 @@ int main(int argc, char* const argv[])
 	}
 
 	struct sigaction signal_action;
-	(void)memset(&signal_action, 0, sizeof (signal_action));
+	(void)memset(&signal_action, 0, sizeof(signal_action));
 	signal_action.sa_flags = SA_RESTART;
 	signal_action.sa_handler = signal_handler;
 
@@ -211,7 +211,7 @@ int main(int argc, char* const argv[])
 		SIGUSR2,
 	};
 
-	for (size_t i = 0; i < sizeof (signals_to_handle) / sizeof (signals_to_handle[0]); ++i)
+	for (size_t i = 0; i < sizeof(signals_to_handle) / sizeof(signals_to_handle[0]); ++i)
 	{
 		if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
 			err(EXIT_FAILURE, "sigaction");
@@ -276,7 +276,7 @@ int main(int argc, char* const argv[])
 				tx_bytes_per_s = (uintmax_t)(((tx_bytes - prev_tx_bytes) / delta_time_s) + 0.5);
 
 			char dest_buf[32] = {'\0'};
-			(void)snprintf(dest_buf, sizeof (dest_buf), "%ju", tx_bytes_per_s);
+			(void)snprintf(dest_buf, sizeof(dest_buf), "%ju", tx_bytes_per_s);
 
 			if (dest_path != NULL)
 			{
