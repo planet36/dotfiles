@@ -31,34 +31,39 @@ bool isword(const char c)
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
+bool is_shell_special_char(const char c)
+{
+	return
+		(c == '\t') ||
+		(c == '\n') ||
+		(c == ' ' ) ||
+		(c == '"' ) ||
+		(c == '#' ) ||
+		(c == '$' ) ||
+		(c == '%' ) ||
+		(c == '&' ) ||
+		(c == '\'') ||
+		(c == '(' ) ||
+		(c == ')' ) ||
+		(c == '*' ) ||
+		(c == ';' ) ||
+		(c == '<' ) ||
+		(c == '=' ) ||
+		(c == '>' ) ||
+		(c == '\?') ||
+		(c == '[' ) ||
+		(c == '\\') ||
+		(c == '`' ) ||
+		(c == '|' ) ||
+		(c == '~' )
+		;
+}
+
 bool contains_shell_special_chars(const std::string& s)
 {
 	for (const char c : s)
 	{
-		if (
-			(c == '\t') ||
-			(c == '\n') ||
-			(c == ' ' ) ||
-			(c == '"' ) ||
-			(c == '#' ) ||
-			(c == '$' ) ||
-			(c == '%' ) ||
-			(c == '&' ) ||
-			(c == '\'') ||
-			(c == '(' ) ||
-			(c == ')' ) ||
-			(c == '*' ) ||
-			(c == ';' ) ||
-			(c == '<' ) ||
-			(c == '=' ) ||
-			(c == '>' ) ||
-			(c == '\?') ||
-			(c == '[' ) ||
-			(c == '\\') ||
-			(c == '`' ) ||
-			(c == '|' ) ||
-			(c == '~' )
-			)
+		if (is_shell_special_char(c))
 			return true;
 	}
 
