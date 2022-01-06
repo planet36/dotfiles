@@ -75,7 +75,7 @@ alias cls='printf "\ec"' # tput clear
 alias cp='cp --archive --backup=numbered'
 alias ctags='ctags --recurse=yes --totals=yes --languages=C,C++'
 #alias d='ls --human-readable -o --file-type --color'
-alias d='lsd --long'
+alias d='lsd --date=relative --icon=never --long'
 alias da='d --almost-all'
 alias df='df --human-readable --print-type --exclude-type=squashfs'
 alias diff='diff --unified --color'
