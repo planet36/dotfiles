@@ -406,13 +406,13 @@ function install_vim_nvim_plugins
 
     if command -v vim > /dev/null
     then
-        #vim +PlugUpgrade +PlugInstall +qall
+        #MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim +PlugUpgrade +PlugInstall +qall
         if $DRY_RUN
         then
             echo \
-            vim -c PlugInstall -c qall
+            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c PlugInstall -c qall
         else
-            vim -c PlugInstall -c qall || return
+            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c PlugInstall -c qall || return
         fi
     fi
 
@@ -437,10 +437,10 @@ function uninstall_vim_nvim_plugins
         then
             # shellcheck disable=SC2016
             echo \
-            vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall
+            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall
         else
             # shellcheck disable=SC2016
-            vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall || return
+            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall || return
         fi
     fi
 
