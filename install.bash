@@ -444,7 +444,7 @@ function uninstall_vim_nvim_plugins
         fi
     fi
 
-    if command -v nvim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/vim/plugins-empty.vim ]]
+    if command -v nvim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/nvim/plugins-empty.vim ]]
     then
         if $DRY_RUN
         then
