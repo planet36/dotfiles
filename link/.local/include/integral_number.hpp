@@ -11,7 +11,6 @@
 #pragma once
 
 #include "type_any_of.hpp"
-
 #include <type_traits>
 
 template <typename T>
