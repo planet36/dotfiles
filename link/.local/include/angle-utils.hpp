@@ -34,6 +34,13 @@ inline constexpr int arcsec_per_arcmin = 60;
 template <std::floating_point T>
 inline constexpr T deg_per_rad = 180 / M_pi<T>;
 
+inline constexpr int quadrants_per_rev = 4;
+inline constexpr int sextants_per_rev = 6;
+inline constexpr int octants_per_rev = 8;
+inline constexpr int hexacontades_per_rev = 60;
+inline constexpr int binary_degrees_per_rev = 256;
+inline constexpr int gradians_per_rev = 400;
+
 /// convert to radians from milliradians
 template <std::floating_point T>
 constexpr T rad_from_mrad(const T x_mrad)

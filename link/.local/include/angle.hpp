@@ -545,13 +545,6 @@ struct const_angle<angle_unit::arcsecond, T>
 template <std::floating_point T>
 using const_ang_arcsec = const_angle<angle_unit::arcsecond, T>;
 
-inline constexpr int quadrants_per_rev = 4;
-inline constexpr int sextants_per_rev = 6;
-inline constexpr int octants_per_rev = 8;
-inline constexpr int hexacontades_per_rev = 60;
-inline constexpr int binary_degrees_per_rev = 256;
-inline constexpr int gradians_per_rev = 400;
-
 /// convert to angle from quadrants
 template <std::floating_point T>
 constexpr auto convert_from_quadrant(const T x_quadrant)
