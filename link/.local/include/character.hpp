@@ -10,27 +10,25 @@
 
 #pragma once
 
+#include "type_any_of.hpp"
+
 #include <type_traits>
 
 template <typename T>
-struct is_narrow_character :
-std::bool_constant<
-   std::is_same_v<char         , std::remove_cv_t<T>>
-|| std::is_same_v<signed char  , std::remove_cv_t<T>>
-|| std::is_same_v<unsigned char, std::remove_cv_t<T>>
-|| std::is_same_v<char8_t      , std::remove_cv_t<T>>
->{};
+struct is_narrow_character : is_type_any_of<std::remove_cv_t<T>,
+	char,
+	signed char,
+	unsigned char,
+	char8_t>{};
 
 template <typename T>
 inline constexpr bool is_narrow_character_v = is_narrow_character<T>::value;
 
 template <typename T>
-struct is_wide_character :
-std::bool_constant<
-   std::is_same_v<char16_t, std::remove_cv_t<T>>
-|| std::is_same_v<char32_t, std::remove_cv_t<T>>
-|| std::is_same_v<wchar_t , std::remove_cv_t<T>>
->{};
+struct is_wide_character : is_type_any_of<std::remove_cv_t<T>,
+	char16_t,
+	char32_t,
+	wchar_t>{};
 
 template <typename T>
 inline constexpr bool is_wide_character_v = is_wide_character<T>::value;
