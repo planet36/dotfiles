@@ -13,7 +13,7 @@
 #include <string>
 #include <string_view>
 
-constexpr std::array<char, 128> ascii_array {
+inline constexpr std::array<char, 128> ascii_array {
 	'\x00', '\x01', '\x02', '\x03', '\x04', '\x05', '\x06', '\x07', '\x08', '\x09', '\x0A', '\x0B', '\x0C', '\x0D', '\x0E', '\x0F',
 	'\x10', '\x11', '\x12', '\x13', '\x14', '\x15', '\x16', '\x17', '\x18', '\x19', '\x1A', '\x1B', '\x1C', '\x1D', '\x1E', '\x1F',
 	'\x20', '\x21', '\x22', '\x23', '\x24', '\x25', '\x26', '\x27', '\x28', '\x29', '\x2A', '\x2B', '\x2C', '\x2D', '\x2E', '\x2F',
@@ -24,9 +24,9 @@ constexpr std::array<char, 128> ascii_array {
 	'\x70', '\x71', '\x72', '\x73', '\x74', '\x75', '\x76', '\x77', '\x78', '\x79', '\x7A', '\x7B', '\x7C', '\x7D', '\x7E', '\x7F',
 };
 
-const std::string ascii_string{ascii_array.cbegin(), ascii_array.cend()};
+inline const std::string ascii_string{ascii_array.cbegin(), ascii_array.cend()};
 
-constexpr std::string_view ascii_string_view{ascii_array.cbegin(), ascii_array.cend()};
+inline constexpr std::string_view ascii_string_view{ascii_array.cbegin(), ascii_array.cend()};
 
 /**
 \sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence
@@ -57,7 +57,7 @@ for i in range(128):
         print('"",')
 \endcode
 */
-constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_oct {
+inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_oct {
 	"\\000",
 	"\\001",
 	"\\002",
@@ -217,7 +217,7 @@ for i in range(128):
         print('"",')
 \endcode
 */
-constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_hex {
+inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_hex {
 	"\\x00",
 	"\\x01",
 	"\\x02",

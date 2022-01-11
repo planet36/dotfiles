@@ -18,12 +18,12 @@
 
 namespace
 {
-constexpr char backslash = '\\';
-constexpr char single_quote = '\'';
-constexpr char double_quote = '"';
+inline constexpr char backslash = '\\';
+inline constexpr char single_quote = '\'';
+inline constexpr char double_quote = '"';
 
 // single quote, backslash, single quote, single quote
-constexpr std::string_view single_quote_escaped{R"('\'')"};
+inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 }
 
 bool isword(const char c)
