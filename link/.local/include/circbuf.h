@@ -7,7 +7,7 @@
 \author Steven Ward
 */
 
-# pragma once
+#pragma once
 
 // inspired by
 // https://embeddedartistry.com/blog/2017/05/17/creating-a-circular-buffer-in-c-and-c/

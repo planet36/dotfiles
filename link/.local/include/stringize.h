@@ -9,7 +9,7 @@
 \sa https://en.wikipedia.org/wiki/C_preprocessor#Token_stringification
 */
 
-# pragma once
+#pragma once
 
 #define XSTR(s) STR(s)
 #define STR(s) #s

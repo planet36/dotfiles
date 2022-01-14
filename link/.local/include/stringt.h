@@ -7,7 +7,7 @@
 \author Steven Ward
 */
 
-# pragma once
+#pragma once
 
 #include "likely.h"
 

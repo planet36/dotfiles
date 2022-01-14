@@ -7,7 +7,7 @@
 \author Steven Ward
 */
 
-# pragma once
+#pragma once
 
 // https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-_005f_005fbuiltin_005fexpect
 // https://llvm.org/docs/BranchWeightMetadata.html#built-in-expect-instructions
