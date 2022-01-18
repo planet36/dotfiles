@@ -13,8 +13,9 @@
 #include <type_traits>
 
 template <typename Iter>
-struct is_const_iterator :
-std::bool_constant<!std::is_swappable_v<typename std::iterator_traits<Iter>::reference>>{};
+struct is_const_iterator:
+std::bool_constant<!std::is_swappable_v<typename std::iterator_traits<Iter>::reference>>
+{};
 
 template <typename Iter>
 inline constexpr bool is_const_iterator_v = is_const_iterator<Iter>::value;

@@ -62,34 +62,34 @@ struct Ellipsoid
 	// derived geometric constants
 
 	/// semi-minor axis (polar radius of the earth) (meters)
-	const T b = a*(1-f);
+	const T b = a * (1 - f);
 
 	/// a squared
-	const T a2 = a*a;
+	const T a2 = a * a;
 
 	/// b squared
-	const T b2 = b*b;
+	const T b2 = b * b;
 
 	/// second flattening
-	const T fp = f/(1-f); // (a-b)/b
+	const T fp = f / (1 - f); // (a - b) / b
 
 	/// third flattening
-	const T n = f/(2-f); // (a-b)/(a+b)
+	const T n = f / (2 - f); // (a - b) / (a+b)
 
 	/// first eccentricity squared
-	const T e2 = f*(2-f); // (a2-b2)/a2
+	const T e2 = f * (2 - f); // (a2 - b2) / a2
 
 	/// first eccentricity
 	const T e = std::sqrt(e2);
 
 	/// second eccentricity squared
-	const T ep2 = e2/(1-e2); // (a2-b2)/b2
+	const T ep2 = e2 / (1 - e2); // (a2 - b2) / b2
 
 	/// second eccentricity
 	const T ep = std::sqrt(ep2);
 
 	/// third eccentricity squared
-	const T epp2 = e2/(2-e2); // (a2-b2)/(a2+b2)
+	const T epp2 = e2 / (2 - e2); // (a2 - b2) / (a2 + b2)
 
 	/// third eccentricity
 	const T epp = std::sqrt(epp2);
@@ -120,15 +120,14 @@ struct Ellipsoid
 	Ellipsoid() = delete;
 
 	constexpr Ellipsoid(
-			const T _a,
-			const T _f_recip, // 1/f
-			const T _GM = 3.986004418E14L,
-			const T _omega = 7.292115E-5L
-			):
-		a(_a),
-		f(1/_f_recip),
-		GM(_GM),
-		omega(_omega)
+		const T _a,
+		const T _f_recip, // 1 / f
+		const T _GM = 3.986004418E14L,
+		const T _omega = 7.292115E-5L):
+	a(_a),
+	f(1 / _f_recip),
+	GM(_GM),
+	omega(_omega)
 	{}
 
 	/// get the radius of curvature in the prime vertical (meters)
@@ -294,11 +293,10 @@ struct Ellipsoid
 
 	bool operator==(const Ellipsoid& that) const
 	{
-		return
-			this->a == that.a &&
-			this->f == that.f &&
-			this->GM == that.GM &&
-			this->omega == that.omega;
+		return this->a == that.a &&
+		       this->f == that.f &&
+		       this->GM == that.GM &&
+		       this->omega == that.omega;
 	}
 
 	bool operator!=(const Ellipsoid& that) const

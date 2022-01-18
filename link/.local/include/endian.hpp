@@ -15,11 +15,11 @@
 
 // https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html
 // https://clang.llvm.org/docs/LanguageExtensions.html
-constexpr uint16_t rev_2_bytes(uint16_t x) { return __builtin_bswap16(x); }
-constexpr uint32_t rev_4_bytes(uint32_t x) { return __builtin_bswap32(x); }
-constexpr uint64_t rev_8_bytes(uint64_t x) { return __builtin_bswap64(x); }
+constexpr uint16_t rev_2_bytes(uint16_t x) {return __builtin_bswap16(x);}
+constexpr uint32_t rev_4_bytes(uint32_t x) {return __builtin_bswap32(x);}
+constexpr uint64_t rev_8_bytes(uint64_t x) {return __builtin_bswap64(x);}
 #if defined(__int128)
-constexpr unsigned __int128 rev_16_bytes(unsigned __int128 x) { return __builtin_bswap128(x); }
+constexpr unsigned __int128 rev_16_bytes(unsigned __int128 x) {return __builtin_bswap128(x);}
 #endif
 
 template <typename T>

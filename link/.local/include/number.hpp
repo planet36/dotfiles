@@ -13,6 +13,7 @@
 #pragma once
 
 #include "character.hpp"
+
 #include <type_traits>
 
 // adapted from

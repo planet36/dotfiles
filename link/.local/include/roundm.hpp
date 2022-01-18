@@ -15,10 +15,9 @@
 \pre \a m > 0
 */
 template <std::integral T>
-constexpr
-T roundm_trunc(const T x, const T m)
+constexpr T roundm_trunc(const T x, const T m)
 {
-	return x - x%m;
+	return x - x % m;
 	//return (x/m)*m;
 }
 
@@ -26,8 +25,7 @@ T roundm_trunc(const T x, const T m)
 \pre \a m > 0
 */
 template <std::integral T>
-constexpr
-T roundm_floor(const T x, const T m)
+constexpr T roundm_floor(const T x, const T m)
 {
 	const auto t = roundm_trunc(x, m);
 
@@ -46,8 +44,7 @@ T roundm_floor(const T x, const T m)
 \pre \a m > 0
 */
 template <std::integral T>
-constexpr
-T roundm_ceil(const T x, const T m)
+constexpr T roundm_ceil(const T x, const T m)
 {
 	const auto t = roundm_trunc(x, m);
 
@@ -67,8 +64,7 @@ T roundm_ceil(const T x, const T m)
 \pre \a m > 0
 */
 template <std::integral T>
-constexpr
-T roundm_up(const T x, const T m)
+constexpr T roundm_up(const T x, const T m)
 {
 	const auto t = roundm_trunc(x, m);
 
@@ -86,13 +82,12 @@ T roundm_up(const T x, const T m)
 \pre \a m > 0
 */
 template <std::integral T>
-constexpr
-T roundm_nearest(const T x, const T m)
+constexpr T roundm_nearest(const T x, const T m)
 {
 	const auto t = roundm_trunc(x, m);
 
 	if (x < 0)
-		return (x%m < -(m/2)) ? t - m : t;
+		return (x % m < -(m / 2)) ? t - m : t;
 	else
-		return (x%m >  (m/2)) ? t + m : t;
+		return (x % m >  (m / 2)) ? t + m : t;
 }

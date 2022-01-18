@@ -19,7 +19,8 @@ public:
 	// http://www.cplusplus.com/forum/general/187899/#msg913531
 	using stopwatch_clock = typename std::conditional_t<
 		std::chrono::high_resolution_clock::is_steady,
-		std::chrono::high_resolution_clock, std::chrono::steady_clock>;
+		std::chrono::high_resolution_clock,
+		std::chrono::steady_clock>;
 
 	stopwatch()
 	{

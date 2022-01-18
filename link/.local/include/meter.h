@@ -200,7 +200,7 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
 	 */
 	// *blocks_index = (size_t)my_fmod(x * meter_width * blocks_len, blocks_len);
 	*blocks_index = (size_t)(my_fmod(x * meter_width * (blocks_len - 1U),
-	                              blocks_len - 1U) + 0.5);
+	                                 blocks_len - 1U) + 0.5);
 
 	*right_width = meter_width - *left_width - 1U;
 }

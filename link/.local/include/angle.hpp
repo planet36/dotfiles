@@ -102,20 +102,20 @@ constexpr T convert_to(const T& x)
 
 	// convert between adjacent units
 
-	if constexpr (To == angle_unit::radian && From == angle_unit::milliradian) { return rad_from_mrad(x); }
-	if constexpr (To == angle_unit::milliradian && From == angle_unit::radian) { return mrad_from_rad(x); }
+	if constexpr (To == angle_unit::radian && From == angle_unit::milliradian) {return rad_from_mrad(x);}
+	if constexpr (To == angle_unit::milliradian && From == angle_unit::radian) {return mrad_from_rad(x);}
 
-	if constexpr (To == angle_unit::revolution && From == angle_unit::radian) { return rev_from_rad(x); }
-	if constexpr (To == angle_unit::radian && From == angle_unit::revolution) { return rad_from_rev(x); }
+	if constexpr (To == angle_unit::revolution && From == angle_unit::radian) {return rev_from_rad(x);}
+	if constexpr (To == angle_unit::radian && From == angle_unit::revolution) {return rad_from_rev(x);}
 
-	if constexpr (To == angle_unit::degree && From == angle_unit::revolution) { return deg_from_rev(x); }
-	if constexpr (To == angle_unit::revolution && From == angle_unit::degree) { return rev_from_deg(x); }
+	if constexpr (To == angle_unit::degree && From == angle_unit::revolution) {return deg_from_rev(x);}
+	if constexpr (To == angle_unit::revolution && From == angle_unit::degree) {return rev_from_deg(x);}
 
-	if constexpr (To == angle_unit::arcminute && From == angle_unit::degree) { return arcmin_from_deg(x); }
-	if constexpr (To == angle_unit::degree && From == angle_unit::arcminute) { return deg_from_arcmin(x); }
+	if constexpr (To == angle_unit::arcminute && From == angle_unit::degree) {return arcmin_from_deg(x);}
+	if constexpr (To == angle_unit::degree && From == angle_unit::arcminute) {return deg_from_arcmin(x);}
 
-	if constexpr (To == angle_unit::arcsecond && From == angle_unit::arcminute) { return arcsec_from_arcmin(x); }
-	if constexpr (To == angle_unit::arcminute && From == angle_unit::arcsecond) { return arcmin_from_arcsec(x); }
+	if constexpr (To == angle_unit::arcsecond && From == angle_unit::arcminute) {return arcsec_from_arcmin(x);}
+	if constexpr (To == angle_unit::arcminute && From == angle_unit::arcsecond) {return arcmin_from_arcsec(x);}
 
 	// TODO: it might be possible to do conversion of the irregular units here
 
@@ -159,52 +159,52 @@ public:
 	angle() = default;
 
 	/// ctor
-	constexpr angle(const T x) : value(x) {}
+	constexpr angle(const T x): value(x) {}
 
 	/// copy ctor
 	angle(const angle&) = default;
 
 	/// conversion ctor
 	template <angle_unit U2, std::floating_point T2>
-	constexpr angle(const angle<U2, T2>& a) :
+	constexpr angle(const angle<U2, T2>& a):
 		value(convert_from<U2, U>(a.scalar()))
 	{}
 
 	/// default assignment
 	angle& operator=(const angle&) = default;
 
-	constexpr angle& operator+=(const angle& that) { value += that.value; return *this; }
-	constexpr angle& operator-=(const angle& that) { value -= that.value; return *this; }
-	constexpr angle& operator*=(const T& x) { value *= x; return *this; }
-	constexpr angle& operator/=(const T& x) { value /= x; return *this; }
+	constexpr angle& operator+=(const angle& that) {value += that.value; return *this;}
+	constexpr angle& operator-=(const angle& that) {value -= that.value; return *this;}
+	constexpr angle& operator*=(const T& x) {value *= x; return *this;}
+	constexpr angle& operator/=(const T& x) {value /= x; return *this;}
 
-	constexpr T to_mrad() const { return convert_from<U, angle_unit::milliradian>(value); }
-	constexpr T to_rad() const { return convert_from<U, angle_unit::radian>(value); }
-	constexpr T to_rev() const { return convert_from<U, angle_unit::revolution>(value); }
-	constexpr T to_deg() const { return convert_from<U, angle_unit::degree>(value); }
-	constexpr T to_arcmin() const { return convert_from<U, angle_unit::arcminute>(value); }
-	constexpr T to_arcsec() const { return convert_from<U, angle_unit::arcsecond>(value); }
+	constexpr T to_mrad() const {return convert_from<U, angle_unit::milliradian>(value);}
+	constexpr T to_rad() const {return convert_from<U, angle_unit::radian>(value);}
+	constexpr T to_rev() const {return convert_from<U, angle_unit::revolution>(value);}
+	constexpr T to_deg() const {return convert_from<U, angle_unit::degree>(value);}
+	constexpr T to_arcmin() const {return convert_from<U, angle_unit::arcminute>(value);}
+	constexpr T to_arcsec() const {return convert_from<U, angle_unit::arcsecond>(value);}
 
 	/// get the scalar value of the angle (in angle units)
 	/**
 	** This is useful for getting the raw internal value regardless of its unit of measurement.
 	*/
-	constexpr T scalar() const { return value; }
+	constexpr T scalar() const {return value;}
 
 	/// get the unit of measurement of the angle
-	constexpr angle_unit units() const { return U; }
+	constexpr angle_unit units() const {return U;}
 
 	/// convert to a different data type
 	template <std::floating_point T2>
-	constexpr auto to() const { return angle<U, T2>{*this}; }
+	constexpr auto to() const {return angle<U, T2>{*this};}
 
 	/// convert to a different angle unit
 	template <angle_unit U2>
-	constexpr auto to() const { return angle<U2, T>{*this}; }
+	constexpr auto to() const {return angle<U2, T>{*this};}
 
 	/// convert to a different angle unit and data type
 	template <angle_unit U2, std::floating_point T2>
-	constexpr auto to() const { return angle<U2, T2>{*this}; }
+	constexpr auto to() const {return angle<U2, T2>{*this};}
 };
 
 /// alias template
@@ -284,7 +284,7 @@ constexpr auto make_ang_arcsec(const T x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _mrad(const long double x)
+constexpr auto operator"" _mrad(const long double x)
 {
 	using T = long double;
 	return ang_mrad<T>{x};
@@ -297,7 +297,7 @@ constexpr auto operator "" _mrad(const long double x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _mrad(const unsigned long long int x)
+constexpr auto operator"" _mrad(const unsigned long long int x)
 {
 	using T = long double;
 	return ang_mrad<T>{static_cast<T>(x)};
@@ -310,7 +310,7 @@ constexpr auto operator "" _mrad(const unsigned long long int x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _rad(const long double x)
+constexpr auto operator"" _rad(const long double x)
 {
 	using T = long double;
 	return ang_rad<T>{x};
@@ -323,7 +323,7 @@ constexpr auto operator "" _rad(const long double x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _rad(const unsigned long long int x)
+constexpr auto operator"" _rad(const unsigned long long int x)
 {
 	using T = long double;
 	return ang_rad<T>{static_cast<T>(x)};
@@ -336,7 +336,7 @@ constexpr auto operator "" _rad(const unsigned long long int x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _rev(const long double x)
+constexpr auto operator"" _rev(const long double x)
 {
 	using T = long double;
 	return ang_rev<T>{x};
@@ -349,7 +349,7 @@ constexpr auto operator "" _rev(const long double x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _rev(const unsigned long long int x)
+constexpr auto operator"" _rev(const unsigned long long int x)
 {
 	using T = long double;
 	return ang_rev<T>{static_cast<T>(x)};
@@ -362,7 +362,7 @@ constexpr auto operator "" _rev(const unsigned long long int x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _deg(const long double x)
+constexpr auto operator"" _deg(const long double x)
 {
 	using T = long double;
 	return ang_deg<T>{x};
@@ -375,7 +375,7 @@ constexpr auto operator "" _deg(const long double x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _deg(const unsigned long long int x)
+constexpr auto operator"" _deg(const unsigned long long int x)
 {
 	using T = long double;
 	return ang_deg<T>{static_cast<T>(x)};
@@ -388,7 +388,7 @@ constexpr auto operator "" _deg(const unsigned long long int x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _arcmin(const long double x)
+constexpr auto operator"" _arcmin(const long double x)
 {
 	using T = long double;
 	return ang_arcmin<T>{x};
@@ -401,7 +401,7 @@ constexpr auto operator "" _arcmin(const long double x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _arcmin(const unsigned long long int x)
+constexpr auto operator"" _arcmin(const unsigned long long int x)
 {
 	using T = long double;
 	return ang_arcmin<T>{static_cast<T>(x)};
@@ -414,7 +414,7 @@ constexpr auto operator "" _arcmin(const unsigned long long int x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _arcsec(const long double x)
+constexpr auto operator"" _arcsec(const long double x)
 {
 	using T = long double;
 	return ang_arcsec<T>{x};
@@ -427,7 +427,7 @@ constexpr auto operator "" _arcsec(const long double x)
 \param x the given value
 \return an angle of the given value
 */
-constexpr auto operator "" _arcsec(const unsigned long long int x)
+constexpr auto operator"" _arcsec(const unsigned long long int x)
 {
 	using T = long double;
 	return ang_arcsec<T>{static_cast<T>(x)};
@@ -1235,12 +1235,14 @@ constexpr bool atan_boundary_case(const T y)
 	case FP_INFINITE:
 	case FP_NAN:
 	case FP_ZERO:
-		return true; break;
+		return true;
+		break;
 
 	case FP_NORMAL:
 	case FP_SUBNORMAL:
 	default:
-		return false; break;
+		return false;
+		break;
 	}
 }
 

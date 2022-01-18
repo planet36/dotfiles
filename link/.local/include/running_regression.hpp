@@ -19,14 +19,12 @@ template <std::floating_point T>
 class running_regression
 {
 private:
-
 	running_stats<T> x_stats;
 	running_stats<T> y_stats;
 	T S_xy = 0;
 	long long n = 0;
 
 public:
-
 	/*
 	/// default ctor
 	running_regression()
@@ -99,7 +97,7 @@ running_regression<T> operator+(const running_regression<T>& a,
 	auto delta_x = b.x_stats.mean() - a.x_stats.mean();
 	auto delta_y = b.y_stats.mean() - a.y_stats.mean();
 	combined.S_xy = a.S_xy + b.S_xy +
-		a.n * b.n * delta_x * delta_y / combined.n;
+	                a.n * b.n * delta_x * delta_y / combined.n;
 
 	return combined;
 }

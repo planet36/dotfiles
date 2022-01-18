@@ -19,10 +19,10 @@ nearest hundredth of a second) is printed (with a trailing newline) to stderr.
 #include <cstdio>
 
 #define TIME_THIS \
-std::fflush(stdout); const time_this TOKENPASTE2(_time_this_, __COUNTER__)
+	std::fflush(stdout); const time_this TOKENPASTE2(_time_this_, __COUNTER__)
 
 // https://stackoverflow.com/a/1597129/1892784
-#define TOKENPASTE(x, y) x ## y
+#define TOKENPASTE(x, y)  x##y
 #define TOKENPASTE2(x, y) TOKENPASTE(x, y)
 
 struct time_this
@@ -31,7 +31,8 @@ public:
 	// http://www.cplusplus.com/forum/general/187899/#msg913531
 	using timer_clock = typename std::conditional_t<
 		std::chrono::high_resolution_clock::is_steady,
-		std::chrono::high_resolution_clock, std::chrono::steady_clock>;
+		std::chrono::high_resolution_clock,
+		std::chrono::steady_clock>;
 
 	time_this(): t0(timer_clock::now())
 	{}
@@ -43,7 +44,7 @@ public:
 		const auto t1 = timer_clock::now();
 		fflush(stdout);
 		fprintf(stderr, "%.2f\n",
-				std::chrono::duration<double>(t1 - t0).count());
+		        std::chrono::duration<double>(t1 - t0).count());
 	}
 
 private:

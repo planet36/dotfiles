@@ -135,7 +135,7 @@ country.
 \endverbatim
 */
 template <std::floating_point T>
-constexpr std::array<Ellipsoid<T>, 25> reference_ellipsoids {
+constexpr std::array<Ellipsoid<T>, 25> reference_ellipsoids{
 	/*AA*/ Ellipsoid<T>{6'377'563.396L, 299.3249646L  },
 	/*AN*/ Ellipsoid<T>{6'378'160.0L  , 298.25L       },
 	/*BR*/ Ellipsoid<T>{6'377'397.155L, 299.1528128L  },
@@ -180,7 +180,7 @@ Used for Datum Transformations*
 country.
 \endverbatim
 */
-constexpr std::array<std::string_view, 25> reference_ellipsoid_names {
+constexpr std::array<std::string_view, 25> reference_ellipsoid_names{
 	/*AA*/ "Airy 1830",
 	/*AN*/ "Australian National 1966",
 	/*BR*/ "Bessel 1841: Ethiopia, Indonesia, Japan and Korea",

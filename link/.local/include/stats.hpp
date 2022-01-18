@@ -27,9 +27,9 @@ constexpr auto plus_abs = [](const auto& a, const auto& b)
 	return std::abs(a) + std::abs(b);
 };
 
-#define POW2(x) ((x)*(x))
-#define POW3(x) ((x)*(x)*(x))
-#define POW4(x) ((x)*(x)*(x)*(x))
+#define POW2(x) ((x) * (x))
+#define POW3(x) ((x) * (x) * (x))
+#define POW4(x) ((x) * (x) * (x) * (x))
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
@@ -101,8 +101,8 @@ auto minmax_vals(const Container& c)
 		                      std::numeric_limits<T>::quiet_NaN());
 
 	const auto& [min_iter, max_iter] = std::minmax_element(
-	                                       //std::execution::par_unseq,
-                                           std::cbegin(c), std::cend(c));
+		//std::execution::par_unseq,
+		std::cbegin(c), std::cend(c));
 	return std::make_pair(*min_iter, *max_iter);
 }
 
@@ -118,9 +118,9 @@ auto minmax_abs_vals(const Container& c)
 		                      std::numeric_limits<T>::quiet_NaN());
 
 	const auto& [min_iter, max_iter] = std::minmax_element(
-	                                       //std::execution::par_unseq,
-                                           std::cbegin(c), std::cend(c),
-	                                       compare_abs_less);
+		//std::execution::par_unseq,
+		std::cbegin(c), std::cend(c),
+		compare_abs_less);
 	return std::make_pair(*min_iter, *max_iter);
 }
 
@@ -180,7 +180,7 @@ auto arithmetic_mean_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto variance_val(const Container& c, const bool is_sample=false)
+auto variance_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
 	const auto n = std::size(c);
@@ -196,13 +196,13 @@ auto variance_val(const Container& c, const bool is_sample=false)
 	T m2{};
 	for (const auto& x : c)
 	{
-		m2 += POW2(x-μ);
+		m2 += POW2(x - μ);
 	}
 
 	T variance = m2;
 
 	if (is_sample)
-		variance /= (n-1);
+		variance /= (n - 1);
 	else
 		variance /= n;
 
@@ -211,7 +211,7 @@ auto variance_val(const Container& c, const bool is_sample=false)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto stdev_val(const Container& c, const bool is_sample=false)
+auto stdev_val(const Container& c, const bool is_sample = false)
 {
 	return std::sqrt(variance_val(c, is_sample));
 }
@@ -222,7 +222,7 @@ auto stdev_val(const Container& c, const bool is_sample=false)
 // https://brownmath.com/stat/shape.htm#Skewness
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto skewness_val(const Container& c, const bool is_sample=false)
+auto skewness_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
 	const auto n = std::size(c);
@@ -239,8 +239,8 @@ auto skewness_val(const Container& c, const bool is_sample=false)
 	T m3{};
 	for (const auto& x : c)
 	{
-		m2 += POW2(x-μ);
-		m3 += POW3(x-μ);
+		m2 += POW2(x - μ);
+		m3 += POW3(x - μ);
 	}
 	m2 /= n;
 	m3 /= n;
@@ -248,7 +248,7 @@ auto skewness_val(const Container& c, const bool is_sample=false)
 	T skewness = m3 / std::sqrt(m2 * m2 * m2);
 
 	if (is_sample)
-		skewness *= std::sqrt(n * (n-1)) / (n-2);
+		skewness *= std::sqrt(n * (n - 1)) / (n - 2);
 
 	return skewness;
 }
@@ -259,7 +259,7 @@ auto skewness_val(const Container& c, const bool is_sample=false)
 // https://brownmath.com/stat/shape.htm#Kurtosis
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto excess_kurtosis_val(const Container& c, const bool is_sample=false)
+auto excess_kurtosis_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
 	const auto n = std::size(c);
@@ -276,8 +276,8 @@ auto excess_kurtosis_val(const Container& c, const bool is_sample=false)
 	T m4{};
 	for (const auto& x : c)
 	{
-		m2 += POW2(x-μ);
-		m4 += POW4(x-μ);
+		m2 += POW2(x - μ);
+		m4 += POW4(x - μ);
 	}
 	m2 /= n;
 	m4 /= n;
@@ -285,8 +285,8 @@ auto excess_kurtosis_val(const Container& c, const bool is_sample=false)
 	T excess_kurtosis = m4 / (m2 * m2) - 3;
 
 	if (is_sample)
-		excess_kurtosis = ((n+1) * excess_kurtosis + 6) * static_cast<T>(n-1) /
-		                  ((n-2) * (n-3));
+		excess_kurtosis = ((n + 1) * excess_kurtosis + 6) * static_cast<T>(n - 1) /
+		                  ((n - 2) * (n - 3));
 
 	return excess_kurtosis;
 }
@@ -302,10 +302,10 @@ auto median_val(const Container& c)
 		return std::numeric_limits<T>::quiet_NaN();
 
 	if (n % 2 == 0) // even
-		return (*std::next(std::cbegin(c), n/2 - 1) +
-		        *std::next(std::cbegin(c), n/2)) / 2;
+		return (*std::next(std::cbegin(c), n / 2 - 1) +
+		        *std::next(std::cbegin(c), n / 2)) / 2;
 	else // odd
-		return *std::next(std::cbegin(c), n/2);
+		return *std::next(std::cbegin(c), n / 2);
 }
 
 template <typename Container>

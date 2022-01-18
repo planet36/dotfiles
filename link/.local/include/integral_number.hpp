@@ -11,6 +11,7 @@
 #pragma once
 
 #include "type_any_of.hpp"
+
 #include <type_traits>
 
 template <typename T>
@@ -22,10 +23,11 @@ struct is_integral_number : is_type_any_of<std::remove_cv_t<T>,
 	unsigned short,
 	unsigned int,
 	unsigned long,
-	unsigned long long>{};
+	unsigned long long>
+{};
 
 template <typename T>
 inline constexpr bool is_integral_number_v = is_integral_number<T>::value;
 
-template<typename T>
+template <typename T>
 concept integral_number = is_integral_number_v<T>;

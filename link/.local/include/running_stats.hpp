@@ -22,7 +22,6 @@ template <std::floating_point T>
 class running_stats
 {
 private:
-
 	T M1 = 0;
 	T M2 = 0;
 	T M3 = 0;
@@ -36,7 +35,6 @@ private:
 	long long n = 0;
 
 public:
-
 	/*
 	/// default ctor
 	running_stats()
@@ -182,16 +180,16 @@ running_stats<T> operator+(const running_stats<T>& a, const running_stats<T>& b)
 	combined.M1 = (a.n * a.M1 + b.n * b.M1) / combined.n;
 
 	combined.M2 = a.M2 + b.M2 +
-		delta2 * a.n * b.n / combined.n;
+	              delta2 * a.n * b.n / combined.n;
 
 	combined.M3 = a.M3 + b.M3 +
-		delta3 * a.n * b.n * (a.n - b.n) / (combined.n * combined.n);
+	              delta3 * a.n * b.n * (a.n - b.n) / (combined.n * combined.n);
 	combined.M3 += 3 * delta * (a.n * b.M2 - b.n * a.M2) / combined.n;
 
 	combined.M4 = a.M4 + b.M4 + delta4 * a.n * b.n * (a.n * a.n - a.n * b.n + b.n * b.n) /
-		(combined.n * combined.n * combined.n);
+	              (combined.n * combined.n * combined.n);
 	combined.M4 += 6 * delta2 * (a.n * a.n * b.M2 + b.n * b.n * a.M2) / (combined.n * combined.n) +
-		4 * delta * (a.n * b.M3 - b.n * a.M3) / combined.n;
+	               4 * delta * (a.n * b.M3 - b.n * a.M3) / combined.n;
 
 	return combined;
 }

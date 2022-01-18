@@ -16,32 +16,30 @@
 #include <cmath>
 #include <concepts>
 
-constexpr
-auto iabs(const std::signed_integral auto x)
+constexpr auto iabs(const std::signed_integral auto x)
 {
 	return std::abs(x);
 }
 
-constexpr
-auto iabs(const std::unsigned_integral auto x)
+constexpr auto iabs(const std::unsigned_integral auto x)
 {
 	return x;
 }
 
-constexpr
-auto int_div_floor(const std::integral auto x, const std::integral auto y)
+constexpr auto int_div_floor(const std::integral auto x,
+                             const std::integral auto y)
 {
 	return (x / y) - (!same_sign(x, y) && ((x % y) != 0));
 }
 
-constexpr
-auto int_div_ceil(const std::integral auto x, const std::integral auto y)
+constexpr auto int_div_ceil(const std::integral auto x,
+                            const std::integral auto y)
 {
 	return (x / y) + (same_sign(x, y) && ((x % y) != 0));
 }
 
-constexpr
-auto int_div_round(const std::integral auto x, const std::integral auto y)
+constexpr auto int_div_round(const std::integral auto x,
+                             const std::integral auto y)
 {
 	return (x / y) + sign(x % y) * sign(y) * (
 	           (iabs(x % y) > iabs(y / 2)) ||

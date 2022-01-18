@@ -44,13 +44,13 @@ consteval T pow_int_func()
 	else
 	{
 		// https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-		return B * pow_int_func<T, B, E-1>();
+		return B * pow_int_func<T, B, E - 1>();
 	}
 }
 
 /// Helper macro
 #define POW_INT(BASE, EXPONENT) \
-pow_int_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
+	pow_int_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
 
 /// Raise base \a B to the power of exponent \a E
 template <typename T, T B, uint8_t E>
@@ -72,10 +72,10 @@ consteval T pow_uint_func()
 	else
 	{
 		// https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-		return B * pow_uint_func<T, B, E-1>();
+		return B * pow_uint_func<T, B, E - 1>();
 	}
 }
 
 /// Helper macro
 #define POW_UINT(BASE, EXPONENT) \
-pow_uint_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
+	pow_uint_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()

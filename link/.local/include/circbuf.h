@@ -40,8 +40,7 @@ circbuf_init(uint32_t num_elems, uint32_t sizeof_elem)
 		.sizeof_elem = sizeof_elem,
 		.head = 0,
 		.tail = 0,
-		.full = false
-	};
+		.full = false};
 }
 
 static void
@@ -59,9 +58,9 @@ circbuf_free(circbuf* cbuf)
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
 // automatically deallocate circbuf
-#define CIRCBUF(varname, num_elems, type) \
-__attribute__((cleanup(circbuf_free))) \
-circbuf varname = circbuf_init(num_elems, sizeof(type));
+#define CIRCBUF(varname, num_elems, type)  \
+	__attribute__((cleanup(circbuf_free))) \
+	circbuf varname = circbuf_init(num_elems, sizeof(type));
 
 static bool
 circbuf_empty(const circbuf* cbuf)
@@ -76,11 +75,10 @@ circbuf_count(const circbuf* cbuf)
 		return 0;
 	else if (cbuf->full)
 		return cbuf->num_elems;
+	else if (cbuf->head > cbuf->tail)
+		return cbuf->head - cbuf->tail;
 	else
-		if (cbuf->head > cbuf->tail)
-			return cbuf->head - cbuf->tail;
-		else
-			return cbuf->num_elems - (cbuf->tail - cbuf->head);
+		return cbuf->num_elems - (cbuf->tail - cbuf->head);
 }
 
 static void

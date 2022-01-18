@@ -22,29 +22,29 @@ trailing newline) to stderr.
 #include <time.h>
 
 #ifdef __cplusplus
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wredundant-tags"
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
 #ifdef __cplusplus
-#define TIME_THIS \
-fflush(stdout); __attribute__((cleanup(print_timerdata_now_diff))) \
-const timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
-timerdata_now()
+	#define TIME_THIS \
+		fflush(stdout); __attribute__((cleanup(print_timerdata_now_diff))) \
+		const timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
+		timerdata_now()
 #else
-#define TIME_THIS \
-fflush(stdout); __attribute__((cleanup(print_timerdata_now_diff))) \
-const struct timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
-timerdata_now()
+	#define TIME_THIS \
+		fflush(stdout); __attribute__((cleanup(print_timerdata_now_diff))) \
+		const struct timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
+		timerdata_now()
 #endif
 
 // https://stackoverflow.com/a/1597129/1892784
-#define TOKENPASTE(x, y) x ## y
+#define TOKENPASTE(x, y)  x##y
 #define TOKENPASTE2(x, y) TOKENPASTE(x, y)
 
 #define TIMESPEC_TO_SEC(ts) ((ts).tv_sec + (ts).tv_nsec / 1E9)
-#define TIMEVAL_TO_SEC(tv) ((tv).tv_sec + (tv).tv_usec / 1E6)
+#define TIMEVAL_TO_SEC(tv)  ((tv).tv_sec + (tv).tv_usec / 1E6)
 
 struct timerdata
 {
@@ -76,7 +76,8 @@ timespecsub(const struct timespec* t1, const struct timespec* t0,
 {
 	diff->tv_sec = t1->tv_sec - t0->tv_sec;
 	diff->tv_nsec = t1->tv_nsec - t0->tv_nsec;
-	if (diff->tv_nsec < 0) {
+	if (diff->tv_nsec < 0)
+	{
 		diff->tv_sec--;
 		diff->tv_nsec += 1000000000L;
 	}
@@ -89,7 +90,8 @@ timevalsub(const struct timeval* t1, const struct timeval* t0,
 {
 	diff->tv_sec = t1->tv_sec - t0->tv_sec;
 	diff->tv_usec = t1->tv_usec - t0->tv_usec;
-	if (diff->tv_usec < 0) {
+	if (diff->tv_usec < 0)
+	{
 		diff->tv_sec--;
 		diff->tv_usec += 1000000L;
 	}
@@ -105,11 +107,11 @@ print_timerdata_now_diff(const struct timerdata* t0)
 	timevalsub(&t1.stime, &t0->stime, &diff.stime);
 	fflush(stdout);
 	fprintf(stderr, "%.2f  %.2f  %.2f\n",
-			TIMESPEC_TO_SEC(diff.rtime),
-			TIMEVAL_TO_SEC(diff.utime),
-			TIMEVAL_TO_SEC(diff.stime));
+	        TIMESPEC_TO_SEC(diff.rtime),
+	        TIMEVAL_TO_SEC(diff.utime),
+	        TIMEVAL_TO_SEC(diff.stime));
 }
 
 #ifdef __cplusplus
-#pragma GCC diagnostic pop
+	#pragma GCC diagnostic pop
 #endif

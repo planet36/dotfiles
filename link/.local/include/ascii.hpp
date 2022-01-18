@@ -57,7 +57,7 @@ for i in range(128):
         print('"",')
 \endcode
 */
-inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_oct {
+inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_oct{
 	"\\000",
 	"\\001",
 	"\\002",
@@ -217,7 +217,7 @@ for i in range(128):
         print('"",')
 \endcode
 */
-inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_hex {
+inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_hex{
 	"\\x00",
 	"\\x01",
 	"\\x02",

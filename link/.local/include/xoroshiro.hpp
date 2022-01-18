@@ -23,97 +23,97 @@
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
 #define NAMED_REQ_URBG \
-using result_type = T; \
-static_assert(std::is_unsigned_v<result_type>); \
-static constexpr result_type min() { return std::numeric_limits<result_type>::min(); } \
-static constexpr result_type max() { return std::numeric_limits<result_type>::max(); } \
-result_type operator()() { return next(); }
+	using result_type = T; \
+	static_assert(std::is_unsigned_v<result_type>); \
+	static constexpr result_type min() {return std::numeric_limits<result_type>::min();} \
+	static constexpr result_type max() {return std::numeric_limits<result_type>::max();} \
+	result_type operator()() {return next();}
 
 #define DEF_JUMP \
-void jump() \
-{ \
-	decltype(s) new_s; \
-	new_s.fill(0); \
-	for (const auto x : JUMP) \
+	void jump() \
 	{ \
-		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		decltype(s) new_s; \
+		new_s.fill(0); \
+		for (const auto x : JUMP) \
 		{ \
-			if (x & (T{1} << b)) \
-				for (size_t i = 0; i < s.size(); i++) \
-				{ \
-					new_s[i] ^= s[i]; \
-				} \
-			(void) next(); \
+			for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+			{ \
+				if (x & (T{1} << b)) \
+					for (size_t i = 0; i < s.size(); i++) \
+					{ \
+						new_s[i] ^= s[i]; \
+					} \
+				(void)next(); \
+			} \
 		} \
-	} \
-	s = new_s; \
-}
+		s = new_s; \
+	}
 
 #define DEF_LONG_JUMP \
-void long_jump() \
-{ \
-	decltype(s) new_s; \
-	new_s.fill(0); \
-	for (const auto x : LONG_JUMP) \
+	void long_jump() \
 	{ \
-		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		decltype(s) new_s; \
+		new_s.fill(0); \
+		for (const auto x : LONG_JUMP) \
 		{ \
-			if (x & (T{1} << b)) \
-				for (size_t i = 0; i < s.size(); i++) \
-				{ \
-					new_s[i] ^= s[i]; \
-				} \
-			(void) next(); \
+			for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+			{ \
+				if (x & (T{1} << b)) \
+					for (size_t i = 0; i < s.size(); i++) \
+					{ \
+						new_s[i] ^= s[i]; \
+					} \
+				(void)next(); \
+			} \
 		} \
-	} \
-	s = new_s; \
-}
+		s = new_s; \
+	}
 
-#define DEF_JUMP_2 \
-void jump() \
-{ \
-	decltype(s) new_s; \
-	new_s.fill(0); \
-	for (const auto x : JUMP) \
+	#define DEF_JUMP_2 \
+	void jump() \
 	{ \
-		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		decltype(s) new_s; \
+		new_s.fill(0); \
+		for (const auto x : JUMP) \
 		{ \
-			if (x & (T{1} << b)) \
-				for (size_t i = 0; i < s.size(); i++) \
-				{ \
-					new_s[i] ^= s[(i + p) % s.size()]; \
-				} \
-			(void) next(); \
+			for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+			{ \
+				if (x & (T{1} << b)) \
+					for (size_t i = 0; i < s.size(); i++) \
+					{ \
+						new_s[i] ^= s[(i + p) % s.size()]; \
+					} \
+				(void)next(); \
+			} \
 		} \
-	} \
-	for (size_t i = 0; i < s.size(); i++) \
-	{ \
-		s[(i + p) % s.size()] = new_s[i]; \
-	} \
-}
+		for (size_t i = 0; i < s.size(); i++) \
+		{ \
+			s[(i + p) % s.size()] = new_s[i]; \
+		} \
+	}
 
 #define DEF_LONG_JUMP_2 \
-void long_jump() \
-{ \
-	decltype(s) new_s; \
-	new_s.fill(0); \
-	for (const auto x : LONG_JUMP) \
+	void long_jump() \
 	{ \
-		for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+		decltype(s) new_s; \
+		new_s.fill(0); \
+		for (const auto x : LONG_JUMP) \
 		{ \
-			if (x & (T{1} << b)) \
-				for (size_t i = 0; i < s.size(); i++) \
-				{ \
-					new_s[i] ^= s[(i + p) % s.size()]; \
-				} \
-			(void) next(); \
+			for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
+			{ \
+				if (x & (T{1} << b)) \
+					for (size_t i = 0; i < s.size(); i++) \
+					{ \
+						new_s[i] ^= s[(i + p) % s.size()]; \
+					} \
+				(void)next(); \
+			} \
 		} \
-	} \
-	for (size_t i = 0; i < s.size(); i++) \
-	{ \
-		s[(i + p) % s.size()] = new_s[i]; \
-	} \
-}
+		for (size_t i = 0; i < s.size(); i++) \
+		{ \
+			s[(i + p) % s.size()] = new_s[i]; \
+		} \
+	}
 
 /** This is xoroshiro64* 1.0, our best and fastest 32-bit small-state generator
  * for 32-bit floating-point numbers. We suggest to use its upper bits for
@@ -139,8 +139,8 @@ private:
 	std::array<T, state_num_elems> s;
 
 public:
-	xoroshiro64star() { fill_rand(s); }
-	xoroshiro64star(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro64star() {fill_rand(s);}
+	xoroshiro64star(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
@@ -177,8 +177,8 @@ private:
 	std::array<T, state_num_elems> s;
 
 public:
-	xoroshiro64starstar() { fill_rand(s); }
-	xoroshiro64starstar(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro64starstar() {fill_rand(s);}
+	xoroshiro64starstar(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
@@ -225,14 +225,14 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({ 0xdf900294d8f554a5,
-			0x170865df4b3201fc });
-	static constexpr auto LONG_JUMP = std::to_array<T>({ 0xd2a98b26625eee7b,
-			0xdddf9b1090aa7ac1 });
+	static constexpr auto JUMP = std::to_array<T>({0xdf900294d8f554a5,
+			0x170865df4b3201fc});
+	static constexpr auto LONG_JUMP = std::to_array<T>({0xd2a98b26625eee7b,
+			0xdddf9b1090aa7ac1});
 
 public:
-	xoroshiro128plus() { fill_rand(s); }
-	xoroshiro128plus(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro128plus() {fill_rand(s);}
+	xoroshiro128plus(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
@@ -282,14 +282,14 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({ 0x2bd7a6a6e99c2ddc,
-			0x0992ccaf6a6fca05 });
-	static constexpr auto LONG_JUMP = std::to_array<T>({ 0x360fd5f2cf8d5d99,
-			0x9c6e6877736c46e3 });
+	static constexpr auto JUMP = std::to_array<T>({0x2bd7a6a6e99c2ddc,
+			0x0992ccaf6a6fca05});
+	static constexpr auto LONG_JUMP = std::to_array<T>({0x360fd5f2cf8d5d99,
+			0x9c6e6877736c46e3});
 
 public:
-	xoroshiro128plusplus() { fill_rand(s); }
-	xoroshiro128plusplus(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro128plusplus() {fill_rand(s);}
+	xoroshiro128plusplus(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
@@ -339,14 +339,14 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({ 0xdf900294d8f554a5,
-			0x170865df4b3201fc });
-	static constexpr auto LONG_JUMP = std::to_array<T>({ 0xd2a98b26625eee7b,
-			0xdddf9b1090aa7ac1 });
+	static constexpr auto JUMP = std::to_array<T>({0xdf900294d8f554a5,
+			0x170865df4b3201fc});
+	static constexpr auto LONG_JUMP = std::to_array<T>({0xd2a98b26625eee7b,
+			0xdddf9b1090aa7ac1});
 
 public:
-	xoroshiro128starstar() { fill_rand(s); }
-	xoroshiro128starstar(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro128starstar() {fill_rand(s);}
+	xoroshiro128starstar(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
@@ -398,22 +398,22 @@ NAMED_REQ_URBG
 private:
 	std::array<T, state_num_elems> s;
 	unsigned int p{};
-	static constexpr auto JUMP = std::to_array<T>({ 0x931197d8e3177f17,
+	static constexpr auto JUMP = std::to_array<T>({0x931197d8e3177f17,
 			0xb59422e0b9138c5f, 0xf06a6afb49d668bb, 0xacb8a6412c8a1401,
 			0x12304ec85f0b3468, 0xb7dfe7079209891e, 0x405b7eec77d9eb14,
 			0x34ead68280c44e4a, 0xe0e4ba3e0ac9e366, 0x8f46eda8348905b7,
 			0x328bf4dbad90d6ff, 0xc8fd6fb31c9effc3, 0xe899d452d4b67652,
-			0x45f387286ade3205, 0x03864f454a8920bd, 0xa68fa28725b1b384 });
-	static constexpr auto LONG_JUMP = std::to_array<T>({ 0x7374156360bbf00f,
+			0x45f387286ade3205, 0x03864f454a8920bd, 0xa68fa28725b1b384});
+	static constexpr auto LONG_JUMP = std::to_array<T>({0x7374156360bbf00f,
 			0x4630c2efa3b3c1f6, 0x6654183a892786b1, 0x94f7bfcbfb0f1661,
 			0x27d8243d3d13eb2d, 0x9701730f3dfb300f, 0x2f293baae6f604ad,
 			0xa661831cb60cd8b6, 0x68280c77d9fe008c, 0x50554160f5ba9459,
 			0x2fc20b17ec7b2a9a, 0x49189bbdc8ec9f8f, 0x92a65bca41852cc1,
-			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1 });
+			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024plusplus() { fill_rand(s); }
-	xoroshiro1024plusplus(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro1024plusplus() {fill_rand(s);}
+	xoroshiro1024plusplus(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
@@ -473,22 +473,22 @@ NAMED_REQ_URBG
 private:
 	std::array<T, state_num_elems> s;
 	unsigned int p{};
-	static constexpr auto JUMP = std::to_array<T>({ 0x931197d8e3177f17,
+	static constexpr auto JUMP = std::to_array<T>({0x931197d8e3177f17,
 			0xb59422e0b9138c5f, 0xf06a6afb49d668bb, 0xacb8a6412c8a1401,
 			0x12304ec85f0b3468, 0xb7dfe7079209891e, 0x405b7eec77d9eb14,
 			0x34ead68280c44e4a, 0xe0e4ba3e0ac9e366, 0x8f46eda8348905b7,
 			0x328bf4dbad90d6ff, 0xc8fd6fb31c9effc3, 0xe899d452d4b67652,
-			0x45f387286ade3205, 0x03864f454a8920bd, 0xa68fa28725b1b384 });
-	static constexpr auto LONG_JUMP = std::to_array<T>({ 0x7374156360bbf00f,
+			0x45f387286ade3205, 0x03864f454a8920bd, 0xa68fa28725b1b384});
+	static constexpr auto LONG_JUMP = std::to_array<T>({0x7374156360bbf00f,
 			0x4630c2efa3b3c1f6, 0x6654183a892786b1, 0x94f7bfcbfb0f1661,
 			0x27d8243d3d13eb2d, 0x9701730f3dfb300f, 0x2f293baae6f604ad,
 			0xa661831cb60cd8b6, 0x68280c77d9fe008c, 0x50554160f5ba9459,
 			0x2fc20b17ec7b2a9a, 0x49189bbdc8ec9f8f, 0x92a65bca41852cc1,
-			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1 });
+			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024star() { fill_rand(s); }
-	xoroshiro1024star(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro1024star() {fill_rand(s);}
+	xoroshiro1024star(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
@@ -542,22 +542,22 @@ NAMED_REQ_URBG
 private:
 	std::array<T, state_num_elems> s;
 	unsigned int p{};
-	static constexpr auto JUMP = std::to_array<T>({ 0x931197d8e3177f17,
+	static constexpr auto JUMP = std::to_array<T>({0x931197d8e3177f17,
 			0xb59422e0b9138c5f, 0xf06a6afb49d668bb, 0xacb8a6412c8a1401,
 			0x12304ec85f0b3468, 0xb7dfe7079209891e, 0x405b7eec77d9eb14,
 			0x34ead68280c44e4a, 0xe0e4ba3e0ac9e366, 0x8f46eda8348905b7,
 			0x328bf4dbad90d6ff, 0xc8fd6fb31c9effc3, 0xe899d452d4b67652,
-			0x45f387286ade3205, 0x03864f454a8920bd, 0xa68fa28725b1b384 });
-	static constexpr auto LONG_JUMP = std::to_array<T>({ 0x7374156360bbf00f,
+			0x45f387286ade3205, 0x03864f454a8920bd, 0xa68fa28725b1b384});
+	static constexpr auto LONG_JUMP = std::to_array<T>({0x7374156360bbf00f,
 			0x4630c2efa3b3c1f6, 0x6654183a892786b1, 0x94f7bfcbfb0f1661,
 			0x27d8243d3d13eb2d, 0x9701730f3dfb300f, 0x2f293baae6f604ad,
 			0xa661831cb60cd8b6, 0x68280c77d9fe008c, 0x50554160f5ba9459,
 			0x2fc20b17ec7b2a9a, 0x49189bbdc8ec9f8f, 0x92a65bca41852cc1,
-			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1 });
+			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024starstar() { fill_rand(s); }
-	xoroshiro1024starstar(const decltype(s)& new_s) : s(new_s) {}
+	xoroshiro1024starstar() {fill_rand(s);}
+	xoroshiro1024starstar(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
 	T next()
