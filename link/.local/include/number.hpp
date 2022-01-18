@@ -19,7 +19,6 @@
 // adapted from
 // https://www.sandordargo.com/blog/2021/03/24/concepts-in-real-life
 template <typename T>
-concept number = std::is_arithmetic_v<std::remove_cv_t<T>>
-	&& !std::is_same_v<std::remove_cv_t<T>, bool>
-	&& !is_character_v<T>
-;
+concept number = std::is_arithmetic_v<std::remove_cv_t<T>> &&
+                 !std::is_same_v<std::remove_cv_t<T>, bool> &&
+                 !is_character_v<T>;

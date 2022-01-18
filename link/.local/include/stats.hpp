@@ -18,14 +18,10 @@
 
 // https://en.cppreference.com/w/cpp/named_req/Compare
 constexpr auto compare_abs_less = [](const auto& a, const auto& b)
-{
-	return std::abs(a) < std::abs(b);
-};
+{return std::abs(a) < std::abs(b);};
 
 constexpr auto plus_abs = [](const auto& a, const auto& b)
-{
-	return std::abs(a) + std::abs(b);
-};
+{return std::abs(a) + std::abs(b);};
 
 #define POW2(x) ((x) * (x))
 #define POW3(x) ((x) * (x) * (x))
@@ -285,8 +281,8 @@ auto excess_kurtosis_val(const Container& c, const bool is_sample = false)
 	T excess_kurtosis = m4 / (m2 * m2) - 3;
 
 	if (is_sample)
-		excess_kurtosis = ((n + 1) * excess_kurtosis + 6) * static_cast<T>(n - 1) /
-		                  ((n - 2) * (n - 3));
+		excess_kurtosis = ((n + 1) * excess_kurtosis + 6) *
+		                  static_cast<T>(n - 1) / ((n - 2) * (n - 3));
 
 	return excess_kurtosis;
 }

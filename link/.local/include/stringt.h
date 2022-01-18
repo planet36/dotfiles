@@ -16,8 +16,10 @@
 #include <wchar.h>
 
 inline static size_t
-_strtcat_helper(char* restrict dest, const char* restrict src,
-                size_t dest_sz, size_t dest_len)
+_strtcat_helper(char* restrict dest,
+                const char* restrict src,
+                size_t dest_sz,
+                size_t dest_len)
 {
 	// includes terminating NUL character
 	const size_t src_sz = strlen(src) + 1;
@@ -56,7 +58,9 @@ _strtcat_helper(char* restrict dest, const char* restrict src,
  *     for the operation to be performed.
  */
 static size_t
-strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
+strtcat(char* restrict dest,
+        const char* restrict src,
+        size_t dest_sz)
 {
 	return _strtcat_helper(dest, src, dest_sz, strlen(dest));
 }
@@ -83,14 +87,18 @@ strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
  *     for the operation to be performed.
  */
 static size_t
-strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
+strtcpy(char* restrict dest,
+        const char* restrict src,
+        size_t dest_sz)
 {
 	return _strtcat_helper(dest, src, dest_sz, 0);
 }
 
 inline static size_t
-_wstrtcat_helper(wchar_t* restrict dest, const wchar_t* restrict src,
-                 size_t dest_sz, size_t dest_len)
+_wstrtcat_helper(wchar_t* restrict dest,
+                 const wchar_t* restrict src,
+                 size_t dest_sz,
+                 size_t dest_len)
 {
 	// includes terminating NUL wide character
 	const size_t src_sz = wcslen(src) + 1;
@@ -129,7 +137,9 @@ _wstrtcat_helper(wchar_t* restrict dest, const wchar_t* restrict src,
  *     enlarged by for the operation to be performed.
  */
 static size_t
-wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
+wstrtcat(wchar_t* restrict dest,
+         const wchar_t* restrict src,
+         size_t dest_sz)
 {
 	return _wstrtcat_helper(dest, src, dest_sz, wcslen(dest));
 }
@@ -156,7 +166,9 @@ wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
  *     enlarged by for the operation to be performed.
  */
 static size_t
-wstrtcpy(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
+wstrtcpy(wchar_t* restrict dest,
+         const wchar_t* restrict src,
+         size_t dest_sz)
 {
 	return _wstrtcat_helper(dest, src, dest_sz, 0);
 }

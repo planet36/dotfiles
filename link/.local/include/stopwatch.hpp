@@ -22,10 +22,7 @@ public:
 		std::chrono::high_resolution_clock,
 		std::chrono::steady_clock>;
 
-	stopwatch()
-	{
-		reset();
-	}
+	stopwatch() {reset();}
 
 	stopwatch(const stopwatch&) = delete;
 
@@ -61,10 +58,7 @@ public:
 			return dt + (stopwatch_clock::now() - t0);
 	}
 
-	bool is_running() const
-	{
-		return running;
-	}
+	bool is_running() const {return running;}
 
 private:
 	std::chrono::time_point<stopwatch_clock> t0{};

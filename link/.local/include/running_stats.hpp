@@ -67,7 +67,8 @@ public:
 		const auto delta_n2 = delta_n * delta_n;
 		const auto term1 = delta * delta_n * n1;
 		M1 += delta_n;
-		M4 += term1 * delta_n2 * (n * n - 3 * n + 3) + 6 * delta_n2 * M2 - 4 * delta_n * M3;
+		M4 += term1 * delta_n2 * (n * n - 3 * n + 3) + 6 * delta_n2 * M2 -
+		      4 * delta_n * M3;
 		M3 += term1 * delta_n * (n - 2) - 3 * delta_n * M2;
 		M2 += term1;
 
@@ -88,74 +89,39 @@ public:
 		}
 	}
 
-	auto num_data_values() const
-	{
-		return n;
-	}
+	auto num_data_values() const {return n;}
 
-	auto mean() const
-	{
-		return M1;
-	}
+	auto mean() const {return M1;}
 
-	auto variance() const
-	{
-		return M2 / (n - 1);
-	}
+	auto variance() const {return M2 / (n - 1);}
 
-	auto standard_deviation() const
-	{
-		return std::sqrt(variance());
-	}
+	auto standard_deviation() const {return std::sqrt(variance());}
 
-	auto skewness() const
-	{
-		return std::sqrt(n) * M3 / std::pow(M2, 1.5);
-	}
+	auto skewness() const {return std::sqrt(n) * M3 / std::pow(M2, 1.5);}
 
-	auto kurtosis() const
-	{
-		return n * M4 / (M2 * M2) - 3;
-	}
+	auto kurtosis() const {return n * M4 / (M2 * M2) - 3;}
 
 	/// get the sum of the values
-	auto sum() const
-	{
-		return _sum;
-	}
+	auto sum() const {return _sum;}
 
 	/// get the minimum value
-	auto min() const
-	{
-		return _min;
-	}
+	auto min() const {return _min;}
 
 	/// get the maximum value
-	auto max() const
-	{
-		return _max;
-	}
+	auto max() const {return _max;}
 
 	/// get the sum of the absolute values
-	auto sum_abs() const
-	{
-		return _sum_abs;
-	}
+	auto sum_abs() const {return _sum_abs;}
 
 	/// get the minimum absolute value
-	auto min_abs() const
-	{
-		return _min_abs;
-	}
+	auto min_abs() const {return _min_abs;}
 
 	/// get the maximum absolute value
-	auto max_abs() const
-	{
-		return _max_abs;
-	}
+	auto max_abs() const {return _max_abs;}
 
 	template <std::floating_point T2>
-	friend running_stats<T2> operator+(const running_stats<T2>& a, const running_stats<T2>& b);
+	friend running_stats<T2> operator+(const running_stats<T2>& a,
+	                                   const running_stats<T2>& b);
 
 	running_stats<T>& operator+=(const running_stats<T>& that)
 	{
@@ -179,8 +145,7 @@ running_stats<T> operator+(const running_stats<T>& a, const running_stats<T>& b)
 
 	combined.M1 = (a.n * a.M1 + b.n * b.M1) / combined.n;
 
-	combined.M2 = a.M2 + b.M2 +
-	              delta2 * a.n * b.n / combined.n;
+	combined.M2 = a.M2 + b.M2 + delta2 * a.n * b.n / combined.n;
 
 	combined.M3 = a.M3 + b.M3 +
 	              delta3 * a.n * b.n * (a.n - b.n) / (combined.n * combined.n);
@@ -188,7 +153,8 @@ running_stats<T> operator+(const running_stats<T>& a, const running_stats<T>& b)
 
 	combined.M4 = a.M4 + b.M4 + delta4 * a.n * b.n * (a.n * a.n - a.n * b.n + b.n * b.n) /
 	              (combined.n * combined.n * combined.n);
-	combined.M4 += 6 * delta2 * (a.n * a.n * b.M2 + b.n * b.n * a.M2) / (combined.n * combined.n) +
+	combined.M4 += 6 * delta2 * (a.n * a.n * b.M2 + b.n * b.n * a.M2) /
+	               z(combined.n * combined.n) +
 	               4 * delta * (a.n * b.M3 - b.n * a.M3) / combined.n;
 
 	return combined;

@@ -119,15 +119,11 @@ struct Ellipsoid
 
 	Ellipsoid() = delete;
 
-	constexpr Ellipsoid(
-		const T _a,
-		const T _f_recip, // 1 / f
-		const T _GM = 3.986004418E14L,
-		const T _omega = 7.292115E-5L):
-	a(_a),
-	f(1 / _f_recip),
-	GM(_GM),
-	omega(_omega)
+	constexpr Ellipsoid(const T _a,
+	                    const T _f_recip, // 1 / f
+	                    const T _GM = 3.986004418E14L,
+	                    const T _omega = 7.292115E-5L):
+	a(_a), f(1 / _f_recip), GM(_GM), omega(_omega)
 	{}
 
 	/// get the radius of curvature in the prime vertical (meters)
@@ -176,8 +172,8 @@ struct Ellipsoid
 	*/
 	auto get_R(const T sin_lat) const
 	{
-		return get_Rn(sin_lat) * std::sqrt(
-				1 - e2 * sin_lat * sin_lat * (2 - e2));
+		return get_Rn(sin_lat) *
+		       std::sqrt(1 - e2 * sin_lat * sin_lat * (2 - e2));
 	}
 
 	/// get the radius of curvature in the meridian (meters)
@@ -223,9 +219,9 @@ struct Ellipsoid
 	*/
 	auto get_gamma_h(const T sin_lat, const T ht) const
 	{
-		return get_gamma(sin_lat) * (1
-				- 2 * ht * (1 + f + m - 2 * f * sin_lat * sin_lat) / a
-				+ 3 * ht * ht / a2);
+		return get_gamma(sin_lat) * (
+		       1 - 2 * ht * (1 + f + m - 2 * f * sin_lat * sin_lat) / a +
+		       3 * ht * ht / a2);
 	}
 
 	/// get the height above the ellipsoid (meters)
@@ -299,8 +295,5 @@ struct Ellipsoid
 		       this->omega == that.omega;
 	}
 
-	bool operator!=(const Ellipsoid& that) const
-	{
-		return !operator==(that);
-	}
+	bool operator!=(const Ellipsoid& that) const {return !operator==(that);}
 };

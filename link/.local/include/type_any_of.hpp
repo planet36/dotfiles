@@ -14,7 +14,7 @@
 #include <type_traits>
 
 template <typename T, typename... U>
-struct is_type_any_of : std::bool_constant<(std::is_same_v<T, U> || ...)>
+struct is_type_any_of: std::bool_constant<(std::is_same_v<T, U> || ...)>
 {};
 
 template <typename T, typename... U>

@@ -22,51 +22,57 @@
 #include <type_traits>
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG \
-using result_type = T; \
-static_assert(std::is_unsigned_v<result_type>); \
-static constexpr result_type min() {return std::numeric_limits<result_type>::min();} \
-static constexpr result_type max() {return std::numeric_limits<result_type>::max();} \
-result_type operator()() {return next();}
+#define NAMED_REQ_URBG                                  \
+	using result_type = T;                              \
+	static_assert(std::is_unsigned_v<result_type>);     \
+	static constexpr result_type min()                  \
+	{                                                   \
+		return std::numeric_limits<result_type>::min(); \
+	}                                                   \
+	static constexpr result_type max()                  \
+	{                                                   \
+		return std::numeric_limits<result_type>::max(); \
+	}                                                   \
+	result_type operator()() {return next();}
 
-#define DEF_JUMP \
-	void jump() \
-	{ \
-		decltype(s) new_s; \
-		new_s.fill(0); \
-		for (const auto x : JUMP) \
-		{ \
+#define DEF_JUMP                                                     \
+	void jump()                                                      \
+	{                                                                \
+		decltype(s) new_s;                                           \
+		new_s.fill(0);                                               \
+		for (const auto x : JUMP)                                    \
+		{                                                            \
 			for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
-			{ \
-				if (x & (T{1} << b)) \
-					for (size_t i = 0; i < s.size(); i++) \
-					{ \
-						new_s[i] ^= s[i]; \
-					} \
-				(void)next(); \
-			} \
-		} \
-		s = new_s; \
+			{                                                        \
+				if (x & (T{1} << b))                                 \
+					for (size_t i = 0; i < s.size(); i++)            \
+					{                                                \
+						new_s[i] ^= s[i];                            \
+					}                                                \
+				(void)next();                                        \
+			}                                                        \
+		}                                                            \
+		s = new_s;                                                   \
 	}
 
-#define DEF_LONG_JUMP \
-	void long_jump() \
-	{ \
-		decltype(s) new_s; \
-		new_s.fill(0); \
-		for (const auto x : LONG_JUMP) \
-		{ \
+#define DEF_LONG_JUMP                                                \
+	void long_jump()                                                 \
+	{                                                                \
+		decltype(s) new_s;                                           \
+		new_s.fill(0);                                               \
+		for (const auto x : LONG_JUMP)                               \
+		{                                                            \
 			for (int b = 0; b < std::numeric_limits<T>::digits; b++) \
-			{ \
-				if (x & (T{1} << b)) \
-					for (size_t i = 0; i < s.size(); i++) \
-					{ \
-						new_s[i] ^= s[i]; \
-					} \
-				(void)next(); \
-			} \
-		} \
-		s = new_s; \
+			{                                                        \
+				if (x & (T{1} << b))                                 \
+					for (size_t i = 0; i < s.size(); i++)            \
+					{                                                \
+						new_s[i] ^= s[i];                            \
+					}                                                \
+				(void)next();                                        \
+			}                                                        \
+		}                                                            \
+		s = new_s;                                                   \
 	}
 
 /** This is xoshiro128+ 1.0, our best and fastest 32-bit generator for 32-bit

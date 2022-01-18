@@ -14,15 +14,19 @@
 #include <cmath>
 #include <concepts>
 
-constexpr void div(const std::integral auto x, const std::integral auto y,
-                   std::integral auto& quot, std::integral auto& rem)
+constexpr void div(const std::integral auto x,
+                   const std::integral auto y,
+                   std::integral auto& quot,
+                   std::integral auto& rem)
 {
 	quot = x / y;
 	rem = x % y;
 }
 
-constexpr void div(const std::floating_point auto x, const std::floating_point auto y,
-                   std::floating_point auto& quot, std::floating_point auto& rem)
+constexpr void div(const std::floating_point auto x,
+                   const std::floating_point auto y,
+                   std::floating_point auto& quot,
+                   std::floating_point auto& rem)
 {
 	quot = x / y;
 	rem = x - std::trunc(x / y) * y;

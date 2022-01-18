@@ -18,11 +18,17 @@
 #include <type_traits>
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG \
-	using result_type = T; \
-	static_assert(std::is_unsigned_v<result_type>); \
-	static constexpr result_type min() {return std::numeric_limits<result_type>::min();} \
-	static constexpr result_type max() {return std::numeric_limits<result_type>::max();} \
+#define NAMED_REQ_URBG                                  \
+	using result_type = T;                              \
+	static_assert(std::is_unsigned_v<result_type>);     \
+	static constexpr result_type min()                  \
+	{                                                   \
+		return std::numeric_limits<result_type>::min(); \
+	}                                                   \
+	static constexpr result_type max()                  \
+	{                                                   \
+		return std::numeric_limits<result_type>::max(); \
+	}                                                   \
 	result_type operator()() {return next();}
 
 /** This is a fixed-increment version of Java 8's SplittableRandom generator

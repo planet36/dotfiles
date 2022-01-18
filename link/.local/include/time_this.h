@@ -28,15 +28,17 @@ trailing newline) to stderr.
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
 #ifdef __cplusplus
-	#define TIME_THIS \
-		fflush(stdout); __attribute__((cleanup(print_timerdata_now_diff))) \
-		const timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
-		timerdata_now()
+	#define TIME_THIS                                      \
+		fflush(stdout);                                    \
+		__attribute__((cleanup(print_timerdata_now_diff))) \
+		const timerdata                                    \
+		TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()
 #else
-	#define TIME_THIS \
-		fflush(stdout); __attribute__((cleanup(print_timerdata_now_diff))) \
-		const struct timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
-		timerdata_now()
+	#define TIME_THIS                                      \
+		fflush(stdout);                                    \
+		__attribute__((cleanup(print_timerdata_now_diff))) \
+		const struct timerdata                             \
+		TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()
 #endif
 
 // https://stackoverflow.com/a/1597129/1892784
@@ -71,7 +73,8 @@ static struct timerdata timerdata_now()
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n92
 static void
-timespecsub(const struct timespec* t1, const struct timespec* t0,
+timespecsub(const struct timespec* t1,
+            const struct timespec* t0,
             struct timespec* diff)
 {
 	diff->tv_sec = t1->tv_sec - t0->tv_sec;
@@ -85,7 +88,8 @@ timespecsub(const struct timespec* t1, const struct timespec* t0,
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132
 static void
-timevalsub(const struct timeval* t1, const struct timeval* t0,
+timevalsub(const struct timeval* t1,
+           const struct timeval* t0,
            struct timeval* diff)
 {
 	diff->tv_sec = t1->tv_sec - t0->tv_sec;

@@ -18,8 +18,9 @@ nearest hundredth of a second) is printed (with a trailing newline) to stderr.
 #include <chrono>
 #include <cstdio>
 
-#define TIME_THIS \
-	std::fflush(stdout); const time_this TOKENPASTE2(_time_this_, __COUNTER__)
+#define TIME_THIS        \
+	std::fflush(stdout); \
+	const time_this TOKENPASTE2(_time_this_, __COUNTER__)
 
 // https://stackoverflow.com/a/1597129/1892784
 #define TOKENPASTE(x, y)  x##y
