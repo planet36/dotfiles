@@ -46,7 +46,7 @@ define mat_print_col_as_cpp_array(s, A, c = 0, indent_num = 0, indent_char = "\t
 	local indent_str = indent_char * indent_num;
 
 	printf("%stemplate <typename T>\n", indent_str);
-	printf("%sconstexpr std::array<T, %d+1> %s {\n", indent_str, matmax(A,1)-matmin(A,1)+1, s);
+	printf("%sconstexpr std::array<T, %d+1> %s{\n", indent_str, matmax(A,1)-matmin(A,1)+1, s);
 	printf("%s%sT{0}, // This array is indexed starting at 1.\n", indent_str, indent_char);
 	mat_print_col(A, c, indent_num+1);
 	printf("%s};\n\n", indent_str);
@@ -57,7 +57,7 @@ define mat_print_col_as_cpp_static_constexpr_array(s, A, c = 0, indent_num = 0, 
 	local indent_str = indent_char * indent_num;
 	local num_elems = matmax(A,1)-matmin(A,1)+1;
 
-	printf("%sconstexpr std::array<T, %d> %s {\n", indent_str, num_elems, s);
+	printf("%sconstexpr std::array<T, %d> %s{\n", indent_str, num_elems, s);
 	mat_print_col(A, c, indent_num+1);
 	printf("%s};\n\n", indent_str);
 }
@@ -66,7 +66,7 @@ define mat_print_col_as_cpp_static_constexpr_array(s, A, c = 0, indent_num = 0, 
 define mat_print_col_as_cpp_static_array(s, A, c = 0, indent_num = 0, indent_char = "\t") {
 	local indent_str = indent_char * indent_num;
 
-	printf("%sstatic constexpr std::array<T, %d+1> %s {\n", indent_str, matmax(A,1)-matmin(A,1)+1, s);
+	printf("%sstatic constexpr std::array<T, %d+1> %s{\n", indent_str, matmax(A,1)-matmin(A,1)+1, s);
 	printf("%s%sT{0}, // This array is indexed starting at 1.\n", indent_str, indent_char);
 	mat_print_col(A, c, indent_num+1);
 	printf("%s};\n\n", indent_str);
@@ -76,7 +76,7 @@ define mat_print_col_as_cpp_static_array(s, A, c = 0, indent_num = 0, indent_cha
 define mat_print_col_as_cpp_static_const_valarray(s, A, c = 0, indent_num = 0, indent_char = "\t") {
 	local indent_str = indent_char * indent_num;
 
-	printf("%sstatic const std::valarray<T> %s {\n", indent_str, s);
+	printf("%sstatic const std::valarray<T> %s{\n", indent_str, s);
 	mat_print_col(A, c, indent_num+1);
 	printf("%s};\n\n", indent_str);
 }
@@ -136,7 +136,7 @@ define print_iota_valarray(num_elems, val = 0, inc = 1) {
 	local i;
 
 	printf("template <std::floating_point T>\n");
-	printf("const std::valarray<T> iota_%d_%d {", val, inc);
+	printf("const std::valarray<T> iota_%d_%d{", val, inc);
 	for (i = 0; i < num_elems; ++i) {
 		printf("%d, ", val);
 		val += inc;

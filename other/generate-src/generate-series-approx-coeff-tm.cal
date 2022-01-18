@@ -53,10 +53,10 @@ define array_print_as_cpp_valarray(s, arr) {
 	/* Ignore the first element of the array (it's 0). */
 	printf("template <std::floating_point T>\n");
 	/*
-	printf("constexpr std::array<T, %d+1> %s {\n", size(arr)-1, s);
+	printf("constexpr std::array<T, %d+1> %s{\n", size(arr)-1, s);
 	printf("%sT{0}, // This array is indexed starting at 1.\n", indent_char);
 	*/
-	printf("const std::valarray<T> %s {\n", s);
+	printf("const std::valarray<T> %s{\n", s);
 	array_print_from_min(arr, 1);
 	printf("};\n\n");
 }
