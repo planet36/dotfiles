@@ -25,9 +25,9 @@
 #define NAMED_REQ_URBG \
 using result_type = T; \
 static_assert(std::is_unsigned_v<result_type>); \
-static constexpr result_type min() { return std::numeric_limits<result_type>::min(); } \
-static constexpr result_type max() { return std::numeric_limits<result_type>::max(); } \
-result_type operator()() { return next(); }
+static constexpr result_type min() {return std::numeric_limits<result_type>::min();} \
+static constexpr result_type max() {return std::numeric_limits<result_type>::max();} \
+result_type operator()() {return next();}
 
 #define DEF_JUMP \
 	void jump() \

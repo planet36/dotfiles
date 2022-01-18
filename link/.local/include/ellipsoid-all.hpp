@@ -53,7 +53,7 @@ Used for Datum Transformations*
 country.
 \endverbatim
 */
-enum class ELLIPSOID_ID_CODE : unsigned short
+enum class ELLIPSOID_ID_CODE: unsigned short
 {
 	AA,
 	AN,

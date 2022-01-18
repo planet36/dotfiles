@@ -13,7 +13,8 @@
 
 uint16_t int_join(const uint8_t hi, const uint8_t lo)
 {
-	const union {
+	const union
+	{
 		uint16_t whole;
 		uint8_t parts[2];
 	} u = {.parts = {lo, hi}};
@@ -23,7 +24,8 @@ uint16_t int_join(const uint8_t hi, const uint8_t lo)
 
 uint32_t int_join(const uint16_t hi, const uint16_t lo)
 {
-	const union {
+	const union
+	{
 		uint32_t whole;
 		uint16_t parts[2];
 	} u = {.parts = {lo, hi}};
@@ -33,7 +35,8 @@ uint32_t int_join(const uint16_t hi, const uint16_t lo)
 
 uint64_t int_join(const uint32_t hi, const uint32_t lo)
 {
-	const union {
+	const union
+	{
 		uint64_t whole;
 		uint32_t parts[2];
 	} u = {.parts = {lo, hi}};

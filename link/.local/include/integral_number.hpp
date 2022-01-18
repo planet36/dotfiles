@@ -15,7 +15,7 @@
 #include <type_traits>
 
 template <typename T>
-struct is_integral_number : is_type_any_of<std::remove_cv_t<T>,
+struct is_integral_number: is_type_any_of<std::remove_cv_t<T>,
 	short,
 	int,
 	long,
