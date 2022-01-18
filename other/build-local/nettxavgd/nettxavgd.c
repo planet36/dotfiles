@@ -18,7 +18,7 @@ const char program_version[] = "1.2.0";
 
 const unsigned int default_init_delay_msec = 2000;
 const unsigned int default_interval_msec = 2000;
-char default_net_iface[NAME_MAX+1] = {'\0'};
+char default_net_iface[NAME_MAX + 1] = {'\0'};
 
 const char* dest_path = NULL;
 
@@ -53,7 +53,7 @@ void atexit_cleanup()
 
 void set_default_net_iface()
 {
-	struct dirent **namelist;
+	struct dirent** namelist;
 	int n;
 
 	n = scandir("/sys/class/net/", &namelist, scandir_filter, alphasort);
@@ -288,9 +288,8 @@ int main(int argc, char* const argv[])
 				if (fputs(dest_buf, dest_fp) < 0)
 					err(EXIT_FAILURE, "fputs");
 			}
-			else
-				if (puts(dest_buf) < 0)
-					err(EXIT_FAILURE, "puts");
+			else if (puts(dest_buf) < 0)
+				err(EXIT_FAILURE, "puts");
 		}
 
 		prev_now_s = now_s;

@@ -227,9 +227,8 @@ int main(int argc, char* const argv[])
 				if (fputs(dest_buf, dest_fp) < 0)
 					err(EXIT_FAILURE, "fputs");
 			}
-			else
-				if (puts(dest_buf) < 0)
-					err(EXIT_FAILURE, "puts");
+			else if (puts(dest_buf) < 0)
+				err(EXIT_FAILURE, "puts");
 		}
 
 		prev_idle_ticks = idle_ticks;

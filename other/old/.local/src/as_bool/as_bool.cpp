@@ -17,9 +17,9 @@ int main(int argc, char* argv[])
 
 	// https://docs.python.org/3/library/configparser.html#configparser.ConfigParser.getboolean
 	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-	const auto true_pattern_1 = std::regex("1|yes|y|true|on", regex_flavor|std::regex::icase);
-	const auto false_pattern_1 = std::regex("0|no|n|false|off", regex_flavor|std::regex::icase);
-	const auto false_pattern_2 = std::regex("null|nil|none|nan|undefined|-0", regex_flavor|std::regex::icase);
+	const auto true_pattern_1 = std::regex("1|yes|y|true|on", regex_flavor | std::regex::icase);
+	const auto false_pattern_1 = std::regex("0|no|n|false|off", regex_flavor | std::regex::icase);
+	const auto false_pattern_2 = std::regex("null|nil|none|nan|undefined|-0", regex_flavor | std::regex::icase);
 
 	int result = EXIT_SUCCESS;
 

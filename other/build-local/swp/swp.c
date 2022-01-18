@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: OSL-3.0
 
 #include <err.h>
-#include <fcntl.h>           /* Definition of AT_* constants */
+#include <fcntl.h> /* Definition of AT_* constants */
 #include <stdio.h>
 #include <stdlib.h>
 
