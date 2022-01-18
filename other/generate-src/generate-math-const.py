@@ -336,7 +336,7 @@ def generate_math_const(x):
 	if desc:
 		print(f'/** {desc} */')
 	print(f'''template <std::floating_point T>
-inline constexpr T {name}{{{hex_str}L}};''')
+inline constexpr T {name}{{\n\t{hex_str}L}};''')
 
 now = dt.datetime.now(dt.timezone.utc)
 author = 'Steven Ward'
