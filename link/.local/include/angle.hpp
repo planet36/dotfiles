@@ -21,7 +21,7 @@
 * \sa https://en.wikipedia.org/wiki/Angle#Units
 * \sa https://en.wikipedia.org/wiki/Angular_unit
 */
-enum class angle_unit: short
+enum struct angle_unit: short
 {
 	milliradian,
 	radian,
