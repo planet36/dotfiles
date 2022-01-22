@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function sc --description 'wrapper for scrypt'
+function sc --wraps scrypt --description 'wrapper for scrypt'
 
     for INFILE in $argv
 
