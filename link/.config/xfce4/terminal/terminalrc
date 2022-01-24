@@ -1,5 +1,5 @@
 [Configuration]
-ColorBoldIsBright=TRUE
+ColorBoldIsBright=FALSE
 FontName=monospace 13
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
