@@ -47,9 +47,9 @@ then
 	fi
 fi
 
-if ! command -v convert > /dev/null
+if ! command -v magick > /dev/null
 then
-	echo 'Error: "convert" command not found' 1>&2
+	echo 'Error: "magick" command not found' 1>&2
 	exit 1
 fi
 
@@ -58,7 +58,7 @@ then
 	set -x
 fi
 
-convert \
+magick \
 	-size "$RES" \
 	canvas:black \
 	-colorspace Gray \

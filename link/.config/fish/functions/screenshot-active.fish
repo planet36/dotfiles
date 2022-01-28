@@ -5,11 +5,11 @@ function screenshot-active --description 'Take a screenshot of the active window
 
     set --local DATETIME (date -u +%Y%m%dT%H%M%SS%3N)
 
-    if command --quiet xdotool 
+    if command --quiet xdotool
 
         set --local WIN_ID (xdotool getactivewindow)
 
-    else if command --quiet xprop 
+    else if command --quiet xprop
 
         set --local WIN_ID (xprop -root _NET_ACTIVE_WINDOW | awk '{print $NF}')
 
@@ -30,7 +30,7 @@ function screenshot-active --description 'Take a screenshot of the active window
 
         xwd -id $WIN_ID -out ~/screenshot-$DATETIME.xwd || return
 
-        convert ~/screenshot-$DATETIME.xwd ~/screenshot-$DATETIME.png || return
+        magick ~/screenshot-$DATETIME.xwd ~/screenshot-$DATETIME.png || return
 
         rm --force -- ~/screenshot-$DATETIME.xwd
 

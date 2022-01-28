@@ -17,7 +17,7 @@ function screenshot --description 'Take a screenshot'
 
         xwd -root -out ~/screenshot-$DATETIME.xwd || return
 
-        convert ~/screenshot-$DATETIME.xwd ~/screenshot-$DATETIME.png || return
+        magick ~/screenshot-$DATETIME.xwd ~/screenshot-$DATETIME.png || return
 
         rm --force -- ~/screenshot-$DATETIME.xwd
 
