@@ -3,5 +3,6 @@
 
 function program_exists
 {
+	# https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html
     command -v "${@}" > /dev/null
 }
