@@ -743,7 +743,7 @@ endfor
 "highlight Constant guifg=#FBB829
 "highlight Character guifg=#FBB829
 "highlight Boolean guifg=#FBB829
-highlight Number guifg=#FBB829
-highlight Float guifg=#FBB829
+"highlight Number guifg=#FBB829
+"highlight Float guifg=#FBB829
 
 " }}}
