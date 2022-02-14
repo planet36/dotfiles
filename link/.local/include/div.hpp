@@ -5,8 +5,6 @@
 /**
 \file
 \author Steven Ward
-\note Division by zero is not checked.
-\note Overflow is not checked.
 */
 
 #pragma once
@@ -14,6 +12,11 @@
 #include <cmath>
 #include <concepts>
 
+/// get the quotient and remainder of the _truncated_ integer division
+/**
+\note Division by zero is not checked.
+\note Overflow is not checked.
+*/
 constexpr void div(const std::integral auto x,
                    const std::integral auto y,
                    std::integral auto& quot,
@@ -23,6 +26,11 @@ constexpr void div(const std::integral auto x,
 	rem = x % y;
 }
 
+/// get the quotient and remainder of the _truncated_ division
+/**
+\note Division by zero is not checked.
+\note Overflow is not checked.
+*/
 constexpr void div(const std::floating_point auto x,
                    const std::floating_point auto y,
                    std::floating_point auto& quot,
