@@ -46,3 +46,33 @@ constexpr auto int_div_round(const std::integral auto x,
 	           ((iabs(x % y) == iabs(y / 2)) && ((y % 2) == 0))
 	       );
 }
+
+constexpr void int_divmod_floor(const std::integral auto x,
+                                const std::integral auto y,
+                                std::integral auto& quot,
+                                std::integral auto& rem)
+{
+#if 0
+	quot = int_div_floor(x, y);
+	rem = x - y * quot;
+#else
+	quot = x / y;
+	rem =  x % y;
+	if (y < 0)
+	{
+		if (rem > 0)
+		{
+			rem += y;
+			quot--;
+		}
+	}
+	else
+	{
+		if (rem < 0)
+		{
+			rem += y;
+			quot--;
+		}
+	}
+#endif
+}
