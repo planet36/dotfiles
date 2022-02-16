@@ -129,3 +129,67 @@ constexpr void int_divmod_ceil(const std::signed_integral auto x,
 	}
 #endif
 }
+
+/// get the quotient and remainder of the _rounded_ integer division
+/**
+\note Division by zero is not checked.
+\note Overflow is not checked.
+*/
+constexpr void int_divmod_round(const std::signed_integral auto x,
+                                const std::signed_integral auto y,
+                                std::signed_integral auto& quo,
+                                std::signed_integral auto& rem)
+{
+#if 0
+	quo = int_div_round(x, y);
+	rem = x - y * quo;
+#else
+	quo = x / y;
+	rem = x % y;
+
+	if (rem == 0)
+		return;
+
+	const bool y_is_even = (y % 2) == 0;
+	const auto y_half = y / 2;
+
+	if (y < 0)
+	{
+		if (rem < 0)
+		{
+			if ((rem < y_half) || ((rem == y_half) && y_is_even))
+			{
+				rem -= y;
+				quo++;
+			}
+		}
+		else
+		{
+			if ((-rem < y_half) || ((-rem == y_half) && y_is_even))
+			{
+				rem += y;
+				quo--;
+			}
+		}
+	}
+	else
+	{
+		if (rem < 0)
+		{
+			if ((-rem > y_half) || ((-rem == y_half) && y_is_even))
+			{
+				rem += y;
+				quo--;
+			}
+		}
+		else
+		{
+			if ((rem > y_half) || ((rem == y_half) && y_is_even))
+			{
+				rem -= y;
+				quo++;
+			}
+		}
+	}
+#endif
+}
