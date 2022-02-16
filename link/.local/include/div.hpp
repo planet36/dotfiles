@@ -19,10 +19,10 @@
 */
 constexpr void div(const std::integral auto x,
                    const std::integral auto y,
-                   std::integral auto& quot,
+                   std::integral auto& quo,
                    std::integral auto& rem)
 {
-	quot = x / y;
+	quo = x / y;
 	rem = x % y;
 }
 
@@ -33,10 +33,10 @@ constexpr void div(const std::integral auto x,
 */
 constexpr void div(const std::floating_point auto x,
                    const std::floating_point auto y,
-                   std::floating_point auto& quot,
+                   std::floating_point auto& quo,
                    std::floating_point auto& rem)
 {
-	quot = x / y;
+	quo = x / y;
 	rem = x - std::trunc(x / y) * y;
 	// fmod is less accurate than division and trunc
 	//rem = std::fmod(x, y);

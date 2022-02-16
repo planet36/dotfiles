@@ -67,21 +67,21 @@ constexpr auto int_div_round(const std::signed_integral auto x,
 */
 constexpr void int_divmod_floor(const std::signed_integral auto x,
                                 const std::signed_integral auto y,
-                                std::signed_integral auto& quot,
+                                std::signed_integral auto& quo,
                                 std::signed_integral auto& rem)
 {
 #if 0
-	quot = int_div_floor(x, y);
-	rem = x - y * quot;
+	quo = int_div_floor(x, y);
+	rem = x - y * quo;
 #else
-	quot = x / y;
-	rem =  x % y;
+	quo = x / y;
+	rem = x % y;
 	if (y < 0)
 	{
 		if (rem > 0)
 		{
 			rem += y;
-			quot--;
+			quo--;
 		}
 	}
 	else
@@ -89,7 +89,7 @@ constexpr void int_divmod_floor(const std::signed_integral auto x,
 		if (rem < 0)
 		{
 			rem += y;
-			quot--;
+			quo--;
 		}
 	}
 #endif
