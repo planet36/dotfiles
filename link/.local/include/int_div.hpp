@@ -94,3 +94,38 @@ constexpr void int_divmod_floor(const std::signed_integral auto x,
 	}
 #endif
 }
+
+/// get the quotient and remainder of the _ceiling_ integer division
+/**
+\note Division by zero is not checked.
+\note Overflow is not checked.
+*/
+constexpr void int_divmod_ceil(const std::signed_integral auto x,
+                               const std::signed_integral auto y,
+                               std::signed_integral auto& quo,
+                               std::signed_integral auto& rem)
+{
+#if 0
+	quo = int_div_ceil(x, y);
+	rem = x - y * quo;
+#else
+	quo = x / y;
+	rem = x % y;
+	if (y > 0)
+	{
+		if (rem > 0)
+		{
+			rem -= y;
+			quo++;
+		}
+	}
+	else
+	{
+		if (rem < 0)
+		{
+			rem -= y;
+			quo++;
+		}
+	}
+#endif
+}
