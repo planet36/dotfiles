@@ -147,25 +147,19 @@ constexpr void int_divmod_round(const std::signed_integral auto x,
 	quo = x / y;
 	rem = x % y;
 
-	if (rem == 0)
-		return;
-
-	const bool y_is_even = (y % 2) == 0;
-	const auto y_half = y / 2;
-
 	if (y < 0)
 	{
 		if (rem < 0)
 		{
-			if ((rem < y_half) || ((rem == y_half) && y_is_even))
+			if ((rem < (y / 2)) || ((rem == (y / 2)) && ((y % 2) == 0)))
 			{
 				rem -= y;
 				quo++;
 			}
 		}
-		else
+		else if (rem > 0)
 		{
-			if ((-rem < y_half) || ((-rem == y_half) && y_is_even))
+			if ((-rem < (y / 2)) || ((-rem == (y / 2)) && ((y % 2) == 0)))
 			{
 				rem += y;
 				quo--;
@@ -176,15 +170,15 @@ constexpr void int_divmod_round(const std::signed_integral auto x,
 	{
 		if (rem < 0)
 		{
-			if ((-rem > y_half) || ((-rem == y_half) && y_is_even))
+			if ((-rem > (y / 2)) || ((-rem == (y / 2)) && ((y % 2) == 0)))
 			{
 				rem += y;
 				quo--;
 			}
 		}
-		else
+		else if (rem > 0)
 		{
-			if ((rem > y_half) || ((rem == y_half) && y_is_even))
+			if ((rem > (y / 2)) || ((rem == (y / 2)) && ((y % 2) == 0)))
 			{
 				rem -= y;
 				quo++;
