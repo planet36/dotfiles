@@ -97,8 +97,7 @@ case arch
     # --cleanafter
     alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
     alias uninst='sudo pacman -Rs'
-    ##### TODO: maybe use xargs
-    alias autorm='pacman -Qdtq | sudo pacman -Rs -' ##### TODO: test this
+    alias autorm='pacman -Qdtq | sudo pacman -Rs -'
     alias upd='sudo pacman -Syw'
     alias upg='sudo pacman -Syu'
     alias pf="pacman -Sl | fzf --nth 2.. --preview 'pacman -Si {2}'"

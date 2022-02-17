@@ -161,8 +161,7 @@ arch)
     # --answerupgrade None
     # --cleanafter
     alias uninst='sudo pacman -Rs'
-    ##### TODO: maybe use xargs
-    alias autorm='pacman -Qdtq | sudo pacman -Rs -' ##### TODO: test this
+    alias autorm='pacman -Qdtq | sudo pacman -Rs -'
     alias upd='sudo pacman -Syw'
     alias upg='sudo pacman -Syu'
     ;;
