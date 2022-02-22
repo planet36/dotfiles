@@ -203,6 +203,12 @@ set path+=~/.local/include
 
 " }}}
 
+" {{{ ignore case when completing file names and directories
+
+set wildignorecase
+
+" }}}
+
 " {{{ Line numbers
 
 set number
