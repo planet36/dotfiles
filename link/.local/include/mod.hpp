@@ -62,11 +62,11 @@ constexpr auto mod(const std::signed_integral auto x,
 #if 0
 	return x - y * int_div_floor(x, y);
 #else
-	const auto r = x % y;
+	const auto rem = x % y;
 	if (y < 0)
-		return (r > 0) ? r + y : r;
+		return (rem > 0) ? rem + y : rem;
 	else
-		return (r < 0) ? r + y : r;
+		return (rem < 0) ? rem + y : rem;
 #endif
 }
 
