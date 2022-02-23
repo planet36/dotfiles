@@ -29,13 +29,13 @@ constexpr auto iabs(const std::unsigned_integral auto x)
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr void int_divmod_floor(const std::signed_integral auto x,
+constexpr void floor_div_mod(const std::signed_integral auto x,
                                 const std::signed_integral auto y,
                                 std::signed_integral auto& quo,
                                 std::signed_integral auto& rem)
 {
 #if 0
-	quo = int_div_floor(x, y);
+	quo = floor_div(x, y);
 	rem = x - y * quo;
 #else
 	quo = x / y;
@@ -64,13 +64,13 @@ constexpr void int_divmod_floor(const std::signed_integral auto x,
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr void int_divmod_ceil(const std::signed_integral auto x,
+constexpr void ceil_div_mod(const std::signed_integral auto x,
                                const std::signed_integral auto y,
                                std::signed_integral auto& quo,
                                std::signed_integral auto& rem)
 {
 #if 0
-	quo = int_div_ceil(x, y);
+	quo = ceil_div(x, y);
 	rem = x - y * quo;
 #else
 	quo = x / y;
@@ -99,13 +99,13 @@ constexpr void int_divmod_ceil(const std::signed_integral auto x,
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr void int_divmod_round(const std::signed_integral auto x,
+constexpr void round_div_mod(const std::signed_integral auto x,
                                 const std::signed_integral auto y,
                                 std::signed_integral auto& quo,
                                 std::signed_integral auto& rem)
 {
 #if 0
-	quo = int_div_round(x, y);
+	quo = round_div(x, y);
 	rem = x - y * quo;
 #else
 	quo = x / y;
@@ -157,7 +157,7 @@ constexpr void int_divmod_round(const std::signed_integral auto x,
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr auto int_div_floor(const std::signed_integral auto x,
+constexpr auto floor_div(const std::signed_integral auto x,
                              const std::signed_integral auto y)
 {
 	return (x / y) - (!same_sign(x, y) && ((x % y) != 0));
@@ -168,7 +168,7 @@ constexpr auto int_div_floor(const std::signed_integral auto x,
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr auto int_div_ceil(const std::signed_integral auto x,
+constexpr auto ceil_div(const std::signed_integral auto x,
                             const std::signed_integral auto y)
 {
 	return (x / y) + (same_sign(x, y) && ((x % y) != 0));
@@ -179,7 +179,7 @@ constexpr auto int_div_ceil(const std::signed_integral auto x,
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr auto int_div_round(const std::signed_integral auto x,
+constexpr auto round_div(const std::signed_integral auto x,
                              const std::signed_integral auto y)
 {
 	return (x / y) + sign(x % y) * sign(y) * (

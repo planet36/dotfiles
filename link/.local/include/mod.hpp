@@ -56,11 +56,11 @@ Example of floored division:
 Mod[x, y] == x - y * Quotient[x, y]
 \endverbatim
 */
-constexpr auto mod(const std::signed_integral auto x,
+constexpr auto floor_mod(const std::signed_integral auto x,
                    const std::signed_integral auto y)
 {
 #if 0
-	return x - y * int_div_floor(x, y);
+	return x - y * floor_div(x, y);
 #else
 	auto rem = x % y;
 	if (y < 0)
@@ -83,8 +83,8 @@ constexpr auto mod(const std::signed_integral auto x,
 }
 
 /// get the adjusted remainder of the _floored_ integer division
-constexpr auto amod(const std::signed_integral auto x,
+constexpr auto floor_amod(const std::signed_integral auto x,
                     const std::signed_integral auto y)
 {
-	return mod(x, y) != 0 ? mod(x, y) : y;
+	return floor_mod(x, y) != 0 ? floor_mod(x, y) : y;
 }

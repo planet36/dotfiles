@@ -17,7 +17,7 @@
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr void div(const std::integral auto x,
+constexpr void trunc_div_mod(const std::integral auto x,
                    const std::integral auto y,
                    std::integral auto& quo,
                    std::integral auto& rem)
@@ -31,7 +31,7 @@ constexpr void div(const std::integral auto x,
 \note Division by zero is not checked.
 \note Overflow is not checked.
 */
-constexpr void div(const std::floating_point auto x,
+constexpr void trunc_div_mod(const std::floating_point auto x,
                    const std::floating_point auto y,
                    std::floating_point auto& quo,
                    std::floating_point auto& rem)
