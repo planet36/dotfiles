@@ -1,10 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Integer division with floor, ceil, and round results
+/// Division and remainder (mod) functions using various rounding methods
 /**
 \file
 \author Steven Ward
+\note Division by zero is not checked.
+\note Overflow is not checked.
 */
 
 #pragma once
@@ -15,10 +17,6 @@
 #include <concepts>
 
 /// get the quotient and remainder of the _truncated_ integer division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr void trunc_div_mod(const std::integral auto x,
                    const std::integral auto y,
                    std::integral auto& quo,
@@ -29,10 +27,6 @@ constexpr void trunc_div_mod(const std::integral auto x,
 }
 
 /// get the quotient and remainder of the _truncated_ division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr void trunc_div_mod(const std::floating_point auto x,
                    const std::floating_point auto y,
                    std::floating_point auto& quo,
@@ -55,10 +49,6 @@ constexpr auto iabs(const std::unsigned_integral auto x)
 }
 
 /// get the quotient and remainder of the _floored_ integer division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr void floor_div_mod(const std::signed_integral auto x,
                                 const std::signed_integral auto y,
                                 std::signed_integral auto& quo,
@@ -90,10 +80,6 @@ constexpr void floor_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient and remainder of the _ceiling_ integer division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr void ceil_div_mod(const std::signed_integral auto x,
                                const std::signed_integral auto y,
                                std::signed_integral auto& quo,
@@ -125,10 +111,6 @@ constexpr void ceil_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient and remainder of the _rounded_ integer division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr void round_div_mod(const std::signed_integral auto x,
                                 const std::signed_integral auto y,
                                 std::signed_integral auto& quo,
@@ -183,10 +165,6 @@ constexpr void round_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient of the _floored_ integer division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr auto floor_div(const std::signed_integral auto x,
                              const std::signed_integral auto y)
 {
@@ -194,10 +172,6 @@ constexpr auto floor_div(const std::signed_integral auto x,
 }
 
 /// get the quotient of the _ceiling_ integer division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr auto ceil_div(const std::signed_integral auto x,
                             const std::signed_integral auto y)
 {
@@ -205,10 +179,6 @@ constexpr auto ceil_div(const std::signed_integral auto x,
 }
 
 /// get the quotient of the _rounded_ integer division
-/**
-\note Division by zero is not checked.
-\note Overflow is not checked.
-*/
 constexpr auto round_div(const std::signed_integral auto x,
                              const std::signed_integral auto y)
 {
@@ -220,8 +190,6 @@ constexpr auto round_div(const std::signed_integral auto x,
 
 /// get the remainder of the _floored_ integer division
 /**
-\note Division by zero is not checked.
-\note Overflow is not checked.
 \sa http://python-history.blogspot.com/2010/08/why-pythons-integer-division-floors.html
 \sa https://eel.is/c++draft/expr.mul#4
 \sa https://stackoverflow.com/a/3602857
