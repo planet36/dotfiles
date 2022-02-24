@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "abs.hpp"
 #include "sign.hpp"
 
 #include <cmath>
@@ -38,16 +39,6 @@ trunc_div_mod(const std::floating_point auto x,
 	rem = x - std::trunc(x / y) * y;
 	// fmod is less accurate than division and trunc
 	//rem = std::fmod(x, y);
-}
-
-constexpr auto iabs(const std::signed_integral auto x)
-{
-	return std::abs(x);
-}
-
-constexpr auto iabs(const std::unsigned_integral auto x)
-{
-	return x;
 }
 
 /// get the quotient and remainder of the _floored_ integer division
