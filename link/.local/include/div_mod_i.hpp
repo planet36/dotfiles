@@ -34,10 +34,6 @@ floor_div_mod(const std::signed_integral auto x,
               std::signed_integral auto& quo,
               std::signed_integral auto& rem)
 {
-#if 0
-	quo = floor_div(x, y);
-	rem = x - y * quo;
-#else
 	quo = x / y;
 	rem = x % y;
 	if (y < 0)
@@ -56,7 +52,6 @@ floor_div_mod(const std::signed_integral auto x,
 			quo--;
 		}
 	}
-#endif
 }
 
 /// get the quotient and remainder of the _ceiling_ integer division
@@ -66,10 +61,6 @@ ceil_div_mod(const std::signed_integral auto x,
              std::signed_integral auto& quo,
              std::signed_integral auto& rem)
 {
-#if 0
-	quo = ceil_div(x, y);
-	rem = x - y * quo;
-#else
 	quo = x / y;
 	rem = x % y;
 	if (y > 0)
@@ -88,7 +79,6 @@ ceil_div_mod(const std::signed_integral auto x,
 			quo++;
 		}
 	}
-#endif
 }
 
 /// get the quotient and remainder of the _rounded_ integer division
@@ -98,10 +88,6 @@ round_div_mod(const std::signed_integral auto x,
               std::signed_integral auto& quo,
               std::signed_integral auto& rem)
 {
-#if 0
-	quo = round_div(x, y);
-	rem = x - y * quo;
-#else
 	quo = x / y;
 	rem = x % y;
 
@@ -143,7 +129,6 @@ round_div_mod(const std::signed_integral auto x,
 			}
 		}
 	}
-#endif
 }
 
 /// get the quotient of the _floored_ integer division
@@ -220,9 +205,6 @@ constexpr auto
 floor_mod(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-#if 0
-	return x - y * floor_div(x, y);
-#else
 	auto rem = x % y;
 	if (y < 0)
 	{
@@ -240,7 +222,6 @@ floor_mod(const std::signed_integral auto x,
 	}
 
 	return rem;
-#endif
 }
 
 /// get the adjusted remainder of the _floored_ integer division
