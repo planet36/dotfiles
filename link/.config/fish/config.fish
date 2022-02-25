@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# vim: set foldmethod=marker foldlevel=0:
+
 ##### XXX: "add fish syntax highlighting"
 # https://github.com/vim/vim/issues/820
 
