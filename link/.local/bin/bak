@@ -162,7 +162,7 @@ OPTIONS
 		out_file_name = bak_func(in_file_name)
 
 		if in_file_name != out_file_name:
-			print(shlex.join((cmd, in_file_name, out_file_name)))
+			print(shlex.join((cmd, '-v', in_file_name, out_file_name)))
 
 	return 0
 
