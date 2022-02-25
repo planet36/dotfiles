@@ -82,7 +82,8 @@ if status is-interactive
 # https://github.com/fish-shell/fish-shell/issues/3425
 if string match --quiet "st-*" "$TERM"
     set --erase VTE_VERSION
-    # fixed by https://github.com/fish-shell/fish-shell/commit/6606dfbeb5e65e1f9d1b900248e02dea6690d48c
+    # fixed by (2021-10-14)
+    # https://github.com/fish-shell/fish-shell/commit/6606dfbeb5e65e1f9d1b900248e02dea6690d48c
     bind \e\[P delete-char
 end
 
