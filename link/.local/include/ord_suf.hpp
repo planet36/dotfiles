@@ -15,8 +15,10 @@
 #include "abs.hpp"
 
 #include <concepts>
+#include <string_view>
 
-const char* ordinal_suffix(std::unsigned_integral auto n)
+constexpr std::string_view
+ordinal_suffix(std::unsigned_integral auto n)
 {
 	switch (n %= 100)
 	{
@@ -38,7 +40,8 @@ const char* ordinal_suffix(std::unsigned_integral auto n)
 	return "th";
 }
 
-const char* ordinal_suffix(const std::signed_integral auto n)
+constexpr std::string_view
+ordinal_suffix(const std::signed_integral auto n)
 {
 	return ordinal_suffix(uabs(n));
 }
