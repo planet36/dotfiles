@@ -21,8 +21,8 @@ trunc_div_mod(const std::floating_point auto x,
               std::floating_point auto& quo,
               std::floating_point auto& rem)
 {
-	quo = x / y;
-	rem = x - std::trunc(x / y) * y;
+	quo = std::trunc(x / y);
+	rem = x - quo * y;
 	// fmod is less accurate than division and trunc
 	//rem = std::fmod(x, y);
 }
@@ -34,8 +34,8 @@ floor_div_mod(const std::floating_point auto x,
               std::floating_point auto& quo,
               std::floating_point auto& rem)
 {
-	quo = x / y;
-	rem = x - std::floor(x / y) * y;
+	quo = std::floor(x / y);
+	rem = x - quo * y;
 }
 
 /// get the quotient and remainder of the _ceiling_ floating point division
@@ -45,8 +45,8 @@ ceil_div_mod(const std::floating_point auto x,
              std::floating_point auto& quo,
              std::floating_point auto& rem)
 {
-	quo = x / y;
-	rem = x - std::ceil(x / y) * y;
+	quo = std::ceil(x / y);
+	rem = x - quo * y;
 }
 
 /// get the quotient and remainder of the _rounded_ floating point division
@@ -56,6 +56,6 @@ round_div_mod(const std::floating_point auto x,
               std::floating_point auto& quo,
               std::floating_point auto& rem)
 {
-	quo = x / y;
-	rem = x - std::round(x / y) * y;
+	quo = std::round(x / y);
+	rem = x - quo * y;
 }
