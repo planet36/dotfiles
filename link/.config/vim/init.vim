@@ -1,3 +1,6 @@
+" SPDX-FileCopyrightText: Steven Ward
+" SPDX-License-Identifier: OSL-3.0
+
 " vim: set foldmethod=marker foldlevel=0:
 
 " {{{ Nvim defaults for Vim
