@@ -38,7 +38,6 @@
   full_screen = ""
   reset = ""
   reset_clear = ""
-  hide_window = ""
   group_all = ""
   ungroup_all = ""
   group_tab = ""
