@@ -11,9 +11,6 @@
 
 #pragma once
 
-#include "abs.hpp"
-#include "sign.hpp"
-
 #include <concepts>
 #include <type_traits>
 
@@ -37,6 +34,7 @@ floor_div_mod(const std::signed_integral auto x,
 {
 	quo = x / y;
 	rem = x % y;
+
 	if (y < 0)
 	{
 		if (rem > 0)
@@ -64,6 +62,7 @@ ceil_div_mod(const std::signed_integral auto x,
 {
 	quo = x / y;
 	rem = x % y;
+
 	if (y > 0)
 	{
 		if (rem > 0)
@@ -148,7 +147,10 @@ constexpr auto
 floor_div(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	return (x / y) - (!same_sign(x, y) && ((x % y) != 0));
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	floor_div_mod(x, y, quo, rem);
+	return quo;
 }
 
 /// get the quotient of the _ceiling_ integer division
@@ -156,7 +158,10 @@ constexpr auto
 ceil_div(const std::signed_integral auto x,
          const std::signed_integral auto y)
 {
-	return (x / y) + (same_sign(x, y) && ((x % y) != 0));
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	ceil_div_mod(x, y, quo, rem);
+	return quo;
 }
 
 /// get the quotient of the _rounded_ integer division
@@ -164,10 +169,10 @@ constexpr auto
 round_div(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	return (x / y) + sign(x % y) * sign(y) * (
-	           (iabs(x % y) > iabs(y / 2)) ||
-	           ((iabs(x % y) == iabs(y / 2)) && ((y % 2) == 0))
-	       );
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	round_div_mod(x, y, quo, rem);
+	return quo;
 }
 
 /// get the remainder of the _truncated_ integer division
