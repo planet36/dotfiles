@@ -3,20 +3,6 @@
 
 # shellcheck shell=bash disable=SC1090,SC1091
 
-# {{{ change terminal line settings
-
-# disable sending of start/stop characters
-#stty -ixoff
-
-# disable XON/XOFF flow control
-#stty -ixon
-
-# https://stackoverflow.com/a/19248775
-# disable control backslash (^\) as quit
-#stty quit undef
-
-# }}}
-
 # {{{ bash history
 
 # https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-HISTCONTROL
@@ -75,19 +61,6 @@ GLOBIGNORE=.:..
 
 # }}}
 
-# {{{ ls colors
-
-#eval $(dircolors -b)
-#source <(dircolors -b)
-
-#if [[ "${TERM}" == linux ]]
-#then
-#    # change dir color
-#    export LS_COLORS="${LS_COLORS}:di=0;33"
-#fi
-
-# }}}
-
 # {{{ env_parallel
 
 if command -v env_parallel > /dev/null
@@ -102,26 +75,6 @@ fi
 export _Z_CMD=j
 export _Z_DATA="${XDG_CACHE_HOME}"/z-data
 [[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
-
-# }}}
-
-# {{{ zoxide
-
-#if command -v zoxide > /dev/null
-#then
-#    #https://github.com/ajeetdsouza/zoxide#step-3-add-zoxide-to-your-shell
-#    eval "$(zoxide init bash)"
-#fi
-
-# }}}
-
-# {{{ command correction
-
-#if command -v thefuck > /dev/null
-#then
-#    # https://github.com/nvbn/thefuck/wiki/Shell-aliases
-#    eval "$(thefuck --alias)"
-#fi
 
 # }}}
 
