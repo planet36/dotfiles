@@ -7,6 +7,10 @@ if test -f (status dirname)/envvars.fish
     source (status dirname)/envvars.fish
 end
 
+if test -f (status dirname)/envvars-private.fish
+    source (status dirname)/envvars-private.fish
+end
+
 # {{{ interactive shell
 
 if status is-interactive
@@ -39,10 +43,6 @@ set Z_CMD "j"
 # }}}
 
 # {{{ source other config files
-
-if test -f (status dirname)/envvars-private.fish
-    source (status dirname)/envvars-private.fish
-end
 
 if test -f (status dirname)/abbrs.fish
     source (status dirname)/abbrs.fish
