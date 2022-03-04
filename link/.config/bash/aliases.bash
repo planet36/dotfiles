@@ -141,16 +141,18 @@ alias zero-out='truncate --size=0 --no-create'
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
 # https://www.archlinux.org/pacman/pacman.8.html
 alias inst='doas pacman -S --needed'
-alias yinst='yay -S --needed --answerclean None --answerdiff None'
 ##### XXX what about:
+# --answerclean All
 # --answeredit None
 # --answerupgrade None
 # --cleanafter
+alias yinst='yay -S --needed --answerclean None --answerdiff None'
 alias uninst='doas pacman -Rs'
 alias yuninst='yay -Rs'
 alias autorm='pacman -Qdtq | doas pacman -Rs -'
 alias upd='doas pacman -Syw'
 alias upg='doas pacman -Syu'
+alias pf="pacman -Sl | fzf --nth 2.. --preview 'pacman -Si {2}'"
 
 # https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Browsing_packages
 # pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
