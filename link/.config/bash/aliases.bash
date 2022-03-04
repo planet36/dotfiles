@@ -147,6 +147,7 @@ alias yinst='yay --color always -S --needed --answerclean None --answerdiff None
 # --answerupgrade None
 # --cleanafter
 alias uninst='doas pacman -Rs'
+alias yuninst='yay --color always -Rs'
 alias autorm='pacman -Qdtq | doas pacman -Rs -'
 alias upd='doas pacman -Syw'
 alias upg='doas pacman -Syu'
