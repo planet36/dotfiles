@@ -141,9 +141,9 @@ alias zero-out='truncate --size=0 --no-create'
 # {{{ package management
 
 # shellcheck disable=SC1091
-[[ -f /etc/os-release ]] && source /etc/os-release
+[[ -f /usr/lib/os-release ]] && source /usr/lib/os-release
 
-# $ID is set in /etc/os-release
+# $ID is set in /usr/lib/os-release
 case "${ID}" in
 
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta

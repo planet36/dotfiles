@@ -77,9 +77,9 @@ alias zero-out='truncate --size=0 --no-create'
 # {{{ package management
 
 # convert from sh to fish syntax
-sed -r -e 's/^([^=]+)=(.*)/set \1 \2/' /etc/os-release | source
+sed -r -e 's/^([^=]+)=(.*)/set \1 \2/' /usr/lib/os-release | source
 
-# $ID is set in /etc/os-release
+# $ID is set in /usr/lib/os-release
 switch "$ID"
 
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
