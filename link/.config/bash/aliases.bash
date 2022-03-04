@@ -138,21 +138,8 @@ alias wc3='wc --lines --words ; echo "  lines   words"'
 alias xz='xz --verbose --threads=0'
 alias zero-out='truncate --size=0 --no-create'
 
-# {{{ package management
-
-# shellcheck disable=SC1091
-[[ -f /usr/lib/os-release ]] && source /usr/lib/os-release
-
-# $ID is set in /usr/lib/os-release
-case "${ID}" in
-
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
-
 # https://www.archlinux.org/pacman/pacman.8.html
-arch)
-    alias cu='checkupdates'
-    alias sp='doas pacman'
-
     alias inst='doas pacman -S --needed'
     alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
     ##### XXX what about:
@@ -163,43 +150,8 @@ arch)
     alias autorm='pacman -Qdtq | doas pacman -Rs -'
     alias upd='doas pacman -Syw'
     alias upg='doas pacman -Syu'
-    ;;
 
-fedora)
-    ##### TODO: test these
-    alias cu='dnf check-update'
-    alias sd='doas dnf'
-
-    alias inst='doas dnf install'
-    alias uninst='doas dnf remove'
-    alias autorm='doas dnf autoremove'
-    alias upd='doas dnf list updates'
-    alias upg='doas dnf upgrade'
-
-    alias dnff='dnf list | fzf --preview "dnf info {1}"'
-    ;;
-
-ubuntu)
-    alias sa='doas apt'
-    alias syn='doas synaptic'
-
-    alias inst='doas apt install'
-    alias uninst='doas apt purge' # or remove
-    alias autorm='doas apt autoremove'
-    alias upd='doas apt update'
-    alias upg='doas apt upgrade'
-
-    alias rmdeborphan='doas apt-get purge $(deborphan)'
-
-    alias af='apt-cache pkgnames | fzf --preview "apt-cache show {}"'
-    ;;
-
-*)
-    ;;
-
-esac
+# https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Browsing_packages
+# pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
 
 # }}}
-
-# }}}
-
