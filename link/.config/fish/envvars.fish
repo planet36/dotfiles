@@ -8,15 +8,8 @@ set --export ACKRC "$XDG_CONFIG_HOME"/ack/ackrc
 set --export CC gcc
 set --export CXX g++
 
-if command --quiet nvim
-    set --export EDITOR nvim
-    set --export VISUAL nvim
-else if command --quiet vim
-    set --export EDITOR vim
-    set --export VISUAL vim
-else
-    echo "Warning: No editor found.  Install nvim or vim."
-end
+set --export EDITOR nvim
+set --export VISUAL nvim
 
 set --export DIFFPROG "$VISUAL -d"
 

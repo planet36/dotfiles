@@ -8,17 +8,8 @@ export ACKRC="$XDG_CONFIG_HOME"/ack/ackrc
 export CC=gcc
 export CXX=g++
 
-if command -p -v nvim > /dev/null
-then
-    export EDITOR=nvim
-    export VISUAL=nvim
-elif command -p -v vim > /dev/null
-then
-    export EDITOR=vim
-    export VISUAL=vim
-else
-    echo "Warning: No editor found.  Install nvim or vim."
-fi
+export EDITOR=nvim
+export VISUAL=nvim
 
 export DIFFPROG="$VISUAL -d"
 
