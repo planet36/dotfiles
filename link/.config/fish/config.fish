@@ -137,8 +137,8 @@ set Z_CMD "j"
 
 # {{{ source other config files
 
-if test -f (status dirname)/private.fish
-    source (status dirname)/private.fish
+if test -f (status dirname)/envvars-private.fish
+    source (status dirname)/envvars-private.fish
 end
 
 if test -f (status dirname)/abbrs.fish

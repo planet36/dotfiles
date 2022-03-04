@@ -148,9 +148,9 @@ fi
 # https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
 #[[ -f /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh
 
-if [[ -f "$XDG_CONFIG_HOME"/bash/private.bash ]]
+if [[ -f "$XDG_CONFIG_HOME"/bash/envvars-private.bash ]]
 then
-    source "$XDG_CONFIG_HOME"/bash/private.bash
+    source "$XDG_CONFIG_HOME"/bash/envvars-private.bash
 fi
 
 if [[ -f "$XDG_CONFIG_HOME"/bash/aliases.bash ]]
