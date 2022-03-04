@@ -44,11 +44,10 @@ alias p2=python2
 alias p3=python3
 alias py2=python2
 alias py3=python3
-alias rbn='sudo reboot now'
+alias rbn='doas reboot now'
 alias reutrn=return
-alias s=sudo
 alias sctl=systemctl
-alias sdn='sudo shutdown now'
+alias sdn='doas shutdown now'
 alias sha1=sha1sum
 alias sha224=sha224sum
 alias sha256=sha256sum
@@ -152,45 +151,45 @@ case "${ID}" in
 # https://www.archlinux.org/pacman/pacman.8.html
 arch)
     alias cu='checkupdates'
-    alias sp='sudo pacman'
+    alias sp='doas pacman'
 
-    alias inst='sudo pacman -S --needed'
+    alias inst='doas pacman -S --needed'
     alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
     ##### XXX what about:
     # --answeredit None
     # --answerupgrade None
     # --cleanafter
-    alias uninst='sudo pacman -Rs'
-    alias autorm='pacman -Qdtq | sudo pacman -Rs -'
-    alias upd='sudo pacman -Syw'
-    alias upg='sudo pacman -Syu'
+    alias uninst='doas pacman -Rs'
+    alias autorm='pacman -Qdtq | doas pacman -Rs -'
+    alias upd='doas pacman -Syw'
+    alias upg='doas pacman -Syu'
     ;;
 
 fedora)
     ##### TODO: test these
     alias cu='dnf check-update'
-    alias sd='sudo dnf'
+    alias sd='doas dnf'
 
-    alias inst='sudo dnf install'
-    alias uninst='sudo dnf remove'
-    alias autorm='sudo dnf autoremove'
-    alias upd='sudo dnf list updates'
-    alias upg='sudo dnf upgrade'
+    alias inst='doas dnf install'
+    alias uninst='doas dnf remove'
+    alias autorm='doas dnf autoremove'
+    alias upd='doas dnf list updates'
+    alias upg='doas dnf upgrade'
 
     alias dnff='dnf list | fzf --preview "dnf info {1}"'
     ;;
 
 ubuntu)
-    alias sa='sudo apt'
-    alias syn='sudo synaptic'
+    alias sa='doas apt'
+    alias syn='doas synaptic'
 
-    alias inst='sudo apt install'
-    alias uninst='sudo apt purge' # or remove
-    alias autorm='sudo apt autoremove'
-    alias upd='sudo apt update'
-    alias upg='sudo apt upgrade'
+    alias inst='doas apt install'
+    alias uninst='doas apt purge' # or remove
+    alias autorm='doas apt autoremove'
+    alias upd='doas apt update'
+    alias upg='doas apt upgrade'
 
-    alias rmdeborphan='sudo apt-get purge $(deborphan)'
+    alias rmdeborphan='doas apt-get purge $(deborphan)'
 
     alias af='apt-cache pkgnames | fzf --preview "apt-cache show {}"'
     ;;

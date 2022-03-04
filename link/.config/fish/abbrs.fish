@@ -41,11 +41,10 @@ abbr --add --global p2 python2
 abbr --add --global p3 python3
 abbr --add --global py2 python2
 abbr --add --global py3 python3
-abbr --add --global rbn sudo reboot now
+abbr --add --global rbn doas reboot now
 abbr --add --global reutrn return
-abbr --add --global s sudo
 abbr --add --global sctl systemctl
-abbr --add --global sdn sudo shutdown now
+abbr --add --global sdn doas shutdown now
 abbr --add --global sha1 sha1sum
 abbr --add --global sha224 sha224sum
 abbr --add --global sha256 sha256sum

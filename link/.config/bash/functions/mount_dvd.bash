@@ -5,5 +5,5 @@
 
 function mount_dvd
 {
-    sudo mkdir --verbose --parents "/media/${USER}/dvd" && sudo mount --read-only -t auto /dev/dvd "/media/${USER}/dvd/"
+    doas mkdir --verbose --parents "/media/${USER}/dvd" && doas mount --read-only -t auto /dev/dvd "/media/${USER}/dvd/"
 }

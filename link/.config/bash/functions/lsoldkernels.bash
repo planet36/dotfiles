@@ -17,5 +17,5 @@ function lsoldkernels
 
     #dpkg --get-selections 'linux-*' | grep --perl-regexp '^linux-(headers|image|image-extra)-[0-9\.\-]+(-generic)?\s+install$' | cut --fields 1
 
-    #sudo apt-get purge $(dpkg --get-selections 'linux-*' | grep --perl-regexp '^linux-(headers|image|image-extra)-[0-9\.\-]+')
+    #doas apt-get purge $(dpkg --get-selections 'linux-*' | grep --perl-regexp '^linux-(headers|image|image-extra)-[0-9\.\-]+')
 }

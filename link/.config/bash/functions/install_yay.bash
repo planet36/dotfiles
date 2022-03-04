@@ -15,7 +15,7 @@ function install_yay
         git pull --ff-only || return
     fi
 
-    # Must enter sudo password
+    # Must enter doas password
     makepkg --install --syncdeps --noconfirm --needed || return
     # Do not run yay as root
 
