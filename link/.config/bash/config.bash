@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# shellcheck shell=bash disable=SC1090,SC1091
+
 # {{{ change terminal line settings
 
 # disable sending of start/stop characters
