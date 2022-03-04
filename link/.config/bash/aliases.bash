@@ -141,13 +141,13 @@ alias zero-out='truncate --size=0 --no-create'
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
 # https://www.archlinux.org/pacman/pacman.8.html
 alias inst='doas pacman -S --needed'
-alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
+alias yinst='yay -S --needed --answerclean None --answerdiff None'
 ##### XXX what about:
 # --answeredit None
 # --answerupgrade None
 # --cleanafter
 alias uninst='doas pacman -Rs'
-alias yuninst='yay --color always -Rs'
+alias yuninst='yay -Rs'
 alias autorm='pacman -Qdtq | doas pacman -Rs -'
 alias upd='doas pacman -Syw'
 alias upg='doas pacman -Syu'

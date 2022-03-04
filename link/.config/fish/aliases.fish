@@ -82,9 +82,9 @@ alias inst='doas pacman -S --needed'
 # --answeredit None
 # --answerupgrade None
 # --cleanafter
-alias yinst='yay --color always -S --needed --answerclean None --answerdiff None'
+alias yinst='yay -S --needed --answerclean None --answerdiff None'
 alias uninst='doas pacman -Rs'
-alias yuninst='yay --color always -Rs'
+alias yuninst='yay -Rs'
 alias autorm='pacman -Qdtq | doas pacman -Rs -'
 alias upd='doas pacman -Syw'
 alias upg='doas pacman -Syu'
