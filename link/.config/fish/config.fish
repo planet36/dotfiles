@@ -7,8 +7,8 @@ if test -f (status dirname)/envvars.fish
     source (status dirname)/envvars.fish
 end
 
-if test -f (status dirname)/envvars-private.fish
-    source (status dirname)/envvars-private.fish
+if test -f (status dirname)/private-envvars.fish
+    source (status dirname)/private-envvars.fish
 end
 
 # {{{ interactive shell
