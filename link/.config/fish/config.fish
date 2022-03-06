@@ -3,14 +3,6 @@
 
 # vim: set foldmethod=marker foldlevel=0:
 
-if test -f (status dirname)/envvars.fish
-    source (status dirname)/envvars.fish
-end
-
-if test -f (status dirname)/private-envvars.fish
-    source (status dirname)/private-envvars.fish
-end
-
 # {{{ interactive shell
 
 if status is-interactive
