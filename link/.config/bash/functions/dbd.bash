@@ -1,6 +1,9 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# XXX: can be replaced with datediff
+# <https://www.fresse.org/dateutils/>
+
 # days between dates
 function dbd
 {

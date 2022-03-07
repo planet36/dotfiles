@@ -1,6 +1,9 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# XXX: can be replaced with dateseq
+# <https://www.fresse.org/dateutils/>
+
 function date_range
 {
     local D1
