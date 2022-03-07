@@ -5,12 +5,12 @@
 
 ulimit -c unlimited
 
-if [[ -f "$XDG_CONFIG_HOME"/bash/envvars.bash ]]
+if [[ -r "$XDG_CONFIG_HOME"/bash/envvars.bash ]]
 then
     source "$XDG_CONFIG_HOME"/bash/envvars.bash
 fi
 
-if [[ -f "$XDG_CONFIG_HOME"/bash/private-envvars.bash ]]
+if [[ -r "$XDG_CONFIG_HOME"/bash/private-envvars.bash ]]
 then
     source "$XDG_CONFIG_HOME"/bash/private-envvars.bash
 fi
