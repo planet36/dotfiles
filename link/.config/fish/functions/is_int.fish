@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function is_int
+function is_int --description 'Determine if a number is an integer'
     # https://stackoverflow.com/a/21505954
     set INT_REGEX '^(?:[+-]?[1-9][0-9]*|0)$'
     string match --regex --quiet $INT_REGEX -- $argv[1]
