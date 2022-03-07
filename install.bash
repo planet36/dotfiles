@@ -56,7 +56,7 @@ OPTIONS
        Only attempt to delete empty folders that contained dotfiles.
 
   -p : In addition to dotfiles, also install the following:
-       vim/nvim plugins listed in the file "plugins.vim"
+       nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
          - $SCRIPT_DIR/other/build-local/*
          - dwm
@@ -363,21 +363,14 @@ function setup_xdg_vars
     # XDG base directories have been created
 }
 
-function create_vim_nvim_dirs
+function create_nvim_dirs
 {
     if $DRY_RUN
     then
         echo \
         mkdir --verbose --parents -- \
-            "$XDG_DATA_HOME"/vim/{autoload,backup,colors,swap,undo}
-
-        echo \
-        mkdir --verbose --parents -- \
             "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo}
     else
-        mkdir --verbose --parents -- \
-            "$XDG_DATA_HOME"/vim/{autoload,backup,colors,swap,undo} || return
-
         mkdir --verbose --parents -- \
             "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo} || return
     fi
@@ -395,25 +388,10 @@ function install_vim_nvim_plugins
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         echo \
         cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim
-        echo \
-        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/vim/autoload/       -- /tmp/plug.vim
     else
         curl -fLo /tmp/plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return
         cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim || return
-        cp --verbose --target-directory "$XDG_DATA_HOME"/vim/autoload/       -- /tmp/plug.vim || return
-    fi
-
-    if command -v vim > /dev/null
-    then
-        #MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim +PlugUpgrade +PlugInstall +qall
-        if $DRY_RUN
-        then
-            echo \
-            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c PlugInstall -c qall
-        else
-            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c PlugInstall -c qall || return
-        fi
     fi
 
     if command -v nvim > /dev/null
@@ -429,21 +407,8 @@ function install_vim_nvim_plugins
     fi
 }
 
-function uninstall_vim_nvim_plugins
+function uninstall_nvim_plugins
 {
-    if command -v vim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/vim/plugins-empty.vim ]]
-    then
-        if $DRY_RUN
-        then
-            # shellcheck disable=SC2016
-            echo \
-            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall
-        else
-            # shellcheck disable=SC2016
-            MYVIMRC='$XDG_CONFIG_HOME/vim/init.vim' VIMINIT='source $MYVIMRC' command vim -c ':source $XDG_CONFIG_HOME/vim/plugins-empty.vim' -c PlugClean! -c qall || return
-        fi
-    fi
-
     if command -v nvim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/nvim/plugins-empty.vim ]]
     then
         if $DRY_RUN
@@ -651,7 +616,7 @@ function main
 
         if $INSTALL_PROGRAMS
         then
-            uninstall_vim_nvim_plugins || return
+            uninstall_nvim_plugins || return
             uninstall_local_programs   || return
             uninstall_github_programs  || return
             uninstall_fish_plugins     || return
@@ -674,7 +639,7 @@ function main
         mkdir --verbose --parents -- ~/.local/{bin,lib,src} || return
         mkdir --verbose --parents -- ~/Downloads || return
 
-        create_vim_nvim_dirs || return
+        create_nvim_dirs || return
 
         copy_dotfiles "$REL_DOTFILES_DIR"/copy || return
 
