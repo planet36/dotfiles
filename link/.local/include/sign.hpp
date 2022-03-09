@@ -12,14 +12,14 @@ This is also called "signum" or "sgn".
 \sa https://reference.wolfram.com/language/ref/Sign.html
 
 For an integer \c x, <code>sign(x)</code> returns
-\li \c -1 if <code>x < 0</code>
-\li \c 0 if <code>x == 0</code>
-\li \c 1 if <code>x > 0</code>
+\li \c -1, if <code>x < 0</code>
+\li \c 0, if <code>x == 0</code>
+\li \c 1, if <code>x > 0</code>
 
 For a floating point \c x, <code>sign(x)</code> returns
-\li \c -1 if <code>x < 0</code>
-\li \c 0 if <code>x == 0</code>
-\li \c 1 if <code>x > 0</code>
+\li \c -1, if <code>x < 0</code>
+\li \c 0, if <code>x == 0</code>
+\li \c 1, if <code>x > 0</code>
 \li \c NaN if <code>x is NaN</code>
 
 Two numbers have the same sign if both are non-positive or non-negative.
