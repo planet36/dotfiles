@@ -154,7 +154,7 @@ constexpr auto
 trunc_amod(const std::floating_point auto x,
            const std::floating_point auto y)
 {
-	return trunc_mod(x, y) != 0 ? trunc_mod(x, y) : y;
+	return trunc_mod(x, y) == 0 ? y : trunc_mod(x, y);
 }
 
 /// get the adjusted remainder of the _floored_ floating point division
@@ -162,7 +162,7 @@ constexpr auto
 floor_amod(const std::floating_point auto x,
            const std::floating_point auto y)
 {
-	return floor_mod(x, y) != 0 ? floor_mod(x, y) : y;
+	return floor_mod(x, y) == 0 ? y : floor_mod(x, y);
 }
 
 /// get the adjusted remainder of the _ceiling_ floating point division
@@ -170,7 +170,7 @@ constexpr auto
 ceil_amod(const std::floating_point auto x,
           const std::floating_point auto y)
 {
-	return ceil_mod(x, y) != 0 ? ceil_mod(x, y) : y;
+	return ceil_mod(x, y) == 0 ? y : ceil_mod(x, y);
 }
 
 /// get the adjusted remainder of the _rounded_ floating point division
@@ -178,5 +178,5 @@ constexpr auto
 round_amod(const std::floating_point auto x,
            const std::floating_point auto y)
 {
-	return round_mod(x, y) != 0 ? round_mod(x, y) : y;
+	return round_mod(x, y) == 0 ? y : round_mod(x, y);
 }
