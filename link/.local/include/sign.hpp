@@ -19,42 +19,34 @@ For an integer \c x, <code>sign(x)</code> returns
 For a floating point \c x, <code>sign(x)</code> returns
 \li \c 1, if <code>x > 0</code>
 \li \c -1, if <code>x < 0</code>
-\li \c 0, if <code>x == 0</code>
-\li \c NaN if \c x is \c NaN
+\li \c 0, otherwise (including \c NaN)
 
 Two numbers have the same sign if both are non-positive or non-negative.
 */
 
 #pragma once
 
-#include <cmath>
 #include <concepts>
 #include <type_traits>
 
 constexpr int sign(const std::unsigned_integral auto x)
 {
-	return x > 0;
+	return (x > 0) ? 1 : ((x < 0) ? -1 : 0);
 }
 
 constexpr int sign(const std::signed_integral auto x)
 {
-	return (x > 0) - (x < 0);
+	return (x > 0) ? 1 : ((x < 0) ? -1 : 0);
 }
 
-#if 1
+#if 0
 template <std::floating_point T>
 constexpr T sign(const T x)
 #else
-constexpr auto sign(const std::floating_point auto x) -> decltype(x)
+constexpr int sign(const std::floating_point auto x)
 #endif
 {
-	if (std::isnan(x))
-		return x;
-
-	if (x == 0)
-		return x;
-
-	return (x > 0) - (x < 0);
+	return (x > 0) ? 1 : ((x < 0) ? -1 : 0);
 }
 
 constexpr bool same_sign([[maybe_unused]] const std::unsigned_integral auto x,
