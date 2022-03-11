@@ -19,6 +19,18 @@ end
 
 # }}}
 
+# {{{ Fix environment variables that have to be split when used interactively and unquoted.
+
+# Fish does not split environment variables on whitespace.
+# https://stackoverflow.com/a/51731126
+# https://stackoverflow.com/a/47971956
+set OPTIMIZE_OPTIONS  (string split ' ' -- $OPTIMIZE_OPTIONS )
+set DEBUG_OPTIONS     (string split ' ' -- $DEBUG_OPTIONS    )
+set PERF_TEST_OPTIONS (string split ' ' -- $PERF_TEST_OPTIONS)
+set PROFILE_OPTIONS   (string split ' ' -- $PROFILE_OPTIONS  )
+
+# }}}
+
 # {{{ env_parallel
 
 if command --quiet env_parallel
