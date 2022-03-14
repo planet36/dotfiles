@@ -13,6 +13,7 @@ abbr --add --global c clear
 abbr --add --global cdl cld
 abbr --add --global clena clean
 abbr --add --global csl cls
+abbr --add --global dc cd
 abbr --add --global e "$EDITOR"
 abbr --add --global ed "$EDITOR"
 abbr --add --global emld meld
