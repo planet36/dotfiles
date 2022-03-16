@@ -78,7 +78,10 @@ export TIME="real\t%E\nuser\t%U\nsys\t%S\n"
 
 export TRASH_DIR="$XDG_DATA_HOME"/Trash
 
-export TZ=':America/New_York'
+# https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08_03
+# https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
+#export TZ=':America/New_York'
+export TZ='EST+5'
 
 #export VCS_REPOS_MATCH='( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
 #export VCS_REPOS_PRUNE="( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"
