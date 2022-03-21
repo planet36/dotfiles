@@ -151,28 +151,28 @@ void print_usage(const char* argv0)
 	printf("Values of zero are not printed by default.\n\n");
 
 	printf("OPTIONS\n");
-	printf("  -V       Print the version information and exit.\n");
-	printf("  -h       Print this message and exit.\n");
-	printf("  -n       Do not print a trailing newline character.\n");
-	printf("  -p UNITS Specify the units of time to be printed.  Omitted units of time are not printed.\n");
-	printf("           If this option is given more than once, only the last occurrence is respected.\n");
-	printf("           The default value is 'ywdhms'.\n");
-	printf("  -w WIDTH Specify the minimum field width for hours, minutes, and seconds values.\n");
-	printf("           If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
-	printf("           WIDTH must be a non-negative integer.\n");
-	printf("           The default value is 1.\n");
-	printf("  -0       Print values of zero.\n");
-	printf("           One -0 prints intermediate values of zero (occurring after the most significant printed value).\n");
-	printf("           Two -0 prints all values of zero.\n");
+	printf("  -V        Print the version information and exit.\n");
+	printf("  -h        Print this message and exit.\n");
+	printf("  -n        Do not print a trailing newline character.\n");
+	printf("  -p UNITS  Specify the units of time to be printed.  Omitted units of time are not printed.\n");
+	printf("            If this option is given more than once, only the last occurrence is respected.\n");
+	printf("            The default value is 'ywdhms'.\n");
+	printf("  -w WIDTH  Specify the minimum field width for hours, minutes, and seconds values.\n");
+	printf("            If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
+	printf("            WIDTH must be a non-negative integer.\n");
+	printf("            The default value is 1.\n");
+	printf("  -0        Print values of zero.\n");
+	printf("            One -0 prints values of zero occurring after the most significant non-zero value.\n");
+	printf("            Two -0 prints values of zero for all units of time.\n");
 	printf("\n");
 
-	printf("  UNIT is a character representing one of the following units of time.\n");
-	printf("    y = years\n");
-	printf("    w = weeks\n");
-	printf("    d = days\n");
-	printf("    h = hours\n");
-	printf("    m = minutes\n");
-	printf("    s = seconds\n");
+	printf("UNIT is a character representing one of the following units of time.\n");
+	printf("  y = years\n");
+	printf("  w = weeks\n");
+	printf("  d = days\n");
+	printf("  h = hours\n");
+	printf("  m = minutes\n");
+	printf("  s = seconds\n");
 	printf("\n");
 }
 
