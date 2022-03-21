@@ -144,11 +144,13 @@ void print_version(const char* argv0)
 
 void print_usage(const char* argv0)
 {
-	printf("Usage: %s [OPTIONS]\n\n", argv0);
+	printf("Usage: %s [OPTIONS]\n", argv0);
+	printf("\n");
 	printf("Read a non-negative duration (in seconds) from stdin.\n");
 	printf("Break down the duration into whole numbers of\n");
 	printf("  years, weeks, days, hours, minutes, and seconds.\n");
-	printf("Values of zero are not printed by default.\n\n");
+	printf("Values of zero are not printed by default.\n");
+	printf("\n");
 
 	printf("OPTIONS\n");
 	printf("  -V        Print the version information and exit.\n");
