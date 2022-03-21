@@ -9,9 +9,8 @@
 unsigned short strtous(const char* s)
 {
 	unsigned long i = strtoul(s, NULL, 0);
-
-	if (i > USHRT_MAX) i = USHRT_MAX;
-
+	if (i > USHRT_MAX)
+		i = USHRT_MAX;
 	return (unsigned short)i;
 }
 

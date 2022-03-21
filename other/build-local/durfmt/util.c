@@ -9,11 +9,9 @@
 int strtoi(const char* s)
 {
 	long i = strtol(s, NULL, 0);
-
 	if (i < INT_MIN)
 		i = INT_MIN;
 	else if (i > INT_MAX)
 		i = INT_MAX;
-
 	return (int)i;
 }
