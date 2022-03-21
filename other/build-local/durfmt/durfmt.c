@@ -118,7 +118,8 @@ void durfmt(unsigned long duration, const struct durfmt_opts* opts)
 	{
 		if (opts->print[ut])
 		{
-			my_div_i(duration, seconds_per[ut], &vals[ut], &duration);
+			vals[ut] = duration / seconds_per[ut];
+			duration = duration % seconds_per[ut];
 
 			if (vals[ut] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
 			{
