@@ -76,28 +76,28 @@ void print_usage(const char* argv0)
 	printf("\n");
 
 	printf("OPTIONS\n");
-	printf("  -V       Print the version information and exit.\n");
+	printf("  -V        Print the version information and exit.\n");
 	printf("\n");
-	printf("  -h       Print this message and exit.\n");
+	printf("  -h        Print this message and exit.\n");
 	printf("\n");
-	printf("  -l       Specify that the meter grows from left to right.\n");
-	printf("           This is the default behavior.\n");
+	printf("  -l        Specify that the meter grows from left to right.\n");
+	printf("            This is the default behavior.\n");
 	printf("\n");
-	printf("  -f CHAR  Specify the fill character of the meter.\n");
-	printf("           CHAR must be a printable character.\n");
-	printf("           The default value is '%c'.\n", default_fill);
+	printf("  -f CHAR   Specify the fill character of the meter.\n");
+	printf("            CHAR must be a printable character.\n");
+	printf("            The default value is '%c'.\n", default_fill);
 	printf("\n");
-	printf("  -n       Do not print a trailing newline character.\n");
+	printf("  -n        Do not print a trailing newline character.\n");
 	printf("\n");
-	printf("  -r       Specify that the meter grows from right to left.\n");
+	printf("  -r        Specify that the meter grows from right to left.\n");
 	printf("\n");
-	printf("  -u CHAR  Specify the unfill character of the meter.\n");
-	printf("           CHAR must be a printable character.\n");
-	printf("           The default value is '%c'.\n", default_unfill);
+	printf("  -u CHAR   Specify the unfill character of the meter.\n");
+	printf("            CHAR must be a printable character.\n");
+	printf("            The default value is '%c'.\n", default_unfill);
 	printf("\n");
-	printf("  -w WIDTH Specify the width of the meter.\n");
-	printf("           WIDTH must be a non-negative integer.\n");
-	printf("           The default value is %hu.\n", default_width);
+	printf("  -w WIDTH  Specify the width of the meter.\n");
+	printf("            WIDTH must be a non-negative integer.\n");
+	printf("            The default value is %hu.\n", default_width);
 	printf("\n");
 }
 
