@@ -6,14 +6,6 @@
 #include <limits.h>
 #include <stdlib.h>
 
-unsigned short strtous(const char* s)
-{
-	unsigned long i = strtoul(s, NULL, 0);
-	if (i > USHRT_MAX)
-		i = USHRT_MAX;
-	return (unsigned short)i;
-}
-
 // https://stackoverflow.com/a/16659263
 double clamp(double x, double min, double max)
 {

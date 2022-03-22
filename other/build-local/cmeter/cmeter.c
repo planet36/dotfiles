@@ -11,7 +11,7 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "1.0.0";
+const char program_version[] = "1.0.1";
 
 const char default_fill = '#';
 const char default_unfill = ' ';
@@ -130,8 +130,10 @@ int main(int argc, char* argv[])
 			return 0;
 
 		case 'w':
-			opts.width = strtous(optarg);
-			if (opts.width > max_width) opts.width = max_width;
+			unsigned long width = strtoul(optarg, NULL, 0);
+			if (width > max_width)
+				width = max_width;
+			opts.width = (unsigned short)width;
 			break;
 
 		case 'f':

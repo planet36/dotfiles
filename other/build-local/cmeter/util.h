@@ -3,5 +3,4 @@
 
 #pragma once
 
-unsigned short strtous(const char* s);
 double clamp(double x, double min, double max);
