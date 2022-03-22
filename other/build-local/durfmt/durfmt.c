@@ -1,8 +1,6 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-#include "util.h"
-
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -10,7 +8,7 @@
 #include <unistd.h>
 
 const char program_author[] = "Steven Ward";
-const char program_version[] = "1.0.0";
+const char program_version[] = "1.0.1";
 
 /// unit of time
 enum UT
@@ -190,7 +188,6 @@ int main(int argc, char* argv[])
 {
 	struct durfmt_opts opts;
 	const char* ut_to_print = "ywdhms";
-	int width = 1;
 
 	durfmt_opts_init(&opts);
 
@@ -218,10 +215,10 @@ int main(int argc, char* argv[])
 			break;
 
 		case 'w':
-			width = strtoi(optarg);
+			long width = strtol(optarg, NULL, 0);
 			if (width < 0) width = 0;
-			if (width > 20) width = 20;
-			opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = width;
+			else if (width > 20) width = 20;
+			opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = (int)width;
 			break;
 
 		case '0':
