@@ -19,10 +19,7 @@
 /// get the quotient and remainder of the _truncated_ floating point division
 template <std::floating_point T>
 constexpr void
-trunc_div_mod(const T x,
-              const T y,
-              T& quo,
-              T& rem)
+trunc_div_mod(const T x, const T y, T& quo, T& rem)
 {
 	quo = std::trunc(x / y);
 	rem = x - quo * y;
@@ -33,10 +30,7 @@ trunc_div_mod(const T x,
 /// get the quotient and remainder of the _floored_ floating point division
 template <std::floating_point T>
 constexpr void
-floor_div_mod(const T x,
-              const T y,
-              T& quo,
-              T& rem)
+floor_div_mod(const T x, const T y, T& quo, T& rem)
 {
 	quo = std::floor(x / y);
 	rem = x - quo * y;
@@ -45,10 +39,7 @@ floor_div_mod(const T x,
 /// get the quotient and remainder of the _ceiling_ floating point division
 template <std::floating_point T>
 constexpr void
-ceil_div_mod(const T x,
-             const T y,
-             T& quo,
-             T& rem)
+ceil_div_mod(const T x, const T y, T& quo, T& rem)
 {
 	quo = std::ceil(x / y);
 	rem = x - quo * y;
@@ -57,10 +48,7 @@ ceil_div_mod(const T x,
 /// get the quotient and remainder of the _rounded_ floating point division
 template <std::floating_point T>
 constexpr void
-round_div_mod(const T x,
-              const T y,
-              T& quo,
-              T& rem)
+round_div_mod(const T x, const T y, T& quo, T& rem)
 {
 	quo = std::round(x / y);
 	rem = x - quo * y;
@@ -69,8 +57,7 @@ round_div_mod(const T x,
 /// get the quotient and remainder of the _truncated_ floating point division
 template <std::floating_point T>
 constexpr auto
-trunc_div_mod(const T x,
-              const T y)
+trunc_div_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -81,8 +68,7 @@ trunc_div_mod(const T x,
 /// get the quotient and remainder of the _floored_ floating point division
 template <std::floating_point T>
 constexpr auto
-floor_div_mod(const T x,
-              const T y)
+floor_div_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -93,8 +79,7 @@ floor_div_mod(const T x,
 /// get the quotient and remainder of the _ceiling_ floating point division
 template <std::floating_point T>
 constexpr auto
-ceil_div_mod(const T x,
-             const T y)
+ceil_div_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -105,8 +90,7 @@ ceil_div_mod(const T x,
 /// get the quotient and remainder of the _rounded_ floating point division
 template <std::floating_point T>
 constexpr auto
-round_div_mod(const T x,
-              const T y)
+round_div_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -117,8 +101,7 @@ round_div_mod(const T x,
 /// get the quotient of the _truncated_ floating point division
 template <std::floating_point T>
 constexpr auto
-trunc_div(const T x,
-          const T y)
+trunc_div(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -129,8 +112,7 @@ trunc_div(const T x,
 /// get the quotient of the _floored_ floating point division
 template <std::floating_point T>
 constexpr auto
-floor_div(const T x,
-          const T y)
+floor_div(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -141,8 +123,7 @@ floor_div(const T x,
 /// get the quotient of the _ceiling_ floating point division
 template <std::floating_point T>
 constexpr auto
-ceil_div(const T x,
-         const T y)
+ceil_div(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -153,8 +134,7 @@ ceil_div(const T x,
 /// get the quotient of the _rounded_ floating point division
 template <std::floating_point T>
 constexpr auto
-round_div(const T x,
-          const T y)
+round_div(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -165,8 +145,7 @@ round_div(const T x,
 /// get the remainder of the _truncated_ floating point division
 template <std::floating_point T>
 constexpr auto
-trunc_mod(const T x,
-          const T y)
+trunc_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -177,8 +156,7 @@ trunc_mod(const T x,
 /// get the remainder of the _floored_ floating point division
 template <std::floating_point T>
 constexpr auto
-floor_mod(const T x,
-          const T y)
+floor_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -189,8 +167,7 @@ floor_mod(const T x,
 /// get the remainder of the _ceiling_ floating point division
 template <std::floating_point T>
 constexpr auto
-ceil_mod(const T x,
-         const T y)
+ceil_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -201,8 +178,7 @@ ceil_mod(const T x,
 /// get the remainder of the _rounded_ floating point division
 template <std::floating_point T>
 constexpr auto
-round_mod(const T x,
-          const T y)
+round_mod(const T x, const T y)
 {
 	T quo;
 	T rem;
@@ -213,8 +189,7 @@ round_mod(const T x,
 /// get the adjusted remainder of the _truncated_ floating point division
 template <std::floating_point T>
 constexpr auto
-trunc_amod(const T x,
-           const T y)
+trunc_amod(const T x, const T y)
 {
 	return trunc_mod(x, y) == 0 ? y : trunc_mod(x, y);
 }
@@ -222,8 +197,7 @@ trunc_amod(const T x,
 /// get the adjusted remainder of the _floored_ floating point division
 template <std::floating_point T>
 constexpr auto
-floor_amod(const T x,
-           const T y)
+floor_amod(const T x, const T y)
 {
 	return floor_mod(x, y) == 0 ? y : floor_mod(x, y);
 }
@@ -231,8 +205,7 @@ floor_amod(const T x,
 /// get the adjusted remainder of the _ceiling_ floating point division
 template <std::floating_point T>
 constexpr auto
-ceil_amod(const T x,
-          const T y)
+ceil_amod(const T x, const T y)
 {
 	return ceil_mod(x, y) == 0 ? y : ceil_mod(x, y);
 }
@@ -240,8 +213,7 @@ ceil_amod(const T x,
 /// get the adjusted remainder of the _rounded_ floating point division
 template <std::floating_point T>
 constexpr auto
-round_amod(const T x,
-           const T y)
+round_amod(const T x, const T y)
 {
 	return round_mod(x, y) == 0 ? y : round_mod(x, y);
 }
