@@ -14,6 +14,7 @@
 #include <cmath>
 #include <concepts>
 #include <type_traits>
+#include <utility>
 
 /// get the quotient and remainder of the _truncated_ floating point division
 constexpr void
@@ -59,6 +60,50 @@ round_div_mod(const std::floating_point auto x,
 {
 	quo = std::round(x / y);
 	rem = x - quo * y;
+}
+
+/// get the quotient and remainder of the _truncated_ floating point division
+constexpr auto
+trunc_div_mod(const std::floating_point auto x,
+              const std::floating_point auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	trunc_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
+}
+
+/// get the quotient and remainder of the _floored_ floating point division
+constexpr auto
+floor_div_mod(const std::floating_point auto x,
+              const std::floating_point auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	floor_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
+}
+
+/// get the quotient and remainder of the _ceiling_ floating point division
+constexpr auto
+ceil_div_mod(const std::floating_point auto x,
+             const std::floating_point auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	ceil_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
+}
+
+/// get the quotient and remainder of the _rounded_ floating point division
+constexpr auto
+round_div_mod(const std::floating_point auto x,
+              const std::floating_point auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	round_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient of the _truncated_ floating point division

@@ -13,6 +13,7 @@
 
 #include <concepts>
 #include <type_traits>
+#include <utility>
 
 /// get the quotient and remainder of the _truncated_ integer division
 constexpr void
@@ -129,6 +130,50 @@ round_div_mod(const std::signed_integral auto x,
 			}
 		}
 	}
+}
+
+/// get the quotient and remainder of the _truncated_ integer division
+constexpr auto
+trunc_div_mod(const std::integral auto x,
+              const std::integral auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	trunc_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
+}
+
+/// get the quotient and remainder of the _floored_ integer division
+constexpr auto
+floor_div_mod(const std::signed_integral auto x,
+              const std::signed_integral auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	floor_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
+}
+
+/// get the quotient and remainder of the _ceiling_ integer division
+constexpr auto
+ceil_div_mod(const std::signed_integral auto x,
+             const std::signed_integral auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	ceil_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
+}
+
+/// get the quotient and remainder of the _rounded_ integer division
+constexpr auto
+round_div_mod(const std::signed_integral auto x,
+              const std::signed_integral auto y)
+{
+	std::common_type_t<decltype(x), decltype(y)> quo;
+	std::common_type_t<decltype(x), decltype(y)> rem;
+	round_div_mod(x, y, quo, rem);
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient of the _truncated_ integer division
