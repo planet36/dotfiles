@@ -57,22 +57,24 @@ Mod[x, y] == x - y * Quotient[x, y]
 #include <utility>
 
 /// get the quotient and remainder of the _truncated_ integer division
+template <std::integral T>
 constexpr void
-trunc_div_mod(const std::integral auto x,
-              const std::integral auto y,
-              std::integral auto& quo,
-              std::integral auto& rem)
+trunc_div_mod(const T x,
+              const T y,
+              T& quo,
+              T& rem)
 {
 	quo = x / y;
 	rem = x % y;
 }
 
 /// get the quotient and remainder of the _floored_ integer division
+template <std::integral T>
 constexpr void
-floor_div_mod(const std::signed_integral auto x,
-              const std::signed_integral auto y,
-              std::signed_integral auto& quo,
-              std::signed_integral auto& rem)
+floor_div_mod(const T x,
+              const T y,
+              T& quo,
+              T& rem)
 {
 	quo = x / y;
 	rem = x % y;
@@ -96,11 +98,12 @@ floor_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient and remainder of the _ceiling_ integer division
+template <std::integral T>
 constexpr void
-ceil_div_mod(const std::signed_integral auto x,
-             const std::signed_integral auto y,
-             std::signed_integral auto& quo,
-             std::signed_integral auto& rem)
+ceil_div_mod(const T x,
+             const T y,
+             T& quo,
+             T& rem)
 {
 	quo = x / y;
 	rem = x % y;
@@ -124,11 +127,12 @@ ceil_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient and remainder of the _rounded_ integer division
+template <std::integral T>
 constexpr void
-round_div_mod(const std::signed_integral auto x,
-              const std::signed_integral auto y,
-              std::signed_integral auto& quo,
-              std::signed_integral auto& rem)
+round_div_mod(const T x,
+              const T y,
+              T& quo,
+              T& rem)
 {
 	quo = x / y;
 	rem = x % y;
@@ -174,11 +178,11 @@ round_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient and remainder of the _truncated_ integer division
+template <std::integral T>
 constexpr auto
-trunc_div_mod(const std::integral auto x,
-              const std::integral auto y)
+trunc_div_mod(const T x,
+              const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	trunc_div_mod(x, y, quo, rem);
@@ -186,11 +190,11 @@ trunc_div_mod(const std::integral auto x,
 }
 
 /// get the quotient and remainder of the _floored_ integer division
+template <std::integral T>
 constexpr auto
-floor_div_mod(const std::signed_integral auto x,
-              const std::signed_integral auto y)
+floor_div_mod(const T x,
+              const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	floor_div_mod(x, y, quo, rem);
@@ -198,11 +202,11 @@ floor_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient and remainder of the _ceiling_ integer division
+template <std::integral T>
 constexpr auto
-ceil_div_mod(const std::signed_integral auto x,
-             const std::signed_integral auto y)
+ceil_div_mod(const T x,
+             const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	ceil_div_mod(x, y, quo, rem);
@@ -210,11 +214,11 @@ ceil_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient and remainder of the _rounded_ integer division
+template <std::integral T>
 constexpr auto
-round_div_mod(const std::signed_integral auto x,
-              const std::signed_integral auto y)
+round_div_mod(const T x,
+              const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	round_div_mod(x, y, quo, rem);
@@ -222,11 +226,11 @@ round_div_mod(const std::signed_integral auto x,
 }
 
 /// get the quotient of the _truncated_ integer division
+template <std::integral T>
 constexpr auto
-trunc_div(const std::signed_integral auto x,
-          const std::signed_integral auto y)
+trunc_div(const T x,
+          const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	trunc_div_mod(x, y, quo, rem);
@@ -234,11 +238,11 @@ trunc_div(const std::signed_integral auto x,
 }
 
 /// get the quotient of the _floored_ integer division
+template <std::integral T>
 constexpr auto
-floor_div(const std::signed_integral auto x,
-          const std::signed_integral auto y)
+floor_div(const T x,
+          const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	floor_div_mod(x, y, quo, rem);
@@ -246,11 +250,11 @@ floor_div(const std::signed_integral auto x,
 }
 
 /// get the quotient of the _ceiling_ integer division
+template <std::integral T>
 constexpr auto
-ceil_div(const std::signed_integral auto x,
-         const std::signed_integral auto y)
+ceil_div(const T x,
+         const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	ceil_div_mod(x, y, quo, rem);
@@ -258,11 +262,11 @@ ceil_div(const std::signed_integral auto x,
 }
 
 /// get the quotient of the _rounded_ integer division
+template <std::integral T>
 constexpr auto
-round_div(const std::signed_integral auto x,
-          const std::signed_integral auto y)
+round_div(const T x,
+          const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	round_div_mod(x, y, quo, rem);
@@ -270,11 +274,11 @@ round_div(const std::signed_integral auto x,
 }
 
 /// get the remainder of the _truncated_ integer division
+template <std::integral T>
 constexpr auto
-trunc_mod(const std::signed_integral auto x,
-          const std::signed_integral auto y)
+trunc_mod(const T x,
+          const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	trunc_div_mod(x, y, quo, rem);
@@ -282,11 +286,11 @@ trunc_mod(const std::signed_integral auto x,
 }
 
 /// get the remainder of the _floored_ integer division
+template <std::integral T>
 constexpr auto
-floor_mod(const std::signed_integral auto x,
-          const std::signed_integral auto y)
+floor_mod(const T x,
+          const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	floor_div_mod(x, y, quo, rem);
@@ -294,11 +298,11 @@ floor_mod(const std::signed_integral auto x,
 }
 
 /// get the remainder of the _ceiling_ integer division
+template <std::integral T>
 constexpr auto
-ceil_mod(const std::signed_integral auto x,
-         const std::signed_integral auto y)
+ceil_mod(const T x,
+         const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	ceil_div_mod(x, y, quo, rem);
@@ -306,11 +310,11 @@ ceil_mod(const std::signed_integral auto x,
 }
 
 /// get the remainder of the _rounded_ integer division
+template <std::integral T>
 constexpr auto
-round_mod(const std::signed_integral auto x,
-          const std::signed_integral auto y)
+round_mod(const T x,
+          const T y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
 	T quo;
 	T rem;
 	round_div_mod(x, y, quo, rem);
@@ -318,33 +322,37 @@ round_mod(const std::signed_integral auto x,
 }
 
 /// get the adjusted remainder of the _truncated_ integer division
+template <std::integral T>
 constexpr auto
-trunc_amod(const std::signed_integral auto x,
-           const std::signed_integral auto y)
+trunc_amod(const T x,
+           const T y)
 {
 	return trunc_mod(x, y) == 0 ? y : trunc_mod(x, y);
 }
 
 /// get the adjusted remainder of the _floored_ integer division
+template <std::integral T>
 constexpr auto
-floor_amod(const std::signed_integral auto x,
-           const std::signed_integral auto y)
+floor_amod(const T x,
+           const T y)
 {
 	return floor_mod(x, y) == 0 ? y : floor_mod(x, y);
 }
 
 /// get the adjusted remainder of the _ceiling_ integer division
+template <std::integral T>
 constexpr auto
-ceil_amod(const std::signed_integral auto x,
-          const std::signed_integral auto y)
+ceil_amod(const T x,
+          const T y)
 {
 	return ceil_mod(x, y) == 0 ? y : ceil_mod(x, y);
 }
 
 /// get the adjusted remainder of the _rounded_ integer division
+template <std::integral T>
 constexpr auto
-round_amod(const std::signed_integral auto x,
-           const std::signed_integral auto y)
+round_amod(const T x,
+           const T y)
 {
 	return round_mod(x, y) == 0 ? y : round_mod(x, y);
 }
