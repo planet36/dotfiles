@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cmath>
 #include <concepts>
 #include <type_traits>
 #include <utility>
@@ -164,6 +165,44 @@ round_div_mod(const T x, const T y, T& quo, T& rem)
 			}
 		}
 	}
+}
+
+/// get the quotient and remainder of the _truncated_ floating point division
+template <std::floating_point T>
+constexpr void
+trunc_div_mod(const T x, const T y, T& quo, T& rem)
+{
+	quo = std::trunc(x / y);
+	rem = x - quo * y;
+	// fmod is less accurate than division and trunc
+	//rem = std::fmod(x, y);
+}
+
+/// get the quotient and remainder of the _floored_ floating point division
+template <std::floating_point T>
+constexpr void
+floor_div_mod(const T x, const T y, T& quo, T& rem)
+{
+	quo = std::floor(x / y);
+	rem = x - quo * y;
+}
+
+/// get the quotient and remainder of the _ceiling_ floating point division
+template <std::floating_point T>
+constexpr void
+ceil_div_mod(const T x, const T y, T& quo, T& rem)
+{
+	quo = std::ceil(x / y);
+	rem = x - quo * y;
+}
+
+/// get the quotient and remainder of the _rounded_ floating point division
+template <std::floating_point T>
+constexpr void
+round_div_mod(const T x, const T y, T& quo, T& rem)
+{
+	quo = std::round(x / y);
+	rem = x - quo * y;
 }
 
 /// get the quotient and remainder of the _truncated_ division
