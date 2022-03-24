@@ -178,8 +178,9 @@ constexpr auto
 trunc_div_mod(const std::integral auto x,
               const std::integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	trunc_div_mod(x, y, quo, rem);
 	return std::make_pair(quo, rem);
 }
@@ -189,8 +190,9 @@ constexpr auto
 floor_div_mod(const std::signed_integral auto x,
               const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	floor_div_mod(x, y, quo, rem);
 	return std::make_pair(quo, rem);
 }
@@ -200,8 +202,9 @@ constexpr auto
 ceil_div_mod(const std::signed_integral auto x,
              const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	ceil_div_mod(x, y, quo, rem);
 	return std::make_pair(quo, rem);
 }
@@ -211,8 +214,9 @@ constexpr auto
 round_div_mod(const std::signed_integral auto x,
               const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	round_div_mod(x, y, quo, rem);
 	return std::make_pair(quo, rem);
 }
@@ -222,8 +226,9 @@ constexpr auto
 trunc_div(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	trunc_div_mod(x, y, quo, rem);
 	return quo;
 }
@@ -233,8 +238,9 @@ constexpr auto
 floor_div(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	floor_div_mod(x, y, quo, rem);
 	return quo;
 }
@@ -244,8 +250,9 @@ constexpr auto
 ceil_div(const std::signed_integral auto x,
          const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	ceil_div_mod(x, y, quo, rem);
 	return quo;
 }
@@ -255,8 +262,9 @@ constexpr auto
 round_div(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	round_div_mod(x, y, quo, rem);
 	return quo;
 }
@@ -266,8 +274,9 @@ constexpr auto
 trunc_mod(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	trunc_div_mod(x, y, quo, rem);
 	return rem;
 }
@@ -277,8 +286,9 @@ constexpr auto
 floor_mod(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	floor_div_mod(x, y, quo, rem);
 	return rem;
 }
@@ -288,8 +298,9 @@ constexpr auto
 ceil_mod(const std::signed_integral auto x,
          const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	ceil_div_mod(x, y, quo, rem);
 	return rem;
 }
@@ -299,8 +310,9 @@ constexpr auto
 round_mod(const std::signed_integral auto x,
           const std::signed_integral auto y)
 {
-	std::common_type_t<decltype(x), decltype(y)> quo;
-	std::common_type_t<decltype(x), decltype(y)> rem;
+	using T = std::common_type_t<decltype(x), decltype(y)>;
+	T quo;
+	T rem;
 	round_div_mod(x, y, quo, rem);
 	return rem;
 }
