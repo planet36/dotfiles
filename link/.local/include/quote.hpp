@@ -148,7 +148,7 @@ std::string quote_escape(const std::string& s, const char escape = backslash)
 	for (const char c : s)
 	{
 		if (std::iscntrl(c))
-			result += ascii_cntrl_simple_escape_seq_oct[c];
+			result += ascii_cntrl_simple_esc_seq_oct[c];
 		else
 		{
 			if ((c == ' ') || (c == escape))
@@ -168,7 +168,7 @@ std::string quote_c(const std::string& s, const char delim = double_quote,
 	for (const char c : s)
 	{
 		if (std::iscntrl(c))
-			result += ascii_cntrl_simple_escape_seq_oct[c];
+			result += ascii_cntrl_simple_esc_seq_oct[c];
 		else
 		{
 			if ((c == delim) || (c == escape))

@@ -38,7 +38,7 @@ Python snippet to generate the array
 def isprint(i: int):
     return i >= 32 and i < 127
 
-simple_escape_sequence_dict = {
+simple_esc_seq_dict = {
     ord('\a'): r'\\a', # alert
     ord('\b'): r'\\b', # backspace
     ord('\t'): r'\\t', # horizontal tab
@@ -49,15 +49,15 @@ simple_escape_sequence_dict = {
 }
 
 for i in range(128):
-    if i in simple_escape_sequence_dict:
-        print(f'"{simple_escape_sequence_dict[i]}",')
+    if i in simple_esc_seq_dict:
+        print(f'"{simple_esc_seq_dict[i]}",')
     elif not isprint(i):
         print(fr'"\\{i:03o}",')
     else:
         print('"",')
 \endcode
 */
-inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_oct{
+inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_esc_seq_oct{
 	"\\000",
 	"\\001",
 	"\\002",
@@ -198,7 +198,7 @@ Python snippet to generate the array
 def isprint(i: int):
     return i >= 32 and i < 127
 
-simple_escape_sequence_dict = {
+simple_esc_seq_dict = {
     ord('\a'): r'\\a', # alert
     ord('\b'): r'\\b', # backspace
     ord('\t'): r'\\t', # horizontal tab
@@ -209,15 +209,15 @@ simple_escape_sequence_dict = {
 }
 
 for i in range(128):
-    if i in simple_escape_sequence_dict:
-        print(f'"{simple_escape_sequence_dict[i]}",')
+    if i in simple_esc_seq_dict:
+        print(f'"{simple_esc_seq_dict[i]}",')
     elif not isprint(i):
         print(fr'"\\x{i:02x}",')
     else:
         print('"",')
 \endcode
 */
-inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_escape_seq_hex{
+inline constexpr std::array<std::string_view, 128> ascii_cntrl_simple_esc_seq_hex{
 	"\\x00",
 	"\\x01",
 	"\\x02",

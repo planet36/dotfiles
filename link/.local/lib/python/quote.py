@@ -25,7 +25,7 @@ simple-escape-sequence: one of
 	\' \" \? \\
 	\a \b \f \n \r \t \v
 """
-simple_escape_sequence = {
+simple_esc_seq = {
 	'\a': r'\a', # alert
 	'\b': r'\b', # backspace
 	'\t': r'\t', # horizontal tab
@@ -43,8 +43,8 @@ simple_escape_sequence = {
 def escape_char_to_octal(c):
 	"""Escape the character to a simple-escape-sequence or an octal-escape-sequence."""
 
-	if c in simple_escape_sequence:
-		return simple_escape_sequence[c]
+	if c in simple_esc_seq:
+		return simple_esc_seq[c]
 	else:
 		return r'\{:03o}'.format(ord(c))
 
@@ -52,8 +52,8 @@ def escape_char_to_octal(c):
 def escape_char_to_hexadecimal(c):
 	"""Escape the character to a simple-escape-sequence or a hexadecimal-escape-sequence."""
 
-	if c in simple_escape_sequence:
-		return simple_escape_sequence[c]
+	if c in simple_esc_seq:
+		return simple_esc_seq[c]
 	else:
 		return r'\x{:02X}'.format(ord(c))
 
