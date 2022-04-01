@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: OSL-3.0
 
 function psgrep --argument-names NAME
-    set PROCESSES (pgrep -- "$NAME")
+    set PROCESSES $(pgrep -- "$NAME")
 
-    if test (count $PROCESSES) -eq 0
+    if test $(count $PROCESSES) -eq 0
         return
     end
 

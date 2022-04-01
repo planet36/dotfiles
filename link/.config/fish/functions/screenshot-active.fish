@@ -3,15 +3,15 @@
 
 function screenshot-active --description 'Take a screenshot of the active window'
 
-    set --local DATETIME (date -u +%Y%m%dT%H%M%SS%3N)
+    set --local DATETIME $(date -u +%Y%m%dT%H%M%SS%3N)
 
     if command --quiet xdotool
 
-        set --local WIN_ID (xdotool getactivewindow)
+        set --local WIN_ID $(xdotool getactivewindow)
 
     else if command --quiet xprop
 
-        set --local WIN_ID (xprop -root _NET_ACTIVE_WINDOW | awk '{print $NF}')
+        set --local WIN_ID $(xprop -root _NET_ACTIVE_WINDOW | awk '{print $NF}')
 
     else
         echo "Error: No tool to get active window id" 1>&2

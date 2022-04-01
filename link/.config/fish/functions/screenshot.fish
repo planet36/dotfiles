@@ -3,7 +3,7 @@
 
 function screenshot --description 'Take a screenshot'
 
-    set --local DATETIME (date -u +%Y%m%dT%H%M%SS%3N)
+    set --local DATETIME $(date -u +%Y%m%dT%H%M%SS%3N)
 
     if command --quiet import
 

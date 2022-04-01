@@ -6,6 +6,6 @@
 function wttr
 
     set request wttr.in/"$argv[1]"
-    [ (tput cols) -lt 125 ] && set --append request '?n'
-    curl -H "Accept-Language: (string replace --regex '_.*' '' $LANG)" --compressed "$request"
+    [ $(tput cols) -lt 125 ] && set --append request '?n'
+    curl -H "Accept-Language: $(string replace --regex '_.*' '' $LANG)" --compressed "$request"
 end

@@ -3,17 +3,17 @@
 
 function tfp --description 'tar format patch'
 
-    set PATCHES_DIR (basename (git rev-parse --show-toplevel)) || return
+    set PATCHES_DIR $(basename $(git rev-parse --show-toplevel)) || return
 
     # XXX: string replace returns 1 (failure) if no replacement was performed
-    set PATCHES_DIR patches-(string replace --regex --all '\W' '' $PATCHES_DIR)
+    set PATCHES_DIR patches-$(string replace --regex --all '\W' '' $PATCHES_DIR)
 
     mkdir --verbose -- "$PATCHES_DIR" || return
 
     # NOTE: If git format-patch gives this error
     # "fatal: base commit should be the ancestor of revision list"
     # Then remove "--base=auto" from the command.
-    git format-patch -o "$PATCHES_DIR" --keep-subject --base=auto --progress (git rev-parse --abbrev-ref HEAD@{upstream})..HEAD || return
+    git format-patch -o "$PATCHES_DIR" --keep-subject --base=auto --progress $(git rev-parse --abbrev-ref HEAD@{upstream})..HEAD || return
 
     if dir_is_empty "$PATCHES_DIR"
         rmdir --verbose -- "$PATCHES_DIR" || return

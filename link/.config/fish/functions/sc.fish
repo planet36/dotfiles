@@ -13,7 +13,7 @@ function sc --wraps scrypt --description 'wrapper for scrypt'
         if string match --quiet --regex '\.sc$' "$INFILE"
             set ENC_OR_DEC dec
             # Remove ".sc" extension
-            set OUTFILE (string sub --length (math (string length "$INFILE") - (string length ".sc")) "$INFILE") || return
+            set OUTFILE $(string sub --length $(math $(string length "$INFILE") - $(string length ".sc")) "$INFILE") || return
         else
             set ENC_OR_DEC enc
             # Append ".sc" extension

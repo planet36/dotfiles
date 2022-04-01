@@ -3,9 +3,9 @@
 
 function get
 
-    if test (count $argv) -eq 0
+    if test $(count $argv) -eq 0
         echo 'Error: Must give at least one folder name' 1>&2
-        echo 'Usage: '(status function)' DIR...' 1>&2
+        echo 'Usage: '$(status function)' DIR...' 1>&2
         return 1
     end
 

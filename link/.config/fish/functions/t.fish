@@ -13,10 +13,10 @@ function t --description 'tar a folder'
         # Remove duplicate leading slashes
         # Remove trailing slashes
         # Prefix leading '-' with './' (is this necessary?)
-        #set INDIR (echo "$INDIR" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|')
-        set INDIR (echo "$INDIR" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||')
+        #set INDIR $(echo "$INDIR" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|')
+        set INDIR $(echo "$INDIR" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||')
 
-        set OUTFILE (basename -- "$INDIR").tar
+        set OUTFILE $(basename -- "$INDIR").tar
 
         if test -e "$OUTFILE"
             echo "Error: File already exists: $OUTFILE" 1>&2
@@ -25,7 +25,7 @@ function t --description 'tar a folder'
 
         if test -L "$INDIR"
             # Get the link target.
-            set INDIR (realpath -- "$INDIR")
+            set INDIR $(realpath -- "$INDIR")
         end
 
         #echo "# $INDIR => $OUTFILE"
@@ -33,8 +33,8 @@ function t --description 'tar a folder'
 
         if string match --quiet -- '*/*' "$INDIR"
 
-            set DIRNAME (dirname -- "$INDIR")
-            set BASENAME (basename -- "$INDIR")
+            set DIRNAME $(dirname -- "$INDIR")
+            set BASENAME $(basename -- "$INDIR")
 
             tar --create --file="$OUTFILE" --directory "$DIRNAME" -- "$BASENAME" || return
         else

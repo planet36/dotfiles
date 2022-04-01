@@ -3,7 +3,7 @@
 
 function cproto --wraps ctags --description 'Generate function prototypes for the given C file(s)'
 
-    if test (count $argv) -eq 0
+    if test $(count $argv) -eq 0
         return 1
     end
 

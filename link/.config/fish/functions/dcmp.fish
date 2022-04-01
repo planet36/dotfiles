@@ -3,8 +3,8 @@
 
 function dcmp --description 'directory comparison' --argument-names A B
 
-    if test (count $argv) -ne 2
-        echo 'Usage: '(status function)' DIR1 DIR2' 1>&2
+    if test $(count $argv) -ne 2
+        echo 'Usage: '$(status function)' DIR1 DIR2' 1>&2
         echo 'Find added/removed/modified files between DIR1 and DIR2.' 1>&2
         return 1
     end
@@ -23,15 +23,15 @@ function dcmp --description 'directory comparison' --argument-names A B
     # Remove trailing slashes
     # Prefix leading '-' with './' (is this necessary?)
 
-    #set A (echo "$A" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|')
-    set A (echo "$A" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||')
+    #set A $(echo "$A" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|')
+    set A $(echo "$A" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||')
 
-    #set B (echo "$B" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|')
-    set B (echo "$B" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||')
+    #set B $(echo "$B" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||' --expression 's|^-|./-|')
+    set B $(echo "$B" | sed --regexp-extended --expression 's|^/{2,}|/|' --expression 's|/+$||')
 
     # escape non-word chars
-    set A_escaped (string escape --style=regex "$A")
-    set B_escaped (string escape --style=regex "$B")
+    set A_escaped $(string escape --style=regex "$A")
+    set B_escaped $(string escape --style=regex "$B")
 
 
     diff --brief --recursive \

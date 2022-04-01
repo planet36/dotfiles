@@ -25,10 +25,10 @@ end
 # Fish does not split environment variables on whitespace.
 # https://stackoverflow.com/a/51731126
 # https://stackoverflow.com/a/47971956
-set OPTIMIZE_OPTIONS  (string split ' ' -- $OPTIMIZE_OPTIONS )
-set DEBUG_OPTIONS     (string split ' ' -- $DEBUG_OPTIONS    )
-set PERF_TEST_OPTIONS (string split ' ' -- $PERF_TEST_OPTIONS)
-set PROFILE_OPTIONS   (string split ' ' -- $PROFILE_OPTIONS  )
+set OPTIMIZE_OPTIONS  $(string split ' ' -- $OPTIMIZE_OPTIONS )
+set DEBUG_OPTIONS     $(string split ' ' -- $DEBUG_OPTIONS    )
+set PERF_TEST_OPTIONS $(string split ' ' -- $PERF_TEST_OPTIONS)
+set PROFILE_OPTIONS   $(string split ' ' -- $PROFILE_OPTIONS  )
 
 # }}}
 
@@ -36,7 +36,7 @@ set PROFILE_OPTIONS   (string split ' ' -- $PROFILE_OPTIONS  )
 
 # https://bugs.archlinux.org/task/74292
 #if command --quiet env_parallel
-#    source (which env_parallel.fish)
+#    source $(which env_parallel.fish)
 #end
 
 # }}}
@@ -50,12 +50,12 @@ set Z_CMD "j"
 
 # {{{ source other config files
 
-if test -f (status dirname)/abbrs.fish
-    source (status dirname)/abbrs.fish
+if test -f $(status dirname)/abbrs.fish
+    source $(status dirname)/abbrs.fish
 end
 
-if test -f (status dirname)/aliases.fish
-    source (status dirname)/aliases.fish
+if test -f $(status dirname)/aliases.fish
+    source $(status dirname)/aliases.fish
 end
 
 # }}}
