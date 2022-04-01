@@ -7,6 +7,10 @@
 
 if status is-interactive
 
+# {{{ Turn off fish greeting
+set --global fish_greeting
+# }}}
+
 # {{{ prevent st unknown escape sequence
 
 # https://github.com/fish-shell/fish-shell/issues/3425
