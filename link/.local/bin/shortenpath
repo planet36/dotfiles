@@ -9,7 +9,7 @@
 import os
 import sys
 
-def shortenpath(path: str, maxlen: int) -> str:
+def shortenpath(path: str, maxlen: int, repl: str = '…') -> str:
 	'''Shorten path by trimming the largest parts of it.  Horizontal ellipsis (…) replace the trimmed characters.
 The result length might be more than maxlen because the path parts will not be trimmed below a certain length.'''
 
@@ -41,7 +41,7 @@ The result length might be more than maxlen because the path parts will not be t
 			break
 
 		longest_part.pop()
-		longest_part[-1] = '…'
+		longest_part[-1] = repl
 		num_to_remove -= 1
 
 	return sep.join(''.join(part) for part in parts)
