@@ -60,6 +60,18 @@ end
 
 # }}}
 
+# {{{ set theme
+
+fish_config theme choose 'Tomorrow Night Bright'
+
+# }}}
+
+# {{{ set prompt
+
+fish_config prompt choose informative_vcs
+
+# }}}
+
 end # status is-interactive
 
 # }}}
