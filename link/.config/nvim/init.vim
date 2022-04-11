@@ -418,9 +418,6 @@ else
     nnoremap K i<CR><esc>`.
 endif
 
-" Yank from the cursor to the end of the line, to be consistent with C and D.
-nnoremap Y y$
-
 " save my left pinky
 nnoremap <space> :
 
