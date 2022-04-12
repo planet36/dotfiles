@@ -58,6 +58,10 @@ if test -f $(status dirname)/aliases.fish
     source $(status dirname)/aliases.fish
 end
 
+if test -f $(status dirname)/private.fish
+    source $(status dirname)/private.fish
+end
+
 # }}}
 
 # {{{ set theme
