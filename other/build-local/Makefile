@@ -1,13 +1,15 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-SUBDIRS=$(sort $(wildcard */))
+# https://stackoverflow.com/a/17845120/1892784
 
-build:
-	$(foreach DIR, $(SUBDIRS), $(MAKE) -C $(DIR);)
+TOPTARGETS := all clean install uninstall lint
 
-clean install uninstall lint:
-	$(foreach DIR, $(SUBDIRS), $(MAKE) -C $(DIR) $@;)
+SUBDIRS := $(wildcard */.)
+
+$(TOPTARGETS): $(SUBDIRS)
+$(SUBDIRS):
+	$(MAKE) -C $@ $(MAKECMDGOALS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: build clean install uninstall lint
+.PHONY: $(TOPTARGETS) $(SUBDIRS)
