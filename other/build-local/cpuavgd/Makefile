@@ -15,6 +15,8 @@ CPPFLAGS += -MMD -MP
 
 BIN = $(notdir $(CURDIR))
 
+all: $(BIN)
+
 $(BIN): $(OBJS)
 	$(CC) $^ -o $@ $(LDLIBS)
 
@@ -36,6 +38,6 @@ lint:
 	clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS) $(LDLIBS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: install clean uninstall lint
+.PHONY: all install clean uninstall lint
 
 -include $(DEPS)

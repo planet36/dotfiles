@@ -15,6 +15,8 @@ CXXFLAGS += -std=c++17
 
 BIN = $(notdir $(CURDIR))
 
+all: $(BIN)
+
 $(BIN): $(OBJS)
 	$(CXX) $^ -o $@ $(LDLIBS)
 
@@ -36,6 +38,6 @@ lint:
 	clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CXXFLAGS) $(LDLIBS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: install clean uninstall lint
+.PHONY: all install clean uninstall lint
 
 -include $(DEPS)
