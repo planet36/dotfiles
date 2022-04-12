@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <concepts>
 #include <cstdint>
 #include <type_traits>
 
@@ -43,4 +44,20 @@ std::conditional_t<N <= sizeof(std::uint8_t), std::uint8_t,
 			>
 		>
 	>
+>;
+
+// For libstdc++, you must compile in gnu++XX mode to get the correct 128-bit
+// integer limits/traits.
+// https://quuxplusone.github.io/blog/2019/02/28/is-int128-integral/
+
+template <std::integral T>
+using next_smaller = std::conditional_t<std::is_signed_v<T>,
+	int_bytes<sizeof(T) / 2>,
+	uint_bytes<sizeof(T) / 2>
+>;
+
+template <std::integral T>
+using next_larger = std::conditional_t<std::is_signed_v<T>,
+	int_bytes<sizeof(T) * 2>,
+	uint_bytes<sizeof(T) * 2>
 >;
