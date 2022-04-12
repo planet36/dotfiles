@@ -10,9 +10,9 @@ then
     source "$XDG_CONFIG_HOME"/bash/envvars.bash
 fi
 
-if [[ -r "$XDG_CONFIG_HOME"/bash/private-envvars.bash ]]
+if [[ -r "$XDG_CONFIG_HOME"/bash/private.envvars.bash ]]
 then
-    source "$XDG_CONFIG_HOME"/bash/private-envvars.bash
+    source "$XDG_CONFIG_HOME"/bash/private.envvars.bash
 fi
 
 if [[ -r ~/.bashrc ]]
