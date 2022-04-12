@@ -19,7 +19,7 @@ constexpr uint16_t rev_2_bytes(uint16_t x) {return __builtin_bswap16(x);}
 constexpr uint32_t rev_4_bytes(uint32_t x) {return __builtin_bswap32(x);}
 constexpr uint64_t rev_8_bytes(uint64_t x) {return __builtin_bswap64(x);}
 #if defined(__SIZEOF_INT128__)
-constexpr unsigned __int128 rev_16_bytes(unsigned __int128 x) {return __builtin_bswap128(x);}
+constexpr __uint128_t rev_16_bytes(__uint128_t x) {return __builtin_bswap128(x);}
 #endif
 
 template <typename T>
@@ -55,7 +55,7 @@ template <typename T>
 requires (sizeof(T) == 16)
 constexpr T rev_bytes(T x)
 {
-	return std::bit_cast<T>(rev_16_bytes(std::bit_cast<unsigned __int128>(x)));
+	return std::bit_cast<T>(rev_16_bytes(std::bit_cast<__uint128_t>(x)));
 }
 #endif
 
