@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+TOPTARGETS := all clone clean install uninstall lint
+
 BUILD_DIRS = \
 dwm \
 slstatus \
@@ -14,12 +16,14 @@ dwm-suckless \
 slstatus-suckless \
 st-suckless
 
-build: clone
+SUBDIRS := $(BUILD_DIRS) $(CLONE_ONLY_DIRS)
+
+all: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR);)
 
-clone: | $(BUILD_DIRS) $(CLONE_ONLY_DIRS)
+clone: | $(SUBDIRS)
 
-clean install lint uninstall: clone
+clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
 arch-install:
@@ -42,4 +46,4 @@ dwm-suckless slstatus-suckless st-suckless:
 	git clone --quiet https://git.suckless.org/$(subst -suckless,,$@) $@
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
-.PHONY: build clone clean install lint uninstall
+.PHONY: $(TOPTARGETS)
