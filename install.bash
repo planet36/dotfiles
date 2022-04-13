@@ -9,7 +9,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2021-10-18'
+SCRIPT_VERSION='2022-04-12'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
@@ -425,20 +425,28 @@ function uninstall_nvim_plugins
 
 function install_local_programs
 {
+    # XXX: Do not run sequential targets (i.e. install, clean) in parallel
+
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local install clean
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local install
+        echo \
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local clean
     else
-        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local install clean || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local install || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C "$SCRIPT_DIR"/other/build-local clean || return
     fi
 
     if $DRY_RUN
     then
         echo \
-        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src install clean
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src install
+        echo \
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src clean
     else
-        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src install clean || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src install || return
+        make PREFIX="$HOME"/.local -j$(nproc) -C ~/.local/src clean || return
     fi
 }
 
