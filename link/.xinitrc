@@ -122,7 +122,6 @@ fi
 
 # }}}
 
-
 # {{{ background
 
 BGCOLOR='#004466'
@@ -171,7 +170,7 @@ then
     while true
     do
         #xsetroot -name "$(date +'%F %R')"
-        xsetroot -name "$(date +'%a %b %d %R')"
+        xsetroot -name "$(date +'%a %b %d %R %Z')"
         sleep 30s
     done &
 fi
