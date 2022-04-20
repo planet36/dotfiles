@@ -7,7 +7,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2021-07-14'
+SCRIPT_VERSION='2022-04-19'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
@@ -105,7 +105,7 @@ print_verbose 'DRY_RUN=%s' "$DRY_RUN"
 declare -a BINARIES
 BINARIES=(
     #'btm'
-    'choose'
+    #'choose'
     #'delta'
     'gotop'
     #'lsd'
@@ -118,7 +118,7 @@ BINARIES=(
 declare -A BINARY_TO_USER_REPO
 BINARY_TO_USER_REPO=(
     #['btm']='ClementTsang/bottom'
-    ['choose']='theryangeary/choose'
+    #['choose']='theryangeary/choose'
     #['delta']='dandavison/delta'
     ['gotop']='xxxserxxx/gotop'
     #['lsd']='Peltoche/lsd'
@@ -131,7 +131,7 @@ BINARY_TO_USER_REPO=(
 declare -A BINARY_TO_PART_RELEASE_FILE
 BINARY_TO_PART_RELEASE_FILE=(
     #['btm']='x86_64-unknown-linux-gnu'
-    ['choose']='x86_64-unknown-linux-gnu'
+    #['choose']='x86_64-unknown-linux-gnu'
     #['delta']='x86_64-unknown-linux-gnu'
     ['gotop']='linux_amd64'
     #['lsd']='x86_64-unknown-linux-gnu'
