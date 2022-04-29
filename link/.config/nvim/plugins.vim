@@ -37,9 +37,9 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'srcery-colors/srcery-vim' " srcery
 Plug 'vim-scripts/candycode.vim'
 Plug 'fneu/breezy'
-Plug 'mhartington/oceanic-next' " OceanicNext
-Plug 'projekt0n/github-nvim-theme' " github_dark_default
-Plug 'morhetz/gruvbox'
+"Plug 'mhartington/oceanic-next' " OceanicNext
+"Plug 'projekt0n/github-nvim-theme' " github_dark_default
+"Plug 'morhetz/gruvbox'
 "Plug 'flazz/vim-colorschemes'
 
 call plug#end()
