@@ -31,7 +31,6 @@ Plug 'tpope/vim-sensible/'
 Plug 'godlygeek/tabular'
 Plug 'AndrewRadev/linediff.vim'
 Plug 'chrisbra/unicode.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
 
 " color schemes
 Plug 'srcery-colors/srcery-vim' " srcery
