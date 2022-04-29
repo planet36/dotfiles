@@ -1,4 +1,6 @@
 #!/usr/bin/fish
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
 
 for DIR in (find . -type d -name .git -printf '%h\n' | sort --version-sort)
   echo "## $DIR"
