@@ -6,13 +6,7 @@
 " {{{ Clipboard
 
 " This option is a list of comma separated names.
-if has('clipboard')
-    if has('unnamedplus')
-        set clipboard^=unnamedplus
-    else
-        set clipboard^=unnamed
-    endif
-endif
+set clipboard+=unnamedplus
 
 " }}}
 
@@ -22,18 +16,12 @@ set backup
 
 set undofile
 
-if has('nvim')
-    set backupdir-=.
-endif
+set backupdir-=.
 
 augroup backup_extension_timestamp
     autocmd!
-    if exists('*strftime')
-        " String which is appended to a file name to make the name of the backup file.
-        autocmd BufWritePre * let &backupext = '~' . strftime('%Y%m%dT%H%M%S') . '~'
-    else
-        set backupext&
-    endif
+    " String which is appended to a file name to make the name of the backup file.
+    autocmd BufWritePre * let &backupext = '~' . strftime('%Y%m%dT%H%M%S') . '~'
 augroup END
 
 " }}}
@@ -69,9 +57,7 @@ autocmd BufRead,BufNewFile *.fish setfiletype sh
 syntax sync fromstart
 "syntax sync minlines=300
 
-if has('termguicolors')
-    set termguicolors
-endif
+set termguicolors
 
 let c_comment_strings=1
 let c_space_errors=1
@@ -247,14 +233,9 @@ inoremap <C-l> <C-x><C-l>
 
 nnoremap <tab> %
 
-if has('jumplist')
-    " g; only available with |+jumplist| feature
-    " Insert newline after cursor
-    nnoremap K i<CR><esc>g;
-else
-    " Insert newline after cursor
-    nnoremap K i<CR><esc>`.
-endif
+" g; only available with |+jumplist| feature
+" Insert newline after cursor
+nnoremap K i<CR><esc>g;
 
 " save my left pinky
 nnoremap <space> :
@@ -484,15 +465,9 @@ let s:source_these_files = [
             \ 'plugins.vim',
             \ ]
 
-if has('nvim')
-    for f in s:source_these_files
-        execute 'source ' . stdpath('config') . '/' . f
-    endfor
-else
-    for f in s:source_these_files
-        execute 'source ' . $XDG_CONFIG_HOME . '/vim/' . f
-    endfor
-endif
+for f in s:source_these_files
+    execute 'source ' . stdpath('config') . '/' . f
+endfor
 
 " }}}
 
