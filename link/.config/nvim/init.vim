@@ -395,14 +395,6 @@ vnoremap <Leader>* :<c-u>call <SID>VisualSurround(visualmode(), '/*', '*/')<CR>
 
 " }}}
 
-" {{{ Insert date/time
-
-command! InsertDate normal! i<c-r>=strftime('%F')<CR>
-command! InsertTime normal! i<c-r>=strftime('%T')<CR>
-command! InsertDateTime normal! i<c-r>=strftime('%FT%T%z')<CR>
-
-" }}}
-
 " {{{ Abbreviations
 
 iabbrev amek make
