@@ -34,6 +34,7 @@ set path+=~/.local/include
 
 " {{{ ignore case when completing file names and directories
 
+set fileignorecase
 set wildignorecase
 
 " }}}
