@@ -73,10 +73,7 @@ let g:load_doxygen_syntax=1
 
 set list
 
-" https://vi.stackexchange.com/a/4304
-" Space character must be escaped with a backslash
-"set listchars+=tab:\ \ ,trail:␣
-set listchars+=trail:␣
+set listchars+=trail:\\u2423
 
 " }}}
 
