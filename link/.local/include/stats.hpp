@@ -32,13 +32,13 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto min_val(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::numeric_limits<T>::quiet_NaN();
 
 	return *std::min_element(//std::execution::par_unseq,
-	                         std::cbegin(c), std::cend(c));
+	                         c.cbegin(), c.cend());
 }
 
 template <typename Container>
@@ -46,13 +46,13 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto min_abs_val(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::numeric_limits<T>::quiet_NaN();
 
 	return *std::min_element(//std::execution::par_unseq,
-	                         std::cbegin(c), std::cend(c),
+	                         c.cbegin(), c.cend(),
 	                         compare_abs_less);
 }
 
@@ -61,13 +61,13 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto max_val(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::numeric_limits<T>::quiet_NaN();
 
 	return *std::max_element(//std::execution::par_unseq,
-	                         std::cbegin(c), std::cend(c));
+	                         c.cbegin(), c.cend());
 }
 
 template <typename Container>
@@ -75,13 +75,13 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto max_abs_val(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::numeric_limits<T>::quiet_NaN();
 
 	return *std::max_element(//std::execution::par_unseq,
-	                         std::cbegin(c), std::cend(c),
+	                         c.cbegin(), c.cend(),
 	                         compare_abs_less);
 }
 
@@ -90,7 +90,7 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto minmax_vals(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::make_pair(std::numeric_limits<T>::quiet_NaN(),
@@ -98,7 +98,7 @@ auto minmax_vals(const Container& c)
 
 	const auto& [min_iter, max_iter] = std::minmax_element(
 		//std::execution::par_unseq,
-		std::cbegin(c), std::cend(c));
+		c.cbegin(), c.cend());
 	return std::make_pair(*min_iter, *max_iter);
 }
 
@@ -107,7 +107,7 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto minmax_abs_vals(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::make_pair(std::numeric_limits<T>::quiet_NaN(),
@@ -115,7 +115,7 @@ auto minmax_abs_vals(const Container& c)
 
 	const auto& [min_iter, max_iter] = std::minmax_element(
 		//std::execution::par_unseq,
-		std::cbegin(c), std::cend(c),
+		c.cbegin(), c.cend(),
 		compare_abs_less);
 	return std::make_pair(*min_iter, *max_iter);
 }
@@ -128,7 +128,7 @@ auto sum_val(const Container& c)
 
 #if 0
 	return std::reduce(//std::execution::par_unseq,
-	                   std::cbegin(c), std::cend(c), T{});
+	                   c.cbegin(), c.cend(), T{});
 #else
 	T sum{};
 	for (const auto& x : c)
@@ -147,7 +147,7 @@ auto sum_abs_val(const Container& c)
 
 #if 0
 	return std::reduce(//std::execution::par_unseq,
-	                   std::cbegin(c), std::cend(c), T{}, plus_abs);
+	                   c.cbegin(), c.cend(), T{}, plus_abs);
 #else
 	T sum{};
 	for (const auto& x : c)
@@ -163,7 +163,7 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto arithmetic_mean_val(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::numeric_limits<T>::quiet_NaN();
@@ -179,7 +179,7 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto variance_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n <= 0)
 		return std::numeric_limits<T>::quiet_NaN();
@@ -221,7 +221,7 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto skewness_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n <= 1)
 		return std::numeric_limits<T>::quiet_NaN();
@@ -258,7 +258,7 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto excess_kurtosis_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n <= 1)
 		return std::numeric_limits<T>::quiet_NaN();
@@ -292,16 +292,16 @@ requires std::is_floating_point_v<typename Container::value_type>
 auto median_val(const Container& c)
 {
 	using T = typename Container::value_type;
-	const auto n = std::size(c);
+	const auto n = c.size();
 
 	if (n == 0)
 		return std::numeric_limits<T>::quiet_NaN();
 
 	if (n % 2 == 0) // even
-		return (*std::next(std::cbegin(c), n / 2 - 1) +
-		        *std::next(std::cbegin(c), n / 2)) / 2;
+		return (*std::next(c.cbegin(), n / 2 - 1) +
+		        *std::next(c.cbegin(), n / 2)) / 2;
 	else // odd
-		return *std::next(std::cbegin(c), n / 2);
+		return *std::next(c.cbegin(), n / 2);
 }
 
 template <typename Container>
