@@ -10,7 +10,7 @@ DEPS = $(SRCS:.cpp=.d)
 OBJS = $(SRCS:.cpp=.o)
 
 CPPFLAGS += -MMD -MP
-CXXFLAGS += -std=c++17
+CXXFLAGS += -std=gnu++23
 #LDLIBS +=
 
 BIN = $(notdir $(CURDIR))
