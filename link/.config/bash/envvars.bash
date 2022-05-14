@@ -73,6 +73,9 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME"/ripgrep/ripgreprc
 
 export SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
 
+export TERMINFO="$XDG_DATA_HOME"/terminfo
+export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
+
 # /usr/bin/time format similar to bash's time
 export TIME="real\t%E\nuser\t%U\nsys\t%S\n"
 
