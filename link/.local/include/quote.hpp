@@ -6,6 +6,8 @@
 \file
 \author Steven Ward
 \sa https://en.cppreference.com/w/cpp/io/manip/quoted
+
+Note: Only std::string is supported.
 */
 
 #pragma once
@@ -71,8 +73,8 @@ bool contains_shell_special_chars(const std::string& s)
 	return false;
 }
 
-std::string quote(const std::string& s, const char delim = double_quote,
-                  const char escape = backslash)
+auto quote(const std::string& s, const char delim = double_quote,
+           const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -87,8 +89,8 @@ std::string quote(const std::string& s, const char delim = double_quote,
 	return result;
 }
 
-std::string quote(const std::string_view& s, const char delim = double_quote,
-                  const char escape = backslash)
+auto quote(const std::string_view& s, const char delim = double_quote,
+           const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -103,8 +105,8 @@ std::string quote(const std::string_view& s, const char delim = double_quote,
 	return result;
 }
 
-std::string quote(const char* s, const char delim = double_quote,
-                  const char escape = backslash)
+auto quote(const char* s, const char delim = double_quote,
+           const char escape = backslash)
 {
 	std::string result;
 	result.push_back(delim);
@@ -119,8 +121,8 @@ std::string quote(const char* s, const char delim = double_quote,
 	return result;
 }
 
-std::string quote_shell_always(const std::string& s,
-                               const char delim = single_quote)
+auto quote_shell_always(const std::string& s,
+                        const char delim = single_quote)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -136,12 +138,12 @@ std::string quote_shell_always(const std::string& s,
 	return result;
 }
 
-std::string quote_shell(const std::string& s)
+auto quote_shell(const std::string& s)
 {
 	return contains_shell_special_chars(s) ? quote_shell_always(s) : s;
 }
 
-std::string quote_escape(const std::string& s, const char escape = backslash)
+auto quote_escape(const std::string& s, const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size());
@@ -159,8 +161,8 @@ std::string quote_escape(const std::string& s, const char escape = backslash)
 	return result;
 }
 
-std::string quote_c(const std::string& s, const char delim = double_quote,
-                    const char escape = backslash)
+auto quote_c(const std::string& s, const char delim = double_quote,
+             const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -180,7 +182,7 @@ std::string quote_c(const std::string& s, const char delim = double_quote,
 	return result;
 }
 
-std::string quote_pcre(const std::string& s)
+auto quote_pcre(const std::string& s)
 {
 	std::string result;
 	result.reserve(s.size());
