@@ -45,6 +45,12 @@ set number
 
 " }}}
 
+" {{{ Status line
+
+set laststatus=3
+
+" }}}
+
 " {{{ File type
 
 autocmd BufRead,BufNewFile *.cal setfiletype c
