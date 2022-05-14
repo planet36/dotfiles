@@ -88,6 +88,8 @@ export TZ='EST+5'
 
 export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 
+export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
+
 # {{{ pager colors
 
 # https://unix.stackexchange.com/a/147
