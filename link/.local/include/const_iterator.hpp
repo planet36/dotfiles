@@ -20,5 +20,5 @@ std::bool_constant<!std::is_swappable_v<typename std::iterator_traits<Iter>::ref
 template <typename Iter>
 inline constexpr bool is_const_iterator_v = is_const_iterator<Iter>::value;
 
-template <class Iter>
+template <typename Iter>
 concept const_iterator = is_const_iterator_v<Iter>;
