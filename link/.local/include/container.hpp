@@ -35,5 +35,5 @@ concept container = requires(C a, const C b)
 	{ a.cend() } -> std::same_as<typename C::const_iterator>;
 	{ a.size() } -> std::same_as<typename C::size_type>;
 	{ a.max_size() } -> std::same_as<typename C::size_type>;
-	{ a.empty() } -> std::same_as<bool>;
+	{ a.empty() } -> std::convertible_to<bool>;
 };
