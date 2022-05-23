@@ -18,7 +18,7 @@ template <std::integral T>
 constexpr T roundm_trunc(const T x, const T m)
 {
 	return x - x % m;
-	//return (x/m)*m;
+	//return (x / m) * m;
 }
 
 /**
@@ -30,7 +30,7 @@ constexpr T roundm_floor(const T x, const T m)
 	const auto t = roundm_trunc(x, m);
 
 	// necessary for x < 0
-	//if (x%m == 0)
+	//if (x % m == 0)
 	if (x == t)
 		return x;
 
@@ -49,7 +49,7 @@ constexpr T roundm_ceil(const T x, const T m)
 	const auto t = roundm_trunc(x, m);
 
 	// necessary for x > 0
-	//if (x%m == 0)
+	//if (x % m == 0)
 	if (x == t)
 		return x;
 
@@ -68,7 +68,7 @@ constexpr T roundm_up(const T x, const T m)
 {
 	const auto t = roundm_trunc(x, m);
 
-	//if (x%m == 0)
+	//if (x % m == 0)
 	if (x == t)
 		return x;
 
