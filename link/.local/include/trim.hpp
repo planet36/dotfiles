@@ -466,3 +466,97 @@ auto trim_set_copy(std::wstring s, const std::wstring& set)
 }
 
 // }}}
+
+// {{{ trim complementary set of characters from std::string
+
+void ltrim_cset(std::string& s, const std::string& set)
+{
+	(void) s.erase(
+		s.begin(),
+		std::find_if_not(
+			s.begin(), s.end(),
+			// Characters must be converted to unsigned char.
+			[set](const unsigned char c_i) { return !set.contains(c_i); }));
+}
+
+void rtrim_cset(std::string& s, const std::string& set)
+{
+	(void) s.erase(
+		std::find_if_not(
+			s.rbegin(), s.rend(),
+			// Characters must be converted to unsigned char.
+			[set](const unsigned char c_i) { return !set.contains(c_i); }).base(),
+		s.end());
+}
+
+void trim_cset(std::string& s, const std::string& set)
+{
+	rtrim_cset(s, set);
+	ltrim_cset(s, set);
+}
+
+auto ltrim_cset_copy(std::string s, const std::string& set)
+{
+	ltrim_cset(s, set);
+	return s;
+}
+
+auto rtrim_cset_copy(std::string s, const std::string& set)
+{
+	rtrim_cset(s, set);
+	return s;
+}
+
+auto trim_cset_copy(std::string s, const std::string& set)
+{
+	trim_cset(s, set);
+	return s;
+}
+
+// }}}
+
+// {{{ trim complementary set of characters from std::wstring
+
+void ltrim_cset(std::wstring& s, const std::wstring& set)
+{
+	(void) s.erase(
+		s.begin(),
+		std::find_if_not(
+			s.begin(), s.end(),
+			[set](const auto c_i) { return !set.contains(c_i); }));
+}
+
+void rtrim_cset(std::wstring& s, const std::wstring& set)
+{
+	(void) s.erase(
+		std::find_if_not(
+			s.rbegin(), s.rend(),
+			[set](const auto c_i) { return !set.contains(c_i); }).base(),
+		s.end());
+}
+
+void trim_cset(std::wstring& s, const std::wstring& set)
+{
+	rtrim_cset(s, set);
+	ltrim_cset(s, set);
+}
+
+auto ltrim_cset_copy(std::wstring s, const std::wstring& set)
+{
+	ltrim_cset(s, set);
+	return s;
+}
+
+auto rtrim_cset_copy(std::wstring s, const std::wstring& set)
+{
+	rtrim_cset(s, set);
+	return s;
+}
+
+auto trim_cset_copy(std::wstring s, const std::wstring& set)
+{
+	trim_cset(s, set);
+	return s;
+}
+
+// }}}
