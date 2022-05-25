@@ -199,7 +199,7 @@ auto trim_copy(std::basic_string<CharT, Traits, Allocator> s,
 
 // }}}
 
-// {{{ trim char from std::string
+// {{{ trim character from std::string
 
 void ltrim(std::string& s, const std::string::value_type c)
 {
@@ -245,7 +245,7 @@ auto trim_copy(std::string s, const std::string::value_type c)
 
 // }}}
 
-// {{{ trim wchar_t from std::wstring
+// {{{ trim character from std::wstring
 
 void ltrim(std::wstring& s, const std::wstring::value_type c)
 {
@@ -291,7 +291,7 @@ auto trim_copy(std::wstring& s, const std::wstring::value_type c)
 
 // }}}
 
-// {{{ trim CharT from std::basic_string<CharT> with std::locale
+// {{{ trim character from std::basic_string<CharT> with std::locale
 
 template<
 	class CharT,
