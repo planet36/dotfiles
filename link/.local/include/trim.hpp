@@ -299,8 +299,7 @@ void ltrim_set(std::string& s, const std::string& set)
 		s.begin(),
 		std::find_if_not(
 			s.begin(), s.end(),
-			// Characters must be converted to unsigned char.
-			[set](const unsigned char c_i) { return set.contains(c_i); }));
+			[set](const auto c_i) { return set.contains(c_i); }));
 }
 
 void rtrim_set(std::string& s, const std::string& set)
@@ -308,8 +307,7 @@ void rtrim_set(std::string& s, const std::string& set)
 	(void) s.erase(
 		std::find_if_not(
 			s.rbegin(), s.rend(),
-			// Characters must be converted to unsigned char.
-			[set](const unsigned char c_i) { return set.contains(c_i); }).base(),
+			[set](const auto c_i) { return set.contains(c_i); }).base(),
 		s.end());
 }
 
@@ -393,8 +391,7 @@ void ltrim_cset(std::string& s, const std::string& set)
 		s.begin(),
 		std::find_if_not(
 			s.begin(), s.end(),
-			// Characters must be converted to unsigned char.
-			[set](const unsigned char c_i) { return !set.contains(c_i); }));
+			[set](const auto c_i) { return !set.contains(c_i); }));
 }
 
 void rtrim_cset(std::string& s, const std::string& set)
@@ -402,8 +399,7 @@ void rtrim_cset(std::string& s, const std::string& set)
 	(void) s.erase(
 		std::find_if_not(
 			s.rbegin(), s.rend(),
-			// Characters must be converted to unsigned char.
-			[set](const unsigned char c_i) { return !set.contains(c_i); }).base(),
+			[set](const auto c_i) { return !set.contains(c_i); }).base(),
 		s.end());
 }
 
