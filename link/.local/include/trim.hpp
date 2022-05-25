@@ -30,12 +30,6 @@ void ltrim(std::string& s)
 			[](const unsigned char c_i) { return std::isspace(c_i); }));
 }
 
-auto ltrim_copy(std::string s)
-{
-	ltrim(s);
-	return s;
-}
-
 void rtrim(std::string& s)
 {
 	(void) s.erase(
@@ -47,16 +41,22 @@ void rtrim(std::string& s)
 		s.end());
 }
 
-auto rtrim_copy(std::string s)
-{
-	rtrim(s);
-	return s;
-}
-
 void trim(std::string& s)
 {
 	rtrim(s);
 	ltrim(s);
+}
+
+auto ltrim_copy(std::string s)
+{
+	ltrim(s);
+	return s;
+}
+
+auto rtrim_copy(std::string s)
+{
+	rtrim(s);
+	return s;
 }
 
 auto trim_copy(std::string s)
@@ -79,12 +79,6 @@ void ltrim(std::wstring& s)
 			[](const auto c_i) { return std::iswspace(c_i); }));
 }
 
-auto ltrim_copy(std::wstring s)
-{
-	ltrim(s);
-	return s;
-}
-
 void rtrim(std::wstring& s)
 {
 	(void) s.erase(
@@ -95,16 +89,22 @@ void rtrim(std::wstring& s)
 		s.end());
 }
 
-auto rtrim_copy(std::wstring s)
-{
-	rtrim(s);
-	return s;
-}
-
 void trim(std::wstring& s)
 {
 	rtrim(s);
 	ltrim(s);
+}
+
+auto ltrim_copy(std::wstring s)
+{
+	ltrim(s);
+	return s;
+}
+
+auto rtrim_copy(std::wstring s)
+{
+	rtrim(s);
+	return s;
 }
 
 auto trim_copy(std::wstring s)
@@ -138,18 +138,6 @@ template<
 	class Traits = std::char_traits<CharT>,
 	class Allocator = std::allocator<CharT>
 >
-auto ltrim_copy(std::basic_string<CharT, Traits, Allocator> s,
-                const std::locale& loc)
-{
-	ltrim(s, loc);
-	return s;
-}
-
-template<
-	class CharT,
-	class Traits = std::char_traits<CharT>,
-	class Allocator = std::allocator<CharT>
->
 void rtrim(std::basic_string<CharT, Traits, Allocator>& s,
            const std::locale& loc)
 {
@@ -166,10 +154,22 @@ template<
 	class Traits = std::char_traits<CharT>,
 	class Allocator = std::allocator<CharT>
 >
-auto rtrim_copy(std::basic_string<CharT, Traits, Allocator> s,
-                const std::locale& loc)
+void trim(std::basic_string<CharT, Traits, Allocator>& s,
+          const std::locale& loc)
 {
 	rtrim(s, loc);
+	ltrim(s, loc);
+}
+
+template<
+	class CharT,
+	class Traits = std::char_traits<CharT>,
+	class Allocator = std::allocator<CharT>
+>
+auto ltrim_copy(std::basic_string<CharT, Traits, Allocator> s,
+                const std::locale& loc)
+{
+	ltrim(s, loc);
 	return s;
 }
 
@@ -178,11 +178,11 @@ template<
 	class Traits = std::char_traits<CharT>,
 	class Allocator = std::allocator<CharT>
 >
-void trim(std::basic_string<CharT, Traits, Allocator>& s,
-          const std::locale& loc)
+auto rtrim_copy(std::basic_string<CharT, Traits, Allocator> s,
+                const std::locale& loc)
 {
 	rtrim(s, loc);
-	ltrim(s, loc);
+	return s;
 }
 
 template<
@@ -210,12 +210,6 @@ void ltrim(std::string& s, const std::string::value_type c)
 			[c](const auto c_i) { return c_i == c; }));
 }
 
-auto ltrim_copy(std::string s, const std::string::value_type c)
-{
-	ltrim(s, c);
-	return s;
-}
-
 void rtrim(std::string& s, const std::string::value_type c)
 {
 	(void) s.erase(
@@ -225,16 +219,22 @@ void rtrim(std::string& s, const std::string::value_type c)
 		s.end());
 }
 
-auto rtrim_copy(std::string s, const std::string::value_type c)
-{
-	rtrim(s, c);
-	return s;
-}
-
 void trim(std::string& s, const std::string::value_type c)
 {
 	rtrim(s, c);
 	ltrim(s, c);
+}
+
+auto ltrim_copy(std::string s, const std::string::value_type c)
+{
+	ltrim(s, c);
+	return s;
+}
+
+auto rtrim_copy(std::string s, const std::string::value_type c)
+{
+	rtrim(s, c);
+	return s;
 }
 
 auto trim_copy(std::string s, const std::string::value_type c)
@@ -256,12 +256,6 @@ void ltrim(std::wstring& s, const std::wstring::value_type c)
 			[c](const auto c_i) { return c_i == c; }));
 }
 
-auto ltrim_copy(std::wstring s, const std::wstring::value_type c)
-{
-	ltrim(s, c);
-	return s;
-}
-
 void rtrim(std::wstring& s, const std::wstring::value_type c)
 {
 	(void) s.erase(
@@ -271,16 +265,22 @@ void rtrim(std::wstring& s, const std::wstring::value_type c)
 		s.end());
 }
 
-auto rtrim_copy(std::wstring s, const std::wstring::value_type c)
-{
-	rtrim(s, c);
-	return s;
-}
-
 void trim(std::wstring& s, const std::wstring::value_type c)
 {
 	rtrim(s, c);
 	ltrim(s, c);
+}
+
+auto ltrim_copy(std::wstring s, const std::wstring::value_type c)
+{
+	ltrim(s, c);
+	return s;
+}
+
+auto rtrim_copy(std::wstring s, const std::wstring::value_type c)
+{
+	rtrim(s, c);
+	return s;
 }
 
 auto trim_copy(std::wstring& s, const std::wstring::value_type c)
@@ -313,18 +313,6 @@ template<
 	class Traits = std::char_traits<CharT>,
 	class Allocator = std::allocator<CharT>
 >
-auto ltrim_copy(std::basic_string<CharT, Traits, Allocator> s,
-                const std::locale& loc, const CharT c)
-{
-	ltrim(s, loc, c);
-	return s;
-}
-
-template<
-	class CharT,
-	class Traits = std::char_traits<CharT>,
-	class Allocator = std::allocator<CharT>
->
 void rtrim(std::basic_string<CharT, Traits, Allocator>& s,
            const std::locale& loc, const CharT c)
 {
@@ -340,10 +328,22 @@ template<
 	class Traits = std::char_traits<CharT>,
 	class Allocator = std::allocator<CharT>
 >
-auto rtrim_copy(std::basic_string<CharT, Traits, Allocator> s,
-                const std::locale& loc, const CharT c)
+void trim(std::basic_string<CharT, Traits, Allocator>& s,
+          const std::locale& loc, const CharT c)
 {
 	rtrim(s, loc, c);
+	ltrim(s, loc, c);
+}
+
+template<
+	class CharT,
+	class Traits = std::char_traits<CharT>,
+	class Allocator = std::allocator<CharT>
+>
+auto ltrim_copy(std::basic_string<CharT, Traits, Allocator> s,
+                const std::locale& loc, const CharT c)
+{
+	ltrim(s, loc, c);
 	return s;
 }
 
@@ -352,11 +352,11 @@ template<
 	class Traits = std::char_traits<CharT>,
 	class Allocator = std::allocator<CharT>
 >
-void trim(std::basic_string<CharT, Traits, Allocator>& s,
-          const std::locale& loc, const CharT c)
+auto rtrim_copy(std::basic_string<CharT, Traits, Allocator> s,
+                const std::locale& loc, const CharT c)
 {
 	rtrim(s, loc, c);
-	ltrim(s, loc, c);
+	return s;
 }
 
 template<
