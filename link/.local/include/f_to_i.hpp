@@ -18,6 +18,7 @@ f_to_i(const float x)
 	using result_type = int32_t;
 	static_assert(std::numeric_limits<decltype(x)>::digits <
 	              std::numeric_limits<result_type>::digits);
+	static_assert(std::numeric_limits<result_type>::is_signed);
 	return static_cast<result_type>(x);
 }
 
@@ -27,5 +28,6 @@ f_to_i(const double x)
 	using result_type = int64_t;
 	static_assert(std::numeric_limits<decltype(x)>::digits <
 	              std::numeric_limits<result_type>::digits);
+	static_assert(std::numeric_limits<result_type>::is_signed);
 	return static_cast<result_type>(x);
 }
