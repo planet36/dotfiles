@@ -67,7 +67,7 @@ auto trim_copy(std::string s)
 
 // }}}
 
-// {{{ trim spaces from std::sstring using std::iswspace
+// {{{ trim spaces from std::wstring using std::iswspace
 
 void ltrim(std::wstring& s)
 {
