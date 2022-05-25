@@ -199,9 +199,10 @@ auto trim_copy(std::basic_string<CharT, Traits, Allocator> s,
 
 // }}}
 
-// {{{ trim character from std::string
+// {{{ trim character from StringT
 
-void ltrim(std::string& s, const std::string::value_type c)
+template <typename StringT>
+void ltrim(StringT& s, const typename StringT::value_type c)
 {
 	(void) s.erase(
 		s.begin(),
@@ -210,7 +211,8 @@ void ltrim(std::string& s, const std::string::value_type c)
 			[c](const auto c_i) { return c_i == c; }));
 }
 
-void rtrim(std::string& s, const std::string::value_type c)
+template <typename StringT>
+void rtrim(StringT& s, const typename StringT::value_type c)
 {
 	(void) s.erase(
 		std::find_if_not(
@@ -219,25 +221,29 @@ void rtrim(std::string& s, const std::string::value_type c)
 		s.end());
 }
 
-void trim(std::string& s, const std::string::value_type c)
+template <typename StringT>
+void trim(StringT& s, const typename StringT::value_type c)
 {
 	rtrim(s, c);
 	ltrim(s, c);
 }
 
-auto ltrim_copy(std::string s, const std::string::value_type c)
+template <typename StringT>
+auto ltrim_copy(StringT s, const typename StringT::value_type c)
 {
 	ltrim(s, c);
 	return s;
 }
 
-auto rtrim_copy(std::string s, const std::string::value_type c)
+template <typename StringT>
+auto rtrim_copy(StringT s, const typename StringT::value_type c)
 {
 	rtrim(s, c);
 	return s;
 }
 
-auto trim_copy(std::string s, const std::string::value_type c)
+template <typename StringT>
+auto trim_copy(StringT s, const typename StringT::value_type c)
 {
 	trim(s, c);
 	return s;
@@ -245,55 +251,10 @@ auto trim_copy(std::string s, const std::string::value_type c)
 
 // }}}
 
-// {{{ trim character from std::wstring
+// {{{ trim set of characters from StringT
 
-void ltrim(std::wstring& s, const std::wstring::value_type c)
-{
-	(void) s.erase(
-		s.begin(),
-		std::find_if_not(
-			s.begin(), s.end(),
-			[c](const auto c_i) { return c_i == c; }));
-}
-
-void rtrim(std::wstring& s, const std::wstring::value_type c)
-{
-	(void) s.erase(
-		std::find_if_not(
-			s.rbegin(), s.rend(),
-			[c](const auto c_i) { return c_i == c; }).base(),
-		s.end());
-}
-
-void trim(std::wstring& s, const std::wstring::value_type c)
-{
-	rtrim(s, c);
-	ltrim(s, c);
-}
-
-auto ltrim_copy(std::wstring s, const std::wstring::value_type c)
-{
-	ltrim(s, c);
-	return s;
-}
-
-auto rtrim_copy(std::wstring s, const std::wstring::value_type c)
-{
-	rtrim(s, c);
-	return s;
-}
-
-auto trim_copy(std::wstring& s, const std::wstring::value_type c)
-{
-	trim(s, c);
-	return s;
-}
-
-// }}}
-
-// {{{ trim set of characters from std::string
-
-void ltrim_set(std::string& s, const std::string& set)
+template <typename StringT>
+void ltrim_set(StringT& s, const StringT& set)
 {
 	(void) s.erase(
 		s.begin(),
@@ -302,7 +263,8 @@ void ltrim_set(std::string& s, const std::string& set)
 			[set](const auto c_i) { return set.contains(c_i); }));
 }
 
-void rtrim_set(std::string& s, const std::string& set)
+template <typename StringT>
+void rtrim_set(StringT& s, const StringT& set)
 {
 	(void) s.erase(
 		std::find_if_not(
@@ -311,25 +273,29 @@ void rtrim_set(std::string& s, const std::string& set)
 		s.end());
 }
 
-void trim_set(std::string& s, const std::string& set)
+template <typename StringT>
+void trim_set(StringT& s, const StringT& set)
 {
 	rtrim_set(s, set);
 	ltrim_set(s, set);
 }
 
-auto ltrim_set_copy(std::string s, const std::string& set)
+template <typename StringT>
+auto ltrim_set_copy(StringT s, const StringT& set)
 {
 	ltrim_set(s, set);
 	return s;
 }
 
-auto rtrim_set_copy(std::string s, const std::string& set)
+template <typename StringT>
+auto rtrim_set_copy(StringT s, const StringT& set)
 {
 	rtrim_set(s, set);
 	return s;
 }
 
-auto trim_set_copy(std::string s, const std::string& set)
+template <typename StringT>
+auto trim_set_copy(StringT s, const StringT& set)
 {
 	trim_set(s, set);
 	return s;
@@ -337,55 +303,10 @@ auto trim_set_copy(std::string s, const std::string& set)
 
 // }}}
 
-// {{{ trim set of characters from std::wstring
+// {{{ trim complementary set of characters from StringT
 
-void ltrim_set(std::wstring& s, const std::wstring& set)
-{
-	(void) s.erase(
-		s.begin(),
-		std::find_if_not(
-			s.begin(), s.end(),
-			[set](const auto c_i) { return set.contains(c_i); }));
-}
-
-void rtrim_set(std::wstring& s, const std::wstring& set)
-{
-	(void) s.erase(
-		std::find_if_not(
-			s.rbegin(), s.rend(),
-			[set](const auto c_i) { return set.contains(c_i); }).base(),
-		s.end());
-}
-
-void trim_set(std::wstring& s, const std::wstring& set)
-{
-	rtrim_set(s, set);
-	ltrim_set(s, set);
-}
-
-auto ltrim_set_copy(std::wstring s, const std::wstring& set)
-{
-	ltrim_set(s, set);
-	return s;
-}
-
-auto rtrim_set_copy(std::wstring s, const std::wstring& set)
-{
-	rtrim_set(s, set);
-	return s;
-}
-
-auto trim_set_copy(std::wstring s, const std::wstring& set)
-{
-	trim_set(s, set);
-	return s;
-}
-
-// }}}
-
-// {{{ trim complementary set of characters from std::string
-
-void ltrim_cset(std::string& s, const std::string& set)
+template <typename StringT>
+void ltrim_cset(StringT& s, const StringT& set)
 {
 	(void) s.erase(
 		s.begin(),
@@ -394,7 +315,8 @@ void ltrim_cset(std::string& s, const std::string& set)
 			[set](const auto c_i) { return !set.contains(c_i); }));
 }
 
-void rtrim_cset(std::string& s, const std::string& set)
+template <typename StringT>
+void rtrim_cset(StringT& s, const StringT& set)
 {
 	(void) s.erase(
 		std::find_if_not(
@@ -403,71 +325,29 @@ void rtrim_cset(std::string& s, const std::string& set)
 		s.end());
 }
 
-void trim_cset(std::string& s, const std::string& set)
+template <typename StringT>
+void trim_cset(StringT& s, const StringT& set)
 {
 	rtrim_cset(s, set);
 	ltrim_cset(s, set);
 }
 
-auto ltrim_cset_copy(std::string s, const std::string& set)
+template <typename StringT>
+auto ltrim_cset_copy(StringT s, const StringT& set)
 {
 	ltrim_cset(s, set);
 	return s;
 }
 
-auto rtrim_cset_copy(std::string s, const std::string& set)
+template <typename StringT>
+auto rtrim_cset_copy(StringT s, const StringT& set)
 {
 	rtrim_cset(s, set);
 	return s;
 }
 
-auto trim_cset_copy(std::string s, const std::string& set)
-{
-	trim_cset(s, set);
-	return s;
-}
-
-// }}}
-
-// {{{ trim complementary set of characters from std::wstring
-
-void ltrim_cset(std::wstring& s, const std::wstring& set)
-{
-	(void) s.erase(
-		s.begin(),
-		std::find_if_not(
-			s.begin(), s.end(),
-			[set](const auto c_i) { return !set.contains(c_i); }));
-}
-
-void rtrim_cset(std::wstring& s, const std::wstring& set)
-{
-	(void) s.erase(
-		std::find_if_not(
-			s.rbegin(), s.rend(),
-			[set](const auto c_i) { return !set.contains(c_i); }).base(),
-		s.end());
-}
-
-void trim_cset(std::wstring& s, const std::wstring& set)
-{
-	rtrim_cset(s, set);
-	ltrim_cset(s, set);
-}
-
-auto ltrim_cset_copy(std::wstring s, const std::wstring& set)
-{
-	ltrim_cset(s, set);
-	return s;
-}
-
-auto rtrim_cset_copy(std::wstring s, const std::wstring& set)
-{
-	rtrim_cset(s, set);
-	return s;
-}
-
-auto trim_cset_copy(std::wstring s, const std::wstring& set)
+template <typename StringT>
+auto trim_cset_copy(StringT s, const StringT& set)
 {
 	trim_cset(s, set);
 	return s;
