@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function cdd --wraps cd
-    cd $argv[1] && d
+function cdd --argument-names DIR --wraps cd
+    cd $DIR && d
 end

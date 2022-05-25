@@ -1,9 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function tfp --description 'tar format patch'
-
-    set DST $argv[1]
+function tfp --argument-names DST --description 'tar format patch'
 
     set PATCHES_DIR $(basename $(git rev-parse --show-toplevel)) || return
 
