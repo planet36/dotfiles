@@ -13,7 +13,6 @@
 // https://embeddedartistry.com/blog/2017/05/17/creating-a-circular-buffer-in-c-and-c/
 
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -22,17 +21,17 @@ static const unsigned long circbuf_version = 20210715UL;
 typedef struct
 {
 	void* buf;
-	uint32_t num_elems;
-	uint32_t sizeof_elem;
-	uint32_t head;
-	uint32_t tail;
+	size_t num_elems;
+	size_t sizeof_elem;
+	size_t head;
+	size_t tail;
 	bool full;
 } circbuf;
 
 static const circbuf circbuf_default = {0};
 
 static circbuf
-circbuf_init(uint32_t num_elems, uint32_t sizeof_elem)
+circbuf_init(size_t num_elems, size_t sizeof_elem)
 {
 	return (circbuf){
 		.buf = calloc(num_elems, sizeof_elem),
@@ -46,7 +45,7 @@ circbuf_init(uint32_t num_elems, uint32_t sizeof_elem)
 static void
 circbuf_free(circbuf* cbuf)
 {
-	(void)memset(cbuf->buf, 0, (size_t)cbuf->num_elems * cbuf->sizeof_elem);
+	(void)memset(cbuf->buf, 0, cbuf->num_elems * cbuf->sizeof_elem);
 	free(cbuf->buf);
 	cbuf->buf = NULL;
 	cbuf->num_elems = 0;
@@ -68,7 +67,7 @@ circbuf_empty(const circbuf* cbuf)
 	return (cbuf->head == cbuf->tail) && !cbuf->full;
 }
 
-static uint32_t
+static size_t
 circbuf_count(const circbuf* cbuf)
 {
 	if (circbuf_empty(cbuf))
@@ -85,7 +84,7 @@ static void
 circbuf_add(circbuf* cbuf, const void* x)
 {
 	// add to head
-	(void)memcpy((char*)cbuf->buf + (size_t)cbuf->head * cbuf->sizeof_elem,
+	(void)memcpy((char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
 	             x, cbuf->sizeof_elem);
 
 	if (cbuf->full)
@@ -105,11 +104,11 @@ circbuf_del(circbuf* cbuf, void* x)
 		return -1;
 
 	if (x)
-		(void)memcpy(x, (char*)cbuf->buf + (size_t)cbuf->tail * cbuf->sizeof_elem,
+		(void)memcpy(x, (char*)cbuf->buf + cbuf->tail * cbuf->sizeof_elem,
 		             cbuf->sizeof_elem);
 
 	// remove from tail
-	(void)memset((char*)cbuf->buf + (size_t)cbuf->tail * cbuf->sizeof_elem,
+	(void)memset((char*)cbuf->buf + cbuf->tail * cbuf->sizeof_elem,
 	             0, cbuf->sizeof_elem);
 
 	if (++cbuf->tail == cbuf->num_elems) // inc tail
