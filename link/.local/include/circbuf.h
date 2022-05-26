@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// circular buffer
+/// non-thread-safe C circular buffer
 /**
 \file
 \author Steven Ward
@@ -25,6 +25,7 @@ typedef struct
 	size_t sizeof_elem;
 	size_t head;
 	size_t tail;
+	bool empty;
 	bool full;
 } circbuf;
 
@@ -39,7 +40,9 @@ circbuf_init(size_t num_elems, size_t sizeof_elem)
 		.sizeof_elem = sizeof_elem,
 		.head = 0,
 		.tail = 0,
-		.full = false};
+		.empty = true,
+		.full = false,
+	};
 }
 
 static void
@@ -52,6 +55,7 @@ circbuf_free(circbuf* cbuf)
 	cbuf->sizeof_elem = 0;
 	cbuf->head = 0;
 	cbuf->tail = 0;
+	cbuf->empty = true;
 	cbuf->full = false;
 }
 
@@ -61,16 +65,10 @@ circbuf_free(circbuf* cbuf)
 	__attribute__((cleanup(circbuf_free))) \
 	circbuf varname = circbuf_init(num_elems, sizeof(type));
 
-static bool
-circbuf_empty(const circbuf* cbuf)
-{
-	return (cbuf->head == cbuf->tail) && !cbuf->full;
-}
-
 static size_t
 circbuf_count(const circbuf* cbuf)
 {
-	if (circbuf_empty(cbuf))
+	if (cbuf->empty)
 		return 0;
 	else if (cbuf->full)
 		return cbuf->num_elems;
@@ -94,13 +92,14 @@ circbuf_add(circbuf* cbuf, const void* x)
 	if (++cbuf->head == cbuf->num_elems) // inc head
 		cbuf->head = 0; // head rollover
 
+	cbuf->empty = false;
 	cbuf->full = cbuf->head == cbuf->tail;
 }
 
 static int
 circbuf_del(circbuf* cbuf, void* x)
 {
-	if (circbuf_empty(cbuf))
+	if (cbuf->empty)
 		return -1;
 
 	if (x)
@@ -114,6 +113,7 @@ circbuf_del(circbuf* cbuf, void* x)
 	if (++cbuf->tail == cbuf->num_elems) // inc tail
 		cbuf->tail = 0; // tail rollover
 
+	cbuf->empty = cbuf->head == cbuf->tail;
 	cbuf->full = false;
 
 	return 0;
