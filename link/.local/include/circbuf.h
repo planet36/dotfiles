@@ -25,7 +25,7 @@ typedef struct
 	size_t sizeof_elem;
 	size_t head;
 	size_t tail;
-	bool empty;
+	bool empty; // (head == tail) && !full
 	bool full;
 } circbuf;
 
