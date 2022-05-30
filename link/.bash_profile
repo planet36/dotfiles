@@ -5,6 +5,9 @@
 
 ulimit -c unlimited
 
+# Prepend user path
+PATH="$HOME/.local/bin:$PATH"
+
 if [[ -r "$XDG_CONFIG_HOME"/bash/envvars.bash ]]
 then
     source "$XDG_CONFIG_HOME"/bash/envvars.bash
