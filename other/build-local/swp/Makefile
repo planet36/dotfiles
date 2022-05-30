@@ -10,6 +10,7 @@ DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
 CPPFLAGS += -MMD -MP
+# needed for RENAME_EXCHANGE
 CFLAGS += -D_GNU_SOURCE
 #LDLIBS +=
 
