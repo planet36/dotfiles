@@ -3,7 +3,7 @@
 
 function boincmgr --wraps boincmgr --description 'boincmgr with datadir specified'
 
-    if not set -q BOINC_DATA_DIR
+    if not set --query BOINC_DATA_DIR
         #set BOINC_DATA_DIR /media/sf_shared/boinc-data
         set BOINC_DATA_DIR ~/boinc-data
     end
