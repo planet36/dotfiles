@@ -663,15 +663,6 @@ function main
 
         if ! $DRY_RUN
         then
-            if command -v thefuck > /dev/null
-            then
-                TF_SHELL=bash thefuck --alias > "$XDG_CONFIG_HOME"/bash/functions/fuck.bash || return
-                TF_SHELL=fish thefuck --alias > "$XDG_CONFIG_HOME"/fish/functions/fuck.fish || return
-            fi
-        fi
-
-        if ! $DRY_RUN
-        then
             fc-cache || return
         fi
 
