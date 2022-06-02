@@ -9,7 +9,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2022-04-12'
+SCRIPT_VERSION='2022-06-02'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
@@ -339,33 +339,6 @@ function delete_linked_dotfiles
     done
 }
 
-function setup_xdg_vars
-{
-    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-
-    : "${XDG_CACHE_HOME:=$HOME/.cache}"
-    : "${XDG_CONFIG_DIRS:=/etc/xdg}"
-    : "${XDG_CONFIG_HOME:=$HOME/.config}"
-    : "${XDG_DATA_DIRS:=/usr/local/share/:/usr/share/}"
-    : "${XDG_DATA_HOME:=$HOME/.local/share}"
-    : "${XDG_STATE_HOME:=$HOME/.local/state}"
-
-    export XDG_CACHE_HOME
-    export XDG_CONFIG_DIRS
-    export XDG_CONFIG_HOME
-    export XDG_DATA_DIRS
-    export XDG_DATA_HOME
-    export XDG_STATE_HOME
-
-    mkdir --verbose --parents -- "$XDG_CACHE_HOME"
-    mkdir --verbose --parents -- "$XDG_CONFIG_HOME"
-    mkdir --verbose --parents -- "$XDG_DATA_HOME"
-    mkdir --verbose --parents -- "$XDG_STATE_HOME"
-
-    # XDG environment variables have been set
-    # XDG base directories have been created
-}
-
 function create_nvim_dirs
 {
     if $DRY_RUN
@@ -619,7 +592,8 @@ function main
     REL_DOTFILES_DIR="$(realpath --relative-to "$PWD" -- "$SCRIPT_DIR")"
     print_verbose 'REL_DOTFILES_DIR=%q' "$REL_DOTFILES_DIR"
 
-    setup_xdg_vars || return
+    # shellcheck disable=SC1091
+    source "$SCRIPT_DIR"/link/.config/bash/xdg-envvars.bash || return
 
     if $DELETE
     then
