@@ -2,26 +2,24 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=C0103
-# pylint: disable=C0114
-# pylint: disable=C0116
-# pylint: disable=W0311
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-module-docstring
 
 import math
 import sys
 
-__version__ = '2021-01-16'
+__version__ = '2022-06-01'
 
 def calcdpi(width_px: int, height_px: int, diagonal_in: float) -> float:
 	return math.hypot(width_px, height_px) / diagonal_in
 
-# pylint: disable=R0912
-# pylint: disable=R0914
-# pylint: disable=R0915
-# pylint: disable=R1710
+# pylint: disable=inconsistent-return-statements
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-statements
 def main(argv = None):
 
-	# pylint: disable=C0415
+	# pylint: disable=import-outside-toplevel
 	import getopt
 	import os.path
 	#import signal
@@ -50,7 +48,7 @@ def main(argv = None):
 	min_dpi = default_min_dpi
 	max_dpi = default_max_dpi
 
-	# pylint: disable=W0613
+	# pylint: disable=unused-variable
 	#def signal_handler(signal_num, execution_frame):
 	#	print()
 	#	sys.exit(0)
@@ -61,14 +59,14 @@ def main(argv = None):
 	def print_version():
 		"""Print the version information and exit."""
 		print(program_name, __version__)
-		print("Written by {}".format(', '.join(program_authors)))
+		print(f"Written by {', '.join(program_authors)}")
 
 	def print_verbose(s):
 		"""Print the message if verbose mode is on."""
 		if verbose:
 			print('#', s)
 
-	# pylint: disable=W0612
+	# pylint: disable=unused-variable
 	def print_warning(s):
 		"""Print the warning message and continue."""
 		print('Warning:', s, file=sys.stderr)
@@ -137,7 +135,7 @@ OPTIONS
 		return 1
 
 	for (option, value) in options:
-		# pylint: disable=R1705
+		# pylint: disable=no-else-return
 		if option in ['-V', '--version']:
 			print_version()
 			return 0
