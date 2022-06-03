@@ -430,47 +430,47 @@ function uninstall_github_programs
 
 function install_fish_plugins
 {
-        if $DRY_RUN
-        then
-            # https://github.com/jorgebucaran/fisher
-            echo  \
-            fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+    if $DRY_RUN
+    then
+        # https://github.com/jorgebucaran/fisher
+        echo  \
+        fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
 
-            # https://github.com/jorgebucaran/getopts.fish
-            echo  \
-            fish -c 'fisher install jorgebucaran/getopts.fish'
+        # https://github.com/jorgebucaran/getopts.fish
+        echo  \
+        fish -c 'fisher install jorgebucaran/getopts.fish'
 
-            # https://github.com/jorgebucaran/spark.fish
-            echo  \
-            fish -c 'fisher install jorgebucaran/spark.fish'
+        # https://github.com/jorgebucaran/spark.fish
+        echo  \
+        fish -c 'fisher install jorgebucaran/spark.fish'
 
-            # https://github.com/jethrokuan/z
-            echo  \
-            fish -c 'fisher install jethrokuan/z'
-        else
-            # https://github.com/jorgebucaran/fisher
-            fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher' || return
+        # https://github.com/jethrokuan/z
+        echo  \
+        fish -c 'fisher install jethrokuan/z'
+    else
+        # https://github.com/jorgebucaran/fisher
+        fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher' || return
 
-            # https://github.com/jorgebucaran/getopts.fish
-            fish -c 'fisher install jorgebucaran/getopts.fish' || return
+        # https://github.com/jorgebucaran/getopts.fish
+        fish -c 'fisher install jorgebucaran/getopts.fish' || return
 
-            # https://github.com/jorgebucaran/spark.fish
-            fish -c 'fisher install jorgebucaran/spark.fish' || return
+        # https://github.com/jorgebucaran/spark.fish
+        fish -c 'fisher install jorgebucaran/spark.fish' || return
 
-            # https://github.com/jethrokuan/z
-            fish -c 'fisher install jethrokuan/z' || return
-        fi
+        # https://github.com/jethrokuan/z
+        fish -c 'fisher install jethrokuan/z' || return
+    fi
 }
 
 function uninstall_fish_plugins
 {
-        if $DRY_RUN
-        then
-            echo  \
-            fish -c 'fisher list | fisher remove'
-        else
-            fish -c 'fisher list | fisher remove' || return
-        fi
+    if $DRY_RUN
+    then
+        echo  \
+        fish -c 'fisher list | fisher remove'
+    else
+        fish -c 'fisher list | fisher remove' || return
+    fi
 }
 
 function install_nvim_plugins
@@ -491,14 +491,14 @@ function install_nvim_plugins
         cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim || return
     fi
 
-        #nvim -c PlugUpgrade -c PlugInstall -c qall
-        if $DRY_RUN
-        then
-            echo \
-            nvim -c PlugInstall -c qall
-        else
-            nvim -c PlugInstall -c qall || return
-        fi
+    #nvim -c PlugUpgrade -c PlugInstall -c qall
+    if $DRY_RUN
+    then
+        echo \
+        nvim -c PlugInstall -c qall
+    else
+        nvim -c PlugInstall -c qall || return
+    fi
 }
 
 function uninstall_nvim_plugins
