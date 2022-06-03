@@ -639,12 +639,6 @@ function main
             install_fish_plugins     || return
         fi
     fi
-
-    if [[ -f ~/.bash_history ]]
-    then
-        #mv --verbose -- ~/.bash_history "$XDG_DATA_HOME"/bash/history
-        mv --verbose -- ~/.bash_history ~/.bash_history.~1~
-    fi
 }
 
 parse_options "$@"
