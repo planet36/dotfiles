@@ -38,7 +38,7 @@ do
 	git clone --quiet -- "$PLUGIN"
 done
 
-cd - > /dev/null
+cd - > /dev/null || exit
 
 mkdir --verbose --parents -- opt
 cd opt || exit
@@ -49,4 +49,4 @@ do
 	git clone --quiet -- "$PLUGIN"
 done
 
-cd - > /dev/null
+cd - > /dev/null || exit
