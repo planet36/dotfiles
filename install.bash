@@ -475,20 +475,16 @@ function uninstall_fish_plugins
 
 function install_nvim_plugins
 {
-    # install vim-plug
-    # https://github.com/junegunn/vim-plug#installation
+    # https://github.com/junegunn/vim-plug#neovim
 
     if $DRY_RUN
     then
         echo \
-        curl -fLo /tmp/plug.vim \
+        curl -fLo "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        echo \
-        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim
     else
-        curl -fLo /tmp/plug.vim \
+        curl -fLo "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return
-        cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim || return
     fi
 
     #nvim -c PlugUpgrade -c PlugInstall -c qall
