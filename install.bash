@@ -339,7 +339,7 @@ function delete_linked_dotfiles
     done
 }
 
-function install_vim_nvim_plugins
+function install_nvim_plugins
 {
     # install vim-plug
     # https://github.com/junegunn/vim-plug#installation
@@ -633,7 +633,7 @@ function main
 
         if $INSTALL_PROGRAMS
         then
-            install_vim_nvim_plugins || return
+            install_nvim_plugins || return
             install_local_programs   || return
             install_github_programs  || return
             install_fish_plugins     || return
