@@ -43,6 +43,7 @@ set PROFILE_OPTIONS   $(string split ' ' -- $PROFILE_OPTIONS  )
 
 # {{{ z
 
+# https://github.com/jethrokuan/z/blob/master/man/man1/z.md#configuration
 set Z_CMD "j"
 #set ZO_CMD "$Z_CMD"o
 
