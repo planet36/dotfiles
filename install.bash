@@ -605,9 +605,6 @@ function main
             fc-cache || return
         fi
     else
-        mkdir --verbose --parents -- ~/.local/{bin,lib,src} || return
-        mkdir --verbose --parents -- ~/Downloads || return
-
         copy_dotfiles "$REL_DOTFILES_DIR"/copy || return
 
         if $COPY_ALL
