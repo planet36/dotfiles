@@ -41,14 +41,6 @@ set PROFILE_OPTIONS   $(string split ' ' -- $PROFILE_OPTIONS  )
 
 # }}}
 
-# {{{ z
-
-# https://github.com/jethrokuan/z/blob/master/man/man1/z.md#configuration
-set Z_CMD "j"
-#set ZO_CMD "$Z_CMD"o
-
-# }}}
-
 # {{{ source other config files
 
 if test -f $(status dirname)/abbrs.fish
@@ -62,6 +54,14 @@ end
 if test -f $(status dirname)/private.fish
     source $(status dirname)/private.fish
 end
+
+# }}}
+
+# {{{ z
+
+# https://github.com/jethrokuan/z/blob/master/man/man1/z.md#configuration
+set Z_CMD "j"
+#set ZO_CMD "$Z_CMD"o
 
 # }}}
 
