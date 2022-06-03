@@ -475,7 +475,6 @@ function uninstall_github_programs
     popd &> /dev/null
 }
 
-
 function install_fish_plugins
 {
     if command -v fish > /dev/null
@@ -639,11 +638,6 @@ function main
             install_github_programs  || return
             install_fish_plugins     || return
         fi
-    fi
-
-    if [[ -f ~/.bash_logout ]]
-    then
-        mv --verbose -- ~/.bash_logout ~/.bash_logout.~1~
     fi
 
     if [[ -f ~/.bash_history ]]
