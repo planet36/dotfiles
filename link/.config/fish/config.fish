@@ -41,7 +41,7 @@ set PROFILE_OPTIONS   $(string split ' ' -- $PROFILE_OPTIONS  )
 
 # }}}
 
-# {{{ source other config files
+# {{{ Source other config files
 
 if test -f $(status dirname)/abbrs.fish
     source $(status dirname)/abbrs.fish
@@ -57,7 +57,7 @@ end
 
 # }}}
 
-# {{{ Install fisher
+# {{{ Install fisher plugin
 
 if not functions --query fisher
     # https://github.com/jorgebucaran/fisher#installation
@@ -66,16 +66,22 @@ end
 
 # }}}
 
-# {{{ Install z
+# {{{ Install fisher plugins
 
-if functions --query fisher && not functions --query __z
-    # https://github.com/jethrokuan/z#installation
-    fisher install jethrokuan/z
-end
+if functions --query fisher
+
+    # {{{ Install z
+    if not functions --query __z
+        # https://github.com/jethrokuan/z#installation
+        fisher install jethrokuan/z
+    end
+    # }}}
+
+end # functions --query fisher
 
 # }}}
 
-# {{{ z
+# {{{ Configure z
 
 # https://github.com/jethrokuan/z/blob/master/man/man1/z.md#configuration
 set Z_CMD "j"
@@ -83,13 +89,13 @@ set Z_CMD "j"
 
 # }}}
 
-# {{{ set theme
+# {{{ Choose theme
 
 fish_config theme choose 'Tomorrow Night Bright'
 
 # }}}
 
-# {{{ set prompt
+# {{{ Choose prompt
 
 fish_config prompt choose informative_vcs
 
