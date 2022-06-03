@@ -339,53 +339,6 @@ function delete_linked_dotfiles
     done
 }
 
-function install_nvim_plugins
-{
-    # install vim-plug
-    # https://github.com/junegunn/vim-plug#installation
-
-    if $DRY_RUN
-    then
-        echo \
-        curl -fLo /tmp/plug.vim \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        echo \
-        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim
-    else
-        curl -fLo /tmp/plug.vim \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return
-        cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim || return
-    fi
-
-    if command -v nvim > /dev/null
-    then
-        #nvim -c PlugUpgrade -c PlugInstall -c qall
-        if $DRY_RUN
-        then
-            echo \
-            nvim -c PlugInstall -c qall
-        else
-            nvim -c PlugInstall -c qall || return
-        fi
-    fi
-}
-
-function uninstall_nvim_plugins
-{
-    if command -v nvim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/nvim/plugins-empty.vim ]]
-    then
-        if $DRY_RUN
-        then
-            # shellcheck disable=SC2016
-            echo \
-            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall
-        else
-            # shellcheck disable=SC2016
-            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall || return
-        fi
-    fi
-}
-
 function install_local_programs
 {
     # XXX: Do not run sequential targets (i.e. install, clean) in parallel
@@ -512,7 +465,6 @@ function install_fish_plugins
     fi
 }
 
-
 function uninstall_fish_plugins
 {
     if command -v fish > /dev/null
@@ -527,6 +479,52 @@ function uninstall_fish_plugins
     fi
 }
 
+function install_nvim_plugins
+{
+    # install vim-plug
+    # https://github.com/junegunn/vim-plug#installation
+
+    if $DRY_RUN
+    then
+        echo \
+        curl -fLo /tmp/plug.vim \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        echo \
+        cp --verbose --backup=numbered --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim
+    else
+        curl -fLo /tmp/plug.vim \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return
+        cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim || return
+    fi
+
+    if command -v nvim > /dev/null
+    then
+        #nvim -c PlugUpgrade -c PlugInstall -c qall
+        if $DRY_RUN
+        then
+            echo \
+            nvim -c PlugInstall -c qall
+        else
+            nvim -c PlugInstall -c qall || return
+        fi
+    fi
+}
+
+function uninstall_nvim_plugins
+{
+    if command -v nvim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/nvim/plugins-empty.vim ]]
+    then
+        if $DRY_RUN
+        then
+            # shellcheck disable=SC2016
+            echo \
+            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall
+        else
+            # shellcheck disable=SC2016
+            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall || return
+        fi
+    fi
+}
 
 function parse_options
 {
