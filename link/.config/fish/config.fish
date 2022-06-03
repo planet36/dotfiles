@@ -57,6 +57,15 @@ end
 
 # }}}
 
+# {{{ Install fisher
+
+if not functions --query fisher
+    # https://github.com/jorgebucaran/fisher#installation
+    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+end
+
+# }}}
+
 # {{{ z
 
 # https://github.com/jethrokuan/z/blob/master/man/man1/z.md#configuration
