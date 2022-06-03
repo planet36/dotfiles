@@ -64,11 +64,6 @@ OPTIONS
          - st
          - stw
          - binaries from github listed in the file "get-all-binaries.bash"
-       fish plugins
-         - fisher
-         - getopts
-         - spark
-         - z
 
   -n : Show what would be done without doing anything.
 
@@ -428,51 +423,6 @@ function uninstall_github_programs
     popd &> /dev/null
 }
 
-function install_fish_plugins
-{
-    if $DRY_RUN
-    then
-        # https://github.com/jorgebucaran/fisher
-        echo  \
-        fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
-
-        # https://github.com/jorgebucaran/getopts.fish
-        echo  \
-        fish -c 'fisher install jorgebucaran/getopts.fish'
-
-        # https://github.com/jorgebucaran/spark.fish
-        echo  \
-        fish -c 'fisher install jorgebucaran/spark.fish'
-
-        # https://github.com/jethrokuan/z
-        echo  \
-        fish -c 'fisher install jethrokuan/z'
-    else
-        # https://github.com/jorgebucaran/fisher
-        fish -c 'curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher' || return
-
-        # https://github.com/jorgebucaran/getopts.fish
-        fish -c 'fisher install jorgebucaran/getopts.fish' || return
-
-        # https://github.com/jorgebucaran/spark.fish
-        fish -c 'fisher install jorgebucaran/spark.fish' || return
-
-        # https://github.com/jethrokuan/z
-        fish -c 'fisher install jethrokuan/z' || return
-    fi
-}
-
-function uninstall_fish_plugins
-{
-    if $DRY_RUN
-    then
-        echo  \
-        fish -c 'fisher list | fisher remove'
-    else
-        fish -c 'fisher list | fisher remove' || return
-    fi
-}
-
 function install_nvim_plugins
 {
     # https://github.com/junegunn/vim-plug#neovim
@@ -574,7 +524,6 @@ function main
         then
             uninstall_local_programs   || return
             uninstall_github_programs  || return
-            uninstall_fish_plugins     || return
             uninstall_nvim_plugins || return
         fi
 
@@ -617,7 +566,6 @@ function main
         then
             install_local_programs   || return
             install_github_programs  || return
-            install_fish_plugins     || return
             install_nvim_plugins || return
         fi
     fi
