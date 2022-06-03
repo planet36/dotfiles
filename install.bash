@@ -339,19 +339,6 @@ function delete_linked_dotfiles
     done
 }
 
-function create_nvim_dirs
-{
-    if $DRY_RUN
-    then
-        echo \
-        mkdir --verbose --parents -- \
-            "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo}
-    else
-        mkdir --verbose --parents -- \
-            "$XDG_DATA_HOME"/nvim/{site/autoload,backup,colors,swap,undo} || return
-    fi
-}
-
 function install_vim_nvim_plugins
 {
     # install vim-plug
@@ -623,8 +610,6 @@ function main
     else
         mkdir --verbose --parents -- ~/.local/{bin,lib,src} || return
         mkdir --verbose --parents -- ~/Downloads || return
-
-        create_nvim_dirs || return
 
         copy_dotfiles "$REL_DOTFILES_DIR"/copy || return
 
