@@ -77,6 +77,22 @@ if functions --query fisher
     end
     # }}}
 
+    # {{{ Install getopts
+    if not functions --query getopts
+        # https://github.com/jorgebucaran/getopts.fish#installation
+        fisher install jorgebucaran/getopts.fish
+    end
+    # }}}
+
+    # {{{ Install spark
+    if not functions --query spark
+        # https://github.com/jorgebucaran/spark.fish#installation
+        fisher install jorgebucaran/spark.fish
+    end
+    # }}}
+
+    # To remove all fisher plugins, run `fisher list | fisher remove`.
+
 end # functions --query fisher
 
 # }}}
