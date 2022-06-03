@@ -12,12 +12,12 @@ source "${XDG_CONFIG_HOME:-$HOME/.config}"/bash/xdg-envvars.bash || return
 
 if [[ -r "$XDG_CONFIG_HOME"/bash/envvars.bash ]]
 then
-    source "$XDG_CONFIG_HOME"/bash/envvars.bash
+    source "$XDG_CONFIG_HOME"/bash/envvars.bash || return
 fi
 
 if [[ -r "$XDG_CONFIG_HOME"/bash/private.bash ]]
 then
-    source "$XDG_CONFIG_HOME"/bash/private.bash
+    source "$XDG_CONFIG_HOME"/bash/private.bash || return
 fi
 
 if [[ -r ~/.bashrc ]]
