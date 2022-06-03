@@ -587,10 +587,10 @@ function main
 
         if $INSTALL_PROGRAMS
         then
-            uninstall_nvim_plugins || return
             uninstall_local_programs   || return
             uninstall_github_programs  || return
             uninstall_fish_plugins     || return
+            uninstall_nvim_plugins || return
         fi
 
         delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy || return
@@ -633,10 +633,10 @@ function main
 
         if $INSTALL_PROGRAMS
         then
-            install_nvim_plugins || return
             install_local_programs   || return
             install_github_programs  || return
             install_fish_plugins     || return
+            install_nvim_plugins || return
         fi
     fi
 }
