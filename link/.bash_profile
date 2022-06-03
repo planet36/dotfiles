@@ -10,8 +10,8 @@ PATH="$HOME/.local/bin:$PATH"
 
 source "${XDG_CONFIG_HOME:-$HOME/.config}"/bash/xdg-envvars.bash || return
 
-    source "$XDG_CONFIG_HOME"/bash/envvars.bash || return
+source "$XDG_CONFIG_HOME"/bash/envvars.bash || return
 
-    source "$XDG_CONFIG_HOME"/bash/private.bash || return
+source "$XDG_CONFIG_HOME"/bash/private.bash || return
 
-    source ~/.bashrc
+source ~/.bashrc
