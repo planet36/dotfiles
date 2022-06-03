@@ -66,6 +66,15 @@ end
 
 # }}}
 
+# {{{ Install z
+
+if functions --query fisher && not functions --query __z
+    # https://github.com/jethrokuan/z#installation
+    fisher install jethrokuan/z
+end
+
+# }}}
+
 # {{{ z
 
 # https://github.com/jethrokuan/z/blob/master/man/man1/z.md#configuration
