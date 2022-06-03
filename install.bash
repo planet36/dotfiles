@@ -430,8 +430,6 @@ function uninstall_github_programs
 
 function install_fish_plugins
 {
-    if command -v fish > /dev/null
-    then
         if $DRY_RUN
         then
             # https://github.com/jorgebucaran/fisher
@@ -462,13 +460,10 @@ function install_fish_plugins
             # https://github.com/jethrokuan/z
             fish -c 'fisher install jethrokuan/z' || return
         fi
-    fi
 }
 
 function uninstall_fish_plugins
 {
-    if command -v fish > /dev/null
-    then
         if $DRY_RUN
         then
             echo  \
@@ -476,7 +471,6 @@ function uninstall_fish_plugins
         else
             fish -c 'fisher list | fisher remove' || return
         fi
-    fi
 }
 
 function install_nvim_plugins
@@ -497,8 +491,6 @@ function install_nvim_plugins
         cp --verbose --target-directory "$XDG_DATA_HOME"/nvim/site/autoload/ -- /tmp/plug.vim || return
     fi
 
-    if command -v nvim > /dev/null
-    then
         #nvim -c PlugUpgrade -c PlugInstall -c qall
         if $DRY_RUN
         then
@@ -507,12 +499,11 @@ function install_nvim_plugins
         else
             nvim -c PlugInstall -c qall || return
         fi
-    fi
 }
 
 function uninstall_nvim_plugins
 {
-    if command -v nvim > /dev/null && [[ -f "$XDG_CONFIG_HOME"/nvim/plugins-empty.vim ]]
+    if [[ -f "$XDG_CONFIG_HOME"/nvim/plugins-empty.vim ]]
     then
         if $DRY_RUN
         then
