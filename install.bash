@@ -56,7 +56,6 @@ OPTIONS
        Only attempt to delete empty folders that contained dotfiles.
 
   -p : In addition to dotfiles, also install the following:
-       nvim plugins listed in the file "plugins.vim"
        programs to ~/.local/bin
          - $SCRIPT_DIR/other/build-local/*
          - dwm
@@ -423,46 +422,6 @@ function uninstall_github_programs
     popd &> /dev/null
 }
 
-function install_nvim_plugins
-{
-    # https://github.com/junegunn/vim-plug#neovim
-
-    if $DRY_RUN
-    then
-        echo \
-        curl -fLo "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim --create-dirs \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    else
-        curl -fLo "$XDG_DATA_HOME"/nvim/site/autoload/plug.vim --create-dirs \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return
-    fi
-
-    #nvim -c PlugUpgrade -c PlugInstall -c qall
-    if $DRY_RUN
-    then
-        echo \
-        nvim -c PlugInstall -c qall
-    else
-        nvim -c PlugInstall -c qall || return
-    fi
-}
-
-function uninstall_nvim_plugins
-{
-    if [[ -f "$XDG_CONFIG_HOME"/nvim/plugins-empty.vim ]]
-    then
-        if $DRY_RUN
-        then
-            # shellcheck disable=SC2016
-            echo \
-            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall
-        else
-            # shellcheck disable=SC2016
-            nvim -c ':source $XDG_CONFIG_HOME/nvim/plugins-empty.vim' -c PlugClean! -c qall || return
-        fi
-    fi
-}
-
 function parse_options
 {
     while getopts 'Vhvrcdpn' OPTION
@@ -524,7 +483,6 @@ function main
         then
             uninstall_local_programs   || return
             uninstall_github_programs  || return
-            uninstall_nvim_plugins || return
         fi
 
         delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy || return
@@ -566,7 +524,6 @@ function main
         then
             install_local_programs   || return
             install_github_programs  || return
-            install_nvim_plugins || return
         fi
     fi
 }

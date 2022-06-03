@@ -466,7 +466,6 @@ autocmd BufReadPost *
 " {{{ Source files
 
 let s:source_these_files = [
-            \ 'plugins.vim',
             \ ]
 
 for f in s:source_these_files
