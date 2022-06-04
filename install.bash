@@ -62,7 +62,6 @@ OPTIONS
          - slstatus
          - st
          - stw
-         - binaries from github listed in the file "get-all-binaries.bash"
 
   -n : Show what would be done without doing anything.
 
@@ -379,49 +378,6 @@ function uninstall_local_programs
     fi
 }
 
-function install_github_programs
-{
-    pushd . &> /dev/null
-
-    cd ~/.local/bin || return
-
-    if $DRY_RUN
-    then
-        bash get-all-binaries.bash -v -n
-    else
-        bash get-all-binaries.bash -v    || return
-    fi
-
-    # https://github.com/koalaman/shellcheck/issues/613
-    # shellcheck disable=SC2164
-    popd &> /dev/null
-}
-
-function uninstall_github_programs
-{
-    pushd . &> /dev/null
-
-    cd ~/.local/bin || return
-
-    for PROGRAM in $(bash get-all-binaries.bash -n | cut -f1)
-    do
-        if [[ -f "$PROGRAM" ]]
-        then
-            if $DRY_RUN
-            then
-                echo \
-                rm --verbose -- "$PROGRAM"
-            else
-                rm --verbose -- "$PROGRAM" || return
-            fi
-        fi
-    done
-
-    # https://github.com/koalaman/shellcheck/issues/613
-    # shellcheck disable=SC2164
-    popd &> /dev/null
-}
-
 function parse_options
 {
     while getopts 'Vhvrcdpn' OPTION
@@ -482,7 +438,6 @@ function main
         if $INSTALL_PROGRAMS
         then
             uninstall_local_programs   || return
-            uninstall_github_programs  || return
         fi
 
         delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy || return
@@ -523,7 +478,6 @@ function main
         if $INSTALL_PROGRAMS
         then
             install_local_programs   || return
-            install_github_programs  || return
         fi
     fi
 }
