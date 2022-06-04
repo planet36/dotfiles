@@ -9,14 +9,13 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2022-06-02'
+SCRIPT_VERSION='2022-06-03'
 SCRIPT_AUTHOR='Steven Ward'
 
 VERBOSE=false
 RELATIVE=false
 COPY_ALL=false
 DELETE=false
-INSTALL_PROGRAMS=false
 DRY_RUN=false
 
 function print_version
@@ -54,14 +53,6 @@ OPTIONS
   -d : Attempt to delete almost everything created by this script.
        Only attempt to delete files and symbolic links that are identical to their source.
        Only attempt to delete empty folders that contained dotfiles.
-
-  -p : In addition to dotfiles, also install the following:
-       programs to ~/.local/bin
-         - $SCRIPT_DIR/other/build-local/*
-         - dwm
-         - slstatus
-         - st
-         - stw
 
   -n : Show what would be done without doing anything.
 
@@ -332,55 +323,9 @@ function delete_linked_dotfiles
     done
 }
 
-function install_local_programs
-{
-    # XXX: Do not run sequential targets (i.e. install, clean) in parallel
-
-    if $DRY_RUN
-    then
-        echo \
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C "$SCRIPT_DIR"/other/build-local install
-        echo \
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C "$SCRIPT_DIR"/other/build-local clean
-    else
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C "$SCRIPT_DIR"/other/build-local install || return
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C "$SCRIPT_DIR"/other/build-local clean || return
-    fi
-
-    if $DRY_RUN
-    then
-        echo \
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C ~/.local/src install
-        echo \
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C ~/.local/src clean
-    else
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C ~/.local/src install || return
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C ~/.local/src clean || return
-    fi
-}
-
-function uninstall_local_programs
-{
-    if $DRY_RUN
-    then
-        echo \
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C "$SCRIPT_DIR"/other/build-local uninstall
-    else
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C "$SCRIPT_DIR"/other/build-local uninstall || return
-    fi
-
-    if $DRY_RUN
-    then
-        echo \
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C ~/.local/src uninstall
-    else
-        make PREFIX="$HOME"/.local -j"$(nproc)" -C ~/.local/src uninstall || return
-    fi
-}
-
 function parse_options
 {
-    while getopts 'Vhvrcdpn' OPTION
+    while getopts 'Vhvrcdn' OPTION
     do
         case "$OPTION" in
 
@@ -395,8 +340,6 @@ function parse_options
         c) COPY_ALL=true ;;
 
         d) DELETE=true ;;
-
-        p) INSTALL_PROGRAMS=true ;;
 
         n) DRY_RUN=true ;;
 
@@ -414,7 +357,6 @@ function parse_options
     print_verbose 'RELATIVE=%s' "$RELATIVE"
     print_verbose 'COPY_ALL=%s' "$COPY_ALL"
     print_verbose 'DELETE=%s' "$DELETE"
-    print_verbose 'INSTALL_PROGRAMS=%s' "$INSTALL_PROGRAMS"
     print_verbose 'DRY_RUN=%s' "$DRY_RUN"
 }
 
@@ -434,11 +376,6 @@ function main
     if $DELETE
     then
         # Only delete dotfiles, not unrelated empty dirs, such as XDG base dirs.
-
-        if $INSTALL_PROGRAMS
-        then
-            uninstall_local_programs   || return
-        fi
 
         delete_copied_dotfiles "$REL_DOTFILES_DIR"/copy || return
 
@@ -473,11 +410,6 @@ function main
             python3     -m compileall ~/.local/lib/python/ || return
             python3 -O  -m compileall ~/.local/lib/python/ || return
             python3 -OO -m compileall ~/.local/lib/python/ || return
-        fi
-
-        if $INSTALL_PROGRAMS
-        then
-            install_local_programs   || return
         fi
     fi
 }
