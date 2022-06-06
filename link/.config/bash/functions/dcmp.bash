@@ -48,7 +48,7 @@ function dcmp
     local -r DELIMITER=$'\x1F'
     # x1F is unit separator
 
-    diff --brief --recursive \
+    command diff --brief --recursive \
     "${DIFF_OPTIONS_EXCLUDE[@]}" \
     -- "${A}" "${B}" |
     sed --regexp-extended \

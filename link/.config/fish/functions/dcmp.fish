@@ -34,7 +34,7 @@ function dcmp --description 'directory comparison' --argument-names A B
     set B_escaped $(string escape --style=regex "$B")
 
 
-    diff --brief --recursive \
+    command diff --brief --recursive \
     --exclude={.bzr,CVS,.git,.hg,.svn} \
     -- "$A" "$B" |
     string replace --regex -- '^Files '"$A_escaped"'(/.+?) and '"$B_escaped"'\1 differ$'  '! {'"$A_escaped"','"$B_escaped"'}$1' |
