@@ -10,6 +10,9 @@
 const char program_author[] = "Steven Ward";
 const char program_version[] = "1.0.1";
 
+const int default_width = 1;
+const int max_width = 20;
+
 /// unit of time
 enum UT
 {
@@ -87,7 +90,7 @@ void durfmt_opts_init(struct durfmt_opts* opts)
 {
 	for (enum UT ut = UT_SECOND; ut <= UT_YEAR; ++ut)
 	{
-		opts->width[ut] = 1;
+		opts->width[ut] = default_width;
 		opts->print[ut] = false;
 	}
 
@@ -218,7 +221,7 @@ int main(int argc, char* argv[])
 		case 'w':
 			width = strtol(optarg, NULL, 0);
 			if (width < 0) width = 0;
-			else if (width > 20) width = 20;
+			else if (width > max_width) width = max_width;
 			opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = (int)width;
 			break;
 
