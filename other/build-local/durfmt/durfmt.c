@@ -194,6 +194,7 @@ int main(int argc, char* argv[])
 	int oc;
 	const char* short_options = "+:Vhnp:w:0";
 	opterr = 0;
+	long width = 0;
 	while ((oc = getopt(argc, argv, short_options)) != -1)
 	{
 		switch (oc)
@@ -215,7 +216,7 @@ int main(int argc, char* argv[])
 			break;
 
 		case 'w':
-			long width = strtol(optarg, NULL, 0);
+			width = strtol(optarg, NULL, 0);
 			if (width < 0) width = 0;
 			else if (width > 20) width = 20;
 			opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = (int)width;
