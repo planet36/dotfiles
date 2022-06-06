@@ -15,12 +15,12 @@ const char program_version[] = "1.0.1";
 
 const char default_fill = '#';
 const char default_unfill = ' ';
-const unsigned short default_width = 10;
-const unsigned short max_width = 1000;
+const int default_width = 10;
+const int max_width = 1000;
 
 struct meter_opts
 {
-	unsigned short width;
+	int width;
 	char fill;
 	char unfill;
 	bool left_to_right;
@@ -40,8 +40,8 @@ void meter_opts_init(struct meter_opts* opts)
 void print_cmeter(double x, const struct meter_opts* opts)
 {
 	// round to nearest int
-	const unsigned short num_filled = (unsigned short)(x * opts->width + 0.5);
-	const unsigned short num_unfilled = opts->width - num_filled;
+	const unsigned int num_filled = (unsigned int)(x * opts->width + 0.5);
+	const unsigned int num_unfilled = opts->width - num_filled;
 
 	if (opts->left_to_right)
 	{
@@ -133,9 +133,8 @@ int main(int argc, char* argv[])
 		case 'w':
 			width = strtol(optarg, NULL, 0);
 			if (width < 0) width = 0;
-			if (width > max_width)
-				width = max_width;
-			opts.width = (unsigned short)width;
+			if (width > max_width) width = max_width;
+			opts.width = (int)width;
 			break;
 
 		case 'f':
