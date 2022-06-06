@@ -88,8 +88,9 @@ export TRASH_DIR="$XDG_DATA_HOME"/Trash
 #export TZ=':America/New_York'
 export TZ='EST+5'
 
-#export VCS_REPOS_MATCH='( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
-#export VCS_REPOS_PRUNE="( $VCS_REPOS_MATCH -prune , -not $VCS_REPOS_MATCH )"
+export VCS_REPOS_MATCH='( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
+printf -v VCS_REPOS_PRUNE '( %s -prune , -not %s )' "$VCS_REPOS_MATCH" "$VCS_REPOS_MATCH"
+export VCS_REPOS_PRUNE
 
 export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 
