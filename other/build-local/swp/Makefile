@@ -10,8 +10,7 @@ DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
 CPPFLAGS += -MMD -MP
-# needed for renameat2, RENAME_EXCHANGE
-CFLAGS += -D_GNU_SOURCE
+#CFLAGS +=
 #LDLIBS +=
 
 BIN = $(notdir $(CURDIR))

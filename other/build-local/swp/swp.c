@@ -1,6 +1,10 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+#ifndef _GNU_SOURCE
+// needed for renameat2, RENAME_EXCHANGE
+#define _GNU_SOURCE
+#endif
 #include <err.h>
 #include <fcntl.h> /* Definition of AT_* constants */
 #include <stdio.h>
