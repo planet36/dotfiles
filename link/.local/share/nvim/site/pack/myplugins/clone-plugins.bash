@@ -30,23 +30,45 @@ PLUGINS_OPT+=('https://github.com/fneu/breezy.git')
 #PLUGINS_OPT+=('https://github.com/flazz/vim-colorschemes.git')
 
 mkdir --verbose --parents -- start
+echo "# start/"
+echo
 cd start || exit
 
 for PLUGIN in "${PLUGINS_START[@]}"
 do
-	echo "$PLUGIN"
-	git clone --quiet -- "$PLUGIN"
+	declare -l DIR="$(basename --suffix .git -- "$PLUGIN")"
+	echo "## $DIR"
+
+	if [[ ! -d "$DIR" ]]
+	then
+		git clone --quiet -- "$PLUGIN" || break
+	else
+		echo "(already exists)"
+	fi
+
+	echo
 done
 
 cd - > /dev/null || exit
 
 mkdir --verbose --parents -- opt
+echo "# opt/"
+echo
 cd opt || exit
 
 for PLUGIN in "${PLUGINS_OPT[@]}"
 do
-	echo "$PLUGIN"
-	git clone --quiet -- "$PLUGIN"
+	declare -l DIR="$(basename --suffix .git -- "$PLUGIN")"
+	echo "## $DIR"
+
+	if [[ ! -d "$DIR" ]]
+	then
+		git clone --quiet -- "$PLUGIN" || break
+	else
+		echo "(already exists)"
+	fi
+
+	echo
 done
 
 cd - > /dev/null || exit
