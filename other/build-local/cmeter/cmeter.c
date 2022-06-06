@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
 	int oc;
 	const char* short_options = "+:Vhf:lnru:w:";
 	opterr = 0;
-	unsigned long width = 0;
+	long width = 0;
 	while ((oc = getopt(argc, argv, short_options)) != -1)
 	{
 		switch (oc)
@@ -131,7 +131,8 @@ int main(int argc, char* argv[])
 			return 0;
 
 		case 'w':
-			width = strtoul(optarg, NULL, 0);
+			width = strtol(optarg, NULL, 0);
+			if (width < 0) width = 0;
 			if (width > max_width)
 				width = max_width;
 			opts.width = (unsigned short)width;
