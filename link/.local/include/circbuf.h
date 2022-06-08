@@ -68,14 +68,18 @@ circbuf_free(circbuf* cbuf)
 static size_t
 circbuf_count(const circbuf* cbuf)
 {
+	size_t ret;
+
 	if (cbuf->empty)
-		return 0;
+		ret = 0;
 	else if (cbuf->full)
-		return cbuf->num_elems;
+		ret = cbuf->num_elems;
 	else if (cbuf->head > cbuf->tail)
-		return cbuf->head - cbuf->tail;
+		ret = cbuf->head - cbuf->tail;
 	else
-		return cbuf->num_elems - (cbuf->tail - cbuf->head);
+		ret = cbuf->num_elems - (cbuf->tail - cbuf->head);
+
+	return ret;
 }
 
 static void
