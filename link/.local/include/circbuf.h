@@ -79,7 +79,7 @@ circbuf_count(const circbuf* cbuf)
 }
 
 static void
-circbuf_add(circbuf* cbuf, const void* x)
+circbuf_push(circbuf* cbuf, const void* x)
 {
 	// add to head
 	(void)memcpy((char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
@@ -97,7 +97,7 @@ circbuf_add(circbuf* cbuf, const void* x)
 }
 
 static int
-circbuf_del(circbuf* cbuf, void* x)
+circbuf_pop(circbuf* cbuf, void* x)
 {
 	if (cbuf->empty)
 		return -1;
