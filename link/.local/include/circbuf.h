@@ -122,3 +122,13 @@ circbuf_pop(circbuf* cbuf, void* x)
 
 	return 0;
 }
+
+static void
+circbuf_zeroize(circbuf* cbuf)
+{
+	(void)memset(cbuf->buf, 0, cbuf->num_elems * cbuf->sizeof_elem);
+	cbuf->head = 0;
+	cbuf->tail = 0;
+	cbuf->empty = true;
+	cbuf->full = false;
+}
