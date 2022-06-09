@@ -23,8 +23,8 @@ typedef struct
 	void* buf;
 	size_t num_elems;
 	size_t sizeof_elem;
-	size_t head;
-	size_t tail;
+	size_t head; // remove from front (head)
+	size_t tail; // add to back (tail)
 	bool empty; // (head == tail) && !full
 	bool full;
 } circbuf;
@@ -74,10 +74,10 @@ circbuf_count(const circbuf* cbuf)
 		ret = 0;
 	else if (cbuf->full)
 		ret = cbuf->num_elems;
-	else if (cbuf->head > cbuf->tail)
-		ret = cbuf->head - cbuf->tail;
+	else if (cbuf->tail > cbuf->head)
+		ret = cbuf->tail - cbuf->head;
 	else
-		ret = cbuf->num_elems - (cbuf->tail - cbuf->head);
+		ret = cbuf->num_elems - (cbuf->head - cbuf->tail);
 
 	return ret;
 }
@@ -85,42 +85,42 @@ circbuf_count(const circbuf* cbuf)
 static void
 circbuf_push(circbuf* cbuf, const void* x)
 {
-	// add to head
-	(void)memcpy((char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
+	// add to tail
+	(void)memcpy((char*)cbuf->buf + cbuf->tail * cbuf->sizeof_elem,
 	             x, cbuf->sizeof_elem);
 
 	if (cbuf->full)
-		if (++cbuf->tail == cbuf->num_elems) // inc tail
-			cbuf->tail = 0; // tail rollover
+		if (++cbuf->head == cbuf->num_elems) // inc head
+			cbuf->head = 0; // head rollover
 
-	if (++cbuf->head == cbuf->num_elems) // inc head
-		cbuf->head = 0; // head rollover
+	if (++cbuf->tail == cbuf->num_elems) // inc tail
+		cbuf->tail = 0; // tail rollover
 
 	cbuf->empty = false;
 	cbuf->full = cbuf->head == cbuf->tail;
 }
 
-static int
+static bool
 circbuf_pop(circbuf* cbuf, void* x)
 {
 	if (cbuf->empty)
-		return -1;
+		return false;
 
 	if (x)
-		(void)memcpy(x, (char*)cbuf->buf + cbuf->tail * cbuf->sizeof_elem,
+		(void)memcpy(x, (char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
 		             cbuf->sizeof_elem);
 
-	// remove from tail
-	(void)memset((char*)cbuf->buf + cbuf->tail * cbuf->sizeof_elem,
+	// remove from head
+	(void)memset((char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
 	             0, cbuf->sizeof_elem);
 
-	if (++cbuf->tail == cbuf->num_elems) // inc tail
-		cbuf->tail = 0; // tail rollover
+	if (++cbuf->head == cbuf->num_elems) // inc head
+		cbuf->head = 0; // head rollover
 
 	cbuf->empty = cbuf->head == cbuf->tail;
 	cbuf->full = false;
 
-	return 0;
+	return true;
 }
 
 static void
