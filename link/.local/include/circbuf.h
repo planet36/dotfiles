@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// non-thread-safe C circular buffer
+/// non-thread-safe C circular queue
 /**
 \file
 \author Steven Ward
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const unsigned long circbuf_version = 20210715UL;
+static const unsigned long circqueue_version = 20220609UL;
 
 typedef struct
 {
@@ -27,14 +27,14 @@ typedef struct
 	size_t tail; // add to back (tail)
 	bool empty; // (head == tail) && !full
 	bool full;
-} circbuf;
+} circqueue;
 
-static const circbuf circbuf_default = {0};
+static const circqueue circqueue_default = {0};
 
-static circbuf
-circbuf_init(size_t num_elems, size_t sizeof_elem)
+static circqueue
+circqueue_init(size_t num_elems, size_t sizeof_elem)
 {
-	return (circbuf){
+	return (circqueue){
 		.buf = calloc(num_elems, sizeof_elem),
 		.num_elems = num_elems,
 		.sizeof_elem = sizeof_elem,
@@ -46,89 +46,89 @@ circbuf_init(size_t num_elems, size_t sizeof_elem)
 }
 
 static void
-circbuf_free(circbuf* cbuf)
+circqueue_free(circqueue* cq)
 {
-	(void)memset(cbuf->buf, 0, cbuf->num_elems * cbuf->sizeof_elem);
-	free(cbuf->buf);
-	cbuf->buf = NULL;
-	cbuf->num_elems = 0;
-	cbuf->sizeof_elem = 0;
-	cbuf->head = 0;
-	cbuf->tail = 0;
-	cbuf->empty = true;
-	cbuf->full = false;
+	(void)memset(cq->buf, 0, cq->num_elems * cq->sizeof_elem);
+	free(cq->buf);
+	cq->buf = NULL;
+	cq->num_elems = 0;
+	cq->sizeof_elem = 0;
+	cq->head = 0;
+	cq->tail = 0;
+	cq->empty = true;
+	cq->full = false;
 }
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
-// automatically deallocate circbuf
-#define CIRCBUF(varname, num_elems, type)  \
-	__attribute__((cleanup(circbuf_free))) \
-	circbuf varname = circbuf_init(num_elems, sizeof(type));
+// automatically deallocate circqueue
+#define circqueue(varname, num_elems, type)  \
+	__attribute__((cleanup(circqueue_free))) \
+	circqueue varname = circqueue_init(num_elems, sizeof(type));
 
 static size_t
-circbuf_count(const circbuf* cbuf)
+circqueue_count(const circqueue* cq)
 {
 	size_t ret;
 
-	if (cbuf->empty)
+	if (cq->empty)
 		ret = 0;
-	else if (cbuf->full)
-		ret = cbuf->num_elems;
-	else if (cbuf->tail > cbuf->head)
-		ret = cbuf->tail - cbuf->head;
+	else if (cq->full)
+		ret = cq->num_elems;
+	else if (cq->tail > cq->head)
+		ret = cq->tail - cq->head;
 	else
-		ret = cbuf->num_elems - (cbuf->head - cbuf->tail);
+		ret = cq->num_elems - (cq->head - cq->tail);
 
 	return ret;
 }
 
 static void
-circbuf_push(circbuf* cbuf, const void* x)
+circqueue_push(circqueue* cq, const void* x)
 {
 	// add to tail
-	(void)memcpy((char*)cbuf->buf + cbuf->tail * cbuf->sizeof_elem,
-	             x, cbuf->sizeof_elem);
+	(void)memcpy((char*)cq->buf + cq->tail * cq->sizeof_elem,
+	             x, cq->sizeof_elem);
 
-	if (cbuf->full)
-		if (++cbuf->head == cbuf->num_elems) // inc head
-			cbuf->head = 0; // head rollover
+	if (cq->full)
+		if (++cq->head == cq->num_elems) // inc head
+			cq->head = 0; // head rollover
 
-	if (++cbuf->tail == cbuf->num_elems) // inc tail
-		cbuf->tail = 0; // tail rollover
+	if (++cq->tail == cq->num_elems) // inc tail
+		cq->tail = 0; // tail rollover
 
-	cbuf->empty = false;
-	cbuf->full = cbuf->head == cbuf->tail;
+	cq->empty = false;
+	cq->full = cq->head == cq->tail;
 }
 
 static bool
-circbuf_pop(circbuf* cbuf, void* x)
+circqueue_pop(circqueue* cq, void* x)
 {
-	if (cbuf->empty)
+	if (cq->empty)
 		return false;
 
 	if (x)
-		(void)memcpy(x, (char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
-		             cbuf->sizeof_elem);
+		(void)memcpy(x, (char*)cq->buf + cq->head * cq->sizeof_elem,
+		             cq->sizeof_elem);
 
 	// zeroize element
-	(void)memset((char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
-	             0, cbuf->sizeof_elem);
+	(void)memset((char*)cq->buf + cq->head * cq->sizeof_elem,
+	             0, cq->sizeof_elem);
 
-	if (++cbuf->head == cbuf->num_elems) // inc head
-		cbuf->head = 0; // head rollover
+	if (++cq->head == cq->num_elems) // inc head
+		cq->head = 0; // head rollover
 
-	cbuf->empty = cbuf->head == cbuf->tail;
-	cbuf->full = false;
+	cq->empty = cq->head == cq->tail;
+	cq->full = false;
 
 	return true;
 }
 
 static void
-circbuf_zeroize(circbuf* cbuf)
+circqueue_zeroize(circqueue* cq)
 {
-	(void)memset(cbuf->buf, 0, cbuf->num_elems * cbuf->sizeof_elem);
-	cbuf->head = 0;
-	cbuf->tail = 0;
-	cbuf->empty = true;
-	cbuf->full = false;
+	(void)memset(cq->buf, 0, cq->num_elems * cq->sizeof_elem);
+	cq->head = 0;
+	cq->tail = 0;
+	cq->empty = true;
+	cq->full = false;
 }
