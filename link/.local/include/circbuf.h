@@ -110,7 +110,7 @@ circbuf_pop(circbuf* cbuf, void* x)
 		(void)memcpy(x, (char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
 		             cbuf->sizeof_elem);
 
-	// remove from head
+	// zeroize element
 	(void)memset((char*)cbuf->buf + cbuf->head * cbuf->sizeof_elem,
 	             0, cbuf->sizeof_elem);
 
