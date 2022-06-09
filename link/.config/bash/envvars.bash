@@ -182,7 +182,7 @@ GCC_COMMON_OPTIONS+=' -ftrivial-auto-var-init=zero'
 #OPTIMIZE_OPTIONS='-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
 # Using -fsigned-zeros disables associative-math
 #OPTIMIZE_OPTIONS='-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-export OPTIMIZE_OPTIONS='-O3 -flto -march=native'
+export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native'
 #OPTIMIZE_OPTIONS+=' -fno-math-errno'
 #OPTIMIZE_OPTIONS+=' -funsafe-math-optimizations'
 
