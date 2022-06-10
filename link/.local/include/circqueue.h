@@ -62,7 +62,7 @@ circqueue_free(circqueue* cq)
 	__attribute__((cleanup(circqueue_free))) \
 	circqueue varname = circqueue_init(max_num_elems, sizeof(type));
 
-static void
+static bool
 circqueue_push(circqueue* cq, const void* x)
 {
 	const bool is_full = cq->num_elems == cq->max_num_elems;
@@ -79,6 +79,8 @@ circqueue_push(circqueue* cq, const void* x)
 		cq->tail = 0; // tail rollover
 
 	++cq->num_elems;
+
+	return true;
 }
 
 static bool
