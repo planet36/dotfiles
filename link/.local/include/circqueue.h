@@ -72,13 +72,16 @@ circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
 	             x, cq->sizeof_elem);
 
 	if (is_full)
+	{
 		if (++cq->head == cq->max_num_elems) // inc head
 			cq->head = 0; // head rollover
+	}
+	else
+		// was not full
+		++cq->num_elems;
 
 	if (++cq->tail == cq->max_num_elems) // inc tail
 		cq->tail = 0; // tail rollover
-
-	++cq->num_elems;
 
 	return true;
 }
@@ -110,10 +113,11 @@ circqueue_pop(circqueue* cq, void* x)
 	(void)memset((char*)cq->buf + cq->head * cq->sizeof_elem,
 	             0, cq->sizeof_elem);
 
+	// was not empty
+	--cq->num_elems;
+
 	if (++cq->head == cq->max_num_elems) // inc head
 		cq->head = 0; // head rollover
-
-	--cq->num_elems;
 
 	return true;
 }
