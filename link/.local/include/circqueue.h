@@ -63,7 +63,7 @@ circqueue_free(circqueue* cq)
 	circqueue varname = circqueue_init(max_num_elems, sizeof(type));
 
 static bool
-circqueue_push(circqueue* cq, const void* x)
+circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
 {
 	const bool is_full = cq->num_elems == cq->max_num_elems;
 
@@ -81,6 +81,17 @@ circqueue_push(circqueue* cq, const void* x)
 	++cq->num_elems;
 
 	return true;
+}
+
+static bool
+circqueue_push(circqueue* cq, const void* x)
+{
+	const bool is_full = cq->num_elems == cq->max_num_elems;
+
+	if (is_full)
+		return false;
+
+	return circqueue_push_overwrite_if_full(cq, x);
 }
 
 static bool
