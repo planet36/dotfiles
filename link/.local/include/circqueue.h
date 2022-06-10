@@ -21,7 +21,7 @@ static const unsigned long circqueue_version = 20220609UL;
 typedef struct
 {
 	void* buf;
-	size_t num_elems;
+	size_t max_num_elems;
 	size_t sizeof_elem;
 	size_t head; // remove from front (head)
 	size_t tail; // add to back (tail)
@@ -32,11 +32,11 @@ typedef struct
 static const circqueue circqueue_default = {0};
 
 static circqueue
-circqueue_init(size_t num_elems, size_t sizeof_elem)
+circqueue_init(size_t max_num_elems, size_t sizeof_elem)
 {
 	return (circqueue){
-		.buf = calloc(num_elems, sizeof_elem),
-		.num_elems = num_elems,
+		.buf = calloc(max_num_elems, sizeof_elem),
+		.max_num_elems = max_num_elems,
 		.sizeof_elem = sizeof_elem,
 		.head = 0,
 		.tail = 0,
@@ -48,10 +48,10 @@ circqueue_init(size_t num_elems, size_t sizeof_elem)
 static void
 circqueue_free(circqueue* cq)
 {
-	(void)memset(cq->buf, 0, cq->num_elems * cq->sizeof_elem);
+	(void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
 	free(cq->buf);
 	cq->buf = NULL;
-	cq->num_elems = 0;
+	cq->max_num_elems = 0;
 	cq->sizeof_elem = 0;
 	cq->head = 0;
 	cq->tail = 0;
@@ -61,9 +61,9 @@ circqueue_free(circqueue* cq)
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
 // automatically deallocate circqueue
-#define circqueue(varname, num_elems, type)  \
+#define circqueue(varname, max_num_elems, type)  \
 	__attribute__((cleanup(circqueue_free))) \
-	circqueue varname = circqueue_init(num_elems, sizeof(type));
+	circqueue varname = circqueue_init(max_num_elems, sizeof(type));
 
 static size_t
 circqueue_count(const circqueue* cq)
@@ -73,11 +73,11 @@ circqueue_count(const circqueue* cq)
 	if (cq->empty)
 		ret = 0;
 	else if (cq->full)
-		ret = cq->num_elems;
+		ret = cq->max_num_elems;
 	else if (cq->tail > cq->head)
 		ret = cq->tail - cq->head;
 	else
-		ret = cq->num_elems - (cq->head - cq->tail);
+		ret = cq->max_num_elems - (cq->head - cq->tail);
 
 	return ret;
 }
@@ -90,10 +90,10 @@ circqueue_push(circqueue* cq, const void* x)
 	             x, cq->sizeof_elem);
 
 	if (cq->full)
-		if (++cq->head == cq->num_elems) // inc head
+		if (++cq->head == cq->max_num_elems) // inc head
 			cq->head = 0; // head rollover
 
-	if (++cq->tail == cq->num_elems) // inc tail
+	if (++cq->tail == cq->max_num_elems) // inc tail
 		cq->tail = 0; // tail rollover
 
 	cq->empty = false;
@@ -114,7 +114,7 @@ circqueue_pop(circqueue* cq, void* x)
 	(void)memset((char*)cq->buf + cq->head * cq->sizeof_elem,
 	             0, cq->sizeof_elem);
 
-	if (++cq->head == cq->num_elems) // inc head
+	if (++cq->head == cq->max_num_elems) // inc head
 		cq->head = 0; // head rollover
 
 	cq->empty = cq->head == cq->tail;
@@ -126,7 +126,7 @@ circqueue_pop(circqueue* cq, void* x)
 static void
 circqueue_zeroize(circqueue* cq)
 {
-	(void)memset(cq->buf, 0, cq->num_elems * cq->sizeof_elem);
+	(void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
 	cq->head = 0;
 	cq->tail = 0;
 	cq->empty = true;
