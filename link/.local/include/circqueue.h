@@ -16,8 +16,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const unsigned long circqueue_version = 20220609UL;
-
 typedef struct
 {
 	void* buf;
