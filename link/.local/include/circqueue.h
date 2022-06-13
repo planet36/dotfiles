@@ -26,6 +26,18 @@ typedef struct
 	size_t num_elems;
 } circqueue;
 
+static bool
+circqueue_is_empty(const circqueue* cq)
+{
+	return cq->num_elems == 0;
+}
+
+static bool
+circqueue_is_full(const circqueue* cq)
+{
+	return cq->num_elems == cq->max_num_elems;
+}
+
 static const circqueue circqueue_default = {0};
 
 static circqueue
@@ -63,13 +75,11 @@ circqueue_free(circqueue* cq)
 static bool
 circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
 {
-	const bool is_full = cq->num_elems == cq->max_num_elems;
-
 	// add to tail
 	(void)memcpy((char*)cq->buf + cq->tail * cq->sizeof_elem,
 	             x, cq->sizeof_elem);
 
-	if (is_full)
+	if (circqueue_is_full(cq))
 	{
 		if (++cq->head == cq->max_num_elems) // inc head
 			cq->head = 0; // head rollover
@@ -87,9 +97,7 @@ circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
 static bool
 circqueue_push(circqueue* cq, const void* x)
 {
-	const bool is_full = cq->num_elems == cq->max_num_elems;
-
-	if (is_full)
+	if (circqueue_is_full(cq))
 		return false;
 
 	return circqueue_push_overwrite_if_full(cq, x);
@@ -98,9 +106,7 @@ circqueue_push(circqueue* cq, const void* x)
 static bool
 circqueue_pop(circqueue* cq, void* x)
 {
-	const bool is_empty = cq->num_elems == 0;
-
-	if (is_empty)
+	if (circqueue_is_empty(cq))
 		return false;
 
 	if (x)
