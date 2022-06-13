@@ -135,6 +135,7 @@ alias units='units --history ""'
 alias watch='watch --differences'
 alias wc2='echo "  lines   words file" ; wc --lines --words'
 alias wc3='wc --lines --words ; echo "  lines   words"'
+alias wget='wget --hsts-file="$XDG_DATA_HOME/wget-hsts"'
 alias xz='xz --verbose --threads=0'
 alias zero-out='truncate --size=0 --no-create'
 
