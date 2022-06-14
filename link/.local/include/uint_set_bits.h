@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Macro to create bitmask with 1 bit set
+/// Macro to create low-pass bitmask
 /**
 \file
 \author Steven Ward
