@@ -50,3 +50,23 @@ T rand_float()
 {
 	return rand_float(T{0}, T{1});
 }
+
+/**
+* \sa https://martin.ankerl.com/2018/12/08/fast-random-bool/
+* \sa https://gist.github.com/martinus/c43d99ad0008e11fcdbf06982e25f464
+*/
+bool rand_bool()
+{
+	static constexpr uint64_t mask64_one_msb = 1ULL << 63;
+	static thread_local xoshiro256starstar gen;
+	static thread_local uint64_t x = gen.next() | mask64_one_msb;
+
+	if (x == 1) [[unlikely]]
+	{
+		x = gen.next() | mask64_one_msb;
+	}
+
+	const bool ret = x & 1;
+	x >>= 1;
+	return ret;
+}
