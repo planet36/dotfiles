@@ -14,6 +14,7 @@
 #include "xoshiro.hpp"
 
 #include <concepts>
+#include <limits>
 #include <random>
 
 /**
@@ -22,7 +23,7 @@
 \return a uniformly distributed random integer within the interval [\a a, \a b]
 */
 template <integral_number T>
-T rand_int(const T a, const T b)
+T rand_int(const T a = std::numeric_limits<T>::min(), const T b = std::numeric_limits<T>::max())
 {
 	static thread_local xoshiro256starstar gen;
 	return std::uniform_int_distribution<T>{a, b}(gen);
