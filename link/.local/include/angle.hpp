@@ -866,6 +866,7 @@ constexpr auto operator/(const angle<U, T>& a1, const angle<U2, T2>& a2)
 
 /// is acute?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/AcuteAngle.html
 */
 template <angle_unit U, std::floating_point T>
@@ -876,6 +877,7 @@ constexpr bool is_acute(const angle<U, T>& a)
 
 /// is right?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/RightAngle.html
 */
 template <angle_unit U, std::floating_point T>
@@ -886,6 +888,7 @@ constexpr bool is_right(const angle<U, T>& a)
 
 /// is obtuse?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/ObtuseAngle.html
 */
 template <angle_unit U, std::floating_point T>
@@ -896,6 +899,7 @@ constexpr bool is_obtuse(const angle<U, T>& a)
 
 /// is right?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/StraightAngle.html
 */
 template <angle_unit U, std::floating_point T>
@@ -906,6 +910,7 @@ constexpr bool is_straight(const angle<U, T>& a)
 
 /// is reflex?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/ReflexAngle.html
 */
 template <angle_unit U, std::floating_point T>
@@ -916,6 +921,7 @@ constexpr bool is_reflex(const angle<U, T>& a)
 
 /// is full?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/FullAngle.html
 */
 template <angle_unit U, std::floating_point T>
@@ -926,6 +932,7 @@ constexpr bool is_full(const angle<U, T>& a)
 
 /// are complementary?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/ComplementaryAngles.html
 */
 template <angle_unit U, std::floating_point T>
@@ -936,6 +943,7 @@ constexpr bool are_complementary(const angle<U, T>& a1, const angle<U, T>& a2)
 
 /// are supplementary?
 /**
+\pre \a a is non-negative
 \sa https://mathworld.wolfram.com/SupplementaryAngles.html
 */
 template <angle_unit U, std::floating_point T>
