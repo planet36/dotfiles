@@ -32,7 +32,7 @@ T rand_int(const T a = std::numeric_limits<T>::min(), const T b = std::numeric_l
 /**
 \pre \a a < \a b
 \sa https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
-\return a uniformly distributed random floating point number within the interval [\a a, \a b)
+\return a uniformly distributed random floating-point number within the interval [\a a, \a b)
 */
 template <std::floating_point T>
 T rand_float(const T a, const T b)
@@ -43,7 +43,7 @@ T rand_float(const T a, const T b)
 
 /**
 \sa https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
-\return a uniformly distributed random floating point number within the interval [0, 1)
+\return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 template <std::floating_point T>
 T rand_float()

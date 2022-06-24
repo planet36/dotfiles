@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Cast integer to floating point of sufficient precision
+/// Cast integer to floating-point of sufficient precision
 /**
 \file
 \author Steven Ward

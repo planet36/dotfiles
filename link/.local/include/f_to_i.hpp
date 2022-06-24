@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Cast floating point to integer of sufficient size
+/// Cast floating-point to integer of sufficient size
 /**
 \file
 \author Steven Ward
