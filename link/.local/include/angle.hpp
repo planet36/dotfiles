@@ -205,6 +205,8 @@ public:
 	/// convert to a different angle unit and data type
 	template <angle_unit U2, std::floating_point T2>
 	constexpr auto to() const {return angle<U2, T2>{*this};}
+
+	auto operator<=>(const angle&) const = default;
 };
 
 /// alias template
@@ -629,137 +631,6 @@ constexpr auto convert_to_gradian(const angle<U, T>& a)
 	return gradians_per_rev * a.to_rev();
 }
 
-/// angle<U, T> == angle<U, T>
-template <angle_unit U, std::floating_point T>
-constexpr bool operator==(const angle<U, T>& a1, const angle<U, T>& a2)
-{
-	return a1.scalar() == a2.scalar();
-}
-
-/// angle<U, T> < angle<U, T>
-template <angle_unit U, std::floating_point T>
-constexpr bool operator<(const angle<U, T>& a1, const angle<U, T>& a2)
-{
-	return a1.scalar() < a2.scalar();
-}
-
-// Note: NAN comparison rules preclude implementing the following operators in
-// terms of the ones above.
-
-/// angle<U, T> != angle<U, T>
-template <angle_unit U, std::floating_point T>
-constexpr bool operator!=(const angle<U, T>& a1, const angle<U, T>& a2)
-{
-	return a1.scalar() != a2.scalar();
-}
-
-/// angle<U, T> > angle<U, T>
-template <angle_unit U, std::floating_point T>
-constexpr bool operator>(const angle<U, T>& a1, const angle<U, T>& a2)
-{
-	return a1.scalar() > a2.scalar();
-}
-
-/// angle<U, T> <= angle<U, T>
-template <angle_unit U, std::floating_point T>
-constexpr bool operator<=(const angle<U, T>& a1, const angle<U, T>& a2)
-{
-	return a1.scalar() <= a2.scalar();
-}
-
-/// angle<U, T> >= angle<U, T>
-template <angle_unit U, std::floating_point T>
-constexpr bool operator>=(const angle<U, T>& a1, const angle<U, T>& a2)
-{
-	return a1.scalar() >= a2.scalar();
-}
-
-/// angle<U, T> == angle<U, T2>
-template <angle_unit U, std::floating_point T, std::floating_point T2>
-constexpr bool operator==(const angle<U, T>& a1, const angle<U, T2>& a2)
-{
-	return a1.scalar() == a2.scalar();
-}
-
-/// angle<U, T> < angle<U, T2>
-template <angle_unit U, std::floating_point T, std::floating_point T2>
-constexpr bool operator<(const angle<U, T>& a1, const angle<U, T2>& a2)
-{
-	return a1.scalar() < a2.scalar();
-}
-
-// Note: NAN comparison rules preclude implementing the following operators in
-// terms of the ones above.
-
-/// angle<U, T> != angle<U, T2>
-template <angle_unit U, std::floating_point T, std::floating_point T2>
-constexpr bool operator!=(const angle<U, T>& a1, const angle<U, T2>& a2)
-{
-	return a1.scalar() != a2.scalar();
-}
-
-/// angle<U, T> > angle<U, T2>
-template <angle_unit U, std::floating_point T, std::floating_point T2>
-constexpr bool operator>(const angle<U, T>& a1, const angle<U, T2>& a2)
-{
-	return a1.scalar() > a2.scalar();
-}
-
-/// angle<U, T> <= angle<U, T2>
-template <angle_unit U, std::floating_point T, std::floating_point T2>
-constexpr bool operator<=(const angle<U, T>& a1, const angle<U, T2>& a2)
-{
-	return a1.scalar() <= a2.scalar();
-}
-
-/// angle<U, T> >= angle<U, T2>
-template <angle_unit U, std::floating_point T, std::floating_point T2>
-constexpr bool operator>=(const angle<U, T>& a1, const angle<U, T2>& a2)
-{
-	return a1.scalar() >= a2.scalar();
-}
-
-/// angle<U, T> == angle<U2, T2>
-template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
-constexpr bool operator==(const angle<U, T>& a1, const angle<U2, T2>& a2)
-{
-	return a1 == a2.template to<U>();
-}
-
-/// angle<U, T> < angle<U2, T2>
-template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
-constexpr bool operator<(const angle<U, T>& a1, const angle<U2, T2>& a2)
-{
-	return a1 < a2.template to<U>();
-}
-
-/// angle<U, T> != angle<U2, T2>
-template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
-constexpr bool operator!=(const angle<U, T>& a1, const angle<U2, T2>& a2)
-{
-	return a1 != a2.template to<U>();
-}
-
-/// angle<U, T> > angle<U2, T2>
-template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
-constexpr bool operator>(const angle<U, T>& a1, const angle<U2, T2>& a2)
-{
-	return a1 > a2.template to<U>();
-}
-
-/// angle<U, T> <= angle<U2, T2>
-template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
-constexpr bool operator<=(const angle<U, T>& a1, const angle<U2, T2>& a2)
-{
-	return a1 <= a2.template to<U>();
-}
-
-/// angle<U, T> >= angle<U2, T2>
-template <angle_unit U, std::floating_point T, angle_unit U2, std::floating_point T2>
-constexpr bool operator>=(const angle<U, T>& a1, const angle<U2, T2>& a2)
-{
-	return a1 >= a2.template to<U>();
-}
 
 /// unary plus (positive operator)
 template <angle_unit U, std::floating_point T>
