@@ -19,7 +19,8 @@
 template <std::unsigned_integral T, size_t N>
 void fill_rand(std::array<T, N>& arr)
 {
-	std::random_device rd;
+	static std::random_device rd;
+
 	for (size_t i = 0; i < arr.size(); ++i)
 	{
 		// std::random_device::result_type is unsigned int
@@ -36,7 +37,8 @@ void fill_rand(std::array<T, N>& arr)
 template <std::unsigned_integral T>
 void fill_rand(T& x)
 {
-	std::random_device rd;
+	static std::random_device rd;
+
 	// std::random_device::result_type is unsigned int
 	// https://en.cppreference.com/w/cpp/numeric/random/random_device
 	if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
