@@ -14,6 +14,7 @@
 #include <array>
 #include <concepts>
 #include <random>
+#include <utility>
 
 template <std::unsigned_integral T, size_t N>
 void fill_rand(std::array<T, N>& arr)
@@ -25,8 +26,10 @@ void fill_rand(std::array<T, N>& arr)
 		// https://en.cppreference.com/w/cpp/numeric/random/random_device
 		if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
 			arr[i] = rd();
-		else
+		else if constexpr (sizeof(T) <= 2*sizeof(typename std::random_device::result_type))
 			arr[i] = int_join(rd(), rd());
+		else
+			std::unreachable();
 	}
 }
 
@@ -38,6 +41,8 @@ void fill_rand(T& x)
 	// https://en.cppreference.com/w/cpp/numeric/random/random_device
 	if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
 		x = rd();
-	else
+	else if constexpr (sizeof(T) <= 2*sizeof(typename std::random_device::result_type))
 		x = int_join(rd(), rd());
+	else
+		std::unreachable();
 }
