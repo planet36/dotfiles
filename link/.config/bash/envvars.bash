@@ -54,6 +54,8 @@ export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 # https://www.reddit.com/r/linux/comments/12wxsl/whats_in_your_bashrc/c6z0y5g/
 #export JAVA_HOME="$(readlink -f -- "$(which javac)" | sed 's|bin/javac||')"
 
+# XXX: parallel complains that $PARALLEL_HOME doesn't exist
+# https://savannah.gnu.org/bugs/index.php?62616
 export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
