@@ -150,7 +150,7 @@ export LESS_TERMCAP_ue
 #export GROFF_NO_SGR=1
 
 # https://stackoverflow.com/a/19871578
-export MANPAGER='less -s -M +Gg'
+export MANPAGER='less -s -M +Gg --color=d+B --color=u+y'
 
 # }}}
 
