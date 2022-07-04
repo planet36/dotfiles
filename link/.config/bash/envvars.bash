@@ -126,25 +126,25 @@ export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 # 6 = cyan
 # 7 = white
 
-LESS_TERMCAP_mb=$(tput bold; tput setaf 6) # turn on blinking
-LESS_TERMCAP_md=$(tput bold; tput setaf 2) # turn on bold (extra bright) mode
-LESS_TERMCAP_mh=$(tput dim) # turn on half-bright mode
-LESS_TERMCAP_mr=$(tput rev) # turn on reverse video mode
-LESS_TERMCAP_so=$(tput bold; tput rev; tput setaf 4) # begin standout mode
-LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 3) # begin underline mode
-LESS_TERMCAP_me=$(tput sgr0) # turn off all attributes
-LESS_TERMCAP_se=$(tput rmso; tput sgr0) # exit standout mode
-LESS_TERMCAP_ue=$(tput rmul; tput sgr0) # exit underline mode
+#LESS_TERMCAP_mb=$(tput bold; tput setaf 6) # turn on blinking
+#LESS_TERMCAP_md=$(tput bold; tput setaf 2) # turn on bold (extra bright) mode
+#LESS_TERMCAP_mh=$(tput dim) # turn on half-bright mode
+#LESS_TERMCAP_mr=$(tput rev) # turn on reverse video mode
+#LESS_TERMCAP_so=$(tput bold; tput rev; tput setaf 4) # begin standout mode
+#LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 3) # begin underline mode
+#LESS_TERMCAP_me=$(tput sgr0) # turn off all attributes
+#LESS_TERMCAP_se=$(tput rmso; tput sgr0) # exit standout mode
+#LESS_TERMCAP_ue=$(tput rmul; tput sgr0) # exit underline mode
 
-export LESS_TERMCAP_mb
-export LESS_TERMCAP_md
-export LESS_TERMCAP_mh
-export LESS_TERMCAP_mr
-export LESS_TERMCAP_so
-export LESS_TERMCAP_us
-export LESS_TERMCAP_me
-export LESS_TERMCAP_se
-export LESS_TERMCAP_ue
+#export LESS_TERMCAP_mb
+#export LESS_TERMCAP_md
+#export LESS_TERMCAP_mh
+#export LESS_TERMCAP_mr
+#export LESS_TERMCAP_so
+#export LESS_TERMCAP_us
+#export LESS_TERMCAP_me
+#export LESS_TERMCAP_se
+#export LESS_TERMCAP_ue
 
 # For Konsole and Gnome-terminal
 #export GROFF_NO_SGR=1
