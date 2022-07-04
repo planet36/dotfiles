@@ -39,8 +39,8 @@ export IPYTHONDIR="$XDG_DATA_HOME"/ipython
 #export LANG=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
 
-#export LESS='--RAW-CONTROL-CHARS --quit-if-one-screen --no-init'
-export LESS='--RAW-CONTROL-CHARS --no-init'
+#export LESS='--RAW-CONTROL-CHARS --quit-if-one-screen --no-init --use-color'
+export LESS='--RAW-CONTROL-CHARS --no-init --use-color'
 export LESSHISTFILE=/dev/null
 
 # Inhibit these dbind warnings: Couldn't register with accessibility bus
