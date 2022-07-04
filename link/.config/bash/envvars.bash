@@ -141,13 +141,9 @@ export LESS_TERMCAP_md
 export LESS_TERMCAP_mh
 export LESS_TERMCAP_mr
 export LESS_TERMCAP_so
-export LESS_TERMCAP_ZN
-export LESS_TERMCAP_ZO
 export LESS_TERMCAP_us
 export LESS_TERMCAP_me
 export LESS_TERMCAP_se
-export LESS_TERMCAP_ZV
-export LESS_TERMCAP_ZW
 export LESS_TERMCAP_ue
 
 # For Konsole and Gnome-terminal
