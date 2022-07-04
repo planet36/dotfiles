@@ -110,13 +110,9 @@ export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 # enter_dim_mode              dim       mh     turn on half-bright mode
 # enter_reverse_mode          rev       mr     turn on reverse video mode
 # enter_standout_mode         smso      so     begin standout mode
-# enter_subscript_mode        ssubm     ZN     Enter subscript mode
-# enter_superscript_mode      ssupm     ZO     Enter superscript mode
 # enter_underline_mode        smul      us     begin underline mode
 # exit_attribute_mode         sgr0      me     turn off all attributes
 # exit_standout_mode          rmso      se     exit standout mode
-# exit_subscript_mode         rsubm     ZV     End subscript mode
-# exit_superscript_mode       rsupm     ZW     End superscript mode
 # exit_underline_mode         rmul      ue     exit underline mode
 
 # 0 = black
@@ -133,13 +129,9 @@ LESS_TERMCAP_md=$(tput bold; tput setaf 2) # turn on bold (extra bright) mode
 LESS_TERMCAP_mh=$(tput dim) # turn on half-bright mode
 LESS_TERMCAP_mr=$(tput rev) # turn on reverse video mode
 LESS_TERMCAP_so=$(tput bold; tput rev; tput setaf 4) # begin standout mode
-LESS_TERMCAP_ZN=$(tput ssubm) # Enter subscript mode
-LESS_TERMCAP_ZO=$(tput ssupm) # Enter superscript mode
 LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 3) # begin underline mode
 LESS_TERMCAP_me=$(tput sgr0) # turn off all attributes
 LESS_TERMCAP_se=$(tput rmso; tput sgr0) # exit standout mode
-LESS_TERMCAP_ZV=$(tput rsubm) # End subscript mode
-LESS_TERMCAP_ZW=$(tput rsupm) # End superscript mode
 LESS_TERMCAP_ue=$(tput rmul; tput sgr0) # exit underline mode
 
 export LESS_TERMCAP_mb

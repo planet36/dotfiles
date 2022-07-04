@@ -13,8 +13,6 @@ ITALIC=$(tput sitm)
 RESET=$(tput sgr0)
 REV=$(tput rev)
 STANDOUT=$(tput smso)
-SUB=$(tput ssubm)
-SUP=$(tput ssupm)
 UL=$(tput smul)
 
 FG_BLACK=$(tput setaf 0)
@@ -45,8 +43,6 @@ echo -e "ITALIC   ${S}${ITALIC}${S}${RESET}"; \
 echo -e "RESET    ${S}${RESET}${S}${RESET}"; \
 echo -e "REV      ${S}${REV}${S}${RESET}"; \
 echo -e "STANDOUT ${S}${STANDOUT}${S}${RESET}"; \
-echo -e "SUB      ${S}${SUB}${S}${RESET}"; \
-echo -e "SUP      ${S}${SUP}${S}${RESET}"; \
 echo -e "UL       ${S}${UL}${S}${RESET}"; \
 echo -e "BOLD        UL ${S}${BOLD}${UL}${S}${RESET}"; \
 echo -e "BOLD ITALIC    ${S}${BOLD}${ITALIC}${S}${RESET}"; \
@@ -80,8 +76,6 @@ echo -e "ITALIC   ${COLOR}${S}${ITALIC}${S}${RESET}"; \
 echo -e "RESET    ${COLOR}${S}${RESET}${S}${RESET}"; \
 echo -e "REV      ${COLOR}${S}${REV}${S}${RESET}"; \
 echo -e "STANDOUT ${COLOR}${S}${STANDOUT}${S}${RESET}"; \
-echo -e "SUB      ${COLOR}${S}${SUB}${S}${RESET}"; \
-echo -e "SUP      ${COLOR}${S}${SUP}${S}${RESET}"; \
 echo -e "UL       ${COLOR}${S}${UL}${S}${RESET}"; \
 echo -e "BOLD        UL ${COLOR}${S}${BOLD}${UL}${S}${RESET}"; \
 echo -e "BOLD ITALIC    ${COLOR}${S}${BOLD}${ITALIC}${S}${RESET}"; \
