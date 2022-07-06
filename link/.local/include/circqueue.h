@@ -113,7 +113,7 @@ circqueue_pop(circqueue* cq, void* x)
 		(void)memcpy(x, (char*)cq->buf + cq->head * cq->sizeof_elem,
 		             cq->sizeof_elem);
 
-	// zeroize element
+	// reset element
 	(void)memset((char*)cq->buf + cq->head * cq->sizeof_elem,
 	             0, cq->sizeof_elem);
 
@@ -127,7 +127,7 @@ circqueue_pop(circqueue* cq, void* x)
 }
 
 static void
-circqueue_zeroize(circqueue* cq)
+circqueue_reset(circqueue* cq)
 {
 	(void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
 	cq->head = 0;
