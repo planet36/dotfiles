@@ -145,7 +145,7 @@ private:
 	std::array<T, state_num_elems> s;
 
 public:
-	xoroshiro64star() {fill_rand(s);}
+	xoroshiro64star() {getentropy(s);}
 	xoroshiro64star(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
@@ -183,7 +183,7 @@ private:
 	std::array<T, state_num_elems> s;
 
 public:
-	xoroshiro64starstar() {fill_rand(s);}
+	xoroshiro64starstar() {getentropy(s);}
 	xoroshiro64starstar(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
@@ -237,7 +237,7 @@ private:
 			0xdddf9b1090aa7ac1});
 
 public:
-	xoroshiro128plus() {fill_rand(s);}
+	xoroshiro128plus() {getentropy(s);}
 	xoroshiro128plus(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
@@ -294,7 +294,7 @@ private:
 			0x9c6e6877736c46e3});
 
 public:
-	xoroshiro128plusplus() {fill_rand(s);}
+	xoroshiro128plusplus() {getentropy(s);}
 	xoroshiro128plusplus(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
@@ -351,7 +351,7 @@ private:
 			0xdddf9b1090aa7ac1});
 
 public:
-	xoroshiro128starstar() {fill_rand(s);}
+	xoroshiro128starstar() {getentropy(s);}
 	xoroshiro128starstar(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
@@ -418,7 +418,7 @@ private:
 			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024plusplus() {fill_rand(s);}
+	xoroshiro1024plusplus() {getentropy(s);}
 	xoroshiro1024plusplus(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
@@ -493,7 +493,7 @@ private:
 			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024star() {fill_rand(s);}
+	xoroshiro1024star() {getentropy(s);}
 	xoroshiro1024star(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
@@ -562,7 +562,7 @@ private:
 			0xf46820dd0509c12a, 0x52b00c35fbf92185, 0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024starstar() {fill_rand(s);}
+	xoroshiro1024starstar() {getentropy(s);}
 	xoroshiro1024starstar(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 

@@ -48,7 +48,7 @@ private:
 	T s{};
 
 public:
-	splitmix64() {fill_rand(s);}
+	splitmix64() {getentropy(s);}
 	splitmix64(const decltype(s)& new_s): s(new_s) {}
 	void seed(const decltype(s)& new_s) {s = new_s;}
 
