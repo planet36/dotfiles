@@ -168,7 +168,7 @@ define print_conv_cpp_func(s, A) {
 	local num_elems = matmax(A,1)-matmin(A,1)+1;
 
 	printf("template <angle_unit U, std::floating_point T>\n");
-	printf("auto %s_approx(const angle<U, T>& a)\n{\n", s);
+	printf("auto\n%s_approx(const angle<U, T>& a)\n{\n", s);
 
 	mat_print_col_as_cpp_static_const_valarray("coeff", A, 0, indent_num, indent_char);
 
@@ -209,7 +209,7 @@ print_conv_cpp_func("authalic_from_conformal"   , authalic_from_conformal   )
 print_conv_cpp_func("conformal_from_authalic"   , conformal_from_authalic   )
 
 printf("template <angle_unit U, std::floating_point T>
-constexpr auto geocentric_from_geodetic_exact(const angle<U, T>& a)
+constexpr auto\ngeocentric_from_geodetic_exact(const angle<U, T>& a)
 {
 #if 0
 	// This is not as accurate.
@@ -222,7 +222,7 @@ constexpr auto geocentric_from_geodetic_exact(const angle<U, T>& a)
 }
 
 template <angle_unit U, std::floating_point T>
-constexpr auto geodetic_from_geocentric_exact(const angle<U, T>& a)
+constexpr auto\ngeodetic_from_geocentric_exact(const angle<U, T>& a)
 {
 #if 0
 	// This is not as accurate.
@@ -235,7 +235,7 @@ constexpr auto geodetic_from_geocentric_exact(const angle<U, T>& a)
 }
 
 template <angle_unit U, std::floating_point T>
-constexpr auto parametric_from_geodetic_exact(const angle<U, T>& a)
+constexpr auto\nparametric_from_geodetic_exact(const angle<U, T>& a)
 {
 #if 0
 	// This is not as accurate.
@@ -248,7 +248,7 @@ constexpr auto parametric_from_geodetic_exact(const angle<U, T>& a)
 }
 
 template <angle_unit U, std::floating_point T>
-constexpr auto geodetic_from_parametric_exact(const angle<U, T>& a)
+constexpr auto\ngeodetic_from_parametric_exact(const angle<U, T>& a)
 {
 #if 0
 	// This is not as accurate.
@@ -261,7 +261,7 @@ constexpr auto geodetic_from_parametric_exact(const angle<U, T>& a)
 }
 
 template <angle_unit U, std::floating_point T>
-constexpr auto geocentric_from_parametric_exact(const angle<U, T>& a)
+constexpr auto\ngeocentric_from_parametric_exact(const angle<U, T>& a)
 {
 #if 0
 	// This is not as accurate.
@@ -274,7 +274,7 @@ constexpr auto geocentric_from_parametric_exact(const angle<U, T>& a)
 }
 
 template <angle_unit U, std::floating_point T>
-constexpr auto parametric_from_geocentric_exact(const angle<U, T>& a)
+constexpr auto\nparametric_from_geocentric_exact(const angle<U, T>& a)
 {
 #if 0
 	// This is not as accurate.
