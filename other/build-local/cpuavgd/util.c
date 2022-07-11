@@ -11,14 +11,16 @@
 #include <stdlib.h>
 
 // Not re-entrant
-char* escape_char(int ch)
+char*
+escape_char(int ch)
 {
 	static char buf[32] = {'\0'};
 	(void)snprintf(buf, sizeof(buf), isprint(ch) ? "%c" : "%#X", ch);
 	return buf;
 }
 
-unsigned int strtou(const char* s)
+unsigned int
+strtou(const char* s)
 {
 	unsigned long i = strtoul(s, NULL, 0);
 	if (i > UINT_MAX)
@@ -26,7 +28,8 @@ unsigned int strtou(const char* s)
 	return (unsigned int)i;
 }
 
-void cleanup_close_file(FILE** fpp)
+void
+cleanup_close_file(FILE** fpp)
 {
 	if (*fpp != NULL)
 	{

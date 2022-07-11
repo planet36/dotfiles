@@ -10,7 +10,8 @@
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
 // automatically close file stream
-#define ACFILE(varname) __attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
+#define ACFILE(varname) \
+	__attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
 
 char* escape_char(int ch);
 unsigned int strtou(const char* s);

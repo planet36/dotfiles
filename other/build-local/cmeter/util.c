@@ -7,7 +7,8 @@
 #include <stdlib.h>
 
 // https://stackoverflow.com/a/16659263
-double clamp(double x, double min, double max)
+double
+clamp(double x, double min, double max)
 {
 	double xx = x < min ? min : x;
 	return xx > max ? max : xx;

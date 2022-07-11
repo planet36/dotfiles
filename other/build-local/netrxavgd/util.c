@@ -12,14 +12,16 @@
 #include <string.h>
 
 // Not re-entrant
-char* escape_char(int ch)
+char*
+escape_char(int ch)
 {
 	static char buf[32] = {'\0'};
 	(void)snprintf(buf, sizeof(buf), isprint(ch) ? "%c" : "%#X", ch);
 	return buf;
 }
 
-unsigned int strtou(const char* s)
+unsigned int
+strtou(const char* s)
 {
 	unsigned long i = strtoul(s, NULL, 0);
 	if (i > UINT_MAX)
@@ -27,7 +29,8 @@ unsigned int strtou(const char* s)
 	return (unsigned int)i;
 }
 
-void cleanup_close_file(FILE** fpp)
+void
+cleanup_close_file(FILE** fpp)
 {
 	if (*fpp != NULL)
 	{
@@ -40,7 +43,8 @@ void cleanup_close_file(FILE** fpp)
 	}
 }
 
-int scandir_filter(const struct dirent* dirent)
+int
+scandir_filter(const struct dirent* dirent)
 {
 	// Exclude these names
 	return strcmp(dirent->d_name, ".") != 0 &&
@@ -80,8 +84,8 @@ struct timeval
 msec_to_timeval(unsigned int msec)
 {
 	return (struct timeval){
-		.tv_sec = msec / 1000U,
-		.tv_usec = (msec % 1000U) * 1000U,
+	    .tv_sec = msec / 1000U,
+	    .tv_usec = (msec % 1000U) * 1000U,
 	};
 }
 

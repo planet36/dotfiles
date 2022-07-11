@@ -27,7 +27,8 @@ struct meter_opts
 	bool suppress_newline;
 };
 
-void meter_opts_init(struct meter_opts* opts)
+void
+meter_opts_init(struct meter_opts* opts)
 {
 	opts->width = default_width;
 	opts->fill = default_fill;
@@ -37,7 +38,8 @@ void meter_opts_init(struct meter_opts* opts)
 }
 
 // x is in the interval [0, 1].
-void print_cmeter(double x, const struct meter_opts* opts)
+void
+print_cmeter(double x, const struct meter_opts* opts)
 {
 	// round to nearest int
 	const unsigned int num_filled = (unsigned int)(x * opts->width + 0.5);
@@ -62,13 +64,15 @@ void print_cmeter(double x, const struct meter_opts* opts)
 		putchar('\n');
 }
 
-void print_version(const char* argv0)
+void
+print_version(const char* argv0)
 {
 	printf("%s %s\n", argv0, program_version);
 	printf("Written by %s\n", program_author);
 }
 
-void print_usage(const char* argv0)
+void
+print_usage(const char* argv0)
 {
 	printf("Usage: %s [OPTIONS]\n\n", argv0);
 	printf("Read a number (in the interval [0, 1]) from stdin and\n");
@@ -101,7 +105,8 @@ void print_usage(const char* argv0)
 	printf("\n");
 }
 
-void print_option_err(const char* argv0, const char* msg, const int o)
+void
+print_option_err(const char* argv0, const char* msg, const int o)
 {
 	if (isprint(o))
 		fprintf(stderr, "%s: %s: '%c'\n", argv0, msg, o);

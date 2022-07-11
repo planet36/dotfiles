@@ -25,7 +25,8 @@ const char* dest_path = NULL;
 volatile sig_atomic_t done = 0;
 volatile sig_atomic_t reset_alarm = 1;
 
-void signal_handler(int signum)
+void
+signal_handler(int signum)
 {
 	switch (signum)
 	{
@@ -44,14 +45,16 @@ void signal_handler(int signum)
 	}
 }
 
-void atexit_cleanup()
+void
+atexit_cleanup()
 {
 	if (dest_path != NULL && done)
 		if (remove(dest_path) < 0)
 			perror("remove");
 }
 
-void set_default_net_iface()
+void
+set_default_net_iface()
 {
 	struct dirent** namelist;
 	int n;
@@ -70,13 +73,15 @@ void set_default_net_iface()
 	free(namelist);
 }
 
-void print_version(const char* argv0)
+void
+print_version(const char* argv0)
 {
 	printf("%s %s\n", argv0, program_version);
 	printf("Written by %s\n", program_author);
 }
 
-void print_usage(const char* argv0)
+void
+print_usage(const char* argv0)
 {
 	printf("Usage: %s [OPTIONS]\n", argv0);
 	printf("\n");
@@ -234,8 +239,8 @@ int main(int argc, char* const argv[])
 	const struct timeval interval = msec_to_timeval(interval_msec);
 
 	const struct itimerval itv = {
-		.it_interval = interval,
-		.it_value = init_delay, // If zero, the alarm is disabled.
+	    .it_interval = interval,
+	    .it_value = init_delay, // If zero, the alarm is disabled.
 	};
 
 	bool first_iteration = true;
@@ -297,8 +302,8 @@ int main(int argc, char* const argv[])
 
 		if (!done)
 			(void)sigsuspend(&empty_mask);
-
-	} while (!done);
+	}
+	while (!done);
 
 	if (sigprocmask(SIG_SETMASK, &orig_mask, NULL) < 0)
 		err(EXIT_FAILURE, "sigprocmask");

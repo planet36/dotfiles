@@ -34,7 +34,8 @@ const char ut_abbr[UT_MAX] = {
 	[UT_YEAR  ] = 'y',
 };
 
-bool valid_ut_abbr(const char c)
+bool
+valid_ut_abbr(const char c)
 {
 	switch (tolower(c))
 	{
@@ -50,7 +51,8 @@ bool valid_ut_abbr(const char c)
 	}
 }
 
-enum UT ut_from_c(const char c)
+enum UT
+ut_from_c(const char c)
 {
 	enum UT ut = -1;
 
@@ -86,7 +88,8 @@ struct durfmt_opts
 	bool suppress_newline;
 };
 
-void durfmt_opts_init(struct durfmt_opts* opts)
+void
+durfmt_opts_init(struct durfmt_opts* opts)
 {
 	for (enum UT ut = UT_SECOND; ut <= UT_YEAR; ++ut)
 	{
@@ -99,7 +102,8 @@ void durfmt_opts_init(struct durfmt_opts* opts)
 	opts->suppress_newline = false;
 }
 
-void durfmt(unsigned long duration, const struct durfmt_opts* opts)
+void
+durfmt(unsigned long duration, const struct durfmt_opts* opts)
 {
 	enum UT last_ut = -1;
 	unsigned long vals[UT_MAX] = {0};
@@ -137,13 +141,15 @@ void durfmt(unsigned long duration, const struct durfmt_opts* opts)
 		putchar('\n');
 }
 
-void print_version(const char* argv0)
+void
+print_version(const char* argv0)
 {
 	printf("%s %s\n", argv0, program_version);
 	printf("Written by %s\n", program_author);
 }
 
-void print_usage(const char* argv0)
+void
+print_usage(const char* argv0)
 {
 	printf("Usage: %s [OPTIONS]\n", argv0);
 	printf("\n");
@@ -179,7 +185,8 @@ void print_usage(const char* argv0)
 	printf("\n");
 }
 
-void print_option_err(const char* argv0, const char* msg, const int o)
+void
+print_option_err(const char* argv0, const char* msg, const int o)
 {
 	if (isprint(o))
 		fprintf(stderr, "%s: %s: '%c'\n", argv0, msg, o);
