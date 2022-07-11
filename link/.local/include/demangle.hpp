@@ -19,7 +19,8 @@
 std::string
 demangle(const char* mangled_name)
 {
-	char* demangled_name = abi::__cxa_demangle(mangled_name, nullptr, nullptr, nullptr);
+	char* demangled_name = abi::__cxa_demangle(mangled_name, nullptr,
+	                                           nullptr, nullptr);
 	const std::string result = (demangled_name == nullptr) ?
 	                           mangled_name : demangled_name;
 	std::free(demangled_name);

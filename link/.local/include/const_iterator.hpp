@@ -13,7 +13,7 @@
 #include <type_traits>
 
 template <typename Iter>
-struct is_const_iterator:
+struct is_const_iterator :
 std::bool_constant<!std::is_swappable_v<typename std::iterator_traits<Iter>::reference>>
 {};
 

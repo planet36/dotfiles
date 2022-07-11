@@ -32,7 +32,7 @@ bitmask of 8 bits
 #include <array>
 #include <cstdint>
 
-constexpr std::array<uint8_t, 8> bitmask8_array_one {
+constexpr std::array<uint8_t, 8> bitmask8_array_one{
 	1U <<  0U,
 	1U <<  1U,
 	1U <<  2U,
@@ -43,7 +43,7 @@ constexpr std::array<uint8_t, 8> bitmask8_array_one {
 	1U <<  7U,
 };
 
-constexpr std::array<uint8_t, 8> bitmask8_array_zero {
+constexpr std::array<uint8_t, 8> bitmask8_array_zero{
 	static_cast<uint8_t>(~bitmask8_array_one[ 0]),
 	static_cast<uint8_t>(~bitmask8_array_one[ 1]),
 	static_cast<uint8_t>(~bitmask8_array_one[ 2]),
@@ -54,7 +54,7 @@ constexpr std::array<uint8_t, 8> bitmask8_array_zero {
 	static_cast<uint8_t>(~bitmask8_array_one[ 7]),
 };
 
-constexpr std::array<uint8_t, 8> bitmask8_array_lowpass {
+constexpr std::array<uint8_t, 8> bitmask8_array_lowpass{
 	bitmask8_array_one[ 0] - 1U,
 	bitmask8_array_one[ 1] - 1U,
 	bitmask8_array_one[ 2] - 1U,
@@ -65,7 +65,7 @@ constexpr std::array<uint8_t, 8> bitmask8_array_lowpass {
 	bitmask8_array_one[ 7] - 1U,
 };
 
-constexpr std::array<uint8_t, 8> bitmask8_array_highpass {
+constexpr std::array<uint8_t, 8> bitmask8_array_highpass{
 	bitmask8_array_zero[ 0] + 1U,
 	bitmask8_array_zero[ 1] + 1U,
 	bitmask8_array_zero[ 2] + 1U,
@@ -76,7 +76,7 @@ constexpr std::array<uint8_t, 8> bitmask8_array_highpass {
 	bitmask8_array_zero[ 7] + 1U,
 };
 
-constexpr std::array<uint16_t, 16> bitmask16_array_one {
+constexpr std::array<uint16_t, 16> bitmask16_array_one{
 	1U <<  0U,
 	1U <<  1U,
 	1U <<  2U,
@@ -95,7 +95,7 @@ constexpr std::array<uint16_t, 16> bitmask16_array_one {
 	1U << 15U,
 };
 
-constexpr std::array<uint16_t, 16> bitmask16_array_zero {
+constexpr std::array<uint16_t, 16> bitmask16_array_zero{
 	static_cast<uint16_t>(~bitmask16_array_one[ 0]),
 	static_cast<uint16_t>(~bitmask16_array_one[ 1]),
 	static_cast<uint16_t>(~bitmask16_array_one[ 2]),
@@ -114,7 +114,7 @@ constexpr std::array<uint16_t, 16> bitmask16_array_zero {
 	static_cast<uint16_t>(~bitmask16_array_one[15]),
 };
 
-constexpr std::array<uint16_t, 16> bitmask16_array_lowpass {
+constexpr std::array<uint16_t, 16> bitmask16_array_lowpass{
 	bitmask16_array_one[ 0] - 1U,
 	bitmask16_array_one[ 1] - 1U,
 	bitmask16_array_one[ 2] - 1U,
@@ -133,7 +133,7 @@ constexpr std::array<uint16_t, 16> bitmask16_array_lowpass {
 	bitmask16_array_one[15] - 1U,
 };
 
-constexpr std::array<uint16_t, 16> bitmask16_array_highpass {
+constexpr std::array<uint16_t, 16> bitmask16_array_highpass{
 	bitmask16_array_zero[ 0] + 1U,
 	bitmask16_array_zero[ 1] + 1U,
 	bitmask16_array_zero[ 2] + 1U,
@@ -152,7 +152,7 @@ constexpr std::array<uint16_t, 16> bitmask16_array_highpass {
 	bitmask16_array_zero[15] + 1U,
 };
 
-constexpr std::array<uint32_t, 32> bitmask32_array_one {
+constexpr std::array<uint32_t, 32> bitmask32_array_one{
 	1U <<  0U,
 	1U <<  1U,
 	1U <<  2U,
@@ -187,7 +187,7 @@ constexpr std::array<uint32_t, 32> bitmask32_array_one {
 	1U << 31U,
 };
 
-constexpr std::array<uint32_t, 32> bitmask32_array_zero {
+constexpr std::array<uint32_t, 32> bitmask32_array_zero{
 	~bitmask32_array_one[ 0],
 	~bitmask32_array_one[ 1],
 	~bitmask32_array_one[ 2],
@@ -222,7 +222,7 @@ constexpr std::array<uint32_t, 32> bitmask32_array_zero {
 	~bitmask32_array_one[31],
 };
 
-constexpr std::array<uint32_t, 32> bitmask32_array_lowpass {
+constexpr std::array<uint32_t, 32> bitmask32_array_lowpass{
 	bitmask32_array_one[ 0] - 1U,
 	bitmask32_array_one[ 1] - 1U,
 	bitmask32_array_one[ 2] - 1U,
@@ -257,7 +257,7 @@ constexpr std::array<uint32_t, 32> bitmask32_array_lowpass {
 	bitmask32_array_one[31] - 1U,
 };
 
-constexpr std::array<uint32_t, 32> bitmask32_array_highpass {
+constexpr std::array<uint32_t, 32> bitmask32_array_highpass{
 	bitmask32_array_zero[ 0] + 1U,
 	bitmask32_array_zero[ 1] + 1U,
 	bitmask32_array_zero[ 2] + 1U,
@@ -292,7 +292,7 @@ constexpr std::array<uint32_t, 32> bitmask32_array_highpass {
 	bitmask32_array_zero[31] + 1U,
 };
 
-constexpr std::array<uint64_t, 64> bitmask64_array_one {
+constexpr std::array<uint64_t, 64> bitmask64_array_one{
 	1ULL <<  0U,
 	1ULL <<  1U,
 	1ULL <<  2U,
@@ -359,7 +359,7 @@ constexpr std::array<uint64_t, 64> bitmask64_array_one {
 	1ULL << 63U,
 };
 
-constexpr std::array<uint64_t, 64> bitmask64_array_zero {
+constexpr std::array<uint64_t, 64> bitmask64_array_zero{
 	~bitmask64_array_one[ 0],
 	~bitmask64_array_one[ 1],
 	~bitmask64_array_one[ 2],
@@ -426,7 +426,7 @@ constexpr std::array<uint64_t, 64> bitmask64_array_zero {
 	~bitmask64_array_one[63],
 };
 
-constexpr std::array<uint64_t, 64> bitmask64_array_lowpass {
+constexpr std::array<uint64_t, 64> bitmask64_array_lowpass{
 	bitmask64_array_one[ 0] - 1U,
 	bitmask64_array_one[ 1] - 1U,
 	bitmask64_array_one[ 2] - 1U,
@@ -493,7 +493,7 @@ constexpr std::array<uint64_t, 64> bitmask64_array_lowpass {
 	bitmask64_array_one[63] - 1U,
 };
 
-constexpr std::array<uint64_t, 64> bitmask64_array_highpass {
+constexpr std::array<uint64_t, 64> bitmask64_array_highpass{
 	bitmask64_array_zero[ 0] + 1U,
 	bitmask64_array_zero[ 1] + 1U,
 	bitmask64_array_zero[ 2] + 1U,

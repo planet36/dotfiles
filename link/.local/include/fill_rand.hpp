@@ -58,7 +58,8 @@ fill_rand(T& x)
 
 template <std::unsigned_integral T, size_t N>
 requires (sizeof(T) * N <= 256)
-void getentropy(std::array<T, N>& arr)
+void
+getentropy(std::array<T, N>& arr)
 {
 	if (getentropy(arr.data(), sizeof(T) * N) < 0)
 	{
@@ -69,7 +70,8 @@ void getentropy(std::array<T, N>& arr)
 
 template <std::unsigned_integral T>
 requires (sizeof(T) <= 256)
-void getentropy(T& x)
+void
+getentropy(T& x)
 {
 	if (getentropy(&x, sizeof(T)) < 0)
 	{

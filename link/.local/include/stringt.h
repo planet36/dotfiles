@@ -58,9 +58,7 @@ _strtcat_helper(char* restrict dest,
  *     for the operation to be performed.
  */
 static size_t
-strtcat(char* restrict dest,
-        const char* restrict src,
-        size_t dest_sz)
+strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
 {
 	return _strtcat_helper(dest, src, dest_sz, strlen(dest));
 }
@@ -87,9 +85,7 @@ strtcat(char* restrict dest,
  *     for the operation to be performed.
  */
 static size_t
-strtcpy(char* restrict dest,
-        const char* restrict src,
-        size_t dest_sz)
+strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
 {
 	return _strtcat_helper(dest, src, dest_sz, 0);
 }
@@ -137,9 +133,7 @@ _wstrtcat_helper(wchar_t* restrict dest,
  *     enlarged by for the operation to be performed.
  */
 static size_t
-wstrtcat(wchar_t* restrict dest,
-         const wchar_t* restrict src,
-         size_t dest_sz)
+wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 {
 	return _wstrtcat_helper(dest, src, dest_sz, wcslen(dest));
 }
@@ -166,9 +160,7 @@ wstrtcat(wchar_t* restrict dest,
  *     enlarged by for the operation to be performed.
  */
 static size_t
-wstrtcpy(wchar_t* restrict dest,
-         const wchar_t* restrict src,
-         size_t dest_sz)
+wstrtcpy(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 {
 	return _wstrtcat_helper(dest, src, dest_sz, 0);
 }

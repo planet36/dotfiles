@@ -68,9 +68,9 @@ circqueue_free(circqueue* cq)
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
 // automatically deallocate circqueue
-#define circqueue(varname, max_num_elems, type)  \
-	__attribute__((cleanup(circqueue_free))) \
-	circqueue varname = circqueue_init(max_num_elems, sizeof(type));
+#define circqueue(varname, max_num_elems, type)                  \
+	__attribute__((cleanup(circqueue_free))) circqueue varname = \
+	    circqueue_init(max_num_elems, sizeof(type));
 
 static bool
 circqueue_push_overwrite_if_full(circqueue* cq, const void* x)

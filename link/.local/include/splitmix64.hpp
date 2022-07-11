@@ -29,7 +29,7 @@
 	{                                                   \
 		return std::numeric_limits<result_type>::max(); \
 	}                                                   \
-	result_type operator()() {return next();}
+	result_type operator()() { return next(); }
 
 /** This is a fixed-increment version of Java 8's SplittableRandom generator
  * See https://dl.acm.org/doi/10.1145/2714064.2660195 and
@@ -48,9 +48,11 @@ private:
 	T s{};
 
 public:
-	splitmix64() {getentropy(s);}
+	splitmix64() { getentropy(s); }
+
 	splitmix64(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{

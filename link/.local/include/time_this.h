@@ -28,14 +28,12 @@ trailing newline) to stderr.
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
 #ifdef __cplusplus
-	#define TIME_THIS                                      \
-		fflush(stdout);                                    \
+	#define TIME_THIS fflush(stdout);                      \
 		__attribute__((cleanup(print_timerdata_now_diff))) \
 		const timerdata                                    \
 		TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()
 #else
-	#define TIME_THIS                                      \
-		fflush(stdout);                                    \
+	#define TIME_THIS fflush(stdout);                      \
 		__attribute__((cleanup(print_timerdata_now_diff))) \
 		const struct timerdata                             \
 		TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()

@@ -18,7 +18,8 @@
 /**
 \pre \a base must be in the interval [2, 36]
 */
-std::string i_to_s(const std::integral auto x, const int base = 10)
+std::string
+i_to_s(const std::integral auto x, const int base = 10)
 {
 	// x=-9223372036854775808  base=2  size=65  result="-1000000000000000000000000000000000000000000000000000000000000000"
 	// x=18446744073709551615  base=2  size=64  result="1111111111111111111111111111111111111111111111111111111111111111"

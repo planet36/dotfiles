@@ -50,10 +50,7 @@ public:
 		n++;
 	}
 
-	auto num_data_values() const
-	{
-		return n;
-	}
+	auto num_data_values() const { return n; }
 
 	auto slope() const
 	{
@@ -61,10 +58,7 @@ public:
 		return S_xy / S_xx;
 	}
 
-	auto intercept() const
-	{
-		return y_stats.mean() - slope() * x_stats.mean();
-	}
+	auto intercept() const { return y_stats.mean() - slope() * x_stats.mean(); }
 
 	auto correlation() const
 	{
@@ -86,8 +80,8 @@ public:
 };
 
 template <std::floating_point T>
-running_regression<T> operator+(const running_regression<T>& a,
-                                const running_regression<T>& b)
+running_regression<T>
+operator+(const running_regression<T>& a, const running_regression<T>& b)
 {
 	running_regression<T> combined;
 

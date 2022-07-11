@@ -21,7 +21,7 @@
 * \sa https://en.wikipedia.org/wiki/Angle#Units
 * \sa https://en.wikipedia.org/wiki/Angular_unit
 */
-enum struct angle_unit: short
+enum struct angle_unit : short
 {
 	milliradian,
 	radian,
@@ -196,22 +196,22 @@ public:
 	* This is useful for getting the raw internal value regardless of its unit
 	* of measurement.
 	*/
-	constexpr T scalar() const {return value;}
+	constexpr T scalar() const { return value; }
 
 	/// get the unit of measurement of the angle
-	constexpr angle_unit units() const {return U;}
+	constexpr angle_unit units() const { return U; }
 
 	/// convert to a different data type
 	template <std::floating_point T2>
-	constexpr auto to() const {return angle<U, T2>{*this};}
+	constexpr auto to() const { return angle<U, T2>{*this}; }
 
 	/// convert to a different angle unit
 	template <angle_unit U2>
-	constexpr auto to() const {return angle<U2, T>{*this};}
+	constexpr auto to() const { return angle<U2, T>{*this}; }
 
 	/// convert to a different angle unit and data type
 	template <angle_unit U2, std::floating_point T2>
-	constexpr auto to() const {return angle<U2, T2>{*this};}
+	constexpr auto to() const { return angle<U2, T2>{*this}; }
 
 	auto operator<=>(const angle&) const = default;
 };

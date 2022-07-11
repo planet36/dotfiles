@@ -256,13 +256,17 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 	                    &left_width, &blocks_index, &right_width);
 
 	for (i = 0; i < left_width; ++i)
+	{
 		*meter++ = FULL_BLOCK;
+	}
 
 	if (blocks_index != (size_t)-1)
 		*meter++ = left_blocks[blocks_index];
 
 	for (i = 0; i < right_width; ++i)
+	{
 		*meter++ = ' ';
+	}
 }
 
 /** Fill a meter with a Unicode vertical 1/8 block character.
@@ -280,22 +284,31 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 	calc_meter_segments(x, meter_width, num_ver_lines,
 	                    &left_width, &blocks_index, &right_width);
 
-	if (left_width == meter_width) {
+	if (left_width == meter_width)
+	{
 		// Special case when the vertical line will be at the right end
 
 		for (i = 1; i < left_width; ++i)
+		{
 			*meter++ = ' ';
+		}
 
 		*meter++ = RIGHT_ONE_EIGHTH_BLOCK;
-	} else {
+	}
+	else
+	{
 		for (i = 0; i < left_width; ++i)
+		{
 			*meter++ = ' ';
+		}
 
 		if (blocks_index != (size_t)-1)
 			*meter++ = ver_lines[blocks_index];
 
 		for (i = 0; i < right_width; ++i)
+		{
 			*meter++ = ' ';
+		}
 	}
 }
 
@@ -317,13 +330,17 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 	// left_width and right_width are swapped
 
 	for (i = 0; i < right_width; ++i)
+	{
 		*meter++ = ' ';
+	}
 
 	if (blocks_index != (size_t)-1)
 		*meter++ = right_blocks[blocks_index];
 
 	for (i = 0; i < left_width; ++i)
+	{
 		*meter++ = FULL_BLOCK;
+	}
 }
 
 /** Fill a meter with ASCII characters.
@@ -350,9 +367,13 @@ left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfil
 	const size_t num_filled = (size_t)(x * meter_width + 0.5);
 
 	for (i = 0; i < num_filled; ++i)
+	{
 		meter[i] = fill;
+	}
 	for (; i < meter_width; ++i)
+	{
 		meter[i] = unfill;
+	}
 }
 
 /** Fill a meter with ASCII characters.
@@ -373,7 +394,11 @@ right_char_meter(double x, char* meter, size_t meter_width, char fill, char unfi
 	const size_t num_unfilled = meter_width - (size_t)(x * meter_width + 0.5);
 
 	for (i = 0; i < num_unfilled; ++i)
+	{
 		meter[i] = unfill;
+	}
 	for (; i < meter_width; ++i)
+	{
 		meter[i] = fill;
+	}
 }

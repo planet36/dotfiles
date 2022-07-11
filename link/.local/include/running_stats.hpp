@@ -83,41 +83,38 @@ public:
 	template <typename ForwardIterator>
 	void push(ForwardIterator first, ForwardIterator last)
 	{
-		for (; first != last; ++first)
-		{
-			push(*first);
-		}
+		for (; first != last; ++first) { push(*first); }
 	}
 
-	auto num_data_values() const {return n;}
+	auto num_data_values() const { return n; }
 
-	auto mean() const {return M1;}
+	auto mean() const { return M1; }
 
-	auto variance() const {return M2 / (n - 1);}
+	auto variance() const { return M2 / (n - 1); }
 
-	auto standard_deviation() const {return std::sqrt(variance());}
+	auto standard_deviation() const { return std::sqrt(variance()); }
 
-	auto skewness() const {return std::sqrt(n) * M3 / std::pow(M2, 1.5);}
+	auto skewness() const { return std::sqrt(n) * M3 / std::pow(M2, 1.5); }
 
-	auto kurtosis() const {return n * M4 / (M2 * M2) - 3;}
+	auto kurtosis() const { return n * M4 / (M2 * M2) - 3; }
 
 	/// get the sum of the values
-	auto sum() const {return _sum;}
+	auto sum() const { return _sum; }
 
 	/// get the minimum value
-	auto min() const {return _min;}
+	auto min() const { return _min; }
 
 	/// get the maximum value
-	auto max() const {return _max;}
+	auto max() const { return _max; }
 
 	/// get the sum of the absolute values
-	auto sum_abs() const {return _sum_abs;}
+	auto sum_abs() const { return _sum_abs; }
 
 	/// get the minimum absolute value
-	auto min_abs() const {return _min_abs;}
+	auto min_abs() const { return _min_abs; }
 
 	/// get the maximum absolute value
-	auto max_abs() const {return _max_abs;}
+	auto max_abs() const { return _max_abs; }
 
 	template <std::floating_point T2>
 	friend running_stats<T2> operator+(const running_stats<T2>& a,
@@ -132,7 +129,8 @@ public:
 };
 
 template <std::floating_point T>
-running_stats<T> operator+(const running_stats<T>& a, const running_stats<T>& b)
+running_stats<T>
+operator+(const running_stats<T>& a, const running_stats<T>& b)
 {
 	running_stats<T> combined;
 

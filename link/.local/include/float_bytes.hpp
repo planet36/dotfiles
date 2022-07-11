@@ -13,11 +13,8 @@
 #include <type_traits>
 
 template <unsigned int N>
-using float_bytes =
-std::conditional_t<N <= sizeof(float), float,
-	std::conditional_t<N <= sizeof(double), double,
-		std::conditional_t<N <= sizeof(long double), long double,
-			void
-		>
-	>
->;
+using float_bytes = std::conditional_t<N <= sizeof(float), float,
+                    std::conditional_t<N <= sizeof(double), double,
+                    std::conditional_t<N <= sizeof(long double), long double,
+                    void
+>>>;

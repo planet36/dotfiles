@@ -18,10 +18,14 @@
 
 // https://en.cppreference.com/w/cpp/named_req/Compare
 constexpr auto compare_abs_less = [](const auto& a, const auto& b)
-{return std::abs(a) < std::abs(b);};
+{
+	return std::abs(a) < std::abs(b);
+};
 
 constexpr auto plus_abs = [](const auto& a, const auto& b)
-{return std::abs(a) + std::abs(b);};
+{
+	return std::abs(a) + std::abs(b);
+};
 
 #define POW2(x) ((x) * (x))
 #define POW3(x) ((x) * (x) * (x))
@@ -29,7 +33,8 @@ constexpr auto plus_abs = [](const auto& a, const auto& b)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto min_val(const Container& c)
+auto
+min_val(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -43,7 +48,8 @@ auto min_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto min_abs_val(const Container& c)
+auto
+min_abs_val(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -58,7 +64,8 @@ auto min_abs_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto max_val(const Container& c)
+auto
+max_val(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -72,7 +79,8 @@ auto max_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto max_abs_val(const Container& c)
+auto
+max_abs_val(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -87,7 +95,8 @@ auto max_abs_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto minmax_vals(const Container& c)
+auto
+minmax_vals(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -104,7 +113,8 @@ auto minmax_vals(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto minmax_abs_vals(const Container& c)
+auto
+minmax_abs_vals(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -122,7 +132,8 @@ auto minmax_abs_vals(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto sum_val(const Container& c)
+auto
+sum_val(const Container& c)
 {
 	using T = typename Container::value_type;
 
@@ -141,7 +152,8 @@ auto sum_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto sum_abs_val(const Container& c)
+auto
+sum_abs_val(const Container& c)
 {
 	using T = typename Container::value_type;
 
@@ -160,7 +172,8 @@ auto sum_abs_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto arithmetic_mean_val(const Container& c)
+auto
+arithmetic_mean_val(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -176,7 +189,8 @@ auto arithmetic_mean_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto variance_val(const Container& c, const bool is_sample = false)
+auto
+variance_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -207,7 +221,8 @@ auto variance_val(const Container& c, const bool is_sample = false)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto stdev_val(const Container& c, const bool is_sample = false)
+auto
+stdev_val(const Container& c, const bool is_sample = false)
 {
 	return std::sqrt(variance_val(c, is_sample));
 }
@@ -218,7 +233,8 @@ auto stdev_val(const Container& c, const bool is_sample = false)
 // https://brownmath.com/stat/shape.htm#Skewness
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto skewness_val(const Container& c, const bool is_sample = false)
+auto
+skewness_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -255,7 +271,8 @@ auto skewness_val(const Container& c, const bool is_sample = false)
 // https://brownmath.com/stat/shape.htm#Kurtosis
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto excess_kurtosis_val(const Container& c, const bool is_sample = false)
+auto
+excess_kurtosis_val(const Container& c, const bool is_sample = false)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -289,7 +306,8 @@ auto excess_kurtosis_val(const Container& c, const bool is_sample = false)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto median_val(const Container& c)
+auto
+median_val(const Container& c)
 {
 	using T = typename Container::value_type;
 	const auto n = c.size();
@@ -306,7 +324,8 @@ auto median_val(const Container& c)
 
 template <typename Container>
 requires std::is_floating_point_v<typename Container::value_type>
-auto range_val(const Container& c)
+auto
+range_val(const Container& c)
 {
 	const auto& [min_val, max_val] = minmax_vals(c);
 	return max_val - min_val;
