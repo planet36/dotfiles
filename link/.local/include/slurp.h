@@ -27,7 +27,8 @@
 #if 1
 
 // this version calls open, fstat, read, close
-int slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
+int
+slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
 	const int fd = open(path, O_RDONLY);
 	if (fd < 0)
@@ -86,7 +87,8 @@ int slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 #else
 
 // this version calls fopen, stat, fread, fclose
-int slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
+int
+slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
 	FILE* fp = fopen(path, "rb");
 	if (fp == NULL)

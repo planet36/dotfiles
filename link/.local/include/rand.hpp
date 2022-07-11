@@ -23,7 +23,9 @@
 \return a uniformly distributed random integer within the interval [\a a, \a b]
 */
 template <integral_number T>
-T rand_int(const T a = std::numeric_limits<T>::min(), const T b = std::numeric_limits<T>::max())
+T
+rand_int(const T a = std::numeric_limits<T>::min(),
+         const T b = std::numeric_limits<T>::max())
 {
 	static thread_local xoshiro256starstar gen;
 	return std::uniform_int_distribution<T>{a, b}(gen);
@@ -35,7 +37,8 @@ T rand_int(const T a = std::numeric_limits<T>::min(), const T b = std::numeric_l
 \return a uniformly distributed random floating-point number within the interval [\a a, \a b)
 */
 template <std::floating_point T>
-T rand_float(const T a, const T b)
+T
+rand_float(const T a, const T b)
 {
 	static thread_local xoshiro256plus gen;
 	return std::uniform_real_distribution<T>{a, b}(gen);
@@ -46,7 +49,8 @@ T rand_float(const T a, const T b)
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 template <std::floating_point T>
-T rand_float()
+T
+rand_float()
 {
 	return rand_float(T{0}, T{1});
 }
@@ -55,7 +59,8 @@ T rand_float()
 * \sa https://martin.ankerl.com/2018/12/08/fast-random-bool/
 * \sa https://gist.github.com/martinus/c43d99ad0008e11fcdbf06982e25f464
 */
-bool rand_bool()
+bool
+rand_bool()
 {
 	static constexpr uint64_t mask64_one_msb = 1ULL << 63;
 	static thread_local xoshiro256starstar gen;

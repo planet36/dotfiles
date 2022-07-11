@@ -43,84 +43,96 @@ inline constexpr int gradians_per_rev = 400;
 
 /// convert to radians from milliradians
 template <std::floating_point T>
-constexpr T rad_from_mrad(const T x_mrad)
+constexpr T
+rad_from_mrad(const T x_mrad)
 {
 	return x_mrad / mrad_per_rad;
 }
 
 /// convert to milliradians from radians
 template <std::floating_point T>
-constexpr T mrad_from_rad(const T x_rad)
+constexpr T
+mrad_from_rad(const T x_rad)
 {
 	return mrad_per_rad * x_rad;
 }
 
 /// convert to revolutions from radians
 template <std::floating_point T>
-constexpr T rev_from_rad(const T x_rad)
+constexpr T
+rev_from_rad(const T x_rad)
 {
 	return x_rad / rad_per_rev<T>;
 }
 
 /// convert to radians from revolutions
 template <std::floating_point T>
-constexpr T rad_from_rev(const T x_rev)
+constexpr T
+rad_from_rev(const T x_rev)
 {
 	return rad_per_rev<T> * x_rev;
 }
 
 /// convert to revolutions from degrees
 template <std::floating_point T>
-constexpr T rev_from_deg(const T x_deg)
+constexpr T
+rev_from_deg(const T x_deg)
 {
 	return x_deg / deg_per_rev;
 }
 
 /// convert to degrees from revolutions
 template <std::floating_point T>
-constexpr T deg_from_rev(const T x_rev)
+constexpr T
+deg_from_rev(const T x_rev)
 {
 	return deg_per_rev * x_rev;
 }
 
 /// convert to degrees from arcminutes
 template <std::floating_point T>
-constexpr T deg_from_arcmin(const T x_arcmin)
+constexpr T
+deg_from_arcmin(const T x_arcmin)
 {
 	return x_arcmin / arcmin_per_deg;
 }
 
 /// convert to arcminutes from degrees
 template <std::floating_point T>
-constexpr T arcmin_from_deg(const T x_deg)
+constexpr T
+arcmin_from_deg(const T x_deg)
 {
 	return arcmin_per_deg * x_deg;
 }
 
 /// convert to arcminutes from arcseconds
 template <std::floating_point T>
-constexpr T arcmin_from_arcsec(const T x_arcsec)
+constexpr T
+arcmin_from_arcsec(const T x_arcsec)
 {
 	return x_arcsec / arcsec_per_arcmin;
 }
 
 /// convert to arcseconds from arcminutes
 template <std::floating_point T>
-constexpr T arcsec_from_arcmin(const T x_arcmin)
+constexpr T
+arcsec_from_arcmin(const T x_arcmin)
 {
 	return arcsec_per_arcmin * x_arcmin;
 }
 
 /// convert to radians from degrees
 template <std::floating_point T>
-constexpr T rad_from_deg(const T x_deg)
+constexpr T
+rad_from_deg(const T x_deg)
 {
 	return x_deg / deg_per_rad<T>;
 }
 
 /// convert to degrees from radians
 template <std::floating_point T>
-constexpr T deg_from_rad(const T x_rad)
+constexpr T
+deg_from_rad(const T x_rad)
 {
 	return deg_per_rad<T> * x_rad;
 }
@@ -133,7 +145,8 @@ constexpr T deg_from_rad(const T x_rad)
 \param[out] arcmin (decimal) arcminutes
 */
 template <std::floating_point T>
-constexpr void deg_to_dm(const T x_deg, T& deg, T& arcmin)
+constexpr void
+deg_to_dm(const T x_deg, T& deg, T& arcmin)
 {
 	T tmp = x_deg;
 	deg = std::trunc(tmp);
@@ -151,7 +164,8 @@ constexpr void deg_to_dm(const T x_deg, T& deg, T& arcmin)
 \param[out] arcsec (decimal) arcseconds
 */
 template <std::floating_point T>
-constexpr void deg_to_dms(const T x_deg, T& deg, T& arcmin, T& arcsec)
+constexpr void
+deg_to_dms(const T x_deg, T& deg, T& arcmin, T& arcsec)
 {
 	T tmp = x_deg;
 	deg = std::trunc(tmp);
@@ -170,7 +184,8 @@ constexpr void deg_to_dms(const T x_deg, T& deg, T& arcmin, T& arcsec)
 \return (decimal) degrees
 */
 template <std::floating_point T>
-constexpr T deg_from_dm(const T deg, const T arcmin)
+constexpr T
+deg_from_dm(const T deg, const T arcmin)
 {
 	return deg + deg_from_arcmin(arcmin);
 }
@@ -183,7 +198,8 @@ constexpr T deg_from_dm(const T deg, const T arcmin)
 \return (decimal) degrees
 */
 template <std::floating_point T>
-constexpr T deg_from_dms(const T deg, const T arcmin, const T arcsec)
+constexpr T
+deg_from_dms(const T deg, const T arcmin, const T arcsec)
 {
 	return deg_from_dm(deg, arcmin + arcmin_from_arcsec(arcsec));
 }

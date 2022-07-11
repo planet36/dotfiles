@@ -62,18 +62,21 @@ constexpr T rev_bytes(T x)
 static_assert(std::endian::native == std::endian::little ||
               std::endian::native == std::endian::big);
 
-constexpr bool h_is_be()
+constexpr bool
+h_is_be()
 {
 	return std::endian::native == std::endian::big;
 }
 
-constexpr bool h_is_le()
+constexpr bool
+h_is_le()
 {
 	return std::endian::native == std::endian::little;
 }
 
 template <typename T>
-constexpr T h_to_be(const T x)
+constexpr T
+h_to_be(const T x)
 {
 	if constexpr (h_is_be())
 		return x;
@@ -82,7 +85,8 @@ constexpr T h_to_be(const T x)
 }
 
 template <typename T>
-constexpr T h_to_le(const T x)
+constexpr T
+h_to_le(const T x)
 {
 	if constexpr (h_is_le())
 		return x;
@@ -91,7 +95,8 @@ constexpr T h_to_le(const T x)
 }
 
 template <typename T>
-constexpr T be_to_h(const T x)
+constexpr T
+be_to_h(const T x)
 {
 	if constexpr (h_is_be())
 		return x;
@@ -100,7 +105,8 @@ constexpr T be_to_h(const T x)
 }
 
 template <typename T>
-constexpr T le_to_h(const T x)
+constexpr T
+le_to_h(const T x)
 {
 	if constexpr (h_is_le())
 		return x;

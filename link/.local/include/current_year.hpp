@@ -14,14 +14,16 @@
 namespace
 {
 
-int current_year_local()
+int
+current_year_local()
 {
 	const std::time_t t = std::time(nullptr);
 	// https://en.cppreference.com/w/cpp/chrono/c/localtime
 	return std::localtime(&t)->tm_year + 1900;
 }
 
-int current_year_utc()
+int
+current_year_utc()
 {
 	const std::time_t t = std::time(nullptr);
 	// https://en.cppreference.com/w/cpp/chrono/c/gmtime

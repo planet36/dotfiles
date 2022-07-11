@@ -18,7 +18,7 @@ constexpr T
 int_part(const T x)
 {
 	T i{};
-	(void) std::modf(x, &i);
+	(void)std::modf(x, &i);
 	return i;
 }
 

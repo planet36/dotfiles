@@ -191,9 +191,11 @@ public:
 
 		size_t i = head;
 
-		do {
+		do
+		{
 			f(buf[i]);
-		} while (next(i));
+		}
+		while (next(i));
 	}
 
 	// https://en.cppreference.com/w/cpp/algorithm/all_any_none_of
@@ -208,10 +210,12 @@ public:
 
 		size_t i = head;
 
-		do {
+		do
+		{
 			if (!f(buf[i]))
 				return false;
-		} while (next(i));
+		}
+		while (next(i));
 
 		return true;
 	}
@@ -226,10 +230,12 @@ public:
 
 		size_t i = head;
 
-		do {
+		do
+		{
 			if (f(buf[i]))
 				return true;
-		} while (next(i));
+		}
+		while (next(i));
 
 		return false;
 	}
@@ -244,10 +250,12 @@ public:
 
 		size_t i = head;
 
-		do {
+		do
+		{
 			if (f(buf[i]))
 				return false;
-		} while (next(i));
+		}
+		while (next(i));
 
 		return true;
 	}
@@ -265,9 +273,11 @@ public:
 
 		size_t i = head;
 
-		do {
+		do
+		{
 			ret.push_back(buf[i]);
-		} while (next(i));
+		}
+		while (next(i));
 
 		return ret;
 	}

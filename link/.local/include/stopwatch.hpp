@@ -18,11 +18,11 @@ struct stopwatch
 public:
 	// http://www.cplusplus.com/forum/general/187899/#msg913531
 	using stopwatch_clock = typename std::conditional_t<
-		std::chrono::high_resolution_clock::is_steady,
-		std::chrono::high_resolution_clock,
-		std::chrono::steady_clock>;
+	    std::chrono::high_resolution_clock::is_steady,
+	    std::chrono::high_resolution_clock,
+	    std::chrono::steady_clock>;
 
-	stopwatch() {reset();}
+	stopwatch() { reset(); }
 
 	stopwatch(const stopwatch&) = delete;
 
@@ -58,7 +58,7 @@ public:
 			return dt + (stopwatch_clock::now() - t0);
 	}
 
-	bool is_running() const {return running;}
+	bool is_running() const { return running; }
 
 private:
 	std::chrono::time_point<stopwatch_clock> t0{};

@@ -23,7 +23,8 @@
 */
 template <std::floating_point T>
 requires std::numeric_limits<T>::is_iec559
-constexpr T ulp(T x)
+constexpr T
+ulp(T x)
 {
 	x = std::abs(x);
 

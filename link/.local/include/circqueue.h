@@ -44,12 +44,12 @@ static circqueue
 circqueue_init(size_t max_num_elems, size_t sizeof_elem)
 {
 	return (circqueue){
-		.buf = calloc(max_num_elems, sizeof_elem),
-		.max_num_elems = max_num_elems,
-		.sizeof_elem = sizeof_elem,
-		.head = 0,
-		.tail = 0,
-		.num_elems = 0,
+	    .buf = calloc(max_num_elems, sizeof_elem),
+	    .max_num_elems = max_num_elems,
+	    .sizeof_elem = sizeof_elem,
+	    .head = 0,
+	    .tail = 0,
+	    .num_elems = 0,
 	};
 }
 

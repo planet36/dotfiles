@@ -28,13 +28,14 @@ Equation (4-14)
 \param[out] z Z coordinate (meters)
 */
 template <std::floating_point T>
-void geodetic_to_ecef(const Ellipsoid<T>& ell,
-                      const T lat_rad,
-                      const T lon_rad,
-                      const T ht,
-                      T& x,
-                      T& y,
-                      T& z)
+void
+geodetic_to_ecef(const Ellipsoid<T>& ell,
+                 const T lat_rad,
+                 const T lon_rad,
+                 const T ht,
+                 T& x,
+                 T& y,
+                 T& z)
 {
 	const auto sin_lat = std::sin(lat_rad);
 	const auto cos_lat = std::cos(lat_rad);
@@ -62,13 +63,14 @@ Equation (4-14)
 \param[out] z Z coordinate (meters)
 */
 template <angle_unit U, std::floating_point T>
-void geodetic_to_ecef(const Ellipsoid<T>& ell,
-                      const angle<U, T>& lat,
-                      const angle<U, T>& lon,
-                      const T ht,
-                      T& x,
-                      T& y,
-                      T& z)
+void
+geodetic_to_ecef(const Ellipsoid<T>& ell,
+                 const angle<U, T>& lat,
+                 const angle<U, T>& lon,
+                 const T ht,
+                 T& x,
+                 T& y,
+                 T& z)
 {
 	const auto sin_lat = sin(lat);
 	const auto cos_lat = cos(lat);

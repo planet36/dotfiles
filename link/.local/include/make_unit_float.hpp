@@ -47,7 +47,8 @@ constexpr auto make_unit_float(const T x)
 		return (x >> shift_r) / f_t{T{1} << shift_l};
 }
 #else
-constexpr float make_unit_float(const uint32_t x)
+constexpr float
+make_unit_float(const uint32_t x)
 {
 	if constexpr (__BYTE_ORDER__ == __FLOAT_WORD_ORDER__)
 		return bits_to_float(UINT32_C(0x7F) << 23 | x >> 9) - 1;
@@ -55,7 +56,8 @@ constexpr float make_unit_float(const uint32_t x)
 		return (x >> 9) / 0x1p+23f;
 }
 
-constexpr double make_unit_float(const uint64_t x)
+constexpr double
+make_unit_float(const uint64_t x)
 {
 	if constexpr (__BYTE_ORDER__ == __FLOAT_WORD_ORDER__)
 		return bits_to_float(UINT64_C(0x3FF) << 52 | x >> 12) - 1;

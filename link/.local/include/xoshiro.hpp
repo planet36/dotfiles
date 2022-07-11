@@ -33,7 +33,7 @@
 	{                                                   \
 		return std::numeric_limits<result_type>::max(); \
 	}                                                   \
-	result_type operator()() {return next();}
+	result_type operator()() { return next(); }
 
 #define DEF_JUMP                                                     \
 	void jump()                                                      \
@@ -96,15 +96,17 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x8764000b, 0xf542d2d3,
-			0x6fa035c3, 0x77f2db5b});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0xb523952e,
-			0x0b6f099f, 0xccf5a0ef, 0x1c580662});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128plus() {getentropy(s);}
+	xoshiro128plus() { getentropy(s); }
+
 	xoshiro128plus(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -155,15 +157,17 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x8764000b, 0xf542d2d3,
-			0x6fa035c3, 0x77f2db5b});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0xb523952e,
-			0x0b6f099f, 0xccf5a0ef, 0x1c580662});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128plusplus() {getentropy(s);}
+	xoshiro128plusplus() { getentropy(s); }
+
 	xoshiro128plusplus(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -217,15 +221,17 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x8764000b, 0xf542d2d3,
-			0x6fa035c3, 0x77f2db5b});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0xb523952e,
-			0x0b6f099f, 0xccf5a0ef, 0x1c580662});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128starstar() {getentropy(s);}
+	xoshiro128starstar() { getentropy(s); }
+
 	xoshiro128starstar(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -282,15 +288,19 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x180ec6d33cfd0aba,
-			0xd5a61266f0c9392c, 0xa9582618e03fc9aa, 0x39abdc4529b1661c});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0x76e15d3efefdcbbf,
-			0xc5004e441c522fb3, 0x77710069854ee241, 0x39109bb02acbe635});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
+	    0xa9582618e03fc9aa, 0x39abdc4529b1661c});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
+	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256plus() {getentropy(s);}
+	xoshiro256plus() { getentropy(s); }
+
 	xoshiro256plus(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -342,15 +352,19 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x180ec6d33cfd0aba,
-			0xd5a61266f0c9392c, 0xa9582618e03fc9aa, 0x39abdc4529b1661c});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0x76e15d3efefdcbbf,
-			0xc5004e441c522fb3, 0x77710069854ee241, 0x39109bb02acbe635});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
+	    0xa9582618e03fc9aa, 0x39abdc4529b1661c});
+	static constexpr auto LONG_JUMP =std::to_array<T>({
+	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
+	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256plusplus() {getentropy(s);}
+	xoshiro256plusplus() { getentropy(s); }
+
 	xoshiro256plusplus(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -402,15 +416,19 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x180ec6d33cfd0aba,
-			0xd5a61266f0c9392c, 0xa9582618e03fc9aa, 0x39abdc4529b1661c});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0x76e15d3efefdcbbf,
-			0xc5004e441c522fb3, 0x77710069854ee241, 0x39109bb02acbe635});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
+	    0xa9582618e03fc9aa, 0x39abdc4529b1661c});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
+	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256starstar() {getentropy(s);}
+	xoshiro256starstar() { getentropy(s); }
+
 	xoshiro256starstar(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -467,19 +485,21 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x33ed89b6e7a353f9,
-			0x760083d7955323be, 0x2837f2fbb5f22fae, 0x4b8c5674d309511c,
-			0xb11ac47a7ba28c25, 0xf1be7667092bcc1c, 0x53851efdb6df0aaf,
-			0x1ebbc8b23eaf25db});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0x11467fef8f921d28,
-			0xa2a819f2e79c8ea8, 0xa8299fc284b3959a, 0xb4d347340ca63ee1,
-			0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17, 0x915e38fd4eda93bc,
-			0x5b3ccdfa5d7daca5});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
+	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
+	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x11467fef8f921d28, 0xa2a819f2e79c8ea8, 0xa8299fc284b3959a,
+	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
+	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512plus() {getentropy(s);}
+	xoshiro512plus() { getentropy(s); }
+
 	xoshiro512plus(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -535,19 +555,21 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x33ed89b6e7a353f9,
-			0x760083d7955323be, 0x2837f2fbb5f22fae, 0x4b8c5674d309511c,
-			0xb11ac47a7ba28c25, 0xf1be7667092bcc1c, 0x53851efdb6df0aaf,
-			0x1ebbc8b23eaf25db});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0x11467fef8f921d28,
-			0xa2a819f2e79c8ea8, 0xa8299fc284b3959a, 0xb4d347340ca63ee1,
-			0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17, 0x915e38fd4eda93bc,
-			0x5b3ccdfa5d7daca5});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
+	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
+	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x11467fef8f921d28, 0xa2a819f2e79c8ea8, 0xa8299fc284b3959a,
+	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
+	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512plusplus() {getentropy(s);}
+	xoshiro512plusplus() { getentropy(s); }
+
 	xoshiro512plusplus(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{
@@ -604,19 +626,21 @@ NAMED_REQ_URBG
 
 private:
 	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({0x33ed89b6e7a353f9,
-			0x760083d7955323be, 0x2837f2fbb5f22fae, 0x4b8c5674d309511c,
-			0xb11ac47a7ba28c25, 0xf1be7667092bcc1c, 0x53851efdb6df0aaf,
-			0x1ebbc8b23eaf25db});
-	static constexpr auto LONG_JUMP = std::to_array<T>({0x11467fef8f921d28,
-			0xa2a819f2e79c8ea8, 0xa8299fc284b3959a, 0xb4d347340ca63ee1,
-			0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17, 0x915e38fd4eda93bc,
-			0x5b3ccdfa5d7daca5});
+	static constexpr auto JUMP = std::to_array<T>({
+	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
+	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
+	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db});
+	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x11467fef8f921d28, 0xa2a819f2e79c8ea8, 0xa8299fc284b3959a,
+	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
+	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512starstar() {getentropy(s);}
+	xoshiro512starstar() { getentropy(s); }
+
 	xoshiro512starstar(const decltype(s)& new_s): s(new_s) {}
-	void seed(const decltype(s)& new_s) {s = new_s;}
+
+	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	T next()
 	{

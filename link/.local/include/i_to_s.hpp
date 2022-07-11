@@ -27,7 +27,7 @@ std::string i_to_s(const std::integral auto x, const int base = 10)
 	// CHAR_BIT * sizeof(x) - 1
 	// We don't want to subtract 1, so we use CHAR_BIT * sizeof(x)
 	constexpr int buf_size =
-		CHAR_BIT * sizeof(x) + std::numeric_limits<decltype(x)>::is_signed;
+	    CHAR_BIT * sizeof(x) + std::numeric_limits<decltype(x)>::is_signed;
 
 	char buf[buf_size] = {'\0'};
 	const std::to_chars_result r = std::to_chars(buf, buf + buf_size, x, base);

@@ -15,7 +15,8 @@ Inspired by https://web.archive.org/web/20200629174939/http://timmurphy.org/2013
 
 /// Raise base \a B to the power of exponent \a E
 template <typename T, T B, int8_t E>
-consteval T pow_int_func()
+consteval T
+pow_int_func()
 {
 	if constexpr (E < 0)
 	{
@@ -54,7 +55,8 @@ consteval T pow_int_func()
 
 /// Raise base \a B to the power of exponent \a E
 template <typename T, T B, uint8_t E>
-consteval T pow_uint_func()
+consteval T
+pow_uint_func()
 {
 	if constexpr (E == 0)
 	{

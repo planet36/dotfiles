@@ -11,7 +11,8 @@
 
 #include <cstdint>
 
-uint16_t int_join(const uint8_t hi, const uint8_t lo)
+uint16_t
+int_join(const uint8_t hi, const uint8_t lo)
 {
 	const union
 	{
@@ -22,7 +23,8 @@ uint16_t int_join(const uint8_t hi, const uint8_t lo)
 	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
-uint32_t int_join(const uint16_t hi, const uint16_t lo)
+uint32_t
+int_join(const uint16_t hi, const uint16_t lo)
 {
 	const union
 	{
@@ -33,7 +35,8 @@ uint32_t int_join(const uint16_t hi, const uint16_t lo)
 	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
-uint64_t int_join(const uint32_t hi, const uint32_t lo)
+uint64_t
+int_join(const uint32_t hi, const uint32_t lo)
 {
 	const union
 	{

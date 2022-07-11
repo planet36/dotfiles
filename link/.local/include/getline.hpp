@@ -15,7 +15,8 @@
 #include <cstdlib>
 #include <string>
 
-ssize_t getline(std::string& line, FILE* stream, char delim = '\n')
+ssize_t
+getline(std::string& line, FILE* stream, char delim = '\n')
 {
 	char* buf = nullptr;
 	size_t buf_size = 0;

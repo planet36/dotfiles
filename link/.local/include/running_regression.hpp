@@ -68,7 +68,8 @@ public:
 
 	auto correlation() const
 	{
-		const auto t = x_stats.standard_deviation() * y_stats.standard_deviation();
+		const auto t = x_stats.standard_deviation() *
+		               y_stats.standard_deviation();
 		return S_xy / ((n - 1) * t);
 	}
 

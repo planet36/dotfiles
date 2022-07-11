@@ -34,13 +34,14 @@ Converted to C++ and modified by Steven Ward.  No rights reserved.
 \param[out] ht ellipsoid height (meters)
 */
 template <std::floating_point T>
-void ecef_to_geodetic(const Ellipsoid<T>& ell,
-                      const T x,
-                      const T y,
-                      const T z,
-                      T& lat_rad,
-                      T& lon_rad,
-                      T& ht)
+void
+ecef_to_geodetic(const Ellipsoid<T>& ell,
+                 const T x,
+                 const T y,
+                 const T z,
+                 T& lat_rad,
+                 T& lon_rad,
+                 T& ht)
 {
 	const auto w2 = x * x + y * y;
 	const auto w = std::sqrt(w2);
@@ -129,13 +130,14 @@ Converted to C++ and modified by Steven Ward.  No rights reserved.
 \param[out] ht ellipsoid height (meters)
 */
 template <angle_unit U, std::floating_point T>
-void ecef_to_geodetic(const Ellipsoid<T>& ell,
-                      const T x,
-                      const T y,
-                      const T z,
-                      angle<U, T>& lat,
-                      angle<U, T>& lon,
-                      T& ht)
+void
+ecef_to_geodetic(const Ellipsoid<T>& ell,
+                 const T x,
+                 const T y,
+                 const T z,
+                 angle<U, T>& lat,
+                 angle<U, T>& lon,
+                 T& ht)
 {
 	const auto w2 = x * x + y * y;
 	const auto w = std::sqrt(w2);

@@ -13,16 +13,18 @@
 #include <charconv>
 #include <string>
 
-void resize_to_nul(std::string& s)
+void
+resize_to_nul(std::string& s)
 {
 	const std::string::size_type i = s.find('\0');
 	if (i != std::string::npos)
 		s.resize(i);
 }
 
-std::string f_to_s(const std::floating_point auto x,
-                   const std::chars_format chars_format,
-                   const int precision)
+std::string
+f_to_s(const std::floating_point auto x,
+       const std::chars_format chars_format,
+       const int precision)
 {
 	std::string s;
 	std::to_chars_result r;

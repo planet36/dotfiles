@@ -55,7 +55,8 @@ struct timerdata
 	struct timeval stime; // system
 };
 
-static struct timerdata timerdata_now()
+static struct timerdata
+timerdata_now()
 {
 	struct timerdata now;
 	struct rusage ru;

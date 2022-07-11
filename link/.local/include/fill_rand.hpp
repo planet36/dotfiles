@@ -19,7 +19,8 @@
 #include <utility>
 
 template <std::unsigned_integral T, size_t N>
-void fill_rand(std::array<T, N>& arr)
+void
+fill_rand(std::array<T, N>& arr)
 {
 	static std::random_device rd;
 
@@ -37,7 +38,8 @@ void fill_rand(std::array<T, N>& arr)
 }
 
 template <std::unsigned_integral T>
-void fill_rand(T& x)
+void
+fill_rand(T& x)
 {
 	static std::random_device rd;
 
@@ -60,7 +62,8 @@ void getentropy(std::array<T, N>& arr)
 {
 	if (getentropy(arr.data(), sizeof(T) * N) < 0)
 	{
-		throw std::system_error(std::make_error_code(std::errc(errno)), "getentropy");
+		throw std::system_error(std::make_error_code(std::errc(errno)),
+		                        "getentropy");
 	}
 }
 
@@ -70,6 +73,7 @@ void getentropy(T& x)
 {
 	if (getentropy(&x, sizeof(T)) < 0)
 	{
-		throw std::system_error(std::make_error_code(std::errc(errno)), "getentropy");
+		throw std::system_error(std::make_error_code(std::errc(errno)),
+		                        "getentropy");
 	}
 }
