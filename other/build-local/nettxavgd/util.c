@@ -62,7 +62,8 @@ pscanf(const char* path, const char* fmt, ...)
 	va_list ap;
 	int n;
 
-	if (!(fp = fopen(path, "r"))) {
+	if (!(fp = fopen(path, "r")))
+	{
 		warn("fopen '%s'", path);
 		return -1;
 	}

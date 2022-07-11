@@ -20,7 +20,9 @@ char*
 skip_spaces(const char* str)
 {
 	while (isspace(*str))
+	{
 		++str;
+	}
 	return (char*)str;
 }
 
@@ -44,7 +46,9 @@ strim(char* s)
 
 	end = s + size - 1;
 	while (end >= s && isspace(*end))
+	{
 		end--;
+	}
 	*(end + 1) = '\0';
 
 	return skip_spaces(s);

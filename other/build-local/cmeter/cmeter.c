@@ -48,16 +48,24 @@ print_cmeter(double x, const struct meter_opts* opts)
 	if (opts->left_to_right)
 	{
 		for (unsigned int i = 0; i < num_filled; ++i)
+		{
 			putchar(opts->fill);
+		}
 		for (unsigned int i = 0; i < num_unfilled; ++i)
+		{
 			putchar(opts->unfill);
+		}
 	}
 	else
 	{
 		for (unsigned int i = 0; i < num_unfilled; ++i)
+		{
 			putchar(opts->unfill);
+		}
 		for (unsigned int i = 0; i < num_filled; ++i)
+		{
 			putchar(opts->fill);
+		}
 	}
 
 	if (!opts->suppress_newline)

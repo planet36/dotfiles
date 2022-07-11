@@ -52,7 +52,8 @@ pscanf(const char* path, const char* fmt, ...)
 	va_list ap;
 	int n;
 
-	if (!(fp = fopen(path, "r"))) {
+	if (!(fp = fopen(path, "r")))
+	{
 		warn("fopen '%s'", path);
 		return -1;
 	}
@@ -74,8 +75,8 @@ struct timeval
 msec_to_timeval(unsigned int msec)
 {
 	return (struct timeval){
-		.tv_sec = msec / 1000U,
-		.tv_usec = (msec % 1000U) * 1000U,
+	    .tv_sec = msec / 1000U,
+	    .tv_usec = (msec % 1000U) * 1000U,
 	};
 }
 
@@ -91,7 +92,8 @@ calc_idle(uintmax_t* idle, uintmax_t* sum)
 
 	// cpu user nice system idle iowait irq softirq
 	if (pscanf("/proc/stat", "%*s %ju %ju %ju %ju %*s %ju %ju",
-	           &a[0], &a[1], &a[2], &a[3], &a[4], &a[5]) != 6) {
+	           &a[0], &a[1], &a[2], &a[3], &a[4], &a[5]) != 6)
+	{
 		return -1;
 	}
 
