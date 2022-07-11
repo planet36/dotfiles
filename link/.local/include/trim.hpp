@@ -119,7 +119,7 @@ trim_copy(std::wstring s)
 
 // }}}
 
-// {{{ trim spaces from std::basic_string with std::locale using std::isspace
+// {{{ trim spaces from std::basic_string with std::locale using std::isspace(std::locale)
 
 template <class CharT,
           class Traits = std::char_traits<CharT>,
