@@ -28,7 +28,7 @@ inline constexpr char double_quote = '"';
 inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 }
 
-bool
+constexpr bool
 isword(const char c)
 {
 	return std::isalnum(c) || c == '_';
@@ -37,7 +37,7 @@ isword(const char c)
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
-bool
+constexpr bool
 is_shell_special_char(const char c)
 {
 	return (c == '\t') ||
