@@ -54,6 +54,7 @@ alias sha256=sha256sum
 alias sha384=sha384sum
 alias sha512=sha512sum
 alias tm=tmux
+alias trahs=trash
 alias treu=true
 alias tyep=type
 # shellcheck disable=SC2139
