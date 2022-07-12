@@ -44,10 +44,10 @@ using uint_bytes = std::conditional_t<N <= sizeof(std::uint8_t), std::uint8_t,
 
 template <std::integral T>
 using next_smaller = std::conditional_t<std::is_signed_v<T>,
-	int_bytes<sizeof(T) / 2>,
-	uint_bytes<sizeof(T) / 2>>;
+                                        int_bytes<sizeof(T) / 2>,
+                                        uint_bytes<sizeof(T) / 2>>;
 
 template <std::integral T>
 using next_larger = std::conditional_t<std::is_signed_v<T>,
-	int_bytes<sizeof(T) * 2>,
-	uint_bytes<sizeof(T) * 2>>;
+                                       int_bytes<sizeof(T) * 2>,
+                                       uint_bytes<sizeof(T) * 2>>;

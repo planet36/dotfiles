@@ -295,5 +295,5 @@ struct Ellipsoid
 		       this->omega == that.omega;
 	}
 
-	bool operator!=(const Ellipsoid& that) const {return !operator==(that);}
+	bool operator!=(const Ellipsoid& that) const { return !operator==(that); }
 };

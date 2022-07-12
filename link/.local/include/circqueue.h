@@ -76,8 +76,8 @@ static bool
 circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
 {
 	// add to tail
-	(void)memcpy((char*)cq->buf + cq->tail * cq->sizeof_elem,
-	             x, cq->sizeof_elem);
+	(void)memcpy((char*)cq->buf + cq->tail * cq->sizeof_elem, x,
+	             cq->sizeof_elem);
 
 	if (circqueue_is_full(cq))
 	{
@@ -114,8 +114,8 @@ circqueue_pop(circqueue* cq, void* x)
 		             cq->sizeof_elem);
 
 	// reset element
-	(void)memset((char*)cq->buf + cq->head * cq->sizeof_elem,
-	             0, cq->sizeof_elem);
+	(void)memset((char*)cq->buf + cq->head * cq->sizeof_elem, 0,
+	             cq->sizeof_elem);
 
 	// was not empty
 	--cq->num_elems;

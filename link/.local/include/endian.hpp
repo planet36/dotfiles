@@ -19,7 +19,7 @@ constexpr uint16_t rev_2_bytes(uint16_t x) { return __builtin_bswap16(x); }
 constexpr uint32_t rev_4_bytes(uint32_t x) { return __builtin_bswap32(x); }
 constexpr uint64_t rev_8_bytes(uint64_t x) { return __builtin_bswap64(x); }
 #if defined(__SIZEOF_INT128__)
-constexpr __uint128_t rev_16_bytes(__uint128_t x) {return __builtin_bswap128(x);}
+constexpr __uint128_t rev_16_bytes(__uint128_t x) { return __builtin_bswap128(x); }
 #endif
 
 template <typename T>

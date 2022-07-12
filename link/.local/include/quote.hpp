@@ -128,8 +128,7 @@ quote(const char* s, const char delim = double_quote,
 }
 
 auto
-quote_shell_always(const std::string& s,
-                   const char delim = single_quote)
+quote_shell_always(const std::string& s, const char delim = single_quote)
 {
 	std::string result;
 	result.reserve(s.size() + 2);

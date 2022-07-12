@@ -22,21 +22,20 @@
 void
 ltrim(std::string& s)
 {
-	(void)s.erase(s.begin(),
-		std::find_if_not(s.begin(), s.end(),
-			// Characters must be converted to unsigned char.
-			// https://en.cppreference.com/w/cpp/string/byte/isspace
-			[](const unsigned char c_i) { return std::isspace(c_i); }));
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              // Characters must be converted to unsigned char.
+	              // https://en.cppreference.com/w/cpp/string/byte/isspace
+	              [](const unsigned char c_i) { return std::isspace(c_i); }));
 }
 
 void
 rtrim(std::string& s)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-			// Characters must be converted to unsigned char.
-			// https://en.cppreference.com/w/cpp/string/byte/isspace
-			[](const unsigned char c_i) { return std::isspace(c_i); }).base(),
-		s.end());
+	              // Characters must be converted to unsigned char.
+	              // https://en.cppreference.com/w/cpp/string/byte/isspace
+	              [](const unsigned char c_i) { return std::isspace(c_i); }).base(),
+	              s.end());
 }
 
 void
@@ -74,19 +73,18 @@ trim_copy(std::string s)
 void
 ltrim(std::wstring& s)
 {
-	(void)s.erase(s.begin(),
-		std::find_if_not(s.begin(), s.end(),
-			// https://en.cppreference.com/w/cpp/string/wide/iswspace
-			[](const auto c_i) { return std::iswspace(c_i); }));
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              // https://en.cppreference.com/w/cpp/string/wide/iswspace
+	              [](const auto c_i) { return std::iswspace(c_i); }));
 }
 
 void
 rtrim(std::wstring& s)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-			// https://en.cppreference.com/w/cpp/string/wide/iswspace
-			[](const auto c_i) { return std::iswspace(c_i); }).base(),
-		s.end());
+	              // https://en.cppreference.com/w/cpp/string/wide/iswspace
+	              [](const auto c_i) { return std::iswspace(c_i); }).base(),
+	              s.end());
 }
 
 void
@@ -127,10 +125,9 @@ template <class CharT,
 void
 ltrim(std::basic_string<CharT, Traits, Allocator>& s, const std::locale& loc)
 {
-	(void)s.erase(s.begin(),
-		std::find_if_not(s.begin(), s.end(),
-			// https://en.cppreference.com/w/cpp/locale/isspace
-			[loc](const auto c_i) { return std::isspace(c_i, loc); }));
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              // https://en.cppreference.com/w/cpp/locale/isspace
+	              [loc](const auto c_i) { return std::isspace(c_i, loc); }));
 }
 
 template <class CharT,
@@ -140,9 +137,9 @@ void
 rtrim(std::basic_string<CharT, Traits, Allocator>& s, const std::locale& loc)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-			// https://en.cppreference.com/w/cpp/locale/isspace
-			[loc](const auto c_i) { return std::isspace(c_i, loc); }).base(),
-		s.end());
+	              // https://en.cppreference.com/w/cpp/locale/isspace
+	              [loc](const auto c_i) { return std::isspace(c_i, loc); }).base(),
+	              s.end());
 }
 
 template <class CharT,
@@ -195,9 +192,8 @@ template <typename StringT>
 void
 ltrim(StringT& s, const typename StringT::value_type c)
 {
-	(void)s.erase(s.begin(),
-		std::find_if_not(s.begin(), s.end(),
-			[c](const auto c_i) { return c_i == c; }));
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              [c](const auto c_i) { return c_i == c; }));
 }
 
 template <typename StringT>
@@ -205,8 +201,8 @@ void
 rtrim(StringT& s, const typename StringT::value_type c)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-			[c](const auto c_i) { return c_i == c; }).base(),
-		s.end());
+	              [c](const auto c_i) { return c_i == c; }).base(),
+	              s.end());
 }
 
 template <typename StringT>
@@ -249,9 +245,8 @@ template <typename StringT>
 void
 ltrim_set(StringT& s, const StringT& set)
 {
-	(void)s.erase(s.begin(),
-		std::find_if_not(s.begin(), s.end(),
-			[set](const auto c_i) { return set.contains(c_i); }));
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              [set](const auto c_i) { return set.contains(c_i); }));
 }
 
 template <typename StringT>
@@ -259,8 +254,8 @@ void
 rtrim_set(StringT& s, const StringT& set)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-			[set](const auto c_i) { return set.contains(c_i); }).base(),
-		s.end());
+	              [set](const auto c_i) { return set.contains(c_i); }).base(),
+	              s.end());
 }
 
 template <typename StringT>
@@ -303,9 +298,8 @@ template <typename StringT>
 void
 ltrim_cset(StringT& s, const StringT& set)
 {
-	(void)s.erase(s.begin(),
-		std::find_if_not(s.begin(), s.end(),
-			[set](const auto c_i) { return !set.contains(c_i); }));
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              [set](const auto c_i) { return !set.contains(c_i); }));
 }
 
 template <typename StringT>
@@ -313,8 +307,8 @@ void
 rtrim_cset(StringT& s, const StringT& set)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-			[set](const auto c_i) { return !set.contains(c_i); }).base(),
-		s.end());
+	              [set](const auto c_i) { return !set.contains(c_i); }).base(),
+	              s.end());
 }
 
 template <typename StringT>
