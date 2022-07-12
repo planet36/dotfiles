@@ -10,6 +10,7 @@
 #pragma once
 
 #include "angle-utils.hpp"
+#include "isclose.hpp"
 #include "number.hpp"
 #include "sin_cos.hpp"
 
@@ -800,6 +801,21 @@ is_right(const angle<U, T>& a)
 	return a == const_angle<U, T>::quarter_turn;
 }
 
+/// is (approximately) right?
+/**
+\pre \a a is non-negative
+\sa https://mathworld.wolfram.com/RightAngle.html
+*/
+template <angle_unit U, std::floating_point T>
+constexpr bool
+is_right_approx(const angle<U, T>& a,
+                const T allowed_rel_diff = 1E-12,
+                const T allowed_abs_diff = 0)
+{
+	return isclose(a.scalar(), const_angle<U, T>::quarter_turn.scalar(),
+	               allowed_rel_diff, allowed_abs_diff);
+}
+
 /// is obtuse?
 /**
 \pre \a a is non-negative
@@ -813,7 +829,7 @@ is_obtuse(const angle<U, T>& a)
 	       (a < const_angle<U, T>::half_turn);
 }
 
-/// is right?
+/// is straight?
 /**
 \pre \a a is non-negative
 \sa https://mathworld.wolfram.com/StraightAngle.html
@@ -823,6 +839,21 @@ constexpr bool
 is_straight(const angle<U, T>& a)
 {
 	return a == const_angle<U, T>::half_turn;
+}
+
+/// is (approximately) straight?
+/**
+\pre \a a is non-negative
+\sa https://mathworld.wolfram.com/StraightAngle.html
+*/
+template <angle_unit U, std::floating_point T>
+constexpr bool
+is_straight_approx(const angle<U, T>& a,
+                   const T allowed_rel_diff = 1E-12,
+                   const T allowed_abs_diff = 0)
+{
+	return isclose(a.scalar(), const_angle<U, T>::half_turn.scalar(),
+	               allowed_rel_diff, allowed_abs_diff);
 }
 
 /// is reflex?
@@ -849,6 +880,21 @@ is_full(const angle<U, T>& a)
 	return a == const_angle<U, T>::full_turn;
 }
 
+/// is (approximately) full?
+/**
+\pre \a a is non-negative
+\sa https://mathworld.wolfram.com/FullAngle.html
+*/
+template <angle_unit U, std::floating_point T>
+constexpr bool
+is_full_approx(const angle<U, T>& a,
+               const T allowed_rel_diff = 1E-12,
+               const T allowed_abs_diff = 0)
+{
+	return isclose(a.scalar(), const_angle<U, T>::full_turn.scalar(),
+	               allowed_rel_diff, allowed_abs_diff);
+}
+
 /// are complementary?
 /**
 \pre \a a is non-negative
@@ -861,6 +907,20 @@ are_complementary(const angle<U, T>& a1, const angle<U, T>& a2)
 	return is_right(a1 + a2);
 }
 
+/// are (approximately) complementary?
+/**
+\pre \a a is non-negative
+\sa https://mathworld.wolfram.com/ComplementaryAngles.html
+*/
+template <angle_unit U, std::floating_point T>
+constexpr bool
+are_complementary_approx(const angle<U, T>& a1, const angle<U, T>& a2,
+                         const T allowed_rel_diff = 1E-12,
+                         const T allowed_abs_diff = 0)
+{
+	return is_right_approx(a1 + a2, allowed_rel_diff, allowed_abs_diff);
+}
+
 /// are supplementary?
 /**
 \pre \a a is non-negative
@@ -871,6 +931,20 @@ constexpr bool
 are_supplementary(const angle<U, T>& a1, const angle<U, T>& a2)
 {
 	return is_straight(a1 + a2);
+}
+
+/// are (approximately) supplementary?
+/**
+\pre \a a is non-negative
+\sa https://mathworld.wolfram.com/SupplementaryAngles.html
+*/
+template <angle_unit U, std::floating_point T>
+constexpr bool
+are_supplementary_approx(const angle<U, T>& a1, const angle<U, T>& a2,
+                         const T allowed_rel_diff = 1E-12,
+                         const T allowed_abs_diff = 0)
+{
+	return is_straight_approx(a1 + a2, allowed_rel_diff, allowed_abs_diff);
 }
 
 /// get the absolute value of the angle
