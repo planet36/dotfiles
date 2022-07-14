@@ -10,6 +10,7 @@
 #pragma once
 
 #include <ctime>
+#include <system_error>
 
 namespace
 {
@@ -24,7 +25,11 @@ current_year_local()
 	::tzset();
 	// NOTE: localtime_r is not in std::
 	// https://en.cppreference.com/w/c/chrono/localtime
-	(void)::localtime_r(&now_time_t, &now_tm);
+	if (::localtime_r(&now_time_t, &now_tm) == nullptr)
+	{
+		throw std::system_error(std::make_error_code(std::errc(errno)),
+		                        "localtime_r");
+	}
 	return now_tm.tm_year + 1900;
 }
 
@@ -36,7 +41,11 @@ current_year_utc()
 	tm now_tm{};
 	// NOTE: gmtime_r is not in std::
 	// https://en.cppreference.com/w/c/chrono/gmtime
-	(void)::gmtime_r(&now_time_t, &now_tm);
+	if (::gmtime_r(&now_time_t, &now_tm) == nullptr)
+	{
+		throw std::system_error(std::make_error_code(std::errc(errno)),
+		                        "gmtime_r");
+	}
 	return now_tm.tm_year + 1900;
 }
 

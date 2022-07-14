@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <limits.h>
+#include <stdio.h>
 #include <time.h>
 
 static int
@@ -20,7 +22,11 @@ current_year_local()
 	// https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
 	tzset();
 	// https://en.cppreference.com/w/c/chrono/localtime
-	(void)localtime_r(&now_time_t, &now_tm);
+	if (localtime_r(&now_time_t, &now_tm) == NULL)
+	{
+		perror("localtime_r");
+		return INT_MIN;
+	}
 	return now_tm.tm_year + 1900;
 }
 
@@ -31,6 +37,10 @@ current_year_utc()
 	const time_t now_time_t = time(NULL);
 	struct tm now_tm = {0};
 	// https://en.cppreference.com/w/c/chrono/gmtime
-	(void)gmtime_r(&now_time_t, &now_tm);
+	if (gmtime_r(&now_time_t, &now_tm) == NULL)
+	{
+		perror("gmtime_r");
+		return INT_MIN;
+	}
 	return now_tm.tm_year + 1900;
 }
