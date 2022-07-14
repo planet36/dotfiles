@@ -16,8 +16,9 @@ current_year_local()
 {
 	// https://en.cppreference.com/w/c/chrono/time
 	const time_t now_time_t = time(NULL);
+	struct tm now_tm = {0};
 	// https://en.cppreference.com/w/c/chrono/localtime
-	struct tm now_tm = *localtime(&now_time_t);
+	(void)localtime_r(&now_time_t, &now_tm);
 	return now_tm.tm_year + 1900;
 }
 
@@ -26,7 +27,8 @@ current_year_utc()
 {
 	// https://en.cppreference.com/w/c/chrono/time
 	const time_t now_time_t = time(NULL);
+	struct tm now_tm = {0};
 	// https://en.cppreference.com/w/c/chrono/gmtime
-	struct tm now_tm = *gmtime(&now_time_t);
+	(void)gmtime_r(&now_time_t, &now_tm);
 	return now_tm.tm_year + 1900;
 }
