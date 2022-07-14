@@ -17,17 +17,21 @@ namespace
 int
 current_year_local()
 {
-	const std::time_t t = std::time(nullptr);
+	// https://en.cppreference.com/w/cpp/chrono/c/time
+	const std::time_t now_time_t = std::time(nullptr);
 	// https://en.cppreference.com/w/cpp/chrono/c/localtime
-	return std::localtime(&t)->tm_year + 1900;
+	tm now_tm = *std::localtime(&now_time_t);
+	return now_tm.tm_year + 1900;
 }
 
 int
 current_year_utc()
 {
-	const std::time_t t = std::time(nullptr);
+	// https://en.cppreference.com/w/cpp/chrono/c/time
+	const std::time_t now_time_t = std::time(nullptr);
 	// https://en.cppreference.com/w/cpp/chrono/c/gmtime
-	return std::gmtime(&t)->tm_year + 1900;
+	tm now_tm = *std::gmtime(&now_time_t);
+	return now_tm.tm_year + 1900;
 }
 
 }

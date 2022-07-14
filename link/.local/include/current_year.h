@@ -14,15 +14,19 @@
 static int
 current_year_local()
 {
-	const time_t t = time(NULL);
+	// https://en.cppreference.com/w/c/chrono/time
+	const time_t now_time_t = time(NULL);
 	// https://en.cppreference.com/w/c/chrono/localtime
-	return localtime(&t)->tm_year + 1900;
+	struct tm now_tm = *localtime(&now_time_t);
+	return now_tm.tm_year + 1900;
 }
 
 static int
 current_year_utc()
 {
-	const time_t t = time(NULL);
+	// https://en.cppreference.com/w/c/chrono/time
+	const time_t now_time_t = time(NULL);
 	// https://en.cppreference.com/w/c/chrono/gmtime
-	return gmtime(&t)->tm_year + 1900;
+	struct tm now_tm = *gmtime(&now_time_t);
+	return now_tm.tm_year + 1900;
 }
