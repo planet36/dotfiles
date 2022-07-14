@@ -40,7 +40,7 @@ OPTIONS
 
   -n : Show what would be done without doing anything.
 
-  -l : List programs and exit.
+  -l : List programs, then exit.
 
 EOT
 }

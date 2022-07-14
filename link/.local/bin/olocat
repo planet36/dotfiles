@@ -329,7 +329,7 @@ OPTIONS
     Reverse the foreground and background.
 
 -d, --debug
-    Print the colors and exit.
+    Print the colors, then exit.
 
 -l LIGHTNESS
     Specify the lightness.  It must be in the inverval [{min_lightness}, {max_lightness}].
