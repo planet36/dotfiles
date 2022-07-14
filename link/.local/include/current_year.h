@@ -17,6 +17,8 @@ current_year_local()
 	// https://en.cppreference.com/w/c/chrono/time
 	const time_t now_time_t = time(NULL);
 	struct tm now_tm = {0};
+	// https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
+	tzset();
 	// https://en.cppreference.com/w/c/chrono/localtime
 	(void)localtime_r(&now_time_t, &now_tm);
 	return now_tm.tm_year + 1900;
