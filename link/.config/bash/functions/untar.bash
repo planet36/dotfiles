@@ -37,9 +37,9 @@ Usage: $SCRIPT_NAME [OPTIONS] FILE...
 Untar FILE.
 
 OPTIONS
-  -V : Print the version information and exit.
+  -V : Print the version information, then exit.
 
-  -h : Print this message and exit.
+  -h : Print this message, then exit.
 
   -v : Print extra output.
 

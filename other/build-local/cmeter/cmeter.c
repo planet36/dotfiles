@@ -88,9 +88,9 @@ print_usage(const char* argv0)
 	printf("\n");
 
 	printf("OPTIONS\n");
-	printf("  -V        Print the version information and exit.\n");
+	printf("  -V        Print the version information, then exit.\n");
 	printf("\n");
-	printf("  -h        Print this message and exit.\n");
+	printf("  -h        Print this message, then exit.\n");
 	printf("\n");
 	printf("  -l        Specify that the meter grows from left to right.\n");
 	printf("            This is the default behavior.\n");

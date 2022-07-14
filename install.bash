@@ -39,9 +39,9 @@ In both cases, parent directories are created, preserving directory structure.
 
 OPTIONS
 
-  -V : Print the version information and exit.
+  -V : Print the version information, then exit.
 
-  -h : Print this message and exit.
+  -h : Print this message, then exit.
 
   -v : Print extra output.
        Commands such as cp, ln, mkdir, rm, and rmdir are verbose by default.

@@ -92,9 +92,9 @@ print_usage(const char* argv0)
 	printf("\n");
 
 	printf("OPTIONS\n");
-	printf("  -V       Print the version information and exit.\n");
+	printf("  -V       Print the version information, then exit.\n");
 	printf("\n");
-	printf("  -h       Print this message and exit.\n");
+	printf("  -h       Print this message, then exit.\n");
 	printf("\n");
 	printf("  -f FILE  Specify the temporary output file.\n");
 	printf("           FILE must not exist when this daemon starts.\n");

@@ -551,7 +551,7 @@ def main(argv = None):
 
 
 	def print_version():
-		"""Print the version information and exit."""
+		"""Print the version information, then exit."""
 		print(f"{program_name} {__version__}")
 		print(f"Written by {', '.join(program_authors)}")
 
@@ -568,13 +568,13 @@ def main(argv = None):
 
 
 	def print_error(s):
-		"""Print the error message and exit."""
+		"""Print the error message, then exit."""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
 
 	def print_help():
-		"""Print the help message and exit."""
+		"""Print the help message, then exit."""
 
 		print(f'''Usage: {program_name} [OPTIONS] METRICS
 
@@ -583,10 +583,10 @@ Print performance metrics such as uptime, load average, CPU usage, memory, netwo
 OPTIONS
 
 -V, --version
-    Print the version information and exit.
+    Print the version information, then exit.
 
 -h, --help
-    Print this message and exit.
+    Print this message, then exit.
 
 -v, --verbose
     Print diagnostics.

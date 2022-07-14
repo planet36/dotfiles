@@ -33,9 +33,9 @@ Get the program from github.  Run this script from the target directory.
 
 OPTIONS
 
-  -V : Print the version information and exit.
+  -V : Print the version information, then exit.
 
-  -h : Print this message and exit.
+  -h : Print this message, then exit.
 
   -v : Print extra output.
 

@@ -96,7 +96,7 @@ def main(argv = None):
 
 
 	def print_version():
-		"""Print the version information and exit."""
+		"""Print the version information, then exit."""
 		print("{} {}".format(program_name, __version__))
 		print("Written by {}".format(', '.join(program_authors)))
 
@@ -108,13 +108,13 @@ def main(argv = None):
 
 
 	def print_error(s):
-		"""Print the error message and exit."""
+		"""Print the error message, then exit."""
 		print("Error: {}".format(s), file=sys.stderr)
 		print("Try '{} --help' for more information.".format(program_name), file=sys.stderr)
 
 
 	def print_help():
-		"""Print the help message and exit."""
+		"""Print the help message, then exit."""
 
 		print("""Usage: {} [OPTIONS] [FILE...]
 Print the hash digest of FILE(s).
@@ -124,10 +124,10 @@ If FILE is absent, or if FILE is '-', read standard input.
 OPTIONS
 
 -V, --version
-    Print the version information and exit.
+    Print the version information, then exit.
 
 -h, --help
-    Print this message and exit.
+    Print this message, then exit.
 
 -a, --hash-algorithm=ALGORITHM
     Use hash algorithm ALGORITHM to hash the file.

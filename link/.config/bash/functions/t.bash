@@ -49,9 +49,9 @@ Usage: ${SCRIPT_NAME} [OPTIONS] PATHNAME...
 Tar PATHNAME.  Create a tar file with the same name as PATHNAME but with the appropriate extension appended.
 
 OPTIONS
-  -V : Print the version information and exit.
+  -V : Print the version information, then exit.
 
-  -h : Print this message and exit.
+  -h : Print this message, then exit.
 
   -v : Print extra output.
 

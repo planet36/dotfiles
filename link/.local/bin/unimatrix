@@ -47,7 +47,7 @@ OPTIONAL ARGUMENTS
   -g COLOR             Background color (See -c). Defaults to keeping
                        terminal's current background.
 
-  -h                   Show this help message and exit
+  -h                   Show this help message, then exit
 
   -l CHARACTER_LIST    Select character set(s) using a string over letter
                        codes (see CHARACTER SETS below.)
@@ -176,7 +176,7 @@ parser.add_argument('-g', '--bg-color',
                     help='background color (see -c)',
                     type=str)
 parser.add_argument('-h', '--help',
-                    help='display extended usage information and exit.',
+                    help='display extended usage information, then exit.',
                     action='store_true')
 parser.add_argument('-l', '--character-list',
                     help='character set. See details below',

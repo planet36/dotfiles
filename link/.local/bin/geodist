@@ -139,7 +139,7 @@ def main(argv = None):
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
 	def print_version():
-		"""Print the version information and exit."""
+		"""Print the version information, then exit."""
 		print(program_name, __version__)
 		print('Written by', ', '.join(program_authors))
 
@@ -154,12 +154,12 @@ def main(argv = None):
 		print('Warning:', s, file=sys.stderr)
 
 	def print_error(s):
-		"""Print the error message and exit."""
+		"""Print the error message, then exit."""
 		print('Error:', s, file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
 	def print_help():
-		"""Print the help message and exit."""
+		"""Print the help message, then exit."""
 		print(f"""Usage: {program_name} [OPTIONS]
 
 Calculate the distance (in meters) between geodetic coordinates (in decimal degrees).
@@ -171,10 +171,10 @@ LAT1 LON1 LAT2 LON2
 OPTIONS
 
 -V, --version
-    Print the version information and exit.
+    Print the version information, then exit.
 
 -h, --help
-    Print this message and exit.
+    Print this message, then exit.
 
 -v, --verbose
     Print diagnostics.
