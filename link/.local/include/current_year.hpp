@@ -26,8 +26,8 @@ int
 current_year_local()
 {
 	const std::time_t now_time_t = std::time(nullptr);
-#ifdef DEBUG
 	tm now_tm{};
+#ifdef DEBUG
 	// https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
 	::tzset();
 	// NOTE: localtime_r is not in std::
@@ -36,28 +36,28 @@ current_year_local()
 		throw std::system_error(std::make_error_code(std::errc(errno)),
 		                        "localtime_r");
 	}
-	return now_tm.tm_year + 1900;
 #else
-	return std::localtime(&now_time_t)->tm_year + 1900;
+	now_tm = *std::localtime(&now_time_t);
 #endif
+	return now_tm.tm_year + 1900;
 }
 
 int
 current_year_utc()
 {
 	const std::time_t now_time_t = std::time(nullptr);
-#ifdef DEBUG
 	tm now_tm{};
+#ifdef DEBUG
 	// NOTE: gmtime_r is not in std::
 	if (::gmtime_r(&now_time_t, &now_tm) == nullptr)
 	{
 		throw std::system_error(std::make_error_code(std::errc(errno)),
 		                        "gmtime_r");
 	}
-	return now_tm.tm_year + 1900;
 #else
-	return std::gmtime(&now_time_t)->tm_year + 1900;
+	now_tm = *std::gmtime(&now_time_t);
 #endif
+	return now_tm.tm_year + 1900;
 }
 
 }
