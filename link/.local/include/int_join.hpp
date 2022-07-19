@@ -9,8 +9,12 @@
 
 #pragma once
 
+#include "int_bytes.hpp"
+
+#include <concepts>
 #include <cstdint>
 
+#if 0
 constexpr uint16_t
 int_join(const uint8_t hi, const uint8_t lo)
 {
@@ -60,4 +64,24 @@ int_join(const uint64_t hi, const uint64_t lo)
 	return u.whole;
 	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
+#endif
+
+#else
+
+template <std::unsigned_integral T>
+constexpr auto
+int_join(const T hi, const T lo)
+{
+	using result_type = uint_bytes<sizeof(T) * 2>;
+
+	const union
+	{
+		result_type whole;
+		T parts[2];
+	} u = {.parts = {lo, hi}};
+
+	return u.whole;
+	static_assert(sizeof(u.whole) == sizeof(u.parts));
+}
+
 #endif
