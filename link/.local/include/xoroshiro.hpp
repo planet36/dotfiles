@@ -22,8 +22,8 @@
 #include <type_traits>
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG                                  \
-	using result_type = T;                              \
+#define NAMED_REQ_URBG(RESULT_TYPE)                     \
+	using result_type = RESULT_TYPE;                    \
 	static_assert(std::is_unsigned_v<result_type>);     \
 	static constexpr result_type min()                  \
 	{                                                   \
@@ -139,7 +139,7 @@ struct xoroshiro64star
 	using T = uint32_t;
 	static constexpr size_t state_num_elems = 2;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -179,7 +179,7 @@ struct xoroshiro64starstar
 	using T = uint32_t;
 	static constexpr size_t state_num_elems = 2;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -231,7 +231,7 @@ struct xoroshiro128plus
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 2;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -290,7 +290,7 @@ struct xoroshiro128plusplus
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 2;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -349,7 +349,7 @@ struct xoroshiro128starstar
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 2;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -409,7 +409,7 @@ struct xoroshiro1024plusplus
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 16;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -488,7 +488,7 @@ struct xoroshiro1024star
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 16;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -561,7 +561,7 @@ struct xoroshiro1024starstar
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 16;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;

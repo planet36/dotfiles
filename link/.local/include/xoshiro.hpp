@@ -22,8 +22,8 @@
 #include <type_traits>
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG                                  \
-	using result_type = T;                              \
+#define NAMED_REQ_URBG(RESULT_TYPE)                     \
+	using result_type = RESULT_TYPE;                    \
 	static_assert(std::is_unsigned_v<result_type>);     \
 	static constexpr result_type min()                  \
 	{                                                   \
@@ -92,7 +92,7 @@ struct xoshiro128plus
 	using T = uint32_t;
 	static constexpr size_t state_num_elems = 4;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -153,7 +153,7 @@ struct xoshiro128plusplus
 	using T = uint32_t;
 	static constexpr size_t state_num_elems = 4;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -217,7 +217,7 @@ struct xoshiro128starstar
 	using T = uint32_t;
 	static constexpr size_t state_num_elems = 4;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -284,7 +284,7 @@ struct xoshiro256plus
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 4;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -348,7 +348,7 @@ struct xoshiro256plusplus
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 4;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -412,7 +412,7 @@ struct xoshiro256starstar
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 4;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -481,7 +481,7 @@ struct xoshiro512plus
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 8;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -551,7 +551,7 @@ struct xoshiro512plusplus
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 8;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
@@ -622,7 +622,7 @@ struct xoshiro512starstar
 	using T = uint64_t;
 	static constexpr size_t state_num_elems = 8;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	std::array<T, state_num_elems> s;
