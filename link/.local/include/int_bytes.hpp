@@ -22,7 +22,7 @@ using int_bytes = std::conditional_t<N <= sizeof(std::int8_t), std::int8_t,
 #if defined(__SIZEOF_INT128__)
                   std::conditional_t<N <= sizeof(__int128_t), __int128_t, void>
 #else
-	void
+                  void
 #endif
 >>>>;
 
