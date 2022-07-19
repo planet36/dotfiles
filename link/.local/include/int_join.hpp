@@ -11,7 +11,7 @@
 
 #include <cstdint>
 
-uint16_t
+constexpr uint16_t
 int_join(const uint8_t hi, const uint8_t lo)
 {
 	const union
@@ -23,7 +23,7 @@ int_join(const uint8_t hi, const uint8_t lo)
 	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
-uint32_t
+constexpr uint32_t
 int_join(const uint16_t hi, const uint16_t lo)
 {
 	const union
@@ -35,7 +35,7 @@ int_join(const uint16_t hi, const uint16_t lo)
 	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
-uint64_t
+constexpr uint64_t
 int_join(const uint32_t hi, const uint32_t lo)
 {
 	const union
@@ -49,7 +49,7 @@ int_join(const uint32_t hi, const uint32_t lo)
 
 #if defined(__SIZEOF_INT128__)
 // https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
-__uint128_t
+constexpr __uint128_t
 int_join(const uint64_t hi, const uint64_t lo)
 {
 	const union
