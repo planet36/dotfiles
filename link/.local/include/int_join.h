@@ -46,3 +46,18 @@ int32_join(const uint32_t hi, const uint32_t lo)
 	return u.whole;
 	_Static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
+
+#if defined(__SIZEOF_INT128__)
+// https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
+__uint128_t
+int64_join(const uint64_t hi, const uint64_t lo)
+{
+	const union
+	{
+		__uint128_t whole;
+		uint64_t parts[2];
+	} u = {.parts = {lo, hi}};
+	return u.whole;
+	_Static_assert(sizeof(u.whole) == sizeof(u.parts));
+}
+#endif
