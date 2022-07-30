@@ -20,6 +20,8 @@
 	prompt = false
 [include]
 	path = ~/.config/git/private.gitconfig
+[init]
+	defaultBranch = main
 [merge]
 	tool = kdiff3
 	conflictstyle = diff3
