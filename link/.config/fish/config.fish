@@ -34,11 +34,9 @@ set PROFILE_OPTIONS   $(string split ' ' -- $PROFILE_OPTIONS  )
 
 # {{{ env_parallel
 
-# https://bugs.archlinux.org/task/74292
-# https://savannah.gnu.org/bugs/?62578
-#if command --quiet env_parallel
-#    source $(which env_parallel.fish)
-#end
+if command --quiet env_parallel
+    source $(which env_parallel.fish)
+end
 
 # }}}
 
