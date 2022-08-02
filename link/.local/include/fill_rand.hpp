@@ -13,10 +13,58 @@
 
 #include <array>
 #include <concepts>
+#include <cstdlib>
 #include <random>
 #include <system_error>
 #include <unistd.h>
 #include <utility>
+
+#if defined(getentropy) && defined(arc4random_buf)
+
+// getentropy
+// https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
+// Max num bytes allowed is 256
+
+// arc4random_buf
+// https://www.gnu.org/software/libc/manual/html_node/High-Quality-Random.html
+
+template <std::unsigned_integral T, size_t N>
+void
+fill_rand(std::array<T, N>& arr)
+{
+	if constexpr (sizeof(T) * N <= 256)
+	{
+		if (getentropy(arr.data(), sizeof(T) * N) < 0)
+		{
+			throw std::system_error(std::make_error_code(std::errc(errno)),
+			                        "getentropy");
+		}
+	}
+	else
+	{
+		arc4random_buf(arr.data(), sizeof(T) * N);
+	}
+}
+
+template <std::unsigned_integral T>
+void
+fill_rand(T& x)
+{
+	if constexpr (sizeof(T) <= 256)
+	{
+		if (getentropy(&x, sizeof(T)) < 0)
+		{
+			throw std::system_error(std::make_error_code(std::errc(errno)),
+			                        "getentropy");
+		}
+	}
+	else
+	{
+		arc4random_buf(&x, sizeof(T));
+	}
+}
+
+#else
 
 template <std::unsigned_integral T, size_t N>
 void
@@ -52,6 +100,8 @@ fill_rand(T& x)
 	else
 		std::unreachable();
 }
+
+#endif
 
 // https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
 // Max num bytes allowed is 256
