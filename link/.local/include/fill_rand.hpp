@@ -53,7 +53,7 @@ fill_rand(T& x)
 		std::unreachable();
 }
 
-// https://man7.org/linux/man-pages/man3/getentropy.3.html
+// https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
 // Max num bytes allowed is 256
 
 template <std::unsigned_integral T, size_t N>
