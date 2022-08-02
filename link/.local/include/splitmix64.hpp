@@ -18,8 +18,8 @@
 #include <type_traits>
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG                                  \
-	using result_type = T;                              \
+#define NAMED_REQ_URBG(RESULT_TYPE)                     \
+	using result_type = RESULT_TYPE;                    \
 	static_assert(std::is_unsigned_v<result_type>);     \
 	static constexpr result_type min()                  \
 	{                                                   \
@@ -42,7 +42,7 @@ struct splitmix64
 {
 	using T = uint64_t;
 
-NAMED_REQ_URBG
+NAMED_REQ_URBG(T)
 
 private:
 	T s{};
