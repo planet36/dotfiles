@@ -151,11 +151,11 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
-		const T s0 = s[0];
-		T s1 = s[1];
-		const T result = s0 * T{0x9E3779BB};
+		const auto s0 = s[0];
+		auto s1 = s[1];
+		const auto result = s0 * 0x9E3779BB;
 
 		s1 ^= s0;
 		s[0] = std::rotl(s0, 26) ^ s1 ^ (s1 << 9); // a, b
@@ -191,11 +191,11 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
-		const T s0 = s[0];
-		T s1 = s[1];
-		const T result = std::rotl(s0 * 0x9E3779BB, 5) * 5;
+		const auto s0 = s[0];
+		auto s1 = s[1];
+		const auto result = std::rotl(s0 * 0x9E3779BB, 5) * 5;
 
 		s1 ^= s0;
 		s[0] = std::rotl(s0, 26) ^ s1 ^ (s1 << 9); // a, b
@@ -247,11 +247,11 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
-		const T s0 = s[0];
-		T s1 = s[1];
-		const T result = s0 + s1;
+		const auto s0 = s[0];
+		auto s1 = s[1];
+		const auto result = s0 + s1;
 
 		s1 ^= s0;
 		s[0] = std::rotl(s0, 24) ^ s1 ^ (s1 << 16); // a, b
@@ -306,11 +306,11 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
-		const T s0 = s[0];
-		T s1 = s[1];
-		const T result = std::rotl(s0 + s1, 17) + s0;
+		const auto s0 = s[0];
+		auto s1 = s[1];
+		const auto result = std::rotl(s0 + s1, 17) + s0;
 
 		s1 ^= s0;
 		s[0] = std::rotl(s0, 49) ^ s1 ^ (s1 << 21); // a, b
@@ -365,11 +365,11 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
-		const T s0 = s[0];
-		T s1 = s[1];
-		const T result = std::rotl(s0 * 5, 7) * 9;
+		const auto s0 = s[0];
+		auto s1 = s[1];
+		const auto result = std::rotl(s0 * 5, 7) * 9;
 
 		s1 ^= s0;
 		s[0] = std::rotl(s0, 24) ^ s1 ^ (s1 << 16); // a, b
@@ -436,13 +436,13 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
 		const auto q = p;
 		p = (p + 1) % s.size();
-		const T s0 = s[p];
-		T s15 = s[q];
-		const T result = std::rotl(s0 + s15, 23) + s15;
+		const auto s0 = s[p];
+		auto s15 = s[q];
+		const auto result = std::rotl(s0 + s15, 23) + s15;
 
 		s15 ^= s0;
 		s[q] = std::rotl(s0, 25) ^ s15 ^ (s15 << 27);
@@ -515,13 +515,13 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
 		const auto q = p;
 		p = (p + 1) % s.size();
-		const T s0 = s[p];
-		T s15 = s[q];
-		const T result = s0 * 0x9e3779b97f4a7c13;
+		const auto s0 = s[p];
+		auto s15 = s[q];
+		const auto result = s0 * 0x9e3779b97f4a7c13;
 
 		s15 ^= s0;
 		s[q] = std::rotl(s0, 25) ^ s15 ^ (s15 << 27);
@@ -588,13 +588,13 @@ public:
 
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
-	T next()
+	result_type next()
 	{
 		const auto q = p;
 		p = (p + 1) % s.size();
-		const T s0 = s[p];
-		T s15 = s[q];
-		const T result = std::rotl(s0 * 5, 7) * 9;
+		const auto s0 = s[p];
+		auto s15 = s[q];
+		const auto result = std::rotl(s0 * 5, 7) * 9;
 
 		s15 ^= s0;
 		s[q] = std::rotl(s0, 25) ^ s15 ^ (s15 << 27);
