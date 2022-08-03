@@ -139,27 +139,27 @@ def main(argv = None):
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
 	def print_version():
-		"""Print the version information, then exit."""
+		"""Print the version information"""
 		print(program_name, __version__)
 		print('Written by', ', '.join(program_authors))
 
 	def print_verbose(s):
-		"""Print the message if verbose mode is on."""
+		"""Print the message if verbose mode is on"""
 		if verbose:
 			print('#', s)
 
 	# pylint: disable=W0612
 	def print_warning(s):
-		"""Print the warning message and continue."""
+		"""Print the warning message"""
 		print('Warning:', s, file=sys.stderr)
 
 	def print_error(s):
-		"""Print the error message, then exit."""
+		"""Print the error message"""
 		print('Error:', s, file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
 	def print_help():
-		"""Print the help message, then exit."""
+		"""Print the help message"""
 		print(f"""Usage: {program_name} [OPTIONS]
 
 Calculate the distance (in meters) between geodetic coordinates (in decimal degrees).

@@ -270,30 +270,30 @@ def main(argv = None):
 
 
 	def print_version():
-		"""Print the version information, then exit."""
+		"""Print the version information"""
 		print(f"{program_name} {__version__}")
 		print(f"Written by {', '.join(program_authors)}")
 
 
 	def print_verbose(s):
-		"""Print the message if verbose mode is on."""
+		"""Print the message if verbose mode is on"""
 		if verbose:
 			print(f"# {s}", file=sys.stderr)
 
 
 	def print_warning(s):
-		"""Print the warning message and continue."""
+		"""Print the warning message"""
 		print(f"Warning: {s}", file=sys.stderr)
 
 
 	def print_error(s):
-		"""Print the error message, then exit."""
+		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
 
 	def print_help():
-		"""Print the help message, then exit."""
+		"""Print the help message"""
 
 		print(f'''Usage: {program_name} [OPTIONS]
 

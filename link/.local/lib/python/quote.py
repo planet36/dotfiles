@@ -258,25 +258,25 @@ def main(argv = None):
 
 
 	def print_version():
-		"""Print the version information, then exit."""
+		"""Print version information"""
 		print("{} {}".format(program_name, __version__))
 		print("Written by {}".format(', '.join(program_authors)))
 
 
 	# pylint: disable=W0612
 	def print_warning(s):
-		"""Print the warning message and continue."""
+		"""Print the warning message"""
 		print("Warning: {}".format(s), file=sys.stderr)
 
 
 	def print_error(s):
-		"""Print the error message, then exit."""
+		"""Print the error message"""
 		print("Error: {}".format(s), file=sys.stderr)
 		print("Try '{} --help' for more information.".format(program_name), file=sys.stderr)
 
 
 	def print_help():
-		"""Print the help message, then exit."""
+		"""Print the help message"""
 
 		print("""Usage: {} [OPTIONS] [FILE...]
 Quote the lines of FILE according to a quoting style.
