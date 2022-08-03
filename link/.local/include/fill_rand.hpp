@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <utility>
 
-#if defined(getentropy) && defined(arc4random_buf)
+#if defined(_GLIBCXX_HAVE_GETENTROPY) && defined(_GLIBCXX_HAVE_ARC4RANDOM)
 
 // getentropy
 // https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
