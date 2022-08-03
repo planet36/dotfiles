@@ -102,30 +102,3 @@ fill_rand(T& x)
 }
 
 #endif
-
-// https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
-// Max num bytes allowed is 256
-
-template <std::unsigned_integral T, size_t N>
-requires (sizeof(T) * N <= 256)
-void
-getentropy(std::array<T, N>& arr)
-{
-	if (getentropy(arr.data(), sizeof(T) * N) < 0)
-	{
-		throw std::system_error(std::make_error_code(std::errc(errno)),
-		                        "getentropy");
-	}
-}
-
-template <std::unsigned_integral T>
-requires (sizeof(T) <= 256)
-void
-getentropy(T& x)
-{
-	if (getentropy(&x, sizeof(T)) < 0)
-	{
-		throw std::system_error(std::make_error_code(std::errc(errno)),
-		                        "getentropy");
-	}
-}
