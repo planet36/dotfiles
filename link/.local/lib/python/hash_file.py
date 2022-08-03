@@ -11,7 +11,7 @@ import hashlib
 import sys
 
 __author__ = 'Steven Ward'
-__version__ = '2020-12-03'
+__version__ = '2022-08-03'
 
 
 def hash_file(file_name, hash_object=None, block_size=65536):
@@ -97,20 +97,20 @@ def main(argv = None):
 
 	def print_version():
 		"""Print the version information"""
-		print("{} {}".format(program_name, __version__))
-		print("Written by {}".format(', '.join(program_authors)))
+		print(f"{program_name} {__version__}")
+		print(f"Written by {', '.join(program_authors)}")
 
 
-	# pylint: disable=W0612
+	# pylint: disable=unused-variable
 	def print_warning(s):
 		"""Print the warning message"""
-		print("Warning: {}".format(s), file=sys.stderr)
+		print(f"Warning: {s}", file=sys.stderr)
 
 
 	def print_error(s):
 		"""Print the error message"""
-		print("Error: {}".format(s), file=sys.stderr)
-		print("Try '{} --help' for more information.".format(program_name), file=sys.stderr)
+		print(f"Error: {s}", file=sys.stderr)
+		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
 
 	def print_help():
@@ -208,7 +208,7 @@ OPTIONS
 			hash_object = hash_file(file_name, hash_object, block_size)
 
 		hash_digest = hash_object.digest()
-		print('{}  {}'.format(valid_formats[fmt](hash_digest).decode(), file_name_quoted))
+		print(f'{valid_formats[fmt](hash_digest).decode()}  {file_name_quoted}')
 
 
 if __name__ == '__main__':

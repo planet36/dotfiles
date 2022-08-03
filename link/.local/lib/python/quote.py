@@ -13,7 +13,7 @@ import string
 import sys
 
 __author__ = 'Steven Ward'
-__version__ = '2016-06-12'
+__version__ = '2022-08-03'
 
 
 r"""
@@ -46,7 +46,7 @@ def escape_char_to_octal(c):
 	if c in simple_esc_seq:
 		return simple_esc_seq[c]
 	else:
-		return r'\{:03o}'.format(ord(c))
+		return fr'\{ord(c):03o}'
 
 
 def escape_char_to_hexadecimal(c):
@@ -55,7 +55,7 @@ def escape_char_to_hexadecimal(c):
 	if c in simple_esc_seq:
 		return simple_esc_seq[c]
 	else:
-		return r'\x{:02X}'.format(ord(c))
+		return fr'\x{ord(c):02X}'
 
 
 def escape_non_printable_char_to_octal(c):
@@ -258,21 +258,21 @@ def main(argv = None):
 
 
 	def print_version():
-		"""Print version information"""
-		print("{} {}".format(program_name, __version__))
-		print("Written by {}".format(', '.join(program_authors)))
+		"""Print the version information"""
+		print(f"{program_name} {__version__}")
+		print(f"Written by {', '.join(program_authors)}")
 
 
-	# pylint: disable=W0612
+	# pylint: disable=unused-variable
 	def print_warning(s):
 		"""Print the warning message"""
-		print("Warning: {}".format(s), file=sys.stderr)
+		print(f"Warning: {s}", file=sys.stderr)
 
 
 	def print_error(s):
 		"""Print the error message"""
-		print("Error: {}".format(s), file=sys.stderr)
-		print("Try '{} --help' for more information.".format(program_name), file=sys.stderr)
+		print(f"Error: {s}", file=sys.stderr)
+		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
 
 	def print_help():
@@ -309,7 +309,7 @@ OPTIONS
 		for key in sorted(quoting_style_to_function_map):
 			value = quoting_style_to_function_map[key]
 			#print("'{}' : {}".format(key, value.__doc__))
-			print("    {} : {}".format(key, value.__doc__))
+			print(f"    {key} : {value.__doc__}")
 			print()
 
 
@@ -340,7 +340,7 @@ OPTIONS
 	# Validate quoting_style.
 
 	if quoting_style not in valid_quoting_styles:
-		print_error("{} is not a valid quoting style.".format(quoting_style))
+		print_error(f"{quoting_style} is not a valid quoting style.")
 		return 1
 
 
@@ -383,7 +383,7 @@ OPTIONS
 
 				# Read the file.
 
-				with open(file_name, 'r') as f:
+				with open(file_name, mode='r', encoding='utf-8') as f:
 
 					if delimiter == os.linesep:
 						quote_lines(f)

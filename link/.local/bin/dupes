@@ -18,7 +18,7 @@ import sys
 
 from hash_file import hash_file
 
-__version__ = '2020-12-03'
+__version__ = '2022-08-03'
 
 
 File_Info = collections.namedtuple('File_Info', ('path', 'basename', 'name_quoted', 'size', 'mtime', 'ctime'))
@@ -200,13 +200,13 @@ def main(argv = None):
 	def print_version():
 		"""Print the version information"""
 		print(f"{program_name} {__version__}")
-		print("Written by {}".format(', '.join(program_authors)))
+		print(f"Written by {', '.join(program_authors)}")
 
 
 	def print_verbose(s):
 		"""Print the message if verbose mode is on"""
 		if verbose:
-			print(f"# {s}")
+			print(f"# {s}", file=sys.stderr)
 
 
 	def print_warning(s):
@@ -325,7 +325,7 @@ OPTIONS
 
 		path_quoted = shlex.quote(path)
 
-		print_verbose('Finding duplicate files in {}'.format(path_quoted))
+		print_verbose(f'Finding duplicate files in {path_quoted}')
 
 
 		print_verbose('(get_file_size_to_file_path_map)')
@@ -335,7 +335,7 @@ OPTIONS
 		remove_keys_with_single_values(file_size_to_file_path_map)
 
 		if len(file_size_to_file_path_map) == 0:
-			print_warning("No files with duplicate sizes found in {}".format(path_quoted))
+			print_warning(f"No files with duplicate sizes found in {path_quoted}")
 			continue
 
 
@@ -346,7 +346,7 @@ OPTIONS
 		remove_keys_with_single_values(file_hash_to_file_info_map)
 
 		if len(file_hash_to_file_info_map) == 0:
-			print_warning("No files with duplicate hashes found in {}".format(path_quoted))
+			print_warning(f"No files with duplicate hashes found in {path_quoted}")
 			continue
 
 
@@ -389,12 +389,12 @@ OPTIONS
 			for file_info in file_hash_to_file_info_map[file_hash]:
 
 				if print_size and first_iteration:
-					output_lines.append('# size= {} B'.format(file_info.size))
+					output_lines.append(f'# size= {file_info.size} B')
 
 					adjusted_size, prefix = number_prefix.get_binary_prefix(file_info.size)
 
 					if prefix['symbol']: # not empty
-						output_lines.append('# size= {} {}B'.format(round(adjusted_size, 1), prefix['symbol']))
+						output_lines.append(f'# size= {round(adjusted_size, 1)} {prefix["symbol"]}B')
 
 				padding_len = max_file_path_quoted_len - len(file_info.name_quoted) + (only_comment_first and not first_iteration)
 				padding = ' ' * padding_len
@@ -419,7 +419,7 @@ OPTIONS
 			output_file_name = os.path.join(path, 'remove-duplicates.sh')
 
 			try:
-				with open(output_file_name, 'w') as output_file:
+				with open(output_file_name, mode='w', encoding='utf-8') as output_file:
 					output_file.write('\n'.join(output_lines))
 
 				# Make the file executable (i.e. mode 0700).

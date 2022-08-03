@@ -9,11 +9,11 @@
 
 import sys
 
-__version__ = '2021-01-25'
+__version__ = '2022-08-03'
 
 
-def sink(out_file_name, mode):
-	with open(out_file_name, mode) as out_file:
+def sink(out_file_name, mode, encoding='utf-8'):
+	with open(out_file_name, mode=mode, encoding=encoding) as out_file:
 		out_file.write(sys.stdin.read())
 
 
@@ -58,7 +58,7 @@ def main(argv = None):
 		if verbose:
 			print('#', s)
 
-	# pylint: disable=W0612
+	# pylint: disable=unused-variable
 	def print_warning(s):
 		"""Print the warning message"""
 		print('Warning:', s, file=sys.stderr)
@@ -136,8 +136,8 @@ https://lists.gnu.org/archive/html/coreutils/2021-01/msg00067.html
 	if not remaining_args: # empty
 		print_error('Must give FILE')
 		return 1
-	else:
-		out_file_name = remaining_args[0]
+
+	out_file_name = remaining_args[0]
 
 	print_verbose(f'{mode=}')
 

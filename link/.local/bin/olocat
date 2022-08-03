@@ -17,7 +17,7 @@
 # pylint: disable=W0105
 # pylint: disable=W0311
 # pylint: disable=W0511
-# pylint: disable=W0612
+# pylint: disable=unused-variable
 # pylint: disable=W0613
 # pylint: disable=W0621
 
@@ -30,7 +30,7 @@ import sys
 import hsluv
 from xterm_color import xterm_color_num_to_rgb_string
 
-__version__ = '2021-05-12'
+__version__ = '2022-08-03'
 
 
 # https://stackoverflow.com/a/14693789
@@ -119,8 +119,7 @@ def get_hsluv_color_dist(hsluv_color1, hsluv_color2) -> float:
 
 xterm_color_num_to_hsluv_color = {}
 
-for k in xterm_color_num_to_rgb_string:
-	v = xterm_color_num_to_rgb_string[k]
+for (k, v) in xterm_color_num_to_rgb_string.items():
 	xterm_color_num_to_hsluv_color[k] = hsluv.hex_to_hsluv(v)
 
 
@@ -129,8 +128,7 @@ def get_closest_xterm_color_num_from_hsluv(hsluv_color: tuple) -> int:
 	closest_color_num = None
 	min_color_dist = float("inf")
 
-	for color_num in xterm_color_num_to_hsluv_color:
-		hsluv_color_i = xterm_color_num_to_hsluv_color[color_num]
+	for (color_num, hsluv_color_i) in xterm_color_num_to_hsluv_color.items():
 		color_dist = get_hsluv_color_dist(hsluv_color, hsluv_color_i)
 		if color_dist < min_color_dist:
 			min_color_dist = color_dist
@@ -388,7 +386,7 @@ OPTIONS
 				assert lightness <= max_lightness
 
 			else:
-				print_error("Unhandled option '{}'.".format(option))
+				print_error(f"Unhandled option '{option}'.")
 				return 1
 
 		except ValueError as err:
@@ -443,14 +441,14 @@ OPTIONS
 	if debug:
 		for color in colors:
 			if use_true_color:
-				color_hex = '#{:02X}{:02X}{:02X}'.format(color[0], color[1], color[2])
+				color_hex = f'#{color[0]:02X}{color[1]:02X}{color[2]:02X}'
 			else:
-				color_hex = '{:02X}'.format(color)
+				color_hex = f'{color:02X}'
 
 			if sys.stdout.isatty():
-				print(ansi_sgr('{}\t{}'.format(color, color_hex), color, do_bg, do_rev))
+				print(ansi_sgr(f'{color}\t{color_hex}', color, do_bg, do_rev))
 			else:
-				print('{}\t{}'.format(color, color_hex))
+				print(f'{color}\t{color_hex}')
 		return 0
 
 	indexes = range(len(colors))
