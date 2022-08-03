@@ -80,13 +80,13 @@ def main(argv = None):
 		print(program_name, __version__)
 		print(f"Written by {', '.join(program_authors)}")
 
-	# pylint: disable=W0612
+	# pylint: disable=unused-variable
 	def print_verbose(s):
 		"""Print the message if verbose mode is on"""
 		if verbose:
 			print(f'# {s}')
 
-	# pylint: disable=W0612
+	# pylint: disable=unused-variable
 	def print_warning(s):
 		"""Print the warning message"""
 		print(f'Warning: {s}', file=sys.stderr)
@@ -131,7 +131,7 @@ OPTIONS
 		print_error(err)
 		return 1
 
-	# pylint: disable=W0612
+	# pylint: disable=unused-variable
 	for (option, value) in options:
 		# pylint: disable=R1705
 		if option in ['-V', '--version']:
