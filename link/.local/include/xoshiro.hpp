@@ -102,7 +102,7 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128plus() { getentropy(s); }
+	xoshiro128plus() { fill_rand(s); }
 
 	xoshiro128plus(const decltype(s)& new_s): s(new_s) {}
 
@@ -163,7 +163,7 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128plusplus() { getentropy(s); }
+	xoshiro128plusplus() { fill_rand(s); }
 
 	xoshiro128plusplus(const decltype(s)& new_s): s(new_s) {}
 
@@ -227,7 +227,7 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128starstar() { getentropy(s); }
+	xoshiro128starstar() { fill_rand(s); }
 
 	xoshiro128starstar(const decltype(s)& new_s): s(new_s) {}
 
@@ -296,7 +296,7 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256plus() { getentropy(s); }
+	xoshiro256plus() { fill_rand(s); }
 
 	xoshiro256plus(const decltype(s)& new_s): s(new_s) {}
 
@@ -360,7 +360,7 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256plusplus() { getentropy(s); }
+	xoshiro256plusplus() { fill_rand(s); }
 
 	xoshiro256plusplus(const decltype(s)& new_s): s(new_s) {}
 
@@ -424,7 +424,7 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256starstar() { getentropy(s); }
+	xoshiro256starstar() { fill_rand(s); }
 
 	xoshiro256starstar(const decltype(s)& new_s): s(new_s) {}
 
@@ -495,7 +495,7 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512plus() { getentropy(s); }
+	xoshiro512plus() { fill_rand(s); }
 
 	xoshiro512plus(const decltype(s)& new_s): s(new_s) {}
 
@@ -565,7 +565,7 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512plusplus() { getentropy(s); }
+	xoshiro512plusplus() { fill_rand(s); }
 
 	xoshiro512plusplus(const decltype(s)& new_s): s(new_s) {}
 
@@ -636,7 +636,7 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512starstar() { getentropy(s); }
+	xoshiro512starstar() { fill_rand(s); }
 
 	xoshiro512starstar(const decltype(s)& new_s): s(new_s) {}
 
