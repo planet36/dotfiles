@@ -250,6 +250,7 @@ def lch_to_hpluv(_hx_tuple):
 
 
 def rgb_to_hex(_hx_tuple):
+    # pylint: disable=consider-using-f-string
     return '#{:02x}{:02x}{:02x}'.format(
             int(math.floor(_hx_tuple[0] * 255 + 0.5)),
             int(math.floor(_hx_tuple[1] * 255 + 0.5)),
