@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# pylint: disable=missing-function-docstring
 # pylint: disable=C0103
 # pylint: disable=C0114
 # pylint: disable=C0301
@@ -9,12 +10,11 @@
 
 import re
 
-__version__ = '2020-12-02'
+__version__ = '2022-08-03'
 
 # http://www.regular-expressions.info/unicode.html
 # http://unicode.org/reports/tr18/#Categories
 # http://unicode.org/reports/tr44/#GC_Values_Table
-
 
 def str_to_int(s):
 	'''Convert the string to an int if possible.'''
@@ -25,7 +25,6 @@ def str_to_int(s):
 		return (int(s), s)
 	else:
 		return s
-
 
 def split_ints(s, pattern):
 	'''Split the string about groups of decimal characters.'''
@@ -39,4 +38,5 @@ def split_ints(s, pattern):
 
 capture_many_decimal_pattern = re.compile(r'(\d+)')
 
-key = lambda s: (split_ints(s.strip().casefold(), capture_many_decimal_pattern), s)
+def key(s):
+	return (split_ints(s.strip().casefold(), capture_many_decimal_pattern), s)
