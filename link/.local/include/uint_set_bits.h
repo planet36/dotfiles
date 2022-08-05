@@ -9,4 +9,4 @@
 
 #pragma once
 
-#define UINT_SET_BITS(N) ((1ULL << (N)) - 1ULL)
+#define UINT_SET_BITS(N) ((UINT64_C(1) << (N)) - UINT64_C(1))

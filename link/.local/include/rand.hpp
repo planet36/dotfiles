@@ -62,7 +62,7 @@ rand_float()
 bool
 rand_bool()
 {
-	static constexpr uint64_t mask64_one_msb = 1ULL << 63;
+	static constexpr uint64_t mask64_one_msb = UINT64_C(1) << 63;
 	static thread_local xoshiro256starstar gen;
 	static thread_local uint64_t x = 1;
 
