@@ -9,15 +9,19 @@
 
 #pragma once
 
-static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
-
 #include "int_parts_union.hpp"
 
+#include <bit>
 #include <concepts>
 
 template <std::unsigned_integral T>
 constexpr auto
 int_join(const T hi, const T lo)
 {
-	return int_parts<T>{.parts = {lo, hi}}.whole;
+	if constexpr (std::endian::native == std::endian::little)
+		return int_parts<T>{.parts = {lo, hi}}.whole;
+	else if constexpr (std::endian::native == std::endian::big)
+		return int_parts<T>{.parts = {hi, lo}}.whole;
+	else // mixed endian
+		__builtin_unreachable();
 }
