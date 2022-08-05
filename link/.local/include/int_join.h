@@ -11,6 +11,8 @@
 
 #include <stdint.h>
 
+_Static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
+
 uint16_t
 int8_join(const uint8_t hi, const uint8_t lo)
 {
