@@ -11,7 +11,7 @@
 
 static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
 
-#include "int_bytes.hpp"
+#include "int_parts_union.hpp"
 
 #include <concepts>
 #include <cstdint>
@@ -74,6 +74,9 @@ template <std::unsigned_integral T>
 constexpr auto
 int_join(const T hi, const T lo)
 {
+#if 1
+	return int_parts<T>{.parts = {lo, hi}}.whole;
+#else
 	using result_type = uint_bytes<sizeof(T) * 2>;
 
 	const union
@@ -84,6 +87,7 @@ int_join(const T hi, const T lo)
 
 	return u.whole;
 	static_assert(sizeof(u.whole) == sizeof(u.parts));
+#endif
 }
 
 #endif
