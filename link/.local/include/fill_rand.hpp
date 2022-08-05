@@ -13,13 +13,10 @@
 
 #include <array>
 #include <concepts>
-#include <cstdlib>
-#include <random>
-#include <system_error>
-#include <unistd.h>
-#include <utility>
 
 #if defined(_GLIBCXX_HAVE_ARC4RANDOM)
+
+#include <cstdlib>
 
 // arc4random_buf
 // https://www.gnu.org/software/libc/manual/html_node/High-Quality-Random.html
@@ -39,6 +36,9 @@ fill_rand(T& x)
 }
 
 #elif defined(_GLIBCXX_HAVE_GETENTROPY)
+
+#include <unistd.h>
+#include <system_error>
 
 // getentropy
 // https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
@@ -69,6 +69,9 @@ fill_rand(T& x)
 }
 
 #else
+
+#include <random>
+#include <utility>
 
 template <std::unsigned_integral T, size_t N>
 void
