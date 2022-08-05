@@ -14,6 +14,7 @@
 
 static_assert(sizeof(uint32_t) == sizeof(float));
 static_assert(sizeof(uint64_t) == sizeof(double));
+static_assert(__BYTE_ORDER__ == __FLOAT_WORD_ORDER__);
 
 template <unsigned int N>
 union float_bits_union;
