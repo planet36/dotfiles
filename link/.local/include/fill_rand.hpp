@@ -13,6 +13,7 @@
 
 #include <array>
 #include <concepts>
+#include <vector>
 
 #if defined(_GLIBCXX_HAVE_ARC4RANDOM)
 
@@ -33,6 +34,13 @@ void
 fill_rand(std::array<T, N>& arr)
 {
 	arc4random_buf(arr.data(), sizeof(T) * N);
+}
+
+template <std::unsigned_integral T>
+void
+fill_rand(std::vector<T>& vec)
+{
+	arc4random_buf(vec.data(), sizeof(T) * vec.size());
 }
 
 #elif defined(_GLIBCXX_HAVE_GETENTROPY)
@@ -62,6 +70,17 @@ void
 fill_rand(std::array<T, N>& arr)
 {
 	if (getentropy(arr.data(), sizeof(T) * N) < 0)
+	{
+		throw std::system_error(std::make_error_code(std::errc(errno)),
+		                        "getentropy");
+	}
+}
+
+template <std::unsigned_integral T>
+void
+fill_rand(std::vector<T>& vec)
+{
+	if (getentropy(vec.data(), sizeof(T) * vec.size()) < 0)
 	{
 		throw std::system_error(std::make_error_code(std::errc(errno)),
 		                        "getentropy");
@@ -103,6 +122,26 @@ fill_rand(std::array<T, N>& arr)
 			arr[i] = rd();
 		else if constexpr (sizeof(T) <= 2*sizeof(typename std::random_device::result_type))
 			arr[i] = int_join(rd(), rd());
+		else
+			std::unreachable();
+	}
+}
+
+template <std::unsigned_integral T>
+void
+fill_rand(std::vector<T>& vec)
+{
+	static std::random_device rd;
+
+	//for (size_t i = 0; i < vec.size(); ++i)
+	for (T& x : vec)
+	{
+		// std::random_device::result_type is unsigned int
+		// https://en.cppreference.com/w/cpp/numeric/random/random_device
+		if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
+			x = rd();
+		else if constexpr (sizeof(T) <= 2*sizeof(typename std::random_device::result_type))
+			x = int_join(rd(), rd());
 		else
 			std::unreachable();
 	}
