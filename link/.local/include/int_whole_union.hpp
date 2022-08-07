@@ -11,12 +11,13 @@
 
 #include "int_bytes.hpp"
 
+#include <array>
 #include <concepts>
 
 template <std::unsigned_integral T>
 union int_whole
 {
-	uint_bytes<sizeof(T) / 2> parts[2];
+	std::array<uint_bytes<sizeof(T) / 2>, 2> parts;
 	T whole;
 	static_assert(sizeof(parts) == sizeof(whole));
 };
