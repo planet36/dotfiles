@@ -20,4 +20,16 @@ union int_parts
 	std::array<T, 2> parts;
 	uint_bytes<sizeof(T) * 2> whole;
 	static_assert(sizeof(parts) == sizeof(whole));
+
+	/// named ctor
+	static constexpr auto from_parts(const decltype(parts)& new_parts)
+	{
+		return int_parts<T>{.parts = new_parts};
+	}
+
+	/// named ctor
+	static constexpr auto from_whole(const decltype(whole)& new_whole)
+	{
+		return int_parts<T>{.whole = new_whole};
+	}
 };
