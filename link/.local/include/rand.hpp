@@ -24,11 +24,32 @@
 */
 template <integral_number T>
 T
-rand_int(const T a = std::numeric_limits<T>::min(),
-         const T b = std::numeric_limits<T>::max())
+rand_int(const T a, const T b)
 {
 	static thread_local xoshiro256starstar gen;
 	return std::uniform_int_distribution<T>{a, b}(gen);
+}
+
+/**
+\sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
+\return a uniformly distributed random integer within the interval [min, \a b]
+*/
+template <integral_number T>
+T
+rand_int(const T b)
+{
+	return rand_int(std::numeric_limits<T>::min(), b);
+}
+
+/**
+\sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
+\return a uniformly distributed random integer within the interval [min, max]
+*/
+template <integral_number T>
+T
+rand_int()
+{
+	return rand_int(std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
 }
 
 /**
