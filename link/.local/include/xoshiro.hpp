@@ -102,10 +102,12 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128plus() { fill_rand(s); }
+	xoshiro128plus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro128plus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -163,10 +165,12 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128plusplus() { fill_rand(s); }
+	xoshiro128plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro128plusplus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -227,10 +231,12 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
 
 public:
-	xoshiro128starstar() { fill_rand(s); }
+	xoshiro128starstar() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro128starstar(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -296,10 +302,12 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256plus() { fill_rand(s); }
+	xoshiro256plus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro256plus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -360,10 +368,12 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256plusplus() { fill_rand(s); }
+	xoshiro256plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro256plusplus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -424,10 +434,12 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635});
 
 public:
-	xoshiro256starstar() { fill_rand(s); }
+	xoshiro256starstar() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro256starstar(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -495,10 +507,12 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512plus() { fill_rand(s); }
+	xoshiro512plus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro512plus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -565,10 +579,12 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512plusplus() { fill_rand(s); }
+	xoshiro512plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro512plusplus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -636,10 +652,12 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
 
 public:
-	xoshiro512starstar() { fill_rand(s); }
+	xoshiro512starstar() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoshiro512starstar(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()

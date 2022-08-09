@@ -145,10 +145,12 @@ private:
 	std::array<T, state_num_elems> s;
 
 public:
-	xoroshiro64star() { fill_rand(s); }
+	xoroshiro64star() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro64star(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -185,10 +187,12 @@ private:
 	std::array<T, state_num_elems> s;
 
 public:
-	xoroshiro64starstar() { fill_rand(s); }
+	xoroshiro64starstar() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro64starstar(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -241,10 +245,12 @@ private:
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1});
 
 public:
-	xoroshiro128plus() { fill_rand(s); }
+	xoroshiro128plus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro128plus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -300,10 +306,12 @@ private:
 	    0x360fd5f2cf8d5d99, 0x9c6e6877736c46e3});
 
 public:
-	xoroshiro128plusplus() { fill_rand(s); }
+	xoroshiro128plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro128plusplus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -359,10 +367,12 @@ private:
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1});
 
 public:
-	xoroshiro128starstar() { fill_rand(s); }
+	xoroshiro128starstar() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro128starstar(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -430,10 +440,12 @@ private:
 	    0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024plusplus() { fill_rand(s); }
+	xoroshiro1024plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro1024plusplus(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -509,10 +521,12 @@ private:
 	    0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024star() { fill_rand(s); }
+	xoroshiro1024star() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro1024star(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
@@ -582,10 +596,12 @@ private:
 	    0x1e5b3b7f589e03c1});
 
 public:
-	xoroshiro1024starstar() { fill_rand(s); }
+	xoroshiro1024starstar() { while (s == decltype(s){}) { fill_rand(s); } }
 
+	// XXX: must not give zero seed
 	xoroshiro1024starstar(const decltype(s)& new_s): s(new_s) {}
 
+	// XXX: must not give zero seed
 	void seed(const decltype(s)& new_s) { s = new_s; }
 
 	result_type next()
