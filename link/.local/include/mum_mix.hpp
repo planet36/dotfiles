@@ -18,21 +18,20 @@
 
 #include "int_parts_union.hpp"
 
-/// Multiply 64-bit \a V and \a P and return sum of high and low parts of the result.
-constexpr uint64_t
-mum_mix_add(const uint64_t v, const uint64_t p)
+/// Multiply \a V and \a P and return the sum of high and low parts of the result.
+template <std::unsigned_integral T>
+constexpr T
+mum_mix_add(const T v, const T p)
 {
-	const int_parts<uint64_t> r{.whole = __uint128_t{v} * p};
-	/* We could use XOR here too but, for some reasons, on Haswell and
-	Power7 using an addition improves hashing performance by 10% for
-	small strings.  */
+	const int_parts<T> r{.whole = static_cast<next_larger<T>>(v) * p};
 	return r.parts[1] + r.parts[0];
 }
 
-/// Multiply 64-bit \a V and \a P and return xor of high and low parts of the result.
-constexpr uint64_t
-mum_mix_xor(const uint64_t v, const uint64_t p)
+/// Multiply \a V and \a P and return the XOR of high and low parts of the result.
+template <std::unsigned_integral T>
+constexpr T
+mum_mix_xor(const T v, const T p)
 {
-	const int_parts<uint64_t> r{.whole = __uint128_t{v} * p};
+	const int_parts<T> r{.whole = static_cast<next_larger<T>>(v) * p};
 	return r.parts[1] ^ r.parts[0];
 }
