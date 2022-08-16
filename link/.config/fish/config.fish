@@ -114,6 +114,14 @@ fish_config theme choose 'Tomorrow Night Bright'
 
 fish_config prompt choose informative_vcs
 
+# {{{ Configure git prompt
+# https://fishshell.com/docs/current/cmds/fish_git_prompt.html
+set __fish_git_prompt_showcolorhints
+set __fish_git_prompt_showdirtystate
+set __fish_git_prompt_showstashstate
+set __fish_git_prompt_showuntrackedfiles
+# }}}
+
 # }}}
 
 end # status is-interactive
