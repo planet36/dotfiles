@@ -15,10 +15,9 @@ PLUGINS_START+=('https://github.com/junegunn/fzf.vim.git')
 #PLUGINS_START+=('https://github.com/tpope/vim-sensible.git')
 PLUGINS_START+=('https://github.com/godlygeek/tabular.git')
 PLUGINS_START+=('https://github.com/AndrewRadev/linediff.vim.git')
+PLUGINS_START+=('https://github.com/chrisbra/unicode.vim.git')
 
 declare -a PLUGINS_OPT
-
-PLUGINS_OPT+=('https://github.com/chrisbra/unicode.vim.git')
 
 # color schemes
 PLUGINS_OPT+=('https://github.com/srcery-colors/srcery-vim.git') # srcery
