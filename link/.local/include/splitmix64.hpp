@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "bytes.hpp"
 #include "fill_rand.hpp"
 
 #include <cstdint>
@@ -40,19 +41,22 @@
  */
 struct splitmix64
 {
-	using T = uint64_t;
+	using state_type = uint64_t;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG(uint64_t)
 
 private:
-	T s{};
+	state_type s{};
 
 public:
 	splitmix64() { fill_rand(s); }
 
-	splitmix64(const decltype(s)& new_s): s(new_s) {}
+	splitmix64(const state_type& new_s) { seed(new_s); }
+	splitmix64(const seed_bytes_type& bytes) { seed(bytes); }
 
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
 
 	result_type next()
 	{

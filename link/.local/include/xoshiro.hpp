@@ -13,6 +13,7 @@
 
 #pragma once
 
+#include "bytes.hpp"
 #include "fill_rand.hpp"
 
 #include <array>
@@ -38,7 +39,7 @@
 #define DEF_JUMP                                                     \
 	void jump()                                                      \
 	{                                                                \
-		decltype(s) new_s;                                           \
+		state_type new_s;                                            \
 		new_s.fill(0);                                               \
 		for (const auto x : JUMP)                                    \
 		{                                                            \
@@ -58,7 +59,7 @@
 #define DEF_LONG_JUMP                                                \
 	void long_jump()                                                 \
 	{                                                                \
-		decltype(s) new_s;                                           \
+		state_type new_s;                                            \
 		new_s.fill(0);                                               \
 		for (const auto x : LONG_JUMP)                               \
 		{                                                            \
@@ -90,25 +91,28 @@
 struct xoshiro128plus
 {
 	using T = uint32_t;
-	static constexpr size_t state_num_elems = 4;
+	using state_type = std::array<T, 4>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
-	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
-	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
+	state_type s{};
+	static constexpr state_type JUMP{
+	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b};
+	static constexpr state_type LONG_JUMP{
+	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
 public:
-	xoshiro128plus() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro128plus() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro128plus(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro128plus(const state_type& new_s) { seed(new_s); }
+	xoshiro128plus(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -153,25 +157,28 @@ DEF_LONG_JUMP
 struct xoshiro128plusplus
 {
 	using T = uint32_t;
-	static constexpr size_t state_num_elems = 4;
+	using state_type = std::array<T, 4>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
-	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
-	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
+	state_type s{};
+	static constexpr state_type JUMP{
+	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b};
+	static constexpr state_type LONG_JUMP{
+	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
 public:
-	xoshiro128plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro128plusplus() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro128plusplus(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro128plusplus(const state_type& new_s) { seed(new_s); }
+	xoshiro128plusplus(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -219,25 +226,28 @@ DEF_LONG_JUMP
 struct xoshiro128starstar
 {
 	using T = uint32_t;
-	static constexpr size_t state_num_elems = 4;
+	using state_type = std::array<T, 4>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
-	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
-	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662});
+	state_type s{};
+	static constexpr state_type JUMP{
+	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b};
+	static constexpr state_type LONG_JUMP{
+	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
 public:
-	xoshiro128starstar() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro128starstar() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro128starstar(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro128starstar(const state_type& new_s) { seed(new_s); }
+	xoshiro128starstar(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -288,27 +298,30 @@ DEF_LONG_JUMP
 struct xoshiro256plus
 {
 	using T = uint64_t;
-	static constexpr size_t state_num_elems = 4;
+	using state_type = std::array<T, 4>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
+	state_type s{};
+	static constexpr state_type JUMP{
 	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
-	    0xa9582618e03fc9aa, 0x39abdc4529b1661c});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0xa9582618e03fc9aa, 0x39abdc4529b1661c};
+	static constexpr state_type LONG_JUMP{
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
-	    0x77710069854ee241, 0x39109bb02acbe635});
+	    0x77710069854ee241, 0x39109bb02acbe635};
 
 public:
-	xoshiro256plus() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro256plus() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro256plus(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro256plus(const state_type& new_s) { seed(new_s); }
+	xoshiro256plus(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -354,27 +367,30 @@ DEF_LONG_JUMP
 struct xoshiro256plusplus
 {
 	using T = uint64_t;
-	static constexpr size_t state_num_elems = 4;
+	using state_type = std::array<T, 4>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
+	state_type s{};
+	static constexpr state_type JUMP{
 	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
-	    0xa9582618e03fc9aa, 0x39abdc4529b1661c});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0xa9582618e03fc9aa, 0x39abdc4529b1661c};
+	static constexpr state_type LONG_JUMP{
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
-	    0x77710069854ee241, 0x39109bb02acbe635});
+	    0x77710069854ee241, 0x39109bb02acbe635};
 
 public:
-	xoshiro256plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro256plusplus() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro256plusplus(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro256plusplus(const state_type& new_s) { seed(new_s); }
+	xoshiro256plusplus(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -420,27 +436,30 @@ DEF_LONG_JUMP
 struct xoshiro256starstar
 {
 	using T = uint64_t;
-	static constexpr size_t state_num_elems = 4;
+	using state_type = std::array<T, 4>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
+	state_type s{};
+	static constexpr state_type JUMP{
 	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
-	    0xa9582618e03fc9aa, 0x39abdc4529b1661c});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0xa9582618e03fc9aa, 0x39abdc4529b1661c};
+	static constexpr state_type LONG_JUMP{
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
-	    0x77710069854ee241, 0x39109bb02acbe635});
+	    0x77710069854ee241, 0x39109bb02acbe635};
 
 public:
-	xoshiro256starstar() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro256starstar() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro256starstar(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro256starstar(const state_type& new_s) { seed(new_s); }
+	xoshiro256starstar(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -491,29 +510,32 @@ DEF_LONG_JUMP
 struct xoshiro512plus
 {
 	using T = uint64_t;
-	static constexpr size_t state_num_elems = 8;
+	using state_type = std::array<T, 8>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
+	state_type s{};
+	static constexpr state_type JUMP{
 	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
 	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
-	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db};
+	static constexpr state_type LONG_JUMP{
 	    0x11467fef8f921d28, 0xa2a819f2e79c8ea8, 0xa8299fc284b3959a,
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
-	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
+	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
 public:
-	xoshiro512plus() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro512plus() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro512plus(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro512plus(const state_type& new_s) { seed(new_s); }
+	xoshiro512plus(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -563,29 +585,32 @@ DEF_LONG_JUMP
 struct xoshiro512plusplus
 {
 	using T = uint64_t;
-	static constexpr size_t state_num_elems = 8;
+	using state_type = std::array<T, 8>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
+	state_type s{};
+	static constexpr state_type JUMP{
 	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
 	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
-	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db};
+	static constexpr state_type LONG_JUMP{
 	    0x11467fef8f921d28, 0xa2a819f2e79c8ea8, 0xa8299fc284b3959a,
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
-	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
+	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
 public:
-	xoshiro512plusplus() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro512plusplus() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro512plusplus(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro512plusplus(const state_type& new_s) { seed(new_s); }
+	xoshiro512plusplus(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
@@ -636,29 +661,32 @@ DEF_LONG_JUMP
 struct xoshiro512starstar
 {
 	using T = uint64_t;
-	static constexpr size_t state_num_elems = 8;
+	using state_type = std::array<T, 8>;
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
 NAMED_REQ_URBG(T)
 
 private:
-	std::array<T, state_num_elems> s;
-	static constexpr auto JUMP = std::to_array<T>({
+	state_type s{};
+	static constexpr state_type JUMP{
 	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
 	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
-	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db});
-	static constexpr auto LONG_JUMP = std::to_array<T>({
+	    0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db};
+	static constexpr state_type LONG_JUMP{
 	    0x11467fef8f921d28, 0xa2a819f2e79c8ea8, 0xa8299fc284b3959a,
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
-	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5});
+	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
 public:
-	xoshiro512starstar() { while (s == decltype(s){}) { fill_rand(s); } }
+	xoshiro512starstar() { while (s == state_type{}) { fill_rand(s); } }
 
 	// XXX: must not give zero seed
-	xoshiro512starstar(const decltype(s)& new_s): s(new_s) {}
 
-	// XXX: must not give zero seed
-	void seed(const decltype(s)& new_s) { s = new_s; }
+	xoshiro512starstar(const state_type& new_s) { seed(new_s); }
+	xoshiro512starstar(const seed_bytes_type& bytes) { seed(bytes); }
+
+	void seed(const state_type& new_s) { s = new_s; }
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
 
 	result_type next()
 	{
