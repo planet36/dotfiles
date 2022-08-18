@@ -36,6 +36,21 @@
 	}                                                   \
 	result_type operator()() { return next(); }
 
+#define DEF_CTORS(CLASS_NAME) \
+	CLASS_NAME() { seed(); } \
+	CLASS_NAME(const state_type& new_s) { seed(new_s); } \
+	CLASS_NAME(const seed_bytes_type& bytes) { seed(bytes); }
+
+#define DEF_SEEDS \
+	void seed() { fill_rand(s); } \
+	void seed(const state_type& new_s) { s = new_s; } \
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+
+#define DEF_SEEDS_NONZERO \
+	void seed() { fill_rand(s); while (s == state_type{}) [[unlikely]] { fill_rand(s); } } \
+	void seed(const state_type& new_s) { s = new_s; } \
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+
 #define DEF_JUMP                                                     \
 	void jump()                                                      \
 	{                                                                \
@@ -147,15 +162,10 @@ private:
 	state_type s{};
 
 public:
-	xoroshiro64star() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro64star)
 
 	// XXX: must not give zero seed
-
-	xoroshiro64star(const state_type& new_s) { seed(new_s); }
-	xoroshiro64star(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -192,15 +202,10 @@ private:
 	state_type s{};
 
 public:
-	xoroshiro64starstar() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro64starstar)
 
 	// XXX: must not give zero seed
-
-	xoroshiro64starstar(const state_type& new_s) { seed(new_s); }
-	xoroshiro64starstar(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -253,15 +258,10 @@ private:
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1};
 
 public:
-	xoroshiro128plus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro128plus)
 
 	// XXX: must not give zero seed
-
-	xoroshiro128plus(const state_type& new_s) { seed(new_s); }
-	xoroshiro128plus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -317,15 +317,10 @@ private:
 	    0x360fd5f2cf8d5d99, 0x9c6e6877736c46e3};
 
 public:
-	xoroshiro128plusplus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro128plusplus)
 
 	// XXX: must not give zero seed
-
-	xoroshiro128plusplus(const state_type& new_s) { seed(new_s); }
-	xoroshiro128plusplus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -381,15 +376,10 @@ private:
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1};
 
 public:
-	xoroshiro128starstar() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro128starstar)
 
 	// XXX: must not give zero seed
-
-	xoroshiro128starstar(const state_type& new_s) { seed(new_s); }
-	xoroshiro128starstar(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -457,15 +447,10 @@ private:
 	    0x1e5b3b7f589e03c1};
 
 public:
-	xoroshiro1024plusplus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro1024plusplus)
 
 	// XXX: must not give zero seed
-
-	xoroshiro1024plusplus(const state_type& new_s) { seed(new_s); }
-	xoroshiro1024plusplus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -541,15 +526,10 @@ private:
 	    0x1e5b3b7f589e03c1};
 
 public:
-	xoroshiro1024star() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro1024star)
 
 	// XXX: must not give zero seed
-
-	xoroshiro1024star(const state_type& new_s) { seed(new_s); }
-	xoroshiro1024star(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -619,15 +599,10 @@ private:
 	    0x1e5b3b7f589e03c1};
 
 public:
-	xoroshiro1024starstar() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoroshiro1024starstar)
 
 	// XXX: must not give zero seed
-
-	xoroshiro1024starstar(const state_type& new_s) { seed(new_s); }
-	xoroshiro1024starstar(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -659,6 +634,9 @@ DEF_LONG_JUMP_2
 };
 
 #undef NAMED_REQ_URBG
+#undef DEF_CTORS
+#undef DEF_SEEDS
+#undef DEF_SEEDS_NONZERO
 #undef DEF_JUMP
 #undef DEF_LONG_JUMP
 #undef DEF_JUMP_2

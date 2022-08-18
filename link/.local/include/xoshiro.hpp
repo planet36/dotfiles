@@ -36,6 +36,21 @@
 	}                                                   \
 	result_type operator()() { return next(); }
 
+#define DEF_CTORS(CLASS_NAME) \
+	CLASS_NAME() { seed(); } \
+	CLASS_NAME(const state_type& new_s) { seed(new_s); } \
+	CLASS_NAME(const seed_bytes_type& bytes) { seed(bytes); }
+
+#define DEF_SEEDS \
+	void seed() { fill_rand(s); } \
+	void seed(const state_type& new_s) { s = new_s; } \
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+
+#define DEF_SEEDS_NONZERO \
+	void seed() { fill_rand(s); while (s == state_type{}) [[unlikely]] { fill_rand(s); } } \
+	void seed(const state_type& new_s) { s = new_s; } \
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+
 #define DEF_JUMP                                                     \
 	void jump()                                                      \
 	{                                                                \
@@ -104,15 +119,10 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
 public:
-	xoshiro128plus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro128plus)
 
 	// XXX: must not give zero seed
-
-	xoshiro128plus(const state_type& new_s) { seed(new_s); }
-	xoshiro128plus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -170,15 +180,10 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
 public:
-	xoshiro128plusplus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro128plusplus)
 
 	// XXX: must not give zero seed
-
-	xoshiro128plusplus(const state_type& new_s) { seed(new_s); }
-	xoshiro128plusplus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -239,15 +244,10 @@ private:
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
 public:
-	xoshiro128starstar() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro128starstar)
 
 	// XXX: must not give zero seed
-
-	xoshiro128starstar(const state_type& new_s) { seed(new_s); }
-	xoshiro128starstar(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -313,15 +313,10 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
 public:
-	xoshiro256plus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro256plus)
 
 	// XXX: must not give zero seed
-
-	xoshiro256plus(const state_type& new_s) { seed(new_s); }
-	xoshiro256plus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -382,15 +377,10 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
 public:
-	xoshiro256plusplus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro256plusplus)
 
 	// XXX: must not give zero seed
-
-	xoshiro256plusplus(const state_type& new_s) { seed(new_s); }
-	xoshiro256plusplus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -451,15 +441,10 @@ private:
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
 public:
-	xoshiro256starstar() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro256starstar)
 
 	// XXX: must not give zero seed
-
-	xoshiro256starstar(const state_type& new_s) { seed(new_s); }
-	xoshiro256starstar(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -527,15 +512,10 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
 public:
-	xoshiro512plus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro512plus)
 
 	// XXX: must not give zero seed
-
-	xoshiro512plus(const state_type& new_s) { seed(new_s); }
-	xoshiro512plus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -602,15 +582,10 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
 public:
-	xoshiro512plusplus() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro512plusplus)
 
 	// XXX: must not give zero seed
-
-	xoshiro512plusplus(const state_type& new_s) { seed(new_s); }
-	xoshiro512plusplus(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -678,15 +653,10 @@ private:
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
 public:
-	xoshiro512starstar() { while (s == state_type{}) { fill_rand(s); } }
+DEF_CTORS(xoshiro512starstar)
 
 	// XXX: must not give zero seed
-
-	xoshiro512starstar(const state_type& new_s) { seed(new_s); }
-	xoshiro512starstar(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_array_of<state_type::value_type>(bytes); }
+DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -724,5 +694,8 @@ DEF_LONG_JUMP
 };
 
 #undef NAMED_REQ_URBG
+#undef DEF_CTORS
+#undef DEF_SEEDS
+#undef DEF_SEEDS_NONZERO
 #undef DEF_JUMP
 #undef DEF_LONG_JUMP

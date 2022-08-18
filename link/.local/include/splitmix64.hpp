@@ -32,6 +32,21 @@
 	}                                                   \
 	result_type operator()() { return next(); }
 
+#define DEF_CTORS(CLASS_NAME) \
+	CLASS_NAME() { seed(); } \
+	CLASS_NAME(const state_type& new_s) { seed(new_s); } \
+	CLASS_NAME(const seed_bytes_type& bytes) { seed(bytes); }
+
+#define DEF_SEEDS \
+	void seed() { fill_rand(s); } \
+	void seed(const state_type& new_s) { s = new_s; } \
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+
+#define DEF_SEEDS_NONZERO \
+	void seed() { fill_rand(s); while (s == state_type{}) [[unlikely]] { fill_rand(s); } } \
+	void seed(const state_type& new_s) { s = new_s; } \
+	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+
 /** This is a fixed-increment version of Java 8's SplittableRandom generator
  * See https://dl.acm.org/doi/10.1145/2714064.2660195 and
  * https://docs.oracle.com/javase/8/docs/api/java/util/SplittableRandom.html
@@ -50,13 +65,9 @@ private:
 	state_type s{};
 
 public:
-	splitmix64() { fill_rand(s); }
+DEF_CTORS(splitmix64)
 
-	splitmix64(const state_type& new_s) { seed(new_s); }
-	splitmix64(const seed_bytes_type& bytes) { seed(bytes); }
-
-	void seed(const state_type& new_s) { s = new_s; }
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+DEF_SEEDS
 
 	result_type next()
 	{
@@ -68,3 +79,6 @@ public:
 };
 
 #undef NAMED_REQ_URBG
+#undef DEF_CTORS
+#undef DEF_SEEDS
+#undef DEF_SEEDS_NONZERO
