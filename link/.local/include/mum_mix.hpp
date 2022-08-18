@@ -12,10 +12,6 @@
 
 #pragma once
 
-#if !defined(__SIZEOF_INT128__)
-#error "__SIZEOF_INT128__ not defined"
-#endif
-
 #include "int_parts_union.hpp"
 
 /// Multiply \a V and \a P and return the sum of high and low parts of the result.
