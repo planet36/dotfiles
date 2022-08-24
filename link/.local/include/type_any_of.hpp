@@ -13,12 +13,12 @@
 
 #include <type_traits>
 
-template <typename T, typename... U>
-struct is_type_any_of : std::bool_constant<(std::is_same_v<T, U> || ...)>
+template <typename T, typename... Us>
+struct is_type_any_of : std::bool_constant<(std::is_same_v<T, Us> || ...)>
 {};
 
-template <typename T, typename... U>
-inline constexpr bool is_type_any_of_v = is_type_any_of<T, U...>::value;
+template <typename T, typename... Us>
+inline constexpr bool is_type_any_of_v = is_type_any_of<T, Us...>::value;
 
-template <typename T, typename... U>
-concept type_any_of = is_type_any_of_v<T, U...>;
+template <typename T, typename... Us>
+concept type_any_of = is_type_any_of_v<T, Us...>;
