@@ -65,7 +65,7 @@ join(const Iter& first, const Iter& last, const std::string& joiner = ", ")
 }
 
 // template template parameter
-template <template<typename> typename Container, typename StringT>
+template <template <typename> typename Container, typename StringT>
 requires type_any_of<StringT,
 	std::string,
 	std::string_view,
