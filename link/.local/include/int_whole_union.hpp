@@ -17,8 +17,8 @@
 template <std::unsigned_integral T>
 union int_whole
 {
-	std::array<next_smaller<T>, 2> parts;
 	T whole;
+	std::array<next_smaller<T>, 2> parts;
 	static_assert(sizeof(parts) == sizeof(whole));
 
 	/// named ctor
