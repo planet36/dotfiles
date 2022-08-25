@@ -17,7 +17,7 @@
 template <std::unsigned_integral T>
 union int_whole
 {
-	std::array<uint_bytes<sizeof(T) / 2>, 2> parts;
+	std::array<next_smaller<T>, 2> parts;
 	T whole;
 	static_assert(sizeof(parts) == sizeof(whole));
 
