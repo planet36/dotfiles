@@ -57,7 +57,7 @@ make_unit_float(const uint32_t x)
 }
 
 constexpr double
-make_unit_float(const uint64_t x)
+make_unit_double(const uint64_t x)
 {
 	if constexpr (__BYTE_ORDER__ == __FLOAT_WORD_ORDER__)
 		return bits_to_float(UINT64_C(0x3FF) << 52 | x >> 12) - 1;
