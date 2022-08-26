@@ -17,3 +17,6 @@ make_unit_float(const uint32_t x) { return (x >> (32-24)) / 0x1p+24f; }
 
 constexpr double
 make_unit_double(const uint64_t x) { return (x >> (64-53)) / 0x1p+53; }
+
+constexpr long double
+make_unit_long_double(const uint64_t x) { return (x >> (64-64)) / 0x1p+64L; }
