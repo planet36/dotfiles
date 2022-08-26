@@ -35,7 +35,7 @@ union float_bits_union<8>
 
 template <std::floating_point T>
 requires (sizeof(T) == 4 || sizeof(T) == 8)
-constexpr auto
+auto
 float_to_bits(const T x)
 {
 	return float_bits_union<sizeof(T)>{.f = x}.i;
@@ -43,7 +43,7 @@ float_to_bits(const T x)
 
 template <std::unsigned_integral T>
 requires (sizeof(T) == 4 || sizeof(T) == 8)
-constexpr auto
+auto
 bits_to_float(const T x)
 {
 	return float_bits_union<sizeof(T)>{.i = x}.f;
