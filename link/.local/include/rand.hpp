@@ -11,6 +11,7 @@
 #pragma once
 
 #include "integral_number.hpp"
+#include "make_unit_float.hpp"
 #include "wyrand.hpp"
 
 #include <concepts>
@@ -66,14 +67,33 @@ rand_float(const T a, const T b)
 }
 
 /**
-\sa https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
-template <std::floating_point T>
-T
-rand_float()
+float
+rand_unit_float()
 {
-	return rand_float(T{0}, T{1});
+	static thread_local wyrand gen;
+	return make_unit_float(gen.next());
+}
+
+/**
+\return a uniformly distributed random floating-point number within the interval [0, 1)
+*/
+double
+rand_unit_double()
+{
+	static thread_local wyrand gen;
+	return make_unit_double(gen.next());
+}
+
+/**
+\return a uniformly distributed random floating-point number within the interval [0, 1)
+*/
+long double
+rand_unit_long_double()
+{
+	static thread_local wyrand gen;
+	return make_unit_long_double(gen.next());
 }
 
 /**
