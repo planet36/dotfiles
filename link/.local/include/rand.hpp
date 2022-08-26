@@ -54,19 +54,6 @@ rand_int()
 }
 
 /**
-\pre \a a < \a b
-\sa https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
-\return a uniformly distributed random floating-point number within the interval [\a a, \a b)
-*/
-template <std::floating_point T>
-T
-rand_float(const T a, const T b)
-{
-	static thread_local wyrand gen;
-	return std::uniform_real_distribution<T>{a, b}(gen);
-}
-
-/**
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 float
@@ -94,6 +81,19 @@ rand_unit_long_double()
 {
 	static thread_local wyrand gen;
 	return make_unit_long_double(gen.next());
+}
+
+/**
+\pre \a a < \a b
+\sa https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+\return a uniformly distributed random floating-point number within the interval [\a a, \a b)
+*/
+template <std::floating_point T>
+T
+rand_float(const T a, const T b)
+{
+	static thread_local wyrand gen;
+	return std::uniform_real_distribution<T>{a, b}(gen);
 }
 
 /**
