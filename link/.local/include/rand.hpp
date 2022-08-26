@@ -28,6 +28,8 @@ T
 rand_int(const T a, const T b)
 {
 	static thread_local wyrand gen;
+	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	              std::numeric_limits<T>::digits);
 	return std::uniform_int_distribution<T>{a, b}(gen);
 }
 
@@ -60,6 +62,8 @@ float
 rand_unit_float()
 {
 	static thread_local wyrand gen;
+	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	              std::numeric_limits<float>::digits);
 	return make_unit_float(gen.next());
 }
 
@@ -70,6 +74,8 @@ double
 rand_unit_double()
 {
 	static thread_local wyrand gen;
+	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	              std::numeric_limits<double>::digits);
 	return make_unit_double(gen.next());
 }
 
@@ -80,6 +86,8 @@ long double
 rand_unit_long_double()
 {
 	static thread_local wyrand gen;
+	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	              std::numeric_limits<long double>::digits);
 	return make_unit_long_double(gen.next());
 }
 
