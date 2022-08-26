@@ -48,20 +48,8 @@ constexpr auto make_unit_float(const Ti x)
 }
 #else
 constexpr float
-make_unit_float(const uint32_t x)
-{
-	if constexpr (__BYTE_ORDER__ == __FLOAT_WORD_ORDER__)
-		return bits_to_float(UINT32_C(0x7F) << 23 | x >> 9) - 1;
-	else
-		return (x >> 9) / 0x1p+23f;
-}
+make_unit_float(const uint32_t x) { return (x >> (32-24)) / 0x1p+24f; }
 
 constexpr double
-make_unit_double(const uint64_t x)
-{
-	if constexpr (__BYTE_ORDER__ == __FLOAT_WORD_ORDER__)
-		return bits_to_float(UINT64_C(0x3FF) << 52 | x >> 12) - 1;
-	else
-		return (x >> 12) / 0x1p+52;
-}
+make_unit_double(const uint64_t x) { return (x >> (64-53)) / 0x1p+53; }
 #endif
