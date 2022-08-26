@@ -45,14 +45,16 @@ rand_int(const T b)
 }
 
 /**
-\sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
 \return a uniformly distributed random integer within the interval [min, max]
 */
 template <integral_number T>
 T
 rand_int()
 {
-	return rand_int(std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
+	static thread_local wyrand gen;
+	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	              std::numeric_limits<T>::digits);
+	return gen.next();
 }
 
 /**
