@@ -11,7 +11,7 @@
 #pragma once
 
 #include "integral_number.hpp"
-#include "xoshiro.hpp"
+#include "wyrand.hpp"
 
 #include <concepts>
 #include <limits>
@@ -26,7 +26,7 @@ template <integral_number T>
 T
 rand_int(const T a, const T b)
 {
-	static thread_local xoshiro256starstar gen;
+	static thread_local wyrand gen;
 	return std::uniform_int_distribution<T>{a, b}(gen);
 }
 
@@ -61,7 +61,7 @@ template <std::floating_point T>
 T
 rand_float(const T a, const T b)
 {
-	static thread_local xoshiro256plus gen;
+	static thread_local wyrand gen;
 	return std::uniform_real_distribution<T>{a, b}(gen);
 }
 
@@ -84,7 +84,7 @@ bool
 rand_bool()
 {
 	static constexpr uint64_t mask64_one_msb = UINT64_C(1) << 63;
-	static thread_local xoshiro256starstar gen;
+	static thread_local wyrand gen;
 	static thread_local uint64_t x = 1;
 
 	if (x == 1) [[unlikely]]
