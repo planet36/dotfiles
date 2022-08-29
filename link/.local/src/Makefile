@@ -14,7 +14,8 @@ CLONE_ONLY_DIRS = \
 arch-install \
 dwm-suckless \
 slstatus-suckless \
-st-suckless
+st-suckless \
+stw-sineemore
 
 SUBDIRS := $(BUILD_DIRS) $(CLONE_ONLY_DIRS)
 
@@ -26,8 +27,8 @@ clone: | $(SUBDIRS)
 clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-arch-install:
-	git clone --quiet https://github.com/planet36/arch-install.git
+arch-install stw:
+	git clone --quiet https://github.com/planet36/$@.git
 
 # My repos (forked from suckless)
 # Clone and add remotes to the respective suckless repos
@@ -39,11 +40,11 @@ dwm slstatus st:
 	git fetch --quiet suckless ; \
 	cd - > /dev/null
 
-stw:
-	git clone --quiet https://github.com/sineemore/stw.git
-
 dwm-suckless slstatus-suckless st-suckless:
 	git clone --quiet https://git.suckless.org/$(subst -suckless,,$@) $@
+
+stw-sineemore:
+	git clone --quiet https://github.com/sineemore/$(subst -sineemore,,$@).git $@
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: $(TOPTARGETS)
