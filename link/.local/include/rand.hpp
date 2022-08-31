@@ -50,7 +50,7 @@ rand_int()
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 float
-rand_unit_float()
+rand_float_unit()
 {
 	static thread_local wyrand gen;
 	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
@@ -62,7 +62,7 @@ rand_unit_float()
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 double
-rand_unit_double()
+rand_double_unit()
 {
 	static thread_local wyrand gen;
 	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
@@ -74,7 +74,7 @@ rand_unit_double()
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 long double
-rand_unit_long_double()
+rand_long_double_unit()
 {
 	static thread_local wyrand gen;
 	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
@@ -89,7 +89,7 @@ rand_unit_long_double()
 float
 rand_float(const float a, const float b)
 {
-	return rand_unit_float() * (b - a) + a;
+	return rand_float_unit() * (b - a) + a;
 }
 
 /**
@@ -99,7 +99,7 @@ rand_float(const float a, const float b)
 double
 rand_double(const double a, const double b)
 {
-	return rand_unit_double() * (b - a) + a;
+	return rand_double_unit() * (b - a) + a;
 }
 
 /**
@@ -109,7 +109,7 @@ rand_double(const double a, const double b)
 long double
 rand_long_double(const long double a, const long double b)
 {
-	return rand_unit_long_double() * (b - a) + a;
+	return rand_long_double_unit() * (b - a) + a;
 }
 
 /**
