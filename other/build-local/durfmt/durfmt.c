@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: OSL-3.0
 
 #include <ctype.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -142,16 +143,16 @@ durfmt(unsigned long duration, const struct durfmt_opts* opts)
 }
 
 void
-print_version(const char* argv0)
+print_version()
 {
-	printf("%s %s\n", argv0, program_version);
+	printf("%s %s\n", program_invocation_short_name, program_version);
 	printf("Written by %s\n", program_author);
 }
 
 void
-print_usage(const char* argv0)
+print_usage()
 {
-	printf("Usage: %s [OPTIONS]\n", argv0);
+	printf("Usage: %s [OPTIONS]\n", program_invocation_short_name);
 	printf("\n");
 	printf("Read a non-negative duration (in seconds) from stdin.\n");
 	printf("Break down the duration into whole numbers of\n");
@@ -186,12 +187,12 @@ print_usage(const char* argv0)
 }
 
 void
-print_option_err(const char* argv0, const char* msg, const int o)
+print_option_err(const char* msg, const int o)
 {
 	if (isprint(o))
-		fprintf(stderr, "%s: %s: '%c'\n", argv0, msg, o);
+		fprintf(stderr, "%s: %s: '%c'\n", program_invocation_short_name, msg, o);
 	else
-		fprintf(stderr, "%s: %s: '\\x%x'\n", argv0, msg, o);
+		fprintf(stderr, "%s: %s: '\\x%x'\n", program_invocation_short_name, msg, o);
 }
 
 int main(int argc, char* argv[])
@@ -210,11 +211,11 @@ int main(int argc, char* argv[])
 		switch (oc)
 		{
 		case 'V':
-			print_version(argv[0]);
+			print_version();
 			return 0;
 
 		case 'h':
-			print_usage(argv[0]);
+			print_usage();
 			return 0;
 
 		case 'n':
@@ -238,11 +239,11 @@ int main(int argc, char* argv[])
 			break;
 
 		case '?':
-			print_option_err(argv[0], "Unknown option", optopt);
+			print_option_err("Unknown option", optopt);
 			return 1;
 
 		case ':':
-			print_option_err(argv[0], "Option requires a value", optopt);
+			print_option_err("Option requires a value", optopt);
 			return 1;
 
 		default:
@@ -257,7 +258,7 @@ int main(int argc, char* argv[])
 	{
 		if (!valid_ut_abbr(ut_to_print[i]))
 		{
-			print_option_err(argv[0], "Invalid option value", ut_to_print[i]);
+			print_option_err("Invalid option value", ut_to_print[i]);
 			return 1;
 		}
 

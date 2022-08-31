@@ -4,6 +4,7 @@
 #include "util.h"
 
 #include <ctype.h>
+#include <errno.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -73,16 +74,16 @@ print_cmeter(double x, const struct meter_opts* opts)
 }
 
 void
-print_version(const char* argv0)
+print_version()
 {
-	printf("%s %s\n", argv0, program_version);
+	printf("%s %s\n", program_invocation_short_name, program_version);
 	printf("Written by %s\n", program_author);
 }
 
 void
-print_usage(const char* argv0)
+print_usage()
 {
-	printf("Usage: %s [OPTIONS]\n\n", argv0);
+	printf("Usage: %s [OPTIONS]\n\n", program_invocation_short_name);
 	printf("Read a number (within the interval [0, 1]) from stdin and\n");
 	printf("print a meter (filled proportional to the number) using ASCII characters.\n");
 	printf("\n");
@@ -114,12 +115,12 @@ print_usage(const char* argv0)
 }
 
 void
-print_option_err(const char* argv0, const char* msg, const int o)
+print_option_err(const char* msg, const int o)
 {
 	if (isprint(o))
-		fprintf(stderr, "%s: %s: '%c'\n", argv0, msg, o);
+		fprintf(stderr, "%s: %s: '%c'\n", program_invocation_short_name, msg, o);
 	else
-		fprintf(stderr, "%s: %s: '\\x%x'\n", argv0, msg, o);
+		fprintf(stderr, "%s: %s: '\\x%x'\n", program_invocation_short_name, msg, o);
 }
 
 int main(int argc, char* argv[])
@@ -136,11 +137,11 @@ int main(int argc, char* argv[])
 		switch (oc)
 		{
 		case 'V':
-			print_version(argv[0]);
+			print_version();
 			return 0;
 
 		case 'h':
-			print_usage(argv[0]);
+			print_usage();
 			return 0;
 
 		case 'w':
@@ -154,7 +155,7 @@ int main(int argc, char* argv[])
 			opts.fill = optarg[0];
 			if (!isprint(opts.fill))
 			{
-				print_option_err(argv[0], "Invalid option value", opts.fill);
+				print_option_err("Invalid option value", opts.fill);
 				return 1;
 			}
 			break;
@@ -163,7 +164,7 @@ int main(int argc, char* argv[])
 			opts.unfill = optarg[0];
 			if (!isprint(opts.unfill))
 			{
-				print_option_err(argv[0], "Invalid option value", opts.unfill);
+				print_option_err("Invalid option value", opts.unfill);
 				return 1;
 			}
 			break;
@@ -181,11 +182,11 @@ int main(int argc, char* argv[])
 			break;
 
 		case '?':
-			print_option_err(argv[0], "Unknown option", optopt);
+			print_option_err("Unknown option", optopt);
 			return 1;
 
 		case ':':
-			print_option_err(argv[0], "Option requires a value", optopt);
+			print_option_err("Option requires a value", optopt);
 			return 1;
 
 		default:

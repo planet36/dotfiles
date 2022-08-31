@@ -4,6 +4,7 @@
 #include "util.h"
 
 #include <err.h>
+#include <errno.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -52,16 +53,16 @@ atexit_cleanup()
 }
 
 void
-print_version(const char* argv0)
+print_version()
 {
-	printf("%s %s\n", argv0, program_version);
+	printf("%s %s\n", program_invocation_short_name, program_version);
 	printf("Written by %s\n", program_author);
 }
 
 void
-print_usage(const char* argv0)
+print_usage()
 {
-	printf("Usage: %s [OPTIONS]\n", argv0);
+	printf("Usage: %s [OPTIONS]\n", program_invocation_short_name);
 	printf("\n");
 	printf("Continuously measure the average CPU usage at a regular interval, and write the measurement to stdout or a temporary file.\n");
 	printf("\n");
@@ -97,11 +98,11 @@ int main(int argc, char* const argv[])
 		switch (oc)
 		{
 		case 'V':
-			print_version(argv[0]);
+			print_version();
 			return EXIT_SUCCESS;
 
 		case 'h':
-			print_usage(argv[0]);
+			print_usage();
 			return EXIT_SUCCESS;
 
 		case 'f':
