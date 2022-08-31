@@ -49,7 +49,8 @@ The result length might be more than maxlen because the path parts will not be t
 try:
 	n = int(sys.argv[1])
 except (IndexError, ValueError):
-	print(f"{sys.argv[0]}: Must give integer for maximum length", file=sys.stderr)
+	program_name = os.path.basename(sys.argv[0])
+	print(f"{program_name}: Must give integer for maximum length", file=sys.stderr)
 	sys.exit(1)
 
 for line in sys.stdin:
