@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "int_bytes.hpp"
 #include "integral_number.hpp"
 #include "make_unit_float.hpp"
 #include "wyrand.hpp"
@@ -44,6 +45,39 @@ rand_int()
 	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
 	              std::numeric_limits<T>::digits);
 	return gen.next();
+}
+
+/**
+"Fast Random Integer Generation in an Interval" by Daniel Lemire
+\sa https://arxiv.org/abs/1805.10941
+\return a uniformly distributed random unsigned integer within the interval [0, \a s)
+*/
+template <std::unsigned_integral T>
+T
+rand_uint_half_open(const T s)
+{
+	if (s == 1)
+		return 0;
+
+	if (s == 0)
+		return rand_int<T>();
+
+	using T2 = next_larger<T>;
+	T2 m;
+
+	m = rand_int<T>(); // x in [0, 2^L)
+	m *= s; // x in [0, s * 2^L)
+	if (static_cast<T>(m) < s)
+	{
+		const T min = std::numeric_limits<T>::max() % s; // 2^L mod s
+		while (static_cast<T>(m) < min)
+		{
+			m = rand_int<T>(); // x in [0, 2^L)
+			m *= s; // x in [0, s * 2^L)
+		}
+	}
+
+	return m >> std::numeric_limits<T>::digits; // in [0, s)
 }
 
 /**
