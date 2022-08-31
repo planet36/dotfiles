@@ -4,8 +4,8 @@
 # Find and print characters that are not ASCII characters.
 function nonascii_chars
 {
-    # ASCII characters are in the interval [0, 127].
-    # Non-ASCII characters are in the interval [128, 255].
+    # ASCII characters are within the interval [0, 127].
+    # Non-ASCII characters are within the interval [128, 255].
     local -r PATTERN='[23][0-7][0-7]'
 
     local FILE

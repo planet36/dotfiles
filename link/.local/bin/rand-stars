@@ -4,7 +4,7 @@
 
 # Force overwriting the output image if it already exists
 DEFAULT_FORCE=false
-# POW should be in the interval [1.0, 4.0]
+# POW should be within the interval [1.0, 4.0]
 # lower is more dense
 # higher is less dense
 DEFAULT_POW=2.5

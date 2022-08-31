@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// From the given bits, make a floating-point number in the interval [0, 1).
+/// From the given bits, make a floating-point number within the interval [0, 1).
 /**
 \file
 \author Steven Ward

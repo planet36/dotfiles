@@ -845,7 +845,7 @@ define n_choose_k(n, k)
 
 /*
 get the binomial probability
-p is the probability of success in the interval [0, 1]
+p is the probability of success within the interval [0, 1]
 n is the number of trials
 k is the number of successes
 https://mathworld.wolfram.com/BinomialDistribution.html

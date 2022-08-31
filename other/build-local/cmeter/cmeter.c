@@ -37,7 +37,7 @@ meter_opts_init(struct meter_opts* opts)
 	opts->suppress_newline = false;
 }
 
-// x is in the interval [0, 1].
+// x is within the interval [0, 1].
 void
 print_cmeter(double x, const struct meter_opts* opts)
 {
@@ -83,7 +83,7 @@ void
 print_usage(const char* argv0)
 {
 	printf("Usage: %s [OPTIONS]\n\n", argv0);
-	printf("Read a number (in the interval [0, 1]) from stdin and\n");
+	printf("Read a number (within the interval [0, 1]) from stdin and\n");
 	printf("print a meter (filled proportional to the number) using ASCII characters.\n");
 	printf("\n");
 

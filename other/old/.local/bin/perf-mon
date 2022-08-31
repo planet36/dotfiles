@@ -55,8 +55,8 @@ def clamp(x: float) -> float:
 		return x
 
 
-# map the real number in the inverval [0, 1]
-# to an integer in the interval [0, b)
+# map the real number within the interval [0, 1]
+# to an integer within the interval [0, b)
 # XXX: does not work for negative numbers
 def map_to_uint(x: float, b: int) -> int:
 

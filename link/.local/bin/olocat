@@ -330,7 +330,7 @@ OPTIONS
     Print the colors, then exit.
 
 -l LIGHTNESS
-    Specify the lightness.  It must be in the inverval [{min_lightness}, {max_lightness}].
+    Specify the lightness.  It must be within the interval [{min_lightness}, {max_lightness}].
     (Default for {ColorSpace.LOLCAT.name}: {default_lightness_dict[ColorSpace.LOLCAT]})
     (Default for {ColorSpace.HSLUV.name}: {default_lightness_dict[ColorSpace.HSLUV]})
 ''')

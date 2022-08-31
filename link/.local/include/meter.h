@@ -160,8 +160,8 @@ clamp(double* x)
 		*x = 1;
 }
 
-/** Map the real number \a x in the interval <code>[0, 1]</code> to an integer
-* in the interval <code>[0, b)</code>.
+/** Map the real number \a x within the interval <code>[0, 1]</code> to an integer
+* within the interval <code>[0, b)</code>.
 */
 static size_t
 map_to_uint(double x, size_t b)
@@ -173,7 +173,7 @@ map_to_uint(double x, size_t b)
 
 /** Calculate values of the meter segments.
 *
-* \pre \a x is in the interval <code>[0, 1]</code>.
+* \pre \a x is within the interval <code>[0, 1]</code>.
 *
 * \a meter_width does not include the terminating null character.
 *
@@ -209,7 +209,7 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
 
 /** Return a Unicode lower block character (whose height is proportional to \a x).
 *
-* \pre \a x is in the interval <code>[0, 1]</code>.
+* \pre \a x is within the interval <code>[0, 1]</code>.
 */
 static wchar_t
 lower_blocks_1(double x)
@@ -237,7 +237,7 @@ upper_blocks_1(double x)
 *
 * The filled region is proportional to \a x, starting at the left.
 *
-* \pre \a x is in the interval [0, 1].
+* \pre \a x is within the interval [0, 1].
 *
 * \pre \a meter is a buffer capable of holding meter_width wide characters
 * (not including the terminating null character).
@@ -347,7 +347,7 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 *
 * The filled region is proportional to \a x, starting at the left.
 *
-* \pre \a x is in the interval <code>[0, 1]</code>.
+* \pre \a x is within the interval <code>[0, 1]</code>.
 *
 * \pre meter is a buffer capable of holding meter_width characters (not including the terminating null character).
 *

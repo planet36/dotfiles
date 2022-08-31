@@ -65,7 +65,7 @@ print_usage(const char* argv0)
 	printf("\n");
 	printf("Continuously measure the average CPU usage at a regular interval, and write the measurement to stdout or a temporary file.\n");
 	printf("\n");
-	printf("CPU usage is a real number in the interval [0, 1].\n");
+	printf("CPU usage is a real number within the interval [0, 1].\n");
 	printf("\n");
 
 	printf("OPTIONS\n");

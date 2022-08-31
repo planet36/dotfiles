@@ -16,7 +16,7 @@
 #include <string>
 
 /**
-\pre \a base must be in the interval [2, 36]
+\pre \a base must be within the interval [2, 36]
 */
 std::string
 i_to_s(const std::integral auto x, const int base = 10)

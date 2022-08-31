@@ -1125,7 +1125,7 @@ fmod_remainder(const angle<U, T>& a1, const angle<U2, T2>& a2)
 
 /// normalize the angle
 /**
-The result will be in the interval [-0.5, 0.5] revolutions.
+The result will be within the interval [-0.5, 0.5] revolutions.
 \param[in,out] a the angle
 */
 template <angle_unit U, std::floating_point T>
@@ -1137,7 +1137,7 @@ normalize_angle_signed(angle<U, T>& a)
 
 /// normalize the angle
 /**
-The result will be in the interval [0, 1] revolutions.
+The result will be within the interval [0, 1] revolutions.
 \param[in,out] a the angle
 */
 template <angle_unit U, std::floating_point T>
@@ -1152,7 +1152,7 @@ normalize_angle_unsigned(angle<U, T>& a)
 
 /// normalize the geodetic latitude
 /**
-The result will be in the interval [-90, 90] degrees.
+The result will be within the interval [-90, 90] degrees.
 \param[in,out] lat the geodetic latitude
 */
 template <angle_unit U, std::floating_point T>
@@ -1169,7 +1169,7 @@ normalize_latitude(angle<U, T>& lat)
 
 /// normalize the geodetic longitude
 /**
-The result will be in the interval [-180, 180] degrees.
+The result will be within the interval [-180, 180] degrees.
 \param[in,out] lon the geodetic longitude
 */
 template <angle_unit U, std::floating_point T>
