@@ -3,7 +3,7 @@
 
 # default install paths
 PREFIX ?= /usr/local
-MANPREFIX = $(PREFIX)/share/man
+MANDIR ?= $(PREFIX)/share/man
 
 SRCS = $(wildcard *.c)
 DEPS = $(SRCS:.c=.d)
