@@ -23,8 +23,7 @@
 #include <type_traits>
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG(RESULT_TYPE)                     \
-	using result_type = RESULT_TYPE;                    \
+#define NAMED_REQ_URBG                                  \
 	static_assert(std::is_unsigned_v<result_type>);     \
 	static constexpr result_type min()                  \
 	{                                                   \
@@ -107,9 +106,12 @@ struct xoshiro128plus
 {
 	using T = uint32_t;
 	using state_type = std::array<T, 4>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -168,9 +170,12 @@ struct xoshiro128plusplus
 {
 	using T = uint32_t;
 	using state_type = std::array<T, 4>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -232,9 +237,12 @@ struct xoshiro128starstar
 {
 	using T = uint32_t;
 	using state_type = std::array<T, 4>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -299,9 +307,12 @@ struct xoshiro256plus
 {
 	using T = uint64_t;
 	using state_type = std::array<T, 4>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -363,9 +374,12 @@ struct xoshiro256plusplus
 {
 	using T = uint64_t;
 	using state_type = std::array<T, 4>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -427,9 +441,12 @@ struct xoshiro256starstar
 {
 	using T = uint64_t;
 	using state_type = std::array<T, 4>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -496,9 +513,12 @@ struct xoshiro512plus
 {
 	using T = uint64_t;
 	using state_type = std::array<T, 8>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -566,9 +586,12 @@ struct xoshiro512plusplus
 {
 	using T = uint64_t;
 	using state_type = std::array<T, 8>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
@@ -637,9 +660,12 @@ struct xoshiro512starstar
 {
 	using T = uint64_t;
 	using state_type = std::array<T, 8>;
+	using result_type = T;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(T)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};

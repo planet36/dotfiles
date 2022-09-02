@@ -18,8 +18,7 @@
 #include <limits>
 
 // https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG(RESULT_TYPE)                     \
-	using result_type = RESULT_TYPE;                    \
+#define NAMED_REQ_URBG                                  \
 	static_assert(std::is_unsigned_v<result_type>);     \
 	static constexpr result_type min()                  \
 	{                                                   \
@@ -49,9 +48,12 @@
 struct sfc64
 {
 	using state_type = std::array<uint64_t, 4>;
+	using result_type = uint64_t;
+	// https://eel.is/c++draft/rand.req.eng#3.1
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG(uint64_t)
+NAMED_REQ_URBG
 
 private:
 	state_type s{};
