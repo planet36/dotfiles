@@ -11,39 +11,12 @@
 #pragma once
 
 #include <bit>
-#include <limits>
 
-#include "bytes.hpp"
-#include "fill_rand.hpp"
+#include "def_urbg_class_details.hpp"
+
+#if defined(__SIZEOF_INT128__)
 #include "int_join.hpp"
-
-// https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG                                  \
-	static_assert(std::is_unsigned_v<result_type>);     \
-	static constexpr result_type min()                  \
-	{                                                   \
-		return std::numeric_limits<result_type>::min(); \
-	}                                                   \
-	static constexpr result_type max()                  \
-	{                                                   \
-		return std::numeric_limits<result_type>::max(); \
-	}                                                   \
-	result_type operator()() { return next(); }
-
-#define DEF_CTORS(CLASS_NAME) \
-	CLASS_NAME() { seed(); } \
-	CLASS_NAME(const state_type& new_s) { seed(new_s); } \
-	CLASS_NAME(const seed_bytes_type& bytes) { seed(bytes); }
-
-#define DEF_SEEDS \
-	void seed() { fill_rand(s); } \
-	void seed(const state_type& new_s) { s = new_s; } \
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
-
-#define DEF_SEEDS_NONZERO \
-	void seed() { fill_rand(s); while (s == state_type{}) [[unlikely]] { fill_rand(s); } } \
-	void seed(const state_type& new_s) { s = new_s; } \
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
+#endif
 
 /*
 * Multiplier and increment values taken from here:
@@ -56,25 +29,15 @@ struct pcg32
 {
 	using state_type = uint64_t;
 	using result_type = uint32_t;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG
-
-private:
-	state_type s{};
-	static constexpr uint64_t multiplier = UINT64_C(6364136223846793005); // not prime
-	static constexpr uint64_t increment = UINT64_C(1442695040888963407); // not prime
-	static_assert(increment & 1U); // must be odd
-
-public:
-DEF_CTORS(pcg32)
-
-DEF_SEEDS
+DEF_URBG_CLASS_DETAILS(pcg32)
 
 	result_type next()
 	{
+		static constexpr state_type multiplier = UINT64_C(6364136223846793005); // not prime
+		static constexpr state_type increment = UINT64_C(1442695040888963407); // not prime
+		static_assert(increment & 1U); // must be odd
+
 		const auto old_s = s;
 		s = s * multiplier + increment;
 
@@ -92,25 +55,15 @@ struct pcg32_fast
 {
 	using state_type = uint64_t;
 	using result_type = uint32_t;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG
-
-private:
-	state_type s{};
-	static constexpr uint64_t multiplier = UINT64_C(6364136223846793005); // not prime
-	static constexpr uint64_t increment = UINT64_C(1442695040888963407); // not prime
-	static_assert(increment & 1U); // must be odd
-
-public:
-DEF_CTORS(pcg32_fast)
-
-DEF_SEEDS
+DEF_URBG_CLASS_DETAILS(pcg32_fast)
 
 	result_type next()
 	{
+		static constexpr state_type multiplier = UINT64_C(6364136223846793005); // not prime
+		static constexpr state_type increment = UINT64_C(1442695040888963407); // not prime
+		static_assert(increment & 1U); // must be odd
+
 		const auto old_s = s;
 		s = s * multiplier + increment;
 
@@ -127,29 +80,24 @@ struct pcg64
 {
 	using state_type = __uint128_t;
 	using result_type = uint64_t;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
 
-NAMED_REQ_URBG
-
-private:
-	state_type s{};
-	/* "There is no support in GCC for expressing an integer constant of type
-	*  __int128 for targets with long long integer less than 128 bits wide."
-	*  https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
-	*/
-	static constexpr __uint128_t multiplier = int_join(UINT64_C(2549297995355413924), UINT64_C(4865540595714422341));
-	static constexpr __uint128_t increment = int_join(UINT64_C(6364136223846793005), UINT64_C(1442695040888963407));
-	static_assert(increment & 1U); // must be odd
-
-public:
-DEF_CTORS(pcg64)
-
-DEF_SEEDS
+DEF_URBG_CLASS_DETAILS(pcg64)
 
 	result_type next()
 	{
+		/* "There is no support in GCC for expressing an integer constant of
+		*  type __int128 for targets with long long integer less than 128 bits
+		*  wide."
+		*  https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
+		*/
+		static constexpr __uint128_t multiplier =
+			int_join(UINT64_C(2549297995355413924),
+					UINT64_C(4865540595714422341)); // not prime
+		static constexpr __uint128_t increment =
+			int_join(UINT64_C(6364136223846793005),
+					UINT64_C(1442695040888963407)); // not prime
+		static_assert(increment & 1U); // must be odd
+
 		const auto old_s = s;
 		s = s * multiplier + increment;
 
@@ -160,10 +108,4 @@ DEF_SEEDS
 		return std::rotr(output, rot);
 	}
 };
-
 #endif
-
-#undef NAMED_REQ_URBG
-#undef DEF_CTORS
-#undef DEF_SEEDS
-#undef DEF_SEEDS_NONZERO

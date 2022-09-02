@@ -13,42 +13,9 @@
 
 #pragma once
 
-#include "bytes.hpp"
-#include "fill_rand.hpp"
+#include "def_urbg_class_details.hpp"
 
-#include <array>
 #include <bit>
-#include <cstdint>
-#include <limits>
-#include <type_traits>
-
-// https://en.cppreference.com/w/cpp/named_req/UniformRandomBitGenerator
-#define NAMED_REQ_URBG                                  \
-	static_assert(std::is_unsigned_v<result_type>);     \
-	static constexpr result_type min()                  \
-	{                                                   \
-		return std::numeric_limits<result_type>::min(); \
-	}                                                   \
-	static constexpr result_type max()                  \
-	{                                                   \
-		return std::numeric_limits<result_type>::max(); \
-	}                                                   \
-	result_type operator()() { return next(); }
-
-#define DEF_CTORS(CLASS_NAME) \
-	CLASS_NAME() { seed(); } \
-	CLASS_NAME(const state_type& new_s) { seed(new_s); } \
-	CLASS_NAME(const seed_bytes_type& bytes) { seed(bytes); }
-
-#define DEF_SEEDS \
-	void seed() { fill_rand(s); } \
-	void seed(const state_type& new_s) { s = new_s; } \
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
-
-#define DEF_SEEDS_NONZERO \
-	void seed() { fill_rand(s); while (s == state_type{}) [[unlikely]] { fill_rand(s); } } \
-	void seed(const state_type& new_s) { s = new_s; } \
-	void seed(const seed_bytes_type& bytes) { s = bytes_to_datum<state_type>(bytes); }
 
 #define DEF_JUMP                                                     \
 	void jump()                                                      \
@@ -107,24 +74,15 @@ struct xoshiro128plus
 	using T = uint32_t;
 	using state_type = std::array<T, 4>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b};
 	static constexpr state_type LONG_JUMP{
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
-public:
-DEF_CTORS(xoshiro128plus)
-
+DEF_URBG_CLASS_DETAILS(xoshiro128plus)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -171,24 +129,15 @@ struct xoshiro128plusplus
 	using T = uint32_t;
 	using state_type = std::array<T, 4>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b};
 	static constexpr state_type LONG_JUMP{
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
-public:
-DEF_CTORS(xoshiro128plusplus)
-
+DEF_URBG_CLASS_DETAILS(xoshiro128plusplus)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -238,24 +187,15 @@ struct xoshiro128starstar
 	using T = uint32_t;
 	using state_type = std::array<T, 4>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x8764000b, 0xf542d2d3, 0x6fa035c3, 0x77f2db5b};
 	static constexpr state_type LONG_JUMP{
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
-public:
-DEF_CTORS(xoshiro128starstar)
-
+DEF_URBG_CLASS_DETAILS(xoshiro128starstar)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -308,14 +248,8 @@ struct xoshiro256plus
 	using T = uint64_t;
 	using state_type = std::array<T, 4>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
 	    0xa9582618e03fc9aa, 0x39abdc4529b1661c};
@@ -323,11 +257,8 @@ private:
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
-public:
-DEF_CTORS(xoshiro256plus)
-
+DEF_URBG_CLASS_DETAILS(xoshiro256plus)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -375,14 +306,8 @@ struct xoshiro256plusplus
 	using T = uint64_t;
 	using state_type = std::array<T, 4>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
 	    0xa9582618e03fc9aa, 0x39abdc4529b1661c};
@@ -390,11 +315,8 @@ private:
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
-public:
-DEF_CTORS(xoshiro256plusplus)
-
+DEF_URBG_CLASS_DETAILS(xoshiro256plusplus)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -442,14 +364,8 @@ struct xoshiro256starstar
 	using T = uint64_t;
 	using state_type = std::array<T, 4>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x180ec6d33cfd0aba, 0xd5a61266f0c9392c,
 	    0xa9582618e03fc9aa, 0x39abdc4529b1661c};
@@ -457,11 +373,8 @@ private:
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
-public:
-DEF_CTORS(xoshiro256starstar)
-
+DEF_URBG_CLASS_DETAILS(xoshiro256starstar)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -514,14 +427,8 @@ struct xoshiro512plus
 	using T = uint64_t;
 	using state_type = std::array<T, 8>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
 	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
@@ -531,11 +438,8 @@ private:
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
-public:
-DEF_CTORS(xoshiro512plus)
-
+DEF_URBG_CLASS_DETAILS(xoshiro512plus)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -587,14 +491,8 @@ struct xoshiro512plusplus
 	using T = uint64_t;
 	using state_type = std::array<T, 8>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
 	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
@@ -604,11 +502,8 @@ private:
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
-public:
-DEF_CTORS(xoshiro512plusplus)
-
+DEF_URBG_CLASS_DETAILS(xoshiro512plusplus)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -661,14 +556,8 @@ struct xoshiro512starstar
 	using T = uint64_t;
 	using state_type = std::array<T, 8>;
 	using result_type = T;
-	// https://eel.is/c++draft/rand.req.eng#3.1
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;
-
-NAMED_REQ_URBG
 
 private:
-	state_type s{};
 	static constexpr state_type JUMP{
 	    0x33ed89b6e7a353f9, 0x760083d7955323be, 0x2837f2fbb5f22fae,
 	    0x4b8c5674d309511c, 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
@@ -678,11 +567,8 @@ private:
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
-public:
-DEF_CTORS(xoshiro512starstar)
-
+DEF_URBG_CLASS_DETAILS(xoshiro512starstar)
 	// XXX: must not give zero seed
-DEF_SEEDS_NONZERO
 
 	result_type next()
 	{
@@ -718,10 +604,3 @@ DEF_JUMP
 	 */
 DEF_LONG_JUMP
 };
-
-#undef NAMED_REQ_URBG
-#undef DEF_CTORS
-#undef DEF_SEEDS
-#undef DEF_SEEDS_NONZERO
-#undef DEF_JUMP
-#undef DEF_LONG_JUMP
