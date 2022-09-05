@@ -19,6 +19,51 @@
 #include <limits>
 #include <random>
 
+namespace per_thread_random_number_engine
+{
+
+// G must satisfy std::uniform_random_bit_generator.
+using G = wyrand;
+
+G&
+instance()
+{
+	static thread_local G gen;
+	return gen;
+}
+
+/// Reseed the per-thread random number engine
+/**
+\sa https://en.cppreference.com/w/cpp/experimental/reseed
+*/
+void
+reseed()
+{
+	instance().seed();
+}
+
+/// Reseed the per-thread random number engine
+/**
+\sa https://en.cppreference.com/w/cpp/experimental/reseed
+*/
+void
+reseed(const G::state_type& new_s)
+{
+	instance().seed(new_s);
+}
+
+/// Reseed the per-thread random number engine
+/**
+\sa https://en.cppreference.com/w/cpp/experimental/reseed
+*/
+void
+reseed(const G::seed_bytes_type& bytes)
+{
+	instance().seed(bytes);
+}
+
+}
+
 /**
 \pre \a a <= \a b
 \sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
@@ -28,10 +73,11 @@ template <integral_number T>
 T
 rand_int(const T a, const T b)
 {
-	static thread_local wyrand gen;
-	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	using per_thread_random_number_engine::G;
+	using per_thread_random_number_engine::instance;
+	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits);
-	return std::uniform_int_distribution<T>{a, b}(gen);
+	return std::uniform_int_distribution<T>{a, b}(instance());
 }
 
 /**
@@ -41,10 +87,11 @@ template <integral_number T>
 T
 rand_int()
 {
-	static thread_local wyrand gen;
-	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	using per_thread_random_number_engine::G;
+	using per_thread_random_number_engine::instance;
+	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits);
-	return gen.next();
+	return instance().next();
 }
 
 /**
@@ -86,10 +133,11 @@ rand_uint_half_open(const T s)
 float
 rand_float_unit()
 {
-	static thread_local wyrand gen;
-	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	using per_thread_random_number_engine::G;
+	using per_thread_random_number_engine::instance;
+	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<float>::digits);
-	return make_unit_float(gen.next());
+	return make_unit_float(instance().next());
 }
 
 /**
@@ -98,10 +146,11 @@ rand_float_unit()
 double
 rand_double_unit()
 {
-	static thread_local wyrand gen;
-	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	using per_thread_random_number_engine::G;
+	using per_thread_random_number_engine::instance;
+	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<double>::digits);
-	return make_unit_double(gen.next());
+	return make_unit_double(instance().next());
 }
 
 /**
@@ -110,10 +159,11 @@ rand_double_unit()
 long double
 rand_long_double_unit()
 {
-	static thread_local wyrand gen;
-	static_assert(std::numeric_limits<decltype(gen)::result_type>::digits >=
+	using per_thread_random_number_engine::G;
+	using per_thread_random_number_engine::instance;
+	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<long double>::digits);
-	return make_unit_long_double(gen.next());
+	return make_unit_long_double(instance().next());
 }
 
 /**
@@ -153,13 +203,17 @@ rand_long_double(const long double a, const long double b)
 bool
 rand_bool()
 {
-	static constexpr uint64_t mask64_one_msb = UINT64_C(1) << 63;
-	static thread_local wyrand gen;
-	static thread_local uint64_t x = 1;
+	using T = uint64_t;
+	using per_thread_random_number_engine::G;
+	using per_thread_random_number_engine::instance;
+	static_assert(std::numeric_limits<G::result_type>::digits >=
+	              std::numeric_limits<T>::digits);
+	static constexpr T mask_one_msb = T{1} << (std::numeric_limits<T>::digits-1);
+	static thread_local T x = 1;
 
 	if (x == 1) [[unlikely]]
 	{
-		x = gen.next() | mask64_one_msb;
+		x = instance().next() | mask_one_msb;
 	}
 
 	const bool ret = x & 1;
