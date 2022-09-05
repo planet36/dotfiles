@@ -24,8 +24,6 @@ other default-constructed engines of the same type.
 #include <limits>
 #include <type_traits>
 
-#if not defined(DEF_URBG_CLASS_DETAILS)
-
 // XXX: state_type and result_type must be declared before invoking this.
 
 #define DEF_URBG_CLASS_DETAILS(CLASS_NAME)                           \
@@ -56,5 +54,3 @@ public:                                                              \
 	{ return this->s == that.s; }                                    \
 	bool operator!=(const CLASS_NAME& that) const                    \
 	{ return this->s != that.s; }
-
-#endif
