@@ -19,7 +19,9 @@
 #include <limits>
 #include <random>
 
-namespace per_thread_random_number_engine
+namespace
+{
+inline namespace per_thread_random_number_engine
 {
 
 // G must satisfy std::uniform_random_bit_generator.
@@ -30,6 +32,9 @@ instance()
 {
 	static thread_local G gen;
 	return gen;
+}
+
+}
 }
 
 /// Reseed the per-thread random number engine
@@ -62,8 +67,6 @@ reseed(const G::seed_bytes_type& bytes)
 	instance().seed(bytes);
 }
 
-}
-
 /**
 \pre \a a <= \a b
 \sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
@@ -73,8 +76,6 @@ template <integral_number T>
 T
 rand_int(const T a, const T b)
 {
-	using per_thread_random_number_engine::G;
-	using per_thread_random_number_engine::instance;
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits);
 	return std::uniform_int_distribution<T>{a, b}(instance());
@@ -87,8 +88,6 @@ template <integral_number T>
 T
 rand_int()
 {
-	using per_thread_random_number_engine::G;
-	using per_thread_random_number_engine::instance;
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits);
 	return instance().next();
@@ -133,8 +132,6 @@ rand_uint_half_open(const T s)
 float
 rand_float_unit()
 {
-	using per_thread_random_number_engine::G;
-	using per_thread_random_number_engine::instance;
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<float>::digits);
 	return make_unit_float(instance().next());
@@ -146,8 +143,6 @@ rand_float_unit()
 double
 rand_double_unit()
 {
-	using per_thread_random_number_engine::G;
-	using per_thread_random_number_engine::instance;
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<double>::digits);
 	return make_unit_double(instance().next());
@@ -159,8 +154,6 @@ rand_double_unit()
 long double
 rand_long_double_unit()
 {
-	using per_thread_random_number_engine::G;
-	using per_thread_random_number_engine::instance;
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<long double>::digits);
 	return make_unit_long_double(instance().next());
@@ -204,8 +197,6 @@ bool
 rand_bool()
 {
 	using T = uint64_t;
-	using per_thread_random_number_engine::G;
-	using per_thread_random_number_engine::instance;
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits);
 	static constexpr T mask_one_msb = T{1} << (std::numeric_limits<T>::digits-1);
