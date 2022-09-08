@@ -11,7 +11,8 @@ import hashlib
 import sys
 
 __author__ = 'Steven Ward'
-__version__ = '2022-08-03'
+__version__ = '2022-09-08'
+__license__ = 'OSL-3.0'
 
 
 def hash_file(file_name, hash_object=None, block_size=65536):
@@ -61,14 +62,10 @@ def main(argv = None):
 	import shlex
 	import signal
 
-
 	if argv is None:
 		argv = sys.argv
 
-
 	program_name = os.path.basename(argv[0])
-
-	program_authors = [__author__]
 
 
 	# valid values
@@ -97,8 +94,9 @@ def main(argv = None):
 
 	def print_version():
 		"""Print the version information"""
-		print(f"{program_name} {__version__}")
-		print(f"Written by {', '.join(program_authors)}")
+		print(program_name, __version__)
+		print("License:", __license__)
+		print("Written by", __author__)
 
 
 	# pylint: disable=unused-variable

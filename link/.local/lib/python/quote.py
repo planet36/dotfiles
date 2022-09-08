@@ -13,7 +13,8 @@ import string
 import sys
 
 __author__ = 'Steven Ward'
-__version__ = '2022-08-03'
+__version__ = '2022-09-08'
+__license__ = 'OSL-3.0'
 
 
 r"""
@@ -233,8 +234,6 @@ def main(argv = None):
 
 	program_name = os.path.basename(argv[0])
 
-	program_authors = [__author__]
-
 
 	# valid values
 	valid_quoting_styles = sorted(quoting_style_to_function_map.keys())
@@ -259,8 +258,9 @@ def main(argv = None):
 
 	def print_version():
 		"""Print the version information"""
-		print(f"{program_name} {__version__}")
-		print(f"Written by {', '.join(program_authors)}")
+		print(program_name, __version__)
+		print("License:", __license__)
+		print("Written by", __author__)
 
 
 	# pylint: disable=unused-variable

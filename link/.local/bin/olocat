@@ -30,7 +30,9 @@ import sys
 import hsluv
 from xterm_color import xterm_color_num_to_rgb_string
 
-__version__ = '2022-08-03'
+__author__ = 'Steven Ward'
+__version__ = '2022-09-08'
+__license__ = 'OSL-3.0'
 
 
 # https://stackoverflow.com/a/14693789
@@ -225,14 +227,10 @@ def main(argv = None):
 	import os
 	import signal
 
-
 	if argv is None:
 		argv = sys.argv
 
-
 	program_name = os.path.basename(argv[0])
-
-	program_authors = ['Steven Ward']
 
 
 	# immutable values
@@ -269,8 +267,9 @@ def main(argv = None):
 
 	def print_version():
 		"""Print the version information"""
-		print(f"{program_name} {__version__}")
-		print(f"Written by {', '.join(program_authors)}")
+		print(program_name, __version__)
+		print("License:", __license__)
+		print("Written by", __author__)
 
 
 	def print_verbose(s):

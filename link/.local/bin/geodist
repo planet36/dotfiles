@@ -14,7 +14,9 @@ import sys
 
 from ellipsoid import WGS84
 
-__version__ = '2022-08-03'
+__author__ = 'Steven Ward'
+__version__ = '2022-09-08'
+__license__ = 'OSL-3.0'
 
 
 # https://mathworld.wolfram.com/Haversine.html
@@ -114,8 +116,6 @@ def main(argv = None):
 
 	program_name = os.path.basename(argv[0])
 
-	program_authors = ['Steven Ward']
-
 	# possible values
 	possible_dist_funcs = {
 			'euclidian': euclidian_deg_dist,
@@ -141,7 +141,8 @@ def main(argv = None):
 	def print_version():
 		"""Print the version information"""
 		print(program_name, __version__)
-		print('Written by', ', '.join(program_authors))
+		print("License:", __license__)
+		print("Written by", __author__)
 
 	def print_verbose(s):
 		"""Print the message if verbose mode is on"""
