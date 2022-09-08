@@ -6,6 +6,8 @@
 /**
 \file
 \author Steven Ward
+\sa http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/SplittableRandom.java
+\sa https://gee.cs.oswego.edu/dl/papers/oopsla14.pdf
 \sa https://prng.di.unimi.it/splitmix64.c
 */
 
@@ -29,7 +31,15 @@ DEF_URBG_CLASS_DETAILS(splitmix64)
 
 	result_type next()
 	{
-		auto z = (s += 0x9e3779b97f4a7c15); // not prime
+		/*
+		* "BaseForm[IntegerPart[(2^64 - 1)/GoldenRatio], 16]"
+		* https://www.wolframalpha.com/input?i=BaseForm%5BIntegerPart%5B%282%5E64+-+1%29%2FGoldenRatio%5D%2C+16%5D
+		*/
+		// The golden ratio scaled to 64 bits
+		static constexpr uint64_t gamma = 0x9e3779b97f4a7c15;
+		static_assert(gamma & 1, "gamma must be odd");
+
+		auto z = (s += gamma);
 		z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9; // not prime
 		z = (z ^ (z >> 27)) * 0x94d049bb133111eb; // not prime
 		return z ^ (z >> 31);
