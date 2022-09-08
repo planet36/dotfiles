@@ -114,7 +114,7 @@ def main(argv = None):
 	def print_help():
 		"""Print the help message"""
 
-		print("""Usage: {} [OPTIONS] [FILE...]
+		print(f"""Usage: {program_name} [OPTIONS] [FILE...]
 Print the hash digest of FILE(s).
 
 If FILE is absent, or if FILE is '-', read standard input.
@@ -129,25 +129,20 @@ OPTIONS
 
 -a, --hash-algorithm=ALGORITHM
     Use hash algorithm ALGORITHM to hash the file.
-    (default: {})
-    (valid: {})
+    (default: {default_hash_algorithm})
+    (valid: {','.join(sorted(valid_hash_algorithms))})
     <https://docs.python.org/3/library/hashlib.html>
 
 -b, --block-size=N
     Read N bytes at a time from FILE.
-    (default: {})
+    (default: {default_block_size})
 
 -f, --format=FORMAT
     Print the hash in FORMAT encoding.
     <https://docs.python.org/3/library/base64.html>
-    (default: {})
-    (valid: {})""".format(
-			program_name,
-			default_hash_algorithm,
-			','.join(sorted(valid_hash_algorithms)),
-			default_block_size,
-			default_format,
-			','.join(sorted(valid_formats.keys()))))
+    (default: {default_format})
+    (valid: {','.join(sorted(valid_formats.keys()))})
+""")
 
 
 	short_options = 'Vha:b:f:'

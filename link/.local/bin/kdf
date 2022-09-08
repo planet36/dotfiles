@@ -117,7 +117,7 @@ def main(argv = None):
 	def print_help():
 		"""Print the help message"""
 
-		print("""Usage: {} [OPTION]...
+		print(f"""Usage: {program_name} [OPTION]...
 Hash a string from standard input and print its hash digest.
 
 OPTIONS
@@ -130,35 +130,28 @@ OPTIONS
 
 -v, --verbose
     Print diagnostics.
-    (default: {})
+    (default: {default_verbose})
 
 -a, --hash-algorithm=ALGORITHM
     Use hash algorithm ALGORITHM to hash the string.
-    (default: {})
-    (valid: {})
+    (default: {default_hash_algorithm})
+    (valid: {','.join(sorted(valid_hash_algorithms))})
     <https://docs.python.org/3/library/hashlib.html>
 
 -f, --format=FORMAT
     Print the hash in FORMAT encoding.
-    (default: {})
-    (valid: {})
+    (default: {default_format})
+    (valid: {','.join(sorted(valid_formats.keys()))})
     <https://docs.python.org/3/library/base64.html>
 
 -n, --num-iterations=N
     Iteratively hash the string N times.
-    (default: {})
+    (default: {default_iterations})
 
 -s, --silent
     Don't echo terminal input.
-    (default: {})""".format(
-			program_name,
-			default_verbose,
-			default_hash_algorithm,
-			','.join(sorted(valid_hash_algorithms)),
-			default_format,
-			','.join(sorted(valid_formats.keys())),
-			default_iterations,
-			default_silent))
+    (default: {default_silent})
+""")
 
 
 	short_options = 'Vhva:f:n:s'

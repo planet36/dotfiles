@@ -278,7 +278,7 @@ def main(argv = None):
 	def print_help():
 		"""Print the help message"""
 
-		print("""Usage: {} [OPTIONS] [FILE...]
+		print(f"""Usage: {program_name} [OPTIONS] [FILE...]
 Quote the lines of FILE according to a quoting style.
 
 If FILE is absent, or if FILE is '-', read standard input.
@@ -293,16 +293,12 @@ OPTIONS
 
 -q, --quoting-style=STYLE
     Use quoting style STYLE to quote lines. See below for descriptions of all quoting styles.
-    (default: {})
-    (valid: {})
+    (default: {default_quoting_style})
+    (valid: {','.join(valid_quoting_styles)})
 
 -0, --null
     Use NULL as the line delimiter instead of NEWLINE.
-""".format(
-			program_name,
-			default_quoting_style,
-			','.join(valid_quoting_styles),
-			))
+""")
 
 		print("QUOTING STYLES")
 		print()
