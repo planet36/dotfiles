@@ -11,29 +11,18 @@ function t
     renice --priority 19 --pid $BASHPID > /dev/null
 
     declare -r SCRIPT_NAME="${FUNCNAME[0]}"
-
     declare -r SCRIPT_VERSION='2022-09-08'
-
     declare -r SCRIPT_AUTHOR='Steven Ward'
-
     declare -r SCRIPT_LICENSE='OSL-3.0'
 
     VERBOSE=false
-
     INCLUDE_DATETIME=false
-
     BASENAME=''
-
     FORCE=false
-
     EXTRA_INFO_FILES=false
-
     PRESERVE_TIMESTAMP=false
-
     SUFFIX=''
-
     declare -a TAR_OPTIONS
-
 
     function print_version
     {
@@ -116,7 +105,6 @@ EOT
         ${VERBOSE} && { printf -- "${@}" ; printf '\n' ; }
     }
 
-
     while getopts "Vhvb:dfips:t:" option
     do
         case "${option}" in
@@ -184,17 +172,11 @@ EOT
     shift $((OPTIND - 1)) || exit
 
     print_verbose 'INCLUDE_DATETIME=%s' "${INCLUDE_DATETIME}"
-
     print_verbose 'FORCE=%s' "${FORCE}"
-
     print_verbose 'EXTRA_INFO_FILES=%s' "${EXTRA_INFO_FILES}"
-
     print_verbose 'PRESERVE_TIMESTAMP=%s' "${PRESERVE_TIMESTAMP}"
-
     print_verbose 'SUFFIX=%s' "${SUFFIX}"
-
     print_verbose 'TAR_OPTIONS=(%s)' "${TAR_OPTIONS[*]}"
-
 
     for INFILE
     do

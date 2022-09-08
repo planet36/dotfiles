@@ -16,11 +16,8 @@ function untar
     declare -r SCRIPT_LICENSE='OSL-3.0'
 
     VERBOSE=false
-
     KEEP=false
-
     declare -a TAR_OPTIONS
-
 
     function print_version
     {
@@ -114,7 +111,6 @@ EOT
     shift $((OPTIND - 1)) || exit
 
     print_verbose 'KEEP=%s' "$KEEP"
-
     print_verbose 'TAR_OPTIONS=(%s)' "${TAR_OPTIONS[*]}"
 
     for INFILE
