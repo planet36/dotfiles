@@ -12,9 +12,11 @@ function t
 
     declare -r SCRIPT_NAME="${FUNCNAME[0]}"
 
-    declare -r SCRIPT_VERSION='2019-09-19'
+    declare -r SCRIPT_VERSION='2022-09-08'
 
     declare -r SCRIPT_AUTHOR='Steven Ward'
+
+    declare -r SCRIPT_LICENSE='OSL-3.0'
 
     VERBOSE=false
 
@@ -37,6 +39,7 @@ function t
     {
         cat <<EOT
 ${SCRIPT_NAME} ${SCRIPT_VERSION}
+License: $SCRIPT_LICENSE
 Written by ${SCRIPT_AUTHOR}
 EOT
     }

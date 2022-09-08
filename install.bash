@@ -9,8 +9,9 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2022-06-03'
+SCRIPT_VERSION='2022-09-08'
 SCRIPT_AUTHOR='Steven Ward'
+SCRIPT_LICENSE='OSL-3.0'
 
 VERBOSE=false
 RELATIVE=false
@@ -22,6 +23,7 @@ function print_version
 {
     cat <<EOT
 $SCRIPT_NAME $SCRIPT_VERSION
+License: $SCRIPT_LICENSE
 Written by $SCRIPT_AUTHOR
 EOT
 }
