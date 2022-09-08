@@ -16,7 +16,6 @@ __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
 
-
 r"""
 From the C++ standard:
 
@@ -40,7 +39,6 @@ simple_esc_seq = {
 	'\\': r'\\', # backslash
 }
 
-
 def escape_char_to_octal(c):
 	"""Escape the character to a simple-escape-sequence or an octal-escape-sequence."""
 
@@ -49,7 +47,6 @@ def escape_char_to_octal(c):
 	else:
 		return fr'\{ord(c):03o}'
 
-
 def escape_char_to_hexadecimal(c):
 	"""Escape the character to a simple-escape-sequence or a hexadecimal-escape-sequence."""
 
@@ -57,7 +54,6 @@ def escape_char_to_hexadecimal(c):
 		return simple_esc_seq[c]
 	else:
 		return fr'\x{ord(c):02X}'
-
 
 def escape_non_printable_char_to_octal(c):
 	"""Escape the non-printable character to octal digits.  \
@@ -68,7 +64,6 @@ If the character is printable, it is not escaped."""
 	else:
 		return escape_char_to_octal(c)
 
-
 def escape_non_printable_char_to_hexadecimal(c):
 	"""Escape the non-printable character to hexadecimal digits.  \
 If the character is printable, it is not escaped."""
@@ -78,12 +73,10 @@ If the character is printable, it is not escaped."""
 	else:
 		return escape_char_to_hexadecimal(c)
 
-
 def literal(s):
 	"""Do not quote the string."""
 
 	return s
-
 
 def shell_always(s):
 	"""Quote the string (in all cases) for a shell.  \
@@ -93,7 +86,6 @@ Escape single quotes, and surround the result with single quotes."""
 	replacement = r"'\''"
 
 	return "'" + s.replace(pattern, replacement) + "'"
-
 
 def shell(s):
 	"""Quote the string (in some cases) for a shell.  \
@@ -106,7 +98,6 @@ If the string contains special characters specified by the POSIX standard, then 
 		return shell_always(s)
 	else:
 		return s
-
 
 def escape(s):
 	"""Escape non-printable characters, spaces, and backslashes."""
@@ -127,7 +118,6 @@ def escape(s):
 	s = pattern2.sub(replacement2, s)
 
 	return s
-
 
 def cstr(s):
 	"""Quote the string for a C string literal.  \
@@ -151,7 +141,6 @@ Escape non-printable characters, double quotes, backslashes, and trigraphs, and 
 	# Surround the result with double quotes.
 	return '"' + s + '"'
 
-
 def cstr_maybe(s):
 	"""Quote the string (in some cases) for a C string literal.  \
 Escape non-printable characters, double quotes, backslashes, and trigraphs, and surround the result with double quotes.  \
@@ -168,7 +157,6 @@ If no characters were escaped, the original string is returned."""
 	else:
 		return s
 
-
 def pcre(s):
 	"""Escape non-alphanumeric characters and non-underscore characters for a Perl Compatible Regular Expression (PCRE)."""
 
@@ -176,7 +164,6 @@ def pcre(s):
 	replacement = r'\\\1'
 
 	return pattern.sub(replacement, s)
-
 
 def csv(s, field_separator = ',', record_separator = '\n'):
 	"""Quote the string (in some cases) for a CSV field.  \
@@ -194,7 +181,6 @@ If the string contains a field separator, contains a record separator, begins wi
 
 	return s
 
-
 quoting_style_to_function_map = {
 	'literal'      : literal     ,
 	'shell-always' : shell_always,
@@ -206,7 +192,6 @@ quoting_style_to_function_map = {
 	'csv'          : csv         ,
 }
 
-
 def quote(s, quoting_style):
 	'''Quote the string with the quoting style.'''
 
@@ -214,8 +199,6 @@ def quote(s, quoting_style):
 		return quoting_style_to_function_map[quoting_style](s)
 	else:
 		return s
-
-
 
 # pylint: disable=R0912
 # pylint: disable=R0915
@@ -227,13 +210,10 @@ def main(argv = None):
 	import os.path
 	import signal
 
-
 	if argv is None:
 		argv = sys.argv
 
-
 	program_name = os.path.basename(argv[0])
-
 
 	# valid values
 	valid_quoting_styles = sorted(quoting_style_to_function_map.keys())
@@ -246,7 +226,6 @@ def main(argv = None):
 	quoting_style = default_quoting_style
 	delimiter = default_delimiter
 
-
 	# pylint: disable=W0613
 	def signal_handler(signal_num, execution_frame):
 		print()
@@ -255,25 +234,21 @@ def main(argv = None):
 	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-
 	def print_version():
 		"""Print the version information"""
 		print(program_name, __version__)
 		print("License:", __license__)
 		print("Written by", __author__)
 
-
 	# pylint: disable=unused-variable
 	def print_warning(s):
 		"""Print the warning message"""
 		print(f"Warning: {s}", file=sys.stderr)
 
-
 	def print_error(s):
 		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
 
 	def print_help():
 		"""Print the help message"""
@@ -308,7 +283,6 @@ OPTIONS
 			print(f"    {key} : {value.__doc__}")
 			print()
 
-
 	short_options = 'Vhq:0'
 	long_options = ['version', 'help', 'quoting-style=', 'null']
 
@@ -339,7 +313,6 @@ OPTIONS
 		print_error(f"{quoting_style} is not a valid quoting style.")
 		return 1
 
-
 	def quote_lines(lines):
 
 		quote_function = quoting_style_to_function_map[quoting_style]
@@ -357,7 +330,6 @@ OPTIONS
 
 		quote_lines(lines)
 
-
 	# No file was given.
 	if not remaining_args: # empty
 		remaining_args.append('-')
@@ -365,9 +337,7 @@ OPTIONS
 	for file_name in remaining_args:
 
 		try:
-
 			if file_name == '-':
-
 				# Read standard input.
 
 				if delimiter == os.linesep:
@@ -376,7 +346,6 @@ OPTIONS
 					quote_file_data(sys.stdin.read())
 
 			else:
-
 				# Read the file.
 
 				with open(file_name, mode='r', encoding='utf-8') as f:
@@ -389,8 +358,6 @@ OPTIONS
 		except (OSError, UnicodeDecodeError) as err:
 			print_error(err)
 			return 1
-
-
 
 if __name__ == '__main__':
 	sys.exit(main())

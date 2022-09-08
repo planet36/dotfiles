@@ -34,17 +34,14 @@ __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
 
-
 # https://stackoverflow.com/a/14693789
 ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-
 
 # https://stackoverflow.com/a/7267280
 def drange(start: D, stop: D, step: D):
 	while start < stop:
 		yield start
 		start += step
-
 
 # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 # endpoint not included
@@ -53,14 +50,11 @@ def dlinspace(start: D, stop: D, num: int):
 	for i in range(num):
 		yield start + step * i
 
-
 def round_half_up_d(x: D) -> int:
 	return int(x.to_integral_value(rounding=ROUND_HALF_UP))
 
-
 def round_half_up_f(x: float) -> int:
 	return round_half_up_d(D(x))
-
 
 def round_half_up(x) -> int:
 	if isinstance(x, float):
@@ -71,11 +65,9 @@ def round_half_up(x) -> int:
 		return x
 	raise TypeError
 
-
 # Get the difference between the angles (degrees)
 def get_angle_deg_diff(a1: float, a2: float) -> float:
 	return abs(math.remainder(a2 - a1, 360))
-
 
 def get_cylinder_coord_dist(
 		ρ1: float, φ1: float, z1: float,
@@ -90,14 +82,12 @@ def get_cylinder_coord_dist(
 
 	return math.hypot(d1, d2, d3)
 
-
 def downscale_RGB(sRGBup: tuple) -> tuple:
 	return tuple((
 		sRGBup[0] / 255,
 		sRGBup[1] / 255,
 		sRGBup[2] / 255
 		))
-
 
 def upscale_RGB(sRGB: tuple) -> tuple:
 	return tuple((
@@ -106,24 +96,20 @@ def upscale_RGB(sRGB: tuple) -> tuple:
 		round_half_up(sRGB[2] * 255)
 		))
 
-
 @unique
 class ColorSpace(Enum):
 	HSLUV = auto()
 	LOLCAT = auto()
-
 
 def get_hsluv_color_dist(hsluv_color1, hsluv_color2) -> float:
 	(H1, S1, L1) = hsluv_color1
 	(H2, S2, L2) = hsluv_color2
 	return get_cylinder_coord_dist(S1, H1, L1, S2, H2, L2)
 
-
 xterm_color_num_to_hsluv_color = {}
 
 for (k, v) in xterm_color_num_to_rgb_string.items():
 	xterm_color_num_to_hsluv_color[k] = hsluv.hex_to_hsluv(v)
-
 
 def get_closest_xterm_color_num_from_hsluv(hsluv_color: tuple) -> int:
 
@@ -137,7 +123,6 @@ def get_closest_xterm_color_num_from_hsluv(hsluv_color: tuple) -> int:
 			closest_color_num = color_num
 
 	return closest_color_num
-
 
 def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_rev: bool = False) -> str:
 	'''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
@@ -163,7 +148,6 @@ def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_rev: bool = Fa
 	result.append(esc_reset)
 
 	return ''.join(result)
-
 
 def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_rev: bool = False) -> str:
 	'''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
@@ -191,7 +175,6 @@ def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_rev: bool = False) ->
 
 	return ''.join(result)
 
-
 def generate_hsluv_colors(num_colors: int, S: float, L: float) -> tuple:
 	'''
 	S, L in [0, 100]
@@ -201,7 +184,6 @@ def generate_hsluv_colors(num_colors: int, S: float, L: float) -> tuple:
 	stop = D(360)
 
 	return tuple((float(H), S, L) for H in dlinspace(start, stop, num_colors))
-
 
 def generate_RGB_colors(num_colors: int, lightness: float) -> list:
 	'''
@@ -218,7 +200,6 @@ def generate_RGB_colors(num_colors: int, lightness: float) -> list:
 		(math.cos(math.tau * float(x) + 1 * math.tau/3) + 1) / 2 * lightness
 		) for x in dlinspace(start, stop, num_colors))
 
-
 def main(argv = None):
 
 	import copy
@@ -231,7 +212,6 @@ def main(argv = None):
 		argv = sys.argv
 
 	program_name = os.path.basename(argv[0])
-
 
 	# immutable values
 	min_lightness = 0
@@ -256,7 +236,6 @@ def main(argv = None):
 	debug = default_debug
 	lightness = None
 
-
 	def signal_handler(signal_num, execution_frame):
 		print()
 		sys.exit(0)
@@ -264,30 +243,25 @@ def main(argv = None):
 	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-
 	def print_version():
 		"""Print the version information"""
 		print(program_name, __version__)
 		print("License:", __license__)
 		print("Written by", __author__)
 
-
 	def print_verbose(s):
 		"""Print the message if verbose mode is on"""
 		if verbose:
 			print(f"# {s}", file=sys.stderr)
 
-
 	def print_warning(s):
 		"""Print the warning message"""
 		print(f"Warning: {s}", file=sys.stderr)
-
 
 	def print_error(s):
 		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
 
 	def print_help():
 		"""Print the help message"""
@@ -333,7 +307,6 @@ OPTIONS
     (Default for {ColorSpace.LOLCAT.name}: {default_lightness_dict[ColorSpace.LOLCAT]})
     (Default for {ColorSpace.HSLUV.name}: {default_lightness_dict[ColorSpace.HSLUV]})
 ''')
-
 
 	short_options = 'Vhvn:c:8brdl:'
 	long_options = ['version', 'help', 'verbose', 'debug',
@@ -402,7 +375,6 @@ OPTIONS
 	print_verbose(f'{do_rev=}')
 	print_verbose(f'{debug=}')
 	print_verbose(f'{lightness=}')
-
 
 	if color_space == ColorSpace.HSLUV:
 
@@ -477,7 +449,6 @@ OPTIONS
 
 		if has_trailing_nl:
 			print(end=os.linesep)
-
 
 if __name__ == '__main__':
 	sys.exit(main())

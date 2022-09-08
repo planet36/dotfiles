@@ -22,9 +22,7 @@ __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
 
-
 File_Info = collections.namedtuple('File_Info', ('path', 'basename', 'name_quoted', 'size', 'mtime', 'ctime'))
-
 
 def remove_keys_with_single_values(d):
 	"""Remove keys with single values from the given dictionary."""
@@ -37,7 +35,6 @@ def remove_keys_with_single_values(d):
 
 	for key_to_delete in keys_to_delete:
 		del d[key_to_delete]
-
 
 ##### TODO: the param to limit the depth should be named 'max_depth'
 def get_file_size_to_file_path_map(path, max_depth: int=sys.maxsize):
@@ -57,12 +54,8 @@ Descend at most max_depth levels of directories below path."""
     return filter(os.path.isdir,
                   [os.path.join(dir, f) for f in os.listdir(dir)])
 
-
-
 	filter(os.path.isfile, [os.path.join(path, f) for f in os.listdir(path)])
 	filter(lambda x: os.path.isfile(x) and not os.path.islink(x), [os.path.join(path, f) for f in os.listdir(path)])
-
-
 
 	https://docs.python.org/3/library/os.html#os.walk
 
@@ -74,8 +67,6 @@ Descend at most max_depth levels of directories below path."""
 	again. Modifying dirnames when topdown is False is ineffective, because in
 	bottom-up mode the directories in dirnames are generated before dirpath
 	itself is generated.
-
-
 	'''
 
 	# https://docs.python.org/dev/library/os.html#os.walk
@@ -105,7 +96,6 @@ Descend at most max_depth levels of directories below path."""
 			file_size_to_file_path_map[file_size].append(file_path_joined)
 
 	return file_size_to_file_path_map
-
 
 ##### TODO: maybe add option to specify the type of hash algorithm
 
@@ -141,7 +131,6 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 			file_hash_to_file_info_map[file_hash].append(file_info)
 
 	return file_hash_to_file_info_map
-
 
 # pylint: disable=R0912
 # pylint: disable=R0914
@@ -185,7 +174,6 @@ def main(argv = None):
 	hash_algorithm = default_hash_algorithm
 	interactive_rm = default_interactive_rm
 
-
 	# pylint: disable=W0613
 	def signal_handler(signal_num, execution_frame):
 		print()
@@ -194,30 +182,25 @@ def main(argv = None):
 	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-
 	def print_version():
 		"""Print the version information"""
 		print(program_name, __version__)
 		print("License:", __license__)
 		print("Written by", __author__)
 
-
 	def print_verbose(s):
 		"""Print the message if verbose mode is on"""
 		if verbose:
 			print(f"# {s}", file=sys.stderr)
 
-
 	def print_warning(s):
 		"""Print the warning message"""
 		print(f"Warning: {s}", file=sys.stderr)
-
 
 	def print_error(s):
 		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
 
 	def print_help():
 		"""Print the help message"""
@@ -268,9 +251,7 @@ OPTIONS
 
 -i, --interactive
     Make the 'rm' command interactive.
-
 """)
-
 
 	short_options = 'Vhvd:crmfsa:i'
 	long_options = ['version', 'help', 'verbose',
@@ -315,7 +296,6 @@ OPTIONS
 			print_error(f"Unhandled option: {option}")
 			return 1
 
-
 	# No path was given.
 	if len(remaining_args) == 0:
 		remaining_args.append('.')
@@ -325,7 +305,6 @@ OPTIONS
 		path_quoted = shlex.quote(path)
 
 		print_verbose(f'Finding duplicate files in {path_quoted}')
-
 
 		print_verbose('(get_file_size_to_file_path_map)')
 		file_size_to_file_path_map = get_file_size_to_file_path_map(path, max_depth)
@@ -337,7 +316,6 @@ OPTIONS
 			print_warning(f"No files with duplicate sizes found in {path_quoted}")
 			continue
 
-
 		print_verbose('(get_file_hash_to_file_info_map)')
 		file_hash_to_file_info_map = get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm)
 
@@ -347,7 +325,6 @@ OPTIONS
 		if len(file_hash_to_file_info_map) == 0:
 			print_warning(f"No files with duplicate hashes found in {path_quoted}")
 			continue
-
 
 		print_verbose('(sorting values of file_hash_to_file_info_map)')
 
@@ -359,7 +336,6 @@ OPTIONS
 			if sort_by_mtime:
 				# Sort by mtime.
 				file_hash_to_file_info_map[file_hash].sort(key=lambda file_info : file_info.mtime, reverse=reverse_sort)
-
 
 		output_lines = []
 
@@ -401,7 +377,6 @@ OPTIONS
 				mtime_str = dt.datetime.fromtimestamp(file_info.mtime).isoformat()
 				ctime_str = dt.datetime.fromtimestamp(file_info.ctime).isoformat()
 
-
 				comment = '' if only_comment_first and not first_iteration else '#'
 
 				output_lines.append(f'{comment}rm -v{" -i" if interactive_rm else ""} {file_info.name_quoted} {padding}# mtime= {mtime_str} ; ctime= {ctime_str}')
@@ -409,7 +384,6 @@ OPTIONS
 				first_iteration = False
 
 			output_lines.append('')
-
 
 		if write_to_stdout:
 
@@ -427,7 +401,6 @@ OPTIONS
 			except OSError as err:
 				print_error(err)
 				return err.errno
-
 
 if __name__ == '__main__':
 	sys.exit(main())

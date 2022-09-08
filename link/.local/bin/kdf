@@ -19,7 +19,6 @@ __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
 
-
 def get_pbkdf2_algorithms_available():
 	'''<https://docs.python.org/3/library/hashlib.html#hashlib.pbkdf2_hmac>'''
 
@@ -35,7 +34,6 @@ def get_pbkdf2_algorithms_available():
 		else:
 			yield hash_algorithm
 
-
 # pylint: disable=C0116
 def main(argv = None):
 
@@ -49,7 +47,6 @@ def main(argv = None):
 		argv = sys.argv
 
 	program_name = os.path.basename(argv[0])
-
 
 	# valid values
 	valid_hash_algorithms = sorted(get_pbkdf2_algorithms_available())
@@ -78,7 +75,6 @@ def main(argv = None):
 	iterations = default_iterations
 	silent = default_silent
 
-
 	# pylint: disable=unused-variable
 	# pylint: disable=W0613
 	def signal_handler(signal_num, execution_frame):
@@ -88,31 +84,26 @@ def main(argv = None):
 	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-
 	def print_version():
 		"""Print the version information"""
 		print(program_name, __version__)
 		print("License:", __license__)
 		print("Written by", __author__)
 
-
 	def print_verbose(s):
 		"""Print the message if verbose mode is on"""
 		if verbose:
 			print(f"# {s}", file=sys.stderr)
 
-
 	def print_warning(s):
 		"""Print the warning message"""
 		print(f"Warning: {s}", file=sys.stderr)
-
 
 	def print_error(s):
 		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 		##### TODO: improve this and make it consistent with other functions
-
 
 	def print_help():
 		"""Print the help message"""
@@ -152,7 +143,6 @@ OPTIONS
     Don't echo terminal input.
     (default: {default_silent})
 """)
-
 
 	short_options = 'Vhva:f:n:s'
 	long_options = ['version', 'help', 'verbose', 'hash-algorithm=', 'format=', 'num-iterations=', 'silent']
@@ -204,12 +194,10 @@ OPTIONS
 		print_error(err)
 		return 1
 
-
 	print_verbose(f'hash_algorithm={hash_algorithm}')
 	print_verbose(f'fmt={fmt}')
 	print_verbose(f'iterations={iterations}')
 	print_verbose(f'silent={silent}')
-
 
 	"""
 	http://www.doughellmann.com/PyMOTW/getpass/
@@ -240,12 +228,8 @@ OPTIONS
 	except ValueError as err:
 		print(err)
 
-
-
 if __name__ == '__main__':
 	sys.exit(main())
-
-
 
 '''
 Output:

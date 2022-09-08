@@ -14,7 +14,6 @@ __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
 
-
 def hash_file(file_name, hash_object=None, block_size=65536):
 	"""Open file_name, read block_size bytes at a time, and hash the bytes using the hash_object.
 
@@ -48,7 +47,6 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 
 	return hash_object
 
-
 # pylint: disable=C0415
 # pylint: disable=R0911
 # pylint: disable=R0912
@@ -67,7 +65,6 @@ def main(argv = None):
 
 	program_name = os.path.basename(argv[0])
 
-
 	# valid values
 	valid_hash_algorithms = hashlib.algorithms_guaranteed
 	valid_formats = {'b16' : base64.b16encode, 'b32' : base64.b32encode, 'b64-std' : base64.standard_b64encode, 'b64-url' : base64.urlsafe_b64encode}
@@ -82,7 +79,6 @@ def main(argv = None):
 	block_size = default_block_size
 	fmt = default_format
 
-
 	# pylint: disable=W0613
 	def signal_handler(signal_num, execution_frame):
 		print()
@@ -91,25 +87,21 @@ def main(argv = None):
 	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-
 	def print_version():
 		"""Print the version information"""
 		print(program_name, __version__)
 		print("License:", __license__)
 		print("Written by", __author__)
 
-
 	# pylint: disable=unused-variable
 	def print_warning(s):
 		"""Print the warning message"""
 		print(f"Warning: {s}", file=sys.stderr)
 
-
 	def print_error(s):
 		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
 
 	def print_help():
 		"""Print the help message"""
@@ -143,7 +135,6 @@ OPTIONS
     (default: {default_format})
     (valid: {','.join(sorted(valid_formats.keys()))})
 """)
-
 
 	short_options = 'Vha:b:f:'
 	long_options = ['version', 'help', 'hash-algorithm=', 'block-size=', 'format=']
@@ -202,7 +193,6 @@ OPTIONS
 
 		hash_digest = hash_object.digest()
 		print(f'{valid_formats[fmt](hash_digest).decode()}  {file_name_quoted}')
-
 
 if __name__ == '__main__':
 	sys.exit(main())

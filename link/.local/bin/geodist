@@ -18,17 +18,14 @@ __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
 
-
 # https://mathworld.wolfram.com/Haversine.html
 # https://en.wikipedia.org/wiki/Haversine_formula
 def hav_rad(a_rad: float) -> float:
 	'''Return the haversine of the given angle (radians).'''
 	return math.sin(a_rad/2)**2
 
-
 def normalize_angle_deg_signed(a_deg: float) -> float:
 	return math.remainder(a_deg, 360)
-
 
 def normalize_latitude_deg(lat_deg: float) -> float:
 	lat_deg = normalize_angle_deg_signed(lat_deg)
@@ -38,11 +35,9 @@ def normalize_latitude_deg(lat_deg: float) -> float:
 		lat_deg = 180 - lat_deg
 	return lat_deg
 
-
 def normalize_longitude_deg(lon_deg: float) -> float:
 	lon_deg = normalize_angle_deg_signed(lon_deg)
 	return lon_deg
-
 
 def normalize_geodetic_deg(lat_deg: float, lon_deg: float) -> tuple:
 	lat_deg = normalize_angle_deg_signed(lat_deg)
@@ -58,10 +53,8 @@ def normalize_geodetic_deg(lat_deg: float, lon_deg: float) -> tuple:
 
 	return (lat_deg, lon_deg)
 
-
 def angle_deg_diff(a1_deg: float, a2_deg: float) -> float:
 	return normalize_angle_deg_signed(a2_deg - a1_deg)
-
 
 # TODO: maybe allow user to specify radius
 # https://en.wikipedia.org/wiki/Earth_radius
@@ -93,7 +86,6 @@ def haversine_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_d
 
 	return R * c
 
-
 # https://en.wikipedia.org/wiki/Euclidean_distance
 def euclidian_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_deg: float) -> float:
 	# pylint: disable=redefined-outer-name
@@ -101,7 +93,6 @@ def euclidian_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_d
 	(x1, y1, z1) = WGS84.geodetic_to_ecef(lat1_deg, lon1_deg, 0)
 	(x2, y2, z2) = WGS84.geodetic_to_ecef(lat2_deg, lon2_deg, 0)
 	return math.dist((x1, y1, z1), (x2, y2, z2))
-
 
 # pylint: disable=R0914
 def main(argv = None):
@@ -185,7 +176,6 @@ OPTIONS
     (valid: {', '.join(possible_dist_funcs.keys())})
     (default: {default_method})
 
-
 EXAMPLES
 
 cat <<EOT | geodist --method haversine
@@ -199,7 +189,6 @@ cat <<EOT | geodist --method euclidian
 40.056667 -78.905833 38.8977 -77.0365
 38.889722 -77.008889 38.8977 -77.0365
 EOT
-
 """)
 
 	short_options = 'Vhvm:'

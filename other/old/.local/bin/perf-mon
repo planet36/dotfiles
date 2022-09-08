@@ -22,29 +22,20 @@ import os
 import re
 import sys
 
-
 __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
 
-
 full_block = '█'
-
 lower_blocks = " ▁▂▃▄▅▆▇█"
-
 left_blocks = " ▏▎▍▌▋▊▉█"
-
 #ver_lines = " ▏🭰🭱🭲🭳🭴🭵▕"
 # space is omitted
 ver_lines = "▏🭰🭱🭲🭳🭴🭵▕"
-
 # space is omitted
 hor_lines = "▁🭻🭺🭹🭸🭷🭶▔"
-
 upper_blocks = " ▔🮂🮃▀🮄🮅🮆█"
-
 right_blocks = " ▕🮇🮈▐🮉🮊🮋█"
-
 
 def clamp(x: float) -> float:
 
@@ -55,7 +46,6 @@ def clamp(x: float) -> float:
 	else:
 		return x
 
-
 # map the real number within the interval [0, 1]
 # to an integer within the interval [0, b)
 # XXX: does not work for negative numbers
@@ -63,7 +53,6 @@ def map_to_uint(x: float, b: int) -> int:
 
 	#return round(clamp(x) * (b - 1)) # does round-half-even
 	return int(clamp(x) * (b - 1) + 0.5)
-
 
 def calc_meter_segments(x: float, meter_width: int, blocks_len: int) -> tuple:
 
@@ -97,7 +86,6 @@ def calc_meter_segments(x: float, meter_width: int, blocks_len: int) -> tuple:
 
 	return (left_width, blocks_index, right_width)
 
-
 def get_pct(x: float) -> str:
 
 	#pct_fmt = '{: >6.1%}'
@@ -113,13 +101,11 @@ def get_pct(x: float) -> str:
 	##### TODO: is this rjust still necessary with the --rjust option???
 	return pct_fmt.format(x).rjust(pct_rjust_width)
 
-
 def lower_blocks_1(x: float) -> str:
 
 	global lower_blocks
 
 	return lower_blocks[map_to_uint(x, len(lower_blocks))]
-
 
 def upper_blocks_1(x: float) -> str:
 
@@ -127,13 +113,11 @@ def upper_blocks_1(x: float) -> str:
 
 	return upper_blocks[map_to_uint(x, len(upper_blocks))]
 
-
 def hor_lines_1(x: float) -> str:
 
 	global hor_lines
 
 	return hor_lines[map_to_uint(x, len(hor_lines))]
-
 
 def left_blocks_meter(x: float, meter_width: int) -> str:
 
@@ -146,7 +130,6 @@ def left_blocks_meter(x: float, meter_width: int) -> str:
 
 	return left_width * full_block + (left_blocks[blocks_index] if blocks_index != -1 else '') + right_width * ' '
 
-
 def right_blocks_meter(x: float, meter_width: int) -> str:
 
 	global right_blocks
@@ -158,7 +141,6 @@ def right_blocks_meter(x: float, meter_width: int) -> str:
 
 	# left_width and right_width are swapped
 	return right_width * ' ' + (right_blocks[blocks_index] if blocks_index != -1 else '') + left_width * full_block
-
 
 def ver_lines_meter(x: float, meter_width: int) -> str:
 
@@ -175,12 +157,6 @@ def ver_lines_meter(x: float, meter_width: int) -> str:
 		return ver_lines[-1].rjust(meter_width)
 	else:
 		return left_width * ' ' + (ver_lines[blocks_index] if blocks_index != -1 else '') + right_width * ' '
-
-
-
-
-
-
 
 '''
 
@@ -204,11 +180,7 @@ for x in range(0, 200+1):
     print("{:.3f} '".format(x/200), end='')
     print(right_blocks_meter(x/200, n), end='')
     print("'")
-
-
-
 '''
-
 
 BIN_SI_BASE = 1024
 DEC_SI_BASE = 1000
@@ -268,7 +240,6 @@ def human_scale(x: int, base: int) -> str:
 	##### TODO: is this rjust still necessary with the --rjust option???
 	return f'{scaled_value:.{precision}g} {si_unit_prefix}'.rjust(human_rjust_width)
 
-
 # Calculate metrics
 
 # https://www.kernel.org/doc/Documentation/filesystems/proc.txt
@@ -323,11 +294,9 @@ def get_mem_info(mem_info_path: Path) -> dict:
 
 	return mem_info
 
-
 def get_mem_used_bytes(mem_info: dict) -> int:
 
 	return mem_info['MemTotal'] - mem_info['MemFree'] - (mem_info['Buffers'] + mem_info['Cached'] + mem_info['SReclaimable'])
-
 
 def get_cpu_proc_stat(cpu_proc_stat_path: Path) -> list:
 
@@ -343,9 +312,7 @@ def get_cpu_proc_stat(cpu_proc_stat_path: Path) -> list:
 	# convert values to int
 	return [dict((key, int(value)) for key, value in match.groupdict().items() if key != 'iowait') for match in match_iter]
 
-
 def get_cpu_idle(cpu_proc_stat_0: dict, cpu_proc_stat_1: dict) -> float: # ratio
-
 
 	assert cpu_proc_stat_0.keys() == cpu_proc_stat_1.keys()
 
@@ -358,13 +325,10 @@ def get_cpu_idle(cpu_proc_stat_0: dict, cpu_proc_stat_1: dict) -> float: # ratio
 
 	return delta_idle_ticks / delta_total_ticks
 
-
 def get_cpu_idle_each(cpu_proc_stat_list_0: list, cpu_proc_stat_list_1: list) -> list:
-
 
 	assert len(cpu_proc_stat_list_0) == len(cpu_proc_stat_list_1)
 	return [get_cpu_idle(cpu_proc_stat_0, cpu_proc_stat_1) for cpu_proc_stat_0, cpu_proc_stat_1 in zip(cpu_proc_stat_list_0, cpu_proc_stat_list_1)]
-
 
 def get_num_cpus_avail() -> int:
 
@@ -375,7 +339,6 @@ def get_num_cpus_avail() -> int:
 	#return len(os.sched_getaffinity(0))
 	# https://www.gnu.org/software/libc/manual/html_node/Processor-Resources.html
 	return os.sysconf('SC_NPROCESSORS_ONLN')
-
 
 def get_uptime(uptime_path: Path) -> timedelta:
 
@@ -393,7 +356,6 @@ def get_uptime(uptime_path: Path) -> timedelta:
 	# round to the nearest second
 	return timedelta(seconds=round(uptime))
 
-
 uptime_width = len('10d 10h 10m') # 99 days should be sufficient
 
 def timedelta_to_dhm(td: timedelta) -> str:
@@ -403,7 +365,6 @@ def timedelta_to_dhm(td: timedelta) -> str:
 	hh, mm = divmod(mm, 60)
 	##### TODO: is this rjust still necessary with the --rjust option???
 	return f'{td.days}d {hh}h {mm}m'.rjust(uptime_width)
-
 
 def main(argv = None):
 
@@ -423,13 +384,10 @@ def main(argv = None):
 	global BIN_SI_BASE
 	global DEC_SI_BASE
 
-
 	if argv is None:
 		argv = sys.argv
 
-
 	program_name = os.path.basename(argv[0])
-
 
 	# valid values
 	valid_metrics = (
@@ -536,7 +494,6 @@ def main(argv = None):
 	ljust_func = default_ljust_func
 	rjust_func = default_rjust_func
 
-
 	def signal_handler_pass(unused_signal_num, unused_execution_frame):
 		pass
 
@@ -548,30 +505,25 @@ def main(argv = None):
 	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 	signal.signal(signal.SIGALRM, signal_handler_pass)
 
-
 	def print_version():
 		"""Print the version information"""
 		print(program_name, __version__)
 		print("License:", __license__)
 		print("Written by", __author__)
 
-
 	def print_verbose(s):
 		"""Print the message if verbose mode is on"""
 		if verbose:
 			print(f"# {s}", file=sys.stderr)
 
-
 	def print_warning(s):
 		"""Print the warning message"""
 		print(f"Warning: {s}", file=sys.stderr)
-
 
 	def print_error(s):
 		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
 
 	def print_help():
 		"""Print the help message"""
@@ -663,7 +615,6 @@ If no metrics are given, local time is used. ##### TODO-DOC
 Valid metrics:
     {valid_metrics_formatted}
 ''')
-
 
 	short_options = 'Vhvqx'
 	long_options = ['version', 'help', 'verbose',
@@ -768,11 +719,9 @@ Valid metrics:
 			print_error(err)
 			return 1
 
-
 	if verbose and quiet:
 		print_error("Options 'verbose' and 'quiet' are mutually exclusive.")
 		return 1
-
 
 	if set_x_root_window_name and not metric_field_separator.isprintable():
 		# Replace non-printable characters with space
@@ -783,7 +732,6 @@ Valid metrics:
 		metric_field_separator = ''.join(' ' if unicodedata.category(c)[0] in ('Z', 'C') else c for c in metric_field_separator)
 
 	print_verbose(f'{repr(metric_field_separator)=}')
-
 
 	dwm_status_bar_buffer_size = 256
 
@@ -797,12 +745,10 @@ Valid metrics:
 
 		elapsed_time_rjust_width = len(f'{total_num_samples * duration_between_samples:.3f}')
 
-
 	print_verbose(f'{remaining_args=}')
 
 	if not remaining_args: # empty
 		print_warning("Should give at least 1 metric")
-
 
 	formatted_metrics = dict()
 
@@ -820,10 +766,8 @@ Valid metrics:
 		formatted_metrics['local_time'] = ''
 		print_verbose(f'{formatted_metrics=}')
 
-
 	num_cpus_avail = get_num_cpus_avail()
 	print_verbose(f'{num_cpus_avail=}')
-
 
 	if use_xlib:
 		display = Display()
@@ -834,7 +778,6 @@ Valid metrics:
 	mem_info_path = Path('/proc/meminfo')
 	rx_bytes_path = Path('/sys/class/net/' + net_dev + '/statistics/rx_bytes')
 	tx_bytes_path = Path('/sys/class/net/' + net_dev + '/statistics/tx_bytes')
-
 
 	#max_v_len = max(vbar_hist_size, vdots_length)
 
@@ -912,7 +855,6 @@ Valid metrics:
 		tx_bytes.append(int(tx_bytes_path.read_text()))
 		delta_tx_bytes = tx_bytes[-1] - tx_bytes[-2]
 		tx_rate_bytes_per_sec = delta_tx_bytes / delta_time
-
 
 		# add the metrics to the output line
 
@@ -1104,7 +1046,6 @@ Valid metrics:
 		if 'tx_rate_bytes_per_sec' in formatted_metrics:
 			formatted_metrics['tx_rate_bytes_per_sec'] = human_scale(tx_rate_bytes_per_sec, si_unit_prefix_base) + 'B/s ▲'
 
-
 		if center_func:
 			#out_line = metric_field_separator.join(s.center(center_width) for s in formatted_metrics.values())
 			out_line = metric_field_separator.join(map(center_func, formatted_metrics.values()))
@@ -1144,7 +1085,6 @@ Valid metrics:
 				except subprocess.CalledProcessError as err:
 					print_error(err)
 					return 1
-
 
 if __name__ == '__main__':
 	sys.exit(main())
