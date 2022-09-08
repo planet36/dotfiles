@@ -27,7 +27,7 @@ EOT
 
 print_help() {
 
-    printf 'Usage: %q [OPTIONS]\n' "${BASH_SOURCE[0]}"
+    printf 'Usage: %q [OPTIONS]\n' "$SCRIPT_NAME"
     cat <<EOT
 
 Get programs from github.  Run this script from the target directory.
