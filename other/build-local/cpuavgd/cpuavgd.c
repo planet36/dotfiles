@@ -15,6 +15,7 @@
 
 const char program_author[] = "Steven Ward";
 const char program_version[] = "1.1.0";
+const char program_license[] = "OSL-3.0";
 
 const unsigned int default_init_delay_msec = 2000;
 const unsigned int default_interval_msec = 2000;
@@ -56,6 +57,7 @@ void
 print_version()
 {
 	printf("%s %s\n", program_invocation_short_name, program_version);
+	printf("License: %s\n", program_license);
 	printf("Written by %s\n", program_author);
 }
 
