@@ -1,6 +1,5 @@
-// SPDX-FileCopyrightText: Sebastiano Vigna (vigna@acm.org)
 // SPDX-FileCopyrightText: Steven Ward
-// SPDX-License-Identifier: CC0-1.0
+// SPDX-License-Identifier: OSL-3.0
 
 /// splitmix64 PRNG
 /**
@@ -8,20 +7,12 @@
 \author Steven Ward
 \sa http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/SplittableRandom.java
 \sa https://gee.cs.oswego.edu/dl/papers/oopsla14.pdf
-\sa https://prng.di.unimi.it/splitmix64.c
 */
 
 #pragma once
 
 #include "def_urbg_class_details.hpp"
 
-/** This is a fixed-increment version of Java 8's SplittableRandom generator
- * See https://dl.acm.org/doi/10.1145/2714064.2660195 and
- * https://docs.oracle.com/javase/8/docs/api/java/util/SplittableRandom.html
- *
- * It is a very fast generator passing BigCrush, and it can be useful if
- * for some reason you absolutely want 64 bits of state.
- */
 struct splitmix64
 {
 	using state_type = uint64_t;
