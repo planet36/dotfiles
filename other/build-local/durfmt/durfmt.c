@@ -8,9 +8,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-const char program_author[] = "Steven Ward";
-const char program_version[] = "1.0.1";
-const char program_license[] = "OSL-3.0";
+const char* program_author = "Steven Ward";
+const char* program_version = "1.0.1";
+const char* program_license = "OSL-3.0";
 
 const int default_width = 1;
 const int max_width = 20;
