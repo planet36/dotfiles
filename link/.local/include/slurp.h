@@ -11,10 +11,10 @@
 #pragma once
 
 // https://man.openbsd.org/err.3
-//#include <err.h> // libbsd
+#include <err.h> // libbsd
 
 // https://www.man7.org/linux/man-pages/man3/error.3.html
-#include <error.h> // glibc
+//#include <error.h> // glibc
 
 #include <assert.h>
 #include <errno.h>
@@ -33,7 +33,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	const int fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		error(0, errno, "open \"%s\"", path);
+		warn("open \"%s\"", path);
 		return -1;
 	}
 
@@ -41,7 +41,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	if (fstat(fd, &statbuf) < 0)
 	{
 		(void)close(fd);
-		error(0, errno, "fstat \"%s\"", path);
+		warn("fstat \"%s\"", path);
 		return -1;
 	}
 
@@ -49,7 +49,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	{
 		(void)close(fd);
 		errno = EISDIR;
-		error(0, errno, "%s \"%s\"", __func__, path);
+		warn("%s \"%s\"", __func__, path);
 		return -1;
 	}
 
@@ -61,7 +61,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	if (buf == NULL)
 	{
 		(void)close(fd);
-		error(0, errno, "malloc %zu", get_bytes);
+		warn("malloc %zu", get_bytes);
 		return -1;
 	}
 
@@ -73,7 +73,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		(void)close(fd);
 		free(buf);
 		buf = NULL;
-		error(0, errno, "read %zu, returned %zd", get_bytes, got_bytes);
+		warn("read %zu, returned %zd", get_bytes, got_bytes);
 		return -1;
 	}
 
@@ -93,7 +93,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	FILE* fp = fopen(path, "rb");
 	if (fp == NULL)
 	{
-		error(0, errno, "fopen \"%s\"", path);
+		warn("fopen \"%s\"", path);
 		return -1;
 	}
 
@@ -101,7 +101,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	if (stat(path, &statbuf) < 0)
 	{
 		(void)fclose(fp);
-		error(0, errno, "stat \"%s\"", path);
+		warn("stat \"%s\"", path);
 		return -1;
 	}
 
@@ -109,7 +109,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	{
 		(void)fclose(fp);
 		errno = EISDIR;
-		error(0, errno, "%s \"%s\"", __func__, path);
+		warn("%s \"%s\"", __func__, path);
 		return -1;
 	}
 
@@ -121,7 +121,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	if (buf == NULL)
 	{
 		(void)fclose(fp);
-		error(0, errno, "malloc %zu ", get_bytes);
+		warn("malloc %zu ", get_bytes);
 		return -1;
 	}
 
@@ -134,7 +134,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		(void)fclose(fp);
 		free(buf);
 		buf = NULL;
-		error(0, errno, "fread %zu, returned %zu", get_bytes, got_bytes);
+		warn("fread %zu, returned %zu", get_bytes, got_bytes);
 		return -1;
 	}
 
