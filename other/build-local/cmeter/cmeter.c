@@ -4,6 +4,7 @@
 #include "util.h"
 
 #include <ctype.h>
+#include <err.h>
 #include <errno.h>
 #include <math.h>
 #include <stdbool.h>
@@ -116,15 +117,6 @@ print_usage()
 	printf("\n");
 }
 
-void
-print_option_err(const char* msg, const int o)
-{
-	if (isprint(o))
-		fprintf(stderr, "%s: %s: '%c'\n", program_invocation_short_name, msg, o);
-	else
-		fprintf(stderr, "%s: %s: '\\x%x'\n", program_invocation_short_name, msg, o);
-}
-
 int main(int argc, char* argv[])
 {
 	struct meter_opts opts;
@@ -157,8 +149,9 @@ int main(int argc, char* argv[])
 			opts.fill = optarg[0];
 			if (!isprint(opts.fill))
 			{
-				print_option_err("Invalid option value", opts.fill);
-				return 1;
+				errx(EXIT_FAILURE,
+				     "option '%c' received invalid option value: '\\x%x'",
+				     oc, opts.fill);
 			}
 			break;
 
@@ -166,8 +159,9 @@ int main(int argc, char* argv[])
 			opts.unfill = optarg[0];
 			if (!isprint(opts.unfill))
 			{
-				print_option_err("Invalid option value", opts.unfill);
-				return 1;
+				errx(EXIT_FAILURE,
+				     "option '%c' received invalid option value: '\\x%x'",
+				     oc, opts.unfill);
 			}
 			break;
 
@@ -184,15 +178,16 @@ int main(int argc, char* argv[])
 			break;
 
 		case '?':
-			print_option_err("Unknown option", optopt);
-			return 1;
+			errx(EXIT_FAILURE, "unknown option: '%s'", escape_char(optopt));
+			break;
 
 		case ':':
-			print_option_err("Option requires a value", optopt);
-			return 1;
+			errx(EXIT_FAILURE, "option requires a value: '%s'", escape_char(optopt));
+			break;
 
 		default:
-			return 1;
+			errx(EXIT_FAILURE, "unhandled option: '%s'", escape_char(oc));
+			break;
 		}
 	}
 

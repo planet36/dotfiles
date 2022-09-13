@@ -1,7 +1,10 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+#include "util.h"
+
 #include <ctype.h>
+#include <err.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -241,15 +244,16 @@ int main(int argc, char* argv[])
 			break;
 
 		case '?':
-			print_option_err("Unknown option", optopt);
-			return 1;
+			errx(EXIT_FAILURE, "unknown option: '%s'", escape_char(optopt));
+			break;
 
 		case ':':
-			print_option_err("Option requires a value", optopt);
-			return 1;
+			errx(EXIT_FAILURE, "option requires a value: '%s'", escape_char(optopt));
+			break;
 
 		default:
-			return 1;
+			errx(EXIT_FAILURE, "unhandled option: '%s'", escape_char(oc));
+			break;
 		}
 	}
 
@@ -260,8 +264,7 @@ int main(int argc, char* argv[])
 	{
 		if (!valid_ut_abbr(ut_to_print[i]))
 		{
-			print_option_err("Invalid option value", ut_to_print[i]);
-			return 1;
+			errx(EXIT_FAILURE, "invalid unit of time: '%c'", ut_to_print[i]);
 		}
 
 		opts.print[ut_from_c(ut_to_print[i])] = true;
