@@ -24,7 +24,7 @@
 
 #include <concepts>
 #include <cstdint>
-#include <error.h>
+#include <err.h>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
@@ -75,12 +75,12 @@ void read_write_int()
 		}
 		catch (const std::invalid_argument& e)
 		{
-			error(EXIT_FAILURE, 0, "%s: %s: %s",
+			errx(EXIT_FAILURE, "%s: %s: %s",
 			      e.what(), "std::invalid_argument", line.c_str());
 		}
 		catch (const std::out_of_range& e)
 		{
-			error(EXIT_FAILURE, 0, "%s: %s: %s",
+			errx(EXIT_FAILURE, "%s: %s: %s",
 			      e.what(), "std::out_of_range", line.c_str());
 		}
 	}
@@ -103,7 +103,7 @@ int main(int argc, char* const argv[])
 	else if (type_name == "uint16") read_write_int<uint16_t>();
 	else if (type_name == "uint32") read_write_int<uint32_t>();
 	else if (type_name == "uint64") read_write_int<uint64_t>();
-	else error(EXIT_FAILURE, 0, "Invalid input integer type: %s",
+	else errx(EXIT_FAILURE, "invalid input integer type: %s",
 	           type_name.c_str());
 
 	return 0;
