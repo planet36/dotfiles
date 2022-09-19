@@ -27,8 +27,8 @@ DEF_URBG_CLASS_DETAILS(splitmix64)
 		* https://www.wolframalpha.com/input?i=BaseForm%5BIntegerPart%5B%282%5E64+-+1%29%2FGoldenRatio%5D%2C+16%5D
 		*/
 		// The golden ratio scaled to 64 bits
-		static constexpr uint64_t gamma = 0x9e3779b97f4a7c15;
-		static_assert(gamma & 1, "gamma must be odd");
+		static constexpr uint64_t gamma = 0x9e3779b97f4a7c15; // not prime (popcount = 38)
+		static_assert(gamma & 1, "must be odd");
 
 		auto z = (s += gamma);
 		z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9; // not prime
