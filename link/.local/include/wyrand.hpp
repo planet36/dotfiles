@@ -14,6 +14,7 @@
 
 #include "def_urbg_class_details.hpp"
 #include "mum_mix.hpp"
+#include "wyprimes.hpp"
 
 struct wyrand
 {
@@ -24,11 +25,7 @@ DEF_URBG_CLASS_DETAILS(wyrand)
 
 	result_type next()
 	{
-		// large primes with half the bits set (e.g. popcount == 32)
-		static constexpr uint64_t p0{0xa0761d6478bd642f};
-		static constexpr uint64_t p1{0xe7037ed1a0b428db};
-
-		s += p0;
-		return mum_mix_xor(s, s ^ p1);
+		s += _wyp[0];
+		return mum_mix_xor(s, s ^ _wyp[1]);
 	}
 };
