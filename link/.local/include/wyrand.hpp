@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// WyRand PRNG
+/// wyrand PRNG
 /**
 \file
 \author Steven Ward
