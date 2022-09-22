@@ -130,7 +130,7 @@ rand_uint_half_open(const T s)
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 float
-rand_float_unit()
+rand_float()
 {
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<float>::digits);
@@ -141,7 +141,7 @@ rand_float_unit()
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 double
-rand_double_unit()
+rand_double()
 {
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<double>::digits);
@@ -152,7 +152,7 @@ rand_double_unit()
 \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 long double
-rand_long_double_unit()
+rand_long_double()
 {
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<long double>::digits);
@@ -166,7 +166,7 @@ rand_long_double_unit()
 float
 rand_float(const float a, const float b)
 {
-	return rand_float_unit() * (b - a) + a;
+	return rand_float() * (b - a) + a;
 }
 
 /**
@@ -176,7 +176,7 @@ rand_float(const float a, const float b)
 double
 rand_double(const double a, const double b)
 {
-	return rand_double_unit() * (b - a) + a;
+	return rand_double() * (b - a) + a;
 }
 
 /**
@@ -186,7 +186,7 @@ rand_double(const double a, const double b)
 long double
 rand_long_double(const long double a, const long double b)
 {
-	return rand_long_double_unit() * (b - a) + a;
+	return rand_long_double() * (b - a) + a;
 }
 
 /**
