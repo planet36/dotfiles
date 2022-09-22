@@ -12,22 +12,44 @@
 
 #pragma once
 
-#include "int_parts_union.hpp"
+#include "int_bytes.hpp"
 
-/// Multiply \a V and \a P and return the sum of high and low parts of the result.
+#include <concepts>
+#include <limits>
+
+/// Multiply \a a and \a b and return the high and low parts of the product
 template <std::unsigned_integral T>
-constexpr T
-mum_mix_add(const T v, const T p)
+constexpr void
+mum(T& a, T& b)
 {
-	const int_parts<T> r{.whole = static_cast<next_larger<T>>(v) * p};
-	return r.parts[1] + r.parts[0];
+	using T2 = next_larger<T>;
+	const T2 r = static_cast<T2>(a) * static_cast<T2>(b);
+	const T hi = static_cast<T>(r >> std::numeric_limits<T>::digits);
+	const T lo = static_cast<T>(r);
+	// https://github.com/wangyi-fudan/wyhash/blob/master/wyhash.h#L56
+#if WYHASH_CONDOM > 1
+	a ^= hi;
+	b ^= lo;
+#else
+	a = hi;
+	b = lo;
+#endif
 }
 
-/// Multiply \a V and \a P and return the XOR of high and low parts of the result.
+/// Multiply \a a and \a b and return the sum of the high and low parts of the product
 template <std::unsigned_integral T>
 constexpr T
-mum_mix_xor(const T v, const T p)
+mum_mix_add(T a, T b)
 {
-	const int_parts<T> r{.whole = static_cast<next_larger<T>>(v) * p};
-	return r.parts[1] ^ r.parts[0];
+	mum(a, b);
+	return a + b;
+}
+
+/// Multiply \a a and \a b and return the XOR of the high and low parts of the product
+template <std::unsigned_integral T>
+constexpr T
+mum_mix_xor(T a, T b)
+{
+	mum(a, b);
+	return a ^ b;
 }
