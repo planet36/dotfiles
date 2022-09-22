@@ -18,5 +18,6 @@ template <std::unsigned_integral T>
 constexpr auto
 int_join(const T hi, const T lo)
 {
-	return (static_cast<next_larger<T>>(hi) << std::numeric_limits<T>::digits) | lo;
+	using T2 = next_larger<T>;
+	return (static_cast<T2>(hi) << std::numeric_limits<T>::digits) | lo;
 }
