@@ -132,8 +132,11 @@ rand_uint_half_open(const T s)
 float
 rand_float()
 {
+	using T = float;
+
 	static_assert(std::numeric_limits<G::result_type>::digits >=
-	              std::numeric_limits<float>::digits);
+	              std::numeric_limits<T>::digits,
+	              "PRNG does not provide sufficient bits");
 	return make_unit_float(instance().next());
 }
 
@@ -143,8 +146,11 @@ rand_float()
 double
 rand_double()
 {
+	using T = double;
+
 	static_assert(std::numeric_limits<G::result_type>::digits >=
-	              std::numeric_limits<double>::digits);
+	              std::numeric_limits<T>::digits,
+	              "PRNG does not provide sufficient bits");
 	return make_unit_double(instance().next());
 }
 
@@ -154,8 +160,11 @@ rand_double()
 long double
 rand_long_double()
 {
+	using T = long double;
+
 	static_assert(std::numeric_limits<G::result_type>::digits >=
-	              std::numeric_limits<long double>::digits);
+	              std::numeric_limits<T>::digits,
+	              "PRNG does not provide sufficient bits");
 	return make_unit_long_double(instance().next());
 }
 
@@ -198,7 +207,8 @@ rand_bool()
 {
 	using T = uint64_t;
 	static_assert(std::numeric_limits<G::result_type>::digits >=
-	              std::numeric_limits<T>::digits);
+	              std::numeric_limits<T>::digits,
+	              "PRNG does not provide sufficient bits");
 	static constexpr T mask_one_msb = T{1} << (std::numeric_limits<T>::digits-1);
 	static thread_local T x = 1;
 
