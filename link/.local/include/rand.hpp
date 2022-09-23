@@ -134,10 +134,24 @@ rand_float()
 {
 	using T = float;
 
+#if 1
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits,
 	              "PRNG does not provide sufficient bits");
 	return make_unit_float(instance().next());
+#else
+	if constexpr (std::numeric_limits<T>::digits <=
+	              std::numeric_limits<G::result_type>::digits)
+	{
+		return make_unit_float(instance().next());
+	}
+	else if constexpr (std::numeric_limits<T>::digits <=
+	                   2 * std::numeric_limits<G::result_type>::digits)
+	{
+		return make_unit_float(int_join(instance().next(),
+		                                instance().next()));
+	}
+#endif
 }
 
 /**
@@ -148,10 +162,24 @@ rand_double()
 {
 	using T = double;
 
+#if 1
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits,
 	              "PRNG does not provide sufficient bits");
 	return make_unit_double(instance().next());
+#else
+	if constexpr (std::numeric_limits<T>::digits <=
+	              std::numeric_limits<G::result_type>::digits)
+	{
+		return make_unit_double(instance().next());
+	}
+	else if constexpr (std::numeric_limits<T>::digits <=
+	                   2 * std::numeric_limits<G::result_type>::digits)
+	{
+		return make_unit_double(int_join(instance().next(),
+		                                 instance().next()));
+	}
+#endif
 }
 
 /**
@@ -162,10 +190,24 @@ rand_long_double()
 {
 	using T = long double;
 
+#if 1
 	static_assert(std::numeric_limits<G::result_type>::digits >=
 	              std::numeric_limits<T>::digits,
 	              "PRNG does not provide sufficient bits");
 	return make_unit_long_double(instance().next());
+#else
+	if constexpr (std::numeric_limits<T>::digits <=
+	              std::numeric_limits<G::result_type>::digits)
+	{
+		return make_unit_long_double(instance().next());
+	}
+	else if constexpr (std::numeric_limits<T>::digits <=
+	                   2 * std::numeric_limits<G::result_type>::digits)
+	{
+		return make_unit_long_double(int_join(instance().next(),
+		                                      instance().next()));
+	}
+#endif
 }
 
 /**
