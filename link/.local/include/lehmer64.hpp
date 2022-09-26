@@ -27,7 +27,8 @@ DEF_URBG_CLASS_DETAILS(lehmer64)
 
 	result_type next()
 	{
-		s *= 0xda942042e4dd58b5; // not prime
+		static constexpr uint64_t M1 = 0xda942042e4dd58b5; // not prime (popcount = 29)
+		s *= M1;
 		return s >> 64;
 	}
 };
