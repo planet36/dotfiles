@@ -463,6 +463,12 @@ autocmd BufReadPost *
 
 " }}}
 
+" {{{ Command to start Python 3
+
+let g:python3_host_prog = '/usr/bin/python3'
+
+" }}}
+
 " {{{ Source files
 
 let s:source_these_files = [
