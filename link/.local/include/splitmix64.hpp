@@ -30,9 +30,9 @@ DEF_URBG_CLASS_DETAILS(splitmix64)
 		static constexpr uint64_t gamma = 0x9e3779b97f4a7c15; // not prime (popcount = 38)
 		static_assert(gamma & 1, "must be odd");
 
-		auto z = (s += gamma);
-		z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9; // not prime
-		z = (z ^ (z >> 27)) * 0x94d049bb133111eb; // not prime
-		return z ^ (z >> 31);
+		auto x = (s += gamma);
+		x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9; // not prime
+		x = (x ^ (x >> 27)) * 0x94d049bb133111eb; // not prime
+		return x ^ (x >> 31);
 	}
 };
