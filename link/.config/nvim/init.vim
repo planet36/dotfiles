@@ -158,7 +158,7 @@ vnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<CR>//gc<left><left><left>
 set whichwrap=<,>,[,]
 set matchpairs+=<:>
 set scrolloff=6
-set cmdheight=0
+set cmdheight=1
 
 " }}}
 
