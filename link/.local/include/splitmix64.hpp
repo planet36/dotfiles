@@ -41,8 +41,12 @@ DEF_URBG_CLASS_DETAILS(splitmix64)
 		static_assert(M2 & 1, "must be odd");
 
 		auto x = (s += gamma);
-		x = (x ^ (x >> S1)) * M1; // not prime
-		x = (x ^ (x >> S2)) * M2; // not prime
-		return x ^ (x >> S3);
+
+		x ^= x >> S1;
+		x *= M1;
+		x ^= x >> S2;
+		x *= M2;
+		x ^= x >> S3;
+		return x;
 	}
 };
