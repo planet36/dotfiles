@@ -28,6 +28,8 @@ DEF_URBG_CLASS_DETAILS(lehmer64)
 	result_type next()
 	{
 		static constexpr uint64_t M1 = 0xda942042e4dd58b5; // not prime (popcount = 29)
+		static_assert(M1 & 1, "must be odd");
+
 		s *= M1;
 		return s >> 64;
 	}
