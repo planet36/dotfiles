@@ -25,6 +25,8 @@ DEF_URBG_CLASS_DETAILS(splitmix64)
 		/*
 		* "BaseForm[IntegerPart[(2^64 - 1)/GoldenRatio], 16]"
 		* https://www.wolframalpha.com/input?i=BaseForm%5BIntegerPart%5B%282%5E64+-+1%29%2FGoldenRatio%5D%2C+16%5D
+		* This is coprime to 2^64.
+		* https://www.wolframalpha.com/input?i=CoprimeQ%5B0x9e3779b97f4a7c15%2C+2%5E64%5D
 		*/
 		// The golden ratio scaled to 64 bits
 		static constexpr uint64_t gamma = 0x9e3779b97f4a7c15; // not prime (popcount = 38)
