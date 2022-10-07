@@ -60,7 +60,7 @@ def angle_deg_diff(a1_deg: float, a2_deg: float) -> float:
 # https://en.wikipedia.org/wiki/Earth_radius
 
 # https://en.wikipedia.org/wiki/Haversine_formula
-# http://www.movable-type.co.uk/scripts/latlong.html
+# https://www.movable-type.co.uk/scripts/latlong.html
 def haversine_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_deg: float) -> float:
 	# pylint: disable=redefined-outer-name
 	'''Calculate the haversine distance (in meters) between 2 geodetic coordinates (in degrees).'''
