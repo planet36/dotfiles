@@ -103,7 +103,6 @@ def main(argv = None):
 		"""Print the error message"""
 		print(f"Error: {s}", file=sys.stderr)
 		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-		##### TODO: improve this and make it consistent with other functions
 
 	def print_help():
 		"""Print the help message"""
