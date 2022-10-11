@@ -99,6 +99,12 @@ glaisher = gmpy2.mpfr('1.2824271291006226368753425688697917277676889273250011920
 #catalan = gmpy2.const_catalan() # Catalan's constant
 catalan = gmpy2.mpfr('.915965594177219015054603514932384110774149374281672134266498119621763019776254769479356512926115106248574')
 
+# universal parabolic constant
+# https://en.wikipedia.org/wiki/Universal_parabolic_constant
+# https://mathworld.wolfram.com/UniversalParabolicConstant.html
+# https://oeis.org/A103710/constant
+P = gmpy2.mpfr('2.29558714939263807403429804918949038759783220363858348392997534664410966268413312668409442623789761559175')
+
 math_expr_list = (
 	'pi', # math.h (M_PI)
 	'e', # math.h (M_E)
@@ -217,6 +223,7 @@ math_expr_list = (
 	'khinchin',
 	'glaisher',
 	'catalan',
+	'P',
 
 )
 
