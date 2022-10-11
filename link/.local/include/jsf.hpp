@@ -25,11 +25,11 @@ DEF_URBG_CLASS_DETAILS(jsf32_2)
 
 	result_type next()
 	{
-		static constexpr unsigned int RL1 = 27;
-		static constexpr unsigned int RL2 = 17;
+		static constexpr unsigned int R1 = 27;
+		static constexpr unsigned int R2 = 17;
 
-		const auto e = s[0] - std::rotl(s[1], RL1);
-		s[0] = s[1] ^ std::rotl(s[2], RL2);
+		const auto e = s[0] - std::rotl(s[1], R1);
+		s[0] = s[1] ^ std::rotl(s[2], R2);
 		s[1] = s[2] + s[3];
 		s[2] = s[3] + e;
 		s[3] = e + s[0];
@@ -48,13 +48,13 @@ DEF_URBG_CLASS_DETAILS(jsf32_3)
 
 	result_type next()
 	{
-		static constexpr unsigned int RL1 = 23;
-		static constexpr unsigned int RL2 = 16;
-		static constexpr unsigned int RL3 = 11;
+		static constexpr unsigned int R1 = 23;
+		static constexpr unsigned int R2 = 16;
+		static constexpr unsigned int R3 = 11;
 
-		const auto e = s[0] - std::rotl(s[1], RL1);
-		s[0] = s[1] ^ std::rotl(s[2], RL2);
-		s[1] = s[2] + std::rotl(s[3], RL3);
+		const auto e = s[0] - std::rotl(s[1], R1);
+		s[0] = s[1] ^ std::rotl(s[2], R2);
+		s[1] = s[2] + std::rotl(s[3], R3);
 		s[2] = s[3] + e;
 		s[3] = e + s[0];
 		return s[3];
@@ -71,13 +71,13 @@ DEF_URBG_CLASS_DETAILS(jsf64)
 
 	result_type next()
 	{
-		static constexpr unsigned int RL1 = 7;
-		static constexpr unsigned int RL2 = 13;
-		static constexpr unsigned int RL3 = 37;
+		static constexpr unsigned int R1 = 7;
+		static constexpr unsigned int R2 = 13;
+		static constexpr unsigned int R3 = 37;
 
-		const auto e = s[0] - std::rotl(s[1], RL1);
-		s[0] = s[1] ^ std::rotl(s[2], RL2);
-		s[1] = s[2] + std::rotl(s[3], RL3);
+		const auto e = s[0] - std::rotl(s[1], R1);
+		s[0] = s[1] ^ std::rotl(s[2], R2);
+		s[1] = s[2] + std::rotl(s[3], R3);
 		s[2] = s[3] + e;
 		s[3] = e + s[0];
 		return s[3];
