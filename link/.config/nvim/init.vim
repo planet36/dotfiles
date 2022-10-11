@@ -153,6 +153,12 @@ vnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<CR>//gc<left><left><left>
 
 " }}}
 
+" {{{ Disable mouse support
+
+set mouse=
+
+" }}}
+
 " {{{ UI
 
 set whichwrap=<,>,[,]
