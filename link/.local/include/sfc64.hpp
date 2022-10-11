@@ -24,11 +24,15 @@ DEF_URBG_CLASS_DETAILS(sfc64)
 
 	result_type next()
 	{
+		static constexpr unsigned int S1 = 11;
+		static constexpr unsigned int S2 = 3;
+		static constexpr unsigned int R1 = 24;
+
 		const result_type result = s[0] + s[1] + s[3]++;
 
-		s[0] = s[1] ^ (s[1] >> 11);
-		s[1] = s[2] + (s[2] << 3);
-		s[2] = std::rotl(s[2], 24) + result;
+		s[0] = s[1] ^ (s[1] >> S1);
+		s[1] = s[2] + (s[2] << S2);
+		s[2] = std::rotl(s[2], R1) + result;
 
 		return result;
 	}
