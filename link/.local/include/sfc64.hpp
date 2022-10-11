@@ -20,7 +20,8 @@ struct sfc64
 	using result_type = uint64_t;
 
 DEF_URBG_CLASS_DETAILS(sfc64)
-	// XXX: should not give zero seed
+	// XXX: If a zero seed is given, it takes about 10 iterations for the bits
+	// to avalanche.
 
 	result_type next()
 	{
@@ -29,11 +30,9 @@ DEF_URBG_CLASS_DETAILS(sfc64)
 		static constexpr unsigned int R1 = 24;
 
 		const result_type result = s[0] + s[1] + s[3]++;
-
 		s[0] = s[1] ^ (s[1] >> S1);
 		s[1] = s[2] + (s[2] << S2);
 		s[2] = std::rotl(s[2], R1) + result;
-
 		return result;
 	}
 };
