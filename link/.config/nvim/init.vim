@@ -3,6 +3,14 @@
 
 " vim: set foldmethod=marker foldlevel=0:
 
+" {{{ Turn off provider warnings
+
+let g:loaded_ruby_provider = 0
+let g:loaded_node_provider = 0
+let g:loaded_perl_provider = 0
+
+" }}}
+
 " {{{ Clipboard
 
 " This option is a list of comma separated names.
