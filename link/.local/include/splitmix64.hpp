@@ -29,8 +29,9 @@ DEF_URBG_CLASS_DETAILS(splitmix64)
 		* https://www.wolframalpha.com/input?i=CoprimeQ%5B0x9e3779b97f4a7c15%2C+2%5E64%5D
 		*/
 		// The golden ratio scaled to 64 bits
-		static constexpr uint64_t gamma = 0x9e3779b97f4a7c15; // not prime (popcount = 38)
-		static_assert(gamma & 1, "must be odd");
+		static constexpr uint64_t gamma64 = 0x9e3779b97f4a7c15; // not prime (popcount = 38)
+		static constexpr uint64_t inc = gamma64;
+		static_assert(inc & 1, "must be odd");
 
 		static constexpr uint64_t M1 = 0xbf58476d1ce4e5b9; // not prime (popcount = 36)
 		static constexpr uint64_t M2 = 0x94d049bb133111eb; // not prime (popcount = 29)
@@ -40,7 +41,7 @@ DEF_URBG_CLASS_DETAILS(splitmix64)
 		static_assert(M1 & 1, "must be odd");
 		static_assert(M2 & 1, "must be odd");
 
-		auto x = (s += gamma);
+		auto x = (s += inc);
 
 		x ^= x >> S1;
 		x *= M1;
