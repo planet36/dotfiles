@@ -161,9 +161,14 @@ vnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<CR>//gc<left><left><left>
 
 " }}}
 
-" {{{ Disable mouse support
+" {{{ Disable mouse support if inside tmux
 
-set mouse=
+lua << EOF
+if vim.env.TMUX ~= nil then
+  -- TMUX is set
+  vim.o.mouse = ''
+end
+EOF
 
 " }}}
 
