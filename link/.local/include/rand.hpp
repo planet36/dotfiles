@@ -247,10 +247,7 @@ rand_long_double(const long double a, const long double b)
 bool
 rand_bool()
 {
-	using T = uint64_t;
-	static_assert(std::numeric_limits<G::result_type>::digits >=
-	              std::numeric_limits<T>::digits,
-	              "PRNG does not provide sufficient bits");
+	using T = G::result_type;
 	static constexpr T mask_one_msb = T{1} << (std::numeric_limits<T>::digits-1);
 	static thread_local T x = 1;
 
