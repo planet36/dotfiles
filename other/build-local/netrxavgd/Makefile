@@ -5,13 +5,13 @@
 PREFIX ?= /usr/local
 MANDIR ?= $(PREFIX)/share/man
 
-SRCS = $(wildcard *.c)
-DEPS = $(SRCS:.c=.d)
-OBJS = $(SRCS:.c=.o)
-
 CPPFLAGS += -MMD -MP
 #CFLAGS +=
 #LDLIBS +=
+
+SRCS = $(wildcard *.c)
+DEPS = $(SRCS:.c=.d)
+OBJS = $(SRCS:.c=.o)
 
 BIN = $(notdir $(CURDIR))
 
