@@ -12,6 +12,7 @@
 #include "angle-utils.hpp"
 
 #include <concepts>
+#include <cstdint>
 #include <string_view>
 
 /// the fundamental unit of measurement of an angle
@@ -19,7 +20,7 @@
 * \sa https://en.wikipedia.org/wiki/Angle#Units
 * \sa https://en.wikipedia.org/wiki/Angular_unit
 */
-enum struct angle_unit : short
+enum struct angle_unit : uint16_t
 {
 	milliradian,
 	radian,
