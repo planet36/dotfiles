@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// JSF (Jenkins' Small Fast) PRNG
+/// JSF (Jenkins' Small Fast) PRNG by Bob Jenkins
 /**
 \file
 \author Steven Ward
