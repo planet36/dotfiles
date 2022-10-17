@@ -14,6 +14,38 @@
 #include "def_urbg_class_details.hpp"
 #include "gamma.hpp"
 
+struct splitmix32
+{
+	using state_type = uint64_t;
+	using result_type = uint32_t;
+
+DEF_URBG_CLASS_DETAILS(splitmix32)
+
+	result_type next()
+	{
+		static constexpr uint64_t inc = gamma64;
+		static_assert(inc & 1, "must be odd");
+
+		static constexpr uint64_t M1 = 0x62a9d9ed799705f5; // not prime (popcount = 36)
+		static constexpr uint64_t M2 = 0xcb24d0a5c88c35b3; // not prime (popcount = 29)
+		static constexpr unsigned int S1 = 33;
+		static constexpr unsigned int S2 = 28;
+		static constexpr unsigned int S3 = 32;
+		static_assert(M1 & 1, "must be odd");
+		static_assert(M2 & 1, "must be odd");
+
+		// Not result_type
+		auto x = (s += inc);
+
+		x ^= x >> S1;
+		x *= M1;
+		x ^= x >> S2;
+		x *= M2;
+		x ^= x >> S3;
+		return x;
+	}
+};
+
 struct splitmix64
 {
 	using state_type = uint64_t;
