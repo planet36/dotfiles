@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Concept for Unordered Associative Container types
+/// Concept for an Unordered Associative Container type
 /**
 \file
 \author Steven Ward

@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Concept for container type
+/// Concept for a container type
 /**
 \file
 \author Steven Ward

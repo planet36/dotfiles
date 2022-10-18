@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Type trait and concept for const iterator type
+/// Type trait and concept for a const iterator type
 /**
 \file
 \author Steven Ward
