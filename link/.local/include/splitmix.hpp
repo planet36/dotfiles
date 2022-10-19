@@ -41,7 +41,12 @@ DEF_URBG_CLASS_DETAILS(splitmix32)
 		x *= M1;
 		x ^= x >> S2;
 		x *= M2;
+#if 0
 		x ^= x >> S3;
+#else
+		// "Returns the 32 high bits of Stafford variant 4 mix64 function as int."
+		x >>= S3;
+#endif
 		return x;
 	}
 };
