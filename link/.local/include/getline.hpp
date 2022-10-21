@@ -16,19 +16,24 @@
 #include <string>
 
 ssize_t
-getdelim(std::string& line, FILE* stream, char delim)
+getdelim(std::string& line, FILE* stream, char delim, const bool strip_delim = false)
 {
 	char* buf = nullptr;
 	size_t buf_size = 0;
 	const ssize_t bytes_read = getdelim(&buf, &buf_size, delim, stream);
 	if (bytes_read >= 0)
-		line.assign(buf, bytes_read);
+	{
+		if (strip_delim && (buf[bytes_read-1] == delim))
+			line.assign(buf, bytes_read-1);
+		else
+			line.assign(buf, bytes_read);
+	}
 	std::free(buf);
 	return bytes_read;
 }
 
 ssize_t
-getline(std::string& line, FILE* stream)
+getline(std::string& line, FILE* stream, const bool strip_delim = false)
 {
-	return getdelim(line, stream, '\n');
+	return getdelim(line, stream, '\n', strip_delim);
 }
