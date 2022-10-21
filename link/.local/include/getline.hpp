@@ -16,7 +16,7 @@
 #include <string>
 
 ssize_t
-getline(std::string& line, FILE* stream, char delim = '\n')
+getdelim(std::string& line, FILE* stream, char delim)
 {
 	char* buf = nullptr;
 	size_t buf_size = 0;
@@ -25,4 +25,10 @@ getline(std::string& line, FILE* stream, char delim = '\n')
 		line.assign(buf, bytes_read);
 	std::free(buf);
 	return bytes_read;
+}
+
+ssize_t
+getline(std::string& line, FILE* stream)
+{
+	return getdelim(line, stream, '\n');
 }
