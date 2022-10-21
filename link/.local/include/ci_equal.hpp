@@ -60,6 +60,52 @@ ci_equal(const std::basic_string<CharT, Traits, Allocator>& s1,
 }
 
 /// case-insensitive equal strings
+template <character CharT,
+          class Traits = std::char_traits<CharT>,
+          class Allocator = std::allocator<CharT>>
+bool
+ci_equal(const std::basic_string<CharT, Traits, Allocator>& s1,
+         const CharT* s2)
+{
+	return ci_equal(s1, std::basic_string<CharT>(s2));
+}
+
+/// case-insensitive equal strings (with locale)
+template <character CharT,
+          class Traits = std::char_traits<CharT>,
+          class Allocator = std::allocator<CharT>>
+bool
+ci_equal(const std::basic_string<CharT, Traits, Allocator>& s1,
+         const CharT* s2,
+         const std::locale& loc)
+{
+	return ci_equal(s1, std::basic_string<CharT>(s2), loc);
+}
+
+/// case-insensitive equal strings
+template <character CharT,
+          class Traits = std::char_traits<CharT>,
+          class Allocator = std::allocator<CharT>>
+bool
+ci_equal(const CharT* s1,
+         const std::basic_string<CharT, Traits, Allocator>& s2)
+{
+	return ci_equal(std::basic_string<CharT>(s1), s2);
+}
+
+/// case-insensitive equal strings (with locale)
+template <character CharT,
+          class Traits = std::char_traits<CharT>,
+          class Allocator = std::allocator<CharT>>
+bool
+ci_equal(const CharT* s1,
+         const std::basic_string<CharT, Traits, Allocator>& s2,
+         const std::locale& loc)
+{
+	return ci_equal(std::basic_string<CharT>(s1), s2, loc);
+}
+
+/// case-insensitive equal strings
 template <character CharT>
 bool
 ci_equal(const CharT* s1, const CharT* s2)
