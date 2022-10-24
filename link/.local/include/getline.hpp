@@ -15,7 +15,12 @@
 #include <cstdlib>
 #include <string>
 
-ssize_t
+/**
+\retval true success
+\retval false failure
+The return value matches the behavior of https://en.cppreference.com/w/cpp/io/basic_ios/operator_bool
+*/
+bool
 getdelim(std::string& line, FILE* stream, char delim, const bool strip_delim = false)
 {
 	char* buf = nullptr;
@@ -33,10 +38,10 @@ getdelim(std::string& line, FILE* stream, char delim, const bool strip_delim = f
 		line.clear();
 	}
 	std::free(buf);
-	return bytes_read;
+	return bytes_read != -1;
 }
 
-ssize_t
+bool
 getline(std::string& line, FILE* stream, const bool strip_delim = false)
 {
 	return getdelim(line, stream, '\n', strip_delim);
