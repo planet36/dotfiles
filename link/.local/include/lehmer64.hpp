@@ -31,6 +31,6 @@ DEF_URBG_CLASS_DETAILS(lehmer64)
 		static_assert(M1 & 1, "must be odd");
 
 		s *= M1;
-		return static_cast<result_type>(s >> 64);
+		return s >> 64;
 	}
 };

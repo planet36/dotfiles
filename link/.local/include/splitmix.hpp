@@ -47,7 +47,7 @@ DEF_URBG_CLASS_DETAILS(splitmix32)
 		// "Returns the 32 high bits of Stafford variant 4 mix64 function as int."
 		x >>= S3;
 #endif
-		return static_cast<result_type>(x);
+		return x;
 	}
 };
 

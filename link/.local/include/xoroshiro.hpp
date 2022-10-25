@@ -359,7 +359,7 @@ struct xoroshiro1024plusplus
 	using result_type = T;
 
 private:
-	T p{};
+	unsigned int p{};
 	static constexpr state_type JUMP{
 	    0x931197d8e3177f17, 0xb59422e0b9138c5f, 0xf06a6afb49d668bb,
 	    0xacb8a6412c8a1401, 0x12304ec85f0b3468, 0xb7dfe7079209891e,
@@ -432,7 +432,7 @@ struct xoroshiro1024star
 	using result_type = T;
 
 private:
-	T p{};
+	unsigned int p{};
 	static constexpr state_type JUMP{
 	    0x931197d8e3177f17, 0xb59422e0b9138c5f, 0xf06a6afb49d668bb,
 	    0xacb8a6412c8a1401, 0x12304ec85f0b3468, 0xb7dfe7079209891e,
@@ -499,7 +499,7 @@ struct xoroshiro1024starstar
 	using result_type = T;
 
 private:
-	T p{};
+	unsigned int p{};
 	static constexpr state_type JUMP{
 	    0x931197d8e3177f17, 0xb59422e0b9138c5f, 0xf06a6afb49d668bb,
 	    0xacb8a6412c8a1401, 0x12304ec85f0b3468, 0xb7dfe7079209891e,

@@ -44,8 +44,8 @@ DEF_URBG_CLASS_DETAILS(pcg32)
 		// (5 + 32) / 2 == 18
 		// 32 - 5 == 27
 		// 64 - 5 == 59
-		const auto output = static_cast<result_type>((old_s ^ (old_s >> 18)) >> 27);
-		const auto rot = static_cast<int>(old_s >> 59);
+		const result_type output = (old_s ^ (old_s >> 18)) >> 27;
+		const int rot = old_s >> 59;
 		return std::rotr(output, rot);
 	}
 };
@@ -69,7 +69,7 @@ DEF_URBG_CLASS_DETAILS(pcg32_fast)
 
 		// 32 - 3 - 7 == 22
 		// 64 - 3 == 61
-		const auto output = static_cast<result_type>((old_s ^ (old_s >> 22)) >> (22 + (old_s >> 61)));
+		const result_type output = (old_s ^ (old_s >> 22)) >> (22 + (old_s >> 61));
 		return output;
 	}
 };
@@ -103,8 +103,8 @@ DEF_URBG_CLASS_DETAILS(pcg64)
 
 		// 128 / 2 == 64
 		// 128 - 6 == 122
-		const auto output = static_cast<result_type>(old_s ^ (old_s >> 64));
-		const auto rot = static_cast<int>(old_s >> 122);
+		const result_type output = old_s ^ (old_s >> 64);
+		const int rot = old_s >> 122;
 		return std::rotr(output, rot);
 	}
 };
