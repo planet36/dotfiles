@@ -31,7 +31,7 @@ inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 constexpr bool
 isword(const char c)
 {
-	return std::isalnum(c) || c == '_';
+	return std::isalnum(static_cast<unsigned char>(c)) || c == '_';
 }
 
 /**
@@ -157,8 +157,8 @@ quote_escape(const std::string& s, const char escape = backslash)
 	result.reserve(s.size());
 	for (const char c : s)
 	{
-		if (std::iscntrl(c))
-			result += ascii_cntrl_simple_esc_seq_oct[c];
+		if (std::iscntrl(static_cast<unsigned char>(c)))
+			result += ascii_cntrl_simple_esc_seq_oct[static_cast<unsigned char>(c)];
 		else
 		{
 			if ((c == ' ') || (c == escape))
@@ -178,8 +178,8 @@ quote_c(const std::string& s, const char delim = double_quote,
 	result.push_back(delim);
 	for (const char c : s)
 	{
-		if (std::iscntrl(c))
-			result += ascii_cntrl_simple_esc_seq_oct[c];
+		if (std::iscntrl(static_cast<unsigned char>(c)))
+			result += ascii_cntrl_simple_esc_seq_oct[static_cast<unsigned char>(c)];
 		else
 		{
 			if ((c == delim) || (c == escape))

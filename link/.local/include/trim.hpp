@@ -75,7 +75,7 @@ ltrim(std::wstring& s)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
 	              // https://en.cppreference.com/w/cpp/string/wide/iswspace
-	              [](const auto c_i) { return std::iswspace(c_i); }));
+	              [](const auto c_i) { return std::iswspace(static_cast<wint_t>(c_i)); }));
 }
 
 void
@@ -83,7 +83,7 @@ rtrim(std::wstring& s)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
 	              // https://en.cppreference.com/w/cpp/string/wide/iswspace
-	              [](const auto c_i) { return std::iswspace(c_i); }).base(),
+	              [](const auto c_i) { return std::iswspace(static_cast<wint_t>(c_i)); }).base(),
 	              s.end());
 }
 

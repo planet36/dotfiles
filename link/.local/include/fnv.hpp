@@ -27,8 +27,9 @@ fnv1_32(const std::string_view& s)
 {
 	uint32_t result = fnv_offset_basis_32;
 
-	for (const uint8_t octet : s)
+	for (const auto c : s)
 	{
+		const auto octet = static_cast<uint8_t>(c);
 		result *= fnv_prime_32;
 		result ^= octet;
 	}
@@ -42,8 +43,9 @@ fnv1a_32(const std::string_view& s)
 {
 	uint32_t result = fnv_offset_basis_32;
 
-	for (const uint8_t octet : s)
+	for (const auto c : s)
 	{
+		const auto octet = static_cast<uint8_t>(c);
 		result ^= octet;
 		result *= fnv_prime_32;
 	}
@@ -57,8 +59,9 @@ fnv1_64(const std::string_view& s)
 {
 	uint64_t result = fnv_offset_basis_64;
 
-	for (const uint8_t octet : s)
+	for (const auto c : s)
 	{
+		const auto octet = static_cast<uint8_t>(c);
 		result *= fnv_prime_64;
 		result ^= octet;
 	}
@@ -72,8 +75,9 @@ fnv1a_64(const std::string_view& s)
 {
 	uint64_t result = fnv_offset_basis_64;
 
-	for (const uint8_t octet : s)
+	for (const auto c : s)
 	{
+		const auto octet = static_cast<uint8_t>(c);
 		result ^= octet;
 		result *= fnv_prime_64;
 	}
