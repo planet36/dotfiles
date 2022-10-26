@@ -13,7 +13,6 @@
 #define ACFILE(varname) \
 	__attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
 
-char* escape_char(int ch);
 unsigned int strtou(const char* s);
 void cleanup_close_file(FILE** fpp);
 int scandir_filter(const struct dirent* dirent);

@@ -3,22 +3,12 @@
 
 #include "util.h"
 
-#include <ctype.h>
 #include <err.h>
 #include <limits.h>
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-// Not re-entrant
-char*
-escape_char(int ch)
-{
-	static char buf[32] = {'\0'};
-	(void)snprintf(buf, sizeof(buf), isprint(ch) ? "%c" : "%#X", ch);
-	return buf;
-}
 
 unsigned int
 strtou(const char* s)

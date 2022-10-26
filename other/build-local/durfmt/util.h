@@ -2,5 +2,3 @@
 // SPDX-License-Identifier: OSL-3.0
 
 #pragma once
-
-char* escape_char(int ch);
