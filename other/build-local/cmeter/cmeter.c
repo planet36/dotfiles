@@ -21,6 +21,15 @@ const char default_unfill = ' ';
 const int default_width = 10;
 const int max_width = 1000;
 
+// https://stackoverflow.com/a/16659263
+double
+clamp(double x, double min, double max)
+{
+	double xx = x < min ? min : x;
+	return xx > max ? max : xx;
+	//return fmin(fmax(x, min), max);
+}
+
 struct meter_opts
 {
 	int width;
