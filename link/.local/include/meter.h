@@ -184,7 +184,7 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
                     size_t* left_width, size_t* blocks_index, size_t* right_width)
 {
 	*left_width = 0;
-	*blocks_index = -1;
+	*blocks_index = (size_t)-1;
 	*right_width = 0;
 
 	if (meter_width == 0)
