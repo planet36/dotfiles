@@ -48,31 +48,32 @@ meter_opts_init(struct meter_opts* opts)
 }
 
 // x is within the interval [0, 1].
+// opts->width is non-negative
 void
 print_cmeter(double x, const struct meter_opts* opts)
 {
 	// round to nearest int
-	const unsigned int num_filled = (unsigned int)(x * opts->width + 0.5);
-	const unsigned int num_unfilled = opts->width - num_filled;
+	const int num_filled = (int)(x * opts->width + 0.5);
+	const int num_unfilled = opts->width - num_filled;
 
 	if (opts->left_to_right)
 	{
-		for (unsigned int i = 0; i < num_filled; ++i)
+		for (int i = 0; i < num_filled; ++i)
 		{
 			putchar(opts->fill);
 		}
-		for (unsigned int i = 0; i < num_unfilled; ++i)
+		for (int i = 0; i < num_unfilled; ++i)
 		{
 			putchar(opts->unfill);
 		}
 	}
 	else
 	{
-		for (unsigned int i = 0; i < num_unfilled; ++i)
+		for (int i = 0; i < num_unfilled; ++i)
 		{
 			putchar(opts->unfill);
 		}
-		for (unsigned int i = 0; i < num_filled; ++i)
+		for (int i = 0; i < num_filled; ++i)
 		{
 			putchar(opts->fill);
 		}
