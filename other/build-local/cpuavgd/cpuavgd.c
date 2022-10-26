@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 const char* program_author = "Steven Ward";
-const char* program_version = "1.1.0";
+const char* program_version = "1.1.1";
 const char* program_license = "OSL-3.0";
 
 const unsigned int default_init_delay_msec = 2000;
