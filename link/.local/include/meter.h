@@ -162,6 +162,8 @@ clamp(double* x)
 
 /** Map the real number \a x within the interval <code>[0, 1]</code> to an integer
 * within the interval <code>[0, b)</code>.
+*
+* \pre \a b is at least \c 1.
 */
 static size_t
 map_to_uint(double x, size_t b)
