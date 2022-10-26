@@ -124,7 +124,6 @@ int main(int argc, char* argv[])
 
 	int oc;
 	const char* short_options = "+:Vhf:lnru:w:";
-	opterr = 0;
 	long width = 0;
 	while ((oc = getopt(argc, argv, short_options)) != -1)
 	{
@@ -177,17 +176,8 @@ int main(int argc, char* argv[])
 			opts.suppress_newline = true;
 			break;
 
-		case '?':
-			errx(EXIT_FAILURE, "unknown option: '%s'", escape_char(optopt));
-			break;
-
-		case ':':
-			errx(EXIT_FAILURE, "option requires a value: '%s'", escape_char(optopt));
-			break;
-
 		default:
-			errx(EXIT_FAILURE, "unhandled option: '%s'", escape_char(oc));
-			break;
+			exit(EXIT_FAILURE);
 		}
 	}
 
