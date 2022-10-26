@@ -43,8 +43,8 @@ trailing newline) to stderr.
 #define TOKENPASTE(x, y)  x##y
 #define TOKENPASTE2(x, y) TOKENPASTE(x, y)
 
-#define TIMESPEC_TO_SEC(ts) ((ts).tv_sec + (ts).tv_nsec / 1E9)
-#define TIMEVAL_TO_SEC(tv)  ((tv).tv_sec + (tv).tv_usec / 1E6)
+#define TIMESPEC_TO_SEC(ts) ((double)(ts).tv_sec + (double)(ts).tv_nsec / 1E9)
+#define TIMEVAL_TO_SEC(tv)  ((double)(tv).tv_sec + (double)(tv).tv_usec / 1E6)
 
 struct timerdata
 {
