@@ -175,6 +175,8 @@ map_to_uint(double x, size_t b)
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 *
+* \pre \a blocks_len is at least \c 1.
+*
 * \a meter_width does not include the terminating null character.
 *
 * \a blocks_len is the length of the wide character array used for the meter.
