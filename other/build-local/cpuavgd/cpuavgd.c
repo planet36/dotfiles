@@ -210,7 +210,7 @@ int main(int argc, char* const argv[])
 
 			if (sum_ticks - prev_sum_ticks != 0)
 				cpu_usage = 1 - (double)(idle_ticks - prev_idle_ticks) /
-				                (sum_ticks - prev_sum_ticks);
+				                (double)(sum_ticks - prev_sum_ticks);
 
 			char dest_buf[32] = {'\0'};
 			(void)snprintf(dest_buf, sizeof(dest_buf), "%.6f", cpu_usage);

@@ -57,5 +57,5 @@ strim(char* s)
 void
 strtolower(char* s)
 {
-	for (; *s; ++s) { *s = tolower(*s); }
+	for (; *s; ++s) { *s = (char)tolower(*s); }
 }

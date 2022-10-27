@@ -59,7 +59,7 @@ pscanf(const char* path, const char* fmt, ...)
 double
 timespec_to_sec(const struct timespec* ts)
 {
-	return ts->tv_sec + copysign(ts->tv_nsec, ts->tv_sec) / 1E9;
+	return (double)ts->tv_sec + copysign((double)ts->tv_nsec, (double)ts->tv_sec) / 1E9;
 }
 
 struct timeval
