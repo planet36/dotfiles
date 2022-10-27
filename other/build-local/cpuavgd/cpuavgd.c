@@ -156,7 +156,9 @@ int main(int argc, char* const argv[])
 		SIGUSR2,
 	};
 
-	for (size_t i = 0; i < sizeof(signals_to_handle) / sizeof(signals_to_handle[0]); ++i)
+	const size_t num_signals_to_handle = sizeof(signals_to_handle) /
+	                                     sizeof(signals_to_handle[0]);
+	for (size_t i = 0; i < num_signals_to_handle; ++i)
 	{
 		if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
 			err(EXIT_FAILURE, "sigaction");

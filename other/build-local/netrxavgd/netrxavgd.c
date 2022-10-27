@@ -210,7 +210,9 @@ int main(int argc, char* const argv[])
 		SIGUSR2,
 	};
 
-	for (size_t i = 0; i < sizeof(signals_to_handle) / sizeof(signals_to_handle[0]); ++i)
+	const size_t num_signals_to_handle = sizeof(signals_to_handle) /
+	                                     sizeof(signals_to_handle[0]);
+	for (size_t i = 0; i < num_signals_to_handle; ++i)
 	{
 		if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
 			err(EXIT_FAILURE, "sigaction");
@@ -272,7 +274,11 @@ int main(int argc, char* const argv[])
 
 			if (delta_time_s != 0)
 				// round to nearest int
-				rx_bytes_per_s = (uintmax_t)(((double)(rx_bytes - prev_rx_bytes) / delta_time_s) + 0.5);
+				rx_bytes_per_s = (uintmax_t)(
+				                     (double)(rx_bytes - prev_rx_bytes) /
+				                     delta_time_s
+				                     + 0.5
+				                 );
 
 			char dest_buf[32] = {'\0'};
 			(void)snprintf(dest_buf, sizeof(dest_buf), "%ju", rx_bytes_per_s);
