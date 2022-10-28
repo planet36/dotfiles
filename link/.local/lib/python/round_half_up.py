@@ -6,24 +6,11 @@
 
 import decimal
 
-DECIMAL_PLACES = [
-		decimal.Decimal(10)**0,
-		decimal.Decimal(10)**-1,
-		decimal.Decimal(10)**-2,
-		decimal.Decimal(10)**-3,
-		decimal.Decimal(10)**-4,
-		decimal.Decimal(10)**-5,
-		decimal.Decimal(10)**-6,
-		decimal.Decimal(10)**-7,
-		decimal.Decimal(10)**-8,
-		decimal.Decimal(10)**-9,
-		decimal.Decimal(10)**-10,
-		]
-
+# https://docs.python.org/3/library/decimal.html#decimal.Decimal.to_integral_value
 def round_half_up(x) -> decimal.Decimal:
-	return decimal.Decimal(x).quantize(exp=decimal.Decimal(1),
-	                                   rounding=decimal.ROUND_HALF_UP)
+	return decimal.Decimal(x).to_integral_value(rounding=decimal.ROUND_HALF_UP)
 
+# https://docs.python.org/3/library/decimal.html#decimal.Decimal.quantize
 def round_half_up_digits(x, precision: int = 0) -> decimal.Decimal:
 	return decimal.Decimal(x).quantize(exp=decimal.Decimal(10)**-precision,
 	                                   rounding=decimal.ROUND_HALF_UP)
