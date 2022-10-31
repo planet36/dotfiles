@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include <stdint.h>
 #include <wchar.h>
 
 #define LEN(arr) (sizeof(arr) / sizeof((arr)[0]))
@@ -158,8 +157,8 @@ clamp(double* x)
 		*x = 1;
 }
 
-/** Map the real number \a x within the interval <code>[0, 1]</code> to an integer
-* within the interval <code>[0, b)</code>.
+/** Map the real number \a x within the interval <code>[0, 1]</code> to an
+* integer within the interval <code>[0, b)</code>.
 *
 * \pre \a b is at least \c 1.
 */
@@ -212,7 +211,8 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
 	*right_width = meter_width - *left_width - 1U;
 }
 
-/** Return a Unicode lower block character (whose height is proportional to \a x).
+/** Return a Unicode lower block character (whose height is proportional to \a
+* x).
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
@@ -222,7 +222,8 @@ lower_blocks_1(double x)
 	return lower_blocks[map_to_uint(x, num_lower_blocks)];
 }
 
-/** Return a Unicode horizontal 1/8 block character (whose height is proportional to \a x).
+/** Return a Unicode horizontal 1/8 block character (whose height is
+* proportional to \a x).
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
@@ -232,7 +233,8 @@ hor_lines_1(double x)
 	return hor_lines[map_to_uint(x, num_hor_lines)];
 }
 
-/** Return a Unicode upper block character (whose height is proportional to \a x).
+/** Return a Unicode upper block character (whose height is proportional to \a
+* x).
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
