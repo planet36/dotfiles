@@ -149,12 +149,6 @@ static const wchar_t right_blocks[] = {
 
 static const size_t num_right_blocks = LEN(right_blocks);
 
-static double
-my_fmod(double x, double y)
-{
-	return x - (intmax_t)(x / y) * y;
-}
-
 static void
 clamp(double* x)
 {
@@ -174,7 +168,8 @@ map_to_uint(double x, size_t b)
 {
 	clamp(&x);
 
-	return (size_t)(x * (b - 1U) + 0.5); // round to nearest int
+	// round to nearest int
+	return (size_t)(x * (b - 1U) + 0.5);
 }
 
 /** Calculate values of the meter segments.
@@ -195,22 +190,21 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
 	*blocks_index = (size_t)-1;
 	*right_width = 0;
 
-	if (meter_width == 0)
+	if (meter_width == 0 || blocks_len == 0)
 		return;
 
 	clamp(&x);
 
+	// truncate
 	*left_width = (size_t)(x * meter_width);
 
 	if (*left_width == meter_width)
 		return;
 
-	/* Using "blocks_len - 1" instead of "blocks_len" in the calculations
-	 * produces a preferred distribution at the ends of the meter.
-	 */
-	// *blocks_index = (size_t)my_fmod(x * meter_width * blocks_len, blocks_len);
-	*blocks_index = (size_t)(my_fmod(x * meter_width * (blocks_len - 1U),
-	                                 blocks_len - 1U) + 0.5);
+	const double frac = x * meter_width - (double)((size_t)(x * meter_width));
+	// round to nearest int
+	// This produces a preferred distribution at the ends of the meter.
+	*blocks_index = (size_t)(frac * (blocks_len - 1U) + 0.5);
 
 	*right_width = meter_width - *left_width - 1U;
 }
@@ -226,6 +220,8 @@ lower_blocks_1(double x)
 }
 
 /** Return a Unicode horizontal 1/8 block character (whose height is proportional to \a x).
+*
+* \pre \a x is within the interval <code>[0, 1]</code>.
 */
 static wchar_t
 hor_lines_1(double x)
@@ -234,6 +230,8 @@ hor_lines_1(double x)
 }
 
 /** Return a Unicode upper block character (whose height is proportional to \a x).
+*
+* \pre \a x is within the interval <code>[0, 1]</code>.
 */
 static wchar_t
 upper_blocks_1(double x)
@@ -280,6 +278,13 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 /** Fill a meter with a Unicode vertical 1/8 block character.
 *
 * The position of the filled character is proportional to \a x, starting at the left.
+*
+* \pre \a x is within the interval [0, 1].
+*
+* \pre \a meter is a buffer capable of holding meter_width wide characters
+* (not including the terminating null character).
+*
+* It is the caller's responsibility to null-terminate the meter buffer.
 */
 static void
 ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
@@ -323,6 +328,13 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 /** Fill a meter with Unicode right block characters.
 *
 * The filled region is proportional to \a x, starting at the right.
+*
+* \pre \a x is within the interval [0, 1].
+*
+* \pre \a meter is a buffer capable of holding meter_width wide characters
+* (not including the terminating null character).
+*
+* It is the caller's responsibility to null-terminate the meter buffer.
 */
 static void
 right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
@@ -373,6 +385,7 @@ left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfil
 
 	// round to nearest int
 	const size_t num_filled = (size_t)(x * meter_width + 0.5);
+	[[maybe_unused]] const size_t num_unfilled = meter_width - num_filled;
 
 	for (i = 0; i < num_filled; ++i)
 	{
@@ -387,6 +400,12 @@ left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfil
 /** Fill a meter with ASCII characters.
 *
 * The filled region is proportional to \a x, starting at the right.
+*
+* \pre \a x is within the interval <code>[0, 1]</code>.
+*
+* \pre meter is a buffer capable of holding meter_width characters (not including the terminating null character).
+*
+* It is the caller's responsibility to null-terminate the meter buffer.
 */
 static void
 right_char_meter(double x, char* meter, size_t meter_width, char fill, char unfill)
@@ -399,7 +418,8 @@ right_char_meter(double x, char* meter, size_t meter_width, char fill, char unfi
 	clamp(&x);
 
 	// round to nearest int
-	const size_t num_unfilled = meter_width - (size_t)(x * meter_width + 0.5);
+	const size_t num_filled = (size_t)(x * meter_width + 0.5);
+	const size_t num_unfilled = meter_width - num_filled;
 
 	for (i = 0; i < num_unfilled; ++i)
 	{
