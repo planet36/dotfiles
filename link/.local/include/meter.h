@@ -202,9 +202,12 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
 		return;
 
 	const double frac = x * meter_width - (double)((size_t)(x * meter_width));
-	// round to nearest int
 	// This produces a preferred distribution at the ends of the meter.
+	// round to nearest int
 	*blocks_index = (size_t)(frac * (blocks_len - 1U) + 0.5);
+	// Use this to get an alternative distribution.
+	// truncate
+	//*blocks_index = (size_t)(frac * blocks_len);
 
 	*right_width = meter_width - *left_width - 1U;
 }
@@ -245,10 +248,10 @@ upper_blocks_1(double x)
 *
 * \pre \a x is within the interval [0, 1].
 *
-* \pre \a meter is a buffer capable of holding meter_width wide characters
+* \pre \a meter is a buffer capable of holding \a meter_width wide characters
 * (not including the terminating null character).
 *
-* It is the caller's responsibility to null-terminate the meter buffer.
+* It is the caller's responsibility to null-terminate the \a meter buffer.
 */
 static void
 left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
@@ -271,20 +274,21 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 
 	for (i = 0; i < right_width; ++i)
 	{
-		*meter++ = ' ';
+		*meter++ = SPACE;
 	}
 }
 
 /** Fill a meter with a Unicode vertical 1/8 block character.
 *
-* The position of the filled character is proportional to \a x, starting at the left.
+* The position of the filled character is proportional to \a x, starting at the
+* left.
 *
 * \pre \a x is within the interval [0, 1].
 *
-* \pre \a meter is a buffer capable of holding meter_width wide characters
+* \pre \a meter is a buffer capable of holding \a meter_width wide characters
 * (not including the terminating null character).
 *
-* It is the caller's responsibility to null-terminate the meter buffer.
+* It is the caller's responsibility to null-terminate the \a meter buffer.
 */
 static void
 ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
@@ -303,7 +307,7 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 
 		for (i = 1; i < left_width; ++i)
 		{
-			*meter++ = ' ';
+			*meter++ = SPACE;
 		}
 
 		*meter++ = RIGHT_ONE_EIGHTH_BLOCK;
@@ -312,7 +316,7 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 	{
 		for (i = 0; i < left_width; ++i)
 		{
-			*meter++ = ' ';
+			*meter++ = SPACE;
 		}
 
 		if (blocks_index != (size_t)-1)
@@ -320,7 +324,7 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 
 		for (i = 0; i < right_width; ++i)
 		{
-			*meter++ = ' ';
+			*meter++ = SPACE;
 		}
 	}
 }
@@ -331,10 +335,10 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 *
 * \pre \a x is within the interval [0, 1].
 *
-* \pre \a meter is a buffer capable of holding meter_width wide characters
+* \pre \a meter is a buffer capable of holding \a meter_width wide characters
 * (not including the terminating null character).
 *
-* It is the caller's responsibility to null-terminate the meter buffer.
+* It is the caller's responsibility to null-terminate the \a meter buffer.
 */
 static void
 right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
@@ -351,7 +355,7 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 
 	for (i = 0; i < right_width; ++i)
 	{
-		*meter++ = ' ';
+		*meter++ = SPACE;
 	}
 
 	if (blocks_index != (size_t)-1)
@@ -369,12 +373,14 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 *
-* \pre meter is a buffer capable of holding meter_width characters (not including the terminating null character).
+* \pre meter is a buffer capable of holding \a meter_width characters
+* (not including the terminating null character).
 *
-* It is the caller's responsibility to null-terminate the meter buffer.
+* It is the caller's responsibility to null-terminate the \a meter buffer.
 */
 static void
-left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfill)
+left_char_meter(double x, char* meter, size_t meter_width,
+                char fill, char unfill)
 {
 	size_t i;
 
@@ -403,12 +409,14 @@ left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfil
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 *
-* \pre meter is a buffer capable of holding meter_width characters (not including the terminating null character).
+* \pre meter is a buffer capable of holding \a meter_width characters
+* (not including the terminating null character).
 *
-* It is the caller's responsibility to null-terminate the meter buffer.
+* It is the caller's responsibility to null-terminate the \a meter buffer.
 */
 static void
-right_char_meter(double x, char* meter, size_t meter_width, char fill, char unfill)
+right_char_meter(double x, char* meter, size_t meter_width,
+                 char fill, char unfill)
 {
 	size_t i;
 
