@@ -75,3 +75,35 @@ join(const Container<StringT>& c, const std::string& joiner = ", ")
 {
 	return join(c.cbegin(), c.cend(), joiner);
 }
+
+template <std::input_iterator Iter>
+requires type_any_of<std::remove_cv_t<typename std::iterator_traits<Iter>::value_type>,
+	std::string,
+	std::string_view>
+auto
+concatenate(const Iter& first, const Iter& last)
+{
+	return join(first, last, std::string{});
+}
+
+template <std::input_iterator Iter>
+requires std::same_as<
+	typename std::iterator_traits<Iter>::value_type,
+	const char*>
+auto
+concatenate(const Iter& first, const Iter& last)
+{
+	return join(first, last, std::string{});
+}
+
+// template template parameter
+template <template <typename> typename Container, typename StringT>
+requires type_any_of<StringT,
+	std::string,
+	std::string_view,
+	const char*>
+auto
+concatenate(const Container<StringT>& c)
+{
+	return join(c.cbegin(), c.cend(), std::string{});
+}
