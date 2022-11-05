@@ -193,8 +193,8 @@ math_expr_list = (
 	'log10(e)', # math.h (M_LOG10E)
 	'log10(pi)',
 
-	#'180 / pi',
-	#'pi / 180',
+	'180 / pi',
+	'pi / 180',
 	#'200 / pi',
 	#'pi / 200',
 
