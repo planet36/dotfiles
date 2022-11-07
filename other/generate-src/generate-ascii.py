@@ -220,8 +220,15 @@ var_name_to_var_value['ascii_non_punctuation' ] = ascii_const.ascii_not_punctuat
 max_name_len = max(len(name) for name in var_name_to_var_value.keys())
 
 for (name, value) in var_name_to_var_value.items():
+	cpp_name_sv = name + "_sv"
 	value_translated = value.translate(c_esc_seq_hex_trans_table)
-	print(f'inline constexpr std::string_view {name:{max_name_len}} {{"{value_translated}", {len(value)}}};')
+	print(f'inline constexpr std::string_view {cpp_name_sv:{max_name_len+3}} {{"{value_translated}", {len(value)}}};')
+print()
+
+for name in var_name_to_var_value.keys():
+	cpp_name_sv = name + "_sv"
+	cpp_name_s = name + "_s"
+	print(f'const std::string {cpp_name_s:{max_name_len+2}} {{{cpp_name_sv:{max_name_len+3}}}};')
 print()
 
 print(fr'''/**
