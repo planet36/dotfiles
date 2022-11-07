@@ -44,10 +44,15 @@ print(fr'''// SPDX-FileCopyrightText: {author}
 #include <string_view>
 ''')
 
-# Translation table to be used in str.translate().
-# https://docs.python.org/3/library/stdtypes.html#str.maketrans
-# https://docs.python.org/3/library/stdtypes.html#str.translate
-ascii_c_escape_hex_trans_table = str.maketrans({
+'''
+Translation table to be used in str.translate().
+https://docs.python.org/3/library/stdtypes.html#str.maketrans
+https://docs.python.org/3/library/stdtypes.html#str.translate
+https://en.cppreference.com/w/c/language/escape
+https://en.cppreference.com/w/cpp/language/escape
+https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
+'''
+c_esc_seq_hex_trans_table = str.maketrans({
 	0x00: r'\x00',
 	0x01: r'\x01',
 	0x02: r'\x02',
@@ -215,7 +220,8 @@ var_name_to_var_value['ascii_non_punctuation' ] = ascii_const.ascii_not_punctuat
 max_name_len = max(len(name) for name in var_name_to_var_value.keys())
 
 for (name, value) in var_name_to_var_value.items():
-	print(f'inline constexpr std::string_view {name:{max_name_len}} {{"{value.translate(ascii_c_escape_hex_trans_table)}", {len(value)}}};')
+	value_translated = value.translate(c_esc_seq_hex_trans_table)
+	print(f'inline constexpr std::string_view {name:{max_name_len}} {{"{value_translated}", {len(value)}}};')
 print()
 
 print(fr'''/**
@@ -227,7 +233,7 @@ inline constexpr std::array<std::string_view, {len(ascii_const.ascii_all)}>
 ascii_cntrl_simple_esc_seq_hex{{''')
 for c in ascii_const.ascii_all:
 	i = ord(c)
-	s = c.translate(ascii_c_escape_hex_trans_table)
+	s = c.translate(c_esc_seq_hex_trans_table)
 	if c.isprintable():
 		print(f'\t""       , // {i: >3} == "{s}"')
 	else:
