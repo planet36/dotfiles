@@ -21,8 +21,8 @@ cat <<EOT
 # Run these commands:
 
 git diff \
-$OUT_DIR/{ascii.hpp,aux-lat-conv.hpp,gcc-machine-modes-typedefs.hpp,math-const.hpp,utm-ups-const.hpp}
+$OUT_DIR/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp
 
 git commit -m 'Update generated source code files' \
-$OUT_DIR/{ascii.hpp,aux-lat-conv.hpp,gcc-machine-modes-typedefs.hpp,math-const.hpp,utm-ups-const.hpp}
+$OUT_DIR/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp
 EOT
