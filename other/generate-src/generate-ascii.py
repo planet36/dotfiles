@@ -230,13 +230,8 @@ print(fr'''/**
 \sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
 */
 inline constexpr std::array<std::string_view, {len(ascii_const.ascii_all)}>
-ascii_cntrl_simple_esc_seq_hex{{''')
+c_simple_esc_seq_hex{{''')
 for c in ascii_const.ascii_all:
-	i = ord(c)
-	s = c.translate(c_esc_seq_hex_trans_table)
-	if c.isprintable():
-		print(f'\t""       , // {i: >3} == "{s}"')
-	else:
-		s = 'R"(' + s + ')"'
-		print(f'\t{s:9}, // {i: >3}')
+	s = 'R"(' + c.translate(c_esc_seq_hex_trans_table) + ')"'
+	print(f'\t{s:9},')
 print("};")
