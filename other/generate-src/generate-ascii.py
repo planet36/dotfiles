@@ -41,6 +41,7 @@ print(fr'''// SPDX-FileCopyrightText: {author}
 #pragma once
 
 #include <array>
+#include <string>
 #include <string_view>
 ''')
 
