@@ -24,6 +24,10 @@ From the C++ standard:
 simple-escape-sequence: one of
 	\' \" \? \\
 	\a \b \f \n \r \t \v
+
+https://en.cppreference.com/w/c/language/escape
+https://en.cppreference.com/w/cpp/language/escape
+https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
 """
 simple_esc_seq = {
 	'\a': r'\a', # alert
