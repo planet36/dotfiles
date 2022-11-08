@@ -8,11 +8,11 @@
 # pylint: disable=R1705
 # pylint: disable=W0311
 
-import re
-
 __author__ = 'Steven Ward'
 __version__ = '2022-08-03'
 __license__ = 'OSL-3.0'
+
+import re
 
 # http://www.regular-expressions.info/unicode.html
 # http://unicode.org/reports/tr18/#Categories

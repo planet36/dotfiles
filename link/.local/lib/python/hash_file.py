@@ -7,12 +7,12 @@
 # pylint: disable=C0301
 # pylint: disable=W0311
 
-import hashlib
-import sys
-
 __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
+
+import hashlib
+import sys
 
 def hash_file(file_name, hash_object=None, block_size=65536):
 	"""Open file_name, read block_size bytes at a time, and hash the bytes using the hash_object.
