@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 # https://github.com/hsluv/hsluv-python
+# https://github.com/hsluv/hsluv-python/blob/master/hsluv.py
 
 # pylint: disable=missing-function-docstring
 
