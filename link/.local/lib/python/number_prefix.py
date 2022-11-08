@@ -5,6 +5,9 @@
 # pylint: disable=C0114
 # pylint: disable=W0311
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 import bisect
 import math
 

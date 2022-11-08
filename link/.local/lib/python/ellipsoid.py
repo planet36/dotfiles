@@ -10,6 +10,9 @@
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-locals
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 import math
 
 class Ellipsoid:

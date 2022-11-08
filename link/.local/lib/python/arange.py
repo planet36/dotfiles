@@ -4,6 +4,9 @@
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 from decimal import Decimal as D
 import numpy as np
 

@@ -5,6 +5,9 @@
 Adapted from
 https://stackoverflow.com/a/21894086'''
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 # pylint: disable=missing-class-docstring
 class bidict(dict):
 

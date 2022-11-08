@@ -4,6 +4,9 @@
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 import decimal
 
 # https://docs.python.org/3/library/decimal.html#decimal.Decimal.to_integral_value

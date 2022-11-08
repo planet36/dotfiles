@@ -3,6 +3,9 @@
 
 # pylint: disable=missing-module-docstring
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 from itertools import zip_longest
 
 # identical to

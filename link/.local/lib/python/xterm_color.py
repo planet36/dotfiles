@@ -4,7 +4,9 @@
 # pylint: disable=C0103
 # pylint: disable=C0114
 
+__author__ = 'Steven Ward'
 __version__ = '2020-08-10'
+__license__ = 'OSL-3.0'
 
 '''
 # X11 color names
