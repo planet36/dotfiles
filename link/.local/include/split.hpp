@@ -17,6 +17,32 @@ Note: Only std::string is supported.
 #include <string>
 #include <vector>
 
+/// split the string about the delimiter character
+/**
+No more than \a max_splits will be performed.
+*/
+std::vector<std::string>
+split(const std::string& s, const char delim,
+      const size_t max_splits = std::numeric_limits<size_t>::max())
+{
+	size_t i = 0; // index of the front of a substring
+	size_t j = 0; // index of the back of a substring
+	std::vector<std::string> result;
+
+	for (size_t num_splits = 0;
+	     ((j = s.find(delim, i)) != std::string::npos) &&
+	     (num_splits < max_splits);
+	     ++num_splits)
+	{
+		result.emplace_back(s.substr(i, j - i));
+		i = j + 1;
+	}
+
+	result.emplace_back(s.substr(i));
+
+	return result;
+}
+
 /// split the string about the delimiter string
 /**
 No more than \a max_splits will be performed.
