@@ -19,9 +19,9 @@
 #include <limits>
 #include <random>
 
-namespace
+namespace per_thread_random_number_engine
 {
-inline namespace per_thread_random_number_engine
+namespace
 {
 
 // G must satisfy std::uniform_random_bit_generator.
@@ -34,7 +34,6 @@ instance()
 	return gen;
 }
 
-}
 }
 
 /// Reseed the per-thread random number engine
@@ -67,6 +66,8 @@ reseed(const G::seed_bytes_type& bytes)
 	instance().seed(bytes);
 }
 
+}
+
 /**
 \pre \a a <= \a b
 \sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
@@ -92,7 +93,7 @@ template <integral_number T>
 T
 rand_int(const T a, const T b)
 {
-	return rand_int(a, b, instance());
+	return rand_int(a, b, per_thread_random_number_engine::instance());
 }
 
 /**
@@ -118,7 +119,7 @@ template <integral_number T>
 T
 rand_int()
 {
-	return rand_int<T>(instance());
+	return rand_int<T>(per_thread_random_number_engine::instance());
 }
 
 /**
@@ -165,7 +166,7 @@ template <std::unsigned_integral T>
 T
 rand_uint_half_open(const T s)
 {
-	return rand_uint_half_open(s, instance());
+	return rand_uint_half_open(s, per_thread_random_number_engine::instance());
 }
 
 /**
@@ -207,7 +208,7 @@ rand_float(G&& gen)
 float
 rand_float()
 {
-	return rand_float(instance());
+	return rand_float(per_thread_random_number_engine::instance());
 }
 
 /**
@@ -249,7 +250,7 @@ rand_double(G&& gen)
 double
 rand_double()
 {
-	return rand_double(instance());
+	return rand_double(per_thread_random_number_engine::instance());
 }
 
 /**
@@ -291,7 +292,7 @@ rand_long_double(G&& gen)
 long double
 rand_long_double()
 {
-	return rand_long_double(instance());
+	return rand_long_double(per_thread_random_number_engine::instance());
 }
 
 /**
@@ -315,7 +316,7 @@ rand_float(const float a, const float b, G&& gen)
 float
 rand_float(const float a, const float b)
 {
-	return rand_float(a, b, instance());
+	return rand_float(a, b, per_thread_random_number_engine::instance());
 }
 
 /**
@@ -339,7 +340,7 @@ rand_double(const double a, const double b, G&& gen)
 double
 rand_double(const double a, const double b)
 {
-	return rand_double(a, b, instance());
+	return rand_double(a, b, per_thread_random_number_engine::instance());
 }
 
 /**
@@ -363,7 +364,7 @@ rand_long_double(const long double a, const long double b, G&& gen)
 long double
 rand_long_double(const long double a, const long double b)
 {
-	return rand_long_double(a, b, instance());
+	return rand_long_double(a, b, per_thread_random_number_engine::instance());
 }
 
 /**
@@ -398,5 +399,5 @@ rand_bool(G&& gen)
 bool
 rand_bool()
 {
-	return rand_bool(instance());
+	return rand_bool(per_thread_random_number_engine::instance());
 }
