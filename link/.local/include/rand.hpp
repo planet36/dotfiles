@@ -192,8 +192,7 @@ rand_float(G& gen)
 	else if constexpr (std::numeric_limits<T>::digits <=
 	                   2 * std::numeric_limits<typename G::result_type>::digits)
 	{
-		return make_unit_float(int_join(gen(),
-		                                gen()));
+		return make_unit_float(int_join(gen(), gen()));
 	}
 #endif
 }
@@ -234,8 +233,7 @@ rand_double(G& gen)
 	else if constexpr (std::numeric_limits<T>::digits <=
 	                   2 * std::numeric_limits<typename G::result_type>::digits)
 	{
-		return make_unit_double(int_join(gen(),
-		                                 gen()));
+		return make_unit_double(int_join(gen(), gen()));
 	}
 #endif
 }
@@ -276,8 +274,7 @@ rand_long_double(G& gen)
 	else if constexpr (std::numeric_limits<T>::digits <=
 	                   2 * std::numeric_limits<typename G::result_type>::digits)
 	{
-		return make_unit_long_double(int_join(gen(),
-		                                      gen()));
+		return make_unit_long_double(int_join(gen(), gen()));
 	}
 #endif
 }
