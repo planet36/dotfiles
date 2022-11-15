@@ -51,6 +51,7 @@ abbr --add --global sha224 sha224sum
 abbr --add --global sha256 sha256sum
 abbr --add --global sha384 sha384sum
 abbr --add --global sha512 sha512sum
+abbr --add --global tiem time
 abbr --add --global tm tmux
 abbr --add --global trahs trash
 abbr --add --global treu true
