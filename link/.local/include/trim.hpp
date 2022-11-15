@@ -190,50 +190,50 @@ trim_copy(std::basic_string<CharT, Traits, Allocator> s, const std::locale& loc)
 
 template <typename StringT>
 void
-ltrim(StringT& s, const typename StringT::value_type c)
+ltrim(StringT& s, const typename StringT::value_type delim_char)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              [c](const auto c_i) { return c_i == c; }));
+	              [delim_char](const auto c_i) { return c_i == delim_char; }));
 }
 
 template <typename StringT>
 void
-rtrim(StringT& s, const typename StringT::value_type c)
+rtrim(StringT& s, const typename StringT::value_type delim_char)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-	              [c](const auto c_i) { return c_i == c; }).base(),
+	              [delim_char](const auto c_i) { return c_i == delim_char; }).base(),
 	              s.end());
 }
 
 template <typename StringT>
 void
-trim(StringT& s, const typename StringT::value_type c)
+trim(StringT& s, const typename StringT::value_type delim_char)
 {
-	rtrim(s, c);
-	ltrim(s, c);
+	rtrim(s, delim_char);
+	ltrim(s, delim_char);
 }
 
 template <typename StringT>
 auto
-ltrim_copy(StringT s, const typename StringT::value_type c)
+ltrim_copy(StringT s, const typename StringT::value_type delim_char)
 {
-	ltrim(s, c);
+	ltrim(s, delim_char);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_copy(StringT s, const typename StringT::value_type c)
+rtrim_copy(StringT s, const typename StringT::value_type delim_char)
 {
-	rtrim(s, c);
+	rtrim(s, delim_char);
 	return s;
 }
 
 template <typename StringT>
 auto
-trim_copy(StringT s, const typename StringT::value_type c)
+trim_copy(StringT s, const typename StringT::value_type delim_char)
 {
-	trim(s, c);
+	trim(s, delim_char);
 	return s;
 }
 
