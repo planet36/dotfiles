@@ -17,7 +17,7 @@
 
 // https://stackoverflow.com/a/217605
 
-// {{{ trim spaces from std::string using std::isspace
+// {{{ trim spaces from a std::string using std::isspace
 
 void
 ltrim(std::string& s)
@@ -68,7 +68,7 @@ trim_copy(std::string s)
 
 // }}}
 
-// {{{ trim spaces from std::wstring using std::iswspace
+// {{{ trim spaces from a std::wstring using std::iswspace
 
 void
 ltrim(std::wstring& s)
@@ -117,7 +117,7 @@ trim_copy(std::wstring s)
 
 // }}}
 
-// {{{ trim spaces from std::basic_string with std::locale using std::isspace(std::locale)
+// {{{ trim spaces from a std::basic_string with std::locale using std::isspace(std::locale)
 
 template <class CharT,
           class Traits = std::char_traits<CharT>,
@@ -186,7 +186,7 @@ trim_copy(std::basic_string<CharT, Traits, Allocator> s, const std::locale& loc)
 
 // }}}
 
-// {{{ trim character from StringT
+// {{{ trim the character from a StringT
 
 template <typename StringT>
 void
@@ -239,7 +239,7 @@ trim_copy(StringT s, const typename StringT::value_type delim_char)
 
 // }}}
 
-// {{{ trim the complement of a character from a StringT
+// {{{ trim the complement of the character from a StringT
 
 template <typename StringT>
 void
@@ -292,7 +292,7 @@ trim_not_copy(StringT s, const typename StringT::value_type delim_char)
 
 // }}}
 
-// {{{ trim set of characters from StringT
+// {{{ trim the set of characters from a StringT
 
 template <typename StringT>
 void
@@ -345,7 +345,7 @@ trim_copy(StringT s, const StringT& delim_set)
 
 // }}}
 
-// {{{ trim complementary set of characters from StringT
+// {{{ trim the complement of the set of characters from a StringT
 
 template <typename StringT>
 void
