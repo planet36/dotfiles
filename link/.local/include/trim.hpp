@@ -239,6 +239,59 @@ trim_copy(StringT s, const typename StringT::value_type delim_char)
 
 // }}}
 
+// {{{ trim the complement of a character from a StringT
+
+template <typename StringT>
+void
+ltrim_not(StringT& s, const typename StringT::value_type delim_char)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              [delim_char](const auto c_i) { return c_i != delim_char; }));
+}
+
+template <typename StringT>
+void
+rtrim_not(StringT& s, const typename StringT::value_type delim_char)
+{
+	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
+	              [delim_char](const auto c_i) { return c_i != delim_char; }).base(),
+	              s.end());
+}
+
+template <typename StringT>
+void
+trim_not(StringT& s, const typename StringT::value_type delim_char)
+{
+	rtrim_not(s, delim_char);
+	ltrim_not(s, delim_char);
+}
+
+template <typename StringT>
+auto
+ltrim_not_copy(StringT s, const typename StringT::value_type delim_char)
+{
+	ltrim_not(s, delim_char);
+	return s;
+}
+
+template <typename StringT>
+auto
+rtrim_not_copy(StringT s, const typename StringT::value_type delim_char)
+{
+	rtrim_not(s, delim_char);
+	return s;
+}
+
+template <typename StringT>
+auto
+trim_not_copy(StringT s, const typename StringT::value_type delim_char)
+{
+	trim_not(s, delim_char);
+	return s;
+}
+
+// }}}
+
 // {{{ trim set of characters from StringT
 
 template <typename StringT>
