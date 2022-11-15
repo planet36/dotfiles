@@ -6,7 +6,7 @@
 \file
 \author Steven Ward
 
-Note: Only std::string is supported.
+Note: Only \c std::string is supported.
 */
 
 #pragma once

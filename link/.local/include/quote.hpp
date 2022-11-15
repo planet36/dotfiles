@@ -7,7 +7,7 @@
 \author Steven Ward
 \sa https://en.cppreference.com/w/cpp/io/manip/quoted
 
-Note: Only std::string is supported.
+Note: Only \c std::string is supported.
 */
 
 #pragma once
