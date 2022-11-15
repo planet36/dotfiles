@@ -243,7 +243,7 @@ trim_copy(StringT s, const typename StringT::value_type delim_char)
 
 template <typename StringT>
 void
-ltrim_set(StringT& s, const StringT& delim_set)
+ltrim(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
 	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }));
@@ -251,7 +251,7 @@ ltrim_set(StringT& s, const StringT& delim_set)
 
 template <typename StringT>
 void
-rtrim_set(StringT& s, const StringT& delim_set)
+rtrim(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
 	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }).base(),
@@ -260,33 +260,33 @@ rtrim_set(StringT& s, const StringT& delim_set)
 
 template <typename StringT>
 void
-trim_set(StringT& s, const StringT& delim_set)
+trim(StringT& s, const StringT& delim_set)
 {
-	rtrim_set(s, delim_set);
-	ltrim_set(s, delim_set);
+	rtrim(s, delim_set);
+	ltrim(s, delim_set);
 }
 
 template <typename StringT>
 auto
-ltrim_set_copy(StringT s, const StringT& delim_set)
+ltrim_copy(StringT s, const StringT& delim_set)
 {
-	ltrim_set(s, delim_set);
+	ltrim(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_set_copy(StringT s, const StringT& delim_set)
+rtrim_copy(StringT s, const StringT& delim_set)
 {
-	rtrim_set(s, delim_set);
+	rtrim(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-trim_set_copy(StringT s, const StringT& delim_set)
+trim_copy(StringT s, const StringT& delim_set)
 {
-	trim_set(s, delim_set);
+	trim(s, delim_set);
 	return s;
 }
 
