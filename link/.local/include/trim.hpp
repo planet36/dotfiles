@@ -245,16 +245,16 @@ template <typename StringT>
 void
 ltrim_not(StringT& s, const typename StringT::value_type delim_char)
 {
-	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              [delim_char](const auto c_i) { return c_i != delim_char; }));
+	(void)s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+	              [delim_char](const auto c_i) { return c_i == delim_char; }));
 }
 
 template <typename StringT>
 void
 rtrim_not(StringT& s, const typename StringT::value_type delim_char)
 {
-	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-	              [delim_char](const auto c_i) { return c_i != delim_char; }).base(),
+	(void)s.erase(std::find_if(s.rbegin(), s.rend(),
+	              [delim_char](const auto c_i) { return c_i == delim_char; }).base(),
 	              s.end());
 }
 
@@ -351,16 +351,16 @@ template <typename StringT>
 void
 ltrim_not(StringT& s, const StringT& delim_set)
 {
-	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              [delim_set](const auto c_i) { return !delim_set.contains(c_i); }));
+	(void)s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }));
 }
 
 template <typename StringT>
 void
 rtrim_not(StringT& s, const StringT& delim_set)
 {
-	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-	              [delim_set](const auto c_i) { return !delim_set.contains(c_i); }).base(),
+	(void)s.erase(std::find_if(s.rbegin(), s.rend(),
+	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }).base(),
 	              s.end());
 }
 
