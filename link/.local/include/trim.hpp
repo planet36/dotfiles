@@ -243,50 +243,50 @@ trim_copy(StringT s, const typename StringT::value_type c)
 
 template <typename StringT>
 void
-ltrim_set(StringT& s, const StringT& set)
+ltrim_set(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              [set](const auto c_i) { return set.contains(c_i); }));
+	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }));
 }
 
 template <typename StringT>
 void
-rtrim_set(StringT& s, const StringT& set)
+rtrim_set(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-	              [set](const auto c_i) { return set.contains(c_i); }).base(),
+	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }).base(),
 	              s.end());
 }
 
 template <typename StringT>
 void
-trim_set(StringT& s, const StringT& set)
+trim_set(StringT& s, const StringT& delim_set)
 {
-	rtrim_set(s, set);
-	ltrim_set(s, set);
+	rtrim_set(s, delim_set);
+	ltrim_set(s, delim_set);
 }
 
 template <typename StringT>
 auto
-ltrim_set_copy(StringT s, const StringT& set)
+ltrim_set_copy(StringT s, const StringT& delim_set)
 {
-	ltrim_set(s, set);
+	ltrim_set(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_set_copy(StringT s, const StringT& set)
+rtrim_set_copy(StringT s, const StringT& delim_set)
 {
-	rtrim_set(s, set);
+	rtrim_set(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-trim_set_copy(StringT s, const StringT& set)
+trim_set_copy(StringT s, const StringT& delim_set)
 {
-	trim_set(s, set);
+	trim_set(s, delim_set);
 	return s;
 }
 
@@ -296,50 +296,50 @@ trim_set_copy(StringT s, const StringT& set)
 
 template <typename StringT>
 void
-ltrim_cset(StringT& s, const StringT& set)
+ltrim_cset(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              [set](const auto c_i) { return !set.contains(c_i); }));
+	              [delim_set](const auto c_i) { return !delim_set.contains(c_i); }));
 }
 
 template <typename StringT>
 void
-rtrim_cset(StringT& s, const StringT& set)
+rtrim_cset(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
-	              [set](const auto c_i) { return !set.contains(c_i); }).base(),
+	              [delim_set](const auto c_i) { return !delim_set.contains(c_i); }).base(),
 	              s.end());
 }
 
 template <typename StringT>
 void
-trim_cset(StringT& s, const StringT& set)
+trim_cset(StringT& s, const StringT& delim_set)
 {
-	rtrim_cset(s, set);
-	ltrim_cset(s, set);
+	rtrim_cset(s, delim_set);
+	ltrim_cset(s, delim_set);
 }
 
 template <typename StringT>
 auto
-ltrim_cset_copy(StringT s, const StringT& set)
+ltrim_cset_copy(StringT s, const StringT& delim_set)
 {
-	ltrim_cset(s, set);
+	ltrim_cset(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_cset_copy(StringT s, const StringT& set)
+rtrim_cset_copy(StringT s, const StringT& delim_set)
 {
-	rtrim_cset(s, set);
+	rtrim_cset(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-trim_cset_copy(StringT s, const StringT& set)
+trim_cset_copy(StringT s, const StringT& delim_set)
 {
-	trim_cset(s, set);
+	trim_cset(s, delim_set);
 	return s;
 }
 
