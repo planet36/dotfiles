@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// trim whitespace from string
+/// trim leading and trailing characters from a string
 /**
 \file
 \author Steven Ward
