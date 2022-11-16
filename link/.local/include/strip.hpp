@@ -14,7 +14,7 @@ The \c trim() functions use <code><algorithm></code> functions to find delimiter
 
 #pragma once
 
-#include "ascii.hpp"
+#include "ctype.hpp"
 #include "unary_predicate.hpp"
 
 #include <algorithm>
@@ -145,12 +145,12 @@ std::string strip_copy(std::string s, const unary_predicate<char>& pred)
 
 void rstrip(std::string& s)
 {
-	rstrip(s, ascii_whitespace_s);
+	rstrip(s, is_whitespace_pred);
 }
 
 void lstrip(std::string& s)
 {
-	lstrip(s, ascii_whitespace_s);
+	lstrip(s, is_whitespace_pred);
 }
 
 void strip(std::string& s)
