@@ -23,15 +23,6 @@ The \c trim() functions use <code><algorithm></code> functions to find delimiter
 // {{{ trim spaces from a std::string using std::isspace
 
 void
-ltrim(std::string& s)
-{
-	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              // Characters must be converted to unsigned char.
-	              // https://en.cppreference.com/w/cpp/string/byte/isspace
-	              [](const unsigned char c_i) { return std::isspace(c_i); }));
-}
-
-void
 rtrim(std::string& s)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
@@ -42,6 +33,15 @@ rtrim(std::string& s)
 }
 
 void
+ltrim(std::string& s)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              // Characters must be converted to unsigned char.
+	              // https://en.cppreference.com/w/cpp/string/byte/isspace
+	              [](const unsigned char c_i) { return std::isspace(c_i); }));
+}
+
+void
 trim(std::string& s)
 {
 	rtrim(s);
@@ -49,16 +49,16 @@ trim(std::string& s)
 }
 
 auto
-ltrim_copy(std::string s)
+rtrim_copy(std::string s)
 {
-	ltrim(s);
+	rtrim(s);
 	return s;
 }
 
 auto
-rtrim_copy(std::string s)
+ltrim_copy(std::string s)
 {
-	rtrim(s);
+	ltrim(s);
 	return s;
 }
 
@@ -74,20 +74,20 @@ trim_copy(std::string s)
 // {{{ trim spaces from a std::wstring using std::iswspace
 
 void
-ltrim(std::wstring& s)
-{
-	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              // https://en.cppreference.com/w/cpp/string/wide/iswspace
-	              [](const auto c_i) { return std::iswspace(static_cast<wint_t>(c_i)); }));
-}
-
-void
 rtrim(std::wstring& s)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
 	              // https://en.cppreference.com/w/cpp/string/wide/iswspace
 	              [](const auto c_i) { return std::iswspace(static_cast<wint_t>(c_i)); }).base(),
 	              s.end());
+}
+
+void
+ltrim(std::wstring& s)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              // https://en.cppreference.com/w/cpp/string/wide/iswspace
+	              [](const auto c_i) { return std::iswspace(static_cast<wint_t>(c_i)); }));
 }
 
 void
@@ -98,16 +98,16 @@ trim(std::wstring& s)
 }
 
 auto
-ltrim_copy(std::wstring s)
+rtrim_copy(std::wstring s)
 {
-	ltrim(s);
+	rtrim(s);
 	return s;
 }
 
 auto
-rtrim_copy(std::wstring s)
+ltrim_copy(std::wstring s)
 {
-	rtrim(s);
+	ltrim(s);
 	return s;
 }
 
@@ -126,23 +126,23 @@ template <class CharT,
           class Traits = std::char_traits<CharT>,
           class Allocator = std::allocator<CharT>>
 void
-ltrim(std::basic_string<CharT, Traits, Allocator>& s, const std::locale& loc)
-{
-	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              // https://en.cppreference.com/w/cpp/locale/isspace
-	              [loc](const auto c_i) { return std::isspace(c_i, loc); }));
-}
-
-template <class CharT,
-          class Traits = std::char_traits<CharT>,
-          class Allocator = std::allocator<CharT>>
-void
 rtrim(std::basic_string<CharT, Traits, Allocator>& s, const std::locale& loc)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
 	              // https://en.cppreference.com/w/cpp/locale/isspace
 	              [loc](const auto c_i) { return std::isspace(c_i, loc); }).base(),
 	              s.end());
+}
+
+template <class CharT,
+          class Traits = std::char_traits<CharT>,
+          class Allocator = std::allocator<CharT>>
+void
+ltrim(std::basic_string<CharT, Traits, Allocator>& s, const std::locale& loc)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              // https://en.cppreference.com/w/cpp/locale/isspace
+	              [loc](const auto c_i) { return std::isspace(c_i, loc); }));
 }
 
 template <class CharT,
@@ -159,10 +159,10 @@ template <class CharT,
           class Traits = std::char_traits<CharT>,
           class Allocator = std::allocator<CharT>>
 auto
-ltrim_copy(std::basic_string<CharT, Traits, Allocator> s,
+rtrim_copy(std::basic_string<CharT, Traits, Allocator> s,
            const std::locale& loc)
 {
-	ltrim(s, loc);
+	rtrim(s, loc);
 	return s;
 }
 
@@ -170,10 +170,10 @@ template <class CharT,
           class Traits = std::char_traits<CharT>,
           class Allocator = std::allocator<CharT>>
 auto
-rtrim_copy(std::basic_string<CharT, Traits, Allocator> s,
+ltrim_copy(std::basic_string<CharT, Traits, Allocator> s,
            const std::locale& loc)
 {
-	rtrim(s, loc);
+	ltrim(s, loc);
 	return s;
 }
 
@@ -193,19 +193,19 @@ trim_copy(std::basic_string<CharT, Traits, Allocator> s, const std::locale& loc)
 
 template <typename StringT>
 void
-ltrim(StringT& s, const typename StringT::value_type delim_char)
-{
-	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              [delim_char](const auto c_i) { return c_i == delim_char; }));
-}
-
-template <typename StringT>
-void
 rtrim(StringT& s, const typename StringT::value_type delim_char)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
 	              [delim_char](const auto c_i) { return c_i == delim_char; }).base(),
 	              s.end());
+}
+
+template <typename StringT>
+void
+ltrim(StringT& s, const typename StringT::value_type delim_char)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              [delim_char](const auto c_i) { return c_i == delim_char; }));
 }
 
 template <typename StringT>
@@ -218,17 +218,17 @@ trim(StringT& s, const typename StringT::value_type delim_char)
 
 template <typename StringT>
 auto
-ltrim_copy(StringT s, const typename StringT::value_type delim_char)
+rtrim_copy(StringT s, const typename StringT::value_type delim_char)
 {
-	ltrim(s, delim_char);
+	rtrim(s, delim_char);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_copy(StringT s, const typename StringT::value_type delim_char)
+ltrim_copy(StringT s, const typename StringT::value_type delim_char)
 {
-	rtrim(s, delim_char);
+	ltrim(s, delim_char);
 	return s;
 }
 
@@ -246,19 +246,19 @@ trim_copy(StringT s, const typename StringT::value_type delim_char)
 
 template <typename StringT>
 void
-ltrim_not(StringT& s, const typename StringT::value_type delim_char)
-{
-	(void)s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-	              [delim_char](const auto c_i) { return c_i == delim_char; }));
-}
-
-template <typename StringT>
-void
 rtrim_not(StringT& s, const typename StringT::value_type delim_char)
 {
 	(void)s.erase(std::find_if(s.rbegin(), s.rend(),
 	              [delim_char](const auto c_i) { return c_i == delim_char; }).base(),
 	              s.end());
+}
+
+template <typename StringT>
+void
+ltrim_not(StringT& s, const typename StringT::value_type delim_char)
+{
+	(void)s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+	              [delim_char](const auto c_i) { return c_i == delim_char; }));
 }
 
 template <typename StringT>
@@ -271,17 +271,17 @@ trim_not(StringT& s, const typename StringT::value_type delim_char)
 
 template <typename StringT>
 auto
-ltrim_not_copy(StringT s, const typename StringT::value_type delim_char)
+rtrim_not_copy(StringT s, const typename StringT::value_type delim_char)
 {
-	ltrim_not(s, delim_char);
+	rtrim_not(s, delim_char);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_not_copy(StringT s, const typename StringT::value_type delim_char)
+ltrim_not_copy(StringT s, const typename StringT::value_type delim_char)
 {
-	rtrim_not(s, delim_char);
+	ltrim_not(s, delim_char);
 	return s;
 }
 
@@ -299,19 +299,19 @@ trim_not_copy(StringT s, const typename StringT::value_type delim_char)
 
 template <typename StringT>
 void
-ltrim(StringT& s, const StringT& delim_set)
-{
-	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
-	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }));
-}
-
-template <typename StringT>
-void
 rtrim(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
 	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }).base(),
 	              s.end());
+}
+
+template <typename StringT>
+void
+ltrim(StringT& s, const StringT& delim_set)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
+	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }));
 }
 
 template <typename StringT>
@@ -324,17 +324,17 @@ trim(StringT& s, const StringT& delim_set)
 
 template <typename StringT>
 auto
-ltrim_copy(StringT s, const StringT& delim_set)
+rtrim_copy(StringT s, const StringT& delim_set)
 {
-	ltrim(s, delim_set);
+	rtrim(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_copy(StringT s, const StringT& delim_set)
+ltrim_copy(StringT s, const StringT& delim_set)
 {
-	rtrim(s, delim_set);
+	ltrim(s, delim_set);
 	return s;
 }
 
@@ -352,19 +352,19 @@ trim_copy(StringT s, const StringT& delim_set)
 
 template <typename StringT>
 void
-ltrim_not(StringT& s, const StringT& delim_set)
-{
-	(void)s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }));
-}
-
-template <typename StringT>
-void
 rtrim_not(StringT& s, const StringT& delim_set)
 {
 	(void)s.erase(std::find_if(s.rbegin(), s.rend(),
 	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }).base(),
 	              s.end());
+}
+
+template <typename StringT>
+void
+ltrim_not(StringT& s, const StringT& delim_set)
+{
+	(void)s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+	              [delim_set](const auto c_i) { return delim_set.contains(c_i); }));
 }
 
 template <typename StringT>
@@ -377,17 +377,17 @@ trim_not(StringT& s, const StringT& delim_set)
 
 template <typename StringT>
 auto
-ltrim_not_copy(StringT s, const StringT& delim_set)
+rtrim_not_copy(StringT s, const StringT& delim_set)
 {
-	ltrim_not(s, delim_set);
+	rtrim_not(s, delim_set);
 	return s;
 }
 
 template <typename StringT>
 auto
-rtrim_not_copy(StringT s, const StringT& delim_set)
+ltrim_not_copy(StringT s, const StringT& delim_set)
 {
-	rtrim_not(s, delim_set);
+	ltrim_not(s, delim_set);
 	return s;
 }
 
