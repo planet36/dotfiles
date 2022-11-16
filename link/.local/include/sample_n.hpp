@@ -26,12 +26,9 @@ auto sample_n(const std::string& in, const size_t num_samples, G& gen)
 	{
 		out.reserve(num_samples);
 
-		// https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution/uniform_int_distribution
-		std::uniform_int_distribution<size_t> dis(0, in.size()-1);
-
 		for (size_t n = 0; n < num_samples; ++n)
 		{
-			out.push_back(in[dis(gen)]);
+			out.push_back(in[rand_uint_half_open(in.size(), gen)]);
 		}
 	}
 
@@ -58,12 +55,9 @@ auto sample_n(const std::vector<T>& in, const size_t num_samples, G& gen)
 	{
 		out.reserve(num_samples);
 
-		// https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution/uniform_int_distribution
-		std::uniform_int_distribution<size_t> dis(0, in.size()-1);
-
 		for (size_t n = 0; n < num_samples; ++n)
 		{
-			out.push_back(in[dis(gen)]);
+			out.push_back(in[rand_uint_half_open(in.size(), gen)]);
 		}
 	}
 
