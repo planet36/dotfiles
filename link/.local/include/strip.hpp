@@ -16,6 +16,8 @@ The \c trim() functions use <code><algorithm></code> functions to find delimiter
 
 #include "ascii.hpp"
 
+#include <algorithm>
+#include <functional>
 #include <string>
 
 // {{{ strip a character from a std::string
@@ -95,6 +97,44 @@ std::string lstrip_copy(std::string s, const std::string& delim_set)
 std::string strip_copy(std::string s, const std::string& delim_set)
 {
 	strip(s, delim_set);
+	return s;
+}
+
+// }}}
+
+// {{{ strip characters that satisfy a predicate from a std::string
+
+void rstrip(std::string& s, const std::function<bool(char)>& pred)
+{
+	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(), pred).base(), s.end());
+}
+
+void lstrip(std::string& s, const std::function<bool(char)>& pred)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), pred));
+}
+
+void strip(std::string& s, const std::function<bool(char)>& pred)
+{
+	rstrip(s, pred);
+	lstrip(s, pred);
+}
+
+std::string rstrip_copy(std::string s, const std::function<bool(char)>& pred)
+{
+	rstrip(s, pred);
+	return s;
+}
+
+std::string lstrip_copy(std::string s, const std::function<bool(char)>& pred)
+{
+	lstrip(s, pred);
+	return s;
+}
+
+std::string strip_copy(std::string s, const std::function<bool(char)>& pred)
+{
+	strip(s, pred);
 	return s;
 }
 
