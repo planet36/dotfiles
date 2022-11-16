@@ -61,7 +61,7 @@ is_shell_special_char(const char c)
 bool
 contains_shell_special_chars(const std::string& s)
 {
-	for (const char c : s)
+	for (const auto c : s)
 	{
 		if (is_shell_special_char(c))
 			return true;
@@ -127,7 +127,7 @@ quote_shell_always(const std::string& s, const char delim = single_quote)
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
-	for (const char c : s)
+	for (const auto c : s)
 	{
 		if (c == delim)
 			result += single_quote_escaped;
@@ -149,7 +149,7 @@ quote_escape(const std::string& s, const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size());
-	for (const char c : s)
+	for (const auto c : s)
 	{
 		if (is_control(c))
 			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
@@ -170,7 +170,7 @@ quote_c(const std::string& s, const char delim = double_quote,
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
-	for (const char c : s)
+	for (const auto c : s)
 	{
 		if (is_control(c))
 			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
@@ -190,7 +190,7 @@ quote_pcre(const std::string& s)
 {
 	std::string result;
 	result.reserve(s.size());
-	for (const char c : s)
+	for (const auto c : s)
 	{
 		if (!is_word(c))
 			result.push_back(backslash);
