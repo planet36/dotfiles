@@ -237,9 +237,12 @@ print(fr'''/**
 \sa https://en.cppreference.com/w/cpp/language/escape
 \sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
 */
-inline constexpr std::array<std::string_view, {len(ascii_const.ascii_all)}>
+inline constexpr std::array<std::string_view, {len(ascii_const.ascii_all)*2}>
 c_simple_esc_seq_hex{{''')
 for c in ascii_const.ascii_all:
 	s = 'R"(' + c.translate(c_esc_seq_hex_trans_table) + ')"'
+	print(f'\t{s:9},')
+for c in range(128, 256):
+	s = 'R"(' + fr'\x{c:02X}' + ')"'
 	print(f'\t{s:9},')
 print("};")
