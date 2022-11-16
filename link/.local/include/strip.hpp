@@ -15,6 +15,7 @@ The \c trim() functions use <code><algorithm></code> functions to find delimiter
 #pragma once
 
 #include "ascii.hpp"
+#include "unary_predicate.hpp"
 
 #include <algorithm>
 #include <functional>
@@ -104,35 +105,35 @@ std::string strip_copy(std::string s, const std::string& delim_set)
 
 // {{{ strip characters that satisfy a predicate from a std::string
 
-void rstrip(std::string& s, const std::function<bool(char)>& pred)
+void rstrip(std::string& s, const unary_predicate<char>& pred)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(), pred).base(), s.end());
 }
 
-void lstrip(std::string& s, const std::function<bool(char)>& pred)
+void lstrip(std::string& s, const unary_predicate<char>& pred)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), pred));
 }
 
-void strip(std::string& s, const std::function<bool(char)>& pred)
+void strip(std::string& s, const unary_predicate<char>& pred)
 {
 	rstrip(s, pred);
 	lstrip(s, pred);
 }
 
-std::string rstrip_copy(std::string s, const std::function<bool(char)>& pred)
+std::string rstrip_copy(std::string s, const unary_predicate<char>& pred)
 {
 	rstrip(s, pred);
 	return s;
 }
 
-std::string lstrip_copy(std::string s, const std::function<bool(char)>& pred)
+std::string lstrip_copy(std::string s, const unary_predicate<char>& pred)
 {
 	lstrip(s, pred);
 	return s;
 }
 
-std::string strip_copy(std::string s, const std::function<bool(char)>& pred)
+std::string strip_copy(std::string s, const unary_predicate<char>& pred)
 {
 	strip(s, pred);
 	return s;
