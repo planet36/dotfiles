@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include "unary_predicate.hpp"
+
 #include <functional>
 #include <string>
 
@@ -99,8 +101,8 @@ constexpr bool is_punctuation(const char c)
 }
 
 #define DEF_CHAR_PRED(NAME) \
-const std::function<bool(const char)> is_ ## NAME ## _predicate = is_ ## NAME; \
-const auto is_non_ ## NAME ## _predicate = std::not_fn(is_ ## NAME ## _predicate);
+const unary_predicate<char> is_ ## NAME ## _pred = is_ ## NAME; \
+const unary_predicate<char> is_non_ ## NAME ## _pred = std::not_fn(is_ ## NAME ## _pred);
 
 DEF_CHAR_PRED(ascii       )
 DEF_CHAR_PRED(uppercase   )
