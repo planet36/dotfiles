@@ -12,6 +12,8 @@ The \c trim() functions use <code><algorithm></code> functions to find delimiter
 
 #pragma once
 
+#include "unary_predicate.hpp"
+
 #include <algorithm>
 #include <cctype>
 #include <cwctype>
@@ -396,6 +398,106 @@ auto
 trim_not_copy(StringT s, const StringT& delim_set)
 {
 	trim_not(s, delim_set);
+	return s;
+}
+
+// }}}
+
+// {{{ trim characters that satisfy a predicate from a StringT
+
+template <typename StringT>
+void
+rtrim(StringT& s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(), pred).base(), s.end());
+}
+
+template <typename StringT>
+void
+ltrim(StringT& s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), pred));
+}
+
+template <typename StringT>
+void
+trim(StringT& s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	rtrim(s, pred);
+	ltrim(s, pred);
+}
+
+template <typename StringT>
+auto
+rtrim_copy(StringT s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	rtrim(s, pred);
+	return s;
+}
+
+template <typename StringT>
+auto
+ltrim_copy(StringT s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	ltrim(s, pred);
+	return s;
+}
+
+template <typename StringT>
+auto
+trim_copy(StringT s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	trim(s, pred);
+	return s;
+}
+
+// }}}
+
+// {{{ trim characters that do not satisfy a predicate from a StringT
+
+template <typename StringT>
+void
+rtrim_not(StringT& s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	(void)s.erase(std::find_if(s.rbegin(), s.rend(), pred).base(), s.end());
+}
+
+template <typename StringT>
+void
+ltrim_not(StringT& s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	(void)s.erase(s.begin(), std::find_if(s.begin(), s.end(), pred));
+}
+
+template <typename StringT>
+void
+trim_not(StringT& s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	rtrim_not(s, pred);
+	ltrim_not(s, pred);
+}
+
+template <typename StringT>
+auto
+rtrim_not_copy(StringT s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	rtrim_not(s, pred);
+	return s;
+}
+
+template <typename StringT>
+auto
+ltrim_not_copy(StringT s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	ltrim_not(s, pred);
+	return s;
+}
+
+template <typename StringT>
+auto
+trim_not_copy(StringT s, const unary_predicate<typename StringT::value_type>& pred)
+{
+	trim_not(s, pred);
 	return s;
 }
 
