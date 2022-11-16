@@ -18,6 +18,8 @@ The \c trim() functions use <code><algorithm></code> functions to find delimiter
 
 #include <string>
 
+// {{{ strip a character from a std::string
+
 void rstrip(std::string& s, const char delim)
 {
 	const auto i = s.find_last_not_of(delim);
@@ -54,6 +56,10 @@ std::string strip_copy(std::string s, const char delim)
 	strip(s, delim);
 	return s;
 }
+
+// }}}
+
+// {{{ strip a set of characters from a std::string
 
 void rstrip(std::string& s, const std::string& delim_set)
 {
@@ -92,6 +98,10 @@ std::string strip_copy(std::string s, const std::string& delim_set)
 	return s;
 }
 
+// }}}
+
+// {{{ strip whitespace characters from a std::string
+
 void rstrip(std::string& s)
 {
 	rstrip(s, ascii_whitespace_s);
@@ -125,3 +135,5 @@ std::string strip_copy(std::string s)
 	strip(s);
 	return s;
 }
+
+// }}}
