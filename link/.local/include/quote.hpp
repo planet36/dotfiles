@@ -71,6 +71,17 @@ contains_shell_special_chars(const std::string& s)
 }
 
 auto
+quote(const char c, const char delim = single_quote)
+{
+	std::string result;
+	result.reserve(4 + 2);
+	result.push_back(delim);
+	result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
+	result.push_back(delim);
+	return result;
+}
+
+auto
 quote(const std::string& s, const char delim = double_quote,
       const char escape = backslash)
 {
