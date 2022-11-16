@@ -19,20 +19,18 @@ Note: Only \c std::string is supported.
 
 /// split the string about the delimiter character
 /**
-No more than \a max_splits will be performed.
+If \a limit is greater than \c 0, the result will have no more than \a limit strings.
 */
 std::vector<std::string>
 split(const std::string& s, const char delim,
-      const size_t max_splits = std::numeric_limits<size_t>::max())
+      const size_t limit = 0)
 {
 	size_t i = 0; // index of the front of a substring
 	size_t j = 0; // index of the back of a substring
 	std::vector<std::string> result;
 
-	for (size_t num_splits = 0;
-	     ((j = s.find(delim, i)) != std::string::npos) &&
-	     (num_splits < max_splits);
-	     ++num_splits)
+	while ((result.size() != limit - 1) &&
+	       ((j = s.find(delim, i)) != std::string::npos))
 	{
 		result.emplace_back(s.substr(i, j - i));
 		i = j + 1;
@@ -45,13 +43,13 @@ split(const std::string& s, const char delim,
 
 /// split the string about the delimiter string
 /**
-No more than \a max_splits will be performed.
+If \a limit is greater than \c 0, the result will have no more than \a limit strings.
 
 If \a delim is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
 split(const std::string& s, const std::string& delim,
-      const size_t max_splits = std::numeric_limits<size_t>::max())
+      const size_t limit = 0)
 {
 	size_t i = 0; // index of the front of a substring
 	size_t j = 0; // index of the back of a substring
@@ -59,10 +57,8 @@ split(const std::string& s, const std::string& delim,
 
 	if (!delim.empty())
 	{
-		for (size_t num_splits = 0;
-		     ((j = s.find(delim, i)) != std::string::npos) &&
-		     (num_splits < max_splits);
-		     ++num_splits)
+		while ((result.size() != limit - 1) &&
+		       ((j = s.find(delim, i)) != std::string::npos))
 		{
 			result.emplace_back(s.substr(i, j - i));
 			i = j + delim.size();
@@ -76,13 +72,13 @@ split(const std::string& s, const std::string& delim,
 
 /// split the string about characters in the delimiter set
 /**
-No more than \a max_splits will be performed.
+If \a limit is greater than \c 0, the result will have no more than \a limit strings.
 
 If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
 split_set(const std::string& s, const std::string& delim_set,
-          const size_t max_splits = std::numeric_limits<size_t>::max())
+          const size_t limit = 0)
 {
 	size_t i = 0; // index of the front of a substring
 	size_t j = 0; // index of the back of a substring
@@ -90,11 +86,9 @@ split_set(const std::string& s, const std::string& delim_set,
 
 	if (!delim_set.empty())
 	{
-		for (size_t num_splits = 0;
-		     ((i = s.find_first_not_of(delim_set, j)) != std::string::npos) &&
-		     ((j = s.find_first_of(delim_set, i)) != std::string::npos) &&
-		     (num_splits < max_splits);
-		     ++num_splits)
+		while (((i = s.find_first_not_of(delim_set, j)) != std::string::npos) &&
+		       (result.size() != limit - 1) &&
+		       ((j = s.find_first_of(delim_set, i)) != std::string::npos))
 		{
 			result.emplace_back(s.substr(i, j - i));
 		}
@@ -114,13 +108,13 @@ split_set(const std::string& s, const std::string& delim_set,
 
 /// split the string about characters not in the delimiter set
 /**
-No more than \a max_splits will be performed.
+If \a limit is greater than \c 0, the result will have no more than \a limit strings.
 
 If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
 split_non_set(const std::string& s, const std::string& delim_set,
-              const size_t max_splits = std::numeric_limits<size_t>::max())
+              const size_t limit = 0)
 {
 	size_t i = 0; // index of the front of a substring
 	size_t j = 0; // index of the back of a substring
@@ -128,11 +122,9 @@ split_non_set(const std::string& s, const std::string& delim_set,
 
 	if (!delim_set.empty())
 	{
-		for (size_t num_splits = 0;
-		     ((i = s.find_first_of(delim_set, j)) != std::string::npos) &&
-		     ((j = s.find_first_not_of(delim_set, i)) != std::string::npos) &&
-		     (num_splits < max_splits);
-		     ++num_splits)
+		while (((i = s.find_first_of(delim_set, j)) != std::string::npos) &&
+		       (result.size() != limit - 1) &&
+		       ((j = s.find_first_not_of(delim_set, i)) != std::string::npos))
 		{
 			result.emplace_back(s.substr(i, j - i));
 		}
