@@ -300,7 +300,9 @@ template <std::uniform_random_bit_generator G>
 float
 rand_float(const float a, const float b, G& gen)
 {
-	return rand_float(gen) * (b - a) + a;
+	const auto x = rand_float(gen);
+	// x * (b - a) + a == 2 * (x * (b/2 - a/2) + a/2)
+	return x * (b - a) + a;
 }
 
 template <std::uniform_random_bit_generator G>
@@ -324,7 +326,9 @@ template <std::uniform_random_bit_generator G>
 double
 rand_double(const double a, const double b, G& gen)
 {
-	return rand_double(gen) * (b - a) + a;
+	const auto x = rand_double(gen);
+	// x * (b - a) + a == 2 * (x * (b/2 - a/2) + a/2)
+	return x * (b - a) + a;
 }
 
 template <std::uniform_random_bit_generator G>
@@ -348,7 +352,9 @@ template <std::uniform_random_bit_generator G>
 long double
 rand_long_double(const long double a, const long double b, G& gen)
 {
-	return rand_long_double(gen) * (b - a) + a;
+	const auto x = rand_long_double(gen);
+	// x * (b - a) + a == 2 * (x * (b/2 - a/2) + a/2)
+	return x * (b - a) + a;
 }
 
 template <std::uniform_random_bit_generator G>
