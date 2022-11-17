@@ -17,6 +17,15 @@ Note: Only \c std::string is supported.
 #include <string>
 #include <vector>
 
+/*
+* These functions use emplace_back() with iterators instead of
+* push_back() with temporary substrings.
+*
+*   s.substr(i) == std::string(s.begin() + i, s.end())
+*
+*   s.substr(i, j - i) == std::string(s.begin() + i, s.begin() + j)
+*/
+
 /// split the string about the delimiter character
 /**
 If \a limit is greater than \c 0, the result will have no more than \a limit strings.
@@ -32,11 +41,11 @@ split(const std::string& s, const char delim,
 	while ((result.size() != limit - 1) &&
 	       ((j = s.find(delim, i)) != std::string::npos))
 	{
-		result.emplace_back(s.substr(i, j - i));
+		result.emplace_back(s.begin() + i, s.begin() + j);
 		i = j + 1;
 	}
 
-	result.emplace_back(s.substr(i));
+	result.emplace_back(s.begin() + i, s.end());
 
 	return result;
 }
@@ -60,12 +69,12 @@ split(const std::string& s, const std::string& delim,
 		while ((result.size() != limit - 1) &&
 		       ((j = s.find(delim, i)) != std::string::npos))
 		{
-			result.emplace_back(s.substr(i, j - i));
+			result.emplace_back(s.begin() + i, s.begin() + j);
 			i = j + delim.size();
 		}
 	}
 
-	result.emplace_back(s.substr(i));
+	result.emplace_back(s.begin() + i, s.end());
 
 	return result;
 }
@@ -90,13 +99,13 @@ split_set(const std::string& s, const std::string& delim_set,
 		       (result.size() != limit - 1) &&
 		       ((j = s.find_first_of(delim_set, i)) != std::string::npos))
 		{
-			result.emplace_back(s.substr(i, j - i));
+			result.emplace_back(s.begin() + i, s.begin() + j);
 		}
 	}
 
 	if (i != std::string::npos)
 	{
-		result.emplace_back(s.substr(i));
+		result.emplace_back(s.begin() + i, s.end());
 	}
 	else if (result.empty())
 	{
@@ -126,13 +135,13 @@ split_non_set(const std::string& s, const std::string& delim_set,
 		       (result.size() != limit - 1) &&
 		       ((j = s.find_first_not_of(delim_set, i)) != std::string::npos))
 		{
-			result.emplace_back(s.substr(i, j - i));
+			result.emplace_back(s.begin() + i, s.begin() + j);
 		}
 	}
 
 	if (i != std::string::npos)
 	{
-		result.emplace_back(s.substr(i));
+		result.emplace_back(s.begin() + i, s.end());
 	}
 	else if (result.empty())
 	{
