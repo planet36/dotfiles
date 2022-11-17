@@ -44,6 +44,7 @@ abbr --add --global py2 python2
 abbr --add --global py3 python3
 abbr --add --global rbn doas reboot now
 abbr --add --global reutrn return
+abbr --add --global rtash trash
 abbr --add --global sctl systemctl
 abbr --add --global sdn doas shutdown now
 abbr --add --global sha1 sha1sum
