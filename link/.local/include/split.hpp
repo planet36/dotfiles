@@ -100,7 +100,7 @@ split_set(const std::string& s, const std::string& delim_set,
 	}
 	else if (result.empty())
 	{
-		result.emplace_back(std::string{});
+		result.emplace_back();
 	}
 
 	return result;
@@ -136,7 +136,7 @@ split_non_set(const std::string& s, const std::string& delim_set,
 	}
 	else if (result.empty())
 	{
-		result.emplace_back(std::string{});
+		result.emplace_back();
 	}
 
 	return result;
