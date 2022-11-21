@@ -43,7 +43,7 @@ auto sample_n(const std::string& in, const size_t num_samples, G&& gen)
 
 auto sample_n(const std::string& in, const size_t num_samples)
 {
-	return sample_n(in, num_samples, per_thread_random_number_engine::instance());
+	return sample_n(in, num_samples, per_thread_random_number_engine);
 }
 
 template <typename T, std::uniform_random_bit_generator G>
@@ -73,5 +73,5 @@ auto sample_n(const std::vector<T>& in, const size_t num_samples, G&& gen)
 template <typename T>
 auto sample_n(const std::vector<T>& in, const size_t num_samples)
 {
-	return sample_n(in, num_samples, per_thread_random_number_engine::instance());
+	return sample_n(in, num_samples, per_thread_random_number_engine);
 }
