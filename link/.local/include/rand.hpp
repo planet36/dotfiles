@@ -259,7 +259,7 @@ rand_float(const float a, const float b, G& gen)
 {
 	const auto x = rand_float(gen);
 	// x * (b - a) + a == 2 * (x * (b/2 - a/2) + a/2)
-	return x * (b - a) + a;
+	return 2 * (x * (b/2 - a/2) + a/2);
 }
 
 template <std::uniform_random_bit_generator G>
@@ -285,7 +285,7 @@ rand_double(const double a, const double b, G& gen)
 {
 	const auto x = rand_double(gen);
 	// x * (b - a) + a == 2 * (x * (b/2 - a/2) + a/2)
-	return x * (b - a) + a;
+	return 2 * (x * (b/2 - a/2) + a/2);
 }
 
 template <std::uniform_random_bit_generator G>
@@ -311,7 +311,7 @@ rand_long_double(const long double a, const long double b, G& gen)
 {
 	const auto x = rand_long_double(gen);
 	// x * (b - a) + a == 2 * (x * (b/2 - a/2) + a/2)
-	return x * (b - a) + a;
+	return 2 * (x * (b/2 - a/2) + a/2);
 }
 
 template <std::uniform_random_bit_generator G>
