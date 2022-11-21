@@ -21,49 +21,13 @@
 
 namespace per_thread_random_number_engine
 {
-namespace
-{
 
-// G must satisfy std::uniform_random_bit_generator.
-using G = sfc64;
-
-G&
+auto&
 instance()
 {
-	static thread_local G gen;
+	// This must satisfy std::uniform_random_bit_generator.
+	static thread_local sfc64 gen;
 	return gen;
-}
-
-}
-
-/// Reseed the per-thread random number engine
-/**
-\sa https://en.cppreference.com/w/cpp/experimental/reseed
-*/
-void
-reseed()
-{
-	instance().seed();
-}
-
-/// Reseed the per-thread random number engine
-/**
-\sa https://en.cppreference.com/w/cpp/experimental/reseed
-*/
-void
-reseed(const G::state_type& new_s)
-{
-	instance().seed(new_s);
-}
-
-/// Reseed the per-thread random number engine
-/**
-\sa https://en.cppreference.com/w/cpp/experimental/reseed
-*/
-void
-reseed(const G::seed_bytes_type& bytes)
-{
-	instance().seed(bytes);
 }
 
 }
