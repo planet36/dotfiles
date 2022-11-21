@@ -13,7 +13,7 @@
 #include "int_bytes.hpp"
 #include "integral_number.hpp"
 #include "make_unit_float.hpp"
-#include "wyrand.hpp"
+#include "sfc.hpp"
 
 #include <concepts>
 #include <limits>
@@ -25,7 +25,7 @@ namespace
 {
 
 // G must satisfy std::uniform_random_bit_generator.
-using G = wyrand;
+using G = sfc64;
 
 G&
 instance()
