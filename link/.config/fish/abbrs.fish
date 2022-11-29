@@ -21,14 +21,6 @@ abbr --add --global ed "$EDITOR"
 abbr --add --global emld meld
 abbr --add --global f find
 abbr --add --global fiel file
-abbr --add --global gci git commit
-abbr --add --global gcl git clean
-abbr --add --global gco git checkout
-abbr --add --global gd git diff
-abbr --add --global gi git
-abbr --add --global gk gitk
-abbr --add --global gl git log
-abbr --add --global gs git status
 abbr --add --global his history
 abbr --add --global hist history
 abbr --add --global ip3 ipython3
