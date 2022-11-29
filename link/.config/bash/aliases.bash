@@ -14,6 +14,7 @@ alias c=clear
 alias cdl=cld
 alias clena=clean
 alias csl=cls
+alias dc=cd
 # shellcheck disable=SC2139
 alias e="$EDITOR"
 # shellcheck disable=SC2139
@@ -46,6 +47,7 @@ alias py2=python2
 alias py3=python3
 alias rbn='doas reboot now'
 alias reutrn=return
+alias rtash=trash
 alias sctl=systemctl
 alias sdn='doas shutdown now'
 alias sha1=sha1sum
@@ -53,6 +55,7 @@ alias sha224=sha224sum
 alias sha256=sha256sum
 alias sha384=sha384sum
 alias sha512=sha512sum
+alias tiem=time
 alias tm=tmux
 alias trahs=trash
 alias treu=true
@@ -131,6 +134,7 @@ alias split='split --verbose --suffix-length=3 --numeric-suffixes'
 alias ssh_my='TERM=xterm-256color ssh_to $MY_WEBSITE'
 alias ssh_to='ssh -Y -o ServerAliveInterval=60'
 alias t-code='cd && clean code && find -type f -name a.out -delete && t code && command xz --verbose -9 -e code.tar && mv code.tar.xz Downloads/ && cd Downloads/ && printf "del code.tar.xz && exit\n"'
+alias t-tmp='cd && clean code && find -type f -name a.out -delete && t code/tmp && command xz --verbose -9 -e tmp.tar && mv tmp.tar.xz Downloads/ && cd Downloads/ && printf "del tmp.tar.xz && exit\n"'
 alias tma='tmux attach || tmux'
 alias tree='tree -AFCaq'
 alias units='units --history ""'
