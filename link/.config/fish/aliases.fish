@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# {{{ alias
+
 alias chgrp='chgrp --preserve-root --changes'
 alias chmod='chmod --preserve-root --changes'
 alias chown='chown --preserve-root --changes'
@@ -95,3 +97,5 @@ alias pf="pacman -Sl | fzf --nth 2.. --preview 'pacman -Si {2}'"
 
 # https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Browsing_packages
 # pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
+
+# }}}

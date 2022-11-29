@@ -4,6 +4,8 @@
 # abbr is a real-time replacement in interactive mode
 # alias is a function wrapper for a command
 
+# {{{ abbr
+
 abbr --add --global -- - cd -
 abbr --add --global amek make
 abbr --add --global amke make
@@ -60,3 +62,5 @@ abbr --add --global tyep type
 abbr --add --global v "$VISUAL"
 abbr --add --global whcih which
 abbr --add --global xa xargs -r
+
+# }}}
