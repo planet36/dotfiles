@@ -1,12 +1,11 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=invalid-name
-# pylint: disable=no-member
-# pylint: disable=eval-used
 # pylint: disable=bad-indentation
+# pylint: disable=eval-used
 # pylint: disable=fixme
 # pylint: disable=invalid-name
+# pylint: disable=no-member
 # pylint: disable=pointless-string-statement
 # pylint: disable=trailing-newlines
 

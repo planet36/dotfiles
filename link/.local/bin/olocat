@@ -2,29 +2,25 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=import-outside-toplevel
 # pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
+# pylint: disable=line-too-long
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
+# pylint: disable=missing-module-docstring
+# pylint: disable=no-else-return
 # pylint: disable=non-ascii-name
-# pylint: disable=line-too-long
-# pylint: disable=import-outside-toplevel
-# pylint: disable=too-many-branches
+# pylint: disable=pointless-string-statement
+# pylint: disable=redefined-outer-name
 # pylint: disable=too-many-arguments
+# pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements
-# pylint: disable=no-else-return
-# pylint: disable=pointless-string-statement
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
-# pylint: disable=unused-variable
-# pylint: disable=unused-argument
-# pylint: disable=redefined-outer-name
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
-# pylint: disable=invalid-name
-# pylint: disable=pointless-string-statement
 # pylint: disable=trailing-newlines
+# pylint: disable=unused-argument
+# pylint: disable=unused-variable
 
 from decimal import Decimal as D, ROUND_HALF_UP
 from enum import Enum, auto, unique

@@ -2,19 +2,18 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
-# pylint: disable=line-too-long
-# pylint: disable=import-outside-toplevel
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-statements
-# pylint: disable=no-else-return
 # pylint: disable=bad-indentation
 # pylint: disable=fixme
+# pylint: disable=import-outside-toplevel
 # pylint: disable=invalid-name
+# pylint: disable=line-too-long
+# pylint: disable=missing-module-docstring
+# pylint: disable=no-else-return
 # pylint: disable=pointless-string-statement
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-statements
 # pylint: disable=trailing-newlines
 
 import hashlib
@@ -80,8 +79,8 @@ def main(argv = None):
 	iterations = default_iterations
 	silent = default_silent
 
-	# pylint: disable=unused-variable
 	# pylint: disable=unused-argument
+	# pylint: disable=unused-variable
 	def signal_handler(signal_num, execution_frame):
 		print()
 		sys.exit(0)

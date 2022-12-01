@@ -2,10 +2,10 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: MIT
 
-# pylint: disable=missing-function-docstring
 # pylint: disable=bad-indentation
 # pylint: disable=fixme
 # pylint: disable=invalid-name
+# pylint: disable=missing-function-docstring
 # pylint: disable=pointless-string-statement
 # pylint: disable=trailing-newlines
 

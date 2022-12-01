@@ -1,14 +1,12 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
-# pylint: disable=missing-function-docstring
-# pylint: disable=line-too-long
-# pylint: disable=bad-indentation
 # pylint: disable=bad-indentation
 # pylint: disable=fixme
 # pylint: disable=invalid-name
+# pylint: disable=line-too-long
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-module-docstring
 # pylint: disable=pointless-string-statement
 # pylint: disable=trailing-newlines
 
@@ -53,9 +51,9 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 	return hash_object
 
 # pylint: disable=import-outside-toplevel
-# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
 def main(argv = None):
 
