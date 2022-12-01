@@ -19,15 +19,15 @@
 # pylint: disable=too-many-statements
 # pylint: disable=trailing-newlines
 
+__author__ = 'Steven Ward'
+__version__ = '2022-09-08'
+__license__ = 'OSL-3.0'
+
 from datetime import timedelta
 from pathlib import Path
 import os
 import re
 import sys
-
-__author__ = 'Steven Ward'
-__version__ = '2022-09-08'
-__license__ = 'OSL-3.0'
 
 full_block = '█'
 lower_blocks = " ▁▂▃▄▅▆▇█"

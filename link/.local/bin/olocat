@@ -22,6 +22,10 @@
 # pylint: disable=unused-argument
 # pylint: disable=unused-variable
 
+__author__ = 'Steven Ward'
+__version__ = '2022-09-08'
+__license__ = 'OSL-3.0'
+
 from decimal import Decimal as D, ROUND_HALF_UP
 from enum import Enum, auto, unique
 import math
@@ -30,10 +34,6 @@ import sys
 
 import hsluv
 from xterm_color import xterm_color_num_to_rgb_string
-
-__author__ = 'Steven Ward'
-__version__ = '2022-09-08'
-__license__ = 'OSL-3.0'
 
 # https://stackoverflow.com/a/14693789
 ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')

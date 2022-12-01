@@ -14,14 +14,14 @@
 
 # All circular angles are in degrees.
 
+__author__ = 'Steven Ward'
+__version__ = '2022-09-08'
+__license__ = 'OSL-3.0'
+
 import math
 import sys
 
 from ellipsoid import WGS84
-
-__author__ = 'Steven Ward'
-__version__ = '2022-09-08'
-__license__ = 'OSL-3.0'
 
 # https://mathworld.wolfram.com/Haversine.html
 # https://en.wikipedia.org/wiki/Haversine_formula
