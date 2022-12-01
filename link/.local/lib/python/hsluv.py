@@ -19,11 +19,10 @@ yourself, clone https://github.com/hsluv/hsluv and run:
     haxe -cp haxe/src hsluv.Hsluv -python hsluv.py
 """
 
+__version__ = '5.0.3'
+
 from functools import wraps, partial
 import math
-
-
-__version__ = '5.0.3'
 
 sRGB_to_XYZ_matrix = [[0.41239079926595945, 0.35758433938387796, 0.18048078840183432],
  [0.21263900587151038, 0.7151686787677559, 0.07219231536073371],
