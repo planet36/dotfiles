@@ -2,15 +2,15 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=C0103
-# pylint: disable=C0114
-# pylint: disable=C0301
-# pylint: disable=C0415
-# pylint: disable=R0911
-# pylint: disable=R0912
-# pylint: disable=R0914
-# pylint: disable=R0915
-# pylint: disable=R1705
+# pylint: disable=invalid-name
+# pylint: disable=missing-module-docstring
+# pylint: disable=line-too-long
+# pylint: disable=import-outside-toplevel
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-statements
+# pylint: disable=no-else-return
 
 import hashlib
 import sys
@@ -34,7 +34,7 @@ def get_pbkdf2_algorithms_available():
 		else:
 			yield hash_algorithm
 
-# pylint: disable=C0116
+# pylint: disable=missing-function-docstring
 def main(argv = None):
 
 	import base64
@@ -76,7 +76,7 @@ def main(argv = None):
 	silent = default_silent
 
 	# pylint: disable=unused-variable
-	# pylint: disable=W0613
+	# pylint: disable=unused-argument
 	def signal_handler(signal_num, execution_frame):
 		print()
 		sys.exit(0)

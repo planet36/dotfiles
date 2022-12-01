@@ -1,12 +1,12 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=C0103
-# pylint: disable=C0114
-# pylint: disable=C0116
-# pylint: disable=C0301
-# pylint: disable=R1705
-# pylint: disable=W0311
+# pylint: disable=invalid-name
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=line-too-long
+# pylint: disable=no-else-return
+# pylint: disable=bad-indentation
 
 __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
@@ -204,12 +204,12 @@ def quote(s, quoting_style):
 	else:
 		return s
 
-# pylint: disable=R0912
-# pylint: disable=R0915
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-statements
 def main(argv = None):
 
-	# pylint: disable=C0415
-	# pylint: disable=R0914
+	# pylint: disable=import-outside-toplevel
+	# pylint: disable=too-many-locals
 	import getopt
 	import os.path
 	import signal
@@ -230,7 +230,7 @@ def main(argv = None):
 	quoting_style = default_quoting_style
 	delimiter = default_delimiter
 
-	# pylint: disable=W0613
+	# pylint: disable=unused-argument
 	def signal_handler(signal_num, execution_frame):
 		print()
 		sys.exit(0)

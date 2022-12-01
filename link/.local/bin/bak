@@ -5,9 +5,9 @@
 # inspired by
 # https://github.com/bakfile/bak
 
-# pylint: disable=C0114
-# pylint: disable=C0116
-# pylint: disable=R1705
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=no-else-return
 
 import os.path
 import re
@@ -44,10 +44,10 @@ def get_unbak_path(path: str) -> str:
 	else:
 		return path
 
-# pylint: disable=R0914
+# pylint: disable=too-many-locals
 def main(argv = None):
 
-	# pylint: disable=C0415
+	# pylint: disable=import-outside-toplevel
 	import getopt
 	#import signal
 	import shlex
@@ -67,7 +67,7 @@ def main(argv = None):
 	move = default_move
 	unbak = default_unbak
 
-	# pylint: disable=W0613
+	# pylint: disable=unused-argument
 	#def signal_handler(signal_num, execution_frame):
 	#	print()
 	#	sys.exit(0)
@@ -134,7 +134,7 @@ OPTIONS
 
 	# pylint: disable=unused-variable
 	for (option, value) in options:
-		# pylint: disable=R1705
+		# pylint: disable=no-else-return
 		if option in ['-V', '--version']:
 			print_version()
 			return 0

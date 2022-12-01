@@ -1,8 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=C0103
-# pylint: disable=C0114
+# pylint: disable=invalid-name
+# pylint: disable=missing-module-docstring
 
 __author__ = 'Steven Ward'
 __version__ = '2020-08-10'

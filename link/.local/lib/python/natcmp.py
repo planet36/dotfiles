@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: OSL-3.0
 
 # pylint: disable=missing-function-docstring
-# pylint: disable=C0103
-# pylint: disable=C0114
-# pylint: disable=C0301
-# pylint: disable=R1705
-# pylint: disable=W0311
+# pylint: disable=invalid-name
+# pylint: disable=missing-module-docstring
+# pylint: disable=line-too-long
+# pylint: disable=no-else-return
+# pylint: disable=bad-indentation
 
 __author__ = 'Steven Ward'
 __version__ = '2022-08-03'

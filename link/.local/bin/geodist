@@ -94,10 +94,10 @@ def euclidian_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_d
 	(x2, y2, z2) = WGS84.geodetic_to_ecef(lat2_deg, lon2_deg, 0)
 	return math.dist((x1, y1, z1), (x2, y2, z2))
 
-# pylint: disable=R0914
+# pylint: disable=too-many-locals
 def main(argv = None):
 
-	# pylint: disable=C0415
+	# pylint: disable=import-outside-toplevel
 	import getopt
 	import os.path
 	import signal
@@ -121,7 +121,7 @@ def main(argv = None):
 	verbose = default_verbose
 	method = default_method
 
-	# pylint: disable=W0613
+	# pylint: disable=unused-argument
 	def signal_handler(signal_num, execution_frame):
 		print()
 		sys.exit(0)
@@ -203,7 +203,7 @@ EOT
 		return 1
 
 	for (option, value) in options:
-		# pylint: disable=R1705
+		# pylint: disable=no-else-return
 		if option in ['-V', '--version']:
 			print_version()
 			return 0

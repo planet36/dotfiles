@@ -6,9 +6,9 @@ Usage:
 python3 generate-math-const.py > math-const.hpp
 """
 
-# pylint: disable=C0103
-# pylint: disable=E1101
-# pylint: disable=W0123
+# pylint: disable=invalid-name
+# pylint: disable=no-member
+# pylint: disable=eval-used
 
 import datetime as dt
 #import math

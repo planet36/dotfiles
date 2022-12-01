@@ -1,11 +1,11 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=C0103
-# pylint: disable=C0114
-# pylint: disable=C0116
-# pylint: disable=C0301
-# pylint: disable=W0311
+# pylint: disable=invalid-name
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=line-too-long
+# pylint: disable=bad-indentation
 
 __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
@@ -47,11 +47,11 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 
 	return hash_object
 
-# pylint: disable=C0415
-# pylint: disable=R0911
-# pylint: disable=R0912
-# pylint: disable=R0914
-# pylint: disable=R0915
+# pylint: disable=import-outside-toplevel
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-statements
 def main(argv = None):
 
 	import base64
@@ -79,7 +79,7 @@ def main(argv = None):
 	block_size = default_block_size
 	fmt = default_format
 
-	# pylint: disable=W0613
+	# pylint: disable=unused-argument
 	def signal_handler(signal_num, execution_frame):
 		print()
 		sys.exit(0)
@@ -146,7 +146,7 @@ OPTIONS
 		return 1
 
 	for (option, value) in options:
-		# pylint: disable=R1705
+		# pylint: disable=no-else-return
 		if option in ['-V', '--version']:
 			print_version()
 			return 0
