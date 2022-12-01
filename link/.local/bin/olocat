@@ -6,7 +6,7 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
-# pylint: disable=C0144
+# pylint: disable=non-ascii-name
 # pylint: disable=line-too-long
 # pylint: disable=import-outside-toplevel
 # pylint: disable=too-many-branches
