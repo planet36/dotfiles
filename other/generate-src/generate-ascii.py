@@ -2,6 +2,11 @@
 # SPDX-License-Identifier: OSL-3.0
 
 # pylint: disable=line-too-long
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=invalid-name
+# pylint: disable=pointless-string-statement
+# pylint: disable=trailing-newlines
 
 """
 Usage:

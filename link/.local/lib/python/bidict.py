@@ -1,6 +1,12 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=invalid-name
+# pylint: disable=pointless-string-statement
+# pylint: disable=trailing-newlines
+
 '''Bidirectional dictionary
 Adapted from
 https://stackoverflow.com/a/21894086'''

@@ -8,6 +8,11 @@
 # pylint: disable=line-too-long
 # pylint: disable=import-outside-toplevel
 # pylint: disable=bad-indentation
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=invalid-name
+# pylint: disable=pointless-string-statement
+# pylint: disable=trailing-newlines
 
 import collections
 import hashlib

@@ -7,6 +7,11 @@
 # pylint: disable=line-too-long
 # pylint: disable=no-else-return
 # pylint: disable=bad-indentation
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=invalid-name
+# pylint: disable=pointless-string-statement
+# pylint: disable=trailing-newlines
 
 __author__ = 'Steven Ward'
 __version__ = '2022-09-08'

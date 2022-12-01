@@ -9,6 +9,11 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-locals
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=invalid-name
+# pylint: disable=pointless-string-statement
+# pylint: disable=trailing-newlines
 
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'

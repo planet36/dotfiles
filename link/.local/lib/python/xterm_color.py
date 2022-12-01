@@ -3,6 +3,11 @@
 
 # pylint: disable=invalid-name
 # pylint: disable=missing-module-docstring
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=invalid-name
+# pylint: disable=pointless-string-statement
+# pylint: disable=trailing-newlines
 
 __author__ = 'Steven Ward'
 __version__ = '2020-08-10'

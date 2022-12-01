@@ -9,6 +9,11 @@ python3 generate-math-const.py > math-const.hpp
 # pylint: disable=invalid-name
 # pylint: disable=no-member
 # pylint: disable=eval-used
+# pylint: disable=bad-indentation
+# pylint: disable=fixme
+# pylint: disable=invalid-name
+# pylint: disable=pointless-string-statement
+# pylint: disable=trailing-newlines
 
 import datetime as dt
 #import math
