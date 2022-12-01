@@ -60,7 +60,6 @@ alias ps2='ps --forest --headers -U root -u root -N    --sort pid'
 alias ps3='ps --forest --headers -U "$USER" -u "$USER" --sort pid'
 alias pstree='pstree -ahlnp'
 alias pwgen='tr -cd "0-9A-Za-z_" < /dev/urandom | head -c 16 ; echo'
-alias pylint='pylint --disable=bad-indentation --disable=fixme --disable=invalid-name --disable=pointless-string-statement --disable=trailing-newlines'
 alias rdiff='diff --recursive --new-file'
 # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=42501
 alias rm='rm --preserve-root --interactive'
