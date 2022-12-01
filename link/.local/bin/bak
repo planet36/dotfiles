@@ -2,9 +2,6 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# inspired by
-# https://github.com/bakfile/bak
-
 # pylint: disable=missing-module-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=no-else-return
@@ -13,6 +10,9 @@
 # pylint: disable=invalid-name
 # pylint: disable=pointless-string-statement
 # pylint: disable=trailing-newlines
+
+# inspired by
+# https://github.com/bakfile/bak
 
 import os.path
 import re

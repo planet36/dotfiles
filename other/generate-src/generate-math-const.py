@@ -1,11 +1,6 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-"""
-Usage:
-python3 generate-math-const.py > math-const.hpp
-"""
-
 # pylint: disable=invalid-name
 # pylint: disable=no-member
 # pylint: disable=eval-used
@@ -14,6 +9,11 @@ python3 generate-math-const.py > math-const.hpp
 # pylint: disable=invalid-name
 # pylint: disable=pointless-string-statement
 # pylint: disable=trailing-newlines
+
+"""
+Usage:
+python3 generate-math-const.py > math-const.hpp
+"""
 
 import datetime as dt
 #import math
