@@ -5,14 +5,17 @@
 # pylint: disable=eval-used
 # pylint: disable=fixme
 # pylint: disable=invalid-name
+# pylint: disable=line-too-long
 # pylint: disable=no-member
 # pylint: disable=pointless-string-statement
-# pylint: disable=trailing-newlines
 
 """
 Usage:
 python3 generate-math-const.py > math-const.hpp
 """
+
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
 
 import datetime as dt
 #import math
@@ -348,6 +351,7 @@ def generate_math_const(x):
 	#val128 = gmpy2.mpfr(val, precision=gmpy2.ieee(128).precision)
 	#val256 = gmpy2.mpfr(val, binary256_precision)
 
+	dec_str = None
 	try:
 		#dec_str = ('{:.' + str(binary192_digits10) + 'NG}').format(val)
 		dec_str = f'{val:.{binary192_digits10}NG}'
@@ -372,20 +376,18 @@ inline constexpr T {name}{{
     {hex_str}L}};''')
 
 now = dt.datetime.now(dt.timezone.utc)
-author = 'Steven Ward'
-this_license = 'OSL-3.0'
 brief_description = 'math constants'
 generated_by_file_name = os.path.basename(__file__)
 generated_datetime = now.isoformat(timespec='seconds')
 system_info = platform.platform()
 
-print(fr'''// SPDX-FileCopyrightText: {author}
-// SPDX-License-Identifier: {this_license}
+print(fr'''// SPDX-FileCopyrightText: {__author__}
+// SPDX-License-Identifier: {__license__}
 
 /// {brief_description}
 /**
 \file
-\author {author}
+\author {__author__}
 \sa https://en.wikipedia.org/wiki/List_of_mathematical_constants
 \sa https://en.wikipedia.org/wiki/Mathematical_constant#Basic_mathematical_constants
 */

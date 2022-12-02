@@ -1,10 +1,21 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# pylint: disable=bad-indentation
+# pylint: disable=function-redefined
+# pylint: disable=invalid-name
+# pylint: disable=line-too-long
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=unused-variable
+
 """
 Usage:
 python3 generate-gcc-machine-modes-typedefs.py > gcc-machine-modes-typedefs.hpp
 """
+
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
 
 import datetime as dt
 import os.path
@@ -12,20 +23,18 @@ import platform
 import subprocess
 
 now = dt.datetime.now(dt.timezone.utc)
-author = 'Steven Ward'
-this_license = 'OSL-3.0'
 brief_description = 'typedefs for GCC machine modes'
 generated_by_file_name = os.path.basename(__file__)
 generated_datetime = now.isoformat(timespec='seconds')
 system_info = platform.platform()
 
-print(fr'''// SPDX-FileCopyrightText: {author}
-// SPDX-License-Identifier: {this_license}
+print(fr'''// SPDX-FileCopyrightText: {__author__}
+// SPDX-License-Identifier: {__license__}
 
 /// {brief_description}
 /**
 \file
-\author {author}
+\author {__author__}
 \sa https://gcc.gnu.org/onlinedocs/gccint/Machine-Modes.html
 */
 
@@ -73,7 +82,7 @@ class GccMachineMode:
 			completed_process = subprocess.run(command, input=test_program, stderr=subprocess.DEVNULL, check=True)
 			self._exists = True
 
-		except subprocess.CalledProcessError as err:
+		except subprocess.CalledProcessError:
 			self._exists = False
 
 	def exists(self):

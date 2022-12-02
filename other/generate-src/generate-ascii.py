@@ -2,16 +2,17 @@
 # SPDX-License-Identifier: OSL-3.0
 
 # pylint: disable=bad-indentation
-# pylint: disable=fixme
 # pylint: disable=invalid-name
 # pylint: disable=line-too-long
 # pylint: disable=pointless-string-statement
-# pylint: disable=trailing-newlines
 
 """
 Usage:
 python3 generate-ascii.py > ascii.hpp
 """
+
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
 
 import collections
 import datetime as dt
@@ -21,20 +22,18 @@ import platform
 import ascii_const
 
 now = dt.datetime.now(dt.timezone.utc)
-author = 'Steven Ward'
-this_license = 'OSL-3.0'
 brief_description = 'ascii strings'
 generated_by_file_name = os.path.basename(__file__)
 generated_datetime = now.isoformat(timespec='seconds')
 system_info = platform.platform()
 
-print(fr'''// SPDX-FileCopyrightText: {author}
-// SPDX-License-Identifier: {this_license}
+print(fr'''// SPDX-FileCopyrightText: {__author__}
+// SPDX-License-Identifier: {__license__}
 
 /// {brief_description}
 /**
 \file
-\author {author}
+\author {__author__}
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_03_01
 \sa https://en.cppreference.com/w/cpp/string/byte
 \sa https://docs.python.org/3/library/string.html
