@@ -18,6 +18,9 @@ Nd-linspace -90 90 721 -180 180 1441 0 0 1
 https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html
 '''
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 import itertools
 import sys
 

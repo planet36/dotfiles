@@ -18,6 +18,9 @@ Nd-arange -90 90 0.25 -180 180 0.25 0
 https://docs.scipy.org/doc/numpy/reference/generated/numpy.arange.html
 '''
 
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+
 import itertools
 import sys
 
