@@ -8,19 +8,17 @@
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
 
-import re
-
 # https://en.cppreference.com/w/cpp/language/integer_literal
 
-int_dec = re.compile('[-+]?[0-9]+', re.ASCII)  # (plain 0 is allowed)
-int_oct = re.compile('[-+]?0[0-7]*', re.ASCII)
-int_hex = re.compile('[-+]?0[Xx][0-9A-Fa-f]+', re.ASCII)
-int_bin = re.compile('[-+]?0[Bb][01]+', re.ASCII)
+int_dec = '[-+]?[0-9]+' # (plain 0 is allowed)
+int_oct = '[-+]?0[0-7]*'
+int_hex = '[-+]?0[Xx][0-9A-Fa-f]+'
+int_bin = '[-+]?0[Bb][01]+'
 
 # https://en.cppreference.com/w/cpp/language/floating_literal
 
-float_dec = re.compile(r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)?', re.ASCII)
-float_hex = re.compile(r'[-+]?0[Xx](?:[0-9A-Fa-f]+\.?[0-9A-Fa-f]*|\.[0-9A-Fa-f]+)(?:[Pp][-+]?[0-9]+)', re.ASCII)
+float_dec = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)?'
+float_hex = r'[-+]?0[Xx](?:[0-9A-Fa-f]+\.?[0-9A-Fa-f]*|\.[0-9A-Fa-f]+)(?:[Pp][-+]?[0-9]+)'
 # (hex-exponent is mandatory)
 
 # test cases for float patterns:
