@@ -15,6 +15,11 @@ INT_OCT = '[-+]?0[0-7]*'
 INT_HEX = '[-+]?0[Xx][0-9A-Fa-f]+'
 INT_BIN = '[-+]?0[Bb][01]+'
 
+UINT_DEC = '[0-9]+' # (plain 0 is allowed)
+UINT_OCT = '0[0-7]*'
+UINT_HEX = '0[Xx][0-9A-Fa-f]+'
+UINT_BIN = '0[Bb][01]+'
+
 # https://en.cppreference.com/w/cpp/language/floating_literal
 
 FLOAT_DEC = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)?'
