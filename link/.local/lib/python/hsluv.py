@@ -35,8 +35,8 @@ XYZ_to_sRGB_matrix = [[3.2409699419045217, -1.5373831775700935, -0.4986107602930
 _ref_y = 1.0
 _ref_u = 0.19783
 _ref_v = 0.46832
-_kappa = 24389/27
-_epsilon = 216/24389
+_kappa = 24389/27 # (29/3)**3
+_epsilon = 216/24389 # (6/29)**3
 
 
 def _normalize_output(conversion):
