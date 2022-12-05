@@ -22,6 +22,8 @@ UINT_BIN = '0[Bb][01]+'
 
 # https://en.cppreference.com/w/cpp/language/floating_literal
 
+FLOAT_FIXED = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)'
+FLOAT_SCIENTIFIC = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)'
 FLOAT = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)?'
 FLOAT_HEX = r'[-+]?0[Xx](?:[0-9A-Fa-f]+\.?[0-9A-Fa-f]*|\.[0-9A-Fa-f]+)(?:[Pp][-+]?[0-9]+)'
 # (hex-exponent is mandatory)
