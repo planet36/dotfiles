@@ -19,8 +19,8 @@ import sys
 # Adapted from
 # https://github.com/clieg/pwy/blob/84189c2a74e5efbc836c877b9ccad2cdf8874631/pwy/__main__.py#L132
 def get_wind_dir(deg: float) -> int:
-	'''Convert deg to an int representing the cardinal direction.'''
-	return int((deg + 11.25) / 45) % 8
+    '''Convert deg to an int representing the cardinal direction.'''
+    return int((deg + 11.25) / 45) % 8
 
 # https://en.wikipedia.org/wiki/Cardinal_direction
 card_dir = ('N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW')
@@ -29,4 +29,4 @@ card_dir = ('N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW')
 arrows = ('🢃', '🢇', '🢀', '🢄', '🢁', '🢅', '🢂', '🢆')
 
 for line in sys.stdin:
-	print(arrows[get_wind_dir(int(line))])
+    print(arrows[get_wind_dir(int(line))])

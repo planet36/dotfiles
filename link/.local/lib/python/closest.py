@@ -12,5 +12,5 @@ __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
 
 def closest(x, iterable):
-	'''Find the closest value to x in iterable.'''
-	return min(iterable, key=lambda y:abs(y - x))
+    '''Find the closest value to x in iterable.'''
+    return min(iterable, key=lambda y:abs(y - x))

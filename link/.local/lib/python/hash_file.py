@@ -18,7 +18,7 @@ import hashlib
 import sys
 
 def hash_file(file_name, hash_object=None, block_size=65536):
-	"""Open file_name, read block_size bytes at a time, and hash the bytes using the hash_object.
+    """Open file_name, read block_size bytes at a time, and hash the bytes using the hash_object.
 
 hash_object is a hash object created by hashlib.new <https://docs.python.org/dev/library/hashlib.html#hashlib.new> or the corresponding named constructor.
 
@@ -34,21 +34,21 @@ It's recommended that block_size be a power-of-2 multiple of 4096.  Suggested bl
 
 This function was inspired by <https://web.archive.org/web/20100609151224/https://www.pytips.com/2010/5/29/a-quick-md5sum-equivalent-in-python>."""
 
-	if hash_object is None:
-		hash_object = hashlib.md5()
+    if hash_object is None:
+        hash_object = hashlib.md5()
 
-	with open(file_name, 'rb') as f:
+    with open(file_name, 'rb') as f:
 
-		while True:
+        while True:
 
-			file_data = f.read(block_size)
+            file_data = f.read(block_size)
 
-			if not file_data:
-				break
+            if not file_data:
+                break
 
-			hash_object.update(file_data)
+            hash_object.update(file_data)
 
-	return hash_object
+    return hash_object
 
 # pylint: disable=import-outside-toplevel
 # pylint: disable=too-many-branches
@@ -57,59 +57,59 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 # pylint: disable=too-many-statements
 def main(argv = None):
 
-	import base64
-	import getopt
-	import os.path
-	import shlex
-	import signal
+    import base64
+    import getopt
+    import os.path
+    import shlex
+    import signal
 
-	if argv is None:
-		argv = sys.argv
+    if argv is None:
+        argv = sys.argv
 
-	program_name = os.path.basename(argv[0])
+    program_name = os.path.basename(argv[0])
 
-	# valid values
-	valid_hash_algorithms = hashlib.algorithms_guaranteed
-	valid_formats = {'b16' : base64.b16encode, 'b32' : base64.b32encode, 'b64-std' : base64.standard_b64encode, 'b64-url' : base64.urlsafe_b64encode}
+    # valid values
+    valid_hash_algorithms = hashlib.algorithms_guaranteed
+    valid_formats = {'b16' : base64.b16encode, 'b32' : base64.b32encode, 'b64-std' : base64.standard_b64encode, 'b64-url' : base64.urlsafe_b64encode}
 
-	# default values
-	default_hash_algorithm = 'md5'
-	default_block_size = 65536
-	default_format = 'b16'
+    # default values
+    default_hash_algorithm = 'md5'
+    default_block_size = 65536
+    default_format = 'b16'
 
-	# mutable values
-	hash_algorithm = default_hash_algorithm
-	block_size = default_block_size
-	fmt = default_format
+    # mutable values
+    hash_algorithm = default_hash_algorithm
+    block_size = default_block_size
+    fmt = default_format
 
-	# pylint: disable=unused-argument
-	def signal_handler(signal_num, execution_frame):
-		print()
-		sys.exit(0)
+    # pylint: disable=unused-argument
+    def signal_handler(signal_num, execution_frame):
+        print()
+        sys.exit(0)
 
-	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
-	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+    signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+    signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-	def print_version():
-		"""Print the version information"""
-		print(program_name, __version__)
-		print("License:", __license__)
-		print("Written by", __author__)
+    def print_version():
+        """Print the version information"""
+        print(program_name, __version__)
+        print("License:", __license__)
+        print("Written by", __author__)
 
-	# pylint: disable=unused-variable
-	def print_warning(s):
-		"""Print the warning message"""
-		print(f"Warning: {s}", file=sys.stderr)
+    # pylint: disable=unused-variable
+    def print_warning(s):
+        """Print the warning message"""
+        print(f"Warning: {s}", file=sys.stderr)
 
-	def print_error(s):
-		"""Print the error message"""
-		print(f"Error: {s}", file=sys.stderr)
-		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+    def print_error(s):
+        """Print the error message"""
+        print(f"Error: {s}", file=sys.stderr)
+        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
-	def print_help():
-		"""Print the help message"""
+    def print_help():
+        """Print the help message"""
 
-		print(f"""Usage: {program_name} [OPTIONS] [FILE...]
+        print(f"""Usage: {program_name} [OPTIONS] [FILE...]
 Print the hash digest of FILE(s).
 
 If FILE is absent, or if FILE is '-', read standard input.
@@ -139,63 +139,63 @@ OPTIONS
     (valid: {','.join(sorted(valid_formats.keys()))})
 """)
 
-	short_options = 'Vha:b:f:'
-	long_options = ['version', 'help', 'hash-algorithm=', 'block-size=', 'format=']
+    short_options = 'Vha:b:f:'
+    long_options = ['version', 'help', 'hash-algorithm=', 'block-size=', 'format=']
 
-	try:
-		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-	except getopt.GetoptError as err:
-		print_error(err)
-		return 1
+    try:
+        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
+    except getopt.GetoptError as err:
+        print_error(err)
+        return 1
 
-	for (option, value) in options:
-		# pylint: disable=no-else-return
-		if option in ['-V', '--version']:
-			print_version()
-			return 0
-		elif option in ['-h', '--help']:
-			print_help()
-			return 0
-		elif option in ['-a', '--hash-algorithm']:
-			hash_algorithm = value
-			assert hash_algorithm in valid_hash_algorithms
-		elif option in ['-b', '--block-size']:
-			block_size = int(value)
-		elif option in ['-f', '--format']:
-			fmt = value
-			assert fmt in valid_formats
-		else:
-			print_error(f"Unhandled option: {option}")
-			return 1
+    for (option, value) in options:
+        # pylint: disable=no-else-return
+        if option in ['-V', '--version']:
+            print_version()
+            return 0
+        elif option in ['-h', '--help']:
+            print_help()
+            return 0
+        elif option in ['-a', '--hash-algorithm']:
+            hash_algorithm = value
+            assert hash_algorithm in valid_hash_algorithms
+        elif option in ['-b', '--block-size']:
+            block_size = int(value)
+        elif option in ['-f', '--format']:
+            fmt = value
+            assert fmt in valid_formats
+        else:
+            print_error(f"Unhandled option: {option}")
+            return 1
 
-	# No file was given.
-	if not remaining_args: # empty
-		remaining_args.append('-')
+    # No file was given.
+    if not remaining_args: # empty
+        remaining_args.append('-')
 
-	for file_name in remaining_args:
+    for file_name in remaining_args:
 
-		file_name_quoted = shlex.quote(file_name)
+        file_name_quoted = shlex.quote(file_name)
 
-		hash_object = hashlib.new(hash_algorithm)
+        hash_object = hashlib.new(hash_algorithm)
 
-		if file_name == '-': # Hash standard input.
+        if file_name == '-': # Hash standard input.
 
-			while True:
+            while True:
 
-				# Use the binary buffer to read bytes from stdin.
-				file_data = sys.stdin.buffer.read(block_size)
+                # Use the binary buffer to read bytes from stdin.
+                file_data = sys.stdin.buffer.read(block_size)
 
-				if not file_data:
-					break
+                if not file_data:
+                    break
 
-				hash_object.update(file_data)
+                hash_object.update(file_data)
 
-		else: # Hash the file.
+        else: # Hash the file.
 
-			hash_object = hash_file(file_name, hash_object, block_size)
+            hash_object = hash_file(file_name, hash_object, block_size)
 
-		hash_digest = hash_object.digest()
-		print(f'{valid_formats[fmt](hash_digest).decode()}  {file_name_quoted}')
+        hash_digest = hash_object.digest()
+        print(f'{valid_formats[fmt](hash_digest).decode()}  {file_name_quoted}')
 
 if __name__ == '__main__':
-	sys.exit(main())
+    sys.exit(main())

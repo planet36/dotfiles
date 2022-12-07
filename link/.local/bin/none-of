@@ -17,11 +17,11 @@ import re
 import sys
 
 #if not sys.argv[1:]: # empty
-#	sys.exit(1)
+#    sys.exit(1)
 
 patterns = tuple(re.compile(arg) for arg in sys.argv[1:])
 
 for line in sys.stdin:
-	line = line.rstrip(os.linesep)
-	if not any(p.search(line) for p in patterns):
-		print(line)
+    line = line.rstrip(os.linesep)
+    if not any(p.search(line) for p in patterns):
+        print(line)

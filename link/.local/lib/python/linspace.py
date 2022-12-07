@@ -21,37 +21,37 @@ import numpy as np
 # The start and stop values in numpy.linspace must be float type.
 #def linspace(start, stop, num=50, endpoint=True):
 def linspace(start: D, stop: D, num: int = 50, endpoint: bool = True):
-	start = D(start)
-	# XXX: stop is mandatory
-	stop = D(stop)
+    start = D(start)
+    # XXX: stop is mandatory
+    stop = D(stop)
 
-	if num is None:
-		num = 50 # default value in numpy.linspace
-	else:
-		num = int(num)
+    if num is None:
+        num = 50 # default value in numpy.linspace
+    else:
+        num = int(num)
 
-	if num < 0:
-		raise ValueError(f'Number of samples ({num}) must be non-negative')
+    if num < 0:
+        raise ValueError(f'Number of samples ({num}) must be non-negative')
 
-	#div = (num - 1) if endpoint else num
-	div = num - endpoint
+    #div = (num - 1) if endpoint else num
+    div = num - endpoint
 
-	y = np.arange(0, num, dtype=D)
+    y = np.arange(0, num, dtype=D)
 
-	delta = stop - start
+    delta = stop - start
 
-	if num > 1:
-		step = delta / div
-		y *= step
-	#else:
-	#	# 0 and 1 item long sequences have an undefined step
-	#	step = np.nan
-	#	# Multiply with delta to allow possible override of output class.
-	#	y *= delta
+    if num > 1:
+        step = delta / div
+        y *= step
+    #else:
+    #    # 0 and 1 item long sequences have an undefined step
+    #    step = np.nan
+    #    # Multiply with delta to allow possible override of output class.
+    #    y *= delta
 
-	y += start
+    y += start
 
-	if endpoint and num > 1:
-		y[-1] = stop
+    if endpoint and num > 1:
+        y[-1] = stop
 
-	return y
+    return y

@@ -17,62 +17,62 @@ __license__ = 'OSL-3.0'
 import sys
 
 def sink(out_file_name, mode, encoding='utf-8'):
-	with open(out_file_name, mode=mode, encoding=encoding) as out_file:
-		out_file.write(sys.stdin.read())
+    with open(out_file_name, mode=mode, encoding=encoding) as out_file:
+        out_file.write(sys.stdin.read())
 
 # pylint: disable=too-many-locals
 def main(argv = None):
 
-	# pylint: disable=import-outside-toplevel
-	import getopt
-	import os.path
-	import signal
+    # pylint: disable=import-outside-toplevel
+    import getopt
+    import os.path
+    import signal
 
-	if argv is None:
-		argv = sys.argv
+    if argv is None:
+        argv = sys.argv
 
-	program_name = os.path.basename(argv[0])
+    program_name = os.path.basename(argv[0])
 
-	# default values
-	default_verbose = False
-	default_mode = 'w'
+    # default values
+    default_verbose = False
+    default_mode = 'w'
 
-	# mutable values
-	verbose = default_verbose
-	mode = default_mode
+    # mutable values
+    verbose = default_verbose
+    mode = default_mode
 
-	# pylint: disable=unused-argument
-	def signal_handler(signal_num, execution_frame):
-		print()
-		sys.exit(0)
+    # pylint: disable=unused-argument
+    def signal_handler(signal_num, execution_frame):
+        print()
+        sys.exit(0)
 
-	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
-	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+    signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+    signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-	def print_version():
-		"""Print the version information"""
-		print(program_name, __version__)
-		print("License:", __license__)
-		print("Written by", __author__)
+    def print_version():
+        """Print the version information"""
+        print(program_name, __version__)
+        print("License:", __license__)
+        print("Written by", __author__)
 
-	def print_verbose(s):
-		"""Print the message if verbose mode is on"""
-		if verbose:
-			print('#', s)
+    def print_verbose(s):
+        """Print the message if verbose mode is on"""
+        if verbose:
+            print('#', s)
 
-	# pylint: disable=unused-variable
-	def print_warning(s):
-		"""Print the warning message"""
-		print('Warning:', s, file=sys.stderr)
+    # pylint: disable=unused-variable
+    def print_warning(s):
+        """Print the warning message"""
+        print('Warning:', s, file=sys.stderr)
 
-	def print_error(s):
-		"""Print the error message"""
-		print('Error:', s, file=sys.stderr)
-		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+    def print_error(s):
+        """Print the error message"""
+        print('Error:', s, file=sys.stderr)
+        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
-	def print_help():
-		"""Print the help message"""
-		print(f"""Usage: {program_name} [OPTIONS] FILE
+    def print_help():
+        """Print the help message"""
+        print(f"""Usage: {program_name} [OPTIONS] FILE
 
 Redirect an input stream to a file.
 
@@ -103,45 +103,45 @@ Inspired by the 'sink' program by Bernhard Voelker
 https://lists.gnu.org/archive/html/coreutils/2021-01/msg00067.html
 """)
 
-	short_options = 'Vhvwxa'
-	long_options = ['version', 'help', 'verbose',
-		]
+    short_options = 'Vhvwxa'
+    long_options = ['version', 'help', 'verbose',
+        ]
 
-	try:
-		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-	except getopt.GetoptError as err:
-		print_error(err)
-		return 1
+    try:
+        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
+    except getopt.GetoptError as err:
+        print_error(err)
+        return 1
 
-	for (option, value) in options:
-		# pylint: disable=no-else-return
-		if option in ['-V', '--version']:
-			print_version()
-			return 0
-		elif option in ['-h', '--help']:
-			print_help()
-			return 0
-		elif option in ['-v', '--verbose']:
-			verbose = True
-		elif option in ['-w']:
-			mode = 'w'
-		elif option in ['-x']:
-			mode = 'x'
-		elif option in ['-a']:
-			mode = 'a'
-		else:
-			print_error(f"Unhandled option: {option}")
-			return 1
+    for (option, value) in options:
+        # pylint: disable=no-else-return
+        if option in ['-V', '--version']:
+            print_version()
+            return 0
+        elif option in ['-h', '--help']:
+            print_help()
+            return 0
+        elif option in ['-v', '--verbose']:
+            verbose = True
+        elif option in ['-w']:
+            mode = 'w'
+        elif option in ['-x']:
+            mode = 'x'
+        elif option in ['-a']:
+            mode = 'a'
+        else:
+            print_error(f"Unhandled option: {option}")
+            return 1
 
-	if not remaining_args: # empty
-		print_error('Must give FILE')
-		return 1
+    if not remaining_args: # empty
+        print_error('Must give FILE')
+        return 1
 
-	out_file_name = remaining_args[0]
+    out_file_name = remaining_args[0]
 
-	print_verbose(f'{mode=}')
+    print_verbose(f'{mode=}')
 
-	sink(out_file_name, mode)
+    sink(out_file_name, mode)
 
 if __name__ == '__main__':
-	sys.exit(main())
+    sys.exit(main())

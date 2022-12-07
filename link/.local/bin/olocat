@@ -40,234 +40,234 @@ ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
 
 # https://stackoverflow.com/a/7267280
 def drange(start: D, stop: D, step: D):
-	while start < stop:
-		yield start
-		start += step
+    while start < stop:
+        yield start
+        start += step
 
 # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 # endpoint not included
 def dlinspace(start: D, stop: D, num: int):
-	step = (stop - start) / num
-	for i in range(num):
-		yield start + step * i
+    step = (stop - start) / num
+    for i in range(num):
+        yield start + step * i
 
 def round_half_up_d(x: D) -> int:
-	return int(x.to_integral_value(rounding=ROUND_HALF_UP))
+    return int(x.to_integral_value(rounding=ROUND_HALF_UP))
 
 def round_half_up_f(x: float) -> int:
-	return round_half_up_d(D(x))
+    return round_half_up_d(D(x))
 
 def round_half_up(x) -> int:
-	if isinstance(x, float):
-		return round_half_up_f(x)
-	if isinstance(x, D):
-		return round_half_up_d(x)
-	if isinstance(x, int):
-		return x
-	raise TypeError
+    if isinstance(x, float):
+        return round_half_up_f(x)
+    if isinstance(x, D):
+        return round_half_up_d(x)
+    if isinstance(x, int):
+        return x
+    raise TypeError
 
 # Get the difference between the angles (degrees)
 def get_angle_deg_diff(a1: float, a2: float) -> float:
-	return abs(math.remainder(a2 - a1, 360))
+    return abs(math.remainder(a2 - a1, 360))
 
 def get_cylinder_coord_dist(
-		ρ1: float, φ1: float, z1: float,
-		ρ2: float, φ2: float, z2: float) -> float:
-	# ρ == radial distance [0, 100]
-	# φ == azimuth (degrees) [0, 360)
-	# z == height [0, 100]
+        ρ1: float, φ1: float, z1: float,
+        ρ2: float, φ2: float, z2: float) -> float:
+    # ρ == radial distance [0, 100]
+    # φ == azimuth (degrees) [0, 360)
+    # z == height [0, 100]
 
-	d1 = get_angle_deg_diff(φ1, φ2) / 360
-	d2 = abs(ρ1 - ρ2) / 100
-	d3 = abs(z1 - z2) / 100
+    d1 = get_angle_deg_diff(φ1, φ2) / 360
+    d2 = abs(ρ1 - ρ2) / 100
+    d3 = abs(z1 - z2) / 100
 
-	return math.hypot(d1, d2, d3)
+    return math.hypot(d1, d2, d3)
 
 def downscale_RGB(sRGBup: tuple) -> tuple:
-	return tuple((
-		sRGBup[0] / 255,
-		sRGBup[1] / 255,
-		sRGBup[2] / 255
-		))
+    return tuple((
+        sRGBup[0] / 255,
+        sRGBup[1] / 255,
+        sRGBup[2] / 255
+        ))
 
 def upscale_RGB(sRGB: tuple) -> tuple:
-	return tuple((
-		round_half_up(sRGB[0] * 255),
-		round_half_up(sRGB[1] * 255),
-		round_half_up(sRGB[2] * 255)
-		))
+    return tuple((
+        round_half_up(sRGB[0] * 255),
+        round_half_up(sRGB[1] * 255),
+        round_half_up(sRGB[2] * 255)
+        ))
 
 @unique
 class ColorSpace(Enum):
-	HSLUV = auto()
-	LOLCAT = auto()
+    HSLUV = auto()
+    LOLCAT = auto()
 
 def get_hsluv_color_dist(hsluv_color1, hsluv_color2) -> float:
-	(H1, S1, L1) = hsluv_color1
-	(H2, S2, L2) = hsluv_color2
-	return get_cylinder_coord_dist(S1, H1, L1, S2, H2, L2)
+    (H1, S1, L1) = hsluv_color1
+    (H2, S2, L2) = hsluv_color2
+    return get_cylinder_coord_dist(S1, H1, L1, S2, H2, L2)
 
 xterm_color_num_to_hsluv_color = {}
 
 for (k, v) in xterm_color_num_to_rgb_string.items():
-	xterm_color_num_to_hsluv_color[k] = hsluv.hex_to_hsluv(v)
+    xterm_color_num_to_hsluv_color[k] = hsluv.hex_to_hsluv(v)
 
 def get_closest_xterm_color_num_from_hsluv(hsluv_color: tuple) -> int:
 
-	closest_color_num = None
-	min_color_dist = float("inf")
+    closest_color_num = None
+    min_color_dist = float("inf")
 
-	for (color_num, hsluv_color_i) in xterm_color_num_to_hsluv_color.items():
-		color_dist = get_hsluv_color_dist(hsluv_color, hsluv_color_i)
-		if color_dist < min_color_dist:
-			min_color_dist = color_dist
-			closest_color_num = color_num
+    for (color_num, hsluv_color_i) in xterm_color_num_to_hsluv_color.items():
+        color_dist = get_hsluv_color_dist(hsluv_color, hsluv_color_i)
+        if color_dist < min_color_dist:
+            min_color_dist = color_dist
+            closest_color_num = color_num
 
-	return closest_color_num
+    return closest_color_num
 
 def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_rev: bool = False) -> str:
-	'''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
+    '''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
 
-	esc_fmt = '\x1b[{};5;{}m'
-	esc_reverse = '\x1b[7m'
-	esc_reset = '\x1b[0m'
-	fg = 38
-	bg = 48
+    esc_fmt = '\x1b[{};5;{}m'
+    esc_reverse = '\x1b[7m'
+    esc_reset = '\x1b[0m'
+    fg = 38
+    bg = 48
 
-	result = []
+    result = []
 
-	if do_bg:
-		result.append(esc_fmt.format(bg, color_num))
-	else:
-		result.append(esc_fmt.format(fg, color_num))
+    if do_bg:
+        result.append(esc_fmt.format(bg, color_num))
+    else:
+        result.append(esc_fmt.format(fg, color_num))
 
-	if do_rev:
-		result.append(esc_reverse)
+    if do_rev:
+        result.append(esc_reverse)
 
-	result.append(s)
+    result.append(s)
 
-	result.append(esc_reset)
+    result.append(esc_reset)
 
-	return ''.join(result)
+    return ''.join(result)
 
 def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_rev: bool = False) -> str:
-	'''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
-	# RGB color must be upscaled
+    '''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
+    # RGB color must be upscaled
 
-	esc_fmt = '\x1b[{};2;{};{};{}m'
-	esc_reverse = '\x1b[7m'
-	esc_reset = '\x1b[0m'
-	fg = 38
-	bg = 48
+    esc_fmt = '\x1b[{};2;{};{};{}m'
+    esc_reverse = '\x1b[7m'
+    esc_reset = '\x1b[0m'
+    fg = 38
+    bg = 48
 
-	result = []
+    result = []
 
-	if do_bg:
-		result.append(esc_fmt.format(bg, sRGBup[0], sRGBup[1], sRGBup[2]))
-	else:
-		result.append(esc_fmt.format(fg, sRGBup[0], sRGBup[1], sRGBup[2]))
+    if do_bg:
+        result.append(esc_fmt.format(bg, sRGBup[0], sRGBup[1], sRGBup[2]))
+    else:
+        result.append(esc_fmt.format(fg, sRGBup[0], sRGBup[1], sRGBup[2]))
 
-	if do_rev:
-		result.append(esc_reverse)
+    if do_rev:
+        result.append(esc_reverse)
 
-	result.append(s)
+    result.append(s)
 
-	result.append(esc_reset)
+    result.append(esc_reset)
 
-	return ''.join(result)
+    return ''.join(result)
 
 def generate_hsluv_colors(num_colors: int, S: float, L: float) -> tuple:
-	'''
-	S, L in [0, 100]
-	'''
+    '''
+    S, L in [0, 100]
+    '''
 
-	start = D(0)
-	stop = D(360)
+    start = D(0)
+    stop = D(360)
 
-	return tuple((float(H), S, L) for H in dlinspace(start, stop, num_colors))
+    return tuple((float(H), S, L) for H in dlinspace(start, stop, num_colors))
 
 def generate_RGB_colors(num_colors: int, lightness: float) -> list:
-	'''
-	lightness in [0, 1]
-	'''
+    '''
+    lightness in [0, 1]
+    '''
 
-	start = D(0)
-	stop = D(1)
+    start = D(0)
+    stop = D(1)
 
-	# inspired by lolcat
-	return tuple((
-		(math.cos(math.tau * float(x) + 0 * math.tau/3) + 1) / 2 * lightness,
-		(math.cos(math.tau * float(x) + 2 * math.tau/3) + 1) / 2 * lightness,
-		(math.cos(math.tau * float(x) + 1 * math.tau/3) + 1) / 2 * lightness
-		) for x in dlinspace(start, stop, num_colors))
+    # inspired by lolcat
+    return tuple((
+        (math.cos(math.tau * float(x) + 0 * math.tau/3) + 1) / 2 * lightness,
+        (math.cos(math.tau * float(x) + 2 * math.tau/3) + 1) / 2 * lightness,
+        (math.cos(math.tau * float(x) + 1 * math.tau/3) + 1) / 2 * lightness
+        ) for x in dlinspace(start, stop, num_colors))
 
 def main(argv = None):
 
-	import copy
-	import getopt
-	import itertools
-	import os
-	import signal
+    import copy
+    import getopt
+    import itertools
+    import os
+    import signal
 
-	if argv is None:
-		argv = sys.argv
+    if argv is None:
+        argv = sys.argv
 
-	program_name = os.path.basename(argv[0])
+    program_name = os.path.basename(argv[0])
 
-	# immutable values
-	min_lightness = 0
-	max_lightness = 100
+    # immutable values
+    min_lightness = 0
+    max_lightness = 100
 
-	# default values
-	verbose = False
-	default_num_colors = 80
-	default_color_space = ColorSpace.LOLCAT
-	default_use_true_color = True
-	default_do_bg = False
-	default_do_rev = False
-	default_debug = False
-	default_lightness_dict = {ColorSpace.LOLCAT: 100, ColorSpace.HSLUV: 70}
+    # default values
+    verbose = False
+    default_num_colors = 80
+    default_color_space = ColorSpace.LOLCAT
+    default_use_true_color = True
+    default_do_bg = False
+    default_do_rev = False
+    default_debug = False
+    default_lightness_dict = {ColorSpace.LOLCAT: 100, ColorSpace.HSLUV: 70}
 
-	# mutable values
-	num_colors = default_num_colors
-	color_space = default_color_space
-	use_true_color = default_use_true_color
-	do_bg = default_do_bg
-	do_rev = default_do_rev
-	debug = default_debug
-	lightness = None
+    # mutable values
+    num_colors = default_num_colors
+    color_space = default_color_space
+    use_true_color = default_use_true_color
+    do_bg = default_do_bg
+    do_rev = default_do_rev
+    debug = default_debug
+    lightness = None
 
-	def signal_handler(signal_num, execution_frame):
-		print()
-		sys.exit(0)
+    def signal_handler(signal_num, execution_frame):
+        print()
+        sys.exit(0)
 
-	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
-	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+    signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+    signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
 
-	def print_version():
-		"""Print the version information"""
-		print(program_name, __version__)
-		print("License:", __license__)
-		print("Written by", __author__)
+    def print_version():
+        """Print the version information"""
+        print(program_name, __version__)
+        print("License:", __license__)
+        print("Written by", __author__)
 
-	def print_verbose(s):
-		"""Print the message if verbose mode is on"""
-		if verbose:
-			print(f"# {s}", file=sys.stderr)
+    def print_verbose(s):
+        """Print the message if verbose mode is on"""
+        if verbose:
+            print(f"# {s}", file=sys.stderr)
 
-	def print_warning(s):
-		"""Print the warning message"""
-		print(f"Warning: {s}", file=sys.stderr)
+    def print_warning(s):
+        """Print the warning message"""
+        print(f"Warning: {s}", file=sys.stderr)
 
-	def print_error(s):
-		"""Print the error message"""
-		print(f"Error: {s}", file=sys.stderr)
-		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+    def print_error(s):
+        """Print the error message"""
+        print(f"Error: {s}", file=sys.stderr)
+        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
-	def print_help():
-		"""Print the help message"""
+    def print_help():
+        """Print the help message"""
 
-		print(f'''Usage: {program_name} [OPTIONS]
+        print(f'''Usage: {program_name} [OPTIONS]
 
 Python version of lolcat
 
@@ -309,147 +309,147 @@ OPTIONS
     (Default for {ColorSpace.HSLUV.name}: {default_lightness_dict[ColorSpace.HSLUV]})
 ''')
 
-	short_options = 'Vhvn:c:8brdl:'
-	long_options = ['version', 'help', 'verbose', 'debug',
-			]
+    short_options = 'Vhvn:c:8brdl:'
+    long_options = ['version', 'help', 'verbose', 'debug',
+            ]
 
-	try:
-		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-	except getopt.GetoptError as err:
-		print_error(err)
-		return 1
+    try:
+        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
+    except getopt.GetoptError as err:
+        print_error(err)
+        return 1
 
-	for (option, value) in options:
-		try:
-			if option in ['-V', '--version']:
-				print_version()
-				return 0
+    for (option, value) in options:
+        try:
+            if option in ['-V', '--version']:
+                print_version()
+                return 0
 
-			elif option in ['-h', '--help']:
-				print_help()
-				return 0
+            elif option in ['-h', '--help']:
+                print_help()
+                return 0
 
-			elif option in ['-v', '--verbose']:
-				verbose = True
+            elif option in ['-v', '--verbose']:
+                verbose = True
 
-			elif option in ['-n']:
-				num_colors = int(value)
-				assert num_colors > 0
-				#if not num_colors > 0:
-					#raise ValueError("num_colors must be > 0")
+            elif option in ['-n']:
+                num_colors = int(value)
+                assert num_colors > 0
+                #if not num_colors > 0:
+                    #raise ValueError("num_colors must be > 0")
 
-			elif option in ['-c']:
-				color_space = ColorSpace[value.upper()]
+            elif option in ['-c']:
+                color_space = ColorSpace[value.upper()]
 
-			elif option in ['-8']:
-				use_true_color = False
+            elif option in ['-8']:
+                use_true_color = False
 
-			elif option in ['-b']:
-				do_bg = True
+            elif option in ['-b']:
+                do_bg = True
 
-			elif option in ['-r']:
-				do_rev = True
+            elif option in ['-r']:
+                do_rev = True
 
-			elif option in ['-d', '--debug']:
-				debug = True
+            elif option in ['-d', '--debug']:
+                debug = True
 
-			elif option in ['-l']:
-				lightness = float(value)
-				assert lightness >= min_lightness
-				assert lightness <= max_lightness
+            elif option in ['-l']:
+                lightness = float(value)
+                assert lightness >= min_lightness
+                assert lightness <= max_lightness
 
-			else:
-				print_error(f"Unhandled option '{option}'.")
-				return 1
+            else:
+                print_error(f"Unhandled option '{option}'.")
+                return 1
 
-		except ValueError as err:
-			print_error(err)
-			return 1
+        except ValueError as err:
+            print_error(err)
+            return 1
 
-	if lightness is None:
-		lightness = default_lightness_dict[color_space]
+    if lightness is None:
+        lightness = default_lightness_dict[color_space]
 
-	print_verbose(f'{num_colors=}')
-	print_verbose(f'{color_space=}')
-	print_verbose(f'{use_true_color=}')
-	print_verbose(f'{do_bg=}')
-	print_verbose(f'{do_rev=}')
-	print_verbose(f'{debug=}')
-	print_verbose(f'{lightness=}')
+    print_verbose(f'{num_colors=}')
+    print_verbose(f'{color_space=}')
+    print_verbose(f'{use_true_color=}')
+    print_verbose(f'{do_bg=}')
+    print_verbose(f'{do_rev=}')
+    print_verbose(f'{debug=}')
+    print_verbose(f'{lightness=}')
 
-	if color_space == ColorSpace.HSLUV:
+    if color_space == ColorSpace.HSLUV:
 
-		saturation = 100
-		hsluv_colors = generate_hsluv_colors(num_colors, saturation, lightness)
+        saturation = 100
+        hsluv_colors = generate_hsluv_colors(num_colors, saturation, lightness)
 
-		if use_true_color:
-			sRGB_colors = tuple(map(hsluv.hsluv_to_rgb, hsluv_colors))
-		else:
-			pass
+        if use_true_color:
+            sRGB_colors = tuple(map(hsluv.hsluv_to_rgb, hsluv_colors))
+        else:
+            pass
 
-	elif color_space == ColorSpace.LOLCAT:
+    elif color_space == ColorSpace.LOLCAT:
 
-		# When the RGB colors are converted to hsluv, the gamma is unapplied
-		sRGB_colors = generate_RGB_colors(num_colors, lightness / 100)
+        # When the RGB colors are converted to hsluv, the gamma is unapplied
+        sRGB_colors = generate_RGB_colors(num_colors, lightness / 100)
 
-		if use_true_color:
-			pass
-		else:
-			hsluv_colors = tuple(map(hsluv.rgb_to_hsluv, sRGB_colors))
+        if use_true_color:
+            pass
+        else:
+            hsluv_colors = tuple(map(hsluv.rgb_to_hsluv, sRGB_colors))
 
-	if use_true_color:
+    if use_true_color:
 
-		sRGBup_colors = tuple(map(upscale_RGB, sRGB_colors))
-		colors = sRGBup_colors
-		ansi_sgr = ansi_sgr_24bit
-	else:
-		color_nums = tuple(map(get_closest_xterm_color_num_from_hsluv, hsluv_colors))
-		colors = color_nums
-		ansi_sgr = ansi_sgr_8bit
+        sRGBup_colors = tuple(map(upscale_RGB, sRGB_colors))
+        colors = sRGBup_colors
+        ansi_sgr = ansi_sgr_24bit
+    else:
+        color_nums = tuple(map(get_closest_xterm_color_num_from_hsluv, hsluv_colors))
+        colors = color_nums
+        ansi_sgr = ansi_sgr_8bit
 
-	print_verbose(f'{len(colors)=}')
-	print_verbose(f'{colors=}')
+    print_verbose(f'{len(colors)=}')
+    print_verbose(f'{colors=}')
 
-	if debug:
-		for color in colors:
-			if use_true_color:
-				color_hex = f'#{color[0]:02X}{color[1]:02X}{color[2]:02X}'
-			else:
-				color_hex = f'{color:02X}'
+    if debug:
+        for color in colors:
+            if use_true_color:
+                color_hex = f'#{color[0]:02X}{color[1]:02X}{color[2]:02X}'
+            else:
+                color_hex = f'{color:02X}'
 
-			if sys.stdout.isatty():
-				print(ansi_sgr(f'{color}\t{color_hex}', color, do_bg, do_rev))
-			else:
-				print(f'{color}\t{color_hex}')
-		return 0
+            if sys.stdout.isatty():
+                print(ansi_sgr(f'{color}\t{color_hex}', color, do_bg, do_rev))
+            else:
+                print(f'{color}\t{color_hex}')
+        return 0
 
-	indexes = range(len(colors))
+    indexes = range(len(colors))
 
-	rows = itertools.cycle(indexes)
+    rows = itertools.cycle(indexes)
 
-	for line in sys.stdin:
+    for line in sys.stdin:
 
-		line = ansi_escape.sub('', line)
+        line = ansi_escape.sub('', line)
 
-		has_trailing_nl = line.endswith(os.linesep)
+        has_trailing_nl = line.endswith(os.linesep)
 
-		start = 0
-		stop = len(line)
+        start = 0
+        stop = len(line)
 
-		if has_trailing_nl:
-			stop -= len(os.linesep)
+        if has_trailing_nl:
+            stop -= len(os.linesep)
 
-		if start != stop: # not empty line
+        if start != stop: # not empty line
 
-			cols = copy.deepcopy(rows)
+            cols = copy.deepcopy(rows)
 
-			for c in itertools.islice(line, start, stop):
-				print(ansi_sgr(c, colors[next(cols)], do_bg, do_rev), end='')
+            for c in itertools.islice(line, start, stop):
+                print(ansi_sgr(c, colors[next(cols)], do_bg, do_rev), end='')
 
-			next(rows)
+            next(rows)
 
-		if has_trailing_nl:
-			print(end=os.linesep)
+        if has_trailing_nl:
+            print(end=os.linesep)
 
 if __name__ == '__main__':
-	sys.exit(main())
+    sys.exit(main())

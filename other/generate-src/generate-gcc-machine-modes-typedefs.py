@@ -46,59 +46,59 @@ print(fr'''// SPDX-FileCopyrightText: {__author__}
 
 class GccMachineMode:
 
-	def __init__(self):
-		self.name = None
-		self.description= None
-		self.type = None
-		self.alias = None
-		self.unsigned_type = None
-		self.unsigned_alias = None
-		self._exists = False
+    def __init__(self):
+        self.name = None
+        self.description= None
+        self.type = None
+        self.alias = None
+        self.unsigned_type = None
+        self.unsigned_alias = None
+        self._exists = False
 
-	def __init__(self,
-		_name,
-		_description,
-		_type,
-		_alias,
-		_unsigned_type = None,
-		_unsigned_alias = None):
+    def __init__(self,
+        _name,
+        _description,
+        _type,
+        _alias,
+        _unsigned_type = None,
+        _unsigned_alias = None):
 
-		self.name = _name
-		self.description= _description
-		self.type = _type
-		self.alias = _alias
-		self.unsigned_type = _unsigned_type
-		self.unsigned_alias = _unsigned_alias
-		self._exists = False
-		self.determine_exists()
+        self.name = _name
+        self.description= _description
+        self.type = _type
+        self.alias = _alias
+        self.unsigned_type = _unsigned_type
+        self.unsigned_alias = _unsigned_alias
+        self._exists = False
+        self.determine_exists()
 
-	def determine_exists(self):
-		# gcc -c -x c++ -o /dev/null -
-		command = ['gcc', '-c', '-x', 'c++', '-o', '/dev/null', '-']
-		#test_program = f'int main() {{typedef {self.type} alias [[gnu::mode({self.name})]]; return 0;}}'.encode()
-		test_program = f'int main() {{using alias = {self.type} [[gnu::mode({self.name})]]; return 0;}}'.encode()
+    def determine_exists(self):
+        # gcc -c -x c++ -o /dev/null -
+        command = ['gcc', '-c', '-x', 'c++', '-o', '/dev/null', '-']
+        #test_program = f'int main() {{typedef {self.type} alias [[gnu::mode({self.name})]]; return 0;}}'.encode()
+        test_program = f'int main() {{using alias = {self.type} [[gnu::mode({self.name})]]; return 0;}}'.encode()
 
-		try:
-			completed_process = subprocess.run(command, input=test_program, stderr=subprocess.DEVNULL, check=True)
-			self._exists = True
+        try:
+            completed_process = subprocess.run(command, input=test_program, stderr=subprocess.DEVNULL, check=True)
+            self._exists = True
 
-		except subprocess.CalledProcessError:
-			self._exists = False
+        except subprocess.CalledProcessError:
+            self._exists = False
 
-	def exists(self):
-		return self._exists
+    def exists(self):
+        return self._exists
 
-	def print_c_decl_str(self):
-		print(f"#ifdef HAVE_{self.name}_MODE")
-		print(f"// {self.description} ({self.name})")
-		#print(f"typedef {self.type} {self.alias} [[gnu::mode({self.name})]];")
-		print(f"using {self.alias} = {self.type} [[gnu::mode({self.name})]];")
-		if (self.unsigned_type is not None) and self.unsigned_alias is not None:
-			#print(f"typedef {self.unsigned_type} {self.unsigned_alias} [[gnu::mode({self.name})]];")
-			print(f"using {self.unsigned_alias} = {self.unsigned_type} [[gnu::mode({self.name})]];")
-		#print("#else")
-		#print("// not available")
-		print("#endif")
+    def print_c_decl_str(self):
+        print(f"#ifdef HAVE_{self.name}_MODE")
+        print(f"// {self.description} ({self.name})")
+        #print(f"typedef {self.type} {self.alias} [[gnu::mode({self.name})]];")
+        print(f"using {self.alias} = {self.type} [[gnu::mode({self.name})]];")
+        if (self.unsigned_type is not None) and self.unsigned_alias is not None:
+            #print(f"typedef {self.unsigned_type} {self.unsigned_alias} [[gnu::mode({self.name})]];")
+            print(f"using {self.unsigned_alias} = {self.unsigned_type} [[gnu::mode({self.name})]];")
+        #print("#else")
+        #print("// not available")
+        print("#endif")
 
 # Machine Modes - GNU Compiler Collection (GCC) Internals
 # https://gcc.gnu.org/onlinedocs/gccint/Machine-Modes.html
@@ -158,12 +158,12 @@ GccMachineMode('COI' , 'octa complex integer'          , '_Complex int'   , 'cmp
 )
 
 for mode in modes:
-	if mode.exists():
-		print(f"// YES {mode.description} ({mode.name})")
-		print(f"#define HAVE_{mode.name}_MODE")
-	else:
-		print(f"// NO {mode.description} ({mode.name})")
+    if mode.exists():
+        print(f"// YES {mode.description} ({mode.name})")
+        print(f"#define HAVE_{mode.name}_MODE")
+    else:
+        print(f"// NO {mode.description} ({mode.name})")
 
 for mode in modes:
-	print()
-	mode.print_c_decl_str()
+    print()
+    mode.print_c_decl_str()

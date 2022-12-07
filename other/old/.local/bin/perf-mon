@@ -42,124 +42,124 @@ right_blocks = " ▕🮇🮈▐🮉🮊🮋█"
 
 def clamp(x: float) -> float:
 
-	if x < 0:
-		return 0.0
-	elif x > 1:
-		return 1.0
-	else:
-		return x
+    if x < 0:
+        return 0.0
+    elif x > 1:
+        return 1.0
+    else:
+        return x
 
 # map the real number within the interval [0, 1]
 # to an integer within the interval [0, b)
 # XXX: does not work for negative numbers
 def map_to_uint(x: float, b: int) -> int:
 
-	#return round(clamp(x) * (b - 1)) # does round-half-even
-	return int(clamp(x) * (b - 1) + 0.5)
+    #return round(clamp(x) * (b - 1)) # does round-half-even
+    return int(clamp(x) * (b - 1) + 0.5)
 
 def calc_meter_segments(x: float, meter_width: int, blocks_len: int) -> tuple:
 
-	left_width = 0
-	blocks_index = -1
-	right_width = 0
+    left_width = 0
+    blocks_index = -1
+    right_width = 0
 
-	meter_width = int(meter_width) # the width of the result string
+    meter_width = int(meter_width) # the width of the result string
 
-	if meter_width < 1:
-		return (left_width, blocks_index, right_width)
+    if meter_width < 1:
+        return (left_width, blocks_index, right_width)
 
-	x = clamp(x)
+    x = clamp(x)
 
-	left_width = int(x * meter_width)
+    left_width = int(x * meter_width)
 
-	if left_width == meter_width:
-		return (left_width, blocks_index, right_width)
+    if left_width == meter_width:
+        return (left_width, blocks_index, right_width)
 
-	# Using "blocks_len - 1" instead of "blocks_len" in the calculations
-	# produces a preferred distribution at the ends of the meter.
+    # Using "blocks_len - 1" instead of "blocks_len" in the calculations
+    # produces a preferred distribution at the ends of the meter.
 
-	#y = x * meter_width * blocks_len
-	y = x * meter_width * (blocks_len - 1)
-	#i = round(y % (blocks_len-1)) # does round-half-even
-	#blocks_index = int(y % blocks_len)
-	blocks_index = int(y % (blocks_len - 1) + 0.5)
+    #y = x * meter_width * blocks_len
+    y = x * meter_width * (blocks_len - 1)
+    #i = round(y % (blocks_len-1)) # does round-half-even
+    #blocks_index = int(y % blocks_len)
+    blocks_index = int(y % (blocks_len - 1) + 0.5)
 
-	#if left_width + 1 < meter_width:
-	right_width = meter_width - (left_width + 1)
+    #if left_width + 1 < meter_width:
+    right_width = meter_width - (left_width + 1)
 
-	return (left_width, blocks_index, right_width)
+    return (left_width, blocks_index, right_width)
 
 def get_pct(x: float) -> str:
 
-	#pct_fmt = '{: >6.1%}'
-	#pct_fmt = '{:.1%}'
-	pct_fmt = '{:.0%}'
-	pct_rjust_width = len(pct_fmt.format(1.0))
+    #pct_fmt = '{: >6.1%}'
+    #pct_fmt = '{:.1%}'
+    pct_fmt = '{:.0%}'
+    pct_rjust_width = len(pct_fmt.format(1.0))
 
-	x = clamp(x)
+    x = clamp(x)
 
-	#return f'{x: >6.1%}'
-	#return f'{x:.1%}'.rjust(pct_rjust_width)
-	#return pct_fmt.format(round(x, 2)).rjust(pct_rjust_width)
-	##### TODO: is this rjust still necessary with the --rjust option???
-	return pct_fmt.format(x).rjust(pct_rjust_width)
+    #return f'{x: >6.1%}'
+    #return f'{x:.1%}'.rjust(pct_rjust_width)
+    #return pct_fmt.format(round(x, 2)).rjust(pct_rjust_width)
+    ##### TODO: is this rjust still necessary with the --rjust option???
+    return pct_fmt.format(x).rjust(pct_rjust_width)
 
 def lower_blocks_1(x: float) -> str:
 
-	global lower_blocks
+    global lower_blocks
 
-	return lower_blocks[map_to_uint(x, len(lower_blocks))]
+    return lower_blocks[map_to_uint(x, len(lower_blocks))]
 
 def upper_blocks_1(x: float) -> str:
 
-	global upper_blocks
+    global upper_blocks
 
-	return upper_blocks[map_to_uint(x, len(upper_blocks))]
+    return upper_blocks[map_to_uint(x, len(upper_blocks))]
 
 def hor_lines_1(x: float) -> str:
 
-	global hor_lines
+    global hor_lines
 
-	return hor_lines[map_to_uint(x, len(hor_lines))]
+    return hor_lines[map_to_uint(x, len(hor_lines))]
 
 def left_blocks_meter(x: float, meter_width: int) -> str:
 
-	global left_blocks
+    global left_blocks
 
-	if meter_width == 0:
-		return ''
+    if meter_width == 0:
+        return ''
 
-	(left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(left_blocks))
+    (left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(left_blocks))
 
-	return left_width * full_block + (left_blocks[blocks_index] if blocks_index != -1 else '') + right_width * ' '
+    return left_width * full_block + (left_blocks[blocks_index] if blocks_index != -1 else '') + right_width * ' '
 
 def right_blocks_meter(x: float, meter_width: int) -> str:
 
-	global right_blocks
+    global right_blocks
 
-	if meter_width == 0:
-		return ''
+    if meter_width == 0:
+        return ''
 
-	(left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(right_blocks))
+    (left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(right_blocks))
 
-	# left_width and right_width are swapped
-	return right_width * ' ' + (right_blocks[blocks_index] if blocks_index != -1 else '') + left_width * full_block
+    # left_width and right_width are swapped
+    return right_width * ' ' + (right_blocks[blocks_index] if blocks_index != -1 else '') + left_width * full_block
 
 def ver_lines_meter(x: float, meter_width: int) -> str:
 
-	global ver_lines
+    global ver_lines
 
-	if meter_width == 0:
-		return ''
+    if meter_width == 0:
+        return ''
 
-	(left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(ver_lines))
+    (left_width, blocks_index, right_width) = calc_meter_segments(x, meter_width, len(ver_lines))
 
-	if left_width == meter_width:
-		# Special case when the vertical line will be at the right end
+    if left_width == meter_width:
+        # Special case when the vertical line will be at the right end
 
-		return ver_lines[-1].rjust(meter_width)
-	else:
-		return left_width * ' ' + (ver_lines[blocks_index] if blocks_index != -1 else '') + right_width * ' '
+        return ver_lines[-1].rjust(meter_width)
+    else:
+        return left_width * ' ' + (ver_lines[blocks_index] if blocks_index != -1 else '') + right_width * ' '
 
 '''
 
@@ -196,68 +196,68 @@ human_dec_rjust_width = len('1.01 k')
 
 def human_scale(x: int, base: int) -> str:
 
-	global BIN_SI_BASE
-	global DEC_SI_BASE
+    global BIN_SI_BASE
+    global DEC_SI_BASE
 
-	global BIN_SI_UNIT_PREFIXES
-	global DEC_SI_UNIT_PREFIXES
+    global BIN_SI_UNIT_PREFIXES
+    global DEC_SI_UNIT_PREFIXES
 
-	global human_bin_rjust_width
-	global human_dec_rjust_width
+    global human_bin_rjust_width
+    global human_dec_rjust_width
 
-	if base == BIN_SI_BASE:
-		si_unit_prefixes = BIN_SI_UNIT_PREFIXES
-		human_rjust_width = human_bin_rjust_width
-	elif base == DEC_SI_BASE:
-		si_unit_prefixes = DEC_SI_UNIT_PREFIXES
-		human_rjust_width = human_dec_rjust_width
-	else:
-		raise ValueError("Invalid base")
+    if base == BIN_SI_BASE:
+        si_unit_prefixes = BIN_SI_UNIT_PREFIXES
+        human_rjust_width = human_bin_rjust_width
+    elif base == DEC_SI_BASE:
+        si_unit_prefixes = DEC_SI_UNIT_PREFIXES
+        human_rjust_width = human_dec_rjust_width
+    else:
+        raise ValueError("Invalid base")
 
-	x = int(x)
+    x = int(x)
 
-	if x < 0:
-		raise ValueError("Value must be non-negative")
-	if x == 0:
-		##### TODO: is this rjust still necessary with the --rjust option???
-		return '0 '.rjust(human_rjust_width)
+    if x < 0:
+        raise ValueError("Value must be non-negative")
+    if x == 0:
+        ##### TODO: is this rjust still necessary with the --rjust option???
+        return '0 '.rjust(human_rjust_width)
 
-	scaled_value = x
+    scaled_value = x
 
-	for si_unit_prefix in si_unit_prefixes:
-		if round(scaled_value) < base:
-			break
-		scaled_value /= base
+    for si_unit_prefix in si_unit_prefixes:
+        if round(scaled_value) < base:
+            break
+        scaled_value /= base
 
-	# We want 3 significant digits to be shown.
+    # We want 3 significant digits to be shown.
 
-	if scaled_value >= 100:
-		# If the base is binary and the value is > 1000, then the %g
-		# conversion would switch to scientific notation.
-		scaled_value = int(round(scaled_value))
-		##### TODO: is this rjust still necessary with the --rjust option???
-		return f'{scaled_value} {si_unit_prefix}'.rjust(human_rjust_width)
+    if scaled_value >= 100:
+        # If the base is binary and the value is > 1000, then the %g
+        # conversion would switch to scientific notation.
+        scaled_value = int(round(scaled_value))
+        ##### TODO: is this rjust still necessary with the --rjust option???
+        return f'{scaled_value} {si_unit_prefix}'.rjust(human_rjust_width)
 
-	precision = 3 # max num significant digits for %g
+    precision = 3 # max num significant digits for %g
 
-	##### TODO: is this rjust still necessary with the --rjust option???
-	return f'{scaled_value:.{precision}g} {si_unit_prefix}'.rjust(human_rjust_width)
+    ##### TODO: is this rjust still necessary with the --rjust option???
+    return f'{scaled_value:.{precision}g} {si_unit_prefix}'.rjust(human_rjust_width)
 
 # Calculate metrics
 
 # https://www.kernel.org/doc/Documentation/filesystems/proc.txt
 # https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/filesystems/proc.rst
 cpu_proc_stat_numeric_fields = (
-		'user',
-		'nice',
-		'system',
-		'idle',
-		'iowait',
-		'irq',
-		'softirq',
-		'steal',
-		'guest',
-		'guest_nice',
+        'user',
+        'nice',
+        'system',
+        'idle',
+        'iowait',
+        'irq',
+        'softirq',
+        'steal',
+        'guest',
+        'guest_nice',
 )
 
 mem_info_pattern = re.compile(r'^(?P<name>\S+?):\s*(?P<value>[0-9]+)\s*(?P<units>\S+)?$', re.MULTILINE)
@@ -270,268 +270,268 @@ cpu_proc_stat_all_pattern = re.compile(r'^cpu(\d+)?\s+' + r'\s+'.join(['(?P<'+f+
 '''
 def get_mem_info(mem_info_path: Path) -> dict:
 
-	global BIN_SI_BASE
-	global DEC_SI_BASE
+    global BIN_SI_BASE
+    global DEC_SI_BASE
 
-	global mem_info_pattern
+    global mem_info_pattern
 
-	mem_info = {}
+    mem_info = {}
 
-	for match in mem_info_pattern.finditer(mem_info_path.read_text()):
+    for match in mem_info_pattern.finditer(mem_info_path.read_text()):
 
-		if match is None:
-			continue
+        if match is None:
+            continue
 
-		name = match['name']
-		value = int(match['value'])
-		units = match['units']
+        name = match['name']
+        value = int(match['value'])
+        units = match['units']
 
-		if units is not None:
-			if units == 'kB':
-				# See above for why 1024 is used instead of 1000.
-				value *= BIN_SI_BASE
-			else:
-				raise ValueError(f'unknown units: {units}')
+        if units is not None:
+            if units == 'kB':
+                # See above for why 1024 is used instead of 1000.
+                value *= BIN_SI_BASE
+            else:
+                raise ValueError(f'unknown units: {units}')
 
-		mem_info[name] = value
+        mem_info[name] = value
 
-	return mem_info
+    return mem_info
 
 def get_mem_used_bytes(mem_info: dict) -> int:
 
-	return mem_info['MemTotal'] - mem_info['MemFree'] - (mem_info['Buffers'] + mem_info['Cached'] + mem_info['SReclaimable'])
+    return mem_info['MemTotal'] - mem_info['MemFree'] - (mem_info['Buffers'] + mem_info['Cached'] + mem_info['SReclaimable'])
 
 def get_cpu_proc_stat(cpu_proc_stat_path: Path) -> list:
 
-	global cpu_proc_stat_all_pattern
+    global cpu_proc_stat_all_pattern
 
-	match_iter = cpu_proc_stat_all_pattern.finditer(cpu_proc_stat_path.read_text())
+    match_iter = cpu_proc_stat_all_pattern.finditer(cpu_proc_stat_path.read_text())
 
-	if match_iter is None:
-		return None
+    if match_iter is None:
+        return None
 
-	# https://docs.python.org/3/library/re.html#re.Match.groupdict
-	# "iowait is not reliable by reading from /proc/stat"
-	# convert values to int
-	return [dict((key, int(value)) for key, value in match.groupdict().items() if key != 'iowait') for match in match_iter]
+    # https://docs.python.org/3/library/re.html#re.Match.groupdict
+    # "iowait is not reliable by reading from /proc/stat"
+    # convert values to int
+    return [dict((key, int(value)) for key, value in match.groupdict().items() if key != 'iowait') for match in match_iter]
 
 def get_cpu_idle(cpu_proc_stat_0: dict, cpu_proc_stat_1: dict) -> float: # ratio
 
-	assert cpu_proc_stat_0.keys() == cpu_proc_stat_1.keys()
+    assert cpu_proc_stat_0.keys() == cpu_proc_stat_1.keys()
 
-	delta_total_ticks = sum(x1 - x0 for x1, x0 in zip(cpu_proc_stat_1.values(), cpu_proc_stat_0.values()))
+    delta_total_ticks = sum(x1 - x0 for x1, x0 in zip(cpu_proc_stat_1.values(), cpu_proc_stat_0.values()))
 
-	if delta_total_ticks == 0: # prevent ZeroDivisionError
-		return 1
+    if delta_total_ticks == 0: # prevent ZeroDivisionError
+        return 1
 
-	delta_idle_ticks = cpu_proc_stat_1['idle'] - cpu_proc_stat_0['idle']
+    delta_idle_ticks = cpu_proc_stat_1['idle'] - cpu_proc_stat_0['idle']
 
-	return delta_idle_ticks / delta_total_ticks
+    return delta_idle_ticks / delta_total_ticks
 
 def get_cpu_idle_each(cpu_proc_stat_list_0: list, cpu_proc_stat_list_1: list) -> list:
 
-	assert len(cpu_proc_stat_list_0) == len(cpu_proc_stat_list_1)
-	return [get_cpu_idle(cpu_proc_stat_0, cpu_proc_stat_1) for cpu_proc_stat_0, cpu_proc_stat_1 in zip(cpu_proc_stat_list_0, cpu_proc_stat_list_1)]
+    assert len(cpu_proc_stat_list_0) == len(cpu_proc_stat_list_1)
+    return [get_cpu_idle(cpu_proc_stat_0, cpu_proc_stat_1) for cpu_proc_stat_0, cpu_proc_stat_1 in zip(cpu_proc_stat_list_0, cpu_proc_stat_list_1)]
 
 def get_num_cpus_avail() -> int:
 
-	# https://docs.python.org/3/library/os.html#os.cpu_count
-	# num CPUs in system
-	#return os.cpu_count()
-	# num usable CPUs
-	#return len(os.sched_getaffinity(0))
-	# https://www.gnu.org/software/libc/manual/html_node/Processor-Resources.html
-	return os.sysconf('SC_NPROCESSORS_ONLN')
+    # https://docs.python.org/3/library/os.html#os.cpu_count
+    # num CPUs in system
+    #return os.cpu_count()
+    # num usable CPUs
+    #return len(os.sched_getaffinity(0))
+    # https://www.gnu.org/software/libc/manual/html_node/Processor-Resources.html
+    return os.sysconf('SC_NPROCESSORS_ONLN')
 
 def get_uptime(uptime_path: Path) -> timedelta:
 
-	# https://linux.die.net/man/5/proc
-	# /proc/uptime
-	# This file contains two numbers: the uptime of the system (seconds), and the amount of time spent in idle process (seconds).
-	uptime_text = uptime_path.read_text().split()
+    # https://linux.die.net/man/5/proc
+    # /proc/uptime
+    # This file contains two numbers: the uptime of the system (seconds), and the amount of time spent in idle process (seconds).
+    uptime_text = uptime_path.read_text().split()
 
-	uptime = float(uptime_text[0])
+    uptime = float(uptime_text[0])
 
-	#num_cpus_avail = get_num_cpus_avail()
-	#idle_time = float(uptime_text[1]) / num_cpus_avail
-	#usage_time = uptime - idle_time
+    #num_cpus_avail = get_num_cpus_avail()
+    #idle_time = float(uptime_text[1]) / num_cpus_avail
+    #usage_time = uptime - idle_time
 
-	# round to the nearest second
-	return timedelta(seconds=round(uptime))
+    # round to the nearest second
+    return timedelta(seconds=round(uptime))
 
 uptime_width = len('10d 10h 10m') # 99 days should be sufficient
 
 def timedelta_to_dhm(td: timedelta) -> str:
 
-	global uptime_width
-	mm, unused_ss = divmod(td.seconds, 60)
-	hh, mm = divmod(mm, 60)
-	##### TODO: is this rjust still necessary with the --rjust option???
-	return f'{td.days}d {hh}h {mm}m'.rjust(uptime_width)
+    global uptime_width
+    mm, unused_ss = divmod(td.seconds, 60)
+    hh, mm = divmod(mm, 60)
+    ##### TODO: is this rjust still necessary with the --rjust option???
+    return f'{td.days}d {hh}h {mm}m'.rjust(uptime_width)
 
 def main(argv = None):
 
-	from collections import deque
-	import datetime
-	import getopt
-	import signal
-	import time
+    from collections import deque
+    import datetime
+    import getopt
+    import signal
+    import time
 
-	try:
-		from Xlib.display import Display
-		use_xlib = True
-	except ImportError:
-		use_xlib = False
-		import subprocess
+    try:
+        from Xlib.display import Display
+        use_xlib = True
+    except ImportError:
+        use_xlib = False
+        import subprocess
 
-	global BIN_SI_BASE
-	global DEC_SI_BASE
+    global BIN_SI_BASE
+    global DEC_SI_BASE
 
-	if argv is None:
-		argv = sys.argv
+    if argv is None:
+        argv = sys.argv
 
-	program_name = os.path.basename(argv[0])
+    program_name = os.path.basename(argv[0])
 
-	# valid values
-	valid_metrics = (
-			'sample_num',
-			'local_time',
-			'elapsed_time',
-			'uptime',
-			'load_avg',
-			'cpu_idle_pct',
-			'cpu_idle_lower_blocks',
-			'cpu_idle_upper_blocks',
-			'cpu_idle_hor_lines',
-			'cpu_idle_left_blocks',
-			'cpu_idle_right_blocks',
-			'cpu_idle_ver_lines',
-			'cpu_usage_pct',
-			'cpu_usage_lower_blocks',
-			'cpu_usage_upper_blocks',
-			'cpu_usage_hor_lines',
-			'cpu_usage_left_blocks',
-			'cpu_usage_right_blocks',
-			'cpu_usage_ver_lines',
-			'cpu_idle_each_pct',
-			'cpu_idle_each_lower_blocks',
-			'cpu_idle_each_upper_blocks',
-			'cpu_idle_each_hor_lines',
-			'cpu_idle_each_left_blocks',
-			'cpu_idle_each_right_blocks',
-			'cpu_idle_each_ver_lines',
-			'cpu_usage_each_pct',
-			'cpu_usage_each_lower_blocks',
-			'cpu_usage_each_upper_blocks',
-			'cpu_usage_each_hor_lines',
-			'cpu_usage_each_left_blocks',
-			'cpu_usage_each_right_blocks',
-			'cpu_usage_each_ver_lines',
-			'mem_avail_bytes',
-			'mem_avail_pct',
-			'mem_avail_lower_blocks',
-			'mem_avail_upper_blocks',
-			'mem_avail_hor_lines',
-			'mem_avail_left_blocks',
-			'mem_avail_right_blocks',
-			'mem_avail_ver_lines',
-			'mem_used_bytes',
-			'mem_used_pct',
-			'mem_used_lower_blocks',
-			'mem_used_upper_blocks',
-			'mem_used_hor_lines',
-			'mem_used_left_blocks',
-			'mem_used_right_blocks',
-			'mem_used_ver_lines',
-			'rx_rate_bytes_per_sec',
-			'tx_rate_bytes_per_sec',
-	)
+    # valid values
+    valid_metrics = (
+            'sample_num',
+            'local_time',
+            'elapsed_time',
+            'uptime',
+            'load_avg',
+            'cpu_idle_pct',
+            'cpu_idle_lower_blocks',
+            'cpu_idle_upper_blocks',
+            'cpu_idle_hor_lines',
+            'cpu_idle_left_blocks',
+            'cpu_idle_right_blocks',
+            'cpu_idle_ver_lines',
+            'cpu_usage_pct',
+            'cpu_usage_lower_blocks',
+            'cpu_usage_upper_blocks',
+            'cpu_usage_hor_lines',
+            'cpu_usage_left_blocks',
+            'cpu_usage_right_blocks',
+            'cpu_usage_ver_lines',
+            'cpu_idle_each_pct',
+            'cpu_idle_each_lower_blocks',
+            'cpu_idle_each_upper_blocks',
+            'cpu_idle_each_hor_lines',
+            'cpu_idle_each_left_blocks',
+            'cpu_idle_each_right_blocks',
+            'cpu_idle_each_ver_lines',
+            'cpu_usage_each_pct',
+            'cpu_usage_each_lower_blocks',
+            'cpu_usage_each_upper_blocks',
+            'cpu_usage_each_hor_lines',
+            'cpu_usage_each_left_blocks',
+            'cpu_usage_each_right_blocks',
+            'cpu_usage_each_ver_lines',
+            'mem_avail_bytes',
+            'mem_avail_pct',
+            'mem_avail_lower_blocks',
+            'mem_avail_upper_blocks',
+            'mem_avail_hor_lines',
+            'mem_avail_left_blocks',
+            'mem_avail_right_blocks',
+            'mem_avail_ver_lines',
+            'mem_used_bytes',
+            'mem_used_pct',
+            'mem_used_lower_blocks',
+            'mem_used_upper_blocks',
+            'mem_used_hor_lines',
+            'mem_used_left_blocks',
+            'mem_used_right_blocks',
+            'mem_used_ver_lines',
+            'rx_rate_bytes_per_sec',
+            'tx_rate_bytes_per_sec',
+    )
 
-	valid_metrics_formatted = '\n    '.join(valid_metrics)
+    valid_metrics_formatted = '\n    '.join(valid_metrics)
 
-	valid_net_devs = os.listdir('/sys/class/net/')
+    valid_net_devs = os.listdir('/sys/class/net/')
 
-	# move 'lo' to the end
-	#if 'lo' in valid_net_devs and len(valid_net_devs) > 1:
-	#	valid_net_devs.append(valid_net_devs.pop(valid_net_devs.index('lo')))
+    # move 'lo' to the end
+    #if 'lo' in valid_net_devs and len(valid_net_devs) > 1:
+    #    valid_net_devs.append(valid_net_devs.pop(valid_net_devs.index('lo')))
 
-	valid_net_devs.remove('lo')
+    valid_net_devs.remove('lo')
 
-	min_num_samples = 0
-	min_duration_between_samples = 0.25
-	min_repeat_header_every_num_samples = 0
-	min_vbar_hist_size = 1
-	min_hbar_len = 1
+    min_num_samples = 0
+    min_duration_between_samples = 0.25
+    min_repeat_header_every_num_samples = 0
+    min_vbar_hist_size = 1
+    min_hbar_len = 1
 
-	# default values
-	default_verbose = False
-	default_quiet = False
-	default_total_num_samples = None
-	default_duration_between_samples = 1.0
-	default_repeat_header_every_num_samples = None
-	default_metric_field_separator = '   '
-	default_si_unit_prefix_base = BIN_SI_BASE
-	default_local_time_fmt = '%a %b %d %T'
-	default_net_dev = valid_net_devs[0]
-	default_set_x_root_window_name = False
-	default_vbar_hist_size = 1
-	default_hbar_len = 4
-	default_center_func = None
-	default_ljust_func = None
-	default_rjust_func = None
+    # default values
+    default_verbose = False
+    default_quiet = False
+    default_total_num_samples = None
+    default_duration_between_samples = 1.0
+    default_repeat_header_every_num_samples = None
+    default_metric_field_separator = '   '
+    default_si_unit_prefix_base = BIN_SI_BASE
+    default_local_time_fmt = '%a %b %d %T'
+    default_net_dev = valid_net_devs[0]
+    default_set_x_root_window_name = False
+    default_vbar_hist_size = 1
+    default_hbar_len = 4
+    default_center_func = None
+    default_ljust_func = None
+    default_rjust_func = None
 
-	# mutable values
-	verbose = default_verbose
-	quiet = default_quiet
-	total_num_samples = default_total_num_samples
-	duration_between_samples = default_duration_between_samples
-	repeat_header_every_num_samples = default_repeat_header_every_num_samples
-	metric_field_separator = default_metric_field_separator
-	si_unit_prefix_base = default_si_unit_prefix_base
-	local_time_fmt = default_local_time_fmt
-	net_dev = default_net_dev
-	set_x_root_window_name = default_set_x_root_window_name
-	vbar_hist_size = default_vbar_hist_size
-	hbar_len = default_hbar_len
-	center_func = default_center_func
-	ljust_func = default_ljust_func
-	rjust_func = default_rjust_func
+    # mutable values
+    verbose = default_verbose
+    quiet = default_quiet
+    total_num_samples = default_total_num_samples
+    duration_between_samples = default_duration_between_samples
+    repeat_header_every_num_samples = default_repeat_header_every_num_samples
+    metric_field_separator = default_metric_field_separator
+    si_unit_prefix_base = default_si_unit_prefix_base
+    local_time_fmt = default_local_time_fmt
+    net_dev = default_net_dev
+    set_x_root_window_name = default_set_x_root_window_name
+    vbar_hist_size = default_vbar_hist_size
+    hbar_len = default_hbar_len
+    center_func = default_center_func
+    ljust_func = default_ljust_func
+    rjust_func = default_rjust_func
 
-	def signal_handler_pass(unused_signal_num, unused_execution_frame):
-		pass
+    def signal_handler_pass(unused_signal_num, unused_execution_frame):
+        pass
 
-	def signal_handler(unused_signal_num, unused_execution_frame):
-		print()
-		sys.exit(0)
+    def signal_handler(unused_signal_num, unused_execution_frame):
+        print()
+        sys.exit(0)
 
-	signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
-	signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
-	signal.signal(signal.SIGALRM, signal_handler_pass)
+    signal.signal(signal.SIGINT, signal_handler) # Interactive attention signal. (Ctrl-C)
+    signal.signal(signal.SIGTERM, signal_handler) # Termination request. (kill default signal)
+    signal.signal(signal.SIGALRM, signal_handler_pass)
 
-	def print_version():
-		"""Print the version information"""
-		print(program_name, __version__)
-		print("License:", __license__)
-		print("Written by", __author__)
+    def print_version():
+        """Print the version information"""
+        print(program_name, __version__)
+        print("License:", __license__)
+        print("Written by", __author__)
 
-	def print_verbose(s):
-		"""Print the message if verbose mode is on"""
-		if verbose:
-			print(f"# {s}", file=sys.stderr)
+    def print_verbose(s):
+        """Print the message if verbose mode is on"""
+        if verbose:
+            print(f"# {s}", file=sys.stderr)
 
-	def print_warning(s):
-		"""Print the warning message"""
-		print(f"Warning: {s}", file=sys.stderr)
+    def print_warning(s):
+        """Print the warning message"""
+        print(f"Warning: {s}", file=sys.stderr)
 
-	def print_error(s):
-		"""Print the error message"""
-		print(f"Error: {s}", file=sys.stderr)
-		print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+    def print_error(s):
+        """Print the error message"""
+        print(f"Error: {s}", file=sys.stderr)
+        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
-	def print_help():
-		"""Print the help message"""
+    def print_help():
+        """Print the help message"""
 
-		print(f'''Usage: {program_name} [OPTIONS] METRICS
+        print(f'''Usage: {program_name} [OPTIONS] METRICS
 
 Print performance metrics such as uptime, load average, CPU usage, memory, network rates.
 
@@ -619,475 +619,475 @@ Valid metrics:
     {valid_metrics_formatted}
 ''')
 
-	short_options = 'Vhvqx'
-	long_options = ['version', 'help', 'verbose',
-			'quiet', 'total=', 'sleep=', 'header=', 'sep=', 'bin', 'dec',
-			'local=', 'net=', 'vbar=', 'hbar=',
-			'center=', 'ljust=', 'rjust=',
-			]
-
-	try:
-		(options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-	except getopt.GetoptError as err:
-		print_error(err)
-		return 1
-
-	for (option, value) in options:
-		try:
-			if option in ['-V', '--version']:
-				print_version()
-				return 0
-
-			elif option in ['-h', '--help']:
-				print_help()
-				return 0
-
-			elif option in ['-v', '--verbose']:
-				verbose = True
-
-			elif option in ['-q', '--quiet']:
-				quiet = True
-
-			elif option in ['--total']:
-				total_num_samples = int(value)
-				if total_num_samples < min_num_samples:
-					print_error(f"Option '{option}' must be >= {min_num_samples}.")
-					return 1
-
-			elif option in ['--sleep']:
-				duration_between_samples = float(value)
-				if duration_between_samples < min_duration_between_samples:
-					print_error(f"Option '{option}' must be >= {min_duration_between_samples}.")
-					return 1
-
-			elif option in ['--header']:
-				repeat_header_every_num_samples = int(value)
-				if repeat_header_every_num_samples < min_repeat_header_every_num_samples:
-					print_error(f"Option '{option}' must be >= {min_repeat_header_every_num_samples}.")
-					return 1
-
-			elif option in ['--sep']:
-				metric_field_separator = value
-
-			elif option in ['--bin']:
-				si_unit_prefix_base = BIN_SI_BASE
-
-			elif option in ['--dec']:
-				si_unit_prefix_base = DEC_SI_BASE
-
-			elif option in ['--local']:
-				local_time_fmt = value
-
-			elif option in ['--net']:
-				net_dev = value
-
-			elif option in ['-x']:
-				set_x_root_window_name = True
-
-			elif option in ['--vbar']:
-				vbar_hist_size = int(value)
-				if vbar_hist_size < min_vbar_hist_size:
-					print_error(f"Option '{option}' must be >= {min_vbar_hist_size}.")
-					return 1
-
-			elif option in ['--hbar']:
-				hbar_len = int(value)
-				if hbar_len < min_hbar_len:
-					print_error(f"Option '{option}' must be >= {min_hbar_len}.")
-					return 1
-
-			elif option in ['--center']:
-				width = int(value)
-				center_func = lambda s : s.center(width)
-				ljust_func = None
-				rjust_func = None
-
-			elif option in ['--ljust']:
-				width = int(value)
-				center_func = None
-				ljust_func = lambda s : s.ljust(width)
-				rjust_func = None
-
-			elif option in ['--rjust']:
-				width = int(value)
-				center_func = None
-				ljust_func = None
-				rjust_func = lambda s : s.rjust(width)
-
-			else:
-				print_error(f"Unhandled option: '{option}'")
-				return 1
-
-		except ValueError as err:
-			print_error(err)
-			return 1
+    short_options = 'Vhvqx'
+    long_options = ['version', 'help', 'verbose',
+            'quiet', 'total=', 'sleep=', 'header=', 'sep=', 'bin', 'dec',
+            'local=', 'net=', 'vbar=', 'hbar=',
+            'center=', 'ljust=', 'rjust=',
+            ]
+
+    try:
+        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
+    except getopt.GetoptError as err:
+        print_error(err)
+        return 1
+
+    for (option, value) in options:
+        try:
+            if option in ['-V', '--version']:
+                print_version()
+                return 0
+
+            elif option in ['-h', '--help']:
+                print_help()
+                return 0
+
+            elif option in ['-v', '--verbose']:
+                verbose = True
+
+            elif option in ['-q', '--quiet']:
+                quiet = True
+
+            elif option in ['--total']:
+                total_num_samples = int(value)
+                if total_num_samples < min_num_samples:
+                    print_error(f"Option '{option}' must be >= {min_num_samples}.")
+                    return 1
+
+            elif option in ['--sleep']:
+                duration_between_samples = float(value)
+                if duration_between_samples < min_duration_between_samples:
+                    print_error(f"Option '{option}' must be >= {min_duration_between_samples}.")
+                    return 1
+
+            elif option in ['--header']:
+                repeat_header_every_num_samples = int(value)
+                if repeat_header_every_num_samples < min_repeat_header_every_num_samples:
+                    print_error(f"Option '{option}' must be >= {min_repeat_header_every_num_samples}.")
+                    return 1
+
+            elif option in ['--sep']:
+                metric_field_separator = value
+
+            elif option in ['--bin']:
+                si_unit_prefix_base = BIN_SI_BASE
+
+            elif option in ['--dec']:
+                si_unit_prefix_base = DEC_SI_BASE
+
+            elif option in ['--local']:
+                local_time_fmt = value
+
+            elif option in ['--net']:
+                net_dev = value
+
+            elif option in ['-x']:
+                set_x_root_window_name = True
+
+            elif option in ['--vbar']:
+                vbar_hist_size = int(value)
+                if vbar_hist_size < min_vbar_hist_size:
+                    print_error(f"Option '{option}' must be >= {min_vbar_hist_size}.")
+                    return 1
+
+            elif option in ['--hbar']:
+                hbar_len = int(value)
+                if hbar_len < min_hbar_len:
+                    print_error(f"Option '{option}' must be >= {min_hbar_len}.")
+                    return 1
+
+            elif option in ['--center']:
+                width = int(value)
+                center_func = lambda s : s.center(width)
+                ljust_func = None
+                rjust_func = None
+
+            elif option in ['--ljust']:
+                width = int(value)
+                center_func = None
+                ljust_func = lambda s : s.ljust(width)
+                rjust_func = None
+
+            elif option in ['--rjust']:
+                width = int(value)
+                center_func = None
+                ljust_func = None
+                rjust_func = lambda s : s.rjust(width)
+
+            else:
+                print_error(f"Unhandled option: '{option}'")
+                return 1
+
+        except ValueError as err:
+            print_error(err)
+            return 1
 
-	if verbose and quiet:
-		print_error("Options 'verbose' and 'quiet' are mutually exclusive.")
-		return 1
+    if verbose and quiet:
+        print_error("Options 'verbose' and 'quiet' are mutually exclusive.")
+        return 1
 
-	if set_x_root_window_name and not metric_field_separator.isprintable():
-		# Replace non-printable characters with space
+    if set_x_root_window_name and not metric_field_separator.isprintable():
+        # Replace non-printable characters with space
 
-		# https://www.unicode.org/reports/tr44/#General_Category_Values
-		# Z    Separator    Zs | Zl | Zp
-		# C    Other        Cc | Cf | Cs | Co | Cn
-		metric_field_separator = ''.join(' ' if unicodedata.category(c)[0] in ('Z', 'C') else c for c in metric_field_separator)
+        # https://www.unicode.org/reports/tr44/#General_Category_Values
+        # Z    Separator    Zs | Zl | Zp
+        # C    Other        Cc | Cf | Cs | Co | Cn
+        metric_field_separator = ''.join(' ' if unicodedata.category(c)[0] in ('Z', 'C') else c for c in metric_field_separator)
 
-	print_verbose(f'{repr(metric_field_separator)=}')
+    print_verbose(f'{repr(metric_field_separator)=}')
 
-	dwm_status_bar_buffer_size = 256
+    dwm_status_bar_buffer_size = 256
 
-	##### TODO: document these values
+    ##### TODO: document these values
 
-	sample_num_rjust_width = len('1000')
-	elapsed_time_rjust_width = len('1000.000')
+    sample_num_rjust_width = len('1000')
+    elapsed_time_rjust_width = len('1000.000')
 
-	if total_num_samples is not None:
-		sample_num_rjust_width = len(str(total_num_samples))
+    if total_num_samples is not None:
+        sample_num_rjust_width = len(str(total_num_samples))
 
-		elapsed_time_rjust_width = len(f'{total_num_samples * duration_between_samples:.3f}')
+        elapsed_time_rjust_width = len(f'{total_num_samples * duration_between_samples:.3f}')
 
-	print_verbose(f'{remaining_args=}')
+    print_verbose(f'{remaining_args=}')
 
-	if not remaining_args: # empty
-		print_warning("Should give at least 1 metric")
+    if not remaining_args: # empty
+        print_warning("Should give at least 1 metric")
 
-	formatted_metrics = dict()
+    formatted_metrics = dict()
 
-	for s in remaining_args:
-		s = s.casefold()
-		if s in valid_metrics:
-			formatted_metrics[s] = ''
-		else:
-			print_error(f'{s} is not a valid metric.')
-			return 1
+    for s in remaining_args:
+        s = s.casefold()
+        if s in valid_metrics:
+            formatted_metrics[s] = ''
+        else:
+            print_error(f'{s} is not a valid metric.')
+            return 1
 
-	print_verbose(f'{formatted_metrics=}')
+    print_verbose(f'{formatted_metrics=}')
 
-	if not formatted_metrics: # empty
-		formatted_metrics['local_time'] = ''
-		print_verbose(f'{formatted_metrics=}')
+    if not formatted_metrics: # empty
+        formatted_metrics['local_time'] = ''
+        print_verbose(f'{formatted_metrics=}')
 
-	num_cpus_avail = get_num_cpus_avail()
-	print_verbose(f'{num_cpus_avail=}')
+    num_cpus_avail = get_num_cpus_avail()
+    print_verbose(f'{num_cpus_avail=}')
 
-	if use_xlib:
-		display = Display()
-		root = display.screen().root
+    if use_xlib:
+        display = Display()
+        root = display.screen().root
 
-	cpu_proc_stat_path = Path('/proc/stat')
-	uptime_path = Path('/proc/uptime')
-	mem_info_path = Path('/proc/meminfo')
-	rx_bytes_path = Path('/sys/class/net/' + net_dev + '/statistics/rx_bytes')
-	tx_bytes_path = Path('/sys/class/net/' + net_dev + '/statistics/tx_bytes')
+    cpu_proc_stat_path = Path('/proc/stat')
+    uptime_path = Path('/proc/uptime')
+    mem_info_path = Path('/proc/meminfo')
+    rx_bytes_path = Path('/sys/class/net/' + net_dev + '/statistics/rx_bytes')
+    tx_bytes_path = Path('/sys/class/net/' + net_dev + '/statistics/tx_bytes')
 
-	#max_v_len = max(vbar_hist_size, vdots_length)
+    #max_v_len = max(vbar_hist_size, vdots_length)
 
-	sample_num = 0
-	sample_time_point = deque(maxlen=2)
-	cpu_proc_stat = deque(maxlen=2)
-	cpu_idle = deque(maxlen=vbar_hist_size)
-	cpu_usage = deque(maxlen=vbar_hist_size)
+    sample_num = 0
+    sample_time_point = deque(maxlen=2)
+    cpu_proc_stat = deque(maxlen=2)
+    cpu_idle = deque(maxlen=vbar_hist_size)
+    cpu_usage = deque(maxlen=vbar_hist_size)
 
-	# Printing a deque of lists is more complicated than we want.
-	cpu_idle_each = deque(maxlen=1)
-	cpu_usage_each = deque(maxlen=1)
-	mem_avail = deque(maxlen=vbar_hist_size)
-	mem_used = deque(maxlen=vbar_hist_size)
-	rx_bytes = deque(maxlen=2)
-	tx_bytes = deque(maxlen=2)
+    # Printing a deque of lists is more complicated than we want.
+    cpu_idle_each = deque(maxlen=1)
+    cpu_usage_each = deque(maxlen=1)
+    mem_avail = deque(maxlen=vbar_hist_size)
+    mem_used = deque(maxlen=vbar_hist_size)
+    rx_bytes = deque(maxlen=2)
+    tx_bytes = deque(maxlen=2)
 
-	# https://docs.python.org/3/library/signal.html#signal.setitimer
-	# which signal, initial delay (seconds), interval (seconds)
-	signal.setitimer(signal.ITIMER_REAL, duration_between_samples, duration_between_samples)
+    # https://docs.python.org/3/library/signal.html#signal.setitimer
+    # which signal, initial delay (seconds), interval (seconds)
+    signal.setitimer(signal.ITIMER_REAL, duration_between_samples, duration_between_samples)
 
-	# initial values
-	sample_time_point.append(time.monotonic())
-	cpu_proc_stat.append(get_cpu_proc_stat(cpu_proc_stat_path))
-	rx_bytes.append(int(rx_bytes_path.read_text()))
-	tx_bytes.append(int(tx_bytes_path.read_text()))
+    # initial values
+    sample_time_point.append(time.monotonic())
+    cpu_proc_stat.append(get_cpu_proc_stat(cpu_proc_stat_path))
+    rx_bytes.append(int(rx_bytes_path.read_text()))
+    tx_bytes.append(int(tx_bytes_path.read_text()))
 
-	begin_time_point = sample_time_point[-1]
+    begin_time_point = sample_time_point[-1]
 
-	while True:
-		if total_num_samples is not None and sample_num >= total_num_samples:
-			break
+    while True:
+        if total_num_samples is not None and sample_num >= total_num_samples:
+            break
 
-		if not quiet and repeat_header_every_num_samples != 0:
-			if sample_num == 0 or (repeat_header_every_num_samples is not None and (sample_num % repeat_header_every_num_samples) == 0):
-				print(metric_field_separator.join(formatted_metrics.keys()))
+        if not quiet and repeat_header_every_num_samples != 0:
+            if sample_num == 0 or (repeat_header_every_num_samples is not None and (sample_num % repeat_header_every_num_samples) == 0):
+                print(metric_field_separator.join(formatted_metrics.keys()))
 
-		sample_num += 1
+        sample_num += 1
 
-		signal.pause()
-
-		# take measurements
-		sample_time_point.append(time.monotonic())
-
-		elapsed_time = sample_time_point[-1] - begin_time_point
-
-		delta_time = sample_time_point[-1] - sample_time_point[-2]
-
-		local_time = datetime.datetime.now().astimezone()
-
-		uptime = get_uptime(uptime_path)
-
-		load_avg = os.getloadavg()
-
-		cpu_proc_stat.append(get_cpu_proc_stat(cpu_proc_stat_path))
-
-		cpu_idle.append(get_cpu_idle(cpu_proc_stat[-2][0], cpu_proc_stat[-1][0]))
-		cpu_usage.append(1 - cpu_idle[-1])
-
-		cpu_idle_each.append(get_cpu_idle_each(cpu_proc_stat[-2][1:], cpu_proc_stat[-1][1:]))
-		cpu_usage_each.append([1 - cpu_idle_i for cpu_idle_i in cpu_idle_each[-1]])
-
-		mem_info = get_mem_info(mem_info_path)
-
-		mem_avail_bytes = mem_info['MemAvailable']
-		mem_avail.append(mem_avail_bytes / mem_info['MemTotal']) # ratio
-
-		mem_used_bytes = get_mem_used_bytes(mem_info)
-		mem_used.append(mem_used_bytes / mem_info['MemTotal']) # ratio
-
-		rx_bytes.append(int(rx_bytes_path.read_text()))
-		delta_rx_bytes = rx_bytes[-1] - rx_bytes[-2]
-		rx_rate_bytes_per_sec = delta_rx_bytes / delta_time
-
-		tx_bytes.append(int(tx_bytes_path.read_text()))
-		delta_tx_bytes = tx_bytes[-1] - tx_bytes[-2]
-		tx_rate_bytes_per_sec = delta_tx_bytes / delta_time
-
-		# add the metrics to the output line
-
-		if 'sample_num' in formatted_metrics:
-			##### TODO: is this rjust still necessary with the --rjust option???
-			formatted_metrics['sample_num'] = str(sample_num).rjust(sample_num_rjust_width)
-
-		if 'local_time' in formatted_metrics:
-			formatted_metrics['local_time'] = local_time.strftime(local_time_fmt)
-
-		if 'elapsed_time' in formatted_metrics:
-			##### TODO: is this rjust still necessary with the --rjust option???
-			formatted_metrics['elapsed_time'] = f'{elapsed_time:.3f}'.rjust(elapsed_time_rjust_width)
-
-		if 'uptime' in formatted_metrics:
-			formatted_metrics['uptime'] = timedelta_to_dhm(uptime)
-
-		if 'load_avg' in formatted_metrics:
-			##### TODO: is this rjust still necessary with the --rjust option???
-			##### TODO: rjust this string
-			##### TODO: get maximum field width of this metric
-			##### len('10.00 10.00 10.00')
-			formatted_metrics['load_avg'] = ' '.join(f'{x:.2f}' for x in load_avg)
-
-		if 'cpu_idle_pct' in formatted_metrics:
-			formatted_metrics['cpu_idle_pct'] = get_pct(cpu_idle[-1])
-		if 'cpu_idle_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_lower_blocks'] = lower_blocks_1(cpu_idle)
-			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['cpu_idle_lower_blocks'] = ''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
-		if 'cpu_idle_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_upper_blocks'] = upper_blocks_1(cpu_idle)
-			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['cpu_idle_upper_blocks'] = ''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
-		if 'cpu_idle_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_idle_hor_lines'] = hor_lines_1(cpu_idle)
-			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['cpu_idle_hor_lines'] = ''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
-		if 'cpu_idle_left_blocks' in formatted_metrics:
-			formatted_metrics['cpu_idle_left_blocks'] = left_blocks_meter(cpu_idle[-1], hbar_len)
-		if 'cpu_idle_right_blocks' in formatted_metrics:
-			formatted_metrics['cpu_idle_right_blocks'] = right_blocks_meter(cpu_idle[-1], hbar_len)
-		if 'cpu_idle_ver_lines' in formatted_metrics:
-			formatted_metrics['cpu_idle_ver_lines'] = right_blocks_meter(cpu_idle[-1], hbar_len)
-
-		if 'cpu_usage_pct' in formatted_metrics:
-			formatted_metrics['cpu_usage_pct'] = get_pct(cpu_usage[-1])
-		if 'cpu_usage_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_lower_blocks'] = lower_blocks_1(cpu_usage[-1])
-			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['cpu_usage_lower_blocks'] = ''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
-		if 'cpu_usage_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_upper_blocks'] = upper_blocks_1(cpu_usage[-1])
-			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['cpu_usage_upper_blocks'] = ''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
-		if 'cpu_usage_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_usage_hor_lines'] = hor_lines_1(cpu_usage[-1])
-			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['cpu_usage_hor_lines'] = ''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
-		if 'cpu_usage_left_blocks' in formatted_metrics:
-			formatted_metrics['cpu_usage_left_blocks'] = left_blocks_meter(cpu_usage[-1], hbar_len)
-		if 'cpu_usage_right_blocks' in formatted_metrics:
-			formatted_metrics['cpu_usage_right_blocks'] = right_blocks_meter(cpu_usage[-1], hbar_len)
-		if 'cpu_usage_ver_lines' in formatted_metrics:
-			formatted_metrics['cpu_usage_ver_lines'] = right_blocks_meter(cpu_usage[-1], hbar_len)
-
-		if 'cpu_idle_each_pct' in formatted_metrics:
-			# adjacent percentages should be separated by a space
-			formatted_metrics['cpu_idle_each_pct'] = ' '.join(get_pct(cpu_idle_i) for cpu_idle_i in cpu_idle_each[-1])
-		if 'cpu_idle_each_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_each_lower_blocks'] = ''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
-			# adjacent lower_blocks groups should be separated by a space
-			# adjacent lower_blocks shouldn't be separated
-			##### TODO: TEST THIS
-			#formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
-			formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
-		if 'cpu_idle_each_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_idle_each_upper_blocks'] = ''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
-			# adjacent upper_blocks groups should be separated by a space
-			# adjacent upper_blocks shouldn't be separated
-			##### TODO: TEST THIS
-			#formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
-			formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
-		if 'cpu_idle_each_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_idle_each_hor_lines'] = ''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
-			# adjacent hor_lines groups should be separated by a space
-			# adjacent hor_lines shouldn't be separated
-			##### TODO: TEST THIS
-			#formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
-			formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
-
-		if 'cpu_idle_each_left_blocks' in formatted_metrics:
-			##### TODO: TEST THIS
-			# adjacent left_blockss should be separated by a space
-			formatted_metrics['cpu_idle_each_left_blocks'] = ' '.join(left_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
-		if 'cpu_idle_each_right_blocks' in formatted_metrics:
-			##### TODO: TEST THIS
-			# adjacent right_blockss should be separated by a space
-			formatted_metrics['cpu_idle_each_right_blocks'] = ' '.join(right_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
-		if 'cpu_idle_each_ver_lines' in formatted_metrics:
-			##### TODO: TEST THIS
-			# adjacent ver_liness should be separated by a space
-			formatted_metrics['cpu_idle_each_ver_lines'] = ' '.join(right_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
-
-		if 'cpu_usage_each_pct' in formatted_metrics:
-			# adjacent percentages should be separated by a space
-			formatted_metrics['cpu_usage_each_pct'] = ' '.join(get_pct(cpu_usage_i) for cpu_usage_i in cpu_usage_each[-1])
-		if 'cpu_usage_each_lower_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_each_lower_blocks'] = ''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
-			# adjacent lower_blocks groups should be separated by a space
-			# adjacent lower_blocks shouldn't be separated
-			#formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
-			formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
-		if 'cpu_usage_each_upper_blocks' in formatted_metrics:
-			#formatted_metrics['cpu_usage_each_upper_blocks'] = ''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
-			# adjacent upper_blocks groups should be separated by a space
-			# adjacent upper_blocks shouldn't be separated
-			#formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
-			formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
-		if 'cpu_usage_each_hor_lines' in formatted_metrics:
-			#formatted_metrics['cpu_usage_each_hor_lines'] = ''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
-			# adjacent hor_lines groups should be separated by a space
-			# adjacent hor_lines shouldn't be separated
-			#formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
-			formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
-
-
-		if 'cpu_usage_each_left_blocks' in formatted_metrics:
-			##### TODO: TEST THIS
-			# adjacent left_blockss should be separated by a space
-			formatted_metrics['cpu_usage_each_left_blocks'] = ' '.join(left_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
-		if 'cpu_usage_each_right_blocks' in formatted_metrics:
-			##### TODO: TEST THIS
-			# adjacent right_blockss should be separated by a space
-			formatted_metrics['cpu_usage_each_right_blocks'] = ' '.join(right_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
-		if 'cpu_usage_each_ver_lines' in formatted_metrics:
-			##### TODO: TEST THIS
-			# adjacent ver_liness should be separated by a space
-			formatted_metrics['cpu_usage_each_ver_lines'] = ' '.join(right_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
-
-		if 'mem_avail_bytes' in formatted_metrics:
-			formatted_metrics['mem_avail_bytes'] = human_scale(mem_avail_bytes, si_unit_prefix_base) + 'B'
-		if 'mem_avail_pct' in formatted_metrics:
-			formatted_metrics['mem_avail_pct'] = get_pct(mem_avail[-1])
-		if 'mem_avail_lower_blocks' in formatted_metrics:
-			#formatted_metrics['mem_avail_lower_blocks'] = lower_blocks_1(mem_avail)
-			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['mem_avail_lower_blocks'] = ''.join(lower_blocks_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
-		if 'mem_avail_upper_blocks' in formatted_metrics:
-			#formatted_metrics['mem_avail_upper_blocks'] = upper_blocks_1(mem_avail)
-			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['mem_avail_upper_blocks'] = ''.join(upper_blocks_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
-		if 'mem_avail_hor_lines' in formatted_metrics:
-			#formatted_metrics['mem_avail_hor_lines'] = hor_lines_1(mem_avail)
-			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['mem_avail_hor_lines'] = ''.join(hor_lines_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
-		if 'mem_avail_left_blocks' in formatted_metrics:
-			formatted_metrics['mem_avail_left_blocks'] = left_blocks_meter(mem_avail[-1], hbar_len)
-		if 'mem_avail_right_blocks' in formatted_metrics:
-			formatted_metrics['mem_avail_right_blocks'] = right_blocks_meter(mem_avail[-1], hbar_len)
-		if 'mem_avail_ver_lines' in formatted_metrics:
-			formatted_metrics['mem_avail_ver_lines'] = right_blocks_meter(mem_avail[-1], hbar_len)
-
-		if 'mem_used_bytes' in formatted_metrics:
-			formatted_metrics['mem_used_bytes'] = human_scale(mem_used_bytes, si_unit_prefix_base) + 'B'
-		if 'mem_used_pct' in formatted_metrics:
-			formatted_metrics['mem_used_pct'] = get_pct(mem_used[-1])
-		if 'mem_used_lower_blocks' in formatted_metrics:
-			#formatted_metrics['mem_used_lower_blocks'] = lower_blocks_1(mem_used)
-			# adjacent lower_blocks shouldn't be separated
-			formatted_metrics['mem_used_lower_blocks'] = ''.join(lower_blocks_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
-		if 'mem_used_upper_blocks' in formatted_metrics:
-			#formatted_metrics['mem_used_upper_blocks'] = upper_blocks_1(mem_used)
-			# adjacent upper_blocks shouldn't be separated
-			formatted_metrics['mem_used_upper_blocks'] = ''.join(upper_blocks_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
-		if 'mem_used_hor_lines' in formatted_metrics:
-			#formatted_metrics['mem_used_hor_lines'] = hor_lines_1(mem_used)
-			# adjacent hor_lines shouldn't be separated
-			formatted_metrics['mem_used_hor_lines'] = ''.join(hor_lines_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
-		if 'mem_used_left_blocks' in formatted_metrics:
-			formatted_metrics['mem_used_left_blocks'] = left_blocks_meter(mem_used[-1], hbar_len)
-		if 'mem_used_right_blocks' in formatted_metrics:
-			formatted_metrics['mem_used_right_blocks'] = right_blocks_meter(mem_used[-1], hbar_len)
-		if 'mem_used_ver_lines' in formatted_metrics:
-			formatted_metrics['mem_used_ver_lines'] = right_blocks_meter(mem_used[-1], hbar_len)
-
-		if 'rx_rate_bytes_per_sec' in formatted_metrics:
-			formatted_metrics['rx_rate_bytes_per_sec'] = human_scale(rx_rate_bytes_per_sec, si_unit_prefix_base) + 'B/s ▼'
-		if 'tx_rate_bytes_per_sec' in formatted_metrics:
-			formatted_metrics['tx_rate_bytes_per_sec'] = human_scale(tx_rate_bytes_per_sec, si_unit_prefix_base) + 'B/s ▲'
-
-		if center_func:
-			#out_line = metric_field_separator.join(s.center(center_width) for s in formatted_metrics.values())
-			out_line = metric_field_separator.join(map(center_func, formatted_metrics.values()))
-		elif ljust_func:
-			#out_line = metric_field_separator.join(s.ljust(ljust_width) for s in formatted_metrics.values())
-			out_line = metric_field_separator.join(map(ljust_func, formatted_metrics.values()))
-		elif rjust_func:
-			#out_line = metric_field_separator.join(s.rjust(rjust_width) for s in formatted_metrics.values())
-			out_line = metric_field_separator.join(map(rjust_func, formatted_metrics.values()))
-		else:
-			out_line = metric_field_separator.join(formatted_metrics.values())
-
-		if not quiet:
-			print(out_line)
-
-		if set_x_root_window_name:
-			if use_xlib:
-				out_line_bytes = out_line.encode()
-
-				if len(out_line_bytes) >= dwm_status_bar_buffer_size:
-					print_warning(f"Size of encoded string ({len(out_line_bytes)}) exceeds dwm status bar buffer size ({dwm_status_bar_buffer_size}).  String will be clipped.")
-
-				root.set_wm_name(out_line_bytes)
-
-				# http://python-xlib.sourceforge.net/doc/html/python-xlib_16.html
-				##### XXX: which of these is best?
-				#display.flush()
-				display.sync()
-
-			else:
-				command = ['xsetroot', '-name', out_line]
-
-				try:
-					unused_completed_process = subprocess.run(command,
-							stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-
-				except subprocess.CalledProcessError as err:
-					print_error(err)
-					return 1
+        signal.pause()
+
+        # take measurements
+        sample_time_point.append(time.monotonic())
+
+        elapsed_time = sample_time_point[-1] - begin_time_point
+
+        delta_time = sample_time_point[-1] - sample_time_point[-2]
+
+        local_time = datetime.datetime.now().astimezone()
+
+        uptime = get_uptime(uptime_path)
+
+        load_avg = os.getloadavg()
+
+        cpu_proc_stat.append(get_cpu_proc_stat(cpu_proc_stat_path))
+
+        cpu_idle.append(get_cpu_idle(cpu_proc_stat[-2][0], cpu_proc_stat[-1][0]))
+        cpu_usage.append(1 - cpu_idle[-1])
+
+        cpu_idle_each.append(get_cpu_idle_each(cpu_proc_stat[-2][1:], cpu_proc_stat[-1][1:]))
+        cpu_usage_each.append([1 - cpu_idle_i for cpu_idle_i in cpu_idle_each[-1]])
+
+        mem_info = get_mem_info(mem_info_path)
+
+        mem_avail_bytes = mem_info['MemAvailable']
+        mem_avail.append(mem_avail_bytes / mem_info['MemTotal']) # ratio
+
+        mem_used_bytes = get_mem_used_bytes(mem_info)
+        mem_used.append(mem_used_bytes / mem_info['MemTotal']) # ratio
+
+        rx_bytes.append(int(rx_bytes_path.read_text()))
+        delta_rx_bytes = rx_bytes[-1] - rx_bytes[-2]
+        rx_rate_bytes_per_sec = delta_rx_bytes / delta_time
+
+        tx_bytes.append(int(tx_bytes_path.read_text()))
+        delta_tx_bytes = tx_bytes[-1] - tx_bytes[-2]
+        tx_rate_bytes_per_sec = delta_tx_bytes / delta_time
+
+        # add the metrics to the output line
+
+        if 'sample_num' in formatted_metrics:
+            ##### TODO: is this rjust still necessary with the --rjust option???
+            formatted_metrics['sample_num'] = str(sample_num).rjust(sample_num_rjust_width)
+
+        if 'local_time' in formatted_metrics:
+            formatted_metrics['local_time'] = local_time.strftime(local_time_fmt)
+
+        if 'elapsed_time' in formatted_metrics:
+            ##### TODO: is this rjust still necessary with the --rjust option???
+            formatted_metrics['elapsed_time'] = f'{elapsed_time:.3f}'.rjust(elapsed_time_rjust_width)
+
+        if 'uptime' in formatted_metrics:
+            formatted_metrics['uptime'] = timedelta_to_dhm(uptime)
+
+        if 'load_avg' in formatted_metrics:
+            ##### TODO: is this rjust still necessary with the --rjust option???
+            ##### TODO: rjust this string
+            ##### TODO: get maximum field width of this metric
+            ##### len('10.00 10.00 10.00')
+            formatted_metrics['load_avg'] = ' '.join(f'{x:.2f}' for x in load_avg)
+
+        if 'cpu_idle_pct' in formatted_metrics:
+            formatted_metrics['cpu_idle_pct'] = get_pct(cpu_idle[-1])
+        if 'cpu_idle_lower_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_idle_lower_blocks'] = lower_blocks_1(cpu_idle)
+            # adjacent lower_blocks shouldn't be separated
+            formatted_metrics['cpu_idle_lower_blocks'] = ''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
+        if 'cpu_idle_upper_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_idle_upper_blocks'] = upper_blocks_1(cpu_idle)
+            # adjacent upper_blocks shouldn't be separated
+            formatted_metrics['cpu_idle_upper_blocks'] = ''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
+        if 'cpu_idle_hor_lines' in formatted_metrics:
+            #formatted_metrics['cpu_idle_hor_lines'] = hor_lines_1(cpu_idle)
+            # adjacent hor_lines shouldn't be separated
+            formatted_metrics['cpu_idle_hor_lines'] = ''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle).rjust(cpu_idle.maxlen)
+        if 'cpu_idle_left_blocks' in formatted_metrics:
+            formatted_metrics['cpu_idle_left_blocks'] = left_blocks_meter(cpu_idle[-1], hbar_len)
+        if 'cpu_idle_right_blocks' in formatted_metrics:
+            formatted_metrics['cpu_idle_right_blocks'] = right_blocks_meter(cpu_idle[-1], hbar_len)
+        if 'cpu_idle_ver_lines' in formatted_metrics:
+            formatted_metrics['cpu_idle_ver_lines'] = right_blocks_meter(cpu_idle[-1], hbar_len)
+
+        if 'cpu_usage_pct' in formatted_metrics:
+            formatted_metrics['cpu_usage_pct'] = get_pct(cpu_usage[-1])
+        if 'cpu_usage_lower_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_usage_lower_blocks'] = lower_blocks_1(cpu_usage[-1])
+            # adjacent lower_blocks shouldn't be separated
+            formatted_metrics['cpu_usage_lower_blocks'] = ''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
+        if 'cpu_usage_upper_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_usage_upper_blocks'] = upper_blocks_1(cpu_usage[-1])
+            # adjacent upper_blocks shouldn't be separated
+            formatted_metrics['cpu_usage_upper_blocks'] = ''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
+        if 'cpu_usage_hor_lines' in formatted_metrics:
+            #formatted_metrics['cpu_usage_hor_lines'] = hor_lines_1(cpu_usage[-1])
+            # adjacent hor_lines shouldn't be separated
+            formatted_metrics['cpu_usage_hor_lines'] = ''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage).rjust(cpu_usage.maxlen)
+        if 'cpu_usage_left_blocks' in formatted_metrics:
+            formatted_metrics['cpu_usage_left_blocks'] = left_blocks_meter(cpu_usage[-1], hbar_len)
+        if 'cpu_usage_right_blocks' in formatted_metrics:
+            formatted_metrics['cpu_usage_right_blocks'] = right_blocks_meter(cpu_usage[-1], hbar_len)
+        if 'cpu_usage_ver_lines' in formatted_metrics:
+            formatted_metrics['cpu_usage_ver_lines'] = right_blocks_meter(cpu_usage[-1], hbar_len)
+
+        if 'cpu_idle_each_pct' in formatted_metrics:
+            # adjacent percentages should be separated by a space
+            formatted_metrics['cpu_idle_each_pct'] = ' '.join(get_pct(cpu_idle_i) for cpu_idle_i in cpu_idle_each[-1])
+        if 'cpu_idle_each_lower_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_idle_each_lower_blocks'] = ''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
+            # adjacent lower_blocks groups should be separated by a space
+            # adjacent lower_blocks shouldn't be separated
+            ##### TODO: TEST THIS
+            #formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
+            formatted_metrics['cpu_idle_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
+        if 'cpu_idle_each_upper_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_idle_each_upper_blocks'] = ''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
+            # adjacent upper_blocks groups should be separated by a space
+            # adjacent upper_blocks shouldn't be separated
+            ##### TODO: TEST THIS
+            #formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
+            formatted_metrics['cpu_idle_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
+        if 'cpu_idle_each_hor_lines' in formatted_metrics:
+            #formatted_metrics['cpu_idle_each_hor_lines'] = ''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each)
+            # adjacent hor_lines groups should be separated by a space
+            # adjacent hor_lines shouldn't be separated
+            ##### TODO: TEST THIS
+            #formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i).rjust(vbar_hist_size) for cpu_idle_each_i in cpu_idle_each)
+            formatted_metrics['cpu_idle_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_idle_i) for cpu_idle_i in cpu_idle_each_i) for cpu_idle_each_i in cpu_idle_each).rjust((num_cpus_avail+1)*cpu_idle_each.maxlen-1)
+
+        if 'cpu_idle_each_left_blocks' in formatted_metrics:
+            ##### TODO: TEST THIS
+            # adjacent left_blockss should be separated by a space
+            formatted_metrics['cpu_idle_each_left_blocks'] = ' '.join(left_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
+        if 'cpu_idle_each_right_blocks' in formatted_metrics:
+            ##### TODO: TEST THIS
+            # adjacent right_blockss should be separated by a space
+            formatted_metrics['cpu_idle_each_right_blocks'] = ' '.join(right_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
+        if 'cpu_idle_each_ver_lines' in formatted_metrics:
+            ##### TODO: TEST THIS
+            # adjacent ver_liness should be separated by a space
+            formatted_metrics['cpu_idle_each_ver_lines'] = ' '.join(right_blocks_meter(cpu_idle_i, hbar_len) for cpu_idle_i in cpu_idle_each[-1])
+
+        if 'cpu_usage_each_pct' in formatted_metrics:
+            # adjacent percentages should be separated by a space
+            formatted_metrics['cpu_usage_each_pct'] = ' '.join(get_pct(cpu_usage_i) for cpu_usage_i in cpu_usage_each[-1])
+        if 'cpu_usage_each_lower_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_usage_each_lower_blocks'] = ''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
+            # adjacent lower_blocks groups should be separated by a space
+            # adjacent lower_blocks shouldn't be separated
+            #formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
+            formatted_metrics['cpu_usage_each_lower_blocks'] = ' '.join(''.join(lower_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
+        if 'cpu_usage_each_upper_blocks' in formatted_metrics:
+            #formatted_metrics['cpu_usage_each_upper_blocks'] = ''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
+            # adjacent upper_blocks groups should be separated by a space
+            # adjacent upper_blocks shouldn't be separated
+            #formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
+            formatted_metrics['cpu_usage_each_upper_blocks'] = ' '.join(''.join(upper_blocks_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
+        if 'cpu_usage_each_hor_lines' in formatted_metrics:
+            #formatted_metrics['cpu_usage_each_hor_lines'] = ''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each)
+            # adjacent hor_lines groups should be separated by a space
+            # adjacent hor_lines shouldn't be separated
+            #formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i).rjust(vbar_hist_size) for cpu_usage_each_i in cpu_usage_each)
+            formatted_metrics['cpu_usage_each_hor_lines'] = ' '.join(''.join(hor_lines_1(cpu_usage_i) for cpu_usage_i in cpu_usage_each_i) for cpu_usage_each_i in cpu_usage_each).rjust((num_cpus_avail+1)*cpu_usage_each.maxlen-1)
+
+
+        if 'cpu_usage_each_left_blocks' in formatted_metrics:
+            ##### TODO: TEST THIS
+            # adjacent left_blockss should be separated by a space
+            formatted_metrics['cpu_usage_each_left_blocks'] = ' '.join(left_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
+        if 'cpu_usage_each_right_blocks' in formatted_metrics:
+            ##### TODO: TEST THIS
+            # adjacent right_blockss should be separated by a space
+            formatted_metrics['cpu_usage_each_right_blocks'] = ' '.join(right_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
+        if 'cpu_usage_each_ver_lines' in formatted_metrics:
+            ##### TODO: TEST THIS
+            # adjacent ver_liness should be separated by a space
+            formatted_metrics['cpu_usage_each_ver_lines'] = ' '.join(right_blocks_meter(cpu_usage_i, hbar_len) for cpu_usage_i in cpu_usage_each[-1])
+
+        if 'mem_avail_bytes' in formatted_metrics:
+            formatted_metrics['mem_avail_bytes'] = human_scale(mem_avail_bytes, si_unit_prefix_base) + 'B'
+        if 'mem_avail_pct' in formatted_metrics:
+            formatted_metrics['mem_avail_pct'] = get_pct(mem_avail[-1])
+        if 'mem_avail_lower_blocks' in formatted_metrics:
+            #formatted_metrics['mem_avail_lower_blocks'] = lower_blocks_1(mem_avail)
+            # adjacent lower_blocks shouldn't be separated
+            formatted_metrics['mem_avail_lower_blocks'] = ''.join(lower_blocks_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
+        if 'mem_avail_upper_blocks' in formatted_metrics:
+            #formatted_metrics['mem_avail_upper_blocks'] = upper_blocks_1(mem_avail)
+            # adjacent upper_blocks shouldn't be separated
+            formatted_metrics['mem_avail_upper_blocks'] = ''.join(upper_blocks_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
+        if 'mem_avail_hor_lines' in formatted_metrics:
+            #formatted_metrics['mem_avail_hor_lines'] = hor_lines_1(mem_avail)
+            # adjacent hor_lines shouldn't be separated
+            formatted_metrics['mem_avail_hor_lines'] = ''.join(hor_lines_1(mem_avail_i) for mem_avail_i in mem_avail).rjust(mem_avail.maxlen)
+        if 'mem_avail_left_blocks' in formatted_metrics:
+            formatted_metrics['mem_avail_left_blocks'] = left_blocks_meter(mem_avail[-1], hbar_len)
+        if 'mem_avail_right_blocks' in formatted_metrics:
+            formatted_metrics['mem_avail_right_blocks'] = right_blocks_meter(mem_avail[-1], hbar_len)
+        if 'mem_avail_ver_lines' in formatted_metrics:
+            formatted_metrics['mem_avail_ver_lines'] = right_blocks_meter(mem_avail[-1], hbar_len)
+
+        if 'mem_used_bytes' in formatted_metrics:
+            formatted_metrics['mem_used_bytes'] = human_scale(mem_used_bytes, si_unit_prefix_base) + 'B'
+        if 'mem_used_pct' in formatted_metrics:
+            formatted_metrics['mem_used_pct'] = get_pct(mem_used[-1])
+        if 'mem_used_lower_blocks' in formatted_metrics:
+            #formatted_metrics['mem_used_lower_blocks'] = lower_blocks_1(mem_used)
+            # adjacent lower_blocks shouldn't be separated
+            formatted_metrics['mem_used_lower_blocks'] = ''.join(lower_blocks_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
+        if 'mem_used_upper_blocks' in formatted_metrics:
+            #formatted_metrics['mem_used_upper_blocks'] = upper_blocks_1(mem_used)
+            # adjacent upper_blocks shouldn't be separated
+            formatted_metrics['mem_used_upper_blocks'] = ''.join(upper_blocks_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
+        if 'mem_used_hor_lines' in formatted_metrics:
+            #formatted_metrics['mem_used_hor_lines'] = hor_lines_1(mem_used)
+            # adjacent hor_lines shouldn't be separated
+            formatted_metrics['mem_used_hor_lines'] = ''.join(hor_lines_1(mem_used_i) for mem_used_i in mem_used).rjust(mem_used.maxlen)
+        if 'mem_used_left_blocks' in formatted_metrics:
+            formatted_metrics['mem_used_left_blocks'] = left_blocks_meter(mem_used[-1], hbar_len)
+        if 'mem_used_right_blocks' in formatted_metrics:
+            formatted_metrics['mem_used_right_blocks'] = right_blocks_meter(mem_used[-1], hbar_len)
+        if 'mem_used_ver_lines' in formatted_metrics:
+            formatted_metrics['mem_used_ver_lines'] = right_blocks_meter(mem_used[-1], hbar_len)
+
+        if 'rx_rate_bytes_per_sec' in formatted_metrics:
+            formatted_metrics['rx_rate_bytes_per_sec'] = human_scale(rx_rate_bytes_per_sec, si_unit_prefix_base) + 'B/s ▼'
+        if 'tx_rate_bytes_per_sec' in formatted_metrics:
+            formatted_metrics['tx_rate_bytes_per_sec'] = human_scale(tx_rate_bytes_per_sec, si_unit_prefix_base) + 'B/s ▲'
+
+        if center_func:
+            #out_line = metric_field_separator.join(s.center(center_width) for s in formatted_metrics.values())
+            out_line = metric_field_separator.join(map(center_func, formatted_metrics.values()))
+        elif ljust_func:
+            #out_line = metric_field_separator.join(s.ljust(ljust_width) for s in formatted_metrics.values())
+            out_line = metric_field_separator.join(map(ljust_func, formatted_metrics.values()))
+        elif rjust_func:
+            #out_line = metric_field_separator.join(s.rjust(rjust_width) for s in formatted_metrics.values())
+            out_line = metric_field_separator.join(map(rjust_func, formatted_metrics.values()))
+        else:
+            out_line = metric_field_separator.join(formatted_metrics.values())
+
+        if not quiet:
+            print(out_line)
+
+        if set_x_root_window_name:
+            if use_xlib:
+                out_line_bytes = out_line.encode()
+
+                if len(out_line_bytes) >= dwm_status_bar_buffer_size:
+                    print_warning(f"Size of encoded string ({len(out_line_bytes)}) exceeds dwm status bar buffer size ({dwm_status_bar_buffer_size}).  String will be clipped.")
+
+                root.set_wm_name(out_line_bytes)
+
+                # http://python-xlib.sourceforge.net/doc/html/python-xlib_16.html
+                ##### XXX: which of these is best?
+                #display.flush()
+                display.sync()
+
+            else:
+                command = ['xsetroot', '-name', out_line]
+
+                try:
+                    unused_completed_process = subprocess.run(command,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+
+                except subprocess.CalledProcessError as err:
+                    print_error(err)
+                    return 1
 
 if __name__ == '__main__':
-	sys.exit(main())
+    sys.exit(main())

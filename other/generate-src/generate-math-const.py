@@ -113,145 +113,145 @@ catalan = gmpy2.mpfr('.915965594177219015054603514932384110774149374281672134266
 P = gmpy2.mpfr('2.29558714939263807403429804918949038759783220363858348392997534664410966268413312668409442623789761559175')
 
 math_expr_list = (
-	'pi', # math.h (M_PI)
-	'pi**2',
-	'e', # math.h (M_E)
-	'e**2',
+    'pi', # math.h (M_PI)
+    'pi**2',
+    'e', # math.h (M_E)
+    'e**2',
 
-	'pi+e',
-	'pi-e',
-	'pi*e',
-	'pi/e',
-	'e/pi',
-	'pi**pi',
-	'pi**e',
-	'e**pi',
-	'e**e',
-	'e**(-pi/2)', # (i**i).real
-	'e**pi - pi',
-	'e**pi - pi**e',
+    'pi+e',
+    'pi-e',
+    'pi*e',
+    'pi/e',
+    'e/pi',
+    'pi**pi',
+    'pi**e',
+    'e**pi',
+    'e**e',
+    'e**(-pi/2)', # (i**i).real
+    'e**pi - pi',
+    'e**pi - pi**e',
 
-	'1 / e',
-	#'2 / e',
-	#'3 / e',
-	#'4 / e',
-	#'5 / e',
-	#'6 / e',
-	'1 - 1 / e',
+    '1 / e',
+    #'2 / e',
+    #'3 / e',
+    #'4 / e',
+    #'5 / e',
+    #'6 / e',
+    '1 - 1 / e',
 
-	'pi / 6',
-	'pi / 4', # math.h (M_PI_4)
-	'pi / 3',
-	'pi / 2', # math.h (M_PI_2)
-	'2 * pi / 3',
-	'5 * pi / 6',
-	'7 * pi / 6',
-	'4 * pi / 3',
-	'3 * pi / 2',
-	'5 * pi / 3',
-	'11 * pi / 6',
-	'2 * pi',
-	#'3 * pi',
-	#'4 * pi',
+    'pi / 6',
+    'pi / 4', # math.h (M_PI_4)
+    'pi / 3',
+    'pi / 2', # math.h (M_PI_2)
+    '2 * pi / 3',
+    '5 * pi / 6',
+    '7 * pi / 6',
+    '4 * pi / 3',
+    '3 * pi / 2',
+    '5 * pi / 3',
+    '11 * pi / 6',
+    '2 * pi',
+    #'3 * pi',
+    #'4 * pi',
 
-	'1 / pi', # math.h (M_1_PI)
-	'2 / pi', # math.h (M_2_PI)
-	#'3 / pi',
-	#'4 / pi',
-	'1 / (2 * pi)',
-	#'1 / (3 * pi)',
-	#'1 / (4 * pi)',
+    '1 / pi', # math.h (M_1_PI)
+    '2 / pi', # math.h (M_2_PI)
+    #'3 / pi',
+    #'4 / pi',
+    '1 / (2 * pi)',
+    #'1 / (3 * pi)',
+    #'1 / (4 * pi)',
 
-	'sqrt(2)', # math.h (M_SQRT2)
-	'sqrt(e)',
-	'sqrt(3)',
-	'sqrt(pi)',
-	'sqrt(5)',
-	'sqrt(10)',
+    'sqrt(2)', # math.h (M_SQRT2)
+    'sqrt(e)',
+    'sqrt(3)',
+    'sqrt(pi)',
+    'sqrt(5)',
+    'sqrt(10)',
 
-	'cbrt(2)',
-	'cbrt(e)',
-	'cbrt(3)',
-	'cbrt(pi)',
-	#'cbrt(4)',
-	'cbrt(5)',
-	'cbrt(10)',
+    'cbrt(2)',
+    'cbrt(e)',
+    'cbrt(3)',
+    'cbrt(pi)',
+    #'cbrt(4)',
+    'cbrt(5)',
+    'cbrt(10)',
 
-	'1 / sqrt(2)', # math.h (M_SQRT1_2)
-	'1 / sqrt(e)',
-	'1 / sqrt(3)',
-	'1 / sqrt(pi)',
-	'1 / sqrt(5)',
-	'1 / sqrt(10)',
+    '1 / sqrt(2)', # math.h (M_SQRT1_2)
+    '1 / sqrt(e)',
+    '1 / sqrt(3)',
+    '1 / sqrt(pi)',
+    '1 / sqrt(5)',
+    '1 / sqrt(10)',
 
-	'2 / sqrt(pi)', # math.h (M_2_SQRTPI)
+    '2 / sqrt(pi)', # math.h (M_2_SQRTPI)
 
-	'1 / cbrt(2)',
-	'1 / cbrt(e)',
-	'1 / cbrt(3)',
-	'1 / cbrt(pi)',
-	#'1 / cbrt(4)',
-	'1 / cbrt(5)',
-	'1 / cbrt(10)',
+    '1 / cbrt(2)',
+    '1 / cbrt(e)',
+    '1 / cbrt(3)',
+    '1 / cbrt(pi)',
+    #'1 / cbrt(4)',
+    '1 / cbrt(5)',
+    '1 / cbrt(10)',
 
-	'log2(e)', # math.h (M_LOG2E)
-	'log2(pi)',
-	'log2(10)',
+    'log2(e)', # math.h (M_LOG2E)
+    'log2(pi)',
+    'log2(10)',
 
-	'log(2)', # math.h (M_LN2)
-	'log(pi)',
-	'log(10)', # math.h (M_LN10)
+    'log(2)', # math.h (M_LN2)
+    'log(pi)',
+    'log(10)', # math.h (M_LN10)
 
-	'log10(2)',
-	'log10(e)', # math.h (M_LOG10E)
-	'log10(pi)',
+    'log10(2)',
+    'log10(e)', # math.h (M_LOG10E)
+    'log10(pi)',
 
-	'1 / log2(e)',
-	'1 / log2(pi)',
-	'1 / log2(10)',
+    '1 / log2(e)',
+    '1 / log2(pi)',
+    '1 / log2(10)',
 
-	'1 / log(2)',
-	'1 / log(pi)',
-	'1 / log(10)',
+    '1 / log(2)',
+    '1 / log(pi)',
+    '1 / log(10)',
 
-	'1 / log10(2)',
-	'1 / log10(e)',
-	'1 / log10(pi)',
+    '1 / log10(2)',
+    '1 / log10(e)',
+    '1 / log10(pi)',
 
-	'gamma(1 / 3)',
-	'gamma(2 / 3)',
+    'gamma(1 / 3)',
+    'gamma(2 / 3)',
 
-	'180 / pi',
-	'pi / 180',
-	#'200 / pi',
-	#'pi / 200',
+    '180 / pi',
+    'pi / 180',
+    #'200 / pi',
+    #'pi / 200',
 
-	'_1 / 12',
-	'_1 / 9',
-	'_1 / 6',
-	'_2 / 9',
-	'_1 / 3',
-	'_5 / 12',
-	'_4 / 9',
-	'_5 / 9',
-	'_7 / 12',
-	'_2 / 3',
-	'_7 / 9',
-	'_5 / 6',
-	'_8 / 9',
-	'_11 / 12',
+    '_1 / 12',
+    '_1 / 9',
+    '_1 / 6',
+    '_2 / 9',
+    '_1 / 3',
+    '_5 / 12',
+    '_4 / 9',
+    '_5 / 9',
+    '_7 / 12',
+    '_2 / 3',
+    '_7 / 9',
+    '_5 / 6',
+    '_8 / 9',
+    '_11 / 12',
 
-	'feigenbaum_1',
-	'feigenbaum_2',
-	'apery',
-	'phi',
-	'1 - phi',
-	'egamma',
-	'conway',
-	'khinchin',
-	'glaisher',
-	'catalan',
-	'P',
+    'feigenbaum_1',
+    'feigenbaum_2',
+    'apery',
+    'phi',
+    '1 - phi',
+    'egamma',
+    'conway',
+    'khinchin',
+    'glaisher',
+    'catalan',
+    'P',
 
 )
 
@@ -262,29 +262,29 @@ the C/C++ defines won't work.  The constants must have different names.
 '''
 
 def math_expr_to_c_identifier(s):
-	'''Convert a math expression to a valid C/C++ identifier'''
+    '''Convert a math expression to a valid C/C++ identifier'''
 
-	pattern_replacement_map = (
-		(r'\(-', '(negative_'),
-		# This is only meant for simple replacement of function calls,
-		# not parenthetical groupings.
-		#(r'(\w)\s*\(', r'\1_of_'),
-		(r'\s*\*{2}\s*2\b', '_squared_'),
-		(r'\s*\*{2}\s*3\b', '_cubed_'),
-		(r'\s*\*{2}\s*', '_to_the_'),
-		#(r'\*', '_times_'),
-		(r'\*', '_'),
-		(r'\/', '_over_'),
-		(r'\+', '_plus_'),
-		(r'\-', '_minus_'),
-		('[() ]', '_'),
-		('_+', '_'),
-	)
+    pattern_replacement_map = (
+        (r'\(-', '(negative_'),
+        # This is only meant for simple replacement of function calls,
+        # not parenthetical groupings.
+        #(r'(\w)\s*\(', r'\1_of_'),
+        (r'\s*\*{2}\s*2\b', '_squared_'),
+        (r'\s*\*{2}\s*3\b', '_cubed_'),
+        (r'\s*\*{2}\s*', '_to_the_'),
+        #(r'\*', '_times_'),
+        (r'\*', '_'),
+        (r'\/', '_over_'),
+        (r'\+', '_plus_'),
+        (r'\-', '_minus_'),
+        ('[() ]', '_'),
+        ('_+', '_'),
+    )
 
-	for p_r in pattern_replacement_map:
-		s = regex.sub(p_r[0], p_r[1], s)
+    for p_r in pattern_replacement_map:
+        s = regex.sub(p_r[0], p_r[1], s)
 
-	return 'M_' + s.strip('_')
+    return 'M_' + s.strip('_')
 
 # TODO: maybe generalize this to support more types
 '''
@@ -296,12 +296,12 @@ mpc complex => std::complex
 
 '''
 def mpfr_to_cpp_literal(x):
-	pass
+    pass
 '''
 
 '''
 def mpc_to_cpp_literal(x):
-	pass
+    pass
 '''
 
 log10_of_2 = gmpy2.log10(2)
@@ -316,62 +316,62 @@ binary64_digits10 = int(gmpy2.ceil(log10_of_2 * gmpy2.ieee(64).precision))
 # 16
 
 def generate_math_const(x):
-	'''Generate a C/C++ declaration of a math constant'''
-	name_in_comment = False
-	if isinstance(x, dict):
-		name_in_comment = True
-		name = x['name']
-		val = x['val']
-		desc = x['desc']
-		expr = x['expr']
-	elif isinstance(x, str):
-		name = math_expr_to_c_identifier(x)
-		val = None
-		desc = None
-		expr = x
-		try:
-			val = eval(expr)
-		except (NameError, SyntaxError):
-			print(f'# x={x}')
-			print(f'# name={name}')
-			print(f'# expr={expr}')
-			raise
-	else:
-		raise Warning('The list must contain dicts or strings')
+    '''Generate a C/C++ declaration of a math constant'''
+    name_in_comment = False
+    if isinstance(x, dict):
+        name_in_comment = True
+        name = x['name']
+        val = x['val']
+        desc = x['desc']
+        expr = x['expr']
+    elif isinstance(x, str):
+        name = math_expr_to_c_identifier(x)
+        val = None
+        desc = None
+        expr = x
+        try:
+            val = eval(expr)
+        except (NameError, SyntaxError):
+            print(f'# x={x}')
+            print(f'# name={name}')
+            print(f'# expr={expr}')
+            raise
+    else:
+        raise Warning('The list must contain dicts or strings')
 
-	#if type(val) is gmpy2.mpc:
-	if isinstance(val, gmpy2.mpc().__class__):
-		if gmpy2.is_zero(val.imag):
-			val = val.real
-		else:
-			# TODO: add support for complex numbers
-			pass
+    #if type(val) is gmpy2.mpc:
+    if isinstance(val, gmpy2.mpc().__class__):
+        if gmpy2.is_zero(val.imag):
+            val = val.real
+        else:
+            # TODO: add support for complex numbers
+            pass
 
-	#val64 = gmpy2.mpfr(val, precision=gmpy2.ieee(64).precision)
-	#val128 = gmpy2.mpfr(val, precision=gmpy2.ieee(128).precision)
-	#val256 = gmpy2.mpfr(val, binary256_precision)
+    #val64 = gmpy2.mpfr(val, precision=gmpy2.ieee(64).precision)
+    #val128 = gmpy2.mpfr(val, precision=gmpy2.ieee(128).precision)
+    #val256 = gmpy2.mpfr(val, binary256_precision)
 
-	dec_str = None
-	try:
-		#dec_str = ('{:.' + str(binary192_digits10) + 'NG}').format(val)
-		dec_str = f'{val:.{binary192_digits10}NG}'
-	except ValueError:
-		print(f'# val={val} ({type(val)})')
-		print(f'# binary192_digits10={binary192_digits10}')
-		print(f'# dec_str={dec_str}')
-		print('Error: The value must be a gmpy2 type')
-		raise
+    dec_str = None
+    try:
+        #dec_str = ('{:.' + str(binary192_digits10) + 'NG}').format(val)
+        dec_str = f'{val:.{binary192_digits10}NG}'
+    except ValueError:
+        print(f'# val={val} ({type(val)})')
+        print(f'# binary192_digits10={binary192_digits10}')
+        print(f'# dec_str={dec_str}')
+        print('Error: The value must be a gmpy2 type')
+        raise
 
-	hex_str = f'{val:NA}'
+    hex_str = f'{val:NA}'
 
-	expr_replaced = expr.replace('_', '')
-	if name_in_comment:
-		print(f'/// {name} = {expr_replaced} = {dec_str}')
-	else:
-		print(f'/// {expr_replaced} = {dec_str}')
-	if desc:
-		print(f'/** {desc} */')
-	print(f'''template <std::floating_point T>
+    expr_replaced = expr.replace('_', '')
+    if name_in_comment:
+        print(f'/// {name} = {expr_replaced} = {dec_str}')
+    else:
+        print(f'/// {expr_replaced} = {dec_str}')
+    if desc:
+        print(f'/** {desc} */')
+    print(f'''template <std::floating_point T>
 inline constexpr T {name}{{
     {hex_str}L}};''')
 
@@ -400,5 +400,5 @@ print(fr'''// SPDX-FileCopyrightText: {__author__}
 #include <concepts>''')
 
 for math_expr in math_expr_list:
-	print()
-	generate_math_const(math_expr)
+    print()
+    generate_math_const(math_expr)

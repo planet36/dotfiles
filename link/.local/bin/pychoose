@@ -26,32 +26,32 @@ out_delim = '\t'
 # https://docs.python.org/3/reference/expressions.html#slicings
 # https://docs.python.org/3/tutorial/introduction.html#strings
 class Choice:
-	'''A Choice is either an index or a slice.
+    '''A Choice is either an index or a slice.
 Indexes are 0-based, just like in Python.
 Slices have the same syntax as in Python.'''
 
-	def __init__(self, s: str):
-		'''Convert s to a Choice.'''
-		t = tuple(None if not i else int(i) for i in s.split(':', maxsplit=2))
-		if len(t) == 1:
-			self.is_index = True
-			self.value = t[0]
-		else:
-			self.is_index = False
-			self.value = slice(*t)
+    def __init__(self, s: str):
+        '''Convert s to a Choice.'''
+        t = tuple(None if not i else int(i) for i in s.split(':', maxsplit=2))
+        if len(t) == 1:
+            self.is_index = True
+            self.value = t[0]
+        else:
+            self.is_index = False
+            self.value = slice(*t)
 
 choices = tuple(Choice(arg) for arg in sys.argv[1:])
 
 # Choose fields from each line from stdin.
 for line in sys.stdin:
-	in_fields = in_delim.split(line.rstrip(os.linesep))
-	out_fields = []
-	for choice in choices:
-		if choice.is_index:
-			try:
-				out_fields.append(in_fields[choice.value])
-			except IndexError:
-				pass
-		else:
-			out_fields.extend(in_fields[choice.value])
-	print(out_delim.join(out_fields))
+    in_fields = in_delim.split(line.rstrip(os.linesep))
+    out_fields = []
+    for choice in choices:
+        if choice.is_index:
+            try:
+                out_fields.append(in_fields[choice.value])
+            except IndexError:
+                pass
+        else:
+            out_fields.extend(in_fields[choice.value])
+    print(out_delim.join(out_fields))

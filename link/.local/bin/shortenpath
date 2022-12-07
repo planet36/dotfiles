@@ -18,48 +18,48 @@ import os
 import sys
 
 def shortenpath(path: str, maxlen: int, repl: str = '…') -> str:
-	'''Shorten path by trimming the largest parts of it.  Horizontal ellipsis (…) replace the trimmed characters.
+    '''Shorten path by trimming the largest parts of it.  Horizontal ellipsis (…) replace the trimmed characters.
 The result length might be more than maxlen because the path parts will not be trimmed below a certain length.'''
 
-	HOME = os.environ['HOME']
-	sep = os.sep
+    HOME = os.environ['HOME']
+    sep = os.sep
 
-	while '//' in path:
-		path = path.replace('//', '/')
+    while '//' in path:
+        path = path.replace('//', '/')
 
-	if path == HOME:
-		return '~'
-	elif path.startswith(HOME + sep):
-		path = '~' + path[len(HOME):]
+    if path == HOME:
+        return '~'
+    elif path.startswith(HOME + sep):
+        path = '~' + path[len(HOME):]
 
-	num_to_remove = len(path) - maxlen
+    num_to_remove = len(path) - maxlen
 
-	if num_to_remove <= 0:
-		return path
+    if num_to_remove <= 0:
+        return path
 
-	# Each path part becomes a list of chars
-	parts = [list(part) for part in path.split(sep)]
+    # Each path part becomes a list of chars
+    parts = [list(part) for part in path.split(sep)]
 
-	while num_to_remove > 0:
+    while num_to_remove > 0:
 
-		longest_part = max(reversed(parts), key=len)
+        longest_part = max(reversed(parts), key=len)
 
-		if len(longest_part) <= 2:
-			# Do not trim any more
-			break
+        if len(longest_part) <= 2:
+            # Do not trim any more
+            break
 
-		longest_part.pop()
-		longest_part[-1] = repl
-		num_to_remove -= 1
+        longest_part.pop()
+        longest_part[-1] = repl
+        num_to_remove -= 1
 
-	return sep.join(''.join(part) for part in parts)
+    return sep.join(''.join(part) for part in parts)
 
 try:
-	n = int(sys.argv[1])
+    n = int(sys.argv[1])
 except (IndexError, ValueError):
-	program_name = os.path.basename(sys.argv[0])
-	print(f"{program_name}: Must give integer for maximum length", file=sys.stderr)
-	sys.exit(1)
+    program_name = os.path.basename(sys.argv[0])
+    print(f"{program_name}: Must give integer for maximum length", file=sys.stderr)
+    sys.exit(1)
 
 for line in sys.stdin:
-	print(shortenpath(line.rstrip(os.linesep), n))
+    print(shortenpath(line.rstrip(os.linesep), n))
