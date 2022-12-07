@@ -168,7 +168,8 @@ OPTIONS
         out_file_name = bak_func(in_file_name)
 
         if in_file_name != out_file_name:
-            print(shlex.join((cmd, '--verbose', '--backup=numbered', '--', in_file_name, out_file_name)))
+            print(shlex.join((cmd, '--verbose', '--backup=numbered', '--',
+                              in_file_name, out_file_name)))
 
     return 0
 
