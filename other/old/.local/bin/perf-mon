@@ -4,7 +4,6 @@
 
 # pylint: disable=bad-indentation
 # pylint: disable=fixme
-# pylint: disable=global-statement
 # pylint: disable=import-outside-toplevel
 # pylint: disable=invalid-name
 # pylint: disable=line-too-long
@@ -106,25 +105,17 @@ def get_pct(x: float) -> str:
 
 def lower_blocks_1(x: float) -> str:
 
-    global lower_blocks
-
     return lower_blocks[map_to_uint(x, len(lower_blocks))]
 
 def upper_blocks_1(x: float) -> str:
-
-    global upper_blocks
 
     return upper_blocks[map_to_uint(x, len(upper_blocks))]
 
 def hor_lines_1(x: float) -> str:
 
-    global hor_lines
-
     return hor_lines[map_to_uint(x, len(hor_lines))]
 
 def left_blocks_meter(x: float, meter_width: int) -> str:
-
-    global left_blocks
 
     if meter_width == 0:
         return ''
@@ -135,8 +126,6 @@ def left_blocks_meter(x: float, meter_width: int) -> str:
 
 def right_blocks_meter(x: float, meter_width: int) -> str:
 
-    global right_blocks
-
     if meter_width == 0:
         return ''
 
@@ -146,8 +135,6 @@ def right_blocks_meter(x: float, meter_width: int) -> str:
     return right_width * ' ' + (right_blocks[blocks_index] if blocks_index != -1 else '') + left_width * full_block
 
 def ver_lines_meter(x: float, meter_width: int) -> str:
-
-    global ver_lines
 
     if meter_width == 0:
         return ''
@@ -195,15 +182,6 @@ human_bin_rjust_width = len('1.01 Ki')
 human_dec_rjust_width = len('1.01 k')
 
 def human_scale(x: int, base: int) -> str:
-
-    global BIN_SI_BASE
-    global DEC_SI_BASE
-
-    global BIN_SI_UNIT_PREFIXES
-    global DEC_SI_UNIT_PREFIXES
-
-    global human_bin_rjust_width
-    global human_dec_rjust_width
 
     if base == BIN_SI_BASE:
         si_unit_prefixes = BIN_SI_UNIT_PREFIXES
@@ -270,11 +248,6 @@ cpu_proc_stat_all_pattern = re.compile(r'^cpu(\d+)?\s+' + r'\s+'.join(['(?P<'+f+
 '''
 def get_mem_info(mem_info_path: Path) -> dict:
 
-    global BIN_SI_BASE
-    global DEC_SI_BASE
-
-    global mem_info_pattern
-
     mem_info = {}
 
     for match in mem_info_pattern.finditer(mem_info_path.read_text()):
@@ -302,8 +275,6 @@ def get_mem_used_bytes(mem_info: dict) -> int:
     return mem_info['MemTotal'] - mem_info['MemFree'] - (mem_info['Buffers'] + mem_info['Cached'] + mem_info['SReclaimable'])
 
 def get_cpu_proc_stat(cpu_proc_stat_path: Path) -> list:
-
-    global cpu_proc_stat_all_pattern
 
     match_iter = cpu_proc_stat_all_pattern.finditer(cpu_proc_stat_path.read_text())
 
@@ -363,7 +334,6 @@ uptime_width = len('10d 10h 10m') # 99 days should be sufficient
 
 def timedelta_to_dhm(td: timedelta) -> str:
 
-    global uptime_width
     mm, unused_ss = divmod(td.seconds, 60)
     hh, mm = divmod(mm, 60)
     ##### TODO: is this rjust still necessary with the --rjust option???
@@ -383,9 +353,6 @@ def main(argv = None):
     except ImportError:
         use_xlib = False
         import subprocess
-
-    global BIN_SI_BASE
-    global DEC_SI_BASE
 
     if argv is None:
         argv = sys.argv
