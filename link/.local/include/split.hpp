@@ -34,8 +34,8 @@ std::vector<std::string>
 split(const std::string& s, const char delim,
       const size_t limit = 0)
 {
-	size_t i = 0; // index of the front of a substring
-	size_t j = 0; // index of the back of a substring
+	std::string::size_type i = 0; // index of the front of a substring
+	std::string::size_type j = 0; // index of the back of a substring
 	std::vector<std::string> result;
 
 	while ((result.size() != limit - 1) &&
@@ -60,8 +60,8 @@ std::vector<std::string>
 split(const std::string& s, const std::string& delim,
       const size_t limit = 0)
 {
-	size_t i = 0; // index of the front of a substring
-	size_t j = 0; // index of the back of a substring
+	std::string::size_type i = 0; // index of the front of a substring
+	std::string::size_type j = 0; // index of the back of a substring
 	std::vector<std::string> result;
 
 	if (!delim.empty())
@@ -89,8 +89,8 @@ std::vector<std::string>
 split_set(const std::string& s, const std::string& delim_set,
           const size_t limit = 0)
 {
-	size_t i = 0; // index of the front of a substring
-	size_t j = 0; // index of the back of a substring
+	std::string::size_type i = 0; // index of the front of a substring
+	std::string::size_type j = 0; // index of the back of a substring
 	std::vector<std::string> result;
 
 	if (!delim_set.empty())
@@ -125,8 +125,8 @@ std::vector<std::string>
 split_non_set(const std::string& s, const std::string& delim_set,
               const size_t limit = 0)
 {
-	size_t i = 0; // index of the front of a substring
-	size_t j = 0; // index of the back of a substring
+	std::string::size_type i = 0; // index of the front of a substring
+	std::string::size_type j = 0; // index of the back of a substring
 	std::vector<std::string> result;
 
 	if (!delim_set.empty())
