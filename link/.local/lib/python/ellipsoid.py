@@ -1,27 +1,21 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
 # pylint: disable=invalid-name
 # pylint: disable=line-too-long
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
-# pylint: disable=no-else-return
-# pylint: disable=pointless-string-statement
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-instance-attributes
-# pylint: disable=too-many-locals
-# pylint: disable=trailing-newlines
 
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
 
 import math
 
+# pylint: disable=too-many-instance-attributes
 class Ellipsoid:
 
+    # pylint: disable=too-many-locals
     def __init__(self, _a: float, _f_recip: float, _GM: float = 3.986004418E14, _omega: float = 7.292115E-5):
 
         # defining parameters
@@ -96,7 +90,9 @@ class Ellipsoid:
                 - 2 * ht * (1 + self.f + self.m - 2 * self.f * sin_lat * sin_lat) / self.a
                 + 3 * ht * ht / self.a2)
 
+    # pylint: disable=too-many-arguments
     def get_ht(self, w: float, z: float, sin_lat: float, cos_lat: float, Rn: float) -> float:
+        # pylint: disable=no-else-return
         # https://www.gnu.org/software/libc/manual/html_node/Mathematical-Constants.html
         # cos(45 deg) == 1/sqrt(2)
         if cos_lat > 1 / math.sqrt(2): # Equatorial
@@ -259,6 +255,7 @@ Converted to Python and modified by Steven Ward.  No rights reserved.
 
         return (math.degrees(lat_rad), ht)
 
+WGS84 = Ellipsoid(6_378_137.0, 298.257223563)
 '''
 Source:
 NGA.STND.0036_1.0.0_WGS84 2014-07-08
@@ -269,4 +266,3 @@ Used for Datum Transformations*
 
 * Refer to Appendices D, E, and F.
 '''
-WGS84 = Ellipsoid(6_378_137.0, 298.257223563)

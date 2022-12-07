@@ -2,14 +2,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
 # pylint: disable=invalid-name
-# pylint: disable=line-too-long
 # pylint: disable=missing-module-docstring
-# pylint: disable=no-else-return
-# pylint: disable=pointless-string-statement
-# pylint: disable=trailing-newlines
 
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
@@ -18,8 +12,11 @@ import os
 import sys
 
 def shortenpath(path: str, maxlen: int, repl: str = '…') -> str:
-    '''Shorten path by trimming the largest parts of it.  Horizontal ellipsis (…) replace the trimmed characters.
-The result length might be more than maxlen because the path parts will not be trimmed below a certain length.'''
+    '''
+    Shorten path by trimming the largest parts of it.  Horizontal ellipsis (…)
+    replace the trimmed characters. The result length might be more than maxlen
+    because the path parts will not be trimmed below a certain length.
+    '''
 
     HOME = os.environ['HOME']
     sep = os.sep
@@ -29,7 +26,8 @@ The result length might be more than maxlen because the path parts will not be t
 
     if path == HOME:
         return '~'
-    elif path.startswith(HOME + sep):
+
+    if path.startswith(HOME + sep):
         path = '~' + path[len(HOME):]
 
     num_to_remove = len(path) - maxlen

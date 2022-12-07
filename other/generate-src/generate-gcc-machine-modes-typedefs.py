@@ -1,13 +1,9 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
-# pylint: disable=function-redefined
 # pylint: disable=invalid-name
 # pylint: disable=line-too-long
-# pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
-# pylint: disable=unused-variable
 
 """
 Usage:
@@ -44,6 +40,7 @@ print(fr'''// SPDX-FileCopyrightText: {__author__}
 #pragma once
 ''')
 
+# pylint: disable=missing-class-docstring
 class GccMachineMode:
 
     def __init__(self):
@@ -55,6 +52,7 @@ class GccMachineMode:
         self.unsigned_alias = None
         self._exists = False
 
+    # pylint: disable=function-redefined
     def __init__(self,
         _name,
         _description,
@@ -79,6 +77,7 @@ class GccMachineMode:
         test_program = f'int main() {{using alias = {self.type} [[gnu::mode({self.name})]]; return 0;}}'.encode()
 
         try:
+            # pylint: disable=unused-variable
             completed_process = subprocess.run(command, input=test_program, stderr=subprocess.DEVNULL, check=True)
             self._exists = True
 

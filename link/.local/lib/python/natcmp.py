@@ -1,15 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
 # pylint: disable=invalid-name
-# pylint: disable=line-too-long
-# pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
-# pylint: disable=no-else-return
-# pylint: disable=pointless-string-statement
-# pylint: disable=trailing-newlines
 
 __author__ = 'Steven Ward'
 __version__ = '2022-08-03'
@@ -26,6 +19,7 @@ def str_to_int(s):
     # See 'isdecimal-isdigit-isnumeric.py' for why isdecimal is used.
 
     # Strings that are True for isdigit() and isnumeric() aren't always convertible to int.
+    # pylint: disable=no-else-return
     if s.isdecimal():
         return (int(s), s)
     else:
@@ -43,5 +37,6 @@ def split_ints(s, pattern):
 
 capture_many_decimal_pattern = re.compile(r'(\d+)')
 
+# pylint: disable=missing-function-docstring
 def key(s):
     return (split_ints(s.strip().casefold(), capture_many_decimal_pattern), s)

@@ -2,14 +2,9 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
-# pylint: disable=no-else-return
-# pylint: disable=pointless-string-statement
-# pylint: disable=trailing-newlines
 
 # inspired by
 # https://github.com/bakfile/bak
@@ -44,6 +39,7 @@ def get_unbak_path(path: str) -> str:
 
     basename, ext = os.path.splitext(path)
     match = re.fullmatch(r'\.bak([0-9]+)', ext)
+    # pylint: disable=no-else-return
     if match:
         return basename
     else:

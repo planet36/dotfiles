@@ -2,19 +2,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
-# pylint: disable=import-outside-toplevel
 # pylint: disable=invalid-name
-# pylint: disable=line-too-long
 # pylint: disable=missing-module-docstring
-# pylint: disable=no-else-return
-# pylint: disable=pointless-string-statement
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-statements
-# pylint: disable=trailing-newlines
 
 __author__ = 'Steven Ward'
 __version__ = '2022-09-08'
@@ -39,8 +28,13 @@ def get_pbkdf2_algorithms_available():
             yield hash_algorithm
 
 # pylint: disable=missing-function-docstring
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-statements
 def main(argv = None):
 
+    # pylint: disable=import-outside-toplevel
     import base64
     import getopt
     import getpass
@@ -148,7 +142,8 @@ OPTIONS
 """)
 
     short_options = 'Vhva:f:n:s'
-    long_options = ['version', 'help', 'verbose', 'hash-algorithm=', 'format=', 'num-iterations=', 'silent']
+    long_options = ['version', 'help', 'verbose', 'hash-algorithm=', 'format=',
+                    'num-iterations=', 'silent']
 
     try:
         (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
@@ -156,6 +151,7 @@ OPTIONS
         print_error(err)
         return 1
 
+    # pylint: disable=no-else-return
     for (option, value) in options:
         if option in ['-V', '--version']:
             print_version()
@@ -202,10 +198,9 @@ OPTIONS
     print_verbose(f'iterations={iterations}')
     print_verbose(f'silent={silent}')
 
-    """
-    http://www.doughellmann.com/PyMOTW/getpass/
-    "It is up to the caller to detect when the input stream is not a tty and use an alternate method for reading in that case."
-    """
+    # http://www.doughellmann.com/PyMOTW/getpass/
+    # "It is up to the caller to detect when the input stream is not a tty and
+    # use an alternate method for reading in that case."
 
     password_prompt = ''
     salt_prompt = ''
@@ -234,6 +229,7 @@ OPTIONS
 if __name__ == '__main__':
     sys.exit(main())
 
+# pylint: disable=pointless-string-statement
 '''
 Output:
 

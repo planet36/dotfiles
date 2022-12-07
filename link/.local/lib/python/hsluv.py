@@ -2,12 +2,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: MIT
 
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
-# pylint: disable=pointless-string-statement
-# pylint: disable=trailing-newlines
 
 # https://github.com/hsluv/hsluv-python
 # https://github.com/hsluv/hsluv-python/blob/master/hsluv.py

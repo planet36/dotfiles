@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=line-too-long
+# pylint: disable=invalid-name
 
 '''Regular expression patterns for numbers'''
 

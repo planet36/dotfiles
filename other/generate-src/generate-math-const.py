@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
 # pylint: disable=eval-used
 # pylint: disable=fixme
 # pylint: disable=invalid-name

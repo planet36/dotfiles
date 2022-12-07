@@ -2,15 +2,11 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# pylint: disable=bad-indentation
-# pylint: disable=fixme
 # pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
-# pylint: disable=pointless-string-statement
-# pylint: disable=too-few-public-methods
-# pylint: disable=trailing-newlines
 
-# Inspired by https://github.com/theryangeary/choose
+'''
+Inspired by <https://github.com/theryangeary/choose>.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
@@ -25,6 +21,7 @@ out_delim = '\t'
 # https://docs.python.org/3/library/functions.html#slice
 # https://docs.python.org/3/reference/expressions.html#slicings
 # https://docs.python.org/3/tutorial/introduction.html#strings
+# pylint: disable=too-few-public-methods
 class Choice:
     '''A Choice is either an index or a slice.
 Indexes are 0-based, just like in Python.
