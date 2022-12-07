@@ -34,6 +34,8 @@ std::vector<std::string>
 split(const std::string& s, const char delim,
       const size_t limit = 0)
 {
+	const auto begin = s.cbegin();
+	const auto end = s.cend();
 	using diff_t = std::string::difference_type;
 	std::string::size_type i = 0; // index of the front of a substring
 	std::string::size_type j = 0; // index of the back of a substring
@@ -42,12 +44,12 @@ split(const std::string& s, const char delim,
 	while ((result.size() != limit - 1) &&
 	       ((j = s.find(delim, i)) != std::string::npos))
 	{
-		result.emplace_back(s.begin() + static_cast<diff_t>(i),
-		                    s.begin() + static_cast<diff_t>(j));
+		result.emplace_back(begin + static_cast<diff_t>(i),
+		                    begin + static_cast<diff_t>(j));
 		i = j + 1;
 	}
 
-	result.emplace_back(s.begin() + static_cast<diff_t>(i), s.end());
+	result.emplace_back(begin + static_cast<diff_t>(i), end);
 
 	return result;
 }
@@ -62,6 +64,8 @@ std::vector<std::string>
 split(const std::string& s, const std::string& delim,
       const size_t limit = 0)
 {
+	const auto begin = s.cbegin();
+	const auto end = s.cend();
 	using diff_t = std::string::difference_type;
 	std::string::size_type i = 0; // index of the front of a substring
 	std::string::size_type j = 0; // index of the back of a substring
@@ -72,13 +76,13 @@ split(const std::string& s, const std::string& delim,
 		while ((result.size() != limit - 1) &&
 		       ((j = s.find(delim, i)) != std::string::npos))
 		{
-			result.emplace_back(s.begin() + static_cast<diff_t>(i),
-			                    s.begin() + static_cast<diff_t>(j));
+			result.emplace_back(begin + static_cast<diff_t>(i),
+			                    begin + static_cast<diff_t>(j));
 			i = j + delim.size();
 		}
 	}
 
-	result.emplace_back(s.begin() + static_cast<diff_t>(i), s.end());
+	result.emplace_back(begin + static_cast<diff_t>(i), end);
 
 	return result;
 }
@@ -93,6 +97,8 @@ std::vector<std::string>
 split_set(const std::string& s, const std::string& delim_set,
           const size_t limit = 0)
 {
+	const auto begin = s.cbegin();
+	const auto end = s.cend();
 	using diff_t = std::string::difference_type;
 	std::string::size_type i = 0; // index of the front of a substring
 	std::string::size_type j = 0; // index of the back of a substring
@@ -104,14 +110,14 @@ split_set(const std::string& s, const std::string& delim_set,
 		       (result.size() != limit - 1) &&
 		       ((j = s.find_first_of(delim_set, i)) != std::string::npos))
 		{
-			result.emplace_back(s.begin() + static_cast<diff_t>(i),
-			                    s.begin() + static_cast<diff_t>(j));
+			result.emplace_back(begin + static_cast<diff_t>(i),
+			                    begin + static_cast<diff_t>(j));
 		}
 	}
 
 	if (i != std::string::npos)
 	{
-		result.emplace_back(s.begin() + static_cast<diff_t>(i), s.end());
+		result.emplace_back(begin + static_cast<diff_t>(i), end);
 	}
 	else if (result.empty())
 	{
@@ -131,6 +137,8 @@ std::vector<std::string>
 split_non_set(const std::string& s, const std::string& delim_set,
               const size_t limit = 0)
 {
+	const auto begin = s.cbegin();
+	const auto end = s.cend();
 	using diff_t = std::string::difference_type;
 	std::string::size_type i = 0; // index of the front of a substring
 	std::string::size_type j = 0; // index of the back of a substring
@@ -142,14 +150,14 @@ split_non_set(const std::string& s, const std::string& delim_set,
 		       (result.size() != limit - 1) &&
 		       ((j = s.find_first_not_of(delim_set, i)) != std::string::npos))
 		{
-			result.emplace_back(s.begin() + static_cast<diff_t>(i),
-			                    s.begin() + static_cast<diff_t>(j));
+			result.emplace_back(begin + static_cast<diff_t>(i),
+			                    begin + static_cast<diff_t>(j));
 		}
 	}
 
 	if (i != std::string::npos)
 	{
-		result.emplace_back(s.begin() + static_cast<diff_t>(i), s.end());
+		result.emplace_back(begin + static_cast<diff_t>(i), end);
 	}
 	else if (result.empty())
 	{
