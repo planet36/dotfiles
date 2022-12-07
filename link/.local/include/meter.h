@@ -168,7 +168,7 @@ map_to_uint(double x, size_t b)
 	clamp(&x);
 
 	// round to nearest int
-	return (size_t)(x * (b - 1U) + 0.5);
+	return (size_t)(x * (double)(b - 1U) + 0.5);
 }
 
 /** Calculate values of the meter segments.
@@ -195,15 +195,15 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
 	clamp(&x);
 
 	// truncate
-	*left_width = (size_t)(x * meter_width);
+	*left_width = (size_t)(x * (double)meter_width);
 
 	if (*left_width == meter_width)
 		return;
 
-	const double frac = x * meter_width - (double)((size_t)(x * meter_width));
+	const double frac = x * (double)meter_width - (double)((size_t)(x * (double)meter_width));
 	// This produces a preferred distribution at the ends of the meter.
 	// round to nearest int
-	*blocks_index = (size_t)(frac * (blocks_len - 1U) + 0.5);
+	*blocks_index = (size_t)(frac * (double)(blocks_len - 1U) + 0.5);
 	// Use this to get an alternative distribution.
 	// truncate
 	//*blocks_index = (size_t)(frac * blocks_len);
@@ -392,7 +392,7 @@ left_char_meter(double x, char* meter, size_t meter_width,
 	clamp(&x);
 
 	// round to nearest int
-	const size_t num_filled = (size_t)(x * meter_width + 0.5);
+	const size_t num_filled = (size_t)(x * (double)meter_width + 0.5);
 	[[maybe_unused]] const size_t num_unfilled = meter_width - num_filled;
 
 	for (i = 0; i < num_filled; ++i)
@@ -428,7 +428,7 @@ right_char_meter(double x, char* meter, size_t meter_width,
 	clamp(&x);
 
 	// round to nearest int
-	const size_t num_filled = (size_t)(x * meter_width + 0.5);
+	const size_t num_filled = (size_t)(x * (double)meter_width + 0.5);
 	const size_t num_unfilled = meter_width - num_filled;
 
 	for (i = 0; i < num_unfilled; ++i)
