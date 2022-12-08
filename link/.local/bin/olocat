@@ -8,7 +8,7 @@
 # pylint: disable=missing-module-docstring
 
 __author__ = 'Steven Ward'
-__version__ = '2022-09-08'
+__version__ = '2022-12-08'
 __license__ = 'OSL-3.0'
 
 from decimal import Decimal as D, ROUND_HALF_UP
@@ -22,6 +22,10 @@ from xterm_color import xterm_color_num_to_rgb_string
 
 # https://stackoverflow.com/a/14693789
 ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+
+# Adapted from:
+# https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
+ansi_escape = re.compile(r'((?:\x1B(?:[ -\/]+.|[\]PX^_][^\x07\x1B]*|\[[0-?]*.|.))*)(.?)')
 
 # https://stackoverflow.com/a/7267280
 def drange(start: D, stop: D, step: D):
@@ -117,15 +121,17 @@ def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_rev: bool = Fa
 
     esc_fmt = '\x1b[{};5;{}m'
     esc_reverse = '\x1b[7m'
-    esc_reset = '\x1b[0m'
+    #esc_reset = '\x1b[0m'
     fg = 38
     bg = 48
 
     result = []
 
     if do_bg:
+        esc_reset = f'\x1b[{bg+1}m'
         result.append(esc_fmt.format(bg, color_num))
     else:
+        esc_reset = f'\x1b[{fg+1}m'
         result.append(esc_fmt.format(fg, color_num))
 
     if do_rev:
@@ -143,15 +149,17 @@ def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_rev: bool = False) ->
 
     esc_fmt = '\x1b[{};2;{};{};{}m'
     esc_reverse = '\x1b[7m'
-    esc_reset = '\x1b[0m'
+    #esc_reset = '\x1b[0m'
     fg = 38
     bg = 48
 
     result = []
 
     if do_bg:
+        esc_reset = f'\x1b[{bg+1}m'
         result.append(esc_fmt.format(bg, sRGBup[0], sRGBup[1], sRGBup[2]))
     else:
+        esc_reset = f'\x1b[{fg+1}m'
         result.append(esc_fmt.format(fg, sRGBup[0], sRGBup[1], sRGBup[2]))
 
     if do_rev:
@@ -423,27 +431,17 @@ OPTIONS
 
     for line in sys.stdin:
 
-        line = ansi_escape.sub('', line)
+        cols = copy.deepcopy(rows)
 
-        has_trailing_nl = line.endswith(os.linesep)
-
-        start = 0
-        stop = len(line)
-
-        if has_trailing_nl:
-            stop -= len(os.linesep)
-
-        if start != stop: # not empty line
-
-            cols = copy.deepcopy(rows)
-
-            for c in itertools.islice(line, start, stop):
+        for (esc_seq, c) in ansi_escape.findall(line):
+            print(esc_seq, end='')
+            if len(c) > 0:
                 print(ansi_sgr(c, colors[next(cols)], do_bg, do_rev), end='')
 
-            next(rows)
-
-        if has_trailing_nl:
+        if line.endswith(os.linesep):
             print(end=os.linesep)
+
+        next(rows)
 
 if __name__ == '__main__':
     sys.exit(main())
