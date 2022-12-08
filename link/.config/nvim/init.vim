@@ -119,12 +119,6 @@ set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 
-" https://stackoverflow.com/a/65122
-autocmd BufRead,BufNewFile *.py set expandtab
-
-" Disable indentation settings in $VIMRUNTIME/ftplugin/python.vim
-let g:python_recommended_style=0
-
 " :help cinoptions-values
 set cinoptions=:0,g0,N-s,t0,c0,C1
 
