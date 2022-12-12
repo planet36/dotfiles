@@ -27,7 +27,7 @@ Zutty.altScroll:  true
 Zutty.autoCopy:   true
 Zutty.boldColors: false
 Zutty.border:     2
-Zutty.geometry:   239x65
+Zutty.geometry:   239x61
 Zutty.font:       Hack
 Zutty.fontpath:   /usr/share/fonts/TTF
 Zutty.fontsize:   14
