@@ -7,6 +7,7 @@ Sxiv.foreground: Gray
 
 URxvt.font: xft:monospace:size=13
 
+XTerm.vt100.boldColors: false
 XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
 XTerm.vt100.faceName: monospace:size=13
 XTerm.vt100.fastScroll: true
