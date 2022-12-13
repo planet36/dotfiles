@@ -21,12 +21,12 @@ import hsluv
 from xterm_color import xterm_color_num_to_rgb_string
 
 # https://stackoverflow.com/a/14693789
-ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', re.ASCII)
 
 # Adapted from:
 # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
-ansi_escape = re.compile(r'((?:\x1B(?:[ -\/]+.|[\]PX^_][^\x07\x1B]*|\[[0-?]*.|.))*)(.?)')
-incomplete_escape = re.compile(r'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$')
+ansi_escape = re.compile(r'((?:\x1B(?:[ -\/]+.|[\]PX^_][^\x07\x1B]*|\[[0-?]*.|.))*)(.?)', re.ASCII)
+incomplete_escape = re.compile(r'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$', re.ASCII)
 
 # https://stackoverflow.com/a/7267280
 def drange(start: D, stop: D, step: D):
