@@ -21,7 +21,7 @@ import hsluv
 from xterm_color import xterm_color_num_to_rgb_string
 
 # https://stackoverflow.com/a/14693789
-ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', re.ASCII)
+#ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', re.ASCII)
 
 # Adapted from:
 # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
@@ -430,7 +430,7 @@ OPTIONS
 
     rows = itertools.cycle(indexes)
 
-        for line in sys.stdin:
+        for line in bytes_buf.decode().splitlines(keepends=True):
 
             cols = copy.deepcopy(rows)
 
