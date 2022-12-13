@@ -434,6 +434,10 @@ OPTIONS
 
         cols = copy.deepcopy(rows)
 
+        # lolcat does this
+        if '\t' in line:
+            line = line.replace('\t', ' '*8)
+
         for (esc_seq, c) in ansi_escape.findall(line):
             print(esc_seq, end='')
             if len(c) > 0:
