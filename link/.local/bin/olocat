@@ -26,7 +26,7 @@ ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', re.ASCII)
 # Adapted from:
 # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
 ansi_escape = re.compile(r'((?:\x1B(?:[ -\/]+.|[\]PX^_][^\x07\x1B]*|\[[0-?]*.|.))*)(.?)', re.ASCII)
-incomplete_escape = re.compile(r'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$', re.ASCII)
+incomplete_escape = re.compile(br'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$', re.ASCII)
 
 # https://stackoverflow.com/a/7267280
 def drange(start: D, stop: D, step: D):
@@ -430,23 +430,23 @@ OPTIONS
 
     rows = itertools.cycle(indexes)
 
-    for line in sys.stdin:
+        for line in sys.stdin:
 
-        cols = copy.deepcopy(rows)
+            cols = copy.deepcopy(rows)
 
-        # lolcat does this
-        if '\t' in line:
-            line = line.expandtabs()
+            # lolcat does this
+            if '\t' in line:
+                line = line.expandtabs()
 
-        for (esc_seq, c) in ansi_escape.findall(line):
-            print(esc_seq, end='')
-            if len(c) > 0:
-                print(ansi_sgr(c, colors[next(cols)], do_bg, do_rev), end='')
+            for (esc_seq, c) in ansi_escape.findall(line):
+                print(esc_seq, end='')
+                if len(c) > 0:
+                    print(ansi_sgr(c, colors[next(cols)], do_bg, do_rev), end='')
 
-        if line.endswith(os.linesep):
-            print(end=os.linesep)
+            if line.endswith(os.linesep):
+                print(end=os.linesep)
 
-        next(rows)
+            next(rows)
 
 if __name__ == '__main__':
     sys.exit(main())
