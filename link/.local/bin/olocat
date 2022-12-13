@@ -13,6 +13,7 @@ __license__ = 'OSL-3.0'
 
 from decimal import Decimal as D, ROUND_HALF_UP
 from enum import Enum, auto, unique
+import io
 import math
 import re
 import sys
@@ -27,6 +28,14 @@ from xterm_color import xterm_color_num_to_rgb_string
 # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
 ansi_escape = re.compile(r'((?:\x1B(?:[ -\/]+.|[\]PX^_][^\x07\x1B]*|\[[0-?]*.|.))*)(.?)', re.ASCII)
 incomplete_escape = re.compile(br'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$', re.ASCII)
+
+def can_be_decoded(b: bytes) -> bool:
+    try:
+        b.decode()
+    except UnicodeDecodeError:
+        return False
+    else:
+        return True
 
 # https://stackoverflow.com/a/7267280
 def drange(start: D, stop: D, step: D):
@@ -430,6 +439,24 @@ OPTIONS
 
     rows = itertools.cycle(indexes)
 
+    bytes_read = bytearray(io.DEFAULT_BUFFER_SIZE)
+
+    # bytes_read is appended to this
+    bytes_buf = bytearray()
+
+    # bytes_read is not cleared in subsequent calls to readinto1
+    while (num_bytes_read := sys.stdin.buffer.readinto1(bytes_read)) is not None:
+
+        if num_bytes_read == 0:
+            # EOF
+            break
+
+        bytes_buf += bytes_read[0:num_bytes_read]
+
+        if not can_be_decoded(bytes_buf) or incomplete_escape.search(bytes_read):
+            # Keep reading bytes
+            continue
+
         for line in bytes_buf.decode().splitlines(keepends=True):
 
             cols = copy.deepcopy(rows)
@@ -447,6 +474,8 @@ OPTIONS
                 print(end=os.linesep)
 
             next(rows)
+
+        bytes_buf.clear()
 
 if __name__ == '__main__':
     sys.exit(main())
