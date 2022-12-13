@@ -152,7 +152,7 @@ def xyz_to_luv(_hx_tuple):
         return (0, 0, 0)
     divider = x + 15 * y + 3 * z
     if divider == 0:
-        u = v = float("nan")
+        u = v = math.nan
         return (l, u, v)
     var_u = 4 * x / divider
     var_v = 9 * y / divider
