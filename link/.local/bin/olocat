@@ -86,18 +86,18 @@ def get_hsluv_color_dist(hsluv_color1, hsluv_color2) -> float:
     (H2, S2, L2) = hsluv_color2
     return get_cylinder_coord_dist(S1, H1, L1, S2, H2, L2)
 
-xterm_color_num_to_hsluv_color = {}
+ansi_color_num_to_hsluv_color = {}
 
 for (num, rgb) in x11_colors.num_to_rgb.items():
-    xterm_color_num_to_hsluv_color[num] = hsluv.rgb_to_hsluv(
+    ansi_color_num_to_hsluv_color[num] = hsluv.rgb_to_hsluv(
             (rgb[0] / 255, rgb[1] / 255, rgb[2] / 255))
 
-def get_closest_xterm_color_num_from_hsluv(hsluv_color: tuple) -> int:
+def get_closest_ansi_color_num_from_hsluv(hsluv_color: tuple) -> int:
 
     closest_color_num = None
     min_color_dist = math.inf
 
-    for (color_num, hsluv_color_i) in xterm_color_num_to_hsluv_color.items():
+    for (color_num, hsluv_color_i) in ansi_color_num_to_hsluv_color.items():
         color_dist = get_hsluv_color_dist(hsluv_color, hsluv_color_i)
         if color_dist < min_color_dist:
             min_color_dist = color_dist
@@ -280,7 +280,7 @@ OPTIONS
     (Valid: {', '.join(ColorSpace.__members__.keys())})
 
 -8
-    Print 8-bit xterm colors instead of 24-bit true colors.
+    Print 8-bit ANSI colors instead of 24-bit true colors.
 
 -b
     Color the background instead of the foreground.
@@ -397,7 +397,7 @@ OPTIONS
         colors = sRGBup_colors
         ansi_sgr = ansi_sgr_24bit
     else:
-        color_nums = tuple(map(get_closest_xterm_color_num_from_hsluv, hsluv_colors))
+        color_nums = tuple(map(get_closest_ansi_color_num_from_hsluv, hsluv_colors))
         colors = color_nums
         ansi_sgr = ansi_sgr_8bit
 
