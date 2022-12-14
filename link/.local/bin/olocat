@@ -448,5 +448,10 @@ OPTIONS
 
         bytes_buf.clear()
 
+    # Adapted from:
+    # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
+    if sys.stdout.isatty():
+        print('\x1B[m\x1B[?25h\x1B[?1;5;2004l', end='')
+
 if __name__ == '__main__':
     sys.exit(main())
