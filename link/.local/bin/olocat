@@ -104,11 +104,11 @@ def get_closest_xterm_color_num_from_hsluv(hsluv_color: tuple) -> int:
 
     return closest_color_num
 
-def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_rev: bool = False) -> str:
+def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_inv: bool = False) -> str:
     '''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
 
     esc_fmt = '\x1b[{};5;{}m'
-    esc_reverse = '\x1b[7m'
+    esc_inverse = '\x1b[7m'
     #esc_reset = '\x1b[0m'
     fg = 38
     bg = 48
@@ -122,8 +122,8 @@ def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_rev: bool = Fa
         esc_reset = f'\x1b[{fg+1}m'
         result.append(esc_fmt.format(fg, color_num))
 
-    if do_rev:
-        result.append(esc_reverse)
+    if do_inv:
+        result.append(esc_inverse)
 
     result.append(s)
 
@@ -131,12 +131,12 @@ def ansi_sgr_8bit(s: str, color_num: int, do_bg: bool = False, do_rev: bool = Fa
 
     return ''.join(result)
 
-def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_rev: bool = False) -> str:
+def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_inv: bool = False) -> str:
     '''https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters'''
     # RGB color must be upscaled
 
     esc_fmt = '\x1b[{};2;{};{};{}m'
-    esc_reverse = '\x1b[7m'
+    esc_inverse = '\x1b[7m'
     #esc_reset = '\x1b[0m'
     fg = 38
     bg = 48
@@ -150,8 +150,8 @@ def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_rev: bool = False) ->
         esc_reset = f'\x1b[{fg+1}m'
         result.append(esc_fmt.format(fg, sRGBup[0], sRGBup[1], sRGBup[2]))
 
-    if do_rev:
-        result.append(esc_reverse)
+    if do_inv:
+        result.append(esc_inverse)
 
     result.append(s)
 
@@ -208,7 +208,7 @@ def main(argv = None):
     default_color_space = ColorSpace.LOLCAT
     default_use_true_color = True
     default_do_bg = False
-    default_do_rev = False
+    default_do_inv = False
     default_debug = False
     default_lightness_dict = {ColorSpace.LOLCAT: 100, ColorSpace.HSLUV: 70}
 
@@ -217,7 +217,7 @@ def main(argv = None):
     color_space = default_color_space
     use_true_color = default_use_true_color
     do_bg = default_do_bg
-    do_rev = default_do_rev
+    do_inv = default_do_inv
     debug = default_debug
     lightness = None
 
@@ -283,8 +283,8 @@ OPTIONS
 -b
     Color the background instead of the foreground.
 
--r
-    Reverse the foreground and background.
+-i
+    Invert the foreground and background.
 
 -d, --debug
     Print the colors, then exit.
@@ -295,7 +295,7 @@ OPTIONS
     (Default for {ColorSpace.HSLUV.name}: {default_lightness_dict[ColorSpace.HSLUV]})
 ''')
 
-    short_options = 'Vhvn:c:8brdl:'
+    short_options = 'Vhvn:c:8bidl:'
     long_options = ['version', 'help', 'verbose', 'debug', ]
 
     try:
@@ -334,8 +334,8 @@ OPTIONS
             elif option in ['-b']:
                 do_bg = True
 
-            elif option in ['-r']:
-                do_rev = True
+            elif option in ['-i']:
+                do_inv = True
 
             elif option in ['-d', '--debug']:
                 debug = True
@@ -360,7 +360,7 @@ OPTIONS
     print_verbose(f'{color_space=}')
     print_verbose(f'{use_true_color=}')
     print_verbose(f'{do_bg=}')
-    print_verbose(f'{do_rev=}')
+    print_verbose(f'{do_inv=}')
     print_verbose(f'{debug=}')
     print_verbose(f'{lightness=}')
 
@@ -404,7 +404,7 @@ OPTIONS
                 color_hex = f'{color:02X}'
 
             if sys.stdout.isatty():
-                print(ansi_sgr(f'{color}\t{color_hex}', color, do_bg, do_rev))
+                print(ansi_sgr(f'{color}\t{color_hex}', color, do_bg, do_inv))
             else:
                 print(f'{color}\t{color_hex}')
         return 0
@@ -439,7 +439,7 @@ OPTIONS
             for (esc_seq, c) in ansi_escape.findall(line):
                 print(esc_seq, end='')
                 if len(c) > 0:
-                    print(ansi_sgr(c, next(color_cycle), do_bg, do_rev), end='')
+                    print(ansi_sgr(c, next(color_cycle), do_bg, do_inv), end='')
 
             if line.endswith(os.linesep):
                 i += 1
