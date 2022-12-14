@@ -8,7 +8,7 @@
 # pylint: disable=missing-module-docstring
 
 __author__ = 'Steven Ward'
-__version__ = '2022-12-13'
+__version__ = '2022-12-14'
 __license__ = 'OSL-3.0'
 
 from enum import Enum, auto, unique
@@ -191,6 +191,7 @@ def main(argv = None):
     # pylint: disable=import-outside-toplevel
     import getopt
     import os
+    import random
     import signal
 
     if argv is None:
@@ -286,6 +287,9 @@ OPTIONS
 -i
     Invert the foreground and background.
 
+-s SEED
+    Specify the seed of the PRNG.
+
 -d, --debug
     Print the colors, then exit.
 
@@ -295,7 +299,7 @@ OPTIONS
     (Default for {ColorSpace.HSLUV.name}: {default_lightness_dict[ColorSpace.HSLUV]})
 ''')
 
-    short_options = 'Vhvn:c:8bidl:'
+    short_options = 'Vhvn:c:8bis:dl:'
     long_options = ['version', 'help', 'verbose', 'debug', ]
 
     try:
@@ -336,6 +340,9 @@ OPTIONS
 
             elif option in ['-i']:
                 do_inv = True
+
+            elif option in ['-s']:
+                random.seed(value)
 
             elif option in ['-d', '--debug']:
                 debug = True
@@ -409,7 +416,7 @@ OPTIONS
                 print(f'{color}\t{color_hex}')
         return 0
 
-    i = 0
+    i = random.randrange(num_colors)
     color_cycle = cycle_seq(colors, i)
 
     bytes_read = bytearray(io.DEFAULT_BUFFER_SIZE)
