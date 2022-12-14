@@ -59,9 +59,30 @@ print("}")
 print()
 print("num_to_rgb = {")
 
+i = 0
+
+# ANSI
+# https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
+# This isn't quite accurate for yellow (#3).
+# The first 16 colors configurable by the user (and they vary by terminal), so
+# they're not useful for finding color distance.
+
+vals = [0, 85+85]
+for b in vals:
+    for g in vals:
+        for r in vals:
+            print(f"#   {i:3} : ({r:3}, {g:3}, {b:3}),")
+            i += 1
+
+vals = [0+85, 85+85+85]
+for b in vals:
+    for g in vals:
+        for r in vals:
+            print(f"#   {i:3} : ({r:3}, {g:3}, {b:3}),")
+            i += 1
+
 # Color
 vals = [0] + list(range(95, 255+1, 40))
-i = 16
 for r in vals:
     for g in vals:
         for b in vals:
@@ -70,7 +91,6 @@ for r in vals:
 
 # Gray
 vals = list(range(8, 255 - 18, 10))
-i = 255+1 - 24
 for x in vals:
     print(f"    {i:3} : ({x:3}, {x:3}, {x:3}),")
     i += 1
