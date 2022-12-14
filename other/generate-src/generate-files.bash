@@ -17,12 +17,18 @@ python3 generate-ascii.py                                > "$OUT_DIR"/include/as
 python3 generate-gcc-machine-modes-typedefs.py           > "$OUT_DIR"/include/gcc-machine-modes-typedefs.hpp
 python3 generate-math-const.py                           > "$OUT_DIR"/include/math-const.hpp
 
+curl https://raw.githubusercontent.com/freedesktop/xorg-xserver/master/os/oscolor.c | \
+sed -n -e '/static const BuiltinColor BuiltinColors\[\] = {/, /};/ p' | \
+python3 filter-oscolor.py > "$OUT_DIR"/lib/python/x11_colors.py
+
 cat <<EOT
 # Run these commands:
 
 git diff \
-$OUT_DIR/include/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp
+$OUT_DIR/include/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp \
+$OUT_DIR/lib/python/x11_colors.py
 
 git commit -m 'Update generated source code files' \
-$OUT_DIR/include/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp
+$OUT_DIR/include/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp \
+$OUT_DIR/lib/python/x11_colors.py
 EOT
