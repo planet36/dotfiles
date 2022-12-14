@@ -94,7 +94,7 @@ for (k, v) in xterm_color_num_to_rgb_string.items():
 def get_closest_xterm_color_num_from_hsluv(hsluv_color: tuple) -> int:
 
     closest_color_num = None
-    min_color_dist = float("inf")
+    min_color_dist = math.inf
 
     for (color_num, hsluv_color_i) in xterm_color_num_to_hsluv_color.items():
         color_dist = get_hsluv_color_dist(hsluv_color, hsluv_color_i)
