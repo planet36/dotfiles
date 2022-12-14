@@ -44,7 +44,7 @@ color_pattern = re.compile(r'\s*{(?P<red>\d+),'
                            re.ASCII)
 grey_pattern = re.compile('grey', re.ASCII | re.IGNORECASE)
 
-print("x11_colorname_to_rgb = {")
+print("name_to_rgb = {")
 for line in sys.stdin:
     match = color_pattern.fullmatch(line)
     if match:
@@ -57,7 +57,7 @@ for line in sys.stdin:
 print("}")
 
 print()
-print("xterm_color_num_to_rgb = {")
+print("num_to_rgb = {")
 
 # Color
 vals = [0] + list(range(95, 255+1, 40))
