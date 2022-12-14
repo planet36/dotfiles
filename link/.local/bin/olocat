@@ -8,11 +8,12 @@
 # pylint: disable=missing-module-docstring
 
 __author__ = 'Steven Ward'
-__version__ = '2022-12-08'
+__version__ = '2022-12-13'
 __license__ = 'OSL-3.0'
 
 from decimal import Decimal as D, ROUND_HALF_UP
 from enum import Enum, auto, unique
+from collections.abc import Sequence
 import io
 import math
 import re
@@ -28,6 +29,12 @@ from xterm_color import xterm_color_num_to_rgb_string
 # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
 ansi_escape = re.compile(r'((?:\x1B(?:[ -\/]+.|[\]PX^_][^\x07\x1B]*|\[[0-?]*.|.))*)(.?)', re.ASCII)
 incomplete_escape = re.compile(br'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$', re.ASCII)
+
+def cycle_seq(seq: Sequence, i: int=0):
+    while True:
+        i %= len(seq)
+        yield seq[i]
+        i += 1
 
 def can_be_decoded(b: bytes) -> bool:
     try:
@@ -212,9 +219,7 @@ def generate_RGB_colors(num_colors: int, lightness: float) -> list:
 def main(argv = None):
 
     # pylint: disable=import-outside-toplevel
-    import copy
     import getopt
-    import itertools
     import os
     import signal
 
@@ -435,9 +440,8 @@ OPTIONS
                 print(f'{color}\t{color_hex}')
         return 0
 
-    indexes = range(len(colors))
-
-    rows = itertools.cycle(indexes)
+    i = 0
+    color_cycle = cycle_seq(colors, i)
 
     bytes_read = bytearray(io.DEFAULT_BUFFER_SIZE)
 
@@ -459,8 +463,6 @@ OPTIONS
 
         for line in bytes_buf.decode().splitlines(keepends=True):
 
-            cols = copy.deepcopy(rows)
-
             # lolcat does this
             if '\t' in line:
                 line = line.expandtabs()
@@ -468,12 +470,12 @@ OPTIONS
             for (esc_seq, c) in ansi_escape.findall(line):
                 print(esc_seq, end='')
                 if len(c) > 0:
-                    print(ansi_sgr(c, colors[next(cols)], do_bg, do_rev), end='')
+                    print(ansi_sgr(c, next(color_cycle), do_bg, do_rev), end='')
 
             if line.endswith(os.linesep):
+                i += 1
+                color_cycle = cycle_seq(colors, i)
                 print(end=os.linesep)
-
-            next(rows)
 
         bytes_buf.clear()
 
