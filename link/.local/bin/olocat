@@ -11,7 +11,6 @@ __author__ = 'Steven Ward'
 __version__ = '2022-12-13'
 __license__ = 'OSL-3.0'
 
-from decimal import Decimal as D, ROUND_HALF_UP
 from enum import Enum, auto, unique
 from collections.abc import Sequence
 import io
@@ -44,40 +43,12 @@ def can_be_decoded(b: bytes) -> bool:
     else:
         return True
 
-# https://stackoverflow.com/a/7267280
-def drange(start: D, stop: D, step: D):
-    while start < stop:
-        yield start
-        start += step
-
 # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 # endpoint not included
 def linspace(start, stop, num: int):
     step = (stop - start) / num
     for i in range(num):
         yield start + step * i
-
-# https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
-# endpoint not included
-def dlinspace(start: D, stop: D, num: int):
-    step = (stop - start) / num
-    for i in range(num):
-        yield start + step * i
-
-def round_half_up_d(x: D) -> int:
-    return int(x.to_integral_value(rounding=ROUND_HALF_UP))
-
-def round_half_up_f(x: float) -> int:
-    return round_half_up_d(D(x))
-
-def round_half_up(x) -> int:
-    if isinstance(x, float):
-        return round_half_up_f(x)
-    if isinstance(x, D):
-        return round_half_up_d(x)
-    if isinstance(x, int):
-        return x
-    raise TypeError
 
 # Get the difference between the angles (degrees)
 def get_angle_deg_diff(a1: float, a2: float) -> float:
@@ -97,13 +68,6 @@ def get_cylinder_coord_dist(
     d3 = abs(z1 - z2) / 100
 
     return math.hypot(d1, d2, d3)
-
-def downscale_RGB(sRGBup: tuple) -> tuple:
-    return tuple((
-        sRGBup[0] / 255,
-        sRGBup[1] / 255,
-        sRGBup[2] / 255
-        ))
 
 def upscale_RGB(sRGB: tuple) -> tuple:
     return tuple((
