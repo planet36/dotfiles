@@ -52,6 +52,13 @@ def drange(start: D, stop: D, step: D):
 
 # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 # endpoint not included
+def linspace(start, stop, num: int):
+    step = (stop - start) / num
+    for i in range(num):
+        yield start + step * i
+
+# https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
+# endpoint not included
 def dlinspace(start: D, stop: D, num: int):
     step = (stop - start) / num
     for i in range(num):
@@ -100,9 +107,9 @@ def downscale_RGB(sRGBup: tuple) -> tuple:
 
 def upscale_RGB(sRGB: tuple) -> tuple:
     return tuple((
-        round_half_up(sRGB[0] * 255),
-        round_half_up(sRGB[1] * 255),
-        round_half_up(sRGB[2] * 255)
+        int(sRGB[0] * 255 + 0.5),
+        int(sRGB[1] * 255 + 0.5),
+        int(sRGB[2] * 255 + 0.5)
         ))
 
 @unique
@@ -193,25 +200,24 @@ def generate_hsluv_colors(num_colors: int, S: float, L: float) -> tuple:
     S, L in [0, 100]
     '''
 
-    start = D(0)
-    stop = D(360)
-
-    return tuple((float(H), S, L) for H in dlinspace(start, stop, num_colors))
+    start = 0
+    stop = 360
+    return tuple((H, S, L) for H in linspace(start, stop, num_colors))
 
 def generate_RGB_colors(num_colors: int, lightness: float) -> list:
     '''
     lightness in [0, 1]
     '''
 
-    start = D(0)
-    stop = D(1)
+    start = 0
+    stop = 1
 
     # inspired by lolcat
     return tuple((
         (math.cos(math.tau * float(x) + 0 * math.tau/3) + 1) / 2 * lightness,
         (math.cos(math.tau * float(x) + 2 * math.tau/3) + 1) / 2 * lightness,
         (math.cos(math.tau * float(x) + 1 * math.tau/3) + 1) / 2 * lightness
-        ) for x in dlinspace(start, stop, num_colors))
+        ) for x in linspace(start, stop, num_colors))
 
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
@@ -415,7 +421,6 @@ OPTIONS
             hsluv_colors = tuple(map(hsluv.rgb_to_hsluv, sRGB_colors))
 
     if use_true_color:
-
         sRGBup_colors = tuple(map(upscale_RGB, sRGB_colors))
         colors = sRGBup_colors
         ansi_sgr = ansi_sgr_24bit
