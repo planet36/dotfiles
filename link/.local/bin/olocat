@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: OSL-3.0
 
 # pylint: disable=invalid-name
-# pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
 
@@ -43,6 +42,12 @@ def can_be_decoded(b: bytes) -> bool:
     else:
         return True
 
+def reset_term():
+    # Adapted from:
+    # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
+    if sys.stdout.isatty():
+        print('\x1B[m\x1B[?25h\x1B[?1;5;2004l', end='')
+
 # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 # endpoint not included
 def linspace(start, stop, num: int):
@@ -76,6 +81,7 @@ def upscale_RGB(sRGB: tuple) -> tuple:
         int(sRGB[2] * 255 + 0.5)
         ))
 
+# pylint: disable=missing-class-docstring
 @unique
 class ColorSpace(Enum):
     HSLUV = auto()
@@ -225,6 +231,7 @@ def main(argv = None):
 
     # pylint: disable=unused-argument
     def signal_handler(signal_num, execution_frame):
+        reset_term()
         print()
         sys.exit(0)
 
@@ -456,10 +463,7 @@ OPTIONS
 
         bytes_buf.clear()
 
-    # Adapted from:
-    # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
-    if sys.stdout.isatty():
-        print('\x1B[m\x1B[?25h\x1B[?1;5;2004l', end='')
+    reset_term()
 
 if __name__ == '__main__':
     sys.exit(main())
