@@ -20,7 +20,7 @@ import datetime as dt
 #import math
 import os.path
 import platform
-import regex
+import re
 
 import gmpy2
 
@@ -281,7 +281,7 @@ def math_expr_to_c_identifier(s):
     )
 
     for p_r in pattern_replacement_map:
-        s = regex.sub(p_r[0], p_r[1], s)
+        s = re.sub(p_r[0], p_r[1], s)
 
     return 'M_' + s.strip('_')
 
