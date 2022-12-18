@@ -9,6 +9,7 @@ __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
 
 # https://en.cppreference.com/w/cpp/language/integer_literal
+# https://eel.is/c++draft/lex.icon#nt:integer-literal
 
 INT_DEC = '[-+]?[0-9]+' # (plain 0 is allowed)
 INT_OCT = '[-+]?0[0-7]*'
@@ -21,6 +22,8 @@ UINT_HEX = '0[Xx][0-9A-Fa-f]+'
 UINT_BIN = '0[Bb][01]+'
 
 # https://en.cppreference.com/w/cpp/language/floating_literal
+# https://eel.is/c++draft/lex.fcon#nt:decimal-floating-point-literal
+# https://eel.is/c++draft/lex.fcon#nt:hexadecimal-floating-point-literal
 
 FLOAT_FIXED = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)'
 FLOAT_SCIENTIFIC = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)'
