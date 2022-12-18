@@ -8,28 +8,38 @@
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
 
+SIGN_OPT = '[-+]?'
+HEX_PREFIX = '0[Xx]'
+
+FRACTIONAL_CONSTANT = r'(?:[0-9]+\.?[0-9]*|\.[0-9]+)'
+EXPONENT_PART = '(?:[Ee]' + SIGN_OPT + '[0-9]+)'
+EXPONENT_PART_OPT = EXPONENT_PART + '?'
+
+HEX_FRACTIONAL_CONSTANT = r'(?:[0-9A-Fa-f]+\.?[0-9A-Fa-f]*|\.[0-9A-Fa-f]+)'
+BIN_EXPONENT_PART = '(?:[Pp]' + SIGN_OPT + '[0-9]+)'
+
 # https://en.cppreference.com/w/cpp/language/integer_literal
 # https://eel.is/c++draft/lex.icon#nt:integer-literal
 
-INT_DEC = '[-+]?[0-9]+' # (plain 0 is allowed)
-INT_OCT = '[-+]?0[0-7]*'
-INT_HEX = '[-+]?0[Xx][0-9A-Fa-f]+'
-INT_BIN = '[-+]?0[Bb][01]+'
+INT_DEC = SIGN_OPT + '[0-9]+' # (plain 0 is allowed)
+INT_OCT = SIGN_OPT + '0[0-7]*'
+INT_HEX = SIGN_OPT + HEX_PREFIX + '[0-9A-Fa-f]+'
+INT_BIN = SIGN_OPT + '0[Bb][01]+'
 
 UINT_DEC = '[0-9]+' # (plain 0 is allowed)
 UINT_OCT = '0[0-7]*'
-UINT_HEX = '0[Xx][0-9A-Fa-f]+'
+UINT_HEX = HEX_PREFIX + '[0-9A-Fa-f]+'
 UINT_BIN = '0[Bb][01]+'
 
 # https://en.cppreference.com/w/cpp/language/floating_literal
 # https://eel.is/c++draft/lex.fcon#nt:decimal-floating-point-literal
 # https://eel.is/c++draft/lex.fcon#nt:hexadecimal-floating-point-literal
 
-FLOAT_FIXED = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)'
-FLOAT_SCIENTIFIC = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)'
-FLOAT = r'[-+]?(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:[Ee][-+]?[0-9]+)?'
-FLOAT_HEX = r'[-+]?0[Xx](?:[0-9A-Fa-f]+\.?[0-9A-Fa-f]*|\.[0-9A-Fa-f]+)(?:[Pp][-+]?[0-9]+)'
-# (hex-exponent is mandatory)
+FLOAT_FIXED = SIGN_OPT + FRACTIONAL_CONSTANT
+FLOAT_SCIENTIFIC = SIGN_OPT + FRACTIONAL_CONSTANT + EXPONENT_PART
+FLOAT = SIGN_OPT + FRACTIONAL_CONSTANT + EXPONENT_PART_OPT
+FLOAT_HEX = SIGN_OPT + HEX_PREFIX + HEX_FRACTIONAL_CONSTANT + BIN_EXPONENT_PART
+# (hex-exponent-part is mandatory)
 
 # test cases for float patterns:
 # https://regex101.com/r/ntU5j7/3
