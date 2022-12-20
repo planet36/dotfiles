@@ -10,7 +10,7 @@ __author__ = 'Steven Ward'
 __version__ = '2022-12-14'
 __license__ = 'OSL-3.0'
 
-from enum import Enum, auto, unique
+import enum
 from collections.abc import Sequence
 import io
 import math
@@ -81,10 +81,10 @@ def upscale_RGB(sRGB: tuple) -> tuple:
         ))
 
 # pylint: disable=missing-class-docstring
-@unique
-class ColorSpace(Enum):
-    HSLUV = auto()
-    LOLCAT = auto()
+@enum.unique
+class ColorSpace(enum.Enum):
+    HSLUV = enum.auto()
+    LOLCAT = enum.auto()
 
 def get_hsluv_color_dist(hsluv_color1, hsluv_color2) -> float:
     (H1, S1, L1) = hsluv_color1
