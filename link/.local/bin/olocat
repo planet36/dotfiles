@@ -18,7 +18,6 @@ import re
 import sys
 
 import hsluv
-import x11_colors
 
 # https://stackoverflow.com/a/14693789
 #ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', re.ASCII)
@@ -94,9 +93,26 @@ def get_hsluv_color_dist(hsluv_color1, hsluv_color2) -> float:
 
 ansi_color_num_to_hsluv_color = {}
 
-for (num, rgb) in x11_colors.num_to_rgb.items():
-    ansi_color_num_to_hsluv_color[num] = hsluv.rgb_to_hsluv(
-            (rgb[0] / 255, rgb[1] / 255, rgb[2] / 255))
+# Adapted from:
+# https://github.com/planet36/dotfiles/blob/main/link/.local/lib/python/x11_colors.py
+
+rgb_vals = [0] + list(range(95, 255+1, 40))
+
+# ANSI Colors (16..231)
+for i in range(216):
+    r = rgb_vals[(i // 36) % 6] / 255
+    g = rgb_vals[(i // 6) % 6] / 255
+    b = rgb_vals[i % 6] / 255
+    num = i + 16
+    ansi_color_num_to_hsluv_color[num] = hsluv.rgb_to_hsluv((r, g, b))
+
+# ANSI Grays (232..255)
+for i in range(24):
+    v = (i * 10 + 8) / 255
+    num = i + 232
+    ansi_color_num_to_hsluv_color[num] = hsluv.rgb_to_hsluv((v, v, v))
+
+del rgb_vals
 
 def get_closest_ansi_color_num_from_hsluv(hsluv_color: tuple) -> int:
 
