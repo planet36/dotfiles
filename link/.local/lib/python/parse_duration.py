@@ -31,6 +31,13 @@ duration_pattern = re.compile(r',?\s*'.join(
     for time_unit, abbr_pattern in time_unit_to_abbr_pattern.items()
     ), flags=re.ASCII)
 
+timedelta_pattern = re.compile(
+    '(?:(?P<days>[0-9]+) days?, )?'
+    '(?P<hours>[01]?[0-9]|2[0-3]):'
+    '(?P<minutes>[0-5][0-9]):'
+    r'(?P<seconds>[0-5][0-9](?:\.[0-9]+)?)'
+    , flags=re.ASCII)
+
 def parse_duration(duration: str) -> timedelta:
     '''
     Parse a duration string into a timedelta object.
@@ -47,7 +54,13 @@ def parse_duration(duration: str) -> timedelta:
 
         '12.3456 hours' => datetime.timedelta(seconds=44444, microseconds=160000)
 
+        '11 days, 22:33:44.555666' => '11 days, 22:33:44.555666'
+
+        '1:02:03.444555' => '1:02:03.444555'
+
         '12:34' => ValueError
+
+        '0:60:00' => ValueError
 
     Adapted from <https://stackoverflow.com/a/51916936>, which was adapted from
     <https://stackoverflow.com/a/4628148/851699>.
@@ -55,7 +68,7 @@ def parse_duration(duration: str) -> timedelta:
     See also <https://github.com/wroberts/pytimeparse>
     '''
 
-    match = duration_pattern.fullmatch(duration)
+    match = duration_pattern.fullmatch(duration) or timedelta_pattern.fullmatch(duration)
 
     if match is None:
         raise ValueError(f'Could not parse {duration=}')
