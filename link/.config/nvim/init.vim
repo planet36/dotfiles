@@ -55,7 +55,7 @@ set number
 
 " {{{ Status line
 
-set laststatus=2
+"set laststatus=2
 
 " }}}
 
