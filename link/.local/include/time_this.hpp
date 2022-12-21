@@ -29,7 +29,7 @@ nearest hundredth of a second) is printed (with a trailing newline) to stderr.
 struct time_this
 {
 public:
-	// http://www.cplusplus.com/forum/general/187899/#msg913531
+	// https://cplusplus.com/forum/general/187899/#msg913531
 	using timer_clock = typename std::conditional_t<
 	    std::chrono::high_resolution_clock::is_steady,
 	    std::chrono::high_resolution_clock,

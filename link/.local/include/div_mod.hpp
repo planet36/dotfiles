@@ -27,7 +27,7 @@ trunc_div_mod(const T x, const T y, T& quo, T& rem)
 
 /// get the quotient and remainder of the _floored_ integer division
 /**
-\sa http://python-history.blogspot.com/2010/08/why-pythons-integer-division-floors.html
+\sa https://python-history.blogspot.com/2010/08/why-pythons-integer-division-floors.html
 \sa https://eel.is/c++draft/expr.mul#4
 \sa https://stackoverflow.com/a/3602857
 \sa https://reference.wolfram.com/language/ref/Quotient.html

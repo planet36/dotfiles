@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-# http://mywiki.wooledge.org/BashFAQ/071
+# https://mywiki.wooledge.org/BashFAQ/071
 # converts decimal value to its ASCII character representation
 function chr2
 {

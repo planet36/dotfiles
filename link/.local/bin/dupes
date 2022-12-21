@@ -49,7 +49,7 @@ Descend at most max_depth levels of directories below path."""
     # https://github.com/python/cpython/issues/70968
 
     '''
-    http://stackoverflow.com/a/28200572
+    https://stackoverflow.com/questions/28200287/python-walk-directory-max-depth/28200572#28200572
     def contained_dirs(dir):
     return filter(os.path.isdir,
                   [os.path.join(dir, f) for f in os.listdir(dir)])

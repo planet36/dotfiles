@@ -16,7 +16,7 @@ You can start, stop, and reset the stopwatch.
 struct stopwatch
 {
 public:
-	// http://www.cplusplus.com/forum/general/187899/#msg913531
+	// https://cplusplus.com/forum/general/187899/#msg913531
 	using stopwatch_clock = typename std::conditional_t<
 	    std::chrono::high_resolution_clock::is_steady,
 	    std::chrono::high_resolution_clock,

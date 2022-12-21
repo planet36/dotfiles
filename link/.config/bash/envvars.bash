@@ -103,7 +103,7 @@ export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 # https://unix.stackexchange.com/a/147
 
 # man 5 terminfo
-# http://man7.org/linux/man-pages/man5/terminfo.5.html
+# https://man7.org/linux/man-pages/man5/terminfo.5.html
 
 # man terminfo | grep -A 1 -E '\<(mb|md|me|so|se|us|ue|mr|mh|ZN|ZV|ZO|ZW)\>'
 

@@ -10,9 +10,9 @@ __license__ = 'OSL-3.0'
 
 import re
 
-# http://www.regular-expressions.info/unicode.html
-# http://unicode.org/reports/tr18/#Categories
-# http://unicode.org/reports/tr44/#GC_Values_Table
+# https://www.regular-expressions.info/unicode.html
+# https://unicode.org/reports/tr18/#Categories
+# https://unicode.org/reports/tr44/#GC_Values_Table
 
 def str_to_int(s):
     '''Convert the string to an int if possible.'''
@@ -31,7 +31,7 @@ def split_ints(s, pattern):
     #return [str_to_int(c) for c in pattern.split(s)]
     return tuple(str_to_int(c) for c in pattern.split(s))
 
-# http://nedbatchelder.com/blog/200712/human_sorting.html
+# https://nedbatchelder.com/blog/200712/human_sorting.html
 # Sort the given list in the way that humans expect.
 # Turn a string into a list of string and number chunks.
 

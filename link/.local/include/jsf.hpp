@@ -5,7 +5,7 @@
 /**
 \file
 \author Steven Ward
-\sa http://burtleburtle.net/bob/rand/smallprng.html
+\sa https://burtleburtle.net/bob/rand/smallprng.html
 */
 
 #pragma once

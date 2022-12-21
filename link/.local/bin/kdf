@@ -198,7 +198,7 @@ OPTIONS
     print_verbose(f'iterations={iterations}')
     print_verbose(f'silent={silent}')
 
-    # http://www.doughellmann.com/PyMOTW/getpass/
+    # https://pymotw.com/3/getpass/index.html
     # "It is up to the caller to detect when the input stream is not a tty and
     # use an alternate method for reading in that case."
 

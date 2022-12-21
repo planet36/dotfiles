@@ -5,7 +5,7 @@
 /**
 \file
 \author Steven Ward
-\sa http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/SplittableRandom.java
+\sa https://hg.openjdk.java.net/jdk8/jdk8/jdk/file/tip/src/share/classes/java/util/SplittableRandom.java
 \sa https://gee.cs.oswego.edu/dl/papers/oopsla14.pdf
 */
 
