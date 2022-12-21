@@ -23,9 +23,9 @@ declare -a PLUGINS_OPT
 PLUGINS_OPT+=('https://github.com/srcery-colors/srcery-vim.git') # srcery
 PLUGINS_OPT+=('https://github.com/vim-scripts/candycode.vim.git')
 PLUGINS_OPT+=('https://github.com/fneu/breezy.git')
-#PLUGINS_OPT+=('https://github.com/mhartington/oceanic-next.git') # OceanicNext
-#PLUGINS_OPT+=('https://github.com/projekt0n/github-nvim-theme.git') # github_dark_default
-#PLUGINS_OPT+=('https://github.com/morhetz/gruvbox.git')
+PLUGINS_OPT+=('https://github.com/mhartington/oceanic-next.git') # OceanicNext
+PLUGINS_OPT+=('https://github.com/projekt0n/github-nvim-theme.git') # github_dark_default
+PLUGINS_OPT+=('https://github.com/morhetz/gruvbox.git')
 #PLUGINS_OPT+=('https://github.com/flazz/vim-colorschemes.git')
 
 mkdir --verbose --parents -- start
