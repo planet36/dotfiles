@@ -223,7 +223,8 @@ nnoremap <F9> :vertical resize +1<CR>
 augroup help_window_right
     autocmd!
     " Move the current window to be at the far right
-    autocmd FileType help wincmd L
+    " https://vi.stackexchange.com/a/4464
+    autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 augroup END
 
 " }}}
