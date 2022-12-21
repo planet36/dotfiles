@@ -174,7 +174,7 @@ EOF
 set whichwrap=<,>,[,]
 set matchpairs+=<:>
 set scrolloff=6
-set cmdheight=1
+"set cmdheight=1
 
 " }}}
 
