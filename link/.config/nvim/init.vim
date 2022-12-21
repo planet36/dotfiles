@@ -502,7 +502,7 @@ set cursorline
 
 "colorscheme default
 
-set background=dark
+"set background=dark
 
 let s:colorscheme_list = [
             \ 'srcery',
