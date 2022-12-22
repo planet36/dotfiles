@@ -470,18 +470,6 @@ augroup END
 
 " }}}
 
-" {{{ Restore cursor
-
-" *restore-cursor* *last-position-jump*
-"autocmd BufReadPost *
-"\ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-"\ |   exe "normal! g`\""
-"\ | endif
-
-lua require'nvim-lastplace'.setup{}
-
-" }}}
-
 " {{{ Command to start Python 3
 
 let g:python3_host_prog = '/usr/bin/python3'
