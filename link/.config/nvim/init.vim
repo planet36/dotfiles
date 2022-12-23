@@ -310,12 +310,6 @@ nnoremap <Leader>W :match none<CR>
 nnoremap <Leader>c :2match ErrorMsg /\v%>80v.+/<CR>
 nnoremap <Leader>C :2match none<CR>
 
-augroup filetype_html
-	autocmd!
-	" create folds for the tag at the cursor
-	autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
-augroup END
-
 nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
