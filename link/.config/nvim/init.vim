@@ -83,7 +83,7 @@ EOT
 " {{{ Syntax highlighting
 
 " :help syn-sync
-lua vim.cmd('syntax sync fromstart')
+lua vim.cmd.syntax('sync', 'fromstart')
 
 lua vim.o.termguicolors = true
 
@@ -243,7 +243,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		if vim.o.buftype == 'help' then
 			-- Move the current window to be at the far right
 			-- https://vi.stackexchange.com/a/4464
-			vim.cmd("wincmd L")
+			vim.cmd.wincmd("L")
 		end
 	end
 })
