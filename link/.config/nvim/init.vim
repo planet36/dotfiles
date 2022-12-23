@@ -431,54 +431,6 @@ vnoremap <Leader>* :<c-u>call <SID>VisualSurround(visualmode(), '/*', '*/')<CR>
 
 " {{{ Abbreviations
 
-"inoreabbrev amek make
-"inoreabbrev amke make
-"inoreabbrev becuase because
-"inoreabbrev cdl cld
-"inoreabbrev clena clean
-"inoreabbrev constepxr constexpr
-"inoreabbrev csl cls
-"inoreabbrev daefult default
-"inoreabbrev dafeult default
-"inoreabbrev deafult default
-"inoreabbrev delctype decltype
-"inoreabbrev dfeualt default
-"inoreabbrev doen done
-"inoreabbrev dpritnf dprintf
-"inoreabbrev ecoh echo
-"inoreabbrev ehre here
-"inoreabbrev fpritnf fprintf
-"inoreabbrev ifle file
-"inoreabbrev maek make
-"inoreabbrev medl meld
-"inoreabbrev onece once
-"inoreabbrev pramga pragma
-"inoreabbrev pritn print
-"inoreabbrev pritnf printf
-"inoreabbrev reurn return
-"inoreabbrev reutrn return
-"inoreabbrev snpritnf snprintf
-"inoreabbrev soem some
-"inoreabbrev soemthgin something
-"inoreabbrev soemthign something
-"inoreabbrev soemthing something
-"inoreabbrev somethign something
-"inoreabbrev spritnf sprintf
-"inoreabbrev TEh The
-"inoreabbrev Teh The
-"inoreabbrev teh the
-"inoreabbrev THe The
-"inoreabbrev TODOO TODO
-"inoreabbrev TOOD TODO
-"inoreabbrev treu true
-"inoreabbrev vdpritnf vdprintf
-"inoreabbrev vfpritnf vfprintf
-"inoreabbrev vpritnf vprintf
-"inoreabbrev vsnpritnf vsnprintf
-"inoreabbrev vspritnf vsprintf
-"inoreabbrev whcih which
-"inoreabbrev wiht with
-"inoreabbrev witht with
 lua vim.cmd.inoreabbrev('amek', 'make')
 lua vim.cmd.inoreabbrev('amke', 'make'          )
 lua vim.cmd.inoreabbrev('becuase', 'because'    )
