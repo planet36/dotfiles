@@ -58,12 +58,6 @@ lua vim.o.number = true
 
 " }}}
 
-" {{{ Status line
-
-"set laststatus=2
-
-" }}}
-
 " {{{ File type
 
 lua << EOT
@@ -89,7 +83,6 @@ EOT
 " {{{ Syntax highlighting
 
 " :help syn-sync
-"syntax sync minlines=300
 lua vim.cmd('syntax sync fromstart')
 
 lua vim.o.termguicolors = true
@@ -133,8 +126,6 @@ endfunc
 
 " {{{ Indentation
 
-"set smartindent
-"set noexpandtab
 lua vim.o.shiftwidth=4
 lua vim.o.softtabstop=4
 lua vim.o.tabstop=4
@@ -196,7 +187,6 @@ EOT
 
 " {{{ UI
 
-"set cmdheight=1
 lua vim.o.whichwrap = '<,>,[,]'
 lua vim.opt.matchpairs:append { '<:>' }
 lua vim.o.scrolloff = 6
@@ -505,17 +495,6 @@ augroup END
 " {{{ Command to start Python 3
 
 lua vim.g.python3_host_prog = '/usr/bin/python3'
-
-" }}}
-
-" {{{ Source files
-
-"let s:source_these_files = [
-"			\ ]
-"
-"for f in s:source_these_files
-"	execute 'source ' . stdpath('config') . '/' . f
-"endfor
 
 " }}}
 
