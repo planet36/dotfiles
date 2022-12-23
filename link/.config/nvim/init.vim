@@ -27,9 +27,9 @@ set undofile
 set backupdir-=.
 
 augroup backup_extension_timestamp
-    autocmd!
-    " String which is appended to a file name to make the name of the backup file.
-    autocmd BufWritePre * let &backupext = '~' . strftime('%Y%m%dT%H%M%S') . '~'
+	autocmd!
+	" String which is appended to a file name to make the name of the backup file.
+	autocmd BufWritePre * let &backupext = '~' . strftime('%Y%m%dT%H%M%S') . '~'
 augroup END
 
 " }}}
@@ -103,10 +103,10 @@ nmap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " Show syntax highlighting groups for word under cursor
 nmap <F4> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+	if !exists("*synstack")
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
 " }}}
@@ -127,9 +127,9 @@ set cinoptions=:0,g0,N-s,t0,c0,C1
 " {{{ C/C++ block comments
 
 augroup c_cpp_block_comments
-    autocmd!
-    " A comma separated list of strings that can start a comment line.  See |format-comments|.  See |option-backslash| about using backslashes to insert a space.
-    autocmd FileType c,cpp setlocal comments^=s:/*,mb:*,ex:*/
+	autocmd!
+	" A comma separated list of strings that can start a comment line.  See |format-comments|.  See |option-backslash| about using backslashes to insert a space.
+	autocmd FileType c,cpp setlocal comments^=s:/*,mb:*,ex:*/
 augroup END
 
 " }}}
@@ -162,8 +162,8 @@ vnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<CR>//gc<left><left><left>
 
 lua << EOF
 if vim.env.TMUX ~= nil then
-  -- TMUX is set
-  vim.o.mouse = ''
+	-- TMUX is set
+	vim.o.mouse = ''
 end
 EOF
 
@@ -221,10 +221,10 @@ nnoremap <F9> :vertical resize +1<CR>
 
 " Open help window in a vertical split to the right.
 augroup help_window_right
-    autocmd!
-    " Move the current window to be at the far right
-    " https://vi.stackexchange.com/a/4464
-    autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
+	autocmd!
+	" Move the current window to be at the far right
+	" https://vi.stackexchange.com/a/4464
+	autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 augroup END
 
 " }}}
@@ -265,12 +265,12 @@ nnoremap <down> gj
 nnoremap <up> gk
 
 function! <SID>RemoveTrailingWhitespace()
-    let _s=@/
-    let l = line('.')
-    let c = col('.')
-    %s/\v\s+$//e
-    let @/=_s
-    call cursor(l, c)
+	let _s=@/
+	let l = line('.')
+	let c = col('.')
+	%s/\v\s+$//e
+	let @/=_s
+	call cursor(l, c)
 endfunction
 
 " remove trailing whitespace.
@@ -289,9 +289,9 @@ nnoremap <Leader>c :2match ErrorMsg /\v%>80v.+/<CR>
 nnoremap <Leader>C :2match none<CR>
 
 augroup filetype_html
-    autocmd!
-    " create folds for the tag at the cursor
-    autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
+	autocmd!
+	" create folds for the tag at the cursor
+	autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
 augroup END
 
 nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
@@ -344,26 +344,26 @@ vnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
 
 function! s:VisualSurround(type, text, ...)
 
-    let l_text = a:text
+	let l_text = a:text
 
-    if a:0 > 0
-        let r_text = a:1
-    else
-        let r_text = l_text
-    endif
+	if a:0 > 0
+		let r_text = a:1
+	else
+		let r_text = l_text
+	endif
 
-    if a:type ==? "v"
-        " v or V
-        " visual character mode or visual line mode
-        execute "normal! \<esc>`>a" . r_text . "\<esc>`<i" . l_text . "\<esc>"
-    elseif a:type ==# "\<c-v>"
-        " visual block mode
-        " ##### XXX: this doesn't work
-        "execute "normal! gvA" . r_text . "\<esc>gvI" . l_text . "\<esc>"
-        execute "normal! \<esc>gvA" . r_text . "\<esc>gvI" . l_text . "\<esc>"
-    else
-        return
-    endif
+	if a:type ==? "v"
+		" v or V
+		" visual character mode or visual line mode
+		execute "normal! \<esc>`>a" . r_text . "\<esc>`<i" . l_text . "\<esc>"
+	elseif a:type ==# "\<c-v>"
+		" visual block mode
+		" ##### XXX: this doesn't work
+		"execute "normal! gvA" . r_text . "\<esc>gvI" . l_text . "\<esc>"
+		execute "normal! \<esc>gvA" . r_text . "\<esc>gvI" . l_text . "\<esc>"
+	else
+		return
+	endif
 
 endfunction
 
@@ -461,11 +461,11 @@ nnoremap <M-Down> ]c
 
 " Change colorscheme to default when entering diff mode
 augroup ChangeColorsInDiff
-    autocmd!
-    " https://vi.stackexchange.com/a/13395
-    autocmd VimEnter,FilterWritePre * if &diff | colorscheme default | endif
-    " https://vi.stackexchange.com/a/12852
-    autocmd OptionSet diff colorscheme default
+	autocmd!
+	" https://vi.stackexchange.com/a/13395
+	autocmd VimEnter,FilterWritePre * if &diff | colorscheme default | endif
+	" https://vi.stackexchange.com/a/12852
+	autocmd OptionSet diff colorscheme default
 augroup END
 
 " }}}
@@ -479,10 +479,10 @@ let g:python3_host_prog = '/usr/bin/python3'
 " {{{ Source files
 
 let s:source_these_files = [
-            \ ]
+			\ ]
 
 for f in s:source_these_files
-    execute 'source ' . stdpath('config') . '/' . f
+	execute 'source ' . stdpath('config') . '/' . f
 endfor
 
 " }}}
@@ -496,23 +496,23 @@ set cursorline
 "set background=dark
 
 let s:colorscheme_list = [
-            \ 'srcery',
-            \ 'candycode',
-            \ 'breezy',
-            \ 'OceanicNext',
-            \ 'github_dark_default',
-            \ 'gruvbox',
-            \ 'murphy',
-            \ ]
+			\ 'srcery',
+			\ 'candycode',
+			\ 'breezy',
+			\ 'OceanicNext',
+			\ 'github_dark_default',
+			\ 'gruvbox',
+			\ 'murphy',
+			\ ]
 
 for c in s:colorscheme_list
 
-    try
-        execute 'colorscheme '.c
-        break
-    catch /^Vim\%((\a\+)\)\=:E185/ " catch error E185
-        continue
-    endtry
+	try
+		execute 'colorscheme '.c
+		break
+	catch /^Vim\%((\a\+)\)\=:E185/ " catch error E185
+		continue
+	endtry
 
 endfor
 
