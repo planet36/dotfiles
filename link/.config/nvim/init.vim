@@ -5,51 +5,73 @@
 
 " {{{ Turn off provider warnings
 
-let g:loaded_ruby_provider = 0
-let g:loaded_node_provider = 0
-let g:loaded_perl_provider = 0
+"let g:loaded_ruby_provider = 0
+"let g:loaded_node_provider = 0
+"let g:loaded_perl_provider = 0
+lua vim.g.loaded_ruby_provider = 0
+lua vim.g.loaded_node_provider = 0
+lua vim.g.loaded_perl_provider = 0
 
 " }}}
 
 " {{{ Clipboard
 
 " This option is a list of comma separated names.
-set clipboard+=unnamedplus
+"set clipboard+=unnamedplus
+lua vim.opt.clipboard:append { 'unnamedplus' }
 
 " }}}
 
 " {{{ Backup files & directory, swap directory, undo files & directory
 
-set backup
+"set backup
+lua vim.o.backup = true
 
-set undofile
+"set undofile
+lua vim.o.undofile = true
 
-set backupdir-=.
+"set backupdir-=.
+lua vim.opt.backupdir:remove { '.' }
 
-augroup backup_extension_timestamp
-	autocmd!
-	" String which is appended to a file name to make the name of the backup file.
-	autocmd BufWritePre * let &backupext = '~' . strftime('%Y%m%dT%H%M%S') . '~'
-augroup END
+"augroup backup_extension_timestamp
+"	autocmd!
+"	" String which is appended to a file name to make the name of the backup file.
+"	autocmd BufWritePre * let &backupext = '~' . strftime('%Y%m%dT%H%M%S') . '~'
+"augroup END
+
+lua << EOT
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = vim.api.nvim_create_augroup("backup_extension_timestamp", { clear = true }),
+	pattern = { "*" },
+	callback = function()
+		-- String which is appended to a file name to make the name of the backup file.
+		vim.o.backupext = '~' .. os.date('%Y%m%dT%H%M%S') .. '~'
+	end
+})
+EOT
 
 " }}}
 
 " {{{ Include path
 
-set path+=~/.local/include
+"set path+=~/.local/include
+lua vim.opt.path:append { vim.fs.normalize('~/.local/include') }
 
 " }}}
 
 " {{{ ignore case when completing file names and directories
 
-set fileignorecase
-set wildignorecase
+"set fileignorecase
+"set wildignorecase
+lua vim.o.fileignorecase = true
+lua vim.o.wildignorecase = true
 
 " }}}
 
 " {{{ Line numbers
 
-set number
+"set number
+lua vim.o.number = true
 
 " }}}
 
@@ -61,33 +83,60 @@ set number
 
 " {{{ File type
 
-autocmd BufRead,BufNewFile *.cal setfiletype c
-autocmd BufRead,BufNewFile *.fish setfiletype sh
+"autocmd BufRead,BufNewFile *.cal setfiletype c
+"autocmd BufRead,BufNewFile *.fish setfiletype sh
+
+lua << EOT
+vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
+	pattern = {"*.cal"},
+	callback = function()
+		vim.o.filetype = 'c'
+	end
+})
+EOT
+
+lua << EOT
+vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
+	pattern = {"*.fish"},
+	callback = function()
+		vim.o.filetype = 'sh'
+	end
+})
+EOT
 
 " }}}
 
 " {{{ Syntax highlighting
 
 " :help syn-sync
-syntax sync fromstart
+"syntax sync fromstart
 "syntax sync minlines=300
+lua vim.cmd('syntax sync fromstart')
 
-set termguicolors
+"set termguicolors
+lua vim.o.termguicolors = true
 
-let c_comment_strings=1
-let c_space_errors=1
-let c_curly_error=1
-let c_minlines=200
+"let c_comment_strings=1
+"let c_space_errors=1
+"let c_curly_error=1
+"let c_minlines=200
+lua vim.g.c_comment_strings = 1
+lua vim.g.c_space_errors = 1
+lua vim.g.c_curly_error = 1
+lua vim.g.c_minlines = 200
 
 " :help doxygen-syntax
-let g:load_doxygen_syntax=1
+"let g:load_doxygen_syntax=1
+lua vim.g.load_doxygen_syntax = 1
 
 " WARNING: Uses italic fonts
 "let g:doxygen_enhanced_color=1
 
-set list
+"set list
+lua vim.o.list = true
 
-set listchars+=trail:\\u2423
+"set listchars+=trail:\\u2423
+lua vim.opt.listchars:append { trail = [[\u2423]]}
 
 " }}}
 
@@ -115,30 +164,48 @@ endfunc
 
 "set smartindent
 "set noexpandtab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+"set shiftwidth=4
+"set softtabstop=4
+"set tabstop=4
+lua vim.o.shiftwidth=4
+lua vim.o.softtabstop=4
+lua vim.o.tabstop=4
 
 " :help cinoptions-values
-set cinoptions=:0,g0,N-s,t0,c0,C1
+"set cinoptions=:0,g0,N-s,t0,c0,C1
+lua vim.o.cinoptions = ':0,g0,N-s,t0,c0,C1'
 
 " }}}
 
 " {{{ C/C++ block comments
 
-augroup c_cpp_block_comments
-	autocmd!
-	" A comma separated list of strings that can start a comment line.  See |format-comments|.  See |option-backslash| about using backslashes to insert a space.
-	autocmd FileType c,cpp setlocal comments^=s:/*,mb:*,ex:*/
-augroup END
+"augroup c_cpp_block_comments
+"	autocmd!
+"	" A comma separated list of strings that can start a comment line.  See |format-comments|.  See |option-backslash| about using backslashes to insert a space.
+"	autocmd FileType c,cpp setlocal comments^=s:/*,mb:*,ex:*/
+"augroup END
+
+lua << EOT
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("c_cpp_block_comments", { clear = true }),
+	pattern = { "c,cpp" }, -- matched against filetype
+	callback = function()
+		-- :help format-comments
+		vim.o.comments = string.gsub(vim.o.comments, "s1:", "s:")
+	end
+})
+EOT
 
 " }}}
 
 " {{{ Searching
 
-set nowrapscan
-set ignorecase
-set smartcase
+"set nowrapscan
+"set ignorecase
+"set smartcase
+lua vim.o.wrapscan = false
+lua vim.o.ignorecase = true
+lua vim.o.smartcase = true
 
 " Stop the highlighting for the 'hlsearch' option.
 nnoremap <silent> <Leader><space> :nohlsearch<CR>
@@ -171,17 +238,22 @@ EOT
 
 " {{{ UI
 
-set whichwrap=<,>,[,]
-set matchpairs+=<:>
-set scrolloff=6
+"set whichwrap=<,>,[,]
+"set matchpairs+=<:>
+"set scrolloff=6
 "set cmdheight=1
+lua vim.o.whichwrap = '<,>,[,]'
+lua vim.opt.matchpairs:append { '<:>' }
+lua vim.o.scrolloff = 6
 
 " }}}
 
 " {{{ Splitting
 
-set splitbelow
-set splitright
+"set splitbelow
+"set splitright
+lua vim.o.splitbelow = true
+lua vim.o.splitright = true
 
 nnoremap <Leader>h :split<CR>
 nnoremap <Leader>v :vsplit<CR>
@@ -220,19 +292,36 @@ nnoremap <F9> :vertical resize +1<CR>
 
 
 " Open help window in a vertical split to the right.
-augroup help_window_right
-	autocmd!
-	" Move the current window to be at the far right
-	" https://vi.stackexchange.com/a/4464
-	autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
-augroup END
+"augroup help_window_right
+"	autocmd!
+"	" Move the current window to be at the far right
+"	" https://vi.stackexchange.com/a/4464
+"	autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
+"augroup END
+
+lua << EOT
+-- Open help window in a vertical split to the right.
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = vim.api.nvim_create_augroup("help_window_right", { clear = true }),
+	pattern = { "*.txt" },
+	callback = function()
+		if vim.o.buftype == 'help' then
+			-- Move the current window to be at the far right
+			-- https://vi.stackexchange.com/a/4464
+			vim.cmd("wincmd L")
+		end
+	end
+})
+EOT
 
 " }}}
 
 " {{{ Folding
 
-set foldmethod=marker
-set foldlevelstart=99
+"set foldmethod=marker
+"set foldlevelstart=99
+lua vim.o.foldmethod = 'marker'
+lua vim.o.foldlevelstart = 99
 
 " }}}
 
@@ -472,49 +561,70 @@ augroup END
 
 " {{{ Command to start Python 3
 
-let g:python3_host_prog = '/usr/bin/python3'
+"let g:python3_host_prog = '/usr/bin/python3'
+lua vim.g.python3_host_prog = '/usr/bin/python3'
 
 " }}}
 
 " {{{ Source files
 
-let s:source_these_files = [
-			\ ]
-
-for f in s:source_these_files
-	execute 'source ' . stdpath('config') . '/' . f
-endfor
+"let s:source_these_files = [
+"			\ ]
+"
+"for f in s:source_these_files
+"	execute 'source ' . stdpath('config') . '/' . f
+"endfor
 
 " }}}
 
 " {{{ Color schemes
 
-set cursorline
+"set cursorline
+lua vim.o.cursorline = true
 
 "colorscheme default
 
 "set background=dark
 
-let s:colorscheme_list = [
-			\ 'srcery',
-			\ 'candycode',
-			\ 'breezy',
-			\ 'OceanicNext',
-			\ 'github_dark_default',
-			\ 'gruvbox',
-			\ 'murphy',
-			\ ]
+"let s:colorscheme_list = [
+"			\ 'srcery',
+"			\ 'candycode',
+"			\ 'breezy',
+"			\ 'OceanicNext',
+"			\ 'github_dark_default',
+"			\ 'gruvbox',
+"			\ 'murphy',
+"			\ ]
+"
+"for c in s:colorscheme_list
+"
+"	try
+"		execute 'colorscheme '.c
+"		break
+"	catch /^Vim\%((\a\+)\)\=:E185/ " catch error E185
+"		continue
+"	endtry
+"
+"endfor
 
-for c in s:colorscheme_list
+lua << EOT
+local colorscheme_list = {
+	'srcery',
+	'candycode',
+	'breezy',
+	'OceanicNext',
+	'github_dark_default',
+	'gruvbox',
+	'murphy',
+}
 
-	try
-		execute 'colorscheme '.c
-		break
-	catch /^Vim\%((\a\+)\)\=:E185/ " catch error E185
-		continue
-	endtry
-
-endfor
+-- https://www.lua.org/pil/7.3.html
+-- https://stackoverflow.com/a/55109411/1892784
+for i, c in ipairs(colorscheme_list) do
+	local ok, result = pcall(vim.cmd, 'colorscheme ' .. c)
+	if ok then break end
+end
+EOT
 
 
 "highlight clear CursorLine
