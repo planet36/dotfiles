@@ -295,11 +295,27 @@ function! <SID>RemoveTrailingWhitespace()
 	call cursor(l, c)
 endfunction
 
+lua <<EOT
+function remove_trailing_whitespace()
+	-- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
+	-- https://neovim.io/doc/user/builtin.html#getreginfo()
+	-- https://neovim.io/doc/user/builtin.html#setreg()
+	-- https://neovim.io/doc/user/api.html#nvim_win_set_cursor()
+	local cursor_pos = vim.api.nvim_win_get_cursor(0)
+	local reg_info = vim.fn.getreginfo('/')
+	vim.cmd([[%s/\v\s+$//e]])
+	vim.fn.setreg('/', reg_info)
+	vim.api.nvim_win_set_cursor(0, cursor_pos)
+end
+EOT
+
 " remove trailing whitespace.
 " / is the last search pattern register
 "nnoremap <Leader>S :%s/\v\s+$//e<NL>:let @/=''<NL>
 "nnoremap <Leader>S :%s/\s\+$//e<NL>:let @/=''<NL>
-nnoremap <silent> <Leader>S :<c-u>call <SID>RemoveTrailingWhitespace()<NL>
+"nnoremap <silent> <Leader>S :<c-u>call <SID>RemoveTrailingWhitespace()<NL>
+
+lua vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end)
 
 
 " Highlight trailing whitespace.
