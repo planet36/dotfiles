@@ -160,17 +160,17 @@ lua vim.o.smartcase = true
 nnoremap <silent> <Leader><space> :nohlsearch<CR>
 
 " Find selected text
-"vnoremap // y/<C-r>"
+"xnoremap // y/<C-r>"
 " TODO: need to escape regex special characters
-vnoremap // y/<C-r>=escape(@", '/.~^$*\[]')<CR>
+xnoremap // y/<C-r>=escape(@", '/.~^$*\[]')<CR>
 
 " Replace selected text
-vnoremap <C-r> y:%s/<C-r>"//gc<left><left><left>
+xnoremap <C-r> y:%s/<C-r>"//gc<left><left><left>
 " also do escaping of regex special chars
-"vnoremap <C-e> y:%s/substitute(<C-r>", '[^0-9A-Za-z_]')//gc<left><left><left>
-"vnoremap <C-e> y:%s/<C-r>=escape(@", '/\')<CR>//gc<left><left><left>
+"xnoremap <C-e> y:%s/substitute(<C-r>", '[^0-9A-Za-z_]')//gc<left><left><left>
+"xnoremap <C-e> y:%s/<C-r>=escape(@", '/\')<CR>//gc<left><left><left>
 " TODO: need to escape regex special characters
-vnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<CR>//gc<left><left><left>
+xnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<CR>//gc<left><left><left>
 
 " }}}
 
@@ -264,8 +264,8 @@ inoremap jj <esc>
 "inoremap kkk <esc>
 nnoremap H 0
 nnoremap L $
-vnoremap H 0
-vnoremap L $
+xnoremap H 0
+xnoremap L $
 inoremap <c-d> <esc>ddi
 inoremap <c-s> <c-o>:update<CR>
 
@@ -329,31 +329,31 @@ nnoremap <Leader>' viW<esc>a'<esc>Bi'<esc>
 nnoremap <Leader>g :execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<CR>:copen<CR>
 
 
-vnoremap <tab> %
+xnoremap <tab> %
 
 " save my left pinky
-vnoremap <space> :
+xnoremap <space> :
 
-vnoremap <down> gj
-vnoremap <up> gk
+xnoremap <down> gj
+xnoremap <up> gk
 
-vnoremap <c-s> <esc>:update<CR>gv
+xnoremap <c-s> <esc>:update<CR>gv
 
 " SDW: Their implementation is annoying.  This tries to make visual mode put more usable.
 
 " https://stackoverflow.com/a/5093286
 " https://stackoverflow.com/questions/290465/vim-how-to-paste-over-without-overwriting-register#comment71467536_5093286
 " https://stackoverflow.com/a/15266864
-vnoremap <expr> <silent>p 'pgv"' . v:register . 'y`>'
-vnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
-"vnoremap <silent>p pgvy`>
-"vnoremap <silent>P Pgvy`>
-"vnoremap <silent>p pgvygv<Esc>
-"vnoremap <silent>x Pgvygv<Esc>
+xnoremap <expr> <silent>p 'pgv"' . v:register . 'y`>'
+xnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
+"xnoremap <silent>p pgvy`>
+"xnoremap <silent>P Pgvy`>
+"xnoremap <silent>p pgvygv<Esc>
+"xnoremap <silent>x Pgvygv<Esc>
 
 " Don't clobber the clipboard register when pasting over text in visual mode.
-"vnoremap <expr> <silent>p 'pgv<Esc>:let @' . v:register . '=@*<CR>'
-"vnoremap <expr> <silent>P 'Pgv<Esc>:let @' . v:register . '=@*<CR>'
+"xnoremap <expr> <silent>p 'pgv<Esc>:let @' . v:register . '=@*<CR>'
+"xnoremap <expr> <silent>P 'Pgv<Esc>:let @' . v:register . '=@*<CR>'
 
 " Other solutions that aren't as good:
 " https://superuser.com/questions/321547/how-do-i-replace-paste-yanked-text-in-vim-without-yanking-the-deleted-lines
@@ -385,31 +385,31 @@ endfunction
 
 
 " this doesn't work in visual mode, only visual block mode
-"vnoremap <Leader>' A'<esc>gvI'<esc>
-"vnoremap <Leader>" A"<esc>gvI"<esc>
+"xnoremap <Leader>' A'<esc>gvI'<esc>
+"xnoremap <Leader>" A"<esc>gvI"<esc>
 
 " this works in visual mode, but not in visual block mode
-"vnoremap <Leader>' <esc>`>a'<esc>`<i'<esc>
-"vnoremap <Leader>" <esc>`>a"<esc>`<i"<esc>
-"vnoremap <Leader>( <esc>`>a)<esc>`<i(<esc>
-"vnoremap <Leader>[ <esc>`>a]<esc>`<i[<esc>
-"vnoremap <Leader>{ <esc>`>a}<esc>`<i{<esc>
-"vnoremap <Leader>< <esc>`>a><esc>`<i<<esc>
+"xnoremap <Leader>' <esc>`>a'<esc>`<i'<esc>
+"xnoremap <Leader>" <esc>`>a"<esc>`<i"<esc>
+"xnoremap <Leader>( <esc>`>a)<esc>`<i(<esc>
+"xnoremap <Leader>[ <esc>`>a]<esc>`<i[<esc>
+"xnoremap <Leader>{ <esc>`>a}<esc>`<i{<esc>
+"xnoremap <Leader>< <esc>`>a><esc>`<i<<esc>
 
 " this works in visual mode, and in visual block mode, but not visual line
 " mode
-"vnoremap <Leader>' c''<Esc>P
-"vnoremap <Leader>" c""<Esc>P
+"xnoremap <Leader>' c''<Esc>P
+"xnoremap <Leader>" c""<Esc>P
 
-vnoremap <Leader>` :<c-u>call <SID>VisualSurround(visualmode(), "`")<CR>
-vnoremap <Leader>' :<c-u>call <SID>VisualSurround(visualmode(), "'")<CR>
-vnoremap <Leader>" :<c-u>call <SID>VisualSurround(visualmode(), '"')<CR>
-vnoremap <Leader>( :<c-u>call <SID>VisualSurround(visualmode(), '(', ')')<CR>
-vnoremap <Leader>[ :<c-u>call <SID>VisualSurround(visualmode(), '[', ']')<CR>
-vnoremap <Leader>{ :<c-u>call <SID>VisualSurround(visualmode(), '{', '}')<CR>
-vnoremap <Leader>< :<c-u>call <SID>VisualSurround(visualmode(), '<', '>')<CR>
-vnoremap <Leader>* :<c-u>call <SID>VisualSurround(visualmode(), '/*', '*/')<CR>
-"vnoremap <Leader>x :call VisualSurround(visualmode(), '_')<CR>
+xnoremap <Leader>` :<c-u>call <SID>VisualSurround(visualmode(), "`")<CR>
+xnoremap <Leader>' :<c-u>call <SID>VisualSurround(visualmode(), "'")<CR>
+xnoremap <Leader>" :<c-u>call <SID>VisualSurround(visualmode(), '"')<CR>
+xnoremap <Leader>( :<c-u>call <SID>VisualSurround(visualmode(), '(', ')')<CR>
+xnoremap <Leader>[ :<c-u>call <SID>VisualSurround(visualmode(), '[', ']')<CR>
+xnoremap <Leader>{ :<c-u>call <SID>VisualSurround(visualmode(), '{', '}')<CR>
+xnoremap <Leader>< :<c-u>call <SID>VisualSurround(visualmode(), '<', '>')<CR>
+xnoremap <Leader>* :<c-u>call <SID>VisualSurround(visualmode(), '/*', '*/')<CR>
+"xnoremap <Leader>x :call VisualSurround(visualmode(), '_')<CR>
 
 " }}}
 
