@@ -286,15 +286,6 @@ nnoremap <space> :
 nnoremap <down> gj
 nnoremap <up> gk
 
-function! <SID>RemoveTrailingWhitespace()
-	let _s=@/
-	let l = line('.')
-	let c = col('.')
-	%s/\v\s+$//e
-	let @/=_s
-	call cursor(l, c)
-endfunction
-
 lua <<EOT
 function remove_trailing_whitespace()
 	-- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
