@@ -384,6 +384,25 @@ function! s:VisualSurround(type, text, ...)
 endfunction
 
 
+lua <<EOT
+function visual_surround(l_text, r_text)
+
+	-- https://neovim.io/doc/user/api.html#nvim_replace_termcodes()
+	-- https://neovim.io/doc/user/builtin.html#feedkeys()
+	local esc = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
+	local cntrl_v = vim.api.nvim_replace_termcodes('<C-v>', true, false, true)
+	local mode = vim.fn.mode()
+
+	if mode == 'v' or mode == 'V' then -- visual or visual line
+		vim.api.nvim_feedkeys(esc .. '`>a' .. r_text, 'x', false)
+		vim.api.nvim_feedkeys(esc .. '`<i' .. l_text, 'x', false)
+	elseif mode == cntrl_v then -- visual block
+		vim.api.nvim_feedkeys(esc .. 'gvA' .. r_text, 'x', false)
+		vim.api.nvim_feedkeys(esc .. 'gvI' .. l_text, 'x', false)
+	end
+end
+EOT
+
 " this doesn't work in visual mode, only visual block mode
 "xnoremap <Leader>' A'<esc>gvI'<esc>
 "xnoremap <Leader>" A"<esc>gvI"<esc>
@@ -401,15 +420,24 @@ endfunction
 "xnoremap <Leader>' c''<Esc>P
 "xnoremap <Leader>" c""<Esc>P
 
-xnoremap <Leader>` :<c-u>call <SID>VisualSurround(visualmode(), "`")<CR>
-xnoremap <Leader>' :<c-u>call <SID>VisualSurround(visualmode(), "'")<CR>
-xnoremap <Leader>" :<c-u>call <SID>VisualSurround(visualmode(), '"')<CR>
-xnoremap <Leader>( :<c-u>call <SID>VisualSurround(visualmode(), '(', ')')<CR>
-xnoremap <Leader>[ :<c-u>call <SID>VisualSurround(visualmode(), '[', ']')<CR>
-xnoremap <Leader>{ :<c-u>call <SID>VisualSurround(visualmode(), '{', '}')<CR>
-xnoremap <Leader>< :<c-u>call <SID>VisualSurround(visualmode(), '<', '>')<CR>
-xnoremap <Leader>* :<c-u>call <SID>VisualSurround(visualmode(), '/*', '*/')<CR>
+"xnoremap <Leader>` :<c-u>call <SID>VisualSurround(visualmode(), "`")<CR>
+"xnoremap <Leader>' :<c-u>call <SID>VisualSurround(visualmode(), "'")<CR>
+"xnoremap <Leader>" :<c-u>call <SID>VisualSurround(visualmode(), '"')<CR>
+"xnoremap <Leader>( :<c-u>call <SID>VisualSurround(visualmode(), '(', ')')<CR>
+"xnoremap <Leader>[ :<c-u>call <SID>VisualSurround(visualmode(), '[', ']')<CR>
+"xnoremap <Leader>{ :<c-u>call <SID>VisualSurround(visualmode(), '{', '}')<CR>
+"xnoremap <Leader>< :<c-u>call <SID>VisualSurround(visualmode(), '<', '>')<CR>
+"xnoremap <Leader>* :<c-u>call <SID>VisualSurround(visualmode(), '/*', '*/')<CR>
 "xnoremap <Leader>x :call VisualSurround(visualmode(), '_')<CR>
+
+lua vim.keymap.set("x", "<Leader>`", function() visual_surround("`", "`") end)
+lua vim.keymap.set("x", "<Leader>'", function() visual_surround("'", "'") end)
+lua vim.keymap.set("x", '<Leader>"', function() visual_surround('"', '"') end)
+lua vim.keymap.set("x", "<Leader>(", function() visual_surround('(', ')') end)
+lua vim.keymap.set("x", "<Leader>[", function() visual_surround('[', ']') end)
+lua vim.keymap.set("x", "<Leader>{", function() visual_surround('{', '}') end)
+lua vim.keymap.set("x", "<Leader><", function() visual_surround('<', '>') end)
+lua vim.keymap.set("x", "<Leader>*", function() visual_surround('/*', '*/') end)
 
 " }}}
 
