@@ -313,7 +313,6 @@ EOT
 " / is the last search pattern register
 "nnoremap <Leader>S :%s/\v\s+$//e<NL>:let @/=''<NL>
 "nnoremap <Leader>S :%s/\s\+$//e<NL>:let @/=''<NL>
-"nnoremap <silent> <Leader>S :<c-u>call <SID>RemoveTrailingWhitespace()<NL>
 
 lua vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end)
 
