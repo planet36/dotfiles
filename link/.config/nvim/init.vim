@@ -299,7 +299,7 @@ endfunction
 " / is the last search pattern register
 "nnoremap <Leader>S :%s/\v\s+$//e<NL>:let @/=''<NL>
 "nnoremap <Leader>S :%s/\s\+$//e<NL>:let @/=''<NL>
-nnoremap <Leader>S :<c-u>call <SID>RemoveTrailingWhitespace()<NL>
+nnoremap <silent> <Leader>S :<c-u>call <SID>RemoveTrailingWhitespace()<NL>
 
 
 " Highlight trailing whitespace.
