@@ -358,32 +358,6 @@ xnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
 " Other solutions that aren't as good:
 " https://superuser.com/questions/321547/how-do-i-replace-paste-yanked-text-in-vim-without-yanking-the-deleted-lines
 
-function! s:VisualSurround(type, text, ...)
-
-	let l_text = a:text
-
-	if a:0 > 0
-		let r_text = a:1
-	else
-		let r_text = l_text
-	endif
-
-	if a:type ==? "v"
-		" v or V
-		" visual character mode or visual line mode
-		execute "normal! \<esc>`>a" . r_text . "\<esc>`<i" . l_text . "\<esc>"
-	elseif a:type ==# "\<c-v>"
-		" visual block mode
-		" ##### XXX: this doesn't work
-		"execute "normal! gvA" . r_text . "\<esc>gvI" . l_text . "\<esc>"
-		execute "normal! \<esc>gvA" . r_text . "\<esc>gvI" . l_text . "\<esc>"
-	else
-		return
-	endif
-
-endfunction
-
-
 lua <<EOT
 function visual_surround(l_text, r_text)
 
@@ -419,8 +393,6 @@ EOT
 " mode
 "xnoremap <Leader>' c''<Esc>P
 "xnoremap <Leader>" c""<Esc>P
-
-"xnoremap <Leader>x :call VisualSurround(visualmode(), '_')<CR>
 
 lua vim.keymap.set("x", "<Leader>`", function() visual_surround("`", "`") end)
 lua vim.keymap.set("x", "<Leader>'", function() visual_surround("'", "'") end)
