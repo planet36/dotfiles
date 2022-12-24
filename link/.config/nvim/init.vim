@@ -420,14 +420,6 @@ EOT
 "xnoremap <Leader>' c''<Esc>P
 "xnoremap <Leader>" c""<Esc>P
 
-"xnoremap <Leader>` :<c-u>call <SID>VisualSurround(visualmode(), "`")<CR>
-"xnoremap <Leader>' :<c-u>call <SID>VisualSurround(visualmode(), "'")<CR>
-"xnoremap <Leader>" :<c-u>call <SID>VisualSurround(visualmode(), '"')<CR>
-"xnoremap <Leader>( :<c-u>call <SID>VisualSurround(visualmode(), '(', ')')<CR>
-"xnoremap <Leader>[ :<c-u>call <SID>VisualSurround(visualmode(), '[', ']')<CR>
-"xnoremap <Leader>{ :<c-u>call <SID>VisualSurround(visualmode(), '{', '}')<CR>
-"xnoremap <Leader>< :<c-u>call <SID>VisualSurround(visualmode(), '<', '>')<CR>
-"xnoremap <Leader>* :<c-u>call <SID>VisualSurround(visualmode(), '/*', '*/')<CR>
 "xnoremap <Leader>x :call VisualSurround(visualmode(), '_')<CR>
 
 lua vim.keymap.set("x", "<Leader>`", function() visual_surround("`", "`") end)
