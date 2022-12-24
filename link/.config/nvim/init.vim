@@ -108,13 +108,13 @@ lua vim.opt.listchars:append { trail = [[\u2423]]}
 
 " https://vim.fandom.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
 
-"nmap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-nmap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+"nmap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<NL>
+nmap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<NL>
 
 " https://jordanelver.co.uk/blog/2015/05/27/working-with-vim-colorschemes/
 " https://stackoverflow.com/questions/1467438/find-out-to-which-highlight-group-a-particular-keyword-symbol-belongs-in-vim/1467830#1467830
 " Show syntax highlighting groups for word under cursor
-nmap <F4> :call <SID>SynStack()<CR>
+nmap <F4> :call <SID>SynStack()<NL>
 function! <SID>SynStack()
 	if !exists("*synstack")
 		return
@@ -157,20 +157,20 @@ lua vim.o.ignorecase = true
 lua vim.o.smartcase = true
 
 " Stop the highlighting for the 'hlsearch' option.
-nnoremap <silent> <Leader><space> :nohlsearch<CR>
+nnoremap <silent> <Leader><space> :nohlsearch<NL>
 
 " Find selected text
 "xnoremap // y/<C-r>"
 " TODO: need to escape regex special characters
-xnoremap // y/<C-r>=escape(@", '/.~^$*\[]')<CR>
+xnoremap // y/<C-r>=escape(@", '/.~^$*\[]')<NL>
 
 " Replace selected text
 xnoremap <C-r> y:%s/<C-r>"//gc<left><left><left>
 " also do escaping of regex special chars
 "xnoremap <C-e> y:%s/substitute(<C-r>", '[^0-9A-Za-z_]')//gc<left><left><left>
-"xnoremap <C-e> y:%s/<C-r>=escape(@", '/\')<CR>//gc<left><left><left>
+"xnoremap <C-e> y:%s/<C-r>=escape(@", '/\')<NL>//gc<left><left><left>
 " TODO: need to escape regex special characters
-xnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<CR>//gc<left><left><left>
+xnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<NL>//gc<left><left><left>
 
 " }}}
 
@@ -198,8 +198,8 @@ lua vim.o.scrolloff = 6
 lua vim.o.splitbelow = true
 lua vim.o.splitright = true
 
-nnoremap <Leader>h :split<CR>
-nnoremap <Leader>v :vsplit<CR>
+nnoremap <Leader>h :split<NL>
+nnoremap <Leader>v :vsplit<NL>
 
 " }}}
 
@@ -215,23 +215,23 @@ nnoremap <C-l> <C-w>l
 " Window resizing
 
 " Decrease current window width by N (default 1).
-"nnoremap <Leader><left> :vertical resize -1<CR>
-"nnoremap <C-Left> :vertical resize -1<CR>
-nnoremap <F6> :vertical resize -1<CR>
+"nnoremap <Leader><left> :vertical resize -1<NL>
+"nnoremap <C-Left> :vertical resize -1<NL>
+nnoremap <F6> :vertical resize -1<NL>
 " Decrease current window height by N (default 1).
-"nnoremap <Leader><down> :resize -1<CR>
-"nnoremap <C-Down> :resize -1<CR>
-nnoremap <F7> :resize -1<CR>
-"nnoremap _ :resize -1<CR>
+"nnoremap <Leader><down> :resize -1<NL>
+"nnoremap <C-Down> :resize -1<NL>
+nnoremap <F7> :resize -1<NL>
+"nnoremap _ :resize -1<NL>
 " Increase current window height by N (default 1).
-"nnoremap <Leader><up> :resize +1<CR>
-"nnoremap <C-Up> :resize +1<CR>
-nnoremap <F8> :resize +1<CR>
-"nnoremap + :resize +1<CR>
+"nnoremap <Leader><up> :resize +1<NL>
+"nnoremap <C-Up> :resize +1<NL>
+nnoremap <F8> :resize +1<NL>
+"nnoremap + :resize +1<NL>
 " Increase current window width by N (default 1).
-"nnoremap <Leader><right> :vertical resize +1<CR>
-"nnoremap <C-Right> :vertical resize +1<CR>
-nnoremap <F9> :vertical resize +1<CR>
+"nnoremap <Leader><right> :vertical resize +1<NL>
+"nnoremap <C-Right> :vertical resize +1<NL>
+nnoremap <F9> :vertical resize +1<NL>
 
 
 lua << EOT
@@ -267,7 +267,7 @@ nnoremap L $
 xnoremap H 0
 xnoremap L $
 inoremap <c-d> <esc>ddi
-inoremap <c-s> <c-o>:update<CR>
+inoremap <c-s> <c-o>:update<NL>
 
 " Complete whole filenames/lines with a quicker shortcut key in insert mode
 inoremap <C-f> <C-x><C-f>
@@ -278,7 +278,7 @@ nnoremap <tab> %
 
 " g; only available with |+jumplist| feature
 " Insert newline after cursor
-nnoremap K i<CR><esc>g;
+nnoremap K i<NL><esc>g;
 
 " save my left pinky
 nnoremap <space> :
@@ -297,21 +297,21 @@ endfunction
 
 " remove trailing whitespace.
 " / is the last search pattern register
-"nnoremap <Leader>S :%s/\v\s+$//e<CR>:let @/=''<CR>
-"nnoremap <Leader>S :%s/\s\+$//e<CR>:let @/=''<CR>
-nnoremap <Leader>S :<c-u>call <SID>RemoveTrailingWhitespace()<CR>
+"nnoremap <Leader>S :%s/\v\s+$//e<NL>:let @/=''<NL>
+"nnoremap <Leader>S :%s/\s\+$//e<NL>:let @/=''<NL>
+nnoremap <Leader>S :<c-u>call <SID>RemoveTrailingWhitespace()<NL>
 
 
 " Highlight trailing whitespace.
-nnoremap <Leader>w :match ErrorMsg /\v\s+$/<CR>
-nnoremap <Leader>W :match none<CR>
+nnoremap <Leader>w :match ErrorMsg /\v\s+$/<NL>
+nnoremap <Leader>W :match none<NL>
 
 " Highlight text beyond 80 columns.
-nnoremap <Leader>c :2match ErrorMsg /\v%>80v.+/<CR>
-nnoremap <Leader>C :2match none<CR>
+nnoremap <Leader>c :2match ErrorMsg /\v%>80v.+/<NL>
+nnoremap <Leader>C :2match none<NL>
 
-nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
-nnoremap <Leader>sv :source $MYVIMRC<CR>
+nnoremap <Leader>ev :vsplit $MYVIMRC<NL>
+nnoremap <Leader>sv :source $MYVIMRC<NL>
 
 " :help CTRL-^
 nnoremap <leader><leader> <c-^>
@@ -326,7 +326,7 @@ nnoremap <Leader>' viW<esc>a'<esc>Bi'<esc>
 "nnoremap <Leader>" viw<esc>bi"<esc>ea"<esc>
 "nnoremap <Leader>" viW<esc>Bi"<esc>Ea"<esc>
 
-nnoremap <Leader>g :execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<CR>:copen<CR>
+nnoremap <Leader>g :execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<NL>:copen<NL>
 
 
 xnoremap <tab> %
@@ -337,7 +337,7 @@ xnoremap <space> :
 xnoremap <down> gj
 xnoremap <up> gk
 
-xnoremap <c-s> <esc>:update<CR>gv
+xnoremap <c-s> <esc>:update<NL>gv
 
 " SDW: Their implementation is annoying.  This tries to make visual mode put more usable.
 
@@ -352,8 +352,8 @@ xnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
 "xnoremap <silent>x Pgvygv<Esc>
 
 " Don't clobber the clipboard register when pasting over text in visual mode.
-"xnoremap <expr> <silent>p 'pgv<Esc>:let @' . v:register . '=@*<CR>'
-"xnoremap <expr> <silent>P 'Pgv<Esc>:let @' . v:register . '=@*<CR>'
+"xnoremap <expr> <silent>p 'pgv<Esc>:let @' . v:register . '=@*<NL>'
+"xnoremap <expr> <silent>P 'Pgv<Esc>:let @' . v:register . '=@*<NL>'
 
 " Other solutions that aren't as good:
 " https://superuser.com/questions/321547/how-do-i-replace-paste-yanked-text-in-vim-without-yanking-the-deleted-lines
