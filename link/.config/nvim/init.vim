@@ -477,7 +477,7 @@ augroup ChangeColorsInDiff
 	" https://vi.stackexchange.com/a/13395
 	autocmd VimEnter,FilterWritePre * if &diff | colorscheme default | endif
 	" https://vi.stackexchange.com/a/12852
-	autocmd OptionSet diff colorscheme default
+	autocmd OptionSet diff if &diff | colorscheme default | endif
 augroup END
 
 " }}}
