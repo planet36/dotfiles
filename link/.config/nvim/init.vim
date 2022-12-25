@@ -472,13 +472,40 @@ nnoremap <M-Up> [c
 nnoremap <M-Down> ]c
 
 " Change colorscheme to default when entering diff mode
-augroup ChangeColorsInDiff
-	autocmd!
-	" https://vi.stackexchange.com/a/13395
-	autocmd VimEnter,FilterWritePre * if &diff | colorscheme default | endif
-	" https://vi.stackexchange.com/a/12852
-	autocmd OptionSet diff if &diff | colorscheme default | endif
-augroup END
+"augroup ChangeColorsInDiff
+"	autocmd!
+"	" https://vi.stackexchange.com/a/13395
+"	autocmd VimEnter,FilterWritePre * if &diff | colorscheme default | endif
+"	" https://vi.stackexchange.com/a/12852
+"	autocmd OptionSet diff if &diff | colorscheme default | endif
+"augroup END
+
+lua <<EOT
+-- Change colorscheme to default when entering diff mode
+local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", { clear = true })
+
+-- https://vi.stackexchange.com/a/13395
+vim.api.nvim_create_autocmd({"VimEnter", "FilterWritePre"}, {
+	group = change_colors_in_diff,
+	pattern = { "*" },
+	callback = function()
+		if vim.o.diff and vim.cmd.colorscheme() ~= 'default' then
+			vim.cmd.colorscheme('default')
+		end
+	end
+})
+
+-- https://vi.stackexchange.com/a/12852
+vim.api.nvim_create_autocmd("OptionSet", {
+	group = change_colors_in_diff,
+	pattern = { "diff" },
+	callback = function()
+		if vim.o.diff and vim.cmd.colorscheme() ~= 'default' then
+			vim.cmd.colorscheme('default')
+		end
+	end
+})
+EOT
 
 " }}}
 
