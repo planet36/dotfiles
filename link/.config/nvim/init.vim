@@ -104,26 +104,6 @@ lua vim.opt.listchars:append { trail = [[\u2423]]}
 
 " }}}
 
-" {{{ Syntax debugging
-
-" https://vim.fandom.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
-
-"nmap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<NL>
-nmap <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<NL>
-
-" https://jordanelver.co.uk/blog/2015/05/27/working-with-vim-colorschemes/
-" https://stackoverflow.com/questions/1467438/find-out-to-which-highlight-group-a-particular-keyword-symbol-belongs-in-vim/1467830#1467830
-" Show syntax highlighting groups for word under cursor
-nmap <F4> :call <SID>SynStack()<NL>
-function! <SID>SynStack()
-	if !exists("*synstack")
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
-" }}}
-
 " {{{ Indentation
 
 lua vim.o.shiftwidth=4
