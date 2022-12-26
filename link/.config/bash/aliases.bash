@@ -19,6 +19,7 @@ alias dc=cd
 alias e="$EDITOR"
 # shellcheck disable=SC2139
 alias ed="$EDITOR"
+alias emdl=meld
 alias emld=meld
 alias f=find
 alias fiel=file
