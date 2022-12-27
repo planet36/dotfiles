@@ -140,15 +140,12 @@ lua vim.o.smartcase = true
 lua vim.keymap.set("n", "<Leader><space>", ":nohlsearch<NL>")
 
 " Find selected text
-"xnoremap // y/<C-r>"
 " TODO: need to escape regex special characters
 lua vim.keymap.set("x", "//", [[y/<C-r>=escape(@", '/.~^$*\[]')<NL>]])
 
 " Replace selected text
 lua vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<left><left><left>]])
 " also do escaping of regex special chars
-"xnoremap <C-e> y:%s/substitute(<C-r>", '[^0-9A-Za-z_]')//gc<left><left><left>
-"xnoremap <C-e> y:%s/<C-r>=escape(@", '/\')<NL>//gc<left><left><left>
 " TODO: need to escape regex special characters
 lua vim.keymap.set("x", "<C-e>", [[y:%s/<C-r>=escape(@", '/.~^$*\[]')<NL>//gc<left><left><left>]])
 
@@ -195,22 +192,12 @@ lua vim.keymap.set("n", "<C-l>", "<C-w>l")
 " Window resizing
 
 " Decrease current window width by N (default 1).
-"nnoremap <Leader><left> :vertical resize -1<NL>
-"nnoremap <C-Left> :vertical resize -1<NL>
 lua vim.keymap.set("n", "<F6>", ":vertical resize -1<NL>")
 " Decrease current window height by N (default 1).
-"nnoremap <Leader><down> :resize -1<NL>
-"nnoremap <C-Down> :resize -1<NL>
 lua vim.keymap.set("n", "<F7>", ":resize -1<NL>")
-"nnoremap _ :resize -1<NL>
 " Increase current window height by N (default 1).
-"nnoremap <Leader><up> :resize +1<NL>
-"nnoremap <C-Up> :resize +1<NL>
 lua vim.keymap.set("n", "<F8>", ":resize +1<NL>")
-"nnoremap + :resize +1<NL>
 " Increase current window width by N (default 1).
-"nnoremap <Leader><right> :vertical resize +1<NL>
-"nnoremap <C-Right> :vertical resize +1<NL>
 lua vim.keymap.set("n", "<F9>", ":vertical resize +1<NL>")
 
 
@@ -241,7 +228,6 @@ lua vim.o.foldlevelstart = 99
 " {{{ Maps
 
 lua vim.keymap.set("i", "jj", "<esc>")
-"inoremap kkk <esc>
 lua vim.keymap.set("n", "H", "0")
 lua vim.keymap.set("n", "L", "$")
 lua vim.keymap.set("x", "H", "0")
@@ -275,16 +261,13 @@ function remove_trailing_whitespace()
 	local cursor_pos = vim.api.nvim_win_get_cursor(0)
 	local reg_info = vim.fn.getreginfo('/')
 	vim.cmd([[%s/\v\s+$//e]])
+	-- / is the last search pattern register
 	vim.fn.setreg('/', reg_info)
 	vim.api.nvim_win_set_cursor(0, cursor_pos)
 end
 EOT
 
 " remove trailing whitespace.
-" / is the last search pattern register
-"nnoremap <Leader>S :%s/\v\s+$//e<NL>:let @/=''<NL>
-"nnoremap <Leader>S :%s/\s\+$//e<NL>:let @/=''<NL>
-
 lua vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end)
 
 
@@ -304,13 +287,8 @@ lua vim.keymap.set("n", "<leader><leader>", "<c-^>")
 
 " double quote a word
 " single quote a word
-"nnoremap <Leader>" viw<esc>a"<esc>hbi"<esc>lel
-"nnoremap <Leader>" viW<esc>a"<esc>Bi"<esc>E
-"nnoremap <Leader>' viW<esc>a'<esc>Bi'<esc>E
 lua vim.keymap.set("n", [[<Leader>"]], [[viW<esc>a"<esc>Bi"<esc>]])
 lua vim.keymap.set("n", [[<Leader>']], [[viW<esc>a'<esc>Bi'<esc>]])
-"nnoremap <Leader>" viw<esc>bi"<esc>ea"<esc>
-"nnoremap <Leader>" viW<esc>Bi"<esc>Ea"<esc>
 
 lua vim.keymap.set("n", "<Leader>g", [[:execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<NL>:copen<NL>]])
 
@@ -360,23 +338,6 @@ function visual_surround(l_text, r_text)
 	end
 end
 EOT
-
-" this doesn't work in visual mode, only visual block mode
-"xnoremap <Leader>' A'<esc>gvI'<esc>
-"xnoremap <Leader>" A"<esc>gvI"<esc>
-
-" this works in visual mode, but not in visual block mode
-"xnoremap <Leader>' <esc>`>a'<esc>`<i'<esc>
-"xnoremap <Leader>" <esc>`>a"<esc>`<i"<esc>
-"xnoremap <Leader>( <esc>`>a)<esc>`<i(<esc>
-"xnoremap <Leader>[ <esc>`>a]<esc>`<i[<esc>
-"xnoremap <Leader>{ <esc>`>a}<esc>`<i{<esc>
-"xnoremap <Leader>< <esc>`>a><esc>`<i<<esc>
-
-" this works in visual mode, and in visual block mode, but not visual line
-" mode
-"xnoremap <Leader>' c''<Esc>P
-"xnoremap <Leader>" c""<Esc>P
 
 lua vim.keymap.set("x", "<Leader>`", function() visual_surround("`", "`") end)
 lua vim.keymap.set("x", "<Leader>'", function() visual_surround("'", "'") end)
