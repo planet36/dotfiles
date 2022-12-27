@@ -137,7 +137,7 @@ lua vim.o.ignorecase = true
 lua vim.o.smartcase = true
 
 " Stop the highlighting for the 'hlsearch' option.
-nnoremap <silent> <Leader><space> :nohlsearch<NL>
+lua vim.keymap.set("n", "<Leader><space>", ":nohlsearch<NL>")
 
 " Find selected text
 "xnoremap // y/<C-r>"
@@ -178,8 +178,8 @@ lua vim.o.scrolloff = 6
 lua vim.o.splitbelow = true
 lua vim.o.splitright = true
 
-nnoremap <Leader>h :split<NL>
-nnoremap <Leader>v :vsplit<NL>
+lua vim.keymap.set("n", "<Leader>h", ":split<NL>")
+lua vim.keymap.set("n", "<Leader>v", ":vsplit<NL>")
 
 " }}}
 
@@ -187,31 +187,31 @@ nnoremap <Leader>v :vsplit<NL>
 
 " Moving cursor to other windows
 
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+lua vim.keymap.set("n", "<C-h>", "<C-w>h")
+lua vim.keymap.set("n", "<C-j>", "<C-w>j")
+lua vim.keymap.set("n", "<C-k>", "<C-w>k")
+lua vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 " Window resizing
 
 " Decrease current window width by N (default 1).
 "nnoremap <Leader><left> :vertical resize -1<NL>
 "nnoremap <C-Left> :vertical resize -1<NL>
-nnoremap <F6> :vertical resize -1<NL>
+lua vim.keymap.set("n", "<F6>", ":vertical resize -1<NL>")
 " Decrease current window height by N (default 1).
 "nnoremap <Leader><down> :resize -1<NL>
 "nnoremap <C-Down> :resize -1<NL>
-nnoremap <F7> :resize -1<NL>
+lua vim.keymap.set("n", "<F7>", ":resize -1<NL>")
 "nnoremap _ :resize -1<NL>
 " Increase current window height by N (default 1).
 "nnoremap <Leader><up> :resize +1<NL>
 "nnoremap <C-Up> :resize +1<NL>
-nnoremap <F8> :resize +1<NL>
+lua vim.keymap.set("n", "<F8>", ":resize +1<NL>")
 "nnoremap + :resize +1<NL>
 " Increase current window width by N (default 1).
 "nnoremap <Leader><right> :vertical resize +1<NL>
 "nnoremap <C-Right> :vertical resize +1<NL>
-nnoremap <F9> :vertical resize +1<NL>
+lua vim.keymap.set("n", "<F9>", ":vertical resize +1<NL>")
 
 
 lua << EOT
@@ -242,8 +242,8 @@ lua vim.o.foldlevelstart = 99
 
 inoremap jj <esc>
 "inoremap kkk <esc>
-nnoremap H 0
-nnoremap L $
+lua vim.keymap.set("n", "H", "0")
+lua vim.keymap.set("n", "L", "$")
 xnoremap H 0
 xnoremap L $
 inoremap <c-d> <esc>ddi
@@ -254,17 +254,17 @@ inoremap <C-f> <C-x><C-f>
 inoremap <C-l> <C-x><C-l>
 
 
-nnoremap <tab> %
+lua vim.keymap.set("n", "<tab>", "%")
 
 " g; only available with |+jumplist| feature
 " Insert newline after cursor
-nnoremap K i<NL><esc>g;
+lua vim.keymap.set("n", "K", "i<NL><esc>g")
 
 " save my left pinky
-nnoremap <space> :
+lua vim.keymap.set("n", "<space>", ":")
 
-nnoremap <down> gj
-nnoremap <up> gk
+lua vim.keymap.set("n", "<down>", "gj")
+lua vim.keymap.set("n", "<up>", "gk")
 
 lua <<EOT
 function remove_trailing_whitespace()
@@ -289,30 +289,30 @@ lua vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end
 
 
 " Highlight trailing whitespace.
-nnoremap <Leader>w :match ErrorMsg /\v\s+$/<NL>
-nnoremap <Leader>W :match none<NL>
+lua vim.keymap.set("n", "<Leader>w", [[:match ErrorMsg /\v\s+$/<NL>]])
+lua vim.keymap.set("n", "<Leader>W", ":match none<NL>")
 
 " Highlight text beyond 80 columns.
-nnoremap <Leader>c :2match ErrorMsg /\v%>80v.+/<NL>
-nnoremap <Leader>C :2match none<NL>
+lua vim.keymap.set("n", "<Leader>c", [[:2match ErrorMsg /\v%>80v.+/<NL>]])
+lua vim.keymap.set("n", "<Leader>C", ":2match none<NL>")
 
-nnoremap <Leader>ev :vsplit $MYVIMRC<NL>
-nnoremap <Leader>sv :source $MYVIMRC<NL>
+lua vim.keymap.set("n", "<Leader>ev", ":vsplit $MYVIMRC<NL>")
+lua vim.keymap.set("n", "<Leader>sv", ":source $MYVIMRC<NL>")
 
 " :help CTRL-^
-nnoremap <leader><leader> <c-^>
+lua vim.keymap.set("n", "<leader><leader>", "<c-^>")
 
 " double quote a word
 " single quote a word
 "nnoremap <Leader>" viw<esc>a"<esc>hbi"<esc>lel
 "nnoremap <Leader>" viW<esc>a"<esc>Bi"<esc>E
 "nnoremap <Leader>' viW<esc>a'<esc>Bi'<esc>E
-nnoremap <Leader>" viW<esc>a"<esc>Bi"<esc>
-nnoremap <Leader>' viW<esc>a'<esc>Bi'<esc>
+lua vim.keymap.set("n", [[<Leader>"]], [[viW<esc>a"<esc>Bi"<esc>]])
+lua vim.keymap.set("n", [[<Leader>']], [[viW<esc>a'<esc>Bi'<esc>]])
 "nnoremap <Leader>" viw<esc>bi"<esc>ea"<esc>
 "nnoremap <Leader>" viW<esc>Bi"<esc>Ea"<esc>
 
-nnoremap <Leader>g :execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<NL>:copen<NL>
+lua vim.keymap.set("n", "<Leader>g", [[:execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<NL>:copen<NL>]])
 
 
 xnoremap <tab> %
@@ -401,8 +401,8 @@ lua require('abbrev')
 " https://vi.stackexchange.com/a/2363
 "execute "set <M-j>=\ej"
 "execute "set <M-k>=\ek"
-nnoremap <M-Up> [c
-nnoremap <M-Down> ]c
+lua vim.keymap.set("n", "<M-Up>", "[c")
+lua vim.keymap.set("n", "<M-Down>", "]c")
 
 lua <<EOT
 -- Change colorscheme to default when entering diff mode
