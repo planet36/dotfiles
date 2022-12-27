@@ -326,7 +326,7 @@ lua <<EOT
 function visual_surround(l_text, r_text)
 
 	-- https://neovim.io/doc/user/api.html#nvim_replace_termcodes()
-	-- https://neovim.io/doc/user/builtin.html#feedkeys()
+	-- https://neovim.io/doc/user/api.html#nvim_feedkeys()
 	local esc = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
 	local cntrl_v = vim.api.nvim_replace_termcodes('<C-v>', true, false, true)
 	local mode = vim.fn.mode()
