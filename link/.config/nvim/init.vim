@@ -310,6 +310,8 @@ lua vim.keymap.set("x", "<c-s>", "<esc>:update<NL>gv")
 " https://stackoverflow.com/a/15266864
 xnoremap <expr> <silent>p 'pgv"' . v:register . 'y`>'
 xnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
+xnoremap <expr> <silent>p 'p:let @' . v:register . '=@0<NL>'
+xnoremap p P
 "xnoremap <silent>p pgvy`>
 "xnoremap <silent>P Pgvy`>
 "xnoremap <silent>p pgvygv<Esc>
