@@ -308,9 +308,9 @@ lua vim.keymap.set("x", "<c-s>", "<esc>:update<NL>gv")
 " https://stackoverflow.com/a/5093286
 " https://stackoverflow.com/questions/290465/vim-how-to-paste-over-without-overwriting-register#comment71467536_5093286
 " https://stackoverflow.com/a/15266864
-xnoremap <expr> <silent>p 'pgv"' . v:register . 'y`>'
-xnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
-xnoremap <expr> <silent>p 'p:let @' . v:register . '=@0<NL>'
+"xnoremap <expr> <silent>p 'pgv"' . v:register . 'y`>'
+"xnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
+"xnoremap <expr> <silent>p 'p:let @' . v:register . '=@0<NL>'
 lua vim.keymap.set("x", "p", "P")
 "xnoremap <silent>p pgvy`>
 "xnoremap <silent>P Pgvy`>
