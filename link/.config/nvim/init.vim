@@ -240,18 +240,18 @@ lua vim.o.foldlevelstart = 99
 
 " {{{ Maps
 
-inoremap jj <esc>
+lua vim.keymap.set("i", "jj", "<esc>")
 "inoremap kkk <esc>
 lua vim.keymap.set("n", "H", "0")
 lua vim.keymap.set("n", "L", "$")
 lua vim.keymap.set("x", "H", "0")
 lua vim.keymap.set("x", "L", "$")
-inoremap <c-d> <esc>ddi
-inoremap <c-s> <c-o>:update<NL>
+lua vim.keymap.set("i", "<c-d>", "<esc>ddi")
+lua vim.keymap.set("i", "<c-s>", "<c-o>:update<NL>")
 
 " Complete whole filenames/lines with a quicker shortcut key in insert mode
-inoremap <C-f> <C-x><C-f>
-inoremap <C-l> <C-x><C-l>
+lua vim.keymap.set("i", "<C-f>", "<C-x><C-f>")
+lua vim.keymap.set("i", "<C-l>", "<C-x><C-l>")
 
 
 lua vim.keymap.set("n", "<tab>", "%")
