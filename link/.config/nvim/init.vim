@@ -142,15 +142,15 @@ lua vim.keymap.set("n", "<Leader><space>", ":nohlsearch<NL>")
 " Find selected text
 "xnoremap // y/<C-r>"
 " TODO: need to escape regex special characters
-xnoremap // y/<C-r>=escape(@", '/.~^$*\[]')<NL>
+lua vim.keymap.set("x", "//", [[y/<C-r>=escape(@", '/.~^$*\[]')<NL>]])
 
 " Replace selected text
-xnoremap <C-r> y:%s/<C-r>"//gc<left><left><left>
+lua vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<left><left><left>]])
 " also do escaping of regex special chars
 "xnoremap <C-e> y:%s/substitute(<C-r>", '[^0-9A-Za-z_]')//gc<left><left><left>
 "xnoremap <C-e> y:%s/<C-r>=escape(@", '/\')<NL>//gc<left><left><left>
 " TODO: need to escape regex special characters
-xnoremap <C-e> y:%s/<C-r>=escape(@", '/.~^$*\[]')<NL>//gc<left><left><left>
+lua vim.keymap.set("x", "<C-e>", [[y:%s/<C-r>=escape(@", '/.~^$*\[]')<NL>//gc<left><left><left>]])
 
 " }}}
 
@@ -244,8 +244,8 @@ inoremap jj <esc>
 "inoremap kkk <esc>
 lua vim.keymap.set("n", "H", "0")
 lua vim.keymap.set("n", "L", "$")
-xnoremap H 0
-xnoremap L $
+lua vim.keymap.set("x", "H", "0")
+lua vim.keymap.set("x", "L", "$")
 inoremap <c-d> <esc>ddi
 inoremap <c-s> <c-o>:update<NL>
 
@@ -315,15 +315,15 @@ lua vim.keymap.set("n", [[<Leader>']], [[viW<esc>a'<esc>Bi'<esc>]])
 lua vim.keymap.set("n", "<Leader>g", [[:execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<NL>:copen<NL>]])
 
 
-xnoremap <tab> %
+lua vim.keymap.set("x", "<tab>", "%")
 
 " save my left pinky
-xnoremap <space> :
+lua vim.keymap.set("x", "<space>", ":")
 
-xnoremap <down> gj
-xnoremap <up> gk
+lua vim.keymap.set("x", "<down>", "gj")
+lua vim.keymap.set("x", "<up>", "gk")
 
-xnoremap <c-s> <esc>:update<NL>gv
+lua vim.keymap.set("x", "<c-s>", "<esc>:update<NL>gv")
 
 " SDW: Their implementation is annoying.  This tries to make visual mode put more usable.
 
