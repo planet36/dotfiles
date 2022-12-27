@@ -502,10 +502,10 @@ local colorscheme_list = {
 }
 
 -- https://www.lua.org/pil/7.3.html
+-- https://www.lua.org/pil/8.4.html
 -- https://stackoverflow.com/a/55109411/1892784
 for i, c in ipairs(colorscheme_list) do
-	local ok, result = pcall(vim.cmd, 'colorscheme ' .. c)
-	if ok then break end
+	if pcall(vim.cmd.colorscheme, c) then break end
 end
 EOT
 
