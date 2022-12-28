@@ -303,26 +303,7 @@ lua vim.keymap.set("x", "<up>", "gk")
 
 lua vim.keymap.set("x", "<c-s>", "<esc>:update<NL>gv")
 
-" SDW: Their implementation is annoying.  This tries to make visual mode put more usable.
-
-" https://stackoverflow.com/a/5093286
-" https://stackoverflow.com/questions/290465/vim-how-to-paste-over-without-overwriting-register#comment71467536_5093286
-" https://stackoverflow.com/a/15266864
-"xnoremap <expr> <silent>p 'pgv"' . v:register . 'y`>'
-"xnoremap <expr> <silent>P 'Pgv"' . v:register . 'y`>'
-"xnoremap <expr> <silent>p 'p:let @' . v:register . '=@0<NL>'
 lua vim.keymap.set("x", "p", "P")
-"xnoremap <silent>p pgvy`>
-"xnoremap <silent>P Pgvy`>
-"xnoremap <silent>p pgvygv<Esc>
-"xnoremap <silent>x Pgvygv<Esc>
-
-" Don't clobber the clipboard register when pasting over text in visual mode.
-"xnoremap <expr> <silent>p 'pgv<Esc>:let @' . v:register . '=@*<NL>'
-"xnoremap <expr> <silent>P 'Pgv<Esc>:let @' . v:register . '=@*<NL>'
-
-" Other solutions that aren't as good:
-" https://superuser.com/questions/321547/how-do-i-replace-paste-yanked-text-in-vim-without-yanking-the-deleted-lines
 
 lua <<EOT
 function visual_surround(l_text, r_text)
