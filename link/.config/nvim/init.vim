@@ -344,10 +344,6 @@ lua require('abbrev')
 
 " {{{ Diff
 
-" :help :set-termcap
-" https://vi.stackexchange.com/a/2363
-"execute "set <M-j>=\ej"
-"execute "set <M-k>=\ek"
 lua vim.keymap.set("n", "<M-Up>", "[c")
 lua vim.keymap.set("n", "<M-Down>", "]c")
 
