@@ -191,13 +191,16 @@ lua vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 " Window resizing
 
-" Decrease current window width by N (default 1).
+" window width -1
 lua vim.keymap.set("n", "<F6>", ":vertical resize -1<NL>")
-" Decrease current window height by N (default 1).
+
+" window height -1
 lua vim.keymap.set("n", "<F7>", ":resize -1<NL>")
-" Increase current window height by N (default 1).
+
+" window height +1
 lua vim.keymap.set("n", "<F8>", ":resize +1<NL>")
-" Increase current window width by N (default 1).
+
+" window width +1
 lua vim.keymap.set("n", "<F9>", ":vertical resize +1<NL>")
 
 
