@@ -412,10 +412,10 @@ EOT
 " https://github.com/srcery-colors/srcery-vim/blob/master/autoload/srcery.vim#L17
 " https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L352
 " Use yellow instead of bright magenta
-highlight Constant guifg=#FBB829
-highlight Character guifg=#FBB829
-highlight Boolean guifg=#FBB829
-highlight Number guifg=#FBB829
-highlight Float guifg=#FBB829
+lua vim.cmd.highlight('Constant', 'guifg=#FBB829')
+lua vim.cmd.highlight('Character', 'guifg=#FBB829')
+lua vim.cmd.highlight('Boolean', 'guifg=#FBB829')
+lua vim.cmd.highlight('Number', 'guifg=#FBB829')
+lua vim.cmd.highlight('Float', 'guifg=#FBB829')
 
 " }}}
