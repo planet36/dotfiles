@@ -348,6 +348,45 @@ lua vim.keymap.set("n", "<M-Up>", "[c")
 lua vim.keymap.set("n", "<M-Down>", "]c")
 
 lua <<EOT
+
+function get_colorscheme()
+	-- https://neovim.io/doc/user/api.html#nvim_exec()
+	-- XXX: vim.cmd.colorscheme() prints (not returns) the current colorscheme.
+	return vim.api.nvim_exec('colorscheme', true)
+end
+
+-- Count the windows in the current tabpage for which diff is true.
+function count_tabpage_windows_diffed()
+	-- https://neovim.io/doc/user/api.html#nvim_tabpage_list_wins()
+	-- https://neovim.io/doc/user/api.html#nvim_win_get_option()
+
+	local windows_diffed = 0
+
+	for i, win_hndl in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		if vim.api.nvim_win_get_option(win_hndl, 'diff')
+		then
+			windows_diffed = windows_diffed + 1
+		end
+	end
+
+	return windows_diffed
+end
+
+function handle_diff_change_colorscheme()
+
+	local num_windows_diffed = count_tabpage_windows_diffed()
+
+	if num_windows_diffed > 1 then
+		if get_colorscheme() ~= vim.g.diff_colorscheme then
+			vim.cmd.colorscheme(vim.g.diff_colorscheme)
+		end
+	else
+		if get_colorscheme() ~= vim.g.orig_colorscheme then
+			vim.cmd.colorscheme(vim.g.orig_colorscheme)
+		end
+	end
+end
+
 -- Change colorscheme to default when entering diff mode
 local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", { clear = true })
 
@@ -356,9 +395,7 @@ vim.api.nvim_create_autocmd({"VimEnter", "FilterWritePre"}, {
 	group = change_colors_in_diff,
 	pattern = { "*" },
 	callback = function()
-		if vim.o.diff and vim.cmd.colorscheme() ~= 'default' then
-			vim.cmd.colorscheme('default')
-		end
+		handle_diff_change_colorscheme()
 	end
 })
 
@@ -367,9 +404,7 @@ vim.api.nvim_create_autocmd("OptionSet", {
 	group = change_colors_in_diff,
 	pattern = { "diff" },
 	callback = function()
-		if vim.o.diff and vim.cmd.colorscheme() ~= 'default' then
-			vim.cmd.colorscheme('default')
-		end
+		handle_diff_change_colorscheme()
 	end
 })
 EOT
@@ -403,6 +438,9 @@ local colorscheme_list = {
 for i, c in ipairs(colorscheme_list) do
 	if pcall(vim.cmd.colorscheme, c) then break end
 end
+
+vim.g.orig_colorscheme = get_colorscheme()
+vim.g.diff_colorscheme = 'default'
 EOT
 
 " https://github.com/srcery-colors/srcery-vim/blob/master/autoload/srcery.vim#L17
