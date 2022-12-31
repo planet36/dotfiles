@@ -27,7 +27,7 @@ vim.o.undofile = true
 vim.opt.backupdir:remove { '.' }
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = vim.api.nvim_create_augroup("backup_extension_timestamp", { clear = true }),
+	group = vim.api.nvim_create_augroup("backup_extension_timestamp", {}),
 	pattern = { "*" },
 	callback = function()
 		-- String which is appended to a file name to make the name of the backup file.
@@ -112,7 +112,7 @@ vim.o.cinoptions = ':0,g0,N-s,t0,c0,C1'
 -- {{{ C/C++ block comments
 
 vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("c_cpp_block_comments", { clear = true }),
+	group = vim.api.nvim_create_augroup("c_cpp_block_comments", {}),
 	pattern = { "c,cpp" }, -- matched against filetype
 	callback = function()
 		-- :help format-comments
@@ -195,7 +195,7 @@ vim.keymap.set("n", "<F9>", ":vertical resize +1<NL>")
 
 -- Open help window in a vertical split to the right.
 vim.api.nvim_create_autocmd("BufEnter", {
-	group = vim.api.nvim_create_augroup("help_window_right", { clear = true }),
+	group = vim.api.nvim_create_augroup("help_window_right", {}),
 	pattern = { "*.txt" },
 	callback = function()
 		if vim.o.buftype == 'help' then
@@ -366,7 +366,7 @@ function handle_diff_change_colorscheme()
 end
 
 -- Change colorscheme to default when entering diff mode
-local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", { clear = true })
+local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", {})
 
 -- https://vi.stackexchange.com/a/13395
 vim.api.nvim_create_autocmd({"VimEnter", "FilterWritePre"}, {
