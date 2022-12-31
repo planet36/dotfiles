@@ -218,10 +218,8 @@ vim.o.foldlevelstart = 99
 -- {{{ Maps
 
 vim.keymap.set("i", "jj", "<esc>")
-vim.keymap.set("n", "H", "0")
-vim.keymap.set("n", "L", "$")
-vim.keymap.set("x", "H", "0")
-vim.keymap.set("x", "L", "$")
+vim.keymap.set({"n", "x"}, "H", "0")
+vim.keymap.set({"n", "x"}, "L", "$")
 vim.keymap.set("i", "<c-d>", "<esc>ddi")
 vim.keymap.set("i", "<c-s>", "<c-o>:update<NL>")
 
@@ -229,17 +227,17 @@ vim.keymap.set("i", "<c-s>", "<c-o>:update<NL>")
 vim.keymap.set("i", "<C-f>", "<C-x><C-f>")
 vim.keymap.set("i", "<C-l>", "<C-x><C-l>")
 
-vim.keymap.set("n", "<tab>", "%")
+vim.keymap.set({"n", "x"}, "<tab>", "%")
 
 -- g; only available with |+jumplist| feature
 -- Insert newline after cursor
 vim.keymap.set("n", "K", "i<NL><esc>g")
 
 -- save my left pinky
-vim.keymap.set("n", "<space>", ":")
+vim.keymap.set({"n", "x"}, "<space>", ":")
 
-vim.keymap.set("n", "<down>", "gj")
-vim.keymap.set("n", "<up>", "gk")
+vim.keymap.set({"n", "x"}, "<down>", "gj")
+vim.keymap.set({"n", "x"}, "<up>", "gk")
 
 function remove_trailing_whitespace()
 	-- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
@@ -277,14 +275,6 @@ vim.keymap.set("n", [[<Leader>"]], [[viW<esc>a"<esc>Bi"<esc>]])
 vim.keymap.set("n", [[<Leader>']], [[viW<esc>a'<esc>Bi'<esc>]])
 
 vim.keymap.set("n", "<Leader>g", [[:execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<NL>:copen<NL>]])
-
-vim.keymap.set("x", "<tab>", "%")
-
--- save my left pinky
-vim.keymap.set("x", "<space>", ":")
-
-vim.keymap.set("x", "<down>", "gj")
-vim.keymap.set("x", "<up>", "gk")
 
 vim.keymap.set("x", "<c-s>", "<esc>:update<NL>gv")
 
