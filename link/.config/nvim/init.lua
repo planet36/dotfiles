@@ -368,7 +368,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 -- https://vi.stackexchange.com/a/13395
-vim.api.nvim_create_autocmd({"VimEnter", "FilterWritePre"}, {
+vim.api.nvim_create_autocmd({"VimEnter",
+	"BufWinEnter", "BufWinLeave", "TabEnter", "TabLeave"}, {
 	group = change_colors_in_diff,
 	pattern = { "*" },
 	callback = function()
