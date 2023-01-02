@@ -131,10 +131,6 @@ vim.o.smartcase = true
 -- Stop the highlighting for the 'hlsearch' option.
 vim.keymap.set("n", "<Leader><space>", ":nohlsearch<NL>")
 
--- Find selected text
--- TODO: need to escape regex special characters
-vim.keymap.set("x", "//", [[y/<C-r>=escape(@", '/.~^$*\[]')<NL>]])
-
 -- Replace selected text
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<left><left><left>]])
 -- also do escaping of regex special chars
