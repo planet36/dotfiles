@@ -133,9 +133,10 @@ vim.keymap.set("n", "<Leader><space>", ":nohlsearch<NL>")
 
 -- Replace selected text
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<left><left><left>]])
+
 -- also do escaping of regex special chars
 -- TODO: need to escape regex special characters
-vim.keymap.set("x", "<C-e>", [[y:%s/<C-r>=escape(@", '/.~^$*\[]')<NL>//gc<left><left><left>]])
+vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-r>=escape(@", '/\')<NL>//gc<left><left><left>]])
 
 -- }}}
 
