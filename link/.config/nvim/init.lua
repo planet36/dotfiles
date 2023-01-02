@@ -340,6 +340,8 @@ function count_tabpage_windows_diffed()
 	return windows_diffed
 end
 
+-- https://vi.stackexchange.com/questions/39637/detect-when-a-diff-begins-and-ends
+-- Change colorscheme when diff mode begins/ends.
 function handle_diff_change_colorscheme()
 
 	local num_windows_diffed = count_tabpage_windows_diffed()
@@ -355,7 +357,6 @@ function handle_diff_change_colorscheme()
 	end
 end
 
--- Change colorscheme to default when entering diff mode
 local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", {})
 
 -- https://vi.stackexchange.com/a/13395
