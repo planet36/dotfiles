@@ -359,6 +359,14 @@ end
 
 local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", {})
 
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = change_colors_in_diff,
+	pattern = { "*" },
+	callback = function()
+		vim.g.orig_colorscheme = get_colorscheme()
+	end
+})
+
 -- https://vi.stackexchange.com/a/13395
 vim.api.nvim_create_autocmd({"VimEnter", "FilterWritePre"}, {
 	group = change_colors_in_diff,
