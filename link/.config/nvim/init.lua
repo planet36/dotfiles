@@ -200,11 +200,11 @@ vim.keymap.set("n", "<F8>", ":resize +1<NL>")
 vim.keymap.set("n", "<F9>", ":vertical resize +1<NL>")
 
 -- Open help window in a vertical split to the right.
-vim.api.nvim_create_autocmd("BufEnter", {
+vim.api.nvim_create_autocmd("BufWinEnter", {
 	group = vim.api.nvim_create_augroup("help_window_right", {}),
 	pattern = { "*.txt" },
 	callback = function()
-		if vim.o.buftype == 'help' then
+		if vim.o.filetype == 'help' then
 			-- Move the current window to be at the far right
 			-- https://vi.stackexchange.com/a/4464
 			vim.cmd.wincmd("L")
