@@ -13,6 +13,10 @@ vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-r>=escape(@", '/\')<NL>//gc<left><left>
 vim.keymap.set("n", "<Leader>h", ":split<NL>")
 vim.keymap.set("n", "<Leader>v", ":vsplit<NL>")
 
+-- Go to next/previous buffer
+vim.keymap.set("n", "<C-n>", function() vim.cmd.bnext() end)
+vim.keymap.set("n", "<C-p>", function() vim.cmd.bprevious() end)
+
 -- Moving cursor to other windows
 
 vim.keymap.set("n", "<C-h>", "<C-w>h")
