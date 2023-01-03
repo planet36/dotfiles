@@ -151,10 +151,7 @@ vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-r>=escape(@", '/\')<NL>//gc<left><left>
 
 -- {{{ Disable mouse support if inside tmux
 
-if vim.env.TMUX ~= nil then
-	-- TMUX is set
-	vim.o.mouse = ''
-end
+if vim.env.TMUX ~= nil then vim.o.mouse = '' end
 
 -- }}}
 
@@ -204,11 +201,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 	group = vim.api.nvim_create_augroup("help_window_right", {}),
 	pattern = { "*.txt" },
 	callback = function()
-		if vim.o.filetype == 'help' then
-			-- Move the current window to be at the far right
-			-- https://vi.stackexchange.com/a/4464
-			vim.cmd.wincmd("L")
-		end
+		if vim.o.filetype == 'help' then vim.cmd.wincmd("L") end
 	end
 })
 
@@ -337,8 +330,7 @@ function count_tabpage_windows_diffed()
 	local windows_diffed = 0
 
 	for i, win_hndl in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-		if vim.api.nvim_win_get_option(win_hndl, 'diff')
-		then
+		if vim.api.nvim_win_get_option(win_hndl, 'diff') then
 			windows_diffed = windows_diffed + 1
 		end
 	end
