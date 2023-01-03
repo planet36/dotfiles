@@ -104,8 +104,18 @@ vim.o.shiftwidth=4
 vim.o.softtabstop=4
 vim.o.tabstop=4
 
+-- }}}
+
+-- {{{ Formatting
+
 -- :help cinoptions-values
 vim.o.cinoptions = ':0,g0,N-s,t0,c0,C1'
+
+-- :help fo-/
+vim.opt.formatoptions:append('/')
+
+-- :help fo-p
+vim.opt.formatoptions:append('p')
 
 -- }}}
 
