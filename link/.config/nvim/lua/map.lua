@@ -1,3 +1,6 @@
+-- SPDX-FileCopyrightText: Steven Ward
+-- SPDX-License-Identifier: OSL-3.0
+
 -- Stop the highlighting for the 'hlsearch' option.
 vim.keymap.set("n", "<Leader><space>", ":nohlsearch<NL>")
 
