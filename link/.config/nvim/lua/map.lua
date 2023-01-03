@@ -66,10 +66,10 @@ function remove_trailing_whitespace()
 	-- https://neovim.io/doc/user/builtin.html#setreg()
 	-- https://neovim.io/doc/user/api.html#nvim_win_set_cursor()
 	local cursor_pos = vim.api.nvim_win_get_cursor(0)
-	local reg_info = vim.fn.getreginfo('/')
+	local reg_info = vim.fn.getreginfo("/")
 	vim.cmd([[%s/\v\s+$//e]])
 	-- / is the last search pattern register
-	vim.fn.setreg('/', reg_info)
+	vim.fn.setreg("/", reg_info)
 	vim.api.nvim_win_set_cursor(0, cursor_pos)
 end
 
@@ -105,25 +105,25 @@ function visual_surround(l_text, r_text)
 
 	-- https://neovim.io/doc/user/api.html#nvim_replace_termcodes()
 	-- https://neovim.io/doc/user/api.html#nvim_feedkeys()
-	local esc = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
-	local cntrl_v = vim.api.nvim_replace_termcodes('<C-v>', true, false, true)
+	local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+	local cntrl_v = vim.api.nvim_replace_termcodes("<C-v>", true, false, true)
 	local mode = vim.fn.mode()
 
-	if mode == 'v' or mode == 'V' then -- visual or visual line
-		vim.api.nvim_feedkeys(esc .. '`>a' .. r_text .. esc .. '`<i' .. l_text, 'x', false)
+	if mode == "v" or mode == "V" then -- visual or visual line
+		vim.api.nvim_feedkeys(esc .. "`>a" .. r_text .. esc .. "`<i" .. l_text, "x", false)
 	elseif mode == cntrl_v then -- visual block
-		vim.api.nvim_feedkeys('A' .. r_text .. esc .. 'gvI' .. l_text, 'x', false)
+		vim.api.nvim_feedkeys("A" .. r_text .. esc .. "gvI" .. l_text, "x", false)
 	end
 end
 
 vim.keymap.set("x", "<Leader>`", function() visual_surround("`", "`") end)
 vim.keymap.set("x", "<Leader>'", function() visual_surround("'", "'") end)
 vim.keymap.set("x", '<Leader>"', function() visual_surround('"', '"') end)
-vim.keymap.set("x", "<Leader>(", function() visual_surround('(', ')') end)
-vim.keymap.set("x", "<Leader>[", function() visual_surround('[', ']') end)
-vim.keymap.set("x", "<Leader>{", function() visual_surround('{', '}') end)
-vim.keymap.set("x", "<Leader><", function() visual_surround('<', '>') end)
-vim.keymap.set("x", "<Leader>*", function() visual_surround('/*', '*/') end)
+vim.keymap.set("x", "<Leader>(", function() visual_surround("(", ")") end)
+vim.keymap.set("x", "<Leader>[", function() visual_surround("[", "]") end)
+vim.keymap.set("x", "<Leader>{", function() visual_surround("{", "}") end)
+vim.keymap.set("x", "<Leader><", function() visual_surround("<", ">") end)
+vim.keymap.set("x", "<Leader>*", function() visual_surround("/*", "*/") end)
 
 vim.keymap.set("n", "<M-Up>", "[c")
 vim.keymap.set("n", "<M-Down>", "]c")
