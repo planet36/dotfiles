@@ -2,7 +2,7 @@
 -- SPDX-License-Identifier: OSL-3.0
 
 -- Stop the highlighting for the 'hlsearch' option.
-vim.keymap.set("n", "<Leader><space>", ":nohlsearch<NL>")
+vim.keymap.set("n", "<Leader><space>", function() vim.cmd.nohlsearch() end)
 
 -- Replace selected text.
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<left><left><left>]])
@@ -10,8 +10,8 @@ vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<left><left><left>]])
 -- Use \V, and escape slashes in the selected text before replacing.
 vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-r>=escape(@", '/\')<NL>//gc<left><left><left>]])
 
-vim.keymap.set("n", "<Leader>h", ":split<NL>")
-vim.keymap.set("n", "<Leader>v", ":vsplit<NL>")
+vim.keymap.set("n", "<Leader>h", function() vim.cmd.split() end)
+vim.keymap.set("n", "<Leader>v", function() vim.cmd.vsplit() end)
 
 -- Go to next/previous buffer
 vim.keymap.set("n", "<C-n>", function() vim.cmd.bnext() end)
@@ -27,16 +27,16 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 -- Window resizing
 
 -- window width -1
-vim.keymap.set("n", "<F6>", ":vertical resize -1<NL>")
+vim.keymap.set("n", "<F6>", function() vim.cmd("vertical resize -1") end)
 
 -- window height -1
-vim.keymap.set("n", "<F7>", ":resize -1<NL>")
+vim.keymap.set("n", "<F7>", function() vim.cmd.resize("-1") end)
 
 -- window height +1
-vim.keymap.set("n", "<F8>", ":resize +1<NL>")
+vim.keymap.set("n", "<F8>", function() vim.cmd.resize("+1") end)
 
 -- window width +1
-vim.keymap.set("n", "<F9>", ":vertical resize +1<NL>")
+vim.keymap.set("n", "<F9>", function() vim.cmd("vertical resize +1") end)
 
 vim.keymap.set("i", "jj", "<esc>")
 vim.keymap.set({"n", "x"}, "H", "0")
@@ -71,15 +71,15 @@ end
 vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end)
 
 -- Highlight trailing whitespace.
-vim.keymap.set("n", "<Leader>w", [[:match ErrorMsg /\v\s+$/<NL>]])
-vim.keymap.set("n", "<Leader>W", ":match none<NL>")
+vim.keymap.set("n", "<Leader>w", function() vim.cmd.match("ErrorMsg", [[/\v\s+$/]]) end)
+vim.keymap.set("n", "<Leader>W", function() vim.cmd.match("none") end)
 
 -- Highlight text beyond 80 columns.
-vim.keymap.set("n", "<Leader>c", [[:2match ErrorMsg /\v%>80v.+/<NL>]])
-vim.keymap.set("n", "<Leader>C", ":2match none<NL>")
+vim.keymap.set("n", "<Leader>c", function() vim.cmd([[2match ErrorMsg /\v%>80v.+/]]) end)
+vim.keymap.set("n", "<Leader>C", function() vim.cmd("2match none") end)
 
-vim.keymap.set("n", "<Leader>ev", ":vsplit $MYVIMRC<NL>")
-vim.keymap.set("n", "<Leader>sv", ":source $MYVIMRC<NL>")
+vim.keymap.set("n", "<Leader>ev", function() vim.cmd.vsplit(vim.env.MYVIMRC) end)
+vim.keymap.set("n", "<Leader>sv", function() vim.cmd.source(vim.env.MYVIMRC) end)
 
 vim.keymap.set("x", "p", "P")
 
