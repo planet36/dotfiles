@@ -1,4 +1,4 @@
--- Copied from:
+-- Adapted from:
 -- https://github.com/neovim/neovim/issues/16339#issuecomment-1348133829
 
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
