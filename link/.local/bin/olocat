@@ -71,7 +71,11 @@ def get_cylinder_coord_dist(
     d2 = abs(ρ1 - ρ2) / 100
     d3 = abs(z1 - z2) / 100
 
+    # This gives better results than Euclidean distance between cylindrical
+    # coordinates.
+    # https://math.stackexchange.com/a/3612602
     return math.hypot(d1, d2, d3)
+    #return ρ1**2 + ρ2**2 - 2*ρ1*ρ2*math.cos(math.radians(φ1 - φ2)) + (z1 - z2)**2
 
 def upscale_RGB(sRGB: tuple) -> tuple:
     return tuple((
