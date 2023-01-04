@@ -60,16 +60,12 @@ vim.o.number = true
 
 vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
 	pattern = {"*.cal"},
-	callback = function()
-		vim.o.filetype = 'c'
-	end
+	callback = function() vim.o.filetype = 'c' end
 })
 
 vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
 	pattern = {"*.fish"},
-	callback = function()
-		vim.o.filetype = 'sh'
-	end
+	callback = function() vim.o.filetype = 'sh' end
 })
 
 -- }}}
@@ -239,9 +235,7 @@ local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff
 vim.api.nvim_create_autocmd("ColorScheme", {
 	group = change_colors_in_diff,
 	pattern = { "*" },
-	callback = function()
-		vim.g.orig_colorscheme = get_colorscheme()
-	end
+	callback = function() vim.g.orig_colorscheme = get_colorscheme() end
 })
 
 -- https://vi.stackexchange.com/a/13395
@@ -249,18 +243,14 @@ vim.api.nvim_create_autocmd({"VimEnter",
 	"BufWinEnter", "BufWinLeave", "TabEnter", "TabLeave"}, {
 	group = change_colors_in_diff,
 	pattern = { "*" },
-	callback = function()
-		handle_diff_change_colorscheme()
-	end
+	callback = function() handle_diff_change_colorscheme() end
 })
 
 -- https://vi.stackexchange.com/a/12852
 vim.api.nvim_create_autocmd("OptionSet", {
 	group = change_colors_in_diff,
 	pattern = { "diff" },
-	callback = function()
-		handle_diff_change_colorscheme()
-	end
+	callback = function() handle_diff_change_colorscheme() end
 })
 
 -- :help DiffOrig
