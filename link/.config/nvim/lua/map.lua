@@ -41,12 +41,6 @@ vim.keymap.set("n", "<F9>", ":vertical resize +1<NL>")
 vim.keymap.set("i", "jj", "<esc>")
 vim.keymap.set({"n", "x"}, "H", "0")
 vim.keymap.set({"n", "x"}, "L", "$")
-vim.keymap.set("i", "<c-d>", "<esc>ddi")
-vim.keymap.set("i", "<c-s>", "<c-o>:update<NL>")
-
--- Complete whole filenames/lines with a quicker shortcut key in insert mode
-vim.keymap.set("i", "<C-f>", "<C-x><C-f>")
-vim.keymap.set("i", "<C-l>", "<C-x><C-l>")
 
 vim.keymap.set({"n", "x"}, "<tab>", "%")
 
@@ -86,18 +80,6 @@ vim.keymap.set("n", "<Leader>C", ":2match none<NL>")
 
 vim.keymap.set("n", "<Leader>ev", ":vsplit $MYVIMRC<NL>")
 vim.keymap.set("n", "<Leader>sv", ":source $MYVIMRC<NL>")
-
--- :help CTRL-^
-vim.keymap.set("n", "<leader><leader>", "<c-^>")
-
--- double quote a word
--- single quote a word
-vim.keymap.set("n", [[<Leader>"]], [[viW<esc>a"<esc>Bi"<esc>]])
-vim.keymap.set("n", [[<Leader>']], [[viW<esc>a'<esc>Bi'<esc>]])
-
-vim.keymap.set("n", "<Leader>g", [[:execute "grep! --recursive " . shellescape(expand("<cWORD>")) . " ."<NL>:copen<NL>]])
-
-vim.keymap.set("x", "<c-s>", "<esc>:update<NL>gv")
 
 vim.keymap.set("x", "p", "P")
 
