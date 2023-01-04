@@ -2,13 +2,13 @@
 -- SPDX-License-Identifier: OSL-3.0
 
 -- Stop the highlighting for the 'hlsearch' option.
-vim.keymap.set("n", "<Leader><space>", function() vim.cmd.nohlsearch() end)
+vim.keymap.set("n", "<Leader><Space>", function() vim.cmd.nohlsearch() end)
 
 -- Replace selected text.
-vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<left><left><left>]])
+vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<Left><Left><Left>]])
 
 -- Use \V, and escape slashes in the selected text before replacing.
-vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-r>=escape(@", '/\')<NL>//gc<left><left><left>]])
+vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-r>=escape(@", '/\')<NL>//gc<Left><Left><Left>]])
 
 vim.keymap.set("n", "<Leader>h", function() vim.cmd.split() end)
 vim.keymap.set("n", "<Leader>v", function() vim.cmd.vsplit() end)
@@ -38,24 +38,24 @@ vim.keymap.set("n", "<F8>", function() vim.cmd.resize("+1") end)
 -- window width +1
 vim.keymap.set("n", "<F9>", function() vim.cmd("vertical resize +1") end)
 
-vim.keymap.set("i", "jj", "<esc>")
+vim.keymap.set("i", "jj", "<Esc>")
 vim.keymap.set({"n", "x"}, "H", "0")
 vim.keymap.set({"n", "x"}, "L", "$")
 
-vim.keymap.set({"n", "x"}, "<tab>", "%")
+vim.keymap.set({"n", "x"}, "<Tab>", "%")
 
 -- Jump to the position where the last change was made.
 vim.keymap.set("n", "gl", "'.")
 
 -- g; only available with |+jumplist| feature
 -- Insert newline after cursor
-vim.keymap.set("n", "K", "i<NL><esc>g")
+vim.keymap.set("n", "K", "i<NL><Esc>g")
 
 -- save my left pinky
-vim.keymap.set({"n", "x"}, "<space>", ":")
+vim.keymap.set({"n", "x"}, "<Space>", ":")
 
-vim.keymap.set({"n", "x"}, "<down>", "gj")
-vim.keymap.set({"n", "x"}, "<up>", "gk")
+vim.keymap.set({"n", "x"}, "<Down>", "gj")
+vim.keymap.set({"n", "x"}, "<Up>", "gk")
 
 function remove_trailing_whitespace()
 	-- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
