@@ -92,7 +92,7 @@ function visual_surround(l_text, r_text)
 	local mode = vim.fn.mode()
 
 	if mode == "v" or mode == "V" then -- visual or visual line
-		vim.api.nvim_feedkeys(esc .. "`>a" .. r_text .. esc .. "`<i" .. l_text, "x", false)
+		vim.api.nvim_feedkeys(esc .. "'>a" .. r_text .. esc .. "'<i" .. l_text, "x", false)
 	elseif mode == cntrl_v then -- visual block
 		vim.api.nvim_feedkeys("A" .. r_text .. esc .. "gvI" .. l_text, "x", false)
 	end
