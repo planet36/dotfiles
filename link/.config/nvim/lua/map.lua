@@ -44,6 +44,9 @@ vim.keymap.set({"n", "x"}, "L", "$")
 
 vim.keymap.set({"n", "x"}, "<tab>", "%")
 
+-- Jump to the position where the last change was made.
+vim.keymap.set("n", "gl", "'.")
+
 -- g; only available with |+jumplist| feature
 -- Insert newline after cursor
 vim.keymap.set("n", "K", "i<NL><esc>g")
