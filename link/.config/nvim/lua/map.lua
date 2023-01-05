@@ -4,6 +4,10 @@
 -- Stop the highlighting for the 'hlsearch' option.
 vim.keymap.set("n", "<Leader><Space>", function() vim.cmd.nohlsearch() end)
 
+-- Find selected text
+vim.keymap.set("x", "*", [[y/\V<C-r>=escape(@", '/\')<NL>]])
+vim.keymap.set("x", "#", [[y?\V<C-r>=escape(@", '?\')<NL>]])
+
 -- Replace selected text.
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-r>"//gc<Left><Left><Left>]])
 
