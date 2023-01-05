@@ -16,6 +16,7 @@ This affects the behavior of functions std::fmin, std::fmax.
 
 #include <cmath>
 #include <concepts>
+#include <iterator>
 #include <limits>
 
 template <std::floating_point T>
@@ -80,8 +81,8 @@ public:
 		_max_abs = std::fmax(_max_abs, std::abs(x));
 	}
 
-	template <typename ForwardIterator>
-	void push(ForwardIterator first, ForwardIterator last)
+	template <std::forward_iterator It>
+	void push(It first, It last)
 	{
 		for (; first != last; ++first) { push(*first); }
 	}
