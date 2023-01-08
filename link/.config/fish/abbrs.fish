@@ -22,6 +22,7 @@ abbr --add --global emdl meld
 abbr --add --global emld meld
 abbr --add --global f find
 abbr --add --global fiel file
+abbr --add --global gi git
 abbr --add --global his history
 abbr --add --global hist history
 abbr --add --global ip3 ipython3
@@ -37,6 +38,7 @@ abbr --add --global p2 python2
 abbr --add --global p3 python3
 abbr --add --global py2 python2
 abbr --add --global py3 python3
+abbr --add --global q exit
 abbr --add --global rbn doas reboot now
 abbr --add --global reutrn return
 abbr --add --global rtash trash
