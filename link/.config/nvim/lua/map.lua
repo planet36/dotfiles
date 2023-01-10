@@ -96,7 +96,7 @@ function visual_surround(l_text, r_text)
 	-- https://neovim.io/doc/user/api.html#nvim_feedkeys()
 	local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
 	local cntrl_v = vim.api.nvim_replace_termcodes("<C-v>", true, false, true)
-	local mode = vim.fn.mode()
+	local mode = vim.api.nvim_get_mode().mode
 
 	if mode == "v" or mode == "V" then -- visual or visual line
 		vim.api.nvim_feedkeys(esc .. "`>a" .. r_text .. esc .. "`<i" .. l_text, "x", false)
