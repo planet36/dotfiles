@@ -33,7 +33,7 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
     if hash_object is None:
         hash_object = hashlib.md5()
 
-    with open(file_name, 'rb') as f:
+    with open(file_name, mode='rb') as f:
 
         while True:
 
