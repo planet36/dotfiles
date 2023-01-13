@@ -232,6 +232,7 @@ def main(argv = None):
 
     # default values
     verbose = False
+    force_color_output = False
     default_num_colors = 80
     default_color_space = ColorSpace.LOLCAT
     default_use_true_color = True
@@ -297,6 +298,9 @@ OPTIONS
 -v, --verbose
     Print diagnostics.
 
+-f, --force
+    Force color output even if stdout is not a tty.
+
 -n NUM
     Specify the number of colors to cycle through.  It must be greater than 0.
     (Default: {default_num_colors})
@@ -327,8 +331,8 @@ OPTIONS
     (Default for {ColorSpace.HSLUV.name}: {default_lightness_dict[ColorSpace.HSLUV]})
 ''')
 
-    short_options = 'Vhvn:c:8bis:dl:'
-    long_options = ['version', 'help', 'verbose', 'invert', 'seed=', 'debug', ]
+    short_options = 'Vhvfn:c:8bis:dl:'
+    long_options = ['version', 'help', 'verbose', 'force', 'invert', 'seed=', 'debug', ]
 
     try:
         # pylint: disable=unused-variable
@@ -350,6 +354,9 @@ OPTIONS
 
             elif option in ['-v', '--verbose']:
                 verbose = True
+
+            elif option in ['-f', '--force']:
+                force_color_output = True
 
             elif option in ['-n']:
                 num_colors = int(value)
@@ -391,6 +398,7 @@ OPTIONS
     if lightness is None:
         lightness = default_lightness_dict[color_space]
 
+    print_verbose(f'{force_color_output=}')
     print_verbose(f'{num_colors=}')
     print_verbose(f'{color_space=}')
     print_verbose(f'{use_true_color=}')
@@ -438,7 +446,7 @@ OPTIONS
             else:
                 color_hex = f'{color:02X}'
 
-            if sys.stdout.isatty():
+            if sys.stdout.isatty() or force_color_output:
                 print(ansi_sgr(f'{color}\t{color_hex}', color, do_bg, do_inv))
             else:
                 print(f'{color}\t{color_hex}')
@@ -465,21 +473,24 @@ OPTIONS
             # Keep reading bytes
             continue
 
-        for line in bytes_buf.decode().splitlines(keepends=True):
+        if sys.stdout.isatty() or force_color_output:
+            for line in bytes_buf.decode().splitlines(keepends=True):
 
-            # lolcat does this
-            if '\t' in line:
-                line = line.expandtabs()
+                # lolcat does this
+                if '\t' in line:
+                    line = line.expandtabs()
 
-            for (esc_seq, c) in ansi_escape.findall(line):
-                print(esc_seq, end='')
-                if len(c) > 0:
-                    print(ansi_sgr(c, next(color_cycle), do_bg, do_inv), end='')
+                for (esc_seq, c) in ansi_escape.findall(line):
+                    print(esc_seq, end='')
+                    if len(c) > 0:
+                        print(ansi_sgr(c, next(color_cycle), do_bg, do_inv), end='')
 
-            if line.endswith(os.linesep):
-                i += 1
-                color_cycle = cycle_seq(colors, i)
-                print(end=os.linesep)
+                if line.endswith(os.linesep):
+                    i += 1
+                    color_cycle = cycle_seq(colors, i)
+                    print(end=os.linesep)
+        else:
+            print(bytes_buf.decode(), end='')
 
         bytes_buf.clear()
 
