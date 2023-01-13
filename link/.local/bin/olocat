@@ -312,10 +312,10 @@ OPTIONS
 -b
     Color the background instead of the foreground.
 
--i
+-i, --invert
     Invert the foreground and background.
 
--s SEED
+-s, --seed SEED
     Specify the seed of the PRNG.
 
 -d, --debug
@@ -328,7 +328,7 @@ OPTIONS
 ''')
 
     short_options = 'Vhvn:c:8bis:dl:'
-    long_options = ['version', 'help', 'verbose', 'debug', ]
+    long_options = ['version', 'help', 'verbose', 'invert', 'seed=', 'debug', ]
 
     try:
         # pylint: disable=unused-variable
@@ -366,10 +366,10 @@ OPTIONS
             elif option in ['-b']:
                 do_bg = True
 
-            elif option in ['-i']:
+            elif option in ['-i', '--invert']:
                 do_inv = True
 
-            elif option in ['-s']:
+            elif option in ['-s', '--seed']:
                 random.seed(value)
 
             elif option in ['-d', '--debug']:
