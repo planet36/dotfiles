@@ -5,8 +5,8 @@
 vim.keymap.set("n", "<Leader><Space>", function() vim.cmd.nohlsearch() end)
 
 -- Find selected text
-vim.keymap.set("x", "*", [[y/\V<C-R>=escape(@", '/\')<NL>]])
-vim.keymap.set("x", "#", [[y?\V<C-R>=escape(@", '?\')<NL>]])
+vim.keymap.set("x", "*", [[y/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL>]])
+vim.keymap.set("x", "#", [[y?\V<C-R>=substitute(escape(@", '?\'), '\n', '\\n', 'g')<NL>]])
 
 -- Replace selected text.
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-R>"//gc<Left><Left><Left>]])
