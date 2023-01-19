@@ -21,8 +21,7 @@ vim.keymap.set("n", "<Leader>v", function() vim.cmd.vsplit() end)
 vim.keymap.set("n", "<C-n>", function() vim.cmd.bnext() end)
 vim.keymap.set("n", "<C-p>", function() vim.cmd.bprevious() end)
 
--- Moving cursor to other windows
-
+-- Move cursor to other windows
 vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
