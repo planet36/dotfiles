@@ -3,6 +3,7 @@
 
 #include "util.h"
 
+#include <assert.h>
 #include <err.h>
 #include <errno.h>
 #include <limits.h>
@@ -174,11 +175,12 @@ int main(int argc, char* const argv[])
 	{
 		ACFILE(fp);
 
-		if ((fp = fopen(net_iface_path, "r")) == NULL)
+		fp = fopen(net_iface_path, "r");
+		if (fp == NULL)
 			err(EXIT_FAILURE, "%s", net_iface_path);
 	}
 
-	atexit(atexit_cleanup);
+	assert(atexit(atexit_cleanup) == 0);
 
 	if (dest_path != NULL)
 	{
@@ -187,7 +189,8 @@ int main(int argc, char* const argv[])
 
 		ACFILE(dest_fp);
 
-		if ((dest_fp = fopen(dest_path, "wx")) == NULL)
+		dest_fp = fopen(dest_path, "wx");
+		if (dest_fp == NULL)
 			err(EXIT_FAILURE, "%s", dest_path);
 	}
 
@@ -265,7 +268,7 @@ int main(int argc, char* const argv[])
 			errx(EXIT_FAILURE, "error scanning '%s'", net_iface_path);
 
 		if (first_iteration)
-			first_iteration = 0;
+			first_iteration = false;
 		else
 		{
 			const double delta_time_s = now_s - prev_now_s;
@@ -287,7 +290,8 @@ int main(int argc, char* const argv[])
 			{
 				ACFILE(dest_fp);
 
-				if ((dest_fp = fopen(dest_path, "w")) == NULL)
+				dest_fp = fopen(dest_path, "w");
+				if (dest_fp == NULL)
 					err(EXIT_FAILURE, "%s", dest_path);
 
 				if (fputs(dest_buf, dest_fp) < 0)

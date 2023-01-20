@@ -3,6 +3,7 @@
 
 #include "util.h"
 
+#include <assert.h>
 #include <err.h>
 #include <errno.h>
 #include <signal.h>
@@ -124,7 +125,7 @@ int main(int argc, char* const argv[])
 		}
 	}
 
-	atexit(atexit_cleanup);
+	assert(atexit(atexit_cleanup) == 0);
 
 	if (dest_path != NULL)
 	{
@@ -133,7 +134,8 @@ int main(int argc, char* const argv[])
 
 		ACFILE(dest_fp);
 
-		if ((dest_fp = fopen(dest_path, "wx")) == NULL)
+		dest_fp = fopen(dest_path, "wx");
+		if (dest_fp == NULL)
 			err(EXIT_FAILURE, "%s", dest_path);
 	}
 
@@ -205,7 +207,7 @@ int main(int argc, char* const argv[])
 			errx(EXIT_FAILURE, "error scanning /proc/stat");
 
 		if (first_iteration)
-			first_iteration = 0;
+			first_iteration = false;
 		else
 		{
 			double cpu_usage = 0;
@@ -221,7 +223,8 @@ int main(int argc, char* const argv[])
 			{
 				ACFILE(dest_fp);
 
-				if ((dest_fp = fopen(dest_path, "w")) == NULL)
+				dest_fp = fopen(dest_path, "w");
+				if (dest_fp == NULL)
 					err(EXIT_FAILURE, "%s", dest_path);
 
 				if (fputs(dest_buf, dest_fp) < 0)

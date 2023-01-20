@@ -43,7 +43,8 @@ pscanf(const char* path, const char* fmt, ...)
 	va_list ap;
 	int n;
 
-	if (!(fp = fopen(path, "r")))
+	fp = fopen(path, "r");
+	if (fp == NULL)
 	{
 		warn("fopen '%s'", path);
 		return -1;
@@ -51,7 +52,10 @@ pscanf(const char* path, const char* fmt, ...)
 	va_start(ap, fmt);
 	n = vfscanf(fp, fmt, ap);
 	va_end(ap);
-	fclose(fp);
+	if (fclose(fp) < 0)
+	{
+		err(EXIT_FAILURE, "fclose");
+	}
 
 	return (n == EOF) ? -1 : n;
 }
@@ -67,7 +71,7 @@ msec_to_timeval(unsigned int msec)
 {
 	return (struct timeval){
 	    .tv_sec = msec / 1000U,
-	    .tv_usec = (msec % 1000U) * 1000U,
+	    .tv_usec = (msec % 1000U) * 1000UL,
 	};
 }
 
