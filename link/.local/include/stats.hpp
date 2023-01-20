@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "container.hpp"
+
 #include <algorithm>
 #include <cmath>
 //#include <execution>
@@ -31,7 +33,7 @@ constexpr auto plus_abs = [](const auto& a, const auto& b)
 #define POW3(x) ((x) * (x) * (x))
 #define POW4(x) ((x) * (x) * (x) * (x))
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 min_val(const Container& c)
@@ -46,7 +48,7 @@ min_val(const Container& c)
 	                         c.cbegin(), c.cend());
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 min_abs_val(const Container& c)
@@ -62,7 +64,7 @@ min_abs_val(const Container& c)
 	                         compare_abs_less);
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 max_val(const Container& c)
@@ -77,7 +79,7 @@ max_val(const Container& c)
 	                         c.cbegin(), c.cend());
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 max_abs_val(const Container& c)
@@ -93,7 +95,7 @@ max_abs_val(const Container& c)
 	                         compare_abs_less);
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 minmax_vals(const Container& c)
@@ -111,7 +113,7 @@ minmax_vals(const Container& c)
 	return std::make_pair(*min_iter, *max_iter);
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 minmax_abs_vals(const Container& c)
@@ -130,7 +132,7 @@ minmax_abs_vals(const Container& c)
 	return std::make_pair(*min_iter, *max_iter);
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 sum_val(const Container& c)
@@ -150,7 +152,7 @@ sum_val(const Container& c)
 #endif
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 sum_abs_val(const Container& c)
@@ -170,7 +172,7 @@ sum_abs_val(const Container& c)
 #endif
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 arithmetic_mean_val(const Container& c)
@@ -187,7 +189,7 @@ arithmetic_mean_val(const Container& c)
 // adapted from datamash
 // https://git.savannah.gnu.org/cgit/datamash.git/tree/src/utils.c#n119
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 variance_val(const Container& c, const bool is_sample = false)
@@ -219,7 +221,7 @@ variance_val(const Container& c, const bool is_sample = false)
 	return variance;
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 stdev_val(const Container& c, const bool is_sample = false)
@@ -231,7 +233,7 @@ stdev_val(const Container& c, const bool is_sample = false)
 // https://git.savannah.gnu.org/cgit/datamash.git/tree/src/utils.c#n209
 
 // https://brownmath.com/stat/shape.htm#Skewness
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 skewness_val(const Container& c, const bool is_sample = false)
@@ -269,7 +271,7 @@ skewness_val(const Container& c, const bool is_sample = false)
 // https://git.savannah.gnu.org/cgit/datamash.git/tree/src/utils.c#n269
 
 // https://brownmath.com/stat/shape.htm#Kurtosis
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 excess_kurtosis_val(const Container& c, const bool is_sample = false)
@@ -304,7 +306,7 @@ excess_kurtosis_val(const Container& c, const bool is_sample = false)
 	return excess_kurtosis;
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 median_val(const Container& c)
@@ -322,7 +324,7 @@ median_val(const Container& c)
 		return *std::next(c.cbegin(), n / 2);
 }
 
-template <typename Container>
+template <container Container>
 requires std::is_floating_point_v<typename Container::value_type>
 auto
 range_val(const Container& c)
