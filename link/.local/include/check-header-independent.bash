@@ -4,6 +4,7 @@
 
 for HEADER
 do
+	# This is done to prevent "warning: #pragma once in main file".
 	printf -v PROGRAM '#include "%s"\nint main(){return 0;}' "$HEADER"
 
 	if [[ "$HEADER" == *'.h' ]]
