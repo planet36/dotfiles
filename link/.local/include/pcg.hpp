@@ -10,13 +10,13 @@
 
 #pragma once
 
-#include <bit>
-
 #include "def_urbg_class_details.hpp"
 
 #if defined(__SIZEOF_INT128__)
 #include "int_join.hpp"
 #endif
+
+#include <bit>
 
 /*
 * Multiplier and increment values taken from here:
@@ -30,7 +30,7 @@ struct pcg32
 	using state_type = uint64_t;
 	using result_type = uint32_t;
 
-DEF_URBG_CLASS_DETAILS(pcg32)
+	DEF_URBG_CLASS_DETAILS(pcg32)
 
 	result_type next()
 	{
@@ -56,7 +56,7 @@ struct pcg32_fast
 	using state_type = uint64_t;
 	using result_type = uint32_t;
 
-DEF_URBG_CLASS_DETAILS(pcg32_fast)
+	DEF_URBG_CLASS_DETAILS(pcg32_fast)
 
 	result_type next()
 	{
@@ -81,7 +81,7 @@ struct pcg64
 	using state_type = __uint128_t;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(pcg64)
+	DEF_URBG_CLASS_DETAILS(pcg64)
 
 	result_type next()
 	{
@@ -90,12 +90,12 @@ DEF_URBG_CLASS_DETAILS(pcg64)
 		*  wide."
 		*  https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
 		*/
-		static constexpr __uint128_t multiplier =
-			int_join(UINT64_C(2549297995355413924),
-					UINT64_C(4865540595714422341)); // not prime
-		static constexpr __uint128_t increment =
-			int_join(UINT64_C(6364136223846793005),
-					UINT64_C(1442695040888963407)); // not prime
+		static constexpr __uint128_t multiplier = int_join(
+		    UINT64_C(2549297995355413924),
+		    UINT64_C(4865540595714422341)); // not prime
+		static constexpr __uint128_t increment = int_join(
+		    UINT64_C(6364136223846793005),
+		    UINT64_C(1442695040888963407)); // not prime
 		static_assert(increment & 1U); // must be odd
 
 		const auto old_s = s;

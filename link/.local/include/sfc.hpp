@@ -22,7 +22,8 @@ struct sfc32
 	using state_type = std::array<uint32_t, 4>;
 	using result_type = uint32_t;
 
-DEF_URBG_CLASS_DETAILS(sfc32)
+	DEF_URBG_CLASS_DETAILS(sfc32)
+
 	// XXX: If a zero seed is given, it takes about 7 iterations for the bits
 	// to avalanche.
 
@@ -45,7 +46,8 @@ struct sfc64
 	using state_type = std::array<uint64_t, 4>;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(sfc64)
+	DEF_URBG_CLASS_DETAILS(sfc64)
+
 	// XXX: If a zero seed is given, it takes about 10 iterations for the bits
 	// to avalanche.
 

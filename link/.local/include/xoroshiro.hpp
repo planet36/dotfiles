@@ -122,7 +122,8 @@ struct xoroshiro64star
 	using state_type = std::array<T, 2>;
 	using result_type = T;
 
-DEF_URBG_CLASS_DETAILS(xoroshiro64star)
+	DEF_URBG_CLASS_DETAILS(xoroshiro64star)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -154,7 +155,8 @@ struct xoroshiro64starstar
 	using state_type = std::array<T, 2>;
 	using result_type = T;
 
-DEF_URBG_CLASS_DETAILS(xoroshiro64starstar)
+	DEF_URBG_CLASS_DETAILS(xoroshiro64starstar)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -204,7 +206,8 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1};
 
-DEF_URBG_CLASS_DETAILS(xoroshiro128plus)
+	DEF_URBG_CLASS_DETAILS(xoroshiro128plus)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -224,14 +227,14 @@ DEF_URBG_CLASS_DETAILS(xoroshiro128plus)
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-DEF_JUMP
+    DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-DEF_LONG_JUMP
+    DEF_LONG_JUMP
 };
 
 /** This is xoroshiro128++ 1.0, one of our all-purpose, rock-solid, small-state
@@ -257,7 +260,8 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0x360fd5f2cf8d5d99, 0x9c6e6877736c46e3};
 
-DEF_URBG_CLASS_DETAILS(xoroshiro128plusplus)
+	DEF_URBG_CLASS_DETAILS(xoroshiro128plusplus)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -277,14 +281,14 @@ DEF_URBG_CLASS_DETAILS(xoroshiro128plusplus)
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-DEF_JUMP
+    DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-DEF_LONG_JUMP
+    DEF_LONG_JUMP
 };
 
 /** This is xoroshiro128** 1.0, one of our all-purpose, rock-solid, small-state
@@ -310,7 +314,8 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1};
 
-DEF_URBG_CLASS_DETAILS(xoroshiro128starstar)
+	DEF_URBG_CLASS_DETAILS(xoroshiro128starstar)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -330,14 +335,14 @@ DEF_URBG_CLASS_DETAILS(xoroshiro128starstar)
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-DEF_JUMP
+    DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-DEF_LONG_JUMP
+    DEF_LONG_JUMP
 };
 
 /** This is xoroshiro1024++ 1.0, one of our all-purpose, rock-solid,
@@ -375,7 +380,8 @@ private:
 	    0x92a65bca41852cc1, 0xf46820dd0509c12a, 0x52b00c35fbf92185,
 	    0x1e5b3b7f589e03c1};
 
-DEF_URBG_CLASS_DETAILS(xoroshiro1024plusplus)
+	DEF_URBG_CLASS_DETAILS(xoroshiro1024plusplus)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -397,14 +403,14 @@ DEF_URBG_CLASS_DETAILS(xoroshiro1024plusplus)
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-DEF_JUMP_2
+    DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-DEF_LONG_JUMP_2
+    DEF_LONG_JUMP_2
 };
 
 /** This is xoroshiro1024* 1.0, our large-state generator for floating-point
@@ -448,7 +454,8 @@ private:
 	    0x92a65bca41852cc1, 0xf46820dd0509c12a, 0x52b00c35fbf92185,
 	    0x1e5b3b7f589e03c1};
 
-DEF_URBG_CLASS_DETAILS(xoroshiro1024star)
+	DEF_URBG_CLASS_DETAILS(xoroshiro1024star)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -470,14 +477,14 @@ DEF_URBG_CLASS_DETAILS(xoroshiro1024star)
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-DEF_JUMP_2
+    DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-DEF_LONG_JUMP_2
+    DEF_LONG_JUMP_2
 };
 
 /** This is xoroshiro1024** 1.0, one of our all-purpose, rock-solid,
@@ -515,7 +522,8 @@ private:
 	    0x92a65bca41852cc1, 0xf46820dd0509c12a, 0x52b00c35fbf92185,
 	    0x1e5b3b7f589e03c1};
 
-DEF_URBG_CLASS_DETAILS(xoroshiro1024starstar)
+	DEF_URBG_CLASS_DETAILS(xoroshiro1024starstar)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -537,12 +545,12 @@ DEF_URBG_CLASS_DETAILS(xoroshiro1024starstar)
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-DEF_JUMP_2
+    DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-DEF_LONG_JUMP_2
+    DEF_LONG_JUMP_2
 };

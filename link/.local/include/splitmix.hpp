@@ -19,7 +19,7 @@ struct splitmix32
 	using state_type = uint64_t;
 	using result_type = uint32_t;
 
-DEF_URBG_CLASS_DETAILS(splitmix32)
+	DEF_URBG_CLASS_DETAILS(splitmix32)
 
 	result_type next()
 	{
@@ -56,7 +56,7 @@ struct splitmix64
 	using state_type = uint64_t;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(splitmix64)
+	DEF_URBG_CLASS_DETAILS(splitmix64)
 
 	result_type next()
 	{

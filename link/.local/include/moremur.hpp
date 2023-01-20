@@ -18,7 +18,7 @@ struct moremur
 	using state_type = uint64_t;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(moremur)
+	DEF_URBG_CLASS_DETAILS(moremur)
 
 	result_type next()
 	{

@@ -21,7 +21,7 @@ struct wyrand
 	using state_type = uint64_t;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(wyrand)
+	DEF_URBG_CLASS_DETAILS(wyrand)
 
 	result_type next()
 	{

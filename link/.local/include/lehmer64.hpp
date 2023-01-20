@@ -22,7 +22,8 @@ struct lehmer64
 	using state_type = __uint128_t;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(lehmer64)
+	DEF_URBG_CLASS_DETAILS(lehmer64)
+
 	// XXX: must not give zero seed
 
 	result_type next()

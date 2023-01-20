@@ -20,7 +20,8 @@ struct jsf32_2
 	using state_type = std::array<uint32_t, 4>;
 	using result_type = uint32_t;
 
-DEF_URBG_CLASS_DETAILS(jsf32_2)
+	DEF_URBG_CLASS_DETAILS(jsf32_2)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -43,7 +44,8 @@ struct jsf32_3
 	using state_type = std::array<uint32_t, 4>;
 	using result_type = uint32_t;
 
-DEF_URBG_CLASS_DETAILS(jsf32_3)
+	DEF_URBG_CLASS_DETAILS(jsf32_3)
+
 	// XXX: must not give zero seed
 
 	result_type next()
@@ -66,7 +68,8 @@ struct jsf64
 	using state_type = std::array<uint64_t, 4>;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(jsf64)
+	DEF_URBG_CLASS_DETAILS(jsf64)
+
 	// XXX: must not give zero seed
 
 	result_type next()

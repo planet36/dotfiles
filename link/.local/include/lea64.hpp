@@ -18,7 +18,7 @@ struct lea64
 	using state_type = uint64_t;
 	using result_type = uint64_t;
 
-DEF_URBG_CLASS_DETAILS(lea64)
+	DEF_URBG_CLASS_DETAILS(lea64)
 
 	result_type next()
 	{

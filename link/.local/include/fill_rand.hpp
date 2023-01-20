@@ -45,8 +45,8 @@ fill_rand(std::vector<T>& vec)
 
 #elif defined(_GLIBCXX_HAVE_GETENTROPY)
 
-#include <unistd.h>
 #include <system_error>
+#include <unistd.h>
 
 // getentropy
 // https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
