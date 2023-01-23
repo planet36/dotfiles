@@ -28,12 +28,12 @@ trailing newline) to stderr.
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
 #ifdef __cplusplus
-#define TIME_THIS fflush(stdout);                           \
+#define TIME_THIS (void)fflush(stdout);                     \
 	__attribute__((cleanup(print_timerdata_now_diff)))      \
 	const timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
 	timerdata_now()
 #else
-#define TIME_THIS fflush(stdout);                                  \
+#define TIME_THIS (void)fflush(stdout);                            \
 	__attribute__((cleanup(print_timerdata_now_diff)))             \
 	const struct timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
 	timerdata_now()
@@ -108,8 +108,8 @@ print_timerdata_now_diff(const struct timerdata* t0)
 	timespecsub(&t1.rtime, &t0->rtime, &diff.rtime);
 	timevalsub(&t1.utime, &t0->utime, &diff.utime);
 	timevalsub(&t1.stime, &t0->stime, &diff.stime);
-	fflush(stdout);
-	fprintf(stderr, "%.2f  %.2f  %.2f\n",
+	(void)fflush(stdout);
+	(void)fprintf(stderr, "%.2f  %.2f  %.2f\n",
 	        TIMESPEC_TO_SEC(diff.rtime),
 	        TIMEVAL_TO_SEC(diff.utime),
 	        TIMEVAL_TO_SEC(diff.stime));

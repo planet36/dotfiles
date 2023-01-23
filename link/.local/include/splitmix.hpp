@@ -24,15 +24,15 @@ struct splitmix32
 	result_type next()
 	{
 		static constexpr uint64_t inc = gamma64;
-		static_assert(inc & 1, "must be odd");
+		static_assert((inc & 1) != 0, "must be odd");
 
 		static constexpr uint64_t M1 = 0x62a9d9ed799705f5; // not prime (popcount = 36)
 		static constexpr uint64_t M2 = 0xcb24d0a5c88c35b3; // not prime (popcount = 29)
 		static constexpr unsigned int S1 = 33;
 		static constexpr unsigned int S2 = 28;
 		static constexpr unsigned int S3 = 32;
-		static_assert(M1 & 1, "must be odd");
-		static_assert(M2 & 1, "must be odd");
+		static_assert((M1 & 1) != 0, "must be odd");
+		static_assert((M2 & 1) != 0, "must be odd");
 
 		// Not result_type
 		auto x = (s += inc);
@@ -61,15 +61,15 @@ struct splitmix64
 	result_type next()
 	{
 		static constexpr uint64_t inc = gamma64;
-		static_assert(inc & 1, "must be odd");
+		static_assert((inc & 1) != 0, "must be odd");
 
 		static constexpr uint64_t M1 = 0xbf58476d1ce4e5b9; // not prime (popcount = 36)
 		static constexpr uint64_t M2 = 0x94d049bb133111eb; // not prime (popcount = 29)
 		static constexpr unsigned int S1 = 30;
 		static constexpr unsigned int S2 = 27;
 		static constexpr unsigned int S3 = 31;
-		static_assert(M1 & 1, "must be odd");
-		static_assert(M2 & 1, "must be odd");
+		static_assert((M1 & 1) != 0, "must be odd");
+		static_assert((M2 & 1) != 0, "must be odd");
 
 		auto x = (s += inc);
 

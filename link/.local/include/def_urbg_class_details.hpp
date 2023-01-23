@@ -42,8 +42,8 @@ public:                                                              \
 	static_assert(sizeof(state_type) % sizeof(result_type) == 0);    \
 	/* ctors */                                                      \
 	CLASS_NAME() { seed(); }                                         \
-	CLASS_NAME(const state_type& new_s) { seed(new_s); }             \
-	CLASS_NAME(const seed_bytes_type& bytes) { seed(bytes); }        \
+	explicit CLASS_NAME(const state_type& new_s) { seed(new_s); }             \
+	explicit CLASS_NAME(const seed_bytes_type& bytes) { seed(bytes); }        \
 	/* seed functions */                                             \
 	void seed() { fill_rand(s); }                                    \
 	void seed(const state_type& new_s) { s = new_s; }                \

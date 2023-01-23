@@ -10,11 +10,12 @@
 
 #pragma once
 
+#include <array>
 #include <cstdint>
 
 namespace
 {
-inline constexpr uint64_t _wyp[4] = {
+inline constexpr std::array<uint64_t, 4> _wyp = {
 	0xa0761d6478bd642f, // prime (popcount = 32)
 	0xe7037ed1a0b428db, // prime (popcount = 32)
 	0x8ebc6af09c88c6e3, // prime (popcount = 32)

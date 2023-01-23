@@ -34,12 +34,12 @@ struct pcg32
 
 	result_type next()
 	{
-		static constexpr state_type multiplier = UINT64_C(6364136223846793005); // not prime
-		static constexpr state_type increment = UINT64_C(1442695040888963407); // not prime
-		static_assert(increment & 1U); // must be odd
+		static constexpr state_type mul = UINT64_C(6364136223846793005); // not prime
+		static constexpr state_type inc = UINT64_C(1442695040888963407); // not prime
+		static_assert((inc & 1) != 0, "must be odd");
 
 		const auto old_s = s;
-		s = s * multiplier + increment;
+		s = s * mul + inc;
 
 		// (5 + 32) / 2 == 18
 		// 32 - 5 == 27
@@ -60,12 +60,12 @@ struct pcg32_fast
 
 	result_type next()
 	{
-		static constexpr state_type multiplier = UINT64_C(6364136223846793005); // not prime
-		static constexpr state_type increment = UINT64_C(1442695040888963407); // not prime
-		static_assert(increment & 1U); // must be odd
+		static constexpr state_type mul = UINT64_C(6364136223846793005); // not prime
+		static constexpr state_type inc = UINT64_C(1442695040888963407); // not prime
+		static_assert((inc & 1) != 0, "must be odd");
 
 		const auto old_s = s;
-		s = s * multiplier + increment;
+		s = s * mul + inc;
 
 		// 32 - 3 - 7 == 22
 		// 64 - 3 == 61
@@ -90,16 +90,16 @@ struct pcg64
 		*  wide."
 		*  https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
 		*/
-		static constexpr __uint128_t multiplier = int_join(
+		static constexpr __uint128_t mul = int_join(
 		    UINT64_C(2549297995355413924),
 		    UINT64_C(4865540595714422341)); // not prime
-		static constexpr __uint128_t increment = int_join(
+		static constexpr __uint128_t inc = int_join(
 		    UINT64_C(6364136223846793005),
 		    UINT64_C(1442695040888963407)); // not prime
-		static_assert(increment & 1U); // must be odd
+		static_assert((inc & 1) != 0, "must be odd");
 
 		const auto old_s = s;
-		s = s * multiplier + increment;
+		s = s * mul + inc;
 
 		// 128 / 2 == 64
 		// 128 - 6 == 122

@@ -23,15 +23,15 @@ struct lea64
 	result_type next()
 	{
 		static constexpr uint64_t inc = gamma64;
-		static_assert(inc & 1, "must be odd");
+		static_assert((inc & 1) != 0, "must be odd");
 
 		static constexpr uint64_t M1 = 0xdaba0b6eb09322e3; // not prime (popcount = 32)
 		static constexpr uint64_t M2 = 0xdaba0b6eb09322e3; // not prime (popcount = 32)
 		static constexpr unsigned int S1 = 32;
 		static constexpr unsigned int S2 = 32;
 		static constexpr unsigned int S3 = 32;
-		static_assert(M1 & 1, "must be odd");
-		static_assert(M2 & 1, "must be odd");
+		static_assert((M1 & 1) != 0, "must be odd");
+		static_assert((M2 & 1) != 0, "must be odd");
 
 		auto x = (s += inc);
 

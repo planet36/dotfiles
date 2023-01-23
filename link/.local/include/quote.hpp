@@ -121,7 +121,7 @@ quote(const char* s, const char delim = double_quote,
 {
 	std::string result;
 	result.push_back(delim);
-	while (*s)
+	while (*s != '\0')
 	{
 		if (*s == delim || *s == escape)
 			result.push_back(escape);

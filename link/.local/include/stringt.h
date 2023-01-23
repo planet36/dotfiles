@@ -16,7 +16,7 @@
 #include <wchar.h>
 
 inline static size_t
-_strtcat_helper(char* restrict dest,
+strtcat_helper(char* restrict dest,
                 const char* restrict src,
                 size_t dest_sz,
                 size_t dest_len)
@@ -60,7 +60,7 @@ _strtcat_helper(char* restrict dest,
 static size_t
 strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
 {
-	return _strtcat_helper(dest, src, dest_sz, strlen(dest));
+	return strtcat_helper(dest, src, dest_sz, strlen(dest));
 }
 
 /// String copy without truncation
@@ -87,11 +87,11 @@ strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
 static size_t
 strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
 {
-	return _strtcat_helper(dest, src, dest_sz, 0);
+	return strtcat_helper(dest, src, dest_sz, 0);
 }
 
 inline static size_t
-_wstrtcat_helper(wchar_t* restrict dest,
+wstrtcat_helper(wchar_t* restrict dest,
                  const wchar_t* restrict src,
                  size_t dest_sz,
                  size_t dest_len)
@@ -135,7 +135,7 @@ _wstrtcat_helper(wchar_t* restrict dest,
 static size_t
 wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 {
-	return _wstrtcat_helper(dest, src, dest_sz, wcslen(dest));
+	return wstrtcat_helper(dest, src, dest_sz, wcslen(dest));
 }
 
 /// Wide string copy without truncation
@@ -162,5 +162,5 @@ wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 static size_t
 wstrtcpy(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 {
-	return _wstrtcat_helper(dest, src, dest_sz, 0);
+	return wstrtcat_helper(dest, src, dest_sz, 0);
 }
