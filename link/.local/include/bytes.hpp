@@ -28,7 +28,7 @@ requires (std::is_standard_layout_v<DatumT> && std::is_trivial_v<DatumT>)
 union byte_array_union
 {
 	array_of_data<DatumT, num_data> data;
-	array_of_bytes<sizeof(data)>    bytes;
+	array_of_bytes<sizeof(data)>    bytes{};
 };
 
 /// convert the datum to an array of bytes

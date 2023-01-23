@@ -32,5 +32,5 @@ i_to_s(const std::integral auto x, const int base = 10)
 
 	char buf[buf_size] = {'\0'};
 	const std::to_chars_result r = std::to_chars(buf, buf + buf_size, x, base);
-	return std::string{buf, r.ptr};
+	return std::string(buf, r.ptr);
 }

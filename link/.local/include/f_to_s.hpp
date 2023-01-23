@@ -27,7 +27,7 @@ f_to_s(const std::floating_point auto x,
        const int precision)
 {
 	std::string s;
-	std::to_chars_result r;
+	std::to_chars_result r{};
 
 	do
 	{
