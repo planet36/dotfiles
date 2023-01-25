@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function untar --wraps tar --description 'untar a file and delete it'
+function ut --wraps tar --description 'untar a file and delete it'
 
     for INFILE in $argv
 

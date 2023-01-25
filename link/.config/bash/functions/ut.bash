@@ -4,7 +4,7 @@
 # shellcheck disable=SC2059
 
 # Untar the given file(s)
-function untar
+function ut
 {
     (
     # Change the priority of the subshell.
