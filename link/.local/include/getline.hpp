@@ -29,10 +29,8 @@ getdelim(std::string& line, FILE* stream, char delim,
 	const ssize_t bytes_read = getdelim(&buf, &buf_size, delim, stream);
 	if (bytes_read > 0)
 	{
-		if (strip_delim && (buf[bytes_read - 1] == delim))
-			line.assign(buf, static_cast<std::string::size_type>(bytes_read - 1));
-		else
-			line.assign(buf, static_cast<std::string::size_type>(bytes_read));
+		const bool remove_last_char = strip_delim && (buf[bytes_read - 1] == delim);
+		line.assign(buf, bytes_read - remove_last_char);
 	}
 	else
 	{
