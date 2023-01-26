@@ -33,7 +33,7 @@ current_year_local()
 	// NOTE: localtime_r is not in std::
 	if (::localtime_r(&now_time_t, &now_tm) == nullptr)
 	{
-		throw std::system_error(std::make_error_code(std::errc(errno)),
+		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "localtime_r");
 	}
 #else
@@ -51,7 +51,7 @@ current_year_utc()
 	// NOTE: gmtime_r is not in std::
 	if (::gmtime_r(&now_time_t, &now_tm) == nullptr)
 	{
-		throw std::system_error(std::make_error_code(std::errc(errno)),
+		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "gmtime_r");
 	}
 #else

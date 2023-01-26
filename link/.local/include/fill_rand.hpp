@@ -59,7 +59,7 @@ fill_rand(T& x)
 {
 	if (getentropy(&x, sizeof(T)) < 0)
 	{
-		throw std::system_error(std::make_error_code(std::errc(errno)),
+		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
 	}
 }
@@ -71,7 +71,7 @@ fill_rand(std::array<T, N>& arr)
 {
 	if (getentropy(arr.data(), sizeof(T) * N) < 0)
 	{
-		throw std::system_error(std::make_error_code(std::errc(errno)),
+		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
 	}
 }
@@ -82,7 +82,7 @@ fill_rand(std::vector<T>& vec)
 {
 	if (getentropy(vec.data(), sizeof(T) * vec.size()) < 0)
 	{
-		throw std::system_error(std::make_error_code(std::errc(errno)),
+		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
 	}
 }

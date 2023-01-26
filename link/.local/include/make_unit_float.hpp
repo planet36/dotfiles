@@ -15,7 +15,7 @@ Inspired by <https://prng.di.unimi.it/>
 constexpr float
 make_unit_float(const uint32_t x)
 {
-	return (x >> (32 - 24)) * 0x1p-24f;
+	return (x >> (32 - 24)) * 0x1p-24F;
 }
 
 constexpr double
