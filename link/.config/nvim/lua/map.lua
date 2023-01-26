@@ -12,7 +12,7 @@ vim.keymap.set("x", "#", [[y?\V<C-R>=substitute(escape(@", '?\'), '\n', '\\n', '
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-R>"//gc<Left><Left><Left>]])
 
 -- Use \V, and escape slashes in the selected text before replacing.
-vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-R>=escape(@", '/\')<NL>//gc<Left><Left><Left>]])
+vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL>//gc<Left><Left><Left>]])
 
 vim.keymap.set("n", "<Leader>h", function() vim.cmd.split() end)
 vim.keymap.set("n", "<Leader>v", function() vim.cmd.vsplit() end)
