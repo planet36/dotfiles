@@ -41,6 +41,12 @@ vim.keymap.set("n", "<F8>", function() vim.cmd.resize("+1") end)
 -- window width +1
 vim.keymap.set("n", "<F9>", function() vim.cmd("vertical resize +1") end)
 
+-- Resize with arrows
+vim.keymap.set("n", "<C-Up>", function() vim.cmd.resize("-1") end)
+vim.keymap.set("n", "<C-Down>", function() vim.cmd.resize("+1") end)
+vim.keymap.set("n", "<C-Left>", function() vim.cmd("vertical resize -1") end)
+vim.keymap.set("n", "<C-Right>", function() vim.cmd("vertical resize +1") end)
+
 vim.keymap.set("i", "jj", "<Esc>")
 vim.keymap.set({"n", "x"}, "H", "0")
 vim.keymap.set({"n", "x"}, "L", "$")
