@@ -17,7 +17,11 @@ import numpy as np
 class Ellipsoid:
 
     # pylint: disable=too-many-locals
-    def __init__(self, _a: float, _f_recip: float, _GM: float = 3.986004418E14, _omega: float = 7.292115E-5):
+    def __init__(self,
+                 _a: float,
+                 _f_recip: float,
+                 _GM: float = 3.986004418E14,
+                 _omega: float = 7.292115E-5):
 
         # defining parameters
         a = _a # semi-major axis (equatorial radius of the earth) (meters)
