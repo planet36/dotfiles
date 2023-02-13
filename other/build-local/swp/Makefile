@@ -17,9 +17,6 @@ BIN = $(notdir $(CURDIR))
 
 all: $(BIN)
 
-$(BIN): $(OBJS)
-	$(CC) $^ -o $@ $(LDLIBS)
-
 clean:
 	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS)
 
