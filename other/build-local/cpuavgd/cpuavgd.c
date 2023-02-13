@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+#include "strtou.h"
+
 #include <assert.h>
 #include <err.h>
 #include <errno.h>
@@ -22,15 +24,6 @@
 // automatically close file stream
 #define ACFILE(varname) \
 	__attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
-
-unsigned int
-strtou(const char* s)
-{
-	unsigned long i = strtoul(s, NULL, 0);
-	if (i > UINT_MAX)
-		i = UINT_MAX;
-	return (unsigned int)i;
-}
 
 void
 cleanup_close_file(FILE** fpp)
