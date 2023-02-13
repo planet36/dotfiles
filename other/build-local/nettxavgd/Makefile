@@ -20,9 +20,6 @@ all: $(BIN)
 $(BIN): $(OBJS)
 	$(CC) $^ -o $@ $(LDLIBS)
 
-%.o: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $<
-
 clean:
 	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS)
 
