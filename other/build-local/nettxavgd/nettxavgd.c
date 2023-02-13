@@ -4,6 +4,7 @@
 #include "acfile.h"
 #include "pscanf.h"
 #include "strtou.h"
+#include "timespec.h"
 
 #include <assert.h>
 #include <dirent.h>
@@ -34,12 +35,6 @@ scandir_filter(const struct dirent* dirent)
 
 // {{{ copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
-
-double
-timespec_to_sec(const struct timespec* ts)
-{
-	return (double)ts->tv_sec + copysign((double)ts->tv_nsec, (double)ts->tv_sec) / 1E9;
-}
 
 struct timeval
 msec_to_timeval(unsigned int msec)
