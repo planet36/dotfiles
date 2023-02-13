@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
+#include "acfile.h"
 #include "pscanf.h"
 #include "strtou.h"
 
@@ -21,25 +22,6 @@
 #include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
-
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
-// automatically close file stream
-#define ACFILE(varname) \
-	__attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
-
-void
-cleanup_close_file(FILE** fpp)
-{
-	if (*fpp != NULL)
-	{
-		if (fclose(*fpp) < 0)
-		{
-			*fpp = NULL;
-			err(EXIT_FAILURE, "fclose");
-		}
-		*fpp = NULL;
-	}
-}
 
 int
 scandir_filter(const struct dirent* dirent)
