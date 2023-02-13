@@ -36,7 +36,7 @@ objs: $(OBJS)
 	-printf '#include "%s"\nint main(){return 0;}\n' $< | LC_ALL=C $(CXX) $(CPPFLAGS) $(CXXFLAGS) -x c++ -o $@ - $(LDLIBS)
 
 clean:
-	@$(RM) --verbose -- $(DEPS) $(OBJS) $(BINS) *~ *.d *.o *.out core core.[[:digit:]]*
+	@$(RM) --verbose -- $(DEPS) $(OBJS) $(BINS)
 
 lint:
 	-clang-tidy --quiet $(C_HDRS) -- $(CPPFLAGS) $(CFLAGS) $(LDLIBS)

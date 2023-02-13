@@ -24,7 +24,7 @@ $(BIN): $(OBJS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $<
 
 clean:
-	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS) *~ core core.[[:digit:]]*
+	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS)
 
 install: $(BIN)
 	@mkdir --verbose --parents -- "$(DESTDIR)$(PREFIX)/bin"
