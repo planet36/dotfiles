@@ -4,6 +4,7 @@
 #include "acfile.h"
 #include "pscanf.h"
 #include "strtou.h"
+#include "timeval.h"
 
 #include <assert.h>
 #include <err.h>
@@ -21,20 +22,6 @@
 #include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
-
-// {{{ copied from my slstatus
-// https://github.com/planet36/slstatus/blob/main/util.c
-
-struct timeval
-msec_to_timeval(unsigned int msec)
-{
-	return (struct timeval){
-	    .tv_sec = msec / 1000U,
-	    .tv_usec = (msec % 1000U) * 1000UL,
-	};
-}
-
-// }}}
 
 // {{{ copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/components/cpu.c

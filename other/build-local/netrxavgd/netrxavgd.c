@@ -5,6 +5,7 @@
 #include "pscanf.h"
 #include "strtou.h"
 #include "timespec.h"
+#include "timeval.h"
 
 #include <assert.h>
 #include <dirent.h>
@@ -32,20 +33,6 @@ scandir_filter(const struct dirent* dirent)
 	       strcmp(dirent->d_name, "..") != 0 &&
 	       strcmp(dirent->d_name, "lo") != 0;
 }
-
-// {{{ copied from my slstatus
-// https://github.com/planet36/slstatus/blob/main/util.c
-
-struct timeval
-msec_to_timeval(unsigned int msec)
-{
-	return (struct timeval){
-	    .tv_sec = msec / 1000U,
-	    .tv_usec = (msec % 1000U) * 1000UL,
-	};
-}
-
-// }}}
 
 const char* program_author = "Steven Ward";
 const char* program_version = "1.2.2";
