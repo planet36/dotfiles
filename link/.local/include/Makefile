@@ -39,8 +39,8 @@ clean:
 	@$(RM) --verbose -- $(DEPS) $(OBJS) $(BINS)
 
 lint:
-	-clang-tidy --quiet $(C_HDRS) -- $(CPPFLAGS) $(CFLAGS) $(LDLIBS)
-	-clang-tidy --quiet $(CXX_HDRS) -- $(CPPFLAGS) $(CXXFLAGS) $(LDLIBS)
+	-clang-tidy --quiet $(C_HDRS) -- $(CPPFLAGS) $(CFLAGS)
+	-clang-tidy --quiet $(CXX_HDRS) -- $(CPPFLAGS) $(CXXFLAGS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: all bins objs clean lint

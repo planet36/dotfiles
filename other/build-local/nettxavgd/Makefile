@@ -29,7 +29,7 @@ uninstall:
 	@$(RM) --verbose -- "$(DESTDIR)$(PREFIX)/bin/$(BIN)"
 
 lint:
-	-clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS) $(LDLIBS)
+	-clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: all install clean uninstall lint
