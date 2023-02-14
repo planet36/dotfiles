@@ -17,6 +17,10 @@ BIN = $(notdir $(CURDIR))
 
 all: $(BIN)
 
+# The built-in recipe for the implicit rule uses $^ instead of $<
+%: %.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $< -o $@ $(LDLIBS)
+
 clean:
 	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS)
 
