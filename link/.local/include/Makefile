@@ -29,11 +29,11 @@ objs: $(OBJS)
 
 %.out: %.h
 	@# This is done to prevent "warning: #pragma once in main file".
-	-printf '#include "%s"\nint main(){return 0;}\n' $< | LC_ALL=C $(CC) $(CPPFLAGS) $(CFLAGS) -x c -o $@ - $(LDLIBS)
+	-printf '#include "%s"\nint main(){return 0;}\n' $< | LC_ALL=C $(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -x c -o $@ - $(LDLIBS)
 
 %.out: %.hpp
 	@# This is done to prevent "warning: #pragma once in main file".
-	-printf '#include "%s"\nint main(){return 0;}\n' $< | LC_ALL=C $(CXX) $(CPPFLAGS) $(CXXFLAGS) -x c++ -o $@ - $(LDLIBS)
+	-printf '#include "%s"\nint main(){return 0;}\n' $< | LC_ALL=C $(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -x c++ -o $@ - $(LDLIBS)
 
 clean:
 	@$(RM) --verbose -- $(DEPS) $(OBJS) $(BINS)
