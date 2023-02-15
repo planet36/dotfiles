@@ -17,6 +17,8 @@ trailing newline) to stderr.
 
 #pragma once
 
+#include "timeval.h"
+
 #include <stdio.h>
 #include <sys/resource.h>
 #include <time.h>
@@ -82,21 +84,6 @@ timespecsub(const struct timespec* t1,
 	{
 		diff->tv_sec--;
 		diff->tv_nsec += 1000000000L;
-	}
-}
-
-// https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132
-static void
-timevalsub(const struct timeval* t1,
-           const struct timeval* t0,
-           struct timeval* diff)
-{
-	diff->tv_sec = t1->tv_sec - t0->tv_sec;
-	diff->tv_usec = t1->tv_usec - t0->tv_usec;
-	if (diff->tv_usec < 0)
-	{
-		diff->tv_sec--;
-		diff->tv_usec += 1000000L;
 	}
 }
 
