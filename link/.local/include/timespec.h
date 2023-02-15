@@ -13,6 +13,11 @@
 #include <math.h>
 #include <time.h>
 
+#ifdef __cplusplus
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wredundant-tags"
+#endif
+
 // copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
 static
@@ -36,3 +41,7 @@ timespecsub(const struct timespec* t1,
 		diff->tv_nsec += 1000000000L;
 	}
 }
+
+#ifdef __cplusplus
+#pragma GCC diagnostic pop
+#endif
