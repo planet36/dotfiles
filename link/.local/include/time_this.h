@@ -46,7 +46,6 @@ trailing newline) to stderr.
 #define TOKENPASTE(x, y)  x##y
 #define TOKENPASTE2(x, y) TOKENPASTE(x, y)
 
-#define TIMESPEC_TO_SEC(ts) ((double)(ts).tv_sec + (double)(ts).tv_nsec / 1E9)
 #define TIMEVAL_TO_SEC(tv)  ((double)(tv).tv_sec + (double)(tv).tv_usec / 1E6)
 
 struct timerdata
@@ -83,7 +82,7 @@ print_timerdata_now_diff(const struct timerdata* t0)
 	timevalsub(&t1.stime, &t0->stime, &diff.stime);
 	(void)fflush(stdout);
 	(void)fprintf(stderr, "%.2f  %.2f  %.2f\n",
-	        TIMESPEC_TO_SEC(diff.rtime),
+	        timespec_to_sec(&diff.rtime),
 	        TIMEVAL_TO_SEC(diff.utime),
 	        TIMEVAL_TO_SEC(diff.stime));
 }
