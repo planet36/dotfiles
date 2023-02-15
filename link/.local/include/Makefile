@@ -5,6 +5,8 @@ CPPFLAGS += -MMD -MP
 
 CXXFLAGS += -Werror -Wno-error=pedantic
 
+#LDFLAGS +=
+
 #LDLIBS +=
 
 C_HDRS := $(wildcard *.h)
