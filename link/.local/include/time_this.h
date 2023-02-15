@@ -17,6 +17,7 @@ trailing newline) to stderr.
 
 #pragma once
 
+#include "timespec.h"
 #include "timeval.h"
 
 #include <stdio.h>
@@ -70,21 +71,6 @@ timerdata_now()
 	(void)clock_gettime(CLOCK_MONOTONIC_RAW, &now.rtime);
 
 	return now;
-}
-
-// https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n92
-static void
-timespecsub(const struct timespec* t1,
-            const struct timespec* t0,
-            struct timespec* diff)
-{
-	diff->tv_sec = t1->tv_sec - t0->tv_sec;
-	diff->tv_nsec = t1->tv_nsec - t0->tv_nsec;
-	if (diff->tv_nsec < 0)
-	{
-		diff->tv_sec--;
-		diff->tv_nsec += 1000000000L;
-	}
 }
 
 static void
