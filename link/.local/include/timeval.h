@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <math.h>
 #include <sys/time.h>
 
 // copied from my slstatus
@@ -22,6 +23,13 @@ msec_to_timeval(unsigned int msec)
 	    .tv_sec = msec / 1000U,
 	    .tv_usec = (msec % 1000U) * 1000UL,
 	};
+}
+
+static
+double
+timeval_to_sec(const struct timeval* tv)
+{
+	return (double)tv->tv_sec + copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132
