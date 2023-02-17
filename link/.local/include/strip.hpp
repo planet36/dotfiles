@@ -42,19 +42,19 @@ void strip(std::string& s, const char delim)
 	lstrip(s, delim);
 }
 
-std::string rstrip_copy(std::string s, const char delim)
+auto rstrip_copy(std::string s, const char delim)
 {
 	rstrip(s, delim);
 	return s;
 }
 
-std::string lstrip_copy(std::string s, const char delim)
+auto lstrip_copy(std::string s, const char delim)
 {
 	lstrip(s, delim);
 	return s;
 }
 
-std::string strip_copy(std::string s, const char delim)
+auto strip_copy(std::string s, const char delim)
 {
 	strip(s, delim);
 	return s;
@@ -83,19 +83,19 @@ void strip(std::string& s, const std::string& delim_set)
 	lstrip(s, delim_set);
 }
 
-std::string rstrip_copy(std::string s, const std::string& delim_set)
+auto rstrip_copy(std::string s, const std::string& delim_set)
 {
 	rstrip(s, delim_set);
 	return s;
 }
 
-std::string lstrip_copy(std::string s, const std::string& delim_set)
+auto lstrip_copy(std::string s, const std::string& delim_set)
 {
 	lstrip(s, delim_set);
 	return s;
 }
 
-std::string strip_copy(std::string s, const std::string& delim_set)
+auto strip_copy(std::string s, const std::string& delim_set)
 {
 	strip(s, delim_set);
 	return s;
@@ -121,19 +121,19 @@ void strip(std::string& s, const unary_predicate<char>& pred)
 	lstrip(s, pred);
 }
 
-std::string rstrip_copy(std::string s, const unary_predicate<char>& pred)
+auto rstrip_copy(std::string s, const unary_predicate<char>& pred)
 {
 	rstrip(s, pred);
 	return s;
 }
 
-std::string lstrip_copy(std::string s, const unary_predicate<char>& pred)
+auto lstrip_copy(std::string s, const unary_predicate<char>& pred)
 {
 	lstrip(s, pred);
 	return s;
 }
 
-std::string strip_copy(std::string s, const unary_predicate<char>& pred)
+auto strip_copy(std::string s, const unary_predicate<char>& pred)
 {
 	strip(s, pred);
 	return s;
@@ -159,19 +159,19 @@ void strip(std::string& s)
 	lstrip(s);
 }
 
-std::string rstrip_copy(std::string s)
+auto rstrip_copy(std::string s)
 {
 	rstrip(s);
 	return s;
 }
 
-std::string lstrip_copy(std::string s)
+auto lstrip_copy(std::string s)
 {
 	lstrip(s);
 	return s;
 }
 
-std::string strip_copy(std::string s)
+auto strip_copy(std::string s)
 {
 	strip(s);
 	return s;
