@@ -5,6 +5,8 @@
 
 export ACKRC="$XDG_CONFIG_HOME"/ack/ackrc
 
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+
 export CC=gcc
 export CXX=g++
 
