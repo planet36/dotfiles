@@ -11,6 +11,7 @@
 #pragma once
 
 #include <charconv>
+#include <concepts>
 #include <string>
 
 void

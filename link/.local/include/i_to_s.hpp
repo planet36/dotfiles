@@ -12,6 +12,7 @@
 
 #include <charconv>
 #include <climits>
+#include <concepts>
 #include <limits>
 #include <string>
 
