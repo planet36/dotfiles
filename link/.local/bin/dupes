@@ -116,9 +116,7 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
         file_mtime = file_path.stat().st_mtime
         file_ctime = file_path.stat().st_ctime
 
-        hash_object = hashlib.new(hash_algorithm)
-        hash_object = hash_file(file_path, hash_object)
-        file_hash = hash_object.digest()
+        file_hash = hash_file(file_path, hashlib.new(hash_algorithm)).digest()
 
         file_info = FileInfo(
             file_path,
