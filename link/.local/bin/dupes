@@ -14,7 +14,9 @@ __version__ = '2023-02-23'
 __license__ = 'OSL-3.0'
 
 import collections
+import functools
 import hashlib
+import multiprocessing.dummy
 import os
 import pathlib
 import shlex
@@ -124,11 +126,14 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 
     file_hash_to_file_info_map = collections.defaultdict(list)
 
+    helper = functools.partial(get_file_info, hash_algorithm=hash_algorithm)
+
     # Put the largest files first.
     sorted_file_paths = flatten(file_size_to_file_path_map[file_size]
                          for file_size in sorted(file_size_to_file_path_map, reverse=True))
 
-    file_info_list = [get_file_info(file_path, hash_algorithm) for file_path in sorted_file_paths]
+    with multiprocessing.dummy.Pool() as pool:
+        file_info_list = pool.map(helper, sorted_file_paths, chunksize=1)
 
     for file_info in file_info_list:
         file_hash_to_file_info_map[file_info.hash].append(file_info)
