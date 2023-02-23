@@ -124,7 +124,11 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 
     file_hash_to_file_info_map = collections.defaultdict(list)
 
-    file_info_list = [get_file_info(file_path, hash_algorithm) for file_path in flatten(file_size_to_file_path_map)]
+    # Put the largest files first.
+    sorted_file_paths = flatten(file_size_to_file_path_map[file_size]
+                         for file_size in sorted(file_size_to_file_path_map, reverse=True))
+
+    file_info_list = [get_file_info(file_path, hash_algorithm) for file_path in sorted_file_paths]
 
     for file_info in file_info_list:
         file_hash_to_file_info_map[file_info.hash].append(file_info)
