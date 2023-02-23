@@ -22,7 +22,7 @@ import sys
 
 from hash_file import hash_file
 
-File_Info = collections.namedtuple('File_Info', ('path', 'basename', 'name_quoted', 'size', 'mtime', 'ctime'))
+FileInfo = collections.namedtuple('FileInfo', ('path', 'basename', 'name_quoted', 'size', 'mtime', 'ctime'))
 
 def remove_keys_with_single_values(d):
     """Remove keys with single values from the given dictionary."""
@@ -120,7 +120,7 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
             #file_ctime = os.path.getctime(file_path)
             file_ctime = file_path.stat().st_ctime
 
-            file_info = File_Info(
+            file_info = FileInfo(
                 file_path,
                 file_basename,
                 file_path_quoted,
