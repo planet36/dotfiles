@@ -25,7 +25,7 @@ from hash_file import hash_file
 FileInfo = collections.namedtuple('FileInfo', (
     'path',
     'basename',
-    'name_quoted',
+    'path_quoted',
     'size',
     'mtime',
     'ctime',
@@ -362,7 +362,7 @@ OPTIONS
             # This will be used to get the right amount of padding to align the comments after the rm command.
             for file_info in file_hash_to_file_info_map[file_hash]:
 
-                max_file_path_quoted_len = max(len(file_info.name_quoted) - (only_comment_first and not first_iteration), max_file_path_quoted_len)
+                max_file_path_quoted_len = max(len(file_info.path_quoted) - (only_comment_first and not first_iteration), max_file_path_quoted_len)
 
                 first_iteration = False
 
@@ -379,7 +379,7 @@ OPTIONS
                     if prefix['symbol']: # not empty
                         output_lines.append(f'# size= {round(adjusted_size, 1)} {prefix["symbol"]}B')
 
-                padding_len = max_file_path_quoted_len - len(file_info.name_quoted) + (only_comment_first and not first_iteration)
+                padding_len = max_file_path_quoted_len - len(file_info.path_quoted) + (only_comment_first and not first_iteration)
                 padding = ' ' * padding_len
 
                 mtime_str = dt.datetime.fromtimestamp(file_info.mtime).isoformat()
@@ -387,7 +387,7 @@ OPTIONS
 
                 comment = '' if only_comment_first and not first_iteration else '#'
 
-                output_lines.append(f'{comment}rm -v{" -i" if interactive_rm else ""} {file_info.name_quoted} {padding}# mtime= {mtime_str} ; ctime= {ctime_str}')
+                output_lines.append(f'{comment}rm -v{" -i" if interactive_rm else ""} {file_info.path_quoted} {padding}# mtime= {mtime_str} ; ctime= {ctime_str}')
 
                 first_iteration = False
 
