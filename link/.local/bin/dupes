@@ -124,10 +124,9 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 
     file_hash_to_file_info_map = collections.defaultdict(list)
 
-    for file_path in flatten(file_size_to_file_path_map):
+    file_info_list = [get_file_info(file_path, hash_algorithm) for file_path in flatten(file_size_to_file_path_map)]
 
-        file_info = get_file_info(file_path, hash_algorithm)
-
+    for file_info in file_info_list:
         file_hash_to_file_info_map[file_info.hash].append(file_info)
 
     return file_hash_to_file_info_map
