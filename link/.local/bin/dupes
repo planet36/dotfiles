@@ -115,29 +115,29 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 
     for file_path in flatten(file_size_to_file_path_map):
 
-            hash_object = hashlib.new(hash_algorithm)
-            hash_object = hash_file(file_path, hash_object)
-            file_hash = hash_object.digest()
+        hash_object = hashlib.new(hash_algorithm)
+        hash_object = hash_file(file_path, hash_object)
+        file_hash = hash_object.digest()
 
-            file_basename = file_path.name
+        file_basename = file_path.name
 
-            file_path_quoted = shlex.quote(str(file_path))
-            file_size = file_path.stat().st_size
-            #file_mtime = os.path.getmtime(file_path)
-            file_mtime = file_path.stat().st_mtime
-            #file_ctime = os.path.getctime(file_path)
-            file_ctime = file_path.stat().st_ctime
+        file_path_quoted = shlex.quote(str(file_path))
+        file_size = file_path.stat().st_size
+        #file_mtime = os.path.getmtime(file_path)
+        file_mtime = file_path.stat().st_mtime
+        #file_ctime = os.path.getctime(file_path)
+        file_ctime = file_path.stat().st_ctime
 
-            file_info = FileInfo(
-                file_path,
-                file_basename,
-                file_path_quoted,
-                file_size,
-                file_mtime,
-                file_ctime,
-                file_hash)
+        file_info = FileInfo(
+            file_path,
+            file_basename,
+            file_path_quoted,
+            file_size,
+            file_mtime,
+            file_ctime,
+            file_hash)
 
-            file_hash_to_file_info_map[file_hash].append(file_info)
+        file_hash_to_file_info_map[file_hash].append(file_info)
 
     return file_hash_to_file_info_map
 
