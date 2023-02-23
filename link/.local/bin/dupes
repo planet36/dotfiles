@@ -29,6 +29,7 @@ FileInfo = collections.namedtuple('FileInfo', (
     'size',
     'mtime',
     'ctime',
+    'hash',
     ))
 
 def remove_keys_with_single_values(d):
@@ -133,7 +134,8 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
                 file_path_quoted,
                 file_size,
                 file_mtime,
-                file_ctime)
+                file_ctime,
+                file_hash)
 
             file_hash_to_file_info_map[file_hash].append(file_info)
 
