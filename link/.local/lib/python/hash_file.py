@@ -35,13 +35,7 @@ This function was inspired by <https://web.archive.org/web/20100609151224/https:
 
     with open(file_name, mode='rb') as f:
 
-        while True:
-
-            file_data = f.read(block_size)
-
-            if not file_data:
-                break
-
+        while file_data := f.read(block_size):
             hash_object.update(file_data)
 
     return hash_object
