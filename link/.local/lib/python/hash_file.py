@@ -7,7 +7,7 @@
 # pylint: disable=missing-module-docstring
 
 __author__ = 'Steven Ward'
-__version__ = '2022-09-08'
+__version__ = '2023-02-23'
 __license__ = 'OSL-3.0'
 
 import hashlib
@@ -31,7 +31,7 @@ It's recommended that block_size be a power-of-2 multiple of 4096.  Suggested bl
 This function was inspired by <https://web.archive.org/web/20100609151224/https://www.pytips.com/2010/5/29/a-quick-md5sum-equivalent-in-python>."""
 
     if hash_object is None:
-        hash_object = hashlib.md5()
+        hash_object = hashlib.md5(usedforsecurity=False)
 
     with open(file_name, mode='rb') as f:
 
