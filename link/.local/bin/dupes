@@ -22,7 +22,14 @@ import sys
 
 from hash_file import hash_file
 
-FileInfo = collections.namedtuple('FileInfo', ('path', 'basename', 'name_quoted', 'size', 'mtime', 'ctime'))
+FileInfo = collections.namedtuple('FileInfo', (
+    'path',
+    'basename',
+    'name_quoted',
+    'size',
+    'mtime',
+    'ctime',
+    ))
 
 def remove_keys_with_single_values(d):
     """Remove keys with single values from the given dictionary."""
