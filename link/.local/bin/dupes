@@ -124,8 +124,6 @@ def get_file_info(file_path: pathlib.Path, hash_algorithm: str) -> FileInfo:
 def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: str):
     """Get a map of file hashes to file infos."""
 
-    file_hash_to_file_info_map = collections.defaultdict(list)
-
     helper = functools.partial(get_file_info, hash_algorithm=hash_algorithm)
 
     # Put the largest files first.
@@ -135,6 +133,7 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
     with multiprocessing.dummy.Pool() as pool:
         file_info_list = pool.map(helper, sorted_file_paths, chunksize=1)
 
+    file_hash_to_file_info_map = collections.defaultdict(list)
     for file_info in file_info_list:
         file_hash_to_file_info_map[file_info.hash].append(file_info)
 
