@@ -4,7 +4,7 @@
 /*
 
 Source:
-https://geographiclib.sourceforge.io/html/auxlat.html
+https://geographiclib.sourceforge.io/C++/doc/auxlat.html
 
 Six latitudes are used by GeographicLib:
 
