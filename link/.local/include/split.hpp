@@ -31,8 +31,7 @@ Note: Only \c std::string is supported.
 If \a limit is greater than \c 0, the result will have no more than \a limit strings.
 */
 std::vector<std::string>
-split(const std::string& s, const char delim,
-      const size_t limit = 0)
+split(const std::string& s, const char delim, const size_t limit = 0)
 {
 	const auto begin = s.cbegin();
 	const auto end = s.cend();
@@ -61,8 +60,7 @@ If \a limit is greater than \c 0, the result will have no more than \a limit str
 If \a delim is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
-split(const std::string& s, const std::string& delim,
-      const size_t limit = 0)
+split(const std::string& s, const std::string& delim, const size_t limit = 0)
 {
 	const auto begin = s.cbegin();
 	const auto end = s.cend();
@@ -94,7 +92,8 @@ If \a limit is greater than \c 0, the result will have no more than \a limit str
 If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
-split_set(const std::string& s, const std::string& delim_set,
+split_set(const std::string& s,
+          const std::string& delim_set,
           const size_t limit = 0)
 {
 	const auto begin = s.cbegin();
@@ -134,7 +133,8 @@ If \a limit is greater than \c 0, the result will have no more than \a limit str
 If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
-split_non_set(const std::string& s, const std::string& delim_set,
+split_non_set(const std::string& s,
+              const std::string& delim_set,
               const size_t limit = 0)
 {
 	const auto begin = s.cbegin();

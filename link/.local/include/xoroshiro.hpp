@@ -227,14 +227,14 @@ private:
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-    DEF_JUMP
+	DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-    DEF_LONG_JUMP
+	DEF_LONG_JUMP
 };
 
 /** This is xoroshiro128++ 1.0, one of our all-purpose, rock-solid, small-state
@@ -281,14 +281,14 @@ private:
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-    DEF_JUMP
+	DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-    DEF_LONG_JUMP
+	DEF_LONG_JUMP
 };
 
 /** This is xoroshiro128** 1.0, one of our all-purpose, rock-solid, small-state
@@ -335,14 +335,14 @@ private:
 	 * calls to next(); it can be used to generate 2^64 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-    DEF_JUMP
+	DEF_JUMP
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
 	 * from each of which jump() will generate 2^32 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-    DEF_LONG_JUMP
+	DEF_LONG_JUMP
 };
 
 /** This is xoroshiro1024++ 1.0, one of our all-purpose, rock-solid,
@@ -403,14 +403,14 @@ private:
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-    DEF_JUMP_2
+	DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-    DEF_LONG_JUMP_2
+	DEF_LONG_JUMP_2
 };
 
 /** This is xoroshiro1024* 1.0, our large-state generator for floating-point
@@ -477,14 +477,14 @@ private:
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-    DEF_JUMP_2
+	DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-    DEF_LONG_JUMP_2
+	DEF_LONG_JUMP_2
 };
 
 /** This is xoroshiro1024** 1.0, one of our all-purpose, rock-solid,
@@ -545,12 +545,12 @@ private:
 	 * calls to next(); it can be used to generate 2^512 non-overlapping
 	 * subsequences for parallel computations.
 	 */
-    DEF_JUMP_2
+	DEF_JUMP_2
 
 	/** This is the long-jump function for the generator. It is equivalent to
 	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
 	 * from each of which jump() will generate 2^256 non-overlapping
 	 * subsequences for parallel distributed computations.
 	 */
-    DEF_LONG_JUMP_2
+	DEF_LONG_JUMP_2
 };

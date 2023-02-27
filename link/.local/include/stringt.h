@@ -17,9 +17,9 @@
 
 inline static size_t
 strtcat_helper(char* restrict dest,
-                const char* restrict src,
-                size_t dest_sz,
-                size_t dest_len)
+               const char* restrict src,
+               size_t dest_sz,
+               size_t dest_len)
 {
 	// includes terminating NUL character
 	const size_t src_sz = strlen(src) + 1;
@@ -92,9 +92,9 @@ strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
 
 inline static size_t
 wstrtcat_helper(wchar_t* restrict dest,
-                 const wchar_t* restrict src,
-                 size_t dest_sz,
-                 size_t dest_len)
+                const wchar_t* restrict src,
+                size_t dest_sz,
+                size_t dest_len)
 {
 	// includes terminating NUL wide character
 	const size_t src_sz = wcslen(src) + 1;

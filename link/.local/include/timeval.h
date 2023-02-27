@@ -20,8 +20,7 @@
 
 // copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
-static
-struct timeval
+static struct timeval
 msec_to_timeval(unsigned int msec)
 {
 	return (struct timeval){
@@ -30,11 +29,11 @@ msec_to_timeval(unsigned int msec)
 	};
 }
 
-static
-double
+static double
 timeval_to_sec(const struct timeval* tv)
 {
-	return (double)tv->tv_sec + copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
+	return (double)tv->tv_sec +
+	       copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132

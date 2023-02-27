@@ -138,7 +138,7 @@ rand_float(G& gen)
 
 #if 1
 	static_assert(std::numeric_limits<typename G::result_type>::digits >=
-	              std::numeric_limits<T>::digits,
+	                  std::numeric_limits<T>::digits,
 	              "PRNG does not provide sufficient bits");
 	return make_unit_float(gen());
 #else
@@ -179,7 +179,7 @@ rand_double(G& gen)
 
 #if 1
 	static_assert(std::numeric_limits<typename G::result_type>::digits >=
-	              std::numeric_limits<T>::digits,
+	                  std::numeric_limits<T>::digits,
 	              "PRNG does not provide sufficient bits");
 	return make_unit_double(gen());
 #else
@@ -220,7 +220,7 @@ rand_long_double(G& gen)
 
 #if 1
 	static_assert(std::numeric_limits<typename G::result_type>::digits >=
-	              std::numeric_limits<T>::digits,
+	                  std::numeric_limits<T>::digits,
 	              "PRNG does not provide sufficient bits");
 	return make_unit_long_double(gen());
 #else

@@ -31,8 +31,8 @@ template <typename T>
 inline constexpr bool is_wide_character_v = is_wide_character<T>::value;
 
 template <typename T>
-struct is_character :
-std::bool_constant<is_narrow_character_v<T> || is_wide_character_v<T>>
+struct is_character : std::bool_constant<
+	is_narrow_character_v<T> || is_wide_character_v<T>>
 {};
 
 template <typename T>

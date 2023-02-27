@@ -102,7 +102,8 @@ fill_rand(T& x)
 	// https://en.cppreference.com/w/cpp/numeric/random/random_device
 	if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
 		x = rd();
-	else if constexpr (sizeof(T) <= 2*sizeof(typename std::random_device::result_type))
+	else if constexpr (sizeof(T) <=
+	                   2 * sizeof(typename std::random_device::result_type))
 		x = int_join(rd(), rd());
 	else
 		std::unreachable();
@@ -118,9 +119,11 @@ fill_rand(std::array<T, N>& arr)
 	{
 		// std::random_device::result_type is unsigned int
 		// https://en.cppreference.com/w/cpp/numeric/random/random_device
-		if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
+		if constexpr (sizeof(T) <=
+		              sizeof(typename std::random_device::result_type))
 			arr[i] = rd();
-		else if constexpr (sizeof(T) <= 2*sizeof(typename std::random_device::result_type))
+		else if constexpr (sizeof(T) <=
+		                   2 * sizeof(typename std::random_device::result_type))
 			arr[i] = int_join(rd(), rd());
 		else
 			std::unreachable();
@@ -138,9 +141,11 @@ fill_rand(std::vector<T>& vec)
 	{
 		// std::random_device::result_type is unsigned int
 		// https://en.cppreference.com/w/cpp/numeric/random/random_device
-		if constexpr (sizeof(T) <= sizeof(typename std::random_device::result_type))
+		if constexpr (sizeof(T) <=
+		              sizeof(typename std::random_device::result_type))
 			x = rd();
-		else if constexpr (sizeof(T) <= 2*sizeof(typename std::random_device::result_type))
+		else if constexpr (sizeof(T) <=
+		                   2 * sizeof(typename std::random_device::result_type))
 			x = int_join(rd(), rd());
 		else
 			std::unreachable();

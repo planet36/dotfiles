@@ -71,15 +71,15 @@ public:
 
 	/// convert to a different data type
 	template <std::floating_point T2>
-	constexpr auto to() const { return angle<U, T2>{*this}; }
+	constexpr auto to() const {return angle<U, T2>{*this};}
 
 	/// convert to a different angle unit
 	template <angle_unit U2>
-	constexpr auto to() const { return angle<U2, T>{*this}; }
+	constexpr auto to() const {return angle<U2, T>{*this};}
 
 	/// convert to a different angle unit and data type
 	template <angle_unit U2, std::floating_point T2>
-	constexpr auto to() const { return angle<U2, T2>{*this}; }
+	constexpr auto to() const {return angle<U2, T2>{*this};}
 
 	auto operator<=>(const angle&) const = default;
 };

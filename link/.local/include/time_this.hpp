@@ -18,7 +18,7 @@ nearest hundredth of a second) is printed (with a trailing newline) to stderr.
 #include <chrono>
 #include <cstdio>
 
-#define TIME_THIS        \
+#define TIME_THIS              \
 	(void)std::fflush(stdout); \
 	const time_this TOKENPASTE2(_time_this_, __COUNTER__)
 
@@ -44,7 +44,7 @@ public:
 		const auto t1 = timer_clock::now();
 		(void)fflush(stdout);
 		(void)fprintf(stderr, "%.2f\n",
-		        std::chrono::duration<double>(t1 - t0).count());
+		              std::chrono::duration<double>(t1 - t0).count());
 	}
 
 private:

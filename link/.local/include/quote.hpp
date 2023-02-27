@@ -82,7 +82,8 @@ quote(const char c, const char delim = single_quote)
 }
 
 auto
-quote(const std::string& s, const char delim = double_quote,
+quote(const std::string& s,
+      const char delim = double_quote,
       const char escape = backslash)
 {
 	std::string result;
@@ -99,7 +100,8 @@ quote(const std::string& s, const char delim = double_quote,
 }
 
 auto
-quote(const std::string_view& s, const char delim = double_quote,
+quote(const std::string_view& s,
+      const char delim = double_quote,
       const char escape = backslash)
 {
 	std::string result;
@@ -116,7 +118,8 @@ quote(const std::string_view& s, const char delim = double_quote,
 }
 
 auto
-quote(const char* s, const char delim = double_quote,
+quote(const char* s,
+      const char delim = double_quote,
       const char escape = backslash)
 {
 	std::string result;
@@ -175,7 +178,8 @@ quote_escape(const std::string& s, const char escape = backslash)
 }
 
 auto
-quote_c(const std::string& s, const char delim = double_quote,
+quote_c(const std::string& s,
+        const char delim = double_quote,
         const char escape = backslash)
 {
 	std::string result;

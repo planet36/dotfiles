@@ -13,8 +13,7 @@
 #include <limits.h>
 #include <stdlib.h>
 
-static
-unsigned int
+static unsigned int
 strtou(const char* s)
 {
 	unsigned long i = strtoul(s, NULL, 0);

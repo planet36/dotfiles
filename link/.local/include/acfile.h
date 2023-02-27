@@ -17,8 +17,7 @@
 #define ACFILE(varname) \
 	__attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
 
-static
-void
+static void
 cleanup_close_file(FILE** fpp)
 {
 	if (*fpp != NULL)
