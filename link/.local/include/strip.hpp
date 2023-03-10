@@ -118,40 +118,40 @@ strip_copy(std::string s, const std::string& delim_set)
 // {{{ strip characters that satisfy a predicate from a std::string
 
 void
-rstrip(std::string& s, const unary_predicate<char>& pred)
+rstrip(std::string& s, const unary_predicate_wrapper<char>& pred)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(), pred).base(), s.end());
 }
 
 void
-lstrip(std::string& s, const unary_predicate<char>& pred)
+lstrip(std::string& s, const unary_predicate_wrapper<char>& pred)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), pred));
 }
 
 void
-strip(std::string& s, const unary_predicate<char>& pred)
+strip(std::string& s, const unary_predicate_wrapper<char>& pred)
 {
 	rstrip(s, pred);
 	lstrip(s, pred);
 }
 
 auto
-rstrip_copy(std::string s, const unary_predicate<char>& pred)
+rstrip_copy(std::string s, const unary_predicate_wrapper<char>& pred)
 {
 	rstrip(s, pred);
 	return s;
 }
 
 auto
-lstrip_copy(std::string s, const unary_predicate<char>& pred)
+lstrip_copy(std::string s, const unary_predicate_wrapper<char>& pred)
 {
 	lstrip(s, pred);
 	return s;
 }
 
 auto
-strip_copy(std::string s, const unary_predicate<char>& pred)
+strip_copy(std::string s, const unary_predicate_wrapper<char>& pred)
 {
 	strip(s, pred);
 	return s;

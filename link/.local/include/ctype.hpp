@@ -117,8 +117,8 @@ is_punctuation(const char c)
 }
 
 #define DEF_CHAR_PRED(NAME) \
-const unary_predicate<char> is_ ## NAME ## _pred = is_ ## NAME; \
-const unary_predicate<char> is_non_ ## NAME ## _pred = std::not_fn(is_ ## NAME ## _pred);
+const unary_predicate_wrapper<char> is_ ## NAME ## _pred = is_ ## NAME; \
+const unary_predicate_wrapper<char> is_non_ ## NAME ## _pred = std::not_fn(is_ ## NAME ## _pred);
 
 DEF_CHAR_PRED(ascii       )
 DEF_CHAR_PRED(uppercase   )

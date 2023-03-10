@@ -13,4 +13,4 @@
 
 template <typename... Ts>
 requires (sizeof...(Ts) == 1)
-using unary_predicate = std::function<bool(const Ts&...)>;
+using unary_predicate_wrapper = std::function<bool(const Ts&...)>;
