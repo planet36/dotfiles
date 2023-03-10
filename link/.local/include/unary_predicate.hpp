@@ -11,5 +11,6 @@
 
 #include <functional>
 
-template <typename T>
-using unary_predicate = std::function<bool(const T&)>;
+template <typename... Ts>
+requires (sizeof...(Ts) == 1)
+using unary_predicate = std::function<bool(const Ts&...)>;
