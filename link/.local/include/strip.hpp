@@ -15,7 +15,7 @@ The \c trim() functions use <code><algorithm></code> functions to find delimiter
 #pragma once
 
 #include "ctype.hpp"
-#include "unary_predicate.hpp"
+#include "unary_predicate_wrapper.hpp"
 
 #include <algorithm>
 #include <functional>

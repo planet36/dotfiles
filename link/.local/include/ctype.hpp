@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "unary_predicate.hpp"
+#include "unary_predicate_wrapper.hpp"
 
 #include <functional>
 #include <string>
