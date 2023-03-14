@@ -65,6 +65,8 @@ export PREFIX="$HOME"/.local
 #export PS_FORMAT='pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command'
 export PS_FORMAT='pid,nice,pri,user,stime,etime,cputimes,%cpu,%mem,rss,args'
 
+export PYENV_ROOT="$XDG_DATA_HOME"/pyenv
+
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint.d
 
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH
@@ -93,6 +95,8 @@ export TZ='EST+5'
 export VCS_REPOS_MATCH='( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
 printf -v VCS_REPOS_PRUNE '( %s -prune , -not %s )' "$VCS_REPOS_MATCH" "$VCS_REPOS_MATCH"
 export VCS_REPOS_PRUNE
+
+export W3M_DIR="$XDG_DATA_HOME"/w3m
 
 export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 
