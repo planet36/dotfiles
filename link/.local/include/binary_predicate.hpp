@@ -13,6 +13,4 @@
 #include <concepts>
 
 template <typename F, typename... Ts>
-concept binary_predicate =
-std::predicate<F, Ts...> &&
-sizeof...(Ts) == 2;
+concept binary_predicate = std::predicate<F, Ts...> && (sizeof...(Ts) == 2);

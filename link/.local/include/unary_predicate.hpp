@@ -13,6 +13,4 @@
 #include <concepts>
 
 template <typename F, typename... Ts>
-concept unary_predicate =
-std::predicate<F, Ts...> &&
-sizeof...(Ts) == 1;
+concept unary_predicate = std::predicate<F, Ts...> && (sizeof...(Ts) == 1);
