@@ -11,10 +11,8 @@
 #pragma once
 
 #include <concepts>
-#include <type_traits>
 
 template <typename F, typename... Ts>
 concept unary_predicate =
-std::regular_invocable<F, Ts...> &&
-std::convertible_to<std::invoke_result_t<F, Ts...>, bool> &&
+std::predicate<F, Ts...> &&
 sizeof...(Ts) == 1;
