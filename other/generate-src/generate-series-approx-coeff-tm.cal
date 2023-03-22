@@ -9,7 +9,7 @@ calc -d -m 4 -f generate-series-approx-coeff-tm.cal > utm-ups-const.hpp
 Generate series approximation coefficients for transverse Mercator conversions.
 
 Source:
-https://geographiclib.sourceforge.io/C++/doc/transversemercator.html
+https://geographiclib.sourceforge.io/C++/doc/transversemercator.html#tmseries
 https://geographiclib.sourceforge.io/html/tmseries30.html
 
 */
@@ -71,7 +71,7 @@ script_author = "Steven Ward"
 script_license = "OSL-3.0"
 script_name = "generate-series-approx-coeff-tm.cal"
 script_brief_description = "Transverse Mercator conversions"
-script_detailed_description = "\\sa https://geographiclib.sourceforge.io/html/transversemercator.html#tmseries\n\\sa https://geographiclib.sourceforge.io/html/tmseries30.html"
+script_detailed_description = "\\sa https://geographiclib.sourceforge.io/C++/doc/transversemercator.html#tmseries\n\\sa https://geographiclib.sourceforge.io/html/tmseries30.html"
 
 print_cpp_file_header(script_author, script_license, script_name,
 	script_brief_description, script_detailed_description);

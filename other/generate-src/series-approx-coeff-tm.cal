@@ -3,7 +3,7 @@
 
 /*
 Source:
-https://geographiclib.sourceforge.io/html/transversemercator.html#tmseries
+https://geographiclib.sourceforge.io/C++/doc/transversemercator.html#tmseries
 https://geographiclib.sourceforge.io/html/tmseries30.html
 */
 
