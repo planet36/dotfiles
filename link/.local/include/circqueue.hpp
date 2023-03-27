@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "unary_predicate_wrapper.hpp"
+
 #include <array>
 #include <functional>
 #include <mutex>
@@ -201,7 +203,7 @@ public:
 	// https://en.cppreference.com/w/cpp/algorithm/all_any_none_of
 
 	/// check if unary predicate \a f returns \c true for all elements
-	bool all_of(const std::function<bool(const T&)>& f) const
+	bool all_of(const unary_predicate_wrapper<const T&>& f) const
 	{
 		std::shared_lock lock{mtx};
 
@@ -221,7 +223,7 @@ public:
 	}
 
 	/// check if unary predicate \a f returns \c true for at least one element
-	bool any_of(const std::function<bool(const T&)>& f) const
+	bool any_of(const unary_predicate_wrapper<const T&>& f) const
 	{
 		std::shared_lock lock{mtx};
 
@@ -241,7 +243,7 @@ public:
 	}
 
 	/// check if unary predicate \a f returns \c true for no elements
-	bool none_of(const std::function<bool(const T&)>& f) const
+	bool none_of(const unary_predicate_wrapper<const T&>& f) const
 	{
 		std::shared_lock lock{mtx};
 
