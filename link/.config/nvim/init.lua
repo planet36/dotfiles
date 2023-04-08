@@ -192,9 +192,9 @@ require("abbrev")
 -- {{{ Diff
 
 function get_colorscheme()
-	-- https://neovim.io/doc/user/api.html#nvim_exec()
+	-- https://neovim.io/doc/user/api.html#nvim_exec2()
 	-- XXX: vim.cmd.colorscheme() prints (not returns) the current colorscheme.
-	return vim.api.nvim_exec("colorscheme", true)
+	return vim.api.nvim_exec2("colorscheme", {output = true}).output
 end
 
 -- Count the windows in the current tabpage for which diff is true.
