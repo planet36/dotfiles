@@ -125,7 +125,6 @@ convert_to(const T& x)
 
 	// convert between non-adjacent units
 
-	//constexpr angle_unit inter = next(To, From);
 	constexpr angle_unit inter = next<To, From>();
 
 	return convert_to<To, inter>(convert_to<inter, From>(x));
