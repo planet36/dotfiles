@@ -41,3 +41,31 @@ f_to_s(const std::floating_point auto x,
 	resize_to_nul(s);
 	return s;
 }
+
+std::string
+f_to_s_scientific(const std::floating_point auto x, const int precision)
+{
+	constexpr auto chars_format{std::chars_format::scientific};
+	return f_to_s(x, chars_format, precision);
+}
+
+std::string
+f_to_s_fixed(const std::floating_point auto x, const int precision)
+{
+	constexpr auto chars_format{std::chars_format::fixed};
+	return f_to_s(x, chars_format, precision);
+}
+
+std::string
+f_to_s_hex(const std::floating_point auto x, const int precision)
+{
+	constexpr auto chars_format{std::chars_format::hex};
+	return f_to_s(x, chars_format, precision);
+}
+
+std::string
+f_to_s_general(const std::floating_point auto x, const int precision)
+{
+	constexpr auto chars_format{std::chars_format::general};
+	return f_to_s(x, chars_format, precision);
+}
