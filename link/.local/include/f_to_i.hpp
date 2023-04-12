@@ -18,6 +18,5 @@ constexpr auto
 f_to_i(const std::floating_point auto x)
 {
 	using result_type = int_bits<std::numeric_limits<decltype(x)>::digits>;
-
 	return static_cast<result_type>(x);
 }
