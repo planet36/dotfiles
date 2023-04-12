@@ -9,25 +9,15 @@
 
 #pragma once
 
-#include <cstdint>
+#include "int_bytes.hpp"
+
+#include <concepts>
 #include <limits>
 
 constexpr auto
-f_to_i(const float x)
+f_to_i(const std::floating_point auto x)
 {
-	using result_type = int32_t;
-	static_assert(std::numeric_limits<decltype(x)>::digits <
-	              std::numeric_limits<result_type>::digits);
-	static_assert(std::numeric_limits<result_type>::is_signed);
-	return static_cast<result_type>(x);
-}
+	using result_type = int_bits<std::numeric_limits<decltype(x)>::digits>;
 
-constexpr auto
-f_to_i(const double x)
-{
-	using result_type = int64_t;
-	static_assert(std::numeric_limits<decltype(x)>::digits <
-	              std::numeric_limits<result_type>::digits);
-	static_assert(std::numeric_limits<result_type>::is_signed);
 	return static_cast<result_type>(x);
 }
