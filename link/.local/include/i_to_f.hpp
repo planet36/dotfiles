@@ -14,6 +14,7 @@
 #include <concepts>
 #include <limits>
 
+// XXX: Every uint64_t (digits=64) cannot be cast exactly to long double (digits=64)
 
 constexpr auto
 i_to_f(const std::integral auto x)
