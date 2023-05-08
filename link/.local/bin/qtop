@@ -2,6 +2,10 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+# Without this, the first time top runs, it doesn't have a value for COLUMNS.
+export COLUMNS
+COLUMNS=$(tput cols)
+
 while true
 do
 {
