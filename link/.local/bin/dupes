@@ -23,7 +23,6 @@ import shlex
 import sys
 
 from flatten import flatten
-from hash_file import hash_file
 
 FileInfo = collections.namedtuple('FileInfo', (
     'path',
@@ -110,7 +109,8 @@ def get_file_info(file_path: pathlib.Path, hash_algorithm: str) -> FileInfo:
     file_size = file_path.stat().st_size
     file_mtime = file_path.stat().st_mtime
     file_ctime = file_path.stat().st_ctime
-    file_hash = hash_file(file_path, hashlib.new(hash_algorithm)).digest()
+    with open(file_path, mode='rb') as f:
+        file_hash = hashlib.file_digest(f, hash_algorithm).digest()
 
     return FileInfo(
         file_path,
