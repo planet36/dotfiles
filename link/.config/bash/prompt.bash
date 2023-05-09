@@ -152,7 +152,7 @@ function opt_jobs
 
     #local -r -a JOBS=($(jobs -p))
     local -a JOBS
-    mapfile -t JOBS < <(jobs -p)
+    readarray -t JOBS < <(jobs -p)
 
     #local -r -i NUM_JOBS=${#JOBS[@]}
     local -i NUM_JOBS

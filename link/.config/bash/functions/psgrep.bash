@@ -9,7 +9,7 @@ function psgrep
     fi
 
     local -a PROCESSES
-    mapfile -t PROCESSES < <(pgrep -- "${1}")
+    readarray -t PROCESSES < <(pgrep -- "${1}")
 
     ((${#PROCESSES[@]} == 0)) && return
 

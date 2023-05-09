@@ -6,7 +6,7 @@ declare -r WEATHER_JSON="$XDG_RUNTIME_DIR"/weather.json
 
 update-weather || exit
 
-mapfile -t WEATHER_FIELDS < <(jq -r '
+readarray -t WEATHER_FIELDS < <(jq -r '
 .weather[0].main,
 .weather[0].description,
 .main.temp,

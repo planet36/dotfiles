@@ -14,7 +14,7 @@ function date_range
 
     local -a SORTED_DATES
 
-    mapfile -t SORTED_DATES < <(printf '%q\n%q\n' "${D1}" "${D2}" | sort)
+    readarray -t SORTED_DATES < <(printf '%q\n%q\n' "${D1}" "${D2}" | sort)
 
     D1="${SORTED_DATES[0]}"
     D2="${SORTED_DATES[1]}"
