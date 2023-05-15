@@ -106,7 +106,6 @@ void
 durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
 {
 	enum UT last_ut;
-	unsigned long vals[UT_MAX] = {0};
 	bool printed_something = false;
 
 	// Find the least significant unit of time to print.
@@ -122,14 +121,15 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
 	{
 		if (opts->print[ut])
 		{
-			vals[ut] = dur_secs / seconds_per[ut];
+			unsigned long dur_ut = 0;
+			dur_ut = dur_secs / seconds_per[ut];
 			dur_secs = dur_secs % seconds_per[ut];
 
-			if (vals[ut] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
+			if (dur_ut > 0 || opts->print_all_zero_values || ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
 			{
 				if (printed_something)
 					putchar(' ');
-				printf("%0*lu", opts->width[ut], vals[ut]);
+				printf("%0*lu", opts->width[ut], dur_ut);
 				putchar(ut_abbr[ut]);
 				printed_something = true;
 			}
