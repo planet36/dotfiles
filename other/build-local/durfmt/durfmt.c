@@ -5,6 +5,7 @@
 #include <err.h>
 #include <errno.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -57,20 +58,16 @@ valid_ut_abbr(const char c)
 enum UT
 ut_from_c(const char c)
 {
-	enum UT ut = -1;
-
 	switch (tolower(c))
 	{
-	case 's': ut = UT_SECOND; break;
-	case 'm': ut = UT_MINUTE; break;
-	case 'h': ut = UT_HOUR  ; break;
-	case 'd': ut = UT_DAY   ; break;
-	case 'w': ut = UT_WEEK  ; break;
-	case 'y': ut = UT_YEAR  ; break;
-	default: break;
+	case 's': return UT_SECOND;
+	case 'm': return UT_MINUTE;
+	case 'h': return UT_HOUR  ;
+	case 'd': return UT_DAY   ;
+	case 'w': return UT_WEEK  ;
+	case 'y': return UT_YEAR  ;
+	default: unreachable();
 	}
-
-	return ut;
 }
 
 constexpr unsigned long seconds_per[UT_MAX] = {
