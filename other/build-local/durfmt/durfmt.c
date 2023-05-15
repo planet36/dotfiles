@@ -103,7 +103,7 @@ durfmt_opts_init(struct durfmt_opts* opts)
 }
 
 void
-durfmt(unsigned long duration, const struct durfmt_opts* opts)
+durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
 {
 	enum UT last_ut = -1;
 	unsigned long vals[UT_MAX] = {0};
@@ -123,8 +123,8 @@ durfmt(unsigned long duration, const struct durfmt_opts* opts)
 	{
 		if (opts->print[ut])
 		{
-			vals[ut] = duration / seconds_per[ut];
-			duration = duration % seconds_per[ut];
+			vals[ut] = dur_secs / seconds_per[ut];
+			dur_secs = dur_secs % seconds_per[ut];
 
 			if (vals[ut] > 0 || opts->print_all_zero_values || ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
 			{
@@ -263,8 +263,8 @@ int main(int argc, char* argv[])
 	//while ((bytes_read = getline(&line, &n, stdin)) != EOF)
 	while (getline(&line, &n, stdin) != EOF)
 	{
-		unsigned long seconds = strtoul(line, NULL, 0);
-		durfmt(seconds, &opts);
+		unsigned long dur_secs = strtoul(line, NULL, 0);
+		durfmt(dur_secs, &opts);
 		free(line);
 		line = NULL;
 		n = 0;
