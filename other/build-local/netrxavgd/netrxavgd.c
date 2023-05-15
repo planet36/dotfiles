@@ -38,8 +38,8 @@ const char* program_author = "Steven Ward";
 const char* program_version = "1.2.2";
 const char* program_license = "OSL-3.0";
 
-const unsigned int default_init_delay_msec = 2000;
-const unsigned int default_interval_msec = 2000;
+constexpr unsigned int default_init_delay_msec = 2000;
+constexpr unsigned int default_interval_msec = 2000;
 char default_net_iface[NAME_MAX + 1] = {'\0'};
 
 const char* dest_path = NULL;
@@ -203,7 +203,7 @@ int main(int argc, char* const argv[])
 
 	if (dest_path != NULL)
 	{
-		const mode_t new_mask = 0133; // rw-r--r--
+		constexpr mode_t new_mask = 0133; // rw-r--r--
 		(void)umask(new_mask);
 
 		ACFILE(dest_fp);
@@ -221,7 +221,7 @@ int main(int argc, char* const argv[])
 	if (sigfillset(&signal_action.sa_mask) < 0)
 		err(EXIT_FAILURE, "sigfillset");
 
-	const int signals_to_handle[] = {
+	constexpr int signals_to_handle[] = {
 		SIGALRM,
 		SIGHUP,
 		SIGINT,
@@ -232,7 +232,7 @@ int main(int argc, char* const argv[])
 		SIGUSR2,
 	};
 
-	const size_t num_signals_to_handle = sizeof(signals_to_handle) /
+	constexpr size_t num_signals_to_handle = sizeof(signals_to_handle) /
 	                                     sizeof(signals_to_handle[0]);
 	for (size_t i = 0; i < num_signals_to_handle; ++i)
 	{

@@ -13,8 +13,8 @@ const char* program_author = "Steven Ward";
 const char* program_version = "1.0.2";
 const char* program_license = "OSL-3.0";
 
-const int default_width = 1;
-const int max_width = 20;
+constexpr int default_width = 1;
+constexpr int max_width = 20;
 
 /// unit of time
 enum UT
@@ -28,7 +28,7 @@ enum UT
 	UT_MAX   , // must be last
 };
 
-const char ut_abbr[UT_MAX] = {
+constexpr char ut_abbr[UT_MAX] = {
 	[UT_SECOND] = 's',
 	[UT_MINUTE] = 'm',
 	[UT_HOUR  ] = 'h',
@@ -73,7 +73,7 @@ ut_from_c(const char c)
 	return ut;
 }
 
-const unsigned long seconds_per[UT_MAX] = {
+constexpr unsigned long seconds_per[UT_MAX] = {
 	[UT_SECOND] =        1UL,
 	[UT_MINUTE] =       60UL,
 	[UT_HOUR  ] =     3600UL, // 60*60

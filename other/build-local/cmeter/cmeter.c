@@ -14,10 +14,10 @@ const char* program_author = "Steven Ward";
 const char* program_version = "1.0.2";
 const char* program_license = "OSL-3.0";
 
-const char default_fill = '#';
-const char default_unfill = ' ';
-const int default_width = 10;
-const int max_width = 1000;
+constexpr char default_fill = '#';
+constexpr char default_unfill = ' ';
+constexpr int default_width = 10;
+constexpr int max_width = 1000;
 
 // https://stackoverflow.com/a/16659263
 double
