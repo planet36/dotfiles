@@ -105,18 +105,17 @@ durfmt_opts_init(struct durfmt_opts* opts)
 void
 durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
 {
-	enum UT last_ut = -1;
+	enum UT last_ut;
 	unsigned long vals[UT_MAX] = {0};
 	bool printed_something = false;
 
-	for (enum UT ut = UT_SECOND; ut <= UT_YEAR; ++ut)
-	{
-		if (opts->print[ut])
-		{
-			last_ut = ut;
-			break;
-		}
-	}
+	// Find the least significant unit of time to print.
+	if (opts->print[UT_YEAR  ]) last_ut = UT_YEAR  ;
+	if (opts->print[UT_WEEK  ]) last_ut = UT_WEEK  ;
+	if (opts->print[UT_DAY   ]) last_ut = UT_DAY   ;
+	if (opts->print[UT_HOUR  ]) last_ut = UT_HOUR  ;
+	if (opts->print[UT_MINUTE]) last_ut = UT_MINUTE;
+	if (opts->print[UT_SECOND]) last_ut = UT_SECOND;
 
 	// the controlling expression must consider unsigned integer wrap around
 	for (enum UT ut = UT_YEAR; ut >= UT_SECOND && ut <= UT_YEAR; --ut)
