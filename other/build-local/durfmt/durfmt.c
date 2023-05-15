@@ -166,6 +166,7 @@ print_usage()
 	printf("  -n        Do not print a trailing newline character.\n");
 	printf("  -p UNITS  Specify the units of time to be printed.  Omitted units of time are not printed.\n");
 	printf("            If this option is given more than once, only the last occurrence is respected.\n");
+	printf("            At least one unit of time must be given.\n");
 	printf("            The default value is 'ywdhms'.\n");
 	printf("  -w WIDTH  Specify the minimum field width for hours, minutes, and seconds values.\n");
 	printf("            If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
@@ -244,6 +245,16 @@ int main(int argc, char* argv[])
 		}
 
 		opts.print[ut_from_c(ut_to_print[i])] = true;
+	}
+
+	if (!opts.print[UT_SECOND] &&
+		!opts.print[UT_MINUTE] &&
+		!opts.print[UT_HOUR  ] &&
+		!opts.print[UT_DAY   ] &&
+		!opts.print[UT_WEEK  ] &&
+		!opts.print[UT_YEAR  ])
+	{
+		errx(EXIT_FAILURE, "must specify at least one unit of time to be printed");
 	}
 
 	char* line = NULL;
