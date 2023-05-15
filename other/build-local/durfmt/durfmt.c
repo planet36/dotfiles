@@ -16,6 +16,7 @@ const char* program_license = "OSL-3.0";
 
 constexpr int default_width = 1;
 constexpr int max_width = 20;
+const char* default_ut_to_print = "ywdhms";
 
 /// unit of time
 enum UT
@@ -171,7 +172,7 @@ print_usage()
 	printf("  -p UNITS  Specify the units of time to be printed.  Omitted units of time are not printed.\n");
 	printf("            If this option is given more than once, only the last occurrence is respected.\n");
 	printf("            At least one unit of time must be given.\n");
-	printf("            The default value is 'ywdhms'.\n");
+	printf("            The default value is '%s'.\n", default_ut_to_print);
 	printf("  -w WIDTH  Specify the minimum field width for hours, minutes, and seconds values.\n");
 	printf("            If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
 	printf("            WIDTH must be a non-negative integer.\n");
@@ -194,7 +195,7 @@ print_usage()
 int main(int argc, char* argv[])
 {
 	struct durfmt_opts opts;
-	const char* ut_to_print = "ywdhms";
+	const char* ut_to_print = default_ut_to_print;
 
 	durfmt_opts_init(&opts);
 
