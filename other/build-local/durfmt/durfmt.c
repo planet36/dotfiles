@@ -186,15 +186,6 @@ print_usage()
 	printf("\n");
 }
 
-void
-print_option_err(const char* msg, const int o)
-{
-	if (isprint(o))
-		fprintf(stderr, "%s: %s: '%c'\n", program_invocation_short_name, msg, o);
-	else
-		fprintf(stderr, "%s: %s: '\\x%x'\n", program_invocation_short_name, msg, o);
-}
-
 int main(int argc, char* argv[])
 {
 	struct durfmt_opts opts;
