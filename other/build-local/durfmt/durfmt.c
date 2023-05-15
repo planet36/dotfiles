@@ -125,7 +125,12 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
 			dur_ut = dur_secs / seconds_per[ut];
 			dur_secs = dur_secs % seconds_per[ut];
 
-			if (dur_ut > 0 || opts->print_all_zero_values || ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
+			if (dur_ut > 0 || opts->print_all_zero_values ||
+				(
+					(printed_something || last_ut == ut) &&
+					opts->print_inter_zero_values
+				)
+			)
 			{
 				if (printed_something)
 					putchar(' ');
