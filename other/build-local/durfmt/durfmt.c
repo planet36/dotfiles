@@ -176,7 +176,7 @@ print_usage()
 	printf("  -w WIDTH  Specify the minimum field width for hours, minutes, and seconds values.\n");
 	printf("            If the value of the field has fewer digits than WIDTH, it will be padded with zeros on the left.\n");
 	printf("            WIDTH must be a non-negative integer.\n");
-	printf("            The default value is 1.\n");
+	printf("            The default value is %d.\n", default_width);
 	printf("  -0        Print values of zero.\n");
 	printf("            One -0 prints values of zero occurring after the most significant non-zero value.\n");
 	printf("            Two -0 prints values of zero for all units of time.\n");
