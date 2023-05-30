@@ -5,7 +5,7 @@
 /**
 \file
 \author Steven Ward
-\sa https://github.com/rurban/smhasher/blob/master/wyhash.h#L159
+\sa https://github.com/wangyi-fudan/wyhash/blob/master/wyhash.h#L144
 */
 
 #pragma once
