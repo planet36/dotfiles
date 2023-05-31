@@ -108,10 +108,10 @@ vim.o.tabstop=4
 vim.o.cinoptions = ":0,g0,N-s,E-s,t0,c0,C1"
 
 -- :help fo-/
-vim.opt.formatoptions:append { "/" }
+vim.opt.formatoptions:append("/")
 
 -- :help fo-p
-vim.opt.formatoptions:append { "p" }
+vim.opt.formatoptions:append("p")
 
 -- }}}
 
