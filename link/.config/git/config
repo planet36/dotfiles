@@ -23,8 +23,11 @@
 [init]
 	defaultBranch = main
 [merge]
-	tool = kdiff3
-	conflictstyle = diff3
+	tool = nvimdiff
+	guitool = meld
+[mergetool "meld"]
+	hasOutput = true
+	useAutoMerge = true
 [pack]
 	windowMemory = 1g
 	packSizeLimit = 1g
