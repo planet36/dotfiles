@@ -22,13 +22,12 @@ struct jsf32_2
 
 	DEF_URBG_CLASS_DETAILS(jsf32_2)
 
-	// XXX: must not give zero seed
-
 	result_type next()
 	{
 		static constexpr unsigned int R1 = 27;
 		static constexpr unsigned int R2 = 17;
 
+		++s[0]; // (SDW)
 		const auto e = s[0] - std::rotl(s[1], R1);
 		s[0] = s[1] ^ std::rotl(s[2], R2);
 		s[1] = s[2] + s[3];
@@ -46,14 +45,13 @@ struct jsf32_3
 
 	DEF_URBG_CLASS_DETAILS(jsf32_3)
 
-	// XXX: must not give zero seed
-
 	result_type next()
 	{
 		static constexpr unsigned int R1 = 23;
 		static constexpr unsigned int R2 = 16;
 		static constexpr unsigned int R3 = 11;
 
+		++s[0]; // (SDW)
 		const auto e = s[0] - std::rotl(s[1], R1);
 		s[0] = s[1] ^ std::rotl(s[2], R2);
 		s[1] = s[2] + std::rotl(s[3], R3);
@@ -70,14 +68,13 @@ struct jsf64
 
 	DEF_URBG_CLASS_DETAILS(jsf64)
 
-	// XXX: must not give zero seed
-
 	result_type next()
 	{
 		static constexpr unsigned int R1 = 7;
 		static constexpr unsigned int R2 = 13;
 		static constexpr unsigned int R3 = 37;
 
+		++s[0]; // (SDW)
 		const auto e = s[0] - std::rotl(s[1], R1);
 		s[0] = s[1] ^ std::rotl(s[2], R2);
 		s[1] = s[2] + std::rotl(s[3], R3);
