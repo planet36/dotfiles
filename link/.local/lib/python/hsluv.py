@@ -117,7 +117,7 @@ def _y_to_l(y):
     if y <= _epsilon:
         return y / _ref_y * _kappa
 
-    return 116 * math.pow(y / _ref_y, 1 / 3) - 16
+    return 116 * math.cbrt(y / _ref_y) - 16
 
 
 def _l_to_y(l):
