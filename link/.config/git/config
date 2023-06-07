@@ -28,9 +28,6 @@
 [mergetool "meld"]
 	hasOutput = true
 	useAutoMerge = true
-[pack]
-	windowMemory = 1g
-	packSizeLimit = 1g
 [pull]
 	rebase = false
 [sendemail]
