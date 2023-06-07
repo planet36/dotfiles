@@ -14,7 +14,7 @@ vim.g.loaded_perl_provider = 0
 -- {{{ Clipboard
 
 -- This option is a list of comma separated names.
-vim.opt.clipboard:append { "unnamedplus" }
+vim.opt.clipboard:append({ "unnamedplus" })
 
 -- }}}
 
@@ -24,7 +24,7 @@ vim.o.backup = true
 
 vim.o.undofile = true
 
-vim.opt.backupdir:remove { "." }
+vim.opt.backupdir:remove({ "." })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = vim.api.nvim_create_augroup("backup_extension_timestamp", {}),
@@ -32,14 +32,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function()
 		-- String which is appended to a file name to make the name of the backup file.
 		vim.o.backupext = "~" .. os.date("%Y%m%dT%H%M%S") .. "~"
-	end
+	end,
 })
 
 -- }}}
 
 -- {{{ Include path
 
-vim.opt.path:append { vim.fs.normalize("~/.local/include") }
+vim.opt.path:append({ vim.fs.normalize("~/.local/include") })
 
 -- }}}
 
@@ -58,14 +58,14 @@ vim.o.number = true
 
 -- {{{ File type
 
-vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
-	pattern = {"*.cal"},
-	callback = function() vim.o.filetype = "c" end
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.cal" },
+	callback = function() vim.o.filetype = "c" end,
 })
 
-vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
-	pattern = {"*.fish"},
-	callback = function() vim.o.filetype = "sh" end
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.fish" },
+	callback = function() vim.o.filetype = "sh" end,
 })
 
 -- }}}
@@ -90,15 +90,15 @@ vim.g.load_doxygen_syntax = 1
 
 vim.o.list = true
 
-vim.opt.listchars:append { trail = [[\u2423]]}
+vim.opt.listchars:append({ trail = [[\u2423]] })
 
 -- }}}
 
 -- {{{ Indentation
 
-vim.o.shiftwidth=4
-vim.o.softtabstop=4
-vim.o.tabstop=4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.tabstop = 4
 
 -- }}}
 
@@ -120,7 +120,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		-- :help format-comments
 		vim.o.comments = string.gsub(vim.o.comments, "s1:", "s:")
-	end
+	end,
 })
 
 -- }}}
@@ -142,7 +142,7 @@ if vim.env.TMUX ~= nil then vim.o.mouse = "" end
 -- {{{ UI
 
 vim.o.whichwrap = "<,>,[,]"
-vim.opt.matchpairs:append { "<:>" }
+vim.opt.matchpairs:append({ "<:>" })
 vim.o.scrolloff = 6
 
 -- }}}
@@ -162,7 +162,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 	pattern = { "*.txt" },
 	callback = function()
 		if vim.o.filetype == "help" then vim.cmd.wincmd("L") end
-	end
+	end,
 })
 
 -- }}}
@@ -191,7 +191,7 @@ require("abbrev")
 function get_colorscheme()
 	-- https://neovim.io/doc/user/api.html#nvim_exec2()
 	-- XXX: vim.cmd.colorscheme() prints (not returns) the current colorscheme.
-	return vim.api.nvim_exec2("colorscheme", {output = true}).output
+	return vim.api.nvim_exec2("colorscheme", { output = true }).output
 end
 
 -- Count the windows in the current tabpage for which diff is true.
@@ -213,7 +213,6 @@ end
 -- https://vi.stackexchange.com/questions/39637/detect-when-a-diff-begins-and-ends
 -- Change colorscheme when diff mode begins/ends.
 function handle_diff_change_colorscheme()
-
 	local num_windows_diffed = count_tabpage_windows_diffed()
 
 	if num_windows_diffed > 1 then
@@ -232,27 +231,29 @@ local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff
 vim.api.nvim_create_autocmd("ColorScheme", {
 	group = change_colors_in_diff,
 	pattern = { "*" },
-	callback = function() vim.g.orig_colorscheme = get_colorscheme() end
+	callback = function() vim.g.orig_colorscheme = get_colorscheme() end,
 })
 
 -- https://vi.stackexchange.com/a/13395
-vim.api.nvim_create_autocmd({"VimEnter",
-	"BufWinEnter", "BufWinLeave", "TabEnter", "TabLeave"}, {
+vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "BufWinLeave", "TabEnter", "TabLeave" }, {
 	group = change_colors_in_diff,
 	pattern = { "*" },
-	callback = function() handle_diff_change_colorscheme() end
+	callback = function() handle_diff_change_colorscheme() end,
 })
 
 -- https://vi.stackexchange.com/a/12852
 vim.api.nvim_create_autocmd("OptionSet", {
 	group = change_colors_in_diff,
 	pattern = { "diff" },
-	callback = function() handle_diff_change_colorscheme() end
+	callback = function() handle_diff_change_colorscheme() end,
 })
 
 -- :help DiffOrig
-vim.api.nvim_create_user_command("DiffOrig",
-"vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis", {})
+vim.api.nvim_create_user_command(
+	"DiffOrig",
+	"vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis",
+	{}
+)
 
 -- }}}
 

@@ -12,7 +12,11 @@ vim.keymap.set("x", "#", [[y?\V<C-R>=substitute(escape(@", '?\'), '\n', '\\n', '
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-R>"//gc<Left><Left><Left>]])
 
 -- Use \V, and escape slashes in the selected text before replacing.
-vim.keymap.set("x", "<C-e>", [[y:%s/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL>//gc<Left><Left><Left>]])
+vim.keymap.set(
+	"x",
+	"<C-e>",
+	[[y:%s/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL>//gc<Left><Left><Left>]]
+)
 
 vim.keymap.set("n", "<Leader>h", function() vim.cmd.split() end)
 vim.keymap.set("n", "<Leader>v", function() vim.cmd.vsplit() end)
@@ -48,10 +52,10 @@ vim.keymap.set("n", "<C-Left>", function() vim.cmd("vertical resize -1") end)
 vim.keymap.set("n", "<C-Right>", function() vim.cmd("vertical resize +1") end)
 
 vim.keymap.set("i", "jj", "<Esc>")
-vim.keymap.set({"n", "x"}, "H", "0")
-vim.keymap.set({"n", "x"}, "L", "$")
+vim.keymap.set({ "n", "x" }, "H", "0")
+vim.keymap.set({ "n", "x" }, "L", "$")
 
-vim.keymap.set({"n", "x"}, "<Tab>", "%")
+vim.keymap.set({ "n", "x" }, "<Tab>", "%")
 
 -- Jump to the position where the last change was made.
 vim.keymap.set("n", "gl", "'.")
@@ -61,10 +65,10 @@ vim.keymap.set("n", "gl", "'.")
 vim.keymap.set("n", "K", "i<NL><Esc>g")
 
 -- save my left pinky
-vim.keymap.set({"n", "x"}, "<Space>", ":")
+vim.keymap.set({ "n", "x" }, "<Space>", ":")
 
-vim.keymap.set({"n", "x"}, "<Down>", "gj")
-vim.keymap.set({"n", "x"}, "<Up>", "gk")
+vim.keymap.set({ "n", "x" }, "<Down>", "gj")
+vim.keymap.set({ "n", "x" }, "<Up>", "gk")
 
 function remove_trailing_whitespace()
 	-- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
@@ -96,7 +100,6 @@ vim.keymap.set("n", "<Leader>sv", function() vim.cmd.source(vim.env.MYVIMRC) end
 vim.keymap.set("x", "p", "P")
 
 function visual_surround(l_text, r_text)
-
 	-- https://neovim.io/doc/user/api.html#nvim_replace_termcodes()
 	-- https://neovim.io/doc/user/api.html#nvim_feedkeys()
 	local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
