@@ -1,8 +1,6 @@
 -- SPDX-FileCopyrightText: Steven Ward
 -- SPDX-License-Identifier: OSL-3.0
 
-vim.cmd.cnoreabbrev("Q", "quit!")
-vim.cmd.cnoreabbrev("qq", "quit!")
 vim.cmd.inoreabbrev("amek", "make")
 vim.cmd.inoreabbrev("amke", "make")
 vim.cmd.inoreabbrev("becuase", "because")
