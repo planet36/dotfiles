@@ -23,7 +23,7 @@ struct splitmix32
 
 	result_type next()
 	{
-		static constexpr uint64_t inc = gamma64;
+		static constexpr uint64_t inc = GoldenRatio_64;
 		static_assert((inc & 1) != 0, "must be odd");
 
 		static constexpr uint64_t M1 = 0x62a9d9ed799705f5; // not prime (popcount = 36)
@@ -60,7 +60,7 @@ struct splitmix64
 
 	result_type next()
 	{
-		static constexpr uint64_t inc = gamma64;
+		static constexpr uint64_t inc = GoldenRatio_64;
 		static_assert((inc & 1) != 0, "must be odd");
 
 		static constexpr uint64_t M1 = 0xbf58476d1ce4e5b9; // not prime (popcount = 36)

@@ -22,7 +22,7 @@ struct moremur
 
 	result_type next()
 	{
-		static constexpr uint64_t inc = gamma64;
+		static constexpr uint64_t inc = GoldenRatio_64;
 		static_assert((inc & 1) != 0, "must be odd");
 
 		static constexpr uint64_t M1 = 0x3c79ac492ba7b653; // not prime (popcount = 34)
