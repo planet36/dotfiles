@@ -16,6 +16,10 @@
 #include <iterator>
 #include <string_view>
 
+/*
+https://www.wolframalpha.com/input?i=PrimeQ%5B16777619%5D
+https://www.wolframalpha.com/input?i=PrimeQ%5B1099511628211%5D
+*/
 inline constexpr uint32_t fnv_prime_32 = UINT32_C(16'777'619); // = 2**24 + 2**8 + 0x93
 inline constexpr uint64_t fnv_prime_64 = UINT64_C(1'099'511'628'211); // = 2**40 + 2**8 + 0xB3
 
