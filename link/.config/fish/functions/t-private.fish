@@ -37,7 +37,7 @@ function t-private --description 'tar private config files and folders'
     if dir_is_empty "$TGT_DIR"
         rmdir --verbose -- "$TGT_DIR" || return
     else
-        t "$TGT_DIR" && xz -9 -e "$TGT_DIR".tar && del "$TGT_DIR" || return
+        t "$TGT_DIR" && command xz --verbose -9 -e "$TGT_DIR".tar && del "$TGT_DIR" || return
     end
 
     popd || return
