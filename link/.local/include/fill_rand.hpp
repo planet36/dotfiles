@@ -9,10 +9,7 @@
 
 #pragma once
 
-#include "int_join.hpp"
-
 #include <array>
-#include <concepts>
 #include <vector>
 
 #if defined(_GLIBCXX_HAVE_ARC4RANDOM)
@@ -22,21 +19,21 @@
 // arc4random_buf
 // https://www.gnu.org/software/libc/manual/html_node/High-Quality-Random.html
 
-template <std::unsigned_integral T>
+template <typename T>
 void
 fill_rand(T& x)
 {
 	arc4random_buf(&x, sizeof(T));
 }
 
-template <std::unsigned_integral T, size_t N>
+template <typename T, size_t N>
 void
 fill_rand(std::array<T, N>& arr)
 {
 	arc4random_buf(arr.data(), sizeof(T) * N);
 }
 
-template <std::unsigned_integral T>
+template <typename T>
 void
 fill_rand(std::vector<T>& vec)
 {
@@ -52,7 +49,7 @@ fill_rand(std::vector<T>& vec)
 // https://www.gnu.org/software/libc/manual/html_node/Unpredictable-Bytes.html
 // Max num bytes allowed is 256
 
-template <std::unsigned_integral T>
+template <typename T>
 requires (sizeof(T) <= 256)
 void
 fill_rand(T& x)
@@ -64,7 +61,7 @@ fill_rand(T& x)
 	}
 }
 
-template <std::unsigned_integral T, size_t N>
+template <typename T, size_t N>
 requires (sizeof(T) * N <= 256)
 void
 fill_rand(std::array<T, N>& arr)
@@ -76,7 +73,7 @@ fill_rand(std::array<T, N>& arr)
 	}
 }
 
-template <std::unsigned_integral T>
+template <typename T>
 void
 fill_rand(std::vector<T>& vec)
 {
@@ -89,6 +86,9 @@ fill_rand(std::vector<T>& vec)
 
 #else
 
+#include "int_join.hpp"
+
+#include <concepts>
 #include <random>
 #include <utility>
 
