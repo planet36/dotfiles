@@ -3,6 +3,7 @@
 
 CPPFLAGS += -MMD -MP
 
+CXXFLAGS += -march=native
 CXXFLAGS += -Werror -Wno-error=pedantic
 
 #LDFLAGS +=
