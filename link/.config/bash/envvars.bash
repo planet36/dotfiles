@@ -170,7 +170,7 @@ GCC_COMMON_OPTIONS+=' -D_GNU_SOURCE -D_FORTIFY_SOURCE=2'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
 GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
-GCC_COMMON_OPTIONS+=' -ftrivial-auto-var-init=zero'
+#GCC_COMMON_OPTIONS+=' -ftrivial-auto-var-init=zero'
 
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 #OPTIMIZE_OPTIONS='-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
