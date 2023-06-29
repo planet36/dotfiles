@@ -194,7 +194,7 @@ export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
 export CPPFLAGS="-iquote $HOME/.local/include"
 
 export CFLAGS="$GCC_COMMON_OPTIONS -std=gnu2x -Wc++-compat"
-export CXXFLAGS="$GCC_COMMON_OPTIONS -std=gnu++23 -fchar8_t -fdiagnostics-show-template-tree -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
+export CXXFLAGS="$GCC_COMMON_OPTIONS -std=gnu++23 -fchar8_t -fdiagnostics-show-template-tree -fstrict-enums -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
 
 # }}}
 
