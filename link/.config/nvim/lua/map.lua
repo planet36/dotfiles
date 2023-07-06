@@ -15,25 +15,27 @@ require("get_visual_selection")
 
 ---@private
 local function _search_for_visual_selection(search_prefix)
-  if search_prefix ~= '/' and search_prefix ~= '?' then
-    return
-  end
-  -- Escape these characters
-  local replacements = {
-    [search_prefix] = [[\]] .. search_prefix,
-    [ [[\]] ] = [[\\]],
-    ['\t'] = [[\t]],
-    ['\n'] = [[\n]],
-  }
-  local pattern = '[' .. table.concat(vim.tbl_keys(replacements), '') .. ']'
-  local visual_selection = get_visual_selection(false)
-  local escaped_visual_selection = string.gsub(visual_selection, pattern, replacements)
-  local search_cmd = search_prefix .. [[\V]] .. escaped_visual_selection .. '\n'
-  vim.api.nvim_feedkeys(search_cmd, 'nx', true)
+	if search_prefix ~= "/" and search_prefix ~= "?" then return end
+	-- Escape these characters
+	local replacements = {
+		[search_prefix] = [[\]] .. search_prefix,
+		[ [[\]] ] = [[\\]],
+		["\t"] = [[\t]],
+		["\n"] = [[\n]],
+	}
+	local pattern = "[" .. table.concat(vim.tbl_keys(replacements), "") .. "]"
+	local visual_selection = get_visual_selection(false)
+	local escaped_visual_selection =
+		string.gsub(visual_selection, pattern, replacements)
+	local search_cmd = search_prefix
+		.. [[\V]]
+		.. escaped_visual_selection
+		.. "\n"
+	vim.api.nvim_feedkeys(search_cmd, "nx", true)
 end
 
-vim.keymap.set('x', '*', function() _search_for_visual_selection('/') end)
-vim.keymap.set('x', '#', function() _search_for_visual_selection('?') end)
+vim.keymap.set("x", "*", function() _search_for_visual_selection("/") end)
+vim.keymap.set("x", "#", function() _search_for_visual_selection("?") end)
 
 -- Replace selected text.
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-R>"//gc<Left><Left><Left>]])
@@ -114,15 +116,31 @@ end
 vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end)
 
 -- Highlight trailing whitespace.
-vim.keymap.set("n", "<Leader>w", function() vim.cmd.match("ErrorMsg", [[/\v\s+$/]]) end)
+vim.keymap.set(
+	"n",
+	"<Leader>w",
+	function() vim.cmd.match("ErrorMsg", [[/\v\s+$/]]) end
+)
 vim.keymap.set("n", "<Leader>W", function() vim.cmd.match("none") end)
 
 -- Highlight text beyond 80 columns.
-vim.keymap.set("n", "<Leader>c", function() vim.cmd([[2match ErrorMsg /\v%>80v.+/]]) end)
+vim.keymap.set(
+	"n",
+	"<Leader>c",
+	function() vim.cmd([[2match ErrorMsg /\v%>80v.+/]]) end
+)
 vim.keymap.set("n", "<Leader>C", function() vim.cmd("2match none") end)
 
-vim.keymap.set("n", "<Leader>ev", function() vim.cmd.vsplit(vim.env.MYVIMRC) end)
-vim.keymap.set("n", "<Leader>sv", function() vim.cmd.source(vim.env.MYVIMRC) end)
+vim.keymap.set(
+	"n",
+	"<Leader>ev",
+	function() vim.cmd.vsplit(vim.env.MYVIMRC) end
+)
+vim.keymap.set(
+	"n",
+	"<Leader>sv",
+	function() vim.cmd.source(vim.env.MYVIMRC) end
+)
 
 vim.keymap.set("x", "p", "P")
 
@@ -133,9 +151,17 @@ function visual_surround(l_text, r_text)
 	local mode = vim.api.nvim_get_mode().mode
 
 	if mode == "v" or mode == "V" then -- visual or visual line
-		vim.api.nvim_feedkeys(esc .. "`>a" .. r_text .. esc .. "`<i" .. l_text, "x", false)
+		vim.api.nvim_feedkeys(
+			esc .. "`>a" .. r_text .. esc .. "`<i" .. l_text,
+			"x",
+			false
+		)
 	elseif mode:byte() == 22 then -- visual block
-		vim.api.nvim_feedkeys("A" .. r_text .. esc .. "gvI" .. l_text, "x", false)
+		vim.api.nvim_feedkeys(
+			"A" .. r_text .. esc .. "gvI" .. l_text,
+			"x",
+			false
+		)
 	end
 end
 
