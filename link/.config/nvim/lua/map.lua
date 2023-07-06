@@ -5,8 +5,35 @@
 vim.keymap.set("n", "<Leader><Space>", function() vim.cmd.nohlsearch() end)
 
 -- Find selected text
-vim.keymap.set("x", "*", [[y/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL><NL>]])
-vim.keymap.set("x", "#", [[y?\V<C-R>=substitute(escape(@", '?\'), '\n', '\\n', 'g')<NL><NL>]])
+--vim.keymap.set("x", "*", [[y/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL><NL>]])
+--vim.keymap.set("x", "#", [[y?\V<C-R>=substitute(escape(@", '?\'), '\n', '\\n', 'g')<NL><NL>]])
+
+require("get_visual_selection")
+
+-- Adapted from
+-- https://github.com/neovim/neovim/commit/abd380e28d48dd155b1e29cd2453f13b28bf7e08
+
+---@private
+local function _search_for_visual_selection(search_prefix)
+  if search_prefix ~= '/' and search_prefix ~= '?' then
+    return
+  end
+  -- Escape these characters
+  local replacements = {
+    [search_prefix] = [[\]] .. search_prefix,
+    [ [[\]] ] = [[\\]],
+    ['\t'] = [[\t]],
+    ['\n'] = [[\n]],
+  }
+  local pattern = '[' .. table.concat(vim.tbl_keys(replacements), '') .. ']'
+  local visual_selection = vim.get_visual_selection(false)
+  local escaped_visual_selection = string.gsub(visual_selection, pattern, replacements)
+  local search_cmd = search_prefix .. [[\V]] .. escaped_visual_selection .. '\n'
+  vim.api.nvim_feedkeys(search_cmd, 'nx', true)
+end
+
+vim.keymap.set('x', '*', function() _search_for_visual_selection('/') end)
+vim.keymap.set('x', '#', function() _search_for_visual_selection('?') end)
 
 -- Replace selected text.
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-R>"//gc<Left><Left><Left>]])
