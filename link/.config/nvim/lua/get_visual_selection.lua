@@ -17,7 +17,7 @@
 ---        This will preserve the trailing newline of the selection when the result is concatenated with `"\n"`.
 ---        Defaults to `false`.
 --- @return string|table
-function vim.get_visual_selection(list, append_empty)
+function get_visual_selection(list, append_empty)
   list = list or false
   append_empty = append_empty or false
 

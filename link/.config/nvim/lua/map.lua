@@ -26,7 +26,7 @@ local function _search_for_visual_selection(search_prefix)
     ['\n'] = [[\n]],
   }
   local pattern = '[' .. table.concat(vim.tbl_keys(replacements), '') .. ']'
-  local visual_selection = vim.get_visual_selection(false)
+  local visual_selection = get_visual_selection(false)
   local escaped_visual_selection = string.gsub(visual_selection, pattern, replacements)
   local search_cmd = search_prefix .. [[\V]] .. escaped_visual_selection .. '\n'
   vim.api.nvim_feedkeys(search_cmd, 'nx', true)
