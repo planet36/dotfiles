@@ -1,7 +1,7 @@
 -- SPDX-FileCopyrightText: Steven Ward
 -- SPDX-License-Identifier: OSL-3.0
 
--- Stop the highlighting for the 'hlsearch' option.
+-- Stop the highlighting for the 'hlsearch' option
 vim.keymap.set("n", "<Leader><Space>", function() vim.cmd.nohlsearch() end)
 
 -- Find selected text
@@ -37,10 +37,10 @@ end
 vim.keymap.set("x", "*", function() _search_for_visual_selection("/") end)
 vim.keymap.set("x", "#", function() _search_for_visual_selection("?") end)
 
--- Replace selected text.
+-- Replace selected text
 vim.keymap.set("x", "<C-r>", [[y:%s/<C-R>"//gc<Left><Left><Left>]])
 
--- Use \V, and escape slashes in the selected text before replacing.
+-- Use \V, and escape slashes in the selected text before replacing
 vim.keymap.set(
 	"x",
 	"<C-e>",
@@ -86,14 +86,14 @@ vim.keymap.set({ "n", "x" }, "L", "$")
 
 vim.keymap.set({ "n", "x" }, "<Tab>", "%")
 
--- Jump to the position where the last change was made.
+-- Jump to the position where the last change was made
 vim.keymap.set("n", "gl", "'.")
 
 -- g; only available with |+jumplist| feature
 -- Insert newline after cursor
 vim.keymap.set("n", "K", "i<NL><Esc>g")
 
--- save my left pinky
+-- Save my left pinky
 vim.keymap.set({ "n", "x" }, "<Space>", ":")
 
 vim.keymap.set({ "n", "x" }, "<Down>", "gj")
@@ -112,10 +112,10 @@ function remove_trailing_whitespace()
 	vim.api.nvim_win_set_cursor(0, cursor_pos)
 end
 
--- remove trailing whitespace.
+-- Remove trailing whitespace
 vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end)
 
--- Highlight trailing whitespace.
+-- Highlight trailing whitespace
 vim.keymap.set(
 	"n",
 	"<Leader>w",
@@ -123,7 +123,7 @@ vim.keymap.set(
 )
 vim.keymap.set("n", "<Leader>W", function() vim.cmd.match("none") end)
 
--- Highlight text beyond 80 columns.
+-- Highlight text beyond 80 columns
 vim.keymap.set(
 	"n",
 	"<Leader>c",
@@ -131,17 +131,21 @@ vim.keymap.set(
 )
 vim.keymap.set("n", "<Leader>C", function() vim.cmd("2match none") end)
 
+-- Edit $MYVIMRC
 vim.keymap.set(
 	"n",
 	"<Leader>ev",
 	function() vim.cmd.vsplit(vim.env.MYVIMRC) end
 )
+
+-- Source $MYVIMRC
 vim.keymap.set(
 	"n",
 	"<Leader>sv",
 	function() vim.cmd.source(vim.env.MYVIMRC) end
 )
 
+-- https://stackoverflow.com/a/74935585
 vim.keymap.set("x", "p", "P")
 
 function visual_surround(l_text, r_text)
