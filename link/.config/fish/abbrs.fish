@@ -21,6 +21,7 @@ abbr --add --global ed "$EDITOR"
 abbr --add --global emdl meld
 abbr --add --global emld meld
 abbr --add --global f find
+abbr --add --global fidn find
 abbr --add --global fiel file
 abbr --add --global gi git
 abbr --add --global his history

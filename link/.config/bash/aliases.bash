@@ -22,6 +22,7 @@ alias ed="$EDITOR"
 alias emdl=meld
 alias emld=meld
 alias f=find
+alias fidn=find
 alias fiel=file
 alias gi=git
 alias his=history
