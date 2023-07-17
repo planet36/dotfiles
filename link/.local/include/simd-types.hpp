@@ -14,64 +14,65 @@
 \sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/emmintrin.h
 \sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/avxintrin.h
 \sa https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html
+\sa https://developer.arm.com/documentation/den0018/a/NEON-Intrinsics/Vector-data-types-for-NEON-intrinsics?lang=en
 */
 
 #pragma once
 
 #include <cstring>
 
-#define DECLARE_SIMD_TYPE(N, T, TNAME) \
-using v ## N ## TNAME = [[gnu::vector_size(sizeof(T)*N), gnu::warn_if_not_aligned(sizeof(T)*N)]] T; \
-static_assert(sizeof(v ## N ## TNAME) == sizeof(T)*N); \
-static_assert(alignof(v ## N ## TNAME) == sizeof(T)*N);
+#define DECLARE_SIMD_TYPE(T, TNAME, N) \
+using TNAME ## x ## N = [[gnu::vector_size(sizeof(T)*N), gnu::warn_if_not_aligned(sizeof(T)*N)]] T; \
+static_assert(sizeof(TNAME ## x ## N) == sizeof(T)*N); \
+static_assert(alignof(TNAME ## x ## N) == sizeof(T)*N);
 
 // 128-bit types
 
-DECLARE_SIMD_TYPE(16, signed char, i8) // v16i8
-DECLARE_SIMD_TYPE(16, unsigned char, u8) // v16u8
+DECLARE_SIMD_TYPE(signed char  , i8, 16)
+DECLARE_SIMD_TYPE(unsigned char, u8, 16)
 
-DECLARE_SIMD_TYPE(8, short, i16) // v8i16
-DECLARE_SIMD_TYPE(8, unsigned short, u16) // v8u16
+DECLARE_SIMD_TYPE(short         , i16, 8)
+DECLARE_SIMD_TYPE(unsigned short, u16, 8)
 
-DECLARE_SIMD_TYPE(4, int, i32) // v4i32
-DECLARE_SIMD_TYPE(4, unsigned int, u32) // v4u32
-DECLARE_SIMD_TYPE(4, float, f32) // v4f32 == __m128
+DECLARE_SIMD_TYPE(int         , i32, 4)
+DECLARE_SIMD_TYPE(unsigned int, u32, 4)
+DECLARE_SIMD_TYPE(float       , f32, 4) // == __m128
 
-DECLARE_SIMD_TYPE(2, long long, i64) // v2i64 == __m128i
-DECLARE_SIMD_TYPE(2, unsigned long long, u64) // v2u64
-DECLARE_SIMD_TYPE(2, double, f64) // v2f64 == __m128d
+DECLARE_SIMD_TYPE(long long         , i64, 2) // == __m128i
+DECLARE_SIMD_TYPE(unsigned long long, u64, 2)
+DECLARE_SIMD_TYPE(double            , f64, 2) // == __m128d
 
 // 256-bit types
 
-DECLARE_SIMD_TYPE(32, signed char, i8) // v32i8
-DECLARE_SIMD_TYPE(32, unsigned char, u8) // v32u8
+DECLARE_SIMD_TYPE(signed char  , i8, 32)
+DECLARE_SIMD_TYPE(unsigned char, u8, 32)
 
-DECLARE_SIMD_TYPE(16, short, i16) // v16i16
-DECLARE_SIMD_TYPE(16, unsigned short, u16) // v16u16
+DECLARE_SIMD_TYPE(short         , i16, 16)
+DECLARE_SIMD_TYPE(unsigned short, u16, 16)
 
-DECLARE_SIMD_TYPE(8, int, i32) // v8i32
-DECLARE_SIMD_TYPE(8, unsigned int, u32) // v8u32
-DECLARE_SIMD_TYPE(8, float, f32) // v8f32 == __m256
+DECLARE_SIMD_TYPE(int         , i32, 8)
+DECLARE_SIMD_TYPE(unsigned int, u32, 8)
+DECLARE_SIMD_TYPE(float       , f32, 8) // == __m256
 
-DECLARE_SIMD_TYPE(4, long long, i64) // v4i64 == __m256i
-DECLARE_SIMD_TYPE(4, unsigned long long, u64) // v4u64
-DECLARE_SIMD_TYPE(4, double, f64) // v4f64 == __m256d
+DECLARE_SIMD_TYPE(long long         , i64, 4) // == __m256i
+DECLARE_SIMD_TYPE(unsigned long long, u64, 4)
+DECLARE_SIMD_TYPE(double            , f64, 4) // == __m256d
 
 union simd128
 {
-	v16i8 i8;
-	v16u8 u8;
+	i8x16 i8;
+	u8x16 u8;
 
-	v8i16 i16;
-	v8u16 u16;
+	i16x8 i16;
+	u16x8 u16;
 
-	v4i32 i32;
-	v4u32 u32;
-	v4f32 f32;
+	i32x4 i32;
+	u32x4 u32;
+	f32x4 f32;
 
-	v2i64 i64;
-	v2u64 u64;
-	v2f64 f64;
+	i64x2 i64;
+	u64x2 u64;
+	f64x2 f64;
 
 	bool operator==(const simd128& that) const
 	{
@@ -83,19 +84,19 @@ static_assert(alignof(simd128) == 16);
 
 union simd256
 {
-	v32i8 i8;
-	v32u8 u8;
+	i8x32 i8;
+	u8x32 u8;
 
-	v16i16 i16;
-	v16u16 u16;
+	i16x16 i16;
+	u16x16 u16;
 
-	v8i32 i32;
-	v8u32 u32;
-	v8f32 f32;
+	i32x8 i32;
+	u32x8 u32;
+	f32x8 f32;
 
-	v4i64 i64;
-	v4u64 u64;
-	v4f64 f64;
+	i64x4 i64;
+	u64x4 u64;
+	f64x4 f64;
 
 	bool operator==(const simd256& that) const
 	{
