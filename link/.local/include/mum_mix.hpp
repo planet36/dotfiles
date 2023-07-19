@@ -22,6 +22,11 @@ template <std::unsigned_integral T>
 constexpr void
 mum(T& a, T& b)
 {
+	// When T is uint64_t, the multiplication is optimized the same as _mulx_u64.
+	/*
+	* unsigned long long hi{};
+	* const unsigned long long lo = _mulx_u64(a, b, &hi);
+	*/
 	using T2 = next_larger<T>;
 	const T2 r = static_cast<T2>(a) * static_cast<T2>(b);
 	const T hi = static_cast<T>(r >> std::numeric_limits<T>::digits);
