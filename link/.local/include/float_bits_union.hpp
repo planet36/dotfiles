@@ -9,6 +9,10 @@
 
 #pragma once
 
+#include "float_bytes.hpp"
+#include "int_bytes.hpp"
+
+#include <bit>
 #include <concepts>
 #include <cstdint>
 
@@ -35,16 +39,16 @@ union float_bits_union<8>
 
 template <std::floating_point T>
 requires (sizeof(T) == 4 || sizeof(T) == 8)
-auto
+constexpr auto
 float_to_bits(const T x)
 {
-	return float_bits_union<sizeof(T)>{.f = x}.i;
+	return std::bit_cast<uint_bytes<sizeof(T)>>(x);
 }
 
 template <std::unsigned_integral T>
 requires (sizeof(T) == 4 || sizeof(T) == 8)
-auto
+constexpr auto
 bits_to_float(const T x)
 {
-	return float_bits_union<sizeof(T)>{.i = x}.f;
+	return std::bit_cast<float_bytes<sizeof(T)>>(x);
 }
