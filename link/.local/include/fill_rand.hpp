@@ -30,7 +30,7 @@ template <typename T, size_t N>
 void
 fill_rand(std::array<T, N>& arr)
 {
-	arc4random_buf(arr.data(), sizeof(T) * N);
+	arc4random_buf(arr.data(), sizeof(T) * arr.size());
 }
 
 template <typename T>
@@ -66,7 +66,7 @@ requires (sizeof(T) * N <= 256)
 void
 fill_rand(std::array<T, N>& arr)
 {
-	if (getentropy(arr.data(), sizeof(T) * N) < 0)
+	if (getentropy(arr.data(), sizeof(T) * arr.size()) < 0)
 	{
 		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
