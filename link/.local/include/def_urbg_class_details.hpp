@@ -16,11 +16,11 @@ other default-constructed engines of the same type.
 
 #pragma once
 
-#include "bytes.hpp"
 #include "fill_rand.hpp"
 
 #include <array>
 #include <cstdint>
+#include <cstring>
 #include <limits>
 #include <type_traits>
 
@@ -48,7 +48,7 @@ public:                                                              \
 	void seed() {fill_rand(s);}                                      \
 	void seed(const state_type& new_s) {s = new_s;}                  \
 	void seed(const seed_bytes_type& bytes)                          \
-	{s = bytes_to_datum<state_type>(bytes);}                         \
+	{(void)std::memcpy(&s, bytes.data(), sizeof(state_type));}       \
 	/* equality operators */                                         \
 	bool operator==(const CLASS_NAME& that) const                    \
 	{return this->s == that.s;}                                      \
