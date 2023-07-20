@@ -115,16 +115,16 @@ fill_rand(std::array<T, N>& arr)
 {
 	static std::random_device rd;
 
-	for (size_t i = 0; i < arr.size(); ++i)
+	for (T& x : arr)
 	{
 		// std::random_device::result_type is unsigned int
 		// https://en.cppreference.com/w/cpp/numeric/random/random_device
 		if constexpr (sizeof(T) <=
 		              sizeof(typename std::random_device::result_type))
-			arr[i] = rd();
+			x = rd();
 		else if constexpr (sizeof(T) <=
 		                   2 * sizeof(typename std::random_device::result_type))
-			arr[i] = int_join(rd(), rd());
+			x = int_join(rd(), rd());
 		else
 			std::unreachable();
 	}
@@ -136,7 +136,6 @@ fill_rand(std::vector<T>& vec)
 {
 	static std::random_device rd;
 
-	//for (size_t i = 0; i < vec.size(); ++i)
 	for (T& x : vec)
 	{
 		// std::random_device::result_type is unsigned int
