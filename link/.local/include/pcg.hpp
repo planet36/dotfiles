@@ -108,4 +108,44 @@ struct pcg64
 		return std::rotr(output, rot);
 	}
 };
+
+/// PCG-DXSM
+/**
+* Adapted from
+* https://github.com/numpy/numpy/issues/13635#issuecomment-506088698
+* https://github.com/imneme/pcg-cpp/blob/master/include/pcg_random.hpp#L1031
+* https://dotat.at/@/2023-06-21-pcg64-dxsm.html
+* https://dotat.at/cgi/git/pcg-dxsm.git/blob/HEAD:/pcg64_dxsm.h
+*/
+struct pcg64dxsm
+{
+	using state_type = __uint128_t;
+	using result_type = uint64_t;
+
+	DEF_URBG_CLASS_DETAILS(pcg64dxsm)
+
+	result_type next()
+	{
+		// "cheap multiplier"
+		static constexpr uint64_t mul = 0xda942042e4dd58b5; // not prime (popcount = 29)
+		static_assert((mul & 1) != 0, "must be odd");
+		static constexpr __uint128_t inc = int_join(
+		    UINT64_C(6364136223846793005),
+		    UINT64_C(1442695040888963407)); // not prime
+		static_assert((inc & 1) != 0, "must be odd");
+
+		const auto old_s = s;
+		s = s * mul + inc;
+
+		uint64_t hi = static_cast<uint64_t>(old_s >> 64);
+		const uint64_t lo = static_cast<uint64_t>(old_s | 1);
+
+		hi ^= hi >> 32; // 64 / 2 == 32
+		hi *= mul;
+		hi ^= hi >> 48; // 3 * (64 / 4) == 48
+		hi *= lo;
+
+		return hi;
+	}
+};
 #endif
