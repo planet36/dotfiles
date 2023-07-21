@@ -78,6 +78,8 @@ union simd128
 	{
 		return std::memcmp(this, &that, sizeof(simd128)) == 0;
 	}
+
+	bool operator!=(const simd128& that) const {return !(*this == that);}
 };
 static_assert(sizeof(simd128) == 16);
 static_assert(alignof(simd128) == 16);
@@ -102,6 +104,8 @@ union simd256
 	{
 		return std::memcmp(this, &that, sizeof(simd256)) == 0;
 	}
+
+	bool operator!=(const simd256& that) const {return !(*this == that);}
 };
 static_assert(sizeof(simd256) == 32);
 static_assert(alignof(simd256) == 32);
