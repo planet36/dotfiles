@@ -12,6 +12,7 @@
 #include "ne_arr.hpp"
 
 #include <cstdint>
+#include <cstring>
 #include <type_traits>
 
 /// Alias template for an array of bytes of length \a num_bytes
@@ -22,21 +23,14 @@ using array_of_bytes = ne_arr<std::uint8_t, num_bytes>;
 template <typename DatumT, std::size_t num_data>
 using array_of_data = ne_arr<DatumT, num_data>;
 
-/// Union with an array of bytes and an array of data of the same size
-template <typename DatumT, std::size_t num_data = 1>
-requires (std::is_standard_layout_v<DatumT> && std::is_trivial_v<DatumT>)
-union byte_array_union
-{
-	array_of_data<DatumT, num_data> data;
-	array_of_bytes<sizeof(data)>    bytes{};
-};
-
 /// convert the datum to an array of bytes
 template <typename DatumT>
 constexpr auto
 datum_to_bytes(const DatumT& datum)
 {
-	return byte_array_union<DatumT>{.data{datum}}.bytes;
+	array_of_bytes<sizeof(DatumT)> bytes{};
+	(void)std::memcpy(bytes.data(), &datum, bytes.size());
+	return bytes;
 }
 
 /// convert the array of bytes to a datum
@@ -44,7 +38,9 @@ template <typename DatumT>
 constexpr auto
 bytes_to_datum(const array_of_bytes<sizeof(DatumT)>& bytes)
 {
-	return byte_array_union<DatumT>{.bytes{bytes}}.data[0];
+	DatumT datum{};
+	(void)std::memcpy(&datum, bytes.data(), sizeof(DatumT));
+	return datum;
 }
 
 /// convert the array of data to an array of bytes
@@ -52,7 +48,9 @@ template <typename DatumT, std::size_t num_data>
 constexpr auto
 array_to_bytes(const array_of_data<DatumT, num_data>& data)
 {
-	return byte_array_union<DatumT, num_data>{.data{data}}.bytes;
+	array_of_bytes<sizeof(data)> bytes{};
+	(void)std::memcpy(bytes.data(), data.data(), bytes.size());
+	return bytes;
 }
 
 /// convert the array of bytes to an array of data
@@ -65,5 +63,7 @@ constexpr auto
 bytes_to_array_of(const array_of_bytes<num_bytes>& bytes)
 {
 	static constexpr std::size_t num_data = num_bytes / sizeof(DatumT);
-	return byte_array_union<DatumT, num_data>{.bytes{bytes}}.data;
+	array_of_data<DatumT, num_data> data;
+	(void)std::memcpy(data.data(), bytes.data(), num_bytes);
+	return data;
 }
