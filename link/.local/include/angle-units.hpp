@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// angle units
+/// angle unit enum
 /**
 \file
 \author Steven Ward
@@ -12,7 +12,6 @@
 #include "angle-utils.hpp"
 
 #include <concepts>
-#include <cstdint>
 #include <string_view>
 
 /// the fundamental unit of measurement of an angle
@@ -20,14 +19,14 @@
 * \sa https://en.wikipedia.org/wiki/Angle#Units
 * \sa https://en.wikipedia.org/wiki/Angular_unit
 */
-enum struct angle_unit : uint16_t
+enum struct angle_unit : unsigned char
 {
 	milliradian,
-	radian,
-	revolution,
-	degree,
-	arcminute,
-	arcsecond,
+	radian     ,
+	revolution ,
+	degree     ,
+	arcminute  ,
+	arcsecond  ,
 };
 
 /// convert the \c angle_unit to a string
@@ -56,7 +55,6 @@ fwd()
 	if constexpr (U == angle_unit::degree     ) {return angle_unit::arcminute ;}
 	if constexpr (U == angle_unit::arcminute  ) {return angle_unit::arcsecond ;}
 	if constexpr (U == angle_unit::arcsecond  ) {return angle_unit::arcsecond ;} // same
-
 	__builtin_unreachable();
 }
 
@@ -71,7 +69,6 @@ rev()
 	if constexpr (U == angle_unit::degree     ) {return angle_unit::revolution ;}
 	if constexpr (U == angle_unit::arcminute  ) {return angle_unit::degree     ;}
 	if constexpr (U == angle_unit::arcsecond  ) {return angle_unit::arcminute  ;}
-
 	__builtin_unreachable();
 }
 
