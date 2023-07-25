@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// angle utilities
+/// angle conversion utilities
 /**
 \file
 \author Steven Ward
@@ -15,31 +15,31 @@
 #include <concepts>
 
 /// milliradians per radian
-inline constexpr int mrad_per_rad = 1'000;
+inline constexpr unsigned int mrad_per_rad = 1'000;
 
 /// radians per revolution
 template <std::floating_point T>
 inline constexpr T rad_per_rev = M_2_pi<T>;
 
 /// degrees per revolution
-inline constexpr int deg_per_rev = 360;
+inline constexpr unsigned int deg_per_rev = 360;
 
 /// arcminutes per degree
-inline constexpr int arcmin_per_deg = 60;
+inline constexpr unsigned int arcmin_per_deg = 60;
 
 /// arcseconds per arcminute
-inline constexpr int arcsec_per_arcmin = 60;
+inline constexpr unsigned int arcsec_per_arcmin = 60;
 
 /// degrees per radian
 template <std::floating_point T>
 inline constexpr T deg_per_rad = 180 / M_pi<T>;
 
-inline constexpr int quadrants_per_rev = 4;
-inline constexpr int sextants_per_rev = 6;
-inline constexpr int octants_per_rev = 8;
-inline constexpr int hexacontades_per_rev = 60;
-inline constexpr int binary_degrees_per_rev = 256;
-inline constexpr int gradians_per_rev = 400;
+inline constexpr unsigned int quadrants_per_rev = 4;
+inline constexpr unsigned int sextants_per_rev = 6;
+inline constexpr unsigned int octants_per_rev = 8;
+inline constexpr unsigned int hexacontades_per_rev = 60;
+inline constexpr unsigned int binary_degrees_per_rev = 256;
+inline constexpr unsigned int gradians_per_rev = 400;
 
 /// convert to radians from milliradians
 template <std::floating_point T>
