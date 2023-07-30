@@ -116,6 +116,7 @@ struct pcg64
 * https://github.com/imneme/pcg-cpp/blob/master/include/pcg_random.hpp#L1031
 * https://dotat.at/@/2023-06-21-pcg64-dxsm.html
 * https://dotat.at/cgi/git/pcg-dxsm.git/blob/HEAD:/pcg64_dxsm.h
+* https://github.com/imneme/pcg-cpp/commit/871d0494ee9c9a7b7c43f753e3d8ca47c26f8005
 */
 struct pcg64dxsm
 {
