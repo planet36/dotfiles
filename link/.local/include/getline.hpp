@@ -47,5 +47,6 @@ getdelim(std::string& line,
 bool
 getline(std::string& line, FILE* stream, const bool strip_delim = false)
 {
-	return getdelim(line, '\n', stream, strip_delim);
+	constexpr char delim = '\n';
+	return getdelim(line, delim, stream, strip_delim);
 }
