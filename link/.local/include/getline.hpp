@@ -23,8 +23,8 @@ The return value matches the behavior of https://en.cppreference.com/w/cpp/io/ba
 */
 bool
 getdelim(std::string& line,
-         FILE* stream,
          const char delim,
+         FILE* stream,
          const bool strip_delim = false)
 {
 	char* buf = nullptr;
@@ -47,5 +47,5 @@ getdelim(std::string& line,
 bool
 getline(std::string& line, FILE* stream, const bool strip_delim = false)
 {
-	return getdelim(line, stream, '\n', strip_delim);
+	return getdelim(line, '\n', stream, strip_delim);
 }
