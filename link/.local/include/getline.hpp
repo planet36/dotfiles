@@ -24,7 +24,7 @@ The return value matches the behavior of https://en.cppreference.com/w/cpp/io/ba
 bool
 getdelim(std::string& line,
          FILE* stream,
-         char delim,
+         const char delim,
          const bool strip_delim = false)
 {
 	char* buf = nullptr;
