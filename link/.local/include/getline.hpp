@@ -29,7 +29,7 @@ getdelim(std::string& line,
 {
 	char* buf = nullptr;
 	size_t buf_size = 0;
-	const ssize_t bytes_read = getdelim(&buf, &buf_size, delim, stream);
+	const ssize_t bytes_read = ::getdelim(&buf, &buf_size, delim, stream);
 	if (bytes_read > 0)
 	{
 		const bool remove_last_char = strip_delim &&
