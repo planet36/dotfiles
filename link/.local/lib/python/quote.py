@@ -125,7 +125,7 @@ def escape(s):
 
 def cstr(s):
     """Quote the string for a C string literal.  \
-Escape non-printable characters, double quotes, backslashes, and trigraphs, and surround the result with double quotes."""
+Escape non-printable characters, double quotes, and backslashes, and surround the result with double quotes."""
 
     # Escape double quotes and backslashes.
     pattern = re.compile(r'(["\\])')
@@ -147,7 +147,7 @@ Escape non-printable characters, double quotes, backslashes, and trigraphs, and 
 
 def cstr_maybe(s):
     """Quote the string (in some cases) for a C string literal.  \
-Escape non-printable characters, double quotes, backslashes, and trigraphs, and surround the result with double quotes.  \
+Escape non-printable characters, double quotes, and backslashes, and surround the result with double quotes.  \
 If no characters were escaped, the original string is returned."""
 
     # Look for double quotes and backslashes.
