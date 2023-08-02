@@ -7,6 +7,7 @@
 \author Steven Ward
 \sa https://www.man7.org/linux/man-pages/man3/getline.3.html
 \sa https://en.cppreference.com/w/c/experimental/dynamic/getline
+\sa https://www.gnu.org/software/libc/manual/html_node/Line-Input.html
 */
 
 #pragma once
