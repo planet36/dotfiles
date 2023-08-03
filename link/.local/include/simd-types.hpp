@@ -74,12 +74,12 @@ union simd128
 	u64x2 u64;
 	f64x2 f64;
 
-	bool operator==(const simd128& that) const
+	constexpr bool operator==(const simd128& that) const
 	{
 		return std::memcmp(this, &that, sizeof(simd128)) == 0;
 	}
 
-	bool operator!=(const simd128& that) const {return !(*this == that);}
+	constexpr bool operator!=(const simd128& that) const {return !(*this == that);}
 };
 static_assert(sizeof(simd128) == 16);
 static_assert(alignof(simd128) == 16);
@@ -100,12 +100,12 @@ union simd256
 	u64x4 u64;
 	f64x4 f64;
 
-	bool operator==(const simd256& that) const
+	constexpr bool operator==(const simd256& that) const
 	{
 		return std::memcmp(this, &that, sizeof(simd256)) == 0;
 	}
 
-	bool operator!=(const simd256& that) const {return !(*this == that);}
+	constexpr bool operator!=(const simd256& that) const {return !(*this == that);}
 };
 static_assert(sizeof(simd256) == 32);
 static_assert(alignof(simd256) == 32);
