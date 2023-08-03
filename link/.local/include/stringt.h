@@ -5,6 +5,7 @@
 /**
 \file
 \author Steven Ward
+\sa https://nrk.neocities.org/articles/not-a-fan-of-strlcpy
 */
 
 #pragma once
