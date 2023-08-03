@@ -24,6 +24,27 @@
 * https://github.com/imneme/pcg-cpp/blob/master/include/pcg_random.hpp#L161
 */
 
+namespace
+{
+inline constexpr std::array<uint64_t, 3> pcg_const64 = {
+	0x5851f42d4c957f2d, // not prime (popcount = 33)
+	0x14057b7ef767814f, // not prime (popcount = 35)
+	0xda942042e4dd58b5, // not prime (popcount = 29)
+};
+static_assert((pcg_const64[0] & 1) != 0, "must be odd");
+static_assert((pcg_const64[1] & 1) != 0, "must be odd");
+static_assert((pcg_const64[2] & 1) != 0, "must be odd");
+
+#if defined(__SIZEOF_INT128__)
+inline constexpr std::array<__uint128_t, 2> pcg_const128 = {
+	int_join(UINT64_C(0x2360ed051fc65da4), UINT64_C(0x4385df649fccf645)), // not prime (popcount = 65)
+	int_join(pcg_const64[0], pcg_const64[1]), // not prime (popcount = 68)
+};
+static_assert((pcg_const128[0] & 1) != 0, "must be odd");
+static_assert((pcg_const128[1] & 1) != 0, "must be odd");
+#endif
+}
+
 /// PCG-XSH-RR
 struct pcg32
 {
@@ -34,8 +55,8 @@ struct pcg32
 
 	result_type next()
 	{
-		static constexpr state_type mul = UINT64_C(6364136223846793005); // not prime
-		static constexpr state_type inc = UINT64_C(1442695040888963407); // not prime
+		static constexpr state_type mul = pcg_const64[0];
+		static constexpr state_type inc = pcg_const64[1];
 		static_assert((inc & 1) != 0, "must be odd");
 
 		const auto old_s = s;
@@ -60,8 +81,8 @@ struct pcg32_fast
 
 	result_type next()
 	{
-		static constexpr state_type mul = UINT64_C(6364136223846793005); // not prime
-		static constexpr state_type inc = UINT64_C(1442695040888963407); // not prime
+		static constexpr state_type mul = pcg_const64[0];
+		static constexpr state_type inc = pcg_const64[1];
 		static_assert((inc & 1) != 0, "must be odd");
 
 		const auto old_s = s;
@@ -90,12 +111,8 @@ struct pcg64
 		*  wide."
 		*  https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
 		*/
-		static constexpr __uint128_t mul = int_join(
-		    UINT64_C(2549297995355413924),
-		    UINT64_C(4865540595714422341)); // not prime
-		static constexpr __uint128_t inc = int_join(
-		    UINT64_C(6364136223846793005),
-		    UINT64_C(1442695040888963407)); // not prime
+		static constexpr __uint128_t mul = pcg_const128[0];
+		static constexpr __uint128_t inc = pcg_const128[1];
 		static_assert((inc & 1) != 0, "must be odd");
 
 		const auto old_s = s;
@@ -128,11 +145,9 @@ struct pcg64dxsm
 	result_type next()
 	{
 		// "cheap multiplier"
-		static constexpr uint64_t mul = 0xda942042e4dd58b5; // not prime (popcount = 29)
+		static constexpr uint64_t mul = pcg_const64[2];
 		static_assert((mul & 1) != 0, "must be odd");
-		static constexpr __uint128_t inc = int_join(
-		    UINT64_C(6364136223846793005),
-		    UINT64_C(1442695040888963407)); // not prime
+		static constexpr __uint128_t inc = pcg_const128[1];
 		static_assert((inc & 1) != 0, "must be odd");
 
 		const auto old_s = s;
