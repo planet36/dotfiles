@@ -21,21 +21,21 @@
 
 template <typename T>
 void
-fill_rand(T& x)
+fill_rand(T& x) noexcept
 {
 	arc4random_buf(&x, sizeof(T));
 }
 
 template <typename T, size_t N>
 void
-fill_rand(std::array<T, N>& arr)
+fill_rand(std::array<T, N>& arr) noexcept
 {
 	arc4random_buf(arr.data(), sizeof(T) * arr.size());
 }
 
 template <typename T>
 void
-fill_rand(std::vector<T>& vec)
+fill_rand(std::vector<T>& vec) noexcept
 {
 	arc4random_buf(vec.data(), sizeof(T) * vec.size());
 }

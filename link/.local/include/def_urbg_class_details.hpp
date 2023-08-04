@@ -41,13 +41,13 @@ public:                                                              \
 	/* https://eel.is/c++draft/rand.req.eng#3.1 */                   \
 	static_assert(sizeof(state_type) % sizeof(result_type) == 0);    \
 	/* ctors */                                                      \
-	CLASS_NAME() {seed();}                                           \
-	explicit CLASS_NAME(const state_type& new_s) {seed(new_s);}      \
-	explicit CLASS_NAME(const seed_bytes_type& bytes) {seed(bytes);} \
+	CLASS_NAME() noexcept {seed();}                                           \
+	explicit CLASS_NAME(const state_type& new_s) noexcept {seed(new_s);}      \
+	explicit CLASS_NAME(const seed_bytes_type& bytes) noexcept {seed(bytes);} \
 	/* seed functions */                                             \
-	void seed() {fill_rand(s);}                                      \
-	void seed(const state_type& new_s) {s = new_s;}                  \
-	void seed(const seed_bytes_type& bytes)                          \
+	void seed() noexcept {fill_rand(s);}                                      \
+	void seed(const state_type& new_s) noexcept {s = new_s;}                  \
+	void seed(const seed_bytes_type& bytes) noexcept                          \
 	{(void)std::memcpy(&s, bytes.data(), sizeof(state_type));}       \
 	/* equality operators */                                         \
 	bool operator==(const CLASS_NAME& that) const                    \

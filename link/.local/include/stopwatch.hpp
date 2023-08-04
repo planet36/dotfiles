@@ -22,11 +22,11 @@ public:
 	    std::chrono::high_resolution_clock,
 	    std::chrono::steady_clock>;
 
-	stopwatch() { reset(); }
+	stopwatch() noexcept { reset(); }
 
-	stopwatch(const stopwatch&) = delete;
+	stopwatch(const stopwatch&) = delete; // copy constructor
 
-	void start()
+	void start() noexcept
 	{
 		if (!running)
 		{
@@ -35,7 +35,7 @@ public:
 		}
 	}
 
-	void stop()
+	void stop() noexcept
 	{
 		if (running)
 		{
@@ -44,13 +44,13 @@ public:
 		}
 	}
 
-	void reset()
+	void reset() noexcept
 	{
 		dt = decltype(dt)::zero();
 		running = false;
 	}
 
-	std::chrono::duration<double> get_elapsed_time() const
+	std::chrono::duration<double> get_elapsed_time() const noexcept
 	{
 		if (!running)
 			return dt;
@@ -58,7 +58,7 @@ public:
 			return dt + (stopwatch_clock::now() - t0);
 	}
 
-	bool is_running() const { return running; }
+	bool is_running() const noexcept { return running; }
 
 private:
 	std::chrono::time_point<stopwatch_clock> t0{};

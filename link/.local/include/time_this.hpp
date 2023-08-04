@@ -35,9 +35,9 @@ public:
 	    std::chrono::high_resolution_clock,
 	    std::chrono::steady_clock>;
 
-	time_this(): t0(timer_clock::now()) {}
+	time_this() noexcept : t0(timer_clock::now()) {}
 
-	time_this(const time_this&) = delete;
+	time_this(const time_this&) = delete; // copy constructor
 
 	~time_this()
 	{
