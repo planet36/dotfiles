@@ -109,7 +109,7 @@ public:
 	* \retval PUSHED_BUT_SIZE_UNCHANGED if \a a was pushed but the size did not change because the queue was full
 	* \retval PUSHED_AND_SIZE_INCREASED if \a a was pushed and the size increased
 	*/
-	PUSH_RESULT push(const T& x, const bool overwrite_if_full = false)
+	[[nodiscard]] PUSH_RESULT push(const T& x, const bool overwrite_if_full = false)
 	{
 		std::unique_lock lock{mtx};
 
@@ -140,7 +140,7 @@ public:
 	}
 
 	/// remove the value from the front
-	std::optional<T> pop()
+	[[nodiscard]] std::optional<T> pop()
 	{
 		std::unique_lock lock{mtx};
 
