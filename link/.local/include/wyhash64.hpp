@@ -24,4 +24,4 @@ wyhash64(uint64_t a, uint64_t b)
 	b ^= _wyp[1];
 	mum(a, b);
 	return a ^ b;
-};
+}
