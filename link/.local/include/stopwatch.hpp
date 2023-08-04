@@ -25,6 +25,7 @@ public:
 	stopwatch() noexcept { reset(); }
 
 	stopwatch(const stopwatch&) = delete; // copy constructor
+	stopwatch& operator=(const stopwatch&) = delete; // copy assignment
 
 	void start() noexcept
 	{

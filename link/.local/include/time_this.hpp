@@ -38,6 +38,9 @@ public:
 	time_this() noexcept : t0(timer_clock::now()) {}
 
 	time_this(const time_this&) = delete; // copy constructor
+	time_this(time_this&&) = delete; // move constructor
+	time_this& operator=(const time_this&) = delete; // copy assignment
+	time_this& operator=(time_this&&) = delete; // move assignment
 
 	~time_this()
 	{
