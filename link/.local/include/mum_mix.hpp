@@ -58,3 +58,12 @@ mum_mix_xor(T a, T b)
 	mum(a, b);
 	return a ^ b;
 }
+
+/// Multiply \a a and \a b and return the difference of the high and low parts of the product
+template <std::unsigned_integral T>
+constexpr T
+mum_mix_sub(T a, T b)
+{
+	mum(a, b);
+	return a - b;
+}
