@@ -109,14 +109,14 @@ public:
 	* \retval PUSHED_BUT_SIZE_UNCHANGED if \a a was pushed but the size did not change because the queue was full
 	* \retval PUSHED_AND_SIZE_INCREASED if \a a was pushed and the size increased
 	*/
-	int push(const T& x, const bool overwrite_if_full = false)
+	PUSH_RESULT push(const T& x, const bool overwrite_if_full = false)
 	{
 		std::unique_lock lock{mtx};
 
 		if (is_full() && !overwrite_if_full)
 			return NOT_PUSHED;
 
-		int ret;
+		PUSH_RESULT ret;
 		buf[tail] = x; // add to tail
 
 		if (is_full())
