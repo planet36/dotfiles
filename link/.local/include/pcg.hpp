@@ -153,8 +153,8 @@ struct pcg64dxsm
 		const auto old_s = s;
 		s = s * mul + inc;
 
-		uint64_t hi = static_cast<uint64_t>(old_s >> 64);
-		const uint64_t lo = static_cast<uint64_t>(old_s | 1);
+		auto hi = static_cast<uint64_t>(old_s >> 64);
+		const auto lo = static_cast<uint64_t>(old_s | 1);
 
 		hi ^= hi >> 32; // 64 / 2 == 32
 		hi *= mul;
