@@ -120,11 +120,11 @@ struct Ellipsoid
 
 	Ellipsoid() = delete;
 
-	constexpr Ellipsoid(const T _a,
-	                    const T _f_recip, // 1 / f
-	                    const T _GM = 3.986004418E14L,
-	                    const T _omega = 7.292115E-5L):
-	a(_a), f(1 / _f_recip), GM(_GM), omega(_omega)
+	constexpr Ellipsoid(const T a_,
+	                    const T f_recip_, // 1 / f
+	                    const T GM_ = 3.986004418E14L,
+	                    const T omega_ = 7.292115E-5L):
+	a(a_), f(1 / f_recip_), GM(GM_), omega(omega_)
 	{}
 
 	/// get the radius of curvature in the prime vertical (meters)
