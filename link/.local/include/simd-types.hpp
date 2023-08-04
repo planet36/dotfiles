@@ -22,9 +22,9 @@
 #include <cstring>
 
 #define DECLARE_SIMD_TYPE(T, TNAME, N) \
-using TNAME ## x ## N = [[gnu::vector_size(sizeof(T)*N), gnu::warn_if_not_aligned(sizeof(T)*N)]] T; \
-static_assert(sizeof(TNAME ## x ## N) == sizeof(T)*N); \
-static_assert(alignof(TNAME ## x ## N) == sizeof(T)*N);
+using TNAME ## x ## N = [[gnu::vector_size(sizeof(T)*(N)), gnu::warn_if_not_aligned(sizeof(T)*(N))]] T; \
+static_assert(sizeof(TNAME ## x ## N) == sizeof(T)*(N)); \
+static_assert(alignof(TNAME ## x ## N) == sizeof(T)*(N));
 
 // 128-bit types
 
