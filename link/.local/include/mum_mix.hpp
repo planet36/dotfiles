@@ -20,7 +20,7 @@
 /// Multiply \a a and \a b and return the high and low parts of the product
 template <std::unsigned_integral T>
 constexpr void
-mum(T& a, T& b)
+mul(T& a, T& b)
 {
 	// When T is uint64_t, the multiplication is optimized the same as _mulx_u64.
 	/*
@@ -46,7 +46,7 @@ template <std::unsigned_integral T>
 constexpr T
 mum_mix_add(T a, T b)
 {
-	mum(a, b);
+	mul(a, b);
 	return a + b;
 }
 
@@ -55,7 +55,7 @@ template <std::unsigned_integral T>
 constexpr T
 mum_mix_xor(T a, T b)
 {
-	mum(a, b);
+	mul(a, b);
 	return a ^ b;
 }
 
@@ -64,6 +64,6 @@ template <std::unsigned_integral T>
 constexpr T
 mum_mix_sub(T a, T b)
 {
-	mum(a, b);
+	mul(a, b);
 	return a - b;
 }
