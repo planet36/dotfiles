@@ -8,6 +8,7 @@
 \sa https://github.com/vnmakarov/mum-hash
 \sa https://github.com/vnmakarov/mum-hash/blob/master/mum.h#L104
 \sa https://github.com/vnmakarov/mum-hash/blob/master/mum-prng.h#L74
+\sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/bmi2intrin.h#L83
 */
 
 #pragma once
