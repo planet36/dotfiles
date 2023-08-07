@@ -17,37 +17,21 @@
 
 #include <immintrin.h>
 
-struct aesencrand
+DEF_URBG_CLASS(aesencrand, simd128, uint64_t)
 {
-	using state_type = simd128;
-	using result_type = uint64_t;
+	static constexpr simd128 roundKey{.u64{byteprimes[0], byteprimes[1]}};
+	s.u64 += roundKey.u64;
+	const __m128i penultimate = _mm_aesenc_si128(s.i64, roundKey.i64);
+	const __m128i result = _mm_aesenc_si128(penultimate, roundKey.i64);
+	return result[0];
+}
 
-DEF_URBG_CLASS_DETAILS(aesencrand)
-
-	result_type next()
-	{
-		static constexpr simd128 roundKey{.u64{byteprimes[0], byteprimes[1]}};
-		s.u64 += roundKey.u64;
-		const __m128i penultimate = _mm_aesenc_si128(s.i64, roundKey.i64);
-		const __m128i result = _mm_aesenc_si128(penultimate, roundKey.i64);
-		return result[0];
-	}
-};
-
-struct aesdecrand
+DEF_URBG_CLASS(aesdecrand, simd128, uint64_t)
 {
-	using state_type = simd128;
-	using result_type = uint64_t;
-
-DEF_URBG_CLASS_DETAILS(aesdecrand)
-
-	result_type next()
-	{
-		static constexpr simd128 roundKey{.u64{byteprimes[0], byteprimes[1]}};
-		s.u64 += roundKey.u64;
-		//const __m128i penultimate = _mm_aesenc_si128(s.i64, roundKey.i64);
-		const __m128i penultimate = _mm_aesdec_si128(s.i64, roundKey.i64); // (SDW)
-		const __m128i result = _mm_aesdec_si128(penultimate, roundKey.i64);
-		return result[0];
-	}
-};
+	static constexpr simd128 roundKey{.u64{byteprimes[0], byteprimes[1]}};
+	s.u64 += roundKey.u64;
+	//const __m128i penultimate = _mm_aesenc_si128(s.i64, roundKey.i64);
+	const __m128i penultimate = _mm_aesdec_si128(s.i64, roundKey.i64); // (SDW)
+	const __m128i result = _mm_aesdec_si128(penultimate, roundKey.i64);
+	return result[0];
+}

@@ -18,20 +18,12 @@
 
 #include "def_urbg_class_details.hpp"
 
-struct lehmer64
+DEF_URBG_CLASS(lehmer64, __uint128_t, uint64_t)
 {
-	using state_type = __uint128_t;
-	using result_type = uint64_t;
+	static constexpr uint64_t M1 = 0xda942042e4dd58b5; // not prime (popcount = 29)
+	static_assert((M1 & 1) != 0, "must be odd");
 
-	DEF_URBG_CLASS_DETAILS(lehmer64)
-
-	result_type next()
-	{
-		static constexpr uint64_t M1 = 0xda942042e4dd58b5; // not prime (popcount = 29)
-		static_assert((M1 & 1) != 0, "must be odd");
-
-		++s; // (SDW)
-		s *= M1;
-		return s >> 64;
-	}
-};
+	++s; // (SDW)
+	s *= M1;
+	return s >> 64;
+}

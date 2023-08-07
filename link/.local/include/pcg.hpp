@@ -46,85 +46,64 @@ static_assert((pcg_const128[1] & 1) != 0, "must be odd");
 }
 
 /// PCG-XSH-RR
-struct pcg32
+DEF_URBG_CLASS(pcg32, uint64_t, uint32_t)
 {
-	using state_type = uint64_t;
-	using result_type = uint32_t;
+	static constexpr state_type mul = pcg_const64[0];
+	static_assert((mul & 1) != 0, "must be odd");
+	static constexpr state_type inc = pcg_const64[1];
+	static_assert((inc & 1) != 0, "must be odd");
 
-	DEF_URBG_CLASS_DETAILS(pcg32)
+	const auto old_s = s;
+	s = s * mul + inc;
 
-	result_type next()
-	{
-		static constexpr state_type mul = pcg_const64[0];
-		static constexpr state_type inc = pcg_const64[1];
-		static_assert((inc & 1) != 0, "must be odd");
-
-		const auto old_s = s;
-		s = s * mul + inc;
-
-		// (5 + 32) / 2 == 18
-		// 32 - 5 == 27
-		// 64 - 5 == 59
-		const result_type output = (old_s ^ (old_s >> 18)) >> 27;
-		const int rot = old_s >> 59;
-		return std::rotr(output, rot);
-	}
-};
+	// (5 + 32) / 2 == 18
+	// 32 - 5 == 27
+	// 64 - 5 == 59
+	const result_type output = (old_s ^ (old_s >> 18)) >> 27;
+	const int rot = old_s >> 59;
+	return std::rotr(output, rot);
+}
 
 /// PCG-XSH-RS
-struct pcg32_fast
+DEF_URBG_CLASS(pcg32_fast, uint64_t, uint32_t)
 {
-	using state_type = uint64_t;
-	using result_type = uint32_t;
+	static constexpr state_type mul = pcg_const64[0];
+	static_assert((mul & 1) != 0, "must be odd");
+	static constexpr state_type inc = pcg_const64[1];
+	static_assert((inc & 1) != 0, "must be odd");
 
-	DEF_URBG_CLASS_DETAILS(pcg32_fast)
+	const auto old_s = s;
+	s = s * mul + inc;
 
-	result_type next()
-	{
-		static constexpr state_type mul = pcg_const64[0];
-		static constexpr state_type inc = pcg_const64[1];
-		static_assert((inc & 1) != 0, "must be odd");
-
-		const auto old_s = s;
-		s = s * mul + inc;
-
-		// 32 - 3 - 7 == 22
-		// 64 - 3 == 61
-		const result_type output = (old_s ^ (old_s >> 22)) >> (22 + (old_s >> 61));
-		return output;
-	}
-};
+	// 32 - 3 - 7 == 22
+	// 64 - 3 == 61
+	const result_type output = (old_s ^ (old_s >> 22)) >> (22 + (old_s >> 61));
+	return output;
+}
 
 #if defined(__SIZEOF_INT128__)
 /// PCG-XSL-RR
-struct pcg64
+DEF_URBG_CLASS(pcg64, __uint128_t, uint64_t)
 {
-	using state_type = __uint128_t;
-	using result_type = uint64_t;
+	/* "There is no support in GCC for expressing an integer constant of
+	*  type __int128 for targets with long long integer less than 128 bits
+	*  wide."
+	*  https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
+	*/
+	static constexpr __uint128_t mul = pcg_const128[0];
+	static_assert((mul & 1) != 0, "must be odd");
+	static constexpr __uint128_t inc = pcg_const128[1];
+	static_assert((inc & 1) != 0, "must be odd");
 
-	DEF_URBG_CLASS_DETAILS(pcg64)
+	const auto old_s = s;
+	s = s * mul + inc;
 
-	result_type next()
-	{
-		/* "There is no support in GCC for expressing an integer constant of
-		*  type __int128 for targets with long long integer less than 128 bits
-		*  wide."
-		*  https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
-		*/
-		static constexpr __uint128_t mul = pcg_const128[0];
-		static constexpr __uint128_t inc = pcg_const128[1];
-		static_assert((inc & 1) != 0, "must be odd");
-
-		const auto old_s = s;
-		s = s * mul + inc;
-
-		// 128 / 2 == 64
-		// 128 - 6 == 122
-		const result_type output = old_s ^ (old_s >> 64);
-		const int rot = old_s >> 122;
-		return std::rotr(output, rot);
-	}
-};
+	// 128 / 2 == 64
+	// 128 - 6 == 122
+	const result_type output = old_s ^ (old_s >> 64);
+	const int rot = old_s >> 122;
+	return std::rotr(output, rot);
+}
 
 /// PCG-DXSM
 /**
@@ -135,33 +114,25 @@ struct pcg64
 * https://dotat.at/cgi/git/pcg-dxsm.git/blob/HEAD:/pcg64_dxsm.h
 * https://github.com/imneme/pcg-cpp/commit/871d0494ee9c9a7b7c43f753e3d8ca47c26f8005
 */
-struct pcg64dxsm
+DEF_URBG_CLASS(pcg64dxsm, __uint128_t, uint64_t)
 {
-	using state_type = __uint128_t;
-	using result_type = uint64_t;
+	// "cheap multiplier"
+	static constexpr uint64_t mul = pcg_const64[2];
+	static_assert((mul & 1) != 0, "must be odd");
+	static constexpr __uint128_t inc = pcg_const128[1];
+	static_assert((inc & 1) != 0, "must be odd");
 
-	DEF_URBG_CLASS_DETAILS(pcg64dxsm)
+	const auto old_s = s;
+	s = s * mul + inc;
 
-	result_type next()
-	{
-		// "cheap multiplier"
-		static constexpr uint64_t mul = pcg_const64[2];
-		static_assert((mul & 1) != 0, "must be odd");
-		static constexpr __uint128_t inc = pcg_const128[1];
-		static_assert((inc & 1) != 0, "must be odd");
+	auto hi = static_cast<uint64_t>(old_s >> 64);
+	const auto lo = static_cast<uint64_t>(old_s | 1);
 
-		const auto old_s = s;
-		s = s * mul + inc;
+	hi ^= hi >> 32; // 64 / 2 == 32
+	hi *= mul;
+	hi ^= hi >> 48; // 3 * (64 / 4) == 48
+	hi *= lo;
 
-		auto hi = static_cast<uint64_t>(old_s >> 64);
-		const auto lo = static_cast<uint64_t>(old_s | 1);
-
-		hi ^= hi >> 32; // 64 / 2 == 32
-		hi *= mul;
-		hi ^= hi >> 48; // 3 * (64 / 4) == 48
-		hi *= lo;
-
-		return hi;
-	}
-};
+	return hi;
+}
 #endif

@@ -17,50 +17,34 @@
 
 // Adapted from:
 // PractRand-pre0.95/src/RNGs/sfc.cpp
-struct sfc32
+DEF_URBG_CLASS(sfc32, SINGLE_ARG(std::array<uint32_t, 4>), uint32_t)
 {
-	using state_type = std::array<uint32_t, 4>;
-	using result_type = uint32_t;
-
-	DEF_URBG_CLASS_DETAILS(sfc32)
-
 	// XXX: If a zero seed is given, it takes about 7 iterations for the bits
 	// to avalanche.
 
-	result_type next()
-	{
-		static constexpr unsigned int S1 = 9;
-		static constexpr unsigned int S2 = 3;
-		static constexpr unsigned int R1 = 21;
+	static constexpr unsigned int S1 = 9;
+	static constexpr unsigned int S2 = 3;
+	static constexpr unsigned int R1 = 21;
 
-		const result_type result = s[0] + s[1] + s[3]++;
-		s[0] = s[1] ^ (s[1] >> S1);
-		s[1] = s[2] + (s[2] << S2);
-		s[2] = std::rotl(s[2], R1) + result;
-		return result;
-	}
-};
+	const result_type result = s[0] + s[1] + s[3]++;
+	s[0] = s[1] ^ (s[1] >> S1);
+	s[1] = s[2] + (s[2] << S2);
+	s[2] = std::rotl(s[2], R1) + result;
+	return result;
+}
 
-struct sfc64
+DEF_URBG_CLASS(sfc64, SINGLE_ARG(std::array<uint64_t, 4>), uint64_t)
 {
-	using state_type = std::array<uint64_t, 4>;
-	using result_type = uint64_t;
-
-	DEF_URBG_CLASS_DETAILS(sfc64)
-
 	// XXX: If a zero seed is given, it takes about 10 iterations for the bits
 	// to avalanche.
 
-	result_type next()
-	{
-		static constexpr unsigned int S1 = 11;
-		static constexpr unsigned int S2 = 3;
-		static constexpr unsigned int R1 = 24;
+	static constexpr unsigned int S1 = 11;
+	static constexpr unsigned int S2 = 3;
+	static constexpr unsigned int R1 = 24;
 
-		const result_type result = s[0] + s[1] + s[3]++;
-		s[0] = s[1] ^ (s[1] >> S1);
-		s[1] = s[2] + (s[2] << S2);
-		s[2] = std::rotl(s[2], R1) + result;
-		return result;
-	}
-};
+	const result_type result = s[0] + s[1] + s[3]++;
+	s[0] = s[1] ^ (s[1] >> S1);
+	s[1] = s[2] + (s[2] << S2);
+	s[2] = std::rotl(s[2], R1) + result;
+	return result;
+}

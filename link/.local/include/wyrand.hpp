@@ -16,16 +16,8 @@
 #include "mum_mix.hpp"
 #include "wyprimes.hpp"
 
-struct wyrand
+DEF_URBG_CLASS(wyrand, uint64_t, uint64_t)
 {
-	using state_type = uint64_t;
-	using result_type = uint64_t;
-
-	DEF_URBG_CLASS_DETAILS(wyrand)
-
-	result_type next()
-	{
-		s += _wyp[0];
-		return mum_mix_xor(s, s ^ _wyp[1]);
-	}
-};
+	s += _wyp[0];
+	return mum_mix_xor(s, s ^ _wyp[1]);
+}
