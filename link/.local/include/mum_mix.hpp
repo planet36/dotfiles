@@ -114,15 +114,7 @@ void clmul(uint64_t& hi, uint64_t& lo)
 {
 	simd128 result{.u64{hi, lo}}; // order of hi, lo doesn't matter
 
-	// https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/wmmintrin.h#L103
-	// _mm_clmulepi64_si128(__m128i a, __m128i b, int imm8)
-	// imm8: 0x00 => b[0] * a[0]
-	// imm8: 0x01 => b[0] * a[1]
-	// imm8: 0x10 => b[1] * a[0]
-	// imm8: 0x11 => b[1] * a[1]
-
-	// MSB in result is always 0
-	result.i64 = _mm_clmulepi64_si128(result.i64, result.i64, 0x10);
+	clmul(result);
 
 	hi = result.u64[1];
 	lo = result.u64[0];
