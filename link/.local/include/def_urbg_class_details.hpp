@@ -42,8 +42,10 @@ public:                                                              \
 	static_assert(sizeof(state_type) % sizeof(result_type) == 0);    \
 	/* ctors */                                                      \
 	constexpr CLASS_NAME() noexcept {seed();}                                           \
-	explicit constexpr CLASS_NAME(const state_type& new_s) noexcept {seed(new_s);}      \
-	explicit constexpr CLASS_NAME(const seed_bytes_type& bytes) noexcept {seed(bytes);} \
+	explicit constexpr CLASS_NAME(const state_type& new_s) noexcept      \
+	{seed(new_s);}                                                       \
+	explicit constexpr CLASS_NAME(const seed_bytes_type& bytes) noexcept \
+	{seed(bytes);}                                                       \
 	/* seed functions */                                             \
 	void seed() noexcept {fill_rand(s);}                                      \
 	void seed(const state_type& new_s) noexcept {s = new_s;}                  \
