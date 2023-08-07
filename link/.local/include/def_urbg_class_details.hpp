@@ -26,33 +26,33 @@ other default-constructed engines of the same type.
 
 // XXX: state_type and result_type must be declared before invoking this.
 
-#define DEF_URBG_CLASS_DETAILS(CLASS_NAME)                           \
-private:                                                             \
-	state_type s{};                                                  \
-public:                                                              \
-	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>; \
-	/* https://eel.is/c++draft/rand.req.urng */                      \
-	static_assert(std::is_unsigned_v<result_type>);                  \
-	static constexpr result_type min()                               \
-	{return std::numeric_limits<result_type>::min();}                \
-	static constexpr result_type max()                               \
-	{return std::numeric_limits<result_type>::max();}                \
-	result_type operator()() {return next();}                        \
-	/* https://eel.is/c++draft/rand.req.eng#3.1 */                   \
-	static_assert(sizeof(state_type) % sizeof(result_type) == 0);    \
-	/* ctors */                                                      \
-	constexpr CLASS_NAME() noexcept {seed();}                                           \
+#define DEF_URBG_CLASS_DETAILS(CLASS_NAME)                               \
+private:                                                                 \
+	state_type s{};                                                      \
+public:                                                                  \
+	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;     \
+	/* https://eel.is/c++draft/rand.req.urng */                          \
+	static_assert(std::is_unsigned_v<result_type>);                      \
+	static constexpr result_type min()                                   \
+	{return std::numeric_limits<result_type>::min();}                    \
+	static constexpr result_type max()                                   \
+	{return std::numeric_limits<result_type>::max();}                    \
+	result_type operator()() {return next();}                            \
+	/* https://eel.is/c++draft/rand.req.eng#3.1 */                       \
+	static_assert(sizeof(state_type) % sizeof(result_type) == 0);        \
+	/* ctors */                                                          \
+	constexpr CLASS_NAME() noexcept {seed();}                            \
 	explicit constexpr CLASS_NAME(const state_type& new_s) noexcept      \
 	{seed(new_s);}                                                       \
 	explicit constexpr CLASS_NAME(const seed_bytes_type& bytes) noexcept \
 	{seed(bytes);}                                                       \
-	/* seed functions */                                             \
-	void seed() noexcept {fill_rand(s);}                                      \
-	void seed(const state_type& new_s) noexcept {s = new_s;}                  \
-	void seed(const seed_bytes_type& bytes) noexcept                          \
-	{(void)std::memcpy(&s, bytes.data(), sizeof(state_type));}       \
-	/* equality operators */                                         \
-	constexpr bool operator==(const CLASS_NAME& that) const noexcept                    \
-	{return this->s == that.s;}                                      \
-	constexpr bool operator!=(const CLASS_NAME& that) const noexcept                    \
+	/* seed functions */                                                 \
+	void seed() noexcept {fill_rand(s);}                                 \
+	void seed(const state_type& new_s) noexcept {s = new_s;}             \
+	void seed(const seed_bytes_type& bytes) noexcept                     \
+	{(void)std::memcpy(&s, bytes.data(), sizeof(state_type));}           \
+	/* equality operators */                                             \
+	constexpr bool operator==(const CLASS_NAME& that) const noexcept     \
+	{return this->s == that.s;}                                          \
+	constexpr bool operator!=(const CLASS_NAME& that) const noexcept     \
 	{return this->s != that.s;}
