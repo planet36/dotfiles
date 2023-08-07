@@ -93,6 +93,23 @@ mum_mix_sub(T a, T b)
 	return a - b;
 }
 
+void clmul(simd128& a)
+{
+	// https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/wmmintrin.h#L103
+	// _mm_clmulepi64_si128(__m128i a, __m128i b, int imm8)
+	// imm8: 0x00 => b[0] * a[0]
+	// imm8: 0x01 => b[0] * a[1]
+	// imm8: 0x10 => b[1] * a[0]
+	// imm8: 0x11 => b[1] * a[1]
+
+	// MSB in result is always 0
+	a.i64 = _mm_clmulepi64_si128(a.i64, a.i64, 0x10);
+}
+
+uint64_t clmul_mix_xor(simd128 a) { clmul(a); return a.u64[1] ^ a.u64[0]; }
+uint64_t clmul_mix_add(simd128 a) { clmul(a); return a.u64[1] + a.u64[0]; }
+uint64_t clmul_mix_sub(simd128 a) { clmul(a); return a.u64[1] - a.u64[0]; }
+
 void clmul(uint64_t& hi, uint64_t& lo)
 {
 	const simd128 tmp{.u64{hi, lo}}; // order of hi, lo doesn't matter
