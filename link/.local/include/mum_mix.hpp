@@ -42,28 +42,16 @@ inline constexpr std::array<uint64_t, 16> _mum_primes = {
 	0xde3add92e94caa37, 0x7e14eadb1f65311d, 0x3f5aa40f89812853, 0x33b15a3b587d15c9,
 };
 
-/// Multiply \a a and \a b and return the high and low parts of the product
+/// Multiply \a hi and \a lo and return the high and low parts of the product
 template <std::unsigned_integral T>
 constexpr void
-mul(T& a, T& b)
+mul(T& hi, T& lo)
 {
 	// When T is uint64_t, the multiplication is optimized the same as _mulx_u64.
-	/*
-	* unsigned long long hi{};
-	* const unsigned long long lo = _mulx_u64(a, b, &hi);
-	*/
 	using T2 = next_larger<T>;
-	const T2 r = static_cast<T2>(a) * static_cast<T2>(b);
-	const T hi = static_cast<T>(r >> std::numeric_limits<T>::digits);
-	const T lo = static_cast<T>(r);
-	// https://github.com/wangyi-fudan/wyhash/blob/master/wyhash.h#L56
-#if WYHASH_CONDOM > 1
-	a ^= hi;
-	b ^= lo;
-#else
-	a = hi;
-	b = lo;
-#endif
+	const T2 r = static_cast<T2>(hi) * static_cast<T2>(lo);
+	hi = static_cast<T>(r >> std::numeric_limits<T>::digits);
+	lo = static_cast<T>(r);
 }
 
 /// Multiply \a a and \a b and return the sum of the high and low parts of the product
