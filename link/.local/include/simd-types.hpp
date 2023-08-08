@@ -90,9 +90,9 @@ union simd128
 	constexpr simd128& operator=(const __m128d& x) {f64 = x; return *this;}
 
 	// conversion operators
-	constexpr operator __m128  () const {return f32;}
-	constexpr operator __m128i () const {return i64;}
-	constexpr operator __m128d () const {return f64;}
+	explicit constexpr operator __m128  () const {return f32;}
+	explicit constexpr operator __m128i () const {return i64;}
+	explicit constexpr operator __m128d () const {return f64;}
 
 	// named ctors
 	static constexpr simd128 from_xmm(const __m128&  x) {return {.f32 = x};}
@@ -135,9 +135,9 @@ union simd256
 	constexpr simd256& operator=(const __m256d& x) {f64 = x; return *this;}
 
 	// conversion operators
-	constexpr operator __m256  () const {return f32;}
-	constexpr operator __m256i () const {return i64;}
-	constexpr operator __m256d () const {return f64;}
+	explicit constexpr operator __m256  () const {return f32;}
+	explicit constexpr operator __m256i () const {return i64;}
+	explicit constexpr operator __m256d () const {return f64;}
 
 	// named ctors
 	static constexpr simd256 from_ymm(const __m256&  x) {return {.f32 = x};}
