@@ -19,13 +19,18 @@
 
 #pragma once
 
+#include <array>
 #include <cstring>
 #include <immintrin.h>
 
 #define DECLARE_SIMD_TYPE(T, TNAME, N) \
 using TNAME ## x ## N = [[gnu::vector_size(sizeof(T)*(N)), gnu::warn_if_not_aligned(sizeof(T)*(N))]] T; \
 static_assert(sizeof(TNAME ## x ## N) == sizeof(T)*(N)); \
-static_assert(alignof(TNAME ## x ## N) == sizeof(T)*(N));
+static_assert(alignof(TNAME ## x ## N) == sizeof(T)*(N)); \
+auto to_array(const TNAME ## x ## N& v) { \
+	std::array<T, (N)> result; \
+	(void)std::memcpy(result.data(), &v, sizeof(T)*(N)); \
+	return result; }
 
 // 128-bit types
 
