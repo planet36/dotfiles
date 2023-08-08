@@ -52,9 +52,9 @@ struct Ellipsoid
 	const T a;
 
 	/// flattening factor of the earth
-	const T f; // (a-b)/a
+	const T f; // (a - b) / a
 
-	/// geocentric gravitational constant (m^3/s^2)
+	/// geocentric gravitational constant (m³/s²)
 	const T GM;
 
 	/// nominal mean angular velocity of the earth (rad/s)
@@ -75,7 +75,7 @@ struct Ellipsoid
 	const T fp = f / (1 - f); // (a - b) / b
 
 	/// third flattening
-	const T n = f / (2 - f); // (a - b) / (a+b)
+	const T n = f / (2 - f); // (a - b) / (a + b)
 
 	/// first eccentricity squared
 	const T e2 = f * (2 - f); // (a2 - b2) / a2
@@ -102,14 +102,14 @@ struct Ellipsoid
 	const T c = std::sqrt(c2);
 
 	/// angular eccentricity
-	const T alpha = std::asin(e); // std::acos(b/a)
+	const T alpha = std::asin(e); // std::acos(b / a)
 
 	// derived physical constants
 
-	/// normal gravity at the equator (on the ellipsoid) (m/s^2)
+	/// γₑ - normal gravity at the equator (on the ellipsoid) (m/s²)
 	const T gamma_e = 9.7803253359L;
 
-	/// normal gravity at the poles (on the ellipsoid) (m/s^2)
+	/// γₚ - normal gravity at the poles (on the ellipsoid) (m/s²)
 	const T gamma_p = 9.8321849379L;
 
 	/// Somigliana's Formula - normal gravity formula constant
@@ -148,21 +148,21 @@ struct Ellipsoid
 	*
 	* https://en.wikipedia.org/wiki/Ellipse#Polar_form_relative_to_center
 	*
-	* R(θ) = b / sqrt(1 - e2 * cos(θ)**2)
+	* R(θ) = b / √(1 - e² * cos(θ)²)
 	*
 	* https://en.wikipedia.org/wiki/Latitude#Geocentric_latitude
 	*
-	* θ(φ) = atan(tan(φ) * (1 - e2))
+	* θ(φ) = atan(tan(φ) * (1 - e²))
 	*
 	* https://www.wolframalpha.com/input/?i=simplify+cos%28atan%28x%29%29**2
 	*
-	* cos(atan(x))**2 = 1 / (x**2 + 1)
+	* cos(atan(x))² = 1 / (x² + 1)
 	*
-	* cos(θ)**2 = cos(φ)**2 / ((1 - e2)**2 * sin(φ)**2 + cos(φ)**2)
+	* cos(θ)² = cos(φ)² / ((1 - e²)² * sin(φ)² + cos(φ)²)
 	*
-	* R(φ) = b / sqrt(1 - e2 * cos(φ)**2 / ((1 - e2)**2 * sin(φ)**2 + cos(φ)**2))
-	*      = R_N * sqrt((1 - e2)**2 * sin(φ)**2 + cos(φ)**2)
-	*      = R_N * sqrt(1 - e2 * sin(φ)**2 * (2 - e2))
+	* R(φ) = b / √(1 - e² * cos(φ)² / ((1 - e²)² * sin(φ)² + cos(φ)²))
+	*      = R_N * √((1 - e²)² * sin(φ)² + cos(φ)²)
+	*      = R_N * √(1 - e² * sin(φ)² * (2 - e²))
 	*/
 
 	/// get the ellipsoid radius (meters)
@@ -193,13 +193,13 @@ struct Ellipsoid
 		return a * (1 - e2) / (d2 * d);
 	}
 
-	/// get the normal gravity on the ellipsoid surface (m/s^2)
+	/// get the normal gravity on the ellipsoid surface (m/s²)
 	/**
 	Source:
 	NGA.STND.0036_1.0.0_WGS84 2014-07-08
 	Page 4-1
 	\param sin_lat sine of the geodetic latitude
-	\return the normal gravity on the ellipsoid surface (m/s^2)
+	\return the normal gravity on the ellipsoid surface (m/s²)
 	*/
 	auto get_gamma(const T sin_lat) const
 	{
@@ -209,14 +209,14 @@ struct Ellipsoid
 		return gamma_e * (1 + k * sin_lat * sin_lat) / d;
 	}
 
-	/// get the normal gravity above the ellipsoid (m/s^2)
+	/// get the normal gravity above the ellipsoid (m/s²)
 	/**
 	Source:
 	NGA.STND.0036_1.0.0_WGS84 2014-07-08
 	Page 4-3
 	\param sin_lat sine of the geodetic latitude
 	\param ht ellipsoid height (meters)
-	\return the normal gravity above the ellipsoid (m/s^2)
+	\return the normal gravity above the ellipsoid (m/s²)
 	*/
 	auto get_gamma_h(const T sin_lat, const T ht) const
 	{
