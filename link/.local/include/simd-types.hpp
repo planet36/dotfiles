@@ -28,7 +28,7 @@ using TNAME ## x ## N = [[gnu::vector_size(sizeof(T)*(N)), gnu::warn_if_not_alig
 static_assert(sizeof(TNAME ## x ## N) == sizeof(T)*(N)); \
 static_assert(alignof(TNAME ## x ## N) == sizeof(T)*(N)); \
 auto to_array(const TNAME ## x ## N& v) { \
-	std::array<T, (N)> result; \
+	std::array<T, (N)> result{}; \
 	(void)std::memcpy(result.data(), &v, sizeof(T)*(N)); \
 	return result; }
 
