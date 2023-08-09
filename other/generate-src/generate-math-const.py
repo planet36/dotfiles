@@ -127,6 +127,7 @@ math_expr_list = (
     'e**pi',
     'e**e',
     'e**(-pi/2)', # (i**i).real
+    'e**(pi/2)', # (i**-i).real
     'e**pi - pi',
     'e**pi - pi**e',
 
