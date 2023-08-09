@@ -12,13 +12,22 @@
 #include <cmath>
 #include <concepts>
 
+/// get the integer and fractional parts of a floating-point number
+template <std::floating_point T>
+constexpr void
+int_frac_parts(const T x, T& i, T& f)
+{
+	f = std::modf(x, &i);
+}
+
 /// get the integer part of a floating-point number
 template <std::floating_point T>
 constexpr T
 int_part(const T x)
 {
 	T i{};
-	(void)std::modf(x, &i);
+	T f{};
+	int_frac_parts(x, i, f);
 	return i;
 }
 
@@ -28,13 +37,7 @@ constexpr T
 frac_part(const T x)
 {
 	T i{};
-	return std::modf(x, &i);
-}
-
-/// get the integer and fractional parts of a floating-point number
-template <std::floating_point T>
-constexpr void
-int_frac_parts(const T x, T& i, T& f)
-{
-	f = std::modf(x, &i);
+	T f{};
+	int_frac_parts(x, i, f);
+	return f;
 }
