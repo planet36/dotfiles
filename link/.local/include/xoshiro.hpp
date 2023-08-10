@@ -82,7 +82,7 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro128plus)
+DEF_URBG_CLASS_DETAILS(xoshiro128plus)
 
 	// XXX: must not give zero seed
 
@@ -137,7 +137,7 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro128plusplus)
+DEF_URBG_CLASS_DETAILS(xoshiro128plusplus)
 
 	// XXX: must not give zero seed
 
@@ -195,7 +195,7 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0xb523952e, 0x0b6f099f, 0xccf5a0ef, 0x1c580662};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro128starstar)
+DEF_URBG_CLASS_DETAILS(xoshiro128starstar)
 
 	// XXX: must not give zero seed
 
@@ -258,7 +258,7 @@ private:
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro256plus)
+DEF_URBG_CLASS_DETAILS(xoshiro256plus)
 
 	// XXX: must not give zero seed
 
@@ -316,7 +316,7 @@ private:
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro256plusplus)
+DEF_URBG_CLASS_DETAILS(xoshiro256plusplus)
 
 	// XXX: must not give zero seed
 
@@ -374,7 +374,7 @@ private:
 	    0x76e15d3efefdcbbf, 0xc5004e441c522fb3,
 	    0x77710069854ee241, 0x39109bb02acbe635};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro256starstar)
+DEF_URBG_CLASS_DETAILS(xoshiro256starstar)
 
 	// XXX: must not give zero seed
 
@@ -439,7 +439,7 @@ private:
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro512plus)
+DEF_URBG_CLASS_DETAILS(xoshiro512plus)
 
 	// XXX: must not give zero seed
 
@@ -503,7 +503,7 @@ private:
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro512plusplus)
+DEF_URBG_CLASS_DETAILS(xoshiro512plusplus)
 
 	// XXX: must not give zero seed
 
@@ -568,7 +568,7 @@ private:
 	    0xb4d347340ca63ee1, 0x1cb0940bedbff6ce, 0xd956c5c4fa1f8e17,
 	    0x915e38fd4eda93bc, 0x5b3ccdfa5d7daca5};
 
-	DEF_URBG_CLASS_DETAILS(xoshiro512starstar)
+DEF_URBG_CLASS_DETAILS(xoshiro512starstar)
 
 	// XXX: must not give zero seed
 

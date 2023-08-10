@@ -125,7 +125,7 @@ struct xoroshiro64star
 	using state_type = std::array<uint32_t, 2>;
 	using result_type = uint32_t;
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro64star)
+DEF_URBG_CLASS_DETAILS(xoroshiro64star)
 
 	// XXX: must not give zero seed
 
@@ -157,7 +157,7 @@ struct xoroshiro64starstar
 	using state_type = std::array<uint32_t, 2>;
 	using result_type = uint32_t;
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro64starstar)
+DEF_URBG_CLASS_DETAILS(xoroshiro64starstar)
 
 	// XXX: must not give zero seed
 
@@ -207,7 +207,7 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1};
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro128plus)
+DEF_URBG_CLASS_DETAILS(xoroshiro128plus)
 
 	// XXX: must not give zero seed
 
@@ -260,7 +260,7 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0x360fd5f2cf8d5d99, 0x9c6e6877736c46e3};
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro128plusplus)
+DEF_URBG_CLASS_DETAILS(xoroshiro128plusplus)
 
 	// XXX: must not give zero seed
 
@@ -313,7 +313,7 @@ private:
 	static constexpr state_type LONG_JUMP{
 	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1};
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro128starstar)
+DEF_URBG_CLASS_DETAILS(xoroshiro128starstar)
 
 	// XXX: must not give zero seed
 
@@ -378,7 +378,7 @@ private:
 	    0x92a65bca41852cc1, 0xf46820dd0509c12a, 0x52b00c35fbf92185,
 	    0x1e5b3b7f589e03c1};
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro1024plusplus)
+DEF_URBG_CLASS_DETAILS(xoroshiro1024plusplus)
 
 	// XXX: must not give zero seed
 
@@ -451,7 +451,7 @@ private:
 	    0x92a65bca41852cc1, 0xf46820dd0509c12a, 0x52b00c35fbf92185,
 	    0x1e5b3b7f589e03c1};
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro1024star)
+DEF_URBG_CLASS_DETAILS(xoroshiro1024star)
 
 	// XXX: must not give zero seed
 
@@ -518,7 +518,7 @@ private:
 	    0x92a65bca41852cc1, 0xf46820dd0509c12a, 0x52b00c35fbf92185,
 	    0x1e5b3b7f589e03c1};
 
-	DEF_URBG_CLASS_DETAILS(xoroshiro1024starstar)
+DEF_URBG_CLASS_DETAILS(xoroshiro1024starstar)
 
 	// XXX: must not give zero seed
 
