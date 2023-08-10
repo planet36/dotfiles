@@ -114,8 +114,10 @@ P = gmpy2.mpfr('2.29558714939263807403429804918949038759783220363858348392997534
 math_expr_list = (
     'pi', # math.h (M_PI)
     'pi**2',
+    'pi**3',
     'e', # math.h (M_E)
     'e**2',
+    'e**3',
 
     'pi+e',
     'pi-e',
@@ -167,6 +169,7 @@ math_expr_list = (
     'sqrt(3)',
     'sqrt(pi)',
     'sqrt(5)',
+    'sqrt(2*pi)',
     'sqrt(10)',
 
     'cbrt(2)',
@@ -175,6 +178,7 @@ math_expr_list = (
     'cbrt(pi)',
     #'cbrt(4)',
     'cbrt(5)',
+    'cbrt(2*pi)',
     'cbrt(10)',
 
     '1 / sqrt(2)', # math.h (M_SQRT1_2)
@@ -182,6 +186,7 @@ math_expr_list = (
     '1 / sqrt(3)',
     '1 / sqrt(pi)',
     '1 / sqrt(5)',
+    '1 / sqrt(2*pi)',
     '1 / sqrt(10)',
 
     '2 / sqrt(pi)', # math.h (M_2_SQRTPI)
@@ -192,6 +197,7 @@ math_expr_list = (
     '1 / cbrt(pi)',
     #'1 / cbrt(4)',
     '1 / cbrt(5)',
+    '1 / cbrt(2*pi)',
     '1 / cbrt(10)',
 
     'log2(e)', # math.h (M_LOG2E)
