@@ -20,6 +20,7 @@
 #define DEF_JUMP                                                     \
 	void jump()                                                      \
 	{                                                                \
+		using T = state_type::value_type;                            \
 		state_type new_s;                                            \
 		new_s.fill(0);                                               \
 		for (const auto x : JUMP)                                    \
@@ -40,6 +41,7 @@
 #define DEF_LONG_JUMP                                                \
 	void long_jump()                                                 \
 	{                                                                \
+		using T = state_type::value_type;                            \
 		state_type new_s;                                            \
 		new_s.fill(0);                                               \
 		for (const auto x : LONG_JUMP)                               \
@@ -60,6 +62,7 @@
 #define DEF_JUMP_2                                                   \
 	void jump()                                                      \
 	{                                                                \
+		using T = state_type::value_type;                            \
 		state_type new_s;                                            \
 		new_s.fill(0);                                               \
 		for (const auto x : JUMP)                                    \
@@ -83,6 +86,7 @@
 #define DEF_LONG_JUMP_2                                              \
 	void long_jump()                                                 \
 	{                                                                \
+		using T = state_type::value_type;                            \
 		state_type new_s;                                            \
 		new_s.fill(0);                                               \
 		for (const auto x : LONG_JUMP)                               \
@@ -118,9 +122,8 @@
  */
 struct xoroshiro64star
 {
-	using T = uint32_t;
-	using state_type = std::array<T, 2>;
-	using result_type = T;
+	using state_type = std::array<uint32_t, 2>;
+	using result_type = uint32_t;
 
 	DEF_URBG_CLASS_DETAILS(xoroshiro64star)
 
@@ -151,9 +154,8 @@ struct xoroshiro64star
  */
 struct xoroshiro64starstar
 {
-	using T = uint32_t;
-	using state_type = std::array<T, 2>;
-	using result_type = T;
+	using state_type = std::array<uint32_t, 2>;
+	using result_type = uint32_t;
 
 	DEF_URBG_CLASS_DETAILS(xoroshiro64starstar)
 
@@ -196,9 +198,8 @@ struct xoroshiro64starstar
  */
 struct xoroshiro128plus
 {
-	using T = uint64_t;
-	using state_type = std::array<T, 2>;
-	using result_type = T;
+	using state_type = std::array<uint64_t, 2>;
+	using result_type = uint64_t;
 
 private:
 	static constexpr state_type JUMP{
@@ -250,9 +251,8 @@ private:
  */
 struct xoroshiro128plusplus
 {
-	using T = uint64_t;
-	using state_type = std::array<T, 2>;
-	using result_type = T;
+	using state_type = std::array<uint64_t, 2>;
+	using result_type = uint64_t;
 
 private:
 	static constexpr state_type JUMP{
@@ -304,9 +304,8 @@ private:
  */
 struct xoroshiro128starstar
 {
-	using T = uint64_t;
-	using state_type = std::array<T, 2>;
-	using result_type = T;
+	using state_type = std::array<uint64_t, 2>;
+	using result_type = uint64_t;
 
 private:
 	static constexpr state_type JUMP{
@@ -359,9 +358,8 @@ private:
  */
 struct xoroshiro1024plusplus
 {
-	using T = uint64_t;
-	using state_type = std::array<T, 16>;
-	using result_type = T;
+	using state_type = std::array<uint64_t, 16>;
+	using result_type = uint64_t;
 
 private:
 	unsigned int p{};
@@ -433,9 +431,8 @@ private:
  */
 struct xoroshiro1024star
 {
-	using T = uint64_t;
-	using state_type = std::array<T, 16>;
-	using result_type = T;
+	using state_type = std::array<uint64_t, 16>;
+	using result_type = uint64_t;
 
 private:
 	unsigned int p{};
@@ -501,9 +498,8 @@ private:
  */
 struct xoroshiro1024starstar
 {
-	using T = uint64_t;
-	using state_type = std::array<T, 16>;
-	using result_type = T;
+	using state_type = std::array<uint64_t, 16>;
+	using result_type = uint64_t;
 
 private:
 	unsigned int p{};
