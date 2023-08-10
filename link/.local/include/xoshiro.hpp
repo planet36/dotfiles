@@ -613,3 +613,6 @@ private:
 	 */
 	DEF_LONG_JUMP
 };
+
+#undef DEF_JUMP
+#undef DEF_LONG_JUMP

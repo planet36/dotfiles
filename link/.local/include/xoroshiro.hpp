@@ -554,3 +554,8 @@ private:
 	 */
 	DEF_LONG_JUMP_2
 };
+
+#undef DEF_JUMP
+#undef DEF_LONG_JUMP
+#undef DEF_JUMP_2
+#undef DEF_LONG_JUMP_2
