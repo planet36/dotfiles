@@ -25,7 +25,6 @@ other default-constructed engines of the same type.
 #include <type_traits>
 
 // XXX: state_type and result_type must be declared before invoking this.
-
 #define DEF_URBG_CLASS_DETAILS(CLASS_NAME)                               \
 private:                                                                 \
 	state_type s{};                                                      \
@@ -55,7 +54,7 @@ public:                                                                  \
 	constexpr bool operator==(const CLASS_NAME& that) const noexcept     \
 	{return this->s == that.s;}                                          \
 	constexpr bool operator!=(const CLASS_NAME& that) const noexcept     \
-	{return this->s != that.s;}
+	{return this->s != that.s;}                                          \
 
 // https://stackoverflow.com/a/13842612
 #define SINGLE_ARG(...) __VA_ARGS__
@@ -66,6 +65,9 @@ public:                                                                  \
 struct CLASS_NAME {                                                      \
 	using state_type = STATE_TYPE;                                       \
 	using result_type = RESULT_TYPE;                                     \
+private:                                                                 \
+	state_type s{};                                                      \
+public:                                                                  \
 	using seed_bytes_type = std::array<uint8_t, sizeof(state_type)>;     \
 	/* https://eel.is/c++draft/rand.req.urng */                          \
 	static_assert(std::is_unsigned_v<result_type>);                      \
@@ -94,7 +96,5 @@ struct CLASS_NAME {                                                      \
 	{return this->s != that.s;}                                          \
 	/* non-static member function declaration */                         \
 	result_type next(); /* XXX: must define this below */                \
-private:                                                                 \
-	state_type s{};                                                      \
 };                                                                       \
 auto CLASS_NAME::next() -> result_type
