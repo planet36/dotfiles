@@ -42,12 +42,12 @@ strtcat_helper(char* restrict dest,
  *   Concatenate \a src to \a dest, including the terminating NUL character.
  *
  * PREREQUISITES
- *   dest must be NUL-terminated.
+ *   \a dest must be NUL-terminated.
  *   \a src must be NUL-terminated.
  *   \a dest_sz is the capacity (in characters) of \a dest.
  *
  * CAVEATS
- *   If the strings overlap, the behavior is undefined.
+ *   If \a dest and \a src overlap, the behavior is undefined.
  *   If \a dest_sz is insufficient, the operation will not be performed, and a
  *   positive integer will be returned.
  *
@@ -74,7 +74,7 @@ strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
  *   \a dest_sz is the capacity (in characters) of \a dest.
  *
  * CAVEATS
- *   If the strings overlap, the behavior is undefined.
+ *   If \a dest and \a src overlap, the behavior is undefined.
  *   If \a dest_sz is insufficient, the operation will not be performed, and a
  *   positive integer will be returned.
  *
@@ -122,7 +122,7 @@ wstrtcat_helper(wchar_t* restrict dest,
  *   \a dest_sz is the capacity (in wide characters) of \a dest.
  *
  * CAVEATS
- *   If the strings overlap, the behavior is undefined.
+ *   If \a dest and \a src overlap, the behavior is undefined.
  *   If \a dest_sz is insufficient, the operation will not be performed, and a
  *   positive integer will be returned.
  *
@@ -149,7 +149,7 @@ wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
  *   \a dest_sz is the capacity (in wide characters) of \a dest.
  *
  * CAVEATS
- *   If the strings overlap, the behavior is undefined.
+ *   If \a dest and \a src overlap, the behavior is undefined.
  *   If \a dest_sz is insufficient, the operation will not be performed, and a
  *   positive integer will be returned.
  *
