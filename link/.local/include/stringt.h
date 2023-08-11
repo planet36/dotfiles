@@ -38,26 +38,26 @@ strtcat_helper(char* restrict dest,
 
 /// String concatenate without truncation
 /**
- * DESCRIPTION
- *   Concatenate \a src to \a dest, including the terminating NUL character.
- *
- * PREREQUISITES
- *   \a dest must be NUL-terminated.
- *   \a src must be NUL-terminated.
- *   \a dest_sz is the capacity (in characters) of \a dest.
- *
- * CAVEATS
- *   If \a dest and \a src overlap, the behavior is undefined.
- *   If \a dest_sz is insufficient, the operation will not be performed, and a
- *   positive integer will be returned.
- *
- * RETURN VALUE
- *   0  : Success
- *   >0 : Failure
- *     The operation was not performed because \a dest_sz was insufficient.
- *     The returned value is the number of characters \a dest must be enlarged by
- *     for the operation to be performed.
- */
+* DESCRIPTION
+*   Concatenate \a src to \a dest, including the terminating NUL character.
+*
+* PREREQUISITES
+*   \a dest must be NUL-terminated.
+*   \a src must be NUL-terminated.
+*   \a dest_sz is the capacity (in characters) of \a dest.
+*
+* CAVEATS
+*   If \a dest and \a src overlap, the behavior is undefined.
+*   If \a dest_sz is insufficient, the operation will not be performed, and a
+*   positive integer will be returned.
+*
+* RETURN VALUE
+*   0  : Success
+*   >0 : Failure
+*     The operation was not performed because \a dest_sz was insufficient.
+*     The returned value is the number of characters \a dest must be enlarged by
+*     for the operation to be performed.
+*/
 static size_t
 strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
 {
@@ -66,25 +66,25 @@ strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
 
 /// String copy without truncation
 /**
- * DESCRIPTION
- *   Copy \a src to \a dest, including the terminating NUL character.
- *
- * PREREQUISITES
- *   \a src must be NUL-terminated.
- *   \a dest_sz is the capacity (in characters) of \a dest.
- *
- * CAVEATS
- *   If \a dest and \a src overlap, the behavior is undefined.
- *   If \a dest_sz is insufficient, the operation will not be performed, and a
- *   positive integer will be returned.
- *
- * RETURN VALUE
- *   0  : Success
- *   >0 : Failure
- *     The operation was not performed because \a dest_sz was insufficient.
- *     The returned value is the number of characters \a dest must be enlarged by
- *     for the operation to be performed.
- */
+* DESCRIPTION
+*   Copy \a src to \a dest, including the terminating NUL character.
+*
+* PREREQUISITES
+*   \a src must be NUL-terminated.
+*   \a dest_sz is the capacity (in characters) of \a dest.
+*
+* CAVEATS
+*   If \a dest and \a src overlap, the behavior is undefined.
+*   If \a dest_sz is insufficient, the operation will not be performed, and a
+*   positive integer will be returned.
+*
+* RETURN VALUE
+*   0  : Success
+*   >0 : Failure
+*     The operation was not performed because \a dest_sz was insufficient.
+*     The returned value is the number of characters \a dest must be enlarged by
+*     for the operation to be performed.
+*/
 static size_t
 strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
 {
@@ -113,26 +113,26 @@ wstrtcat_helper(wchar_t* restrict dest,
 
 /// Wide string concatenate without truncation
 /**
- * DESCRIPTION
- *   Concatenate \a src to \a dest, including the terminating NUL wide character.
- *
- * PREREQUISITES
- *   \a dest must be NUL-terminated.
- *   \a src must be NUL-terminated.
- *   \a dest_sz is the capacity (in wide characters) of \a dest.
- *
- * CAVEATS
- *   If \a dest and \a src overlap, the behavior is undefined.
- *   If \a dest_sz is insufficient, the operation will not be performed, and a
- *   positive integer will be returned.
- *
- * RETURN VALUE
- *   0  : Success
- *   >0 : Failure
- *     The operation was not performed because \a dest_sz was insufficient.
- *     The returned value is the number of wide characters \a dest must be
- *     enlarged by for the operation to be performed.
- */
+* DESCRIPTION
+*   Concatenate \a src to \a dest, including the terminating NUL wide character.
+*
+* PREREQUISITES
+*   \a dest must be NUL-terminated.
+*   \a src must be NUL-terminated.
+*   \a dest_sz is the capacity (in wide characters) of \a dest.
+*
+* CAVEATS
+*   If \a dest and \a src overlap, the behavior is undefined.
+*   If \a dest_sz is insufficient, the operation will not be performed, and a
+*   positive integer will be returned.
+*
+* RETURN VALUE
+*   0  : Success
+*   >0 : Failure
+*     The operation was not performed because \a dest_sz was insufficient.
+*     The returned value is the number of wide characters \a dest must be
+*     enlarged by for the operation to be performed.
+*/
 static size_t
 wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 {
@@ -141,25 +141,25 @@ wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 
 /// Wide string copy without truncation
 /**
- * DESCRIPTION
- *   Copy \a src to \a dest, including the terminating NUL wide character.
- *
- * PREREQUISITES
- *   \a src must be NUL-terminated.
- *   \a dest_sz is the capacity (in wide characters) of \a dest.
- *
- * CAVEATS
- *   If \a dest and \a src overlap, the behavior is undefined.
- *   If \a dest_sz is insufficient, the operation will not be performed, and a
- *   positive integer will be returned.
- *
- * RETURN VALUE
- *   0  : Success
- *   >0 : Failure
- *     The operation was not performed because \a dest_sz was insufficient.
- *     The returned value is the number of wide characters \a dest must be
- *     enlarged by for the operation to be performed.
- */
+* DESCRIPTION
+*   Copy \a src to \a dest, including the terminating NUL wide character.
+*
+* PREREQUISITES
+*   \a src must be NUL-terminated.
+*   \a dest_sz is the capacity (in wide characters) of \a dest.
+*
+* CAVEATS
+*   If \a dest and \a src overlap, the behavior is undefined.
+*   If \a dest_sz is insufficient, the operation will not be performed, and a
+*   positive integer will be returned.
+*
+* RETURN VALUE
+*   0  : Success
+*   >0 : Failure
+*     The operation was not performed because \a dest_sz was insufficient.
+*     The returned value is the number of wide characters \a dest must be
+*     enlarged by for the operation to be performed.
+*/
 static size_t
 wstrtcpy(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
 {
