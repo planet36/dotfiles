@@ -15,58 +15,58 @@
 
 // https://www.unicode.org/charts/PDF/U0000.pdf
 
-static const wchar_t SPACE = 0x0020;
+static constexpr wchar_t SPACE = 0x0020;
 
 // https://www.unicode.org/charts/PDF/U2580.pdf
 
-static const wchar_t UPPER_HALF_BLOCK           = 0x2580;
-static const wchar_t LOWER_ONE_EIGHTH_BLOCK     = 0x2581;
-static const wchar_t LOWER_ONE_QUARTER_BLOCK    = 0x2582;
-static const wchar_t LOWER_THREE_EIGHTHS_BLOCK  = 0x2583;
-static const wchar_t LOWER_HALF_BLOCK           = 0x2584;
-static const wchar_t LOWER_FIVE_EIGHTHS_BLOCK   = 0x2585;
-static const wchar_t LOWER_THREE_QUARTERS_BLOCK = 0x2586;
-static const wchar_t LOWER_SEVEN_EIGHTHS_BLOCK  = 0x2587;
-static const wchar_t FULL_BLOCK                 = 0x2588;
-static const wchar_t LEFT_SEVEN_EIGHTHS_BLOCK   = 0x2589;
-static const wchar_t LEFT_THREE_QUARTERS_BLOCK  = 0x258A;
-static const wchar_t LEFT_FIVE_EIGHTHS_BLOCK    = 0x258B;
-static const wchar_t LEFT_HALF_BLOCK            = 0x258C;
-static const wchar_t LEFT_THREE_EIGHTHS_BLOCK   = 0x258D;
-static const wchar_t LEFT_ONE_QUARTER_BLOCK     = 0x258E;
-static const wchar_t LEFT_ONE_EIGHTH_BLOCK      = 0x258F;
-static const wchar_t RIGHT_HALF_BLOCK           = 0x2590;
+static constexpr wchar_t UPPER_HALF_BLOCK           = 0x2580;
+static constexpr wchar_t LOWER_ONE_EIGHTH_BLOCK     = 0x2581;
+static constexpr wchar_t LOWER_ONE_QUARTER_BLOCK    = 0x2582;
+static constexpr wchar_t LOWER_THREE_EIGHTHS_BLOCK  = 0x2583;
+static constexpr wchar_t LOWER_HALF_BLOCK           = 0x2584;
+static constexpr wchar_t LOWER_FIVE_EIGHTHS_BLOCK   = 0x2585;
+static constexpr wchar_t LOWER_THREE_QUARTERS_BLOCK = 0x2586;
+static constexpr wchar_t LOWER_SEVEN_EIGHTHS_BLOCK  = 0x2587;
+static constexpr wchar_t FULL_BLOCK                 = 0x2588;
+static constexpr wchar_t LEFT_SEVEN_EIGHTHS_BLOCK   = 0x2589;
+static constexpr wchar_t LEFT_THREE_QUARTERS_BLOCK  = 0x258A;
+static constexpr wchar_t LEFT_FIVE_EIGHTHS_BLOCK    = 0x258B;
+static constexpr wchar_t LEFT_HALF_BLOCK            = 0x258C;
+static constexpr wchar_t LEFT_THREE_EIGHTHS_BLOCK   = 0x258D;
+static constexpr wchar_t LEFT_ONE_QUARTER_BLOCK     = 0x258E;
+static constexpr wchar_t LEFT_ONE_EIGHTH_BLOCK      = 0x258F;
+static constexpr wchar_t RIGHT_HALF_BLOCK           = 0x2590;
 
-static const wchar_t UPPER_ONE_EIGHTH_BLOCK     = 0x2594;
-static const wchar_t RIGHT_ONE_EIGHTH_BLOCK     = 0x2595;
+static constexpr wchar_t UPPER_ONE_EIGHTH_BLOCK     = 0x2594;
+static constexpr wchar_t RIGHT_ONE_EIGHTH_BLOCK     = 0x2595;
 
 // https://www.unicode.org/charts/PDF/U1FB00.pdf
 
-static const wchar_t VERTICAL_ONE_EIGHTH_BLOCK_2   = 0x1FB70;
-static const wchar_t VERTICAL_ONE_EIGHTH_BLOCK_3   = 0x1FB71;
-static const wchar_t VERTICAL_ONE_EIGHTH_BLOCK_4   = 0x1FB72;
-static const wchar_t VERTICAL_ONE_EIGHTH_BLOCK_5   = 0x1FB73;
-static const wchar_t VERTICAL_ONE_EIGHTH_BLOCK_6   = 0x1FB74;
-static const wchar_t VERTICAL_ONE_EIGHTH_BLOCK_7   = 0x1FB75;
-static const wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_2 = 0x1FB76;
-static const wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_3 = 0x1FB77;
-static const wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_4 = 0x1FB78;
-static const wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_5 = 0x1FB79;
-static const wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_6 = 0x1FB7A;
-static const wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_7 = 0x1FB7B;
+static constexpr wchar_t VERTICAL_ONE_EIGHTH_BLOCK_2   = 0x1FB70;
+static constexpr wchar_t VERTICAL_ONE_EIGHTH_BLOCK_3   = 0x1FB71;
+static constexpr wchar_t VERTICAL_ONE_EIGHTH_BLOCK_4   = 0x1FB72;
+static constexpr wchar_t VERTICAL_ONE_EIGHTH_BLOCK_5   = 0x1FB73;
+static constexpr wchar_t VERTICAL_ONE_EIGHTH_BLOCK_6   = 0x1FB74;
+static constexpr wchar_t VERTICAL_ONE_EIGHTH_BLOCK_7   = 0x1FB75;
+static constexpr wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_2 = 0x1FB76;
+static constexpr wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_3 = 0x1FB77;
+static constexpr wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_4 = 0x1FB78;
+static constexpr wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_5 = 0x1FB79;
+static constexpr wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_6 = 0x1FB7A;
+static constexpr wchar_t HORIZONTAL_ONE_EIGHTH_BLOCK_7 = 0x1FB7B;
 
-static const wchar_t UPPER_ONE_QUARTER_BLOCK    = 0x1FB82;
-static const wchar_t UPPER_THREE_EIGHTHS_BLOCK  = 0x1FB83;
-static const wchar_t UPPER_FIVE_EIGHTHS_BLOCK   = 0x1FB84;
-static const wchar_t UPPER_THREE_QUARTERS_BLOCK = 0x1FB85;
-static const wchar_t UPPER_SEVEN_EIGHTHS_BLOCK  = 0x1FB86;
-static const wchar_t RIGHT_ONE_QUARTER_BLOCK    = 0x1FB87;
-static const wchar_t RIGHT_THREE_EIGHTHS_BLOCK  = 0x1FB88;
-static const wchar_t RIGHT_FIVE_EIGHTHS_BLOCK   = 0x1FB89;
-static const wchar_t RIGHT_THREE_QUARTERS_BLOCK = 0x1FB8A;
-static const wchar_t RIGHT_SEVEN_EIGHTHS_BLOCK  = 0x1FB8B;
+static constexpr wchar_t UPPER_ONE_QUARTER_BLOCK    = 0x1FB82;
+static constexpr wchar_t UPPER_THREE_EIGHTHS_BLOCK  = 0x1FB83;
+static constexpr wchar_t UPPER_FIVE_EIGHTHS_BLOCK   = 0x1FB84;
+static constexpr wchar_t UPPER_THREE_QUARTERS_BLOCK = 0x1FB85;
+static constexpr wchar_t UPPER_SEVEN_EIGHTHS_BLOCK  = 0x1FB86;
+static constexpr wchar_t RIGHT_ONE_QUARTER_BLOCK    = 0x1FB87;
+static constexpr wchar_t RIGHT_THREE_EIGHTHS_BLOCK  = 0x1FB88;
+static constexpr wchar_t RIGHT_FIVE_EIGHTHS_BLOCK   = 0x1FB89;
+static constexpr wchar_t RIGHT_THREE_QUARTERS_BLOCK = 0x1FB8A;
+static constexpr wchar_t RIGHT_SEVEN_EIGHTHS_BLOCK  = 0x1FB8B;
 
-static const wchar_t lower_blocks[] = {
+static constexpr wchar_t lower_blocks[] = {
 	SPACE,
 	LOWER_ONE_EIGHTH_BLOCK,
 	LOWER_ONE_QUARTER_BLOCK,
@@ -78,9 +78,9 @@ static const wchar_t lower_blocks[] = {
 	FULL_BLOCK,
 };
 
-static const size_t num_lower_blocks = LEN(lower_blocks);
+static constexpr size_t num_lower_blocks = LEN(lower_blocks);
 
-static const wchar_t left_blocks[] = {
+static constexpr wchar_t left_blocks[] = {
 	SPACE,
 	LEFT_ONE_EIGHTH_BLOCK,
 	LEFT_ONE_QUARTER_BLOCK,
@@ -92,9 +92,9 @@ static const wchar_t left_blocks[] = {
 	FULL_BLOCK,
 };
 
-static const size_t num_left_blocks = LEN(left_blocks);
+static constexpr size_t num_left_blocks = LEN(left_blocks);
 
-static const wchar_t ver_lines[] = {
+static constexpr wchar_t ver_lines[] = {
 	LEFT_ONE_EIGHTH_BLOCK,
 	VERTICAL_ONE_EIGHTH_BLOCK_2,
 	VERTICAL_ONE_EIGHTH_BLOCK_3,
@@ -105,9 +105,9 @@ static const wchar_t ver_lines[] = {
 	RIGHT_ONE_EIGHTH_BLOCK,
 };
 
-static const size_t num_ver_lines = LEN(ver_lines);
+static constexpr size_t num_ver_lines = LEN(ver_lines);
 
-static const wchar_t hor_lines[] = {
+static constexpr wchar_t hor_lines[] = {
 	LOWER_ONE_EIGHTH_BLOCK,
 	HORIZONTAL_ONE_EIGHTH_BLOCK_7,
 	HORIZONTAL_ONE_EIGHTH_BLOCK_6,
@@ -118,9 +118,9 @@ static const wchar_t hor_lines[] = {
 	UPPER_ONE_EIGHTH_BLOCK,
 };
 
-static const size_t num_hor_lines = LEN(hor_lines);
+static constexpr size_t num_hor_lines = LEN(hor_lines);
 
-static const wchar_t upper_blocks[] = {
+static constexpr wchar_t upper_blocks[] = {
 	SPACE,
 	UPPER_ONE_EIGHTH_BLOCK,
 	UPPER_ONE_QUARTER_BLOCK,
@@ -132,9 +132,9 @@ static const wchar_t upper_blocks[] = {
 	FULL_BLOCK,
 };
 
-static const size_t num_upper_blocks = LEN(upper_blocks);
+static constexpr size_t num_upper_blocks = LEN(upper_blocks);
 
-static const wchar_t right_blocks[] = {
+static constexpr wchar_t right_blocks[] = {
 	SPACE,
 	RIGHT_ONE_EIGHTH_BLOCK,
 	RIGHT_ONE_QUARTER_BLOCK,
@@ -146,7 +146,7 @@ static const wchar_t right_blocks[] = {
 	FULL_BLOCK,
 };
 
-static const size_t num_right_blocks = LEN(right_blocks);
+static constexpr size_t num_right_blocks = LEN(right_blocks);
 
 static void
 clamp(double* x)
