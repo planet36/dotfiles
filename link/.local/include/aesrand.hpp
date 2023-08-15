@@ -12,7 +12,7 @@
 */
 
 #include "byteprimes.hpp"
-#include "def_urbg_class_details.hpp"
+#include "def_urbg_class.hpp"
 #include "simd-types.hpp"
 
 #include <immintrin.h>

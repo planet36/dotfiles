@@ -16,7 +16,7 @@
 #error "__SIZEOF_INT128__ not defined"
 #endif
 
-#include "def_urbg_class_details.hpp"
+#include "def_urbg_class.hpp"
 
 DEF_URBG_CLASS(lehmer64, __uint128_t, uint64_t)
 {

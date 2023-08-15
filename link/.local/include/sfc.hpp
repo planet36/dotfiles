@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "def_urbg_class_details.hpp"
+#include "def_urbg_class.hpp"
 
 #include <bit>
 

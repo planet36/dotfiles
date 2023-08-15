@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "def_urbg_class_details.hpp"
+#include "def_urbg_class.hpp"
 
 #if defined(__SIZEOF_INT128__)
 #include "int_join.hpp"

@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "def_urbg_class_details.hpp"
+#include "def_urbg_class.hpp"
 #include "scaled-const.hpp"
 
 DEF_URBG_CLASS(splitmix32, uint64_t, uint32_t)

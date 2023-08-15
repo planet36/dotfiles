@@ -8,7 +8,7 @@
 \sa https://www.romu-random.org/code.c
 */
 
-#include "def_urbg_class_details.hpp"
+#include "def_urbg_class.hpp"
 
 DEF_URBG_CLASS(romu_quad, SINGLE_ARG(std::array<uint64_t, 4>), uint64_t)
 {

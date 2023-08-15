@@ -12,7 +12,7 @@
 #pragma once
 
 #include "byteprimes.hpp"
-#include "def_urbg_class_details.hpp"
+#include "def_urbg_class.hpp"
 #include "mum_mix.hpp"
 #include "simd-types.hpp"
 

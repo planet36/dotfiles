@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Macro that defines some details of a Uniform Random Bit Generator class
+/// Macro that defines a Uniform Random Bit Generator class
 /**
 \file
 \author Steven Ward
@@ -24,8 +24,15 @@ other default-constructed engines of the same type.
 #include <limits>
 #include <type_traits>
 
-// XXX: state_type and result_type must be declared before invoking this.
-#define DEF_URBG_CLASS_DETAILS(CLASS_NAME)                               \
+// https://stackoverflow.com/a/13842612
+#define SINGLE_ARG(...) __VA_ARGS__
+// Use SINGLE_ARG when a macro arg has a comma.
+
+// XXX: must define member function "next()" immediately after calling this macro
+#define DEF_URBG_CLASS(CLASS_NAME, STATE_TYPE, RESULT_TYPE)              \
+struct CLASS_NAME {                                                      \
+	using state_type = STATE_TYPE;                                       \
+	using result_type = RESULT_TYPE;                                     \
 private:                                                                 \
 	state_type s{};                                                      \
 public:                                                                  \
@@ -55,4 +62,7 @@ public:                                                                  \
 	{return this->s == that.s;}                                          \
 	constexpr bool operator!=(const CLASS_NAME& that) const noexcept     \
 	{return this->s != that.s;}                                          \
-
+	/* non-static member function declaration */                         \
+	result_type next(); /* XXX: must define this below */                \
+};                                                                       \
+auto CLASS_NAME::next() -> result_type
