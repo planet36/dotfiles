@@ -36,7 +36,7 @@ BG_WHITE=$(tput setab 7)
 :<<EOT
 
 S='O|'
-cls
+clear
 echo -e "BOLD     ${S}${BOLD}${S}${RESET}"; \
 echo -e "DIM      ${S}${DIM}${S}${RESET}"; \
 echo -e "ITALIC   ${S}${ITALIC}${S}${RESET}"; \
