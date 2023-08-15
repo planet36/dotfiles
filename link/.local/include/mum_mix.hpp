@@ -13,11 +13,9 @@
 
 #pragma once
 
-#include "int_bytes.hpp"
 #include "simd-types.hpp"
 
 #include <array>
-#include <concepts>
 #include <cstdint>
 #include <immintrin.h>
 #include <limits>
@@ -80,40 +78,36 @@ static_assert((_mum_primes[14] & 1) != 0, "must be odd");
 static_assert((_mum_primes[15] & 1) != 0, "must be odd");
 }
 
+
 /// Multiply \a hi and \a lo and return the high and low parts of the product
-template <std::unsigned_integral T>
 constexpr void
-mul(T& hi, T& lo)
+mul(uint64_t& hi, uint64_t& lo)
 {
-	// When T is uint64_t, the multiplication is optimized the same as _mulx_u64.
-	using T2 = next_larger<T>;
-	const T2 r = static_cast<T2>(hi) * static_cast<T2>(lo);
-	hi = static_cast<T>(r >> std::numeric_limits<T>::digits);
-	lo = static_cast<T>(r);
+	// This is optimized the same as _mulx_u64.
+	const __uint128_t r = static_cast<__uint128_t>(hi) * static_cast<__uint128_t>(lo);
+	hi = static_cast<uint64_t>(r >> std::numeric_limits<uint64_t>::digits);
+	lo = static_cast<uint64_t>(r);
 }
 
 /// Multiply \a a and \a b and return the sum of the high and low parts of the product
-template <std::unsigned_integral T>
-constexpr T
-mum_mix_add(T a, T b)
+constexpr uint64_t
+mum_mix_add(uint64_t a, uint64_t b)
 {
 	mul(a, b);
 	return a + b;
 }
 
 /// Multiply \a a and \a b and return the XOR of the high and low parts of the product
-template <std::unsigned_integral T>
-constexpr T
-mum_mix_xor(T a, T b)
+constexpr uint64_t
+mum_mix_xor(uint64_t a, uint64_t b)
 {
 	mul(a, b);
 	return a ^ b;
 }
 
 /// Multiply \a a and \a b and return the difference of the high and low parts of the product
-template <std::unsigned_integral T>
-constexpr T
-mum_mix_sub(T a, T b)
+constexpr uint64_t
+mum_mix_sub(uint64_t a, uint64_t b)
 {
 	mul(a, b);
 	return a - b;
