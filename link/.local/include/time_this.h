@@ -80,9 +80,9 @@ print_timerdata_now_diff(const struct timerdata* t0)
 	timevalsub(&t1.stime, &t0->stime, &diff.stime);
 	(void)fflush(stdout);
 	(void)fprintf(stderr, "%.2f  %.2f  %.2f\n",
-	        timespec_to_sec(&diff.rtime),
-	        timeval_to_sec(&diff.utime),
-	        timeval_to_sec(&diff.stime));
+	              timespec_to_sec(&diff.rtime),
+	              timeval_to_sec(&diff.utime),
+	              timeval_to_sec(&diff.stime));
 }
 
 #ifdef __cplusplus
