@@ -121,8 +121,9 @@ mum_mix_sub(T a, T b)
 
 void clmul(simd128& a)
 {
+	// https://clang.llvm.org/doxygen/____wmmintrin__pclmul_8h.html
 	// https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/wmmintrin.h#L103
-	// _mm_clmulepi64_si128(__m128i a, __m128i b, int imm8)
+	// __m128i _mm_clmulepi64_si128(__m128i a, __m128i b, int imm8)
 	// imm8: 0x00 => b[0] * a[0]
 	// imm8: 0x01 => b[0] * a[1]
 	// imm8: 0x10 => b[1] * a[0]
