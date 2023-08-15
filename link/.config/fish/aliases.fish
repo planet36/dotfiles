@@ -6,9 +6,6 @@
 alias chgrp='chgrp --preserve-root --changes'
 alias chmod='chmod --preserve-root --changes'
 alias chown='chown --preserve-root --changes'
-alias cld='cls ; d'
-alias clda='cls ; da'
-alias cls='printf "\ec"' # tput clear
 alias cp='cp --archive --backup=numbered'
 alias ctags='ctags --recurse=yes --totals=yes --languages=C,C++'
 #alias d='ls --human-readable -o --file-type --color'
