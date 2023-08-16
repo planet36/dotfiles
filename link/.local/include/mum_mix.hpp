@@ -113,6 +113,7 @@ mum_mix_sub(uint64_t a, uint64_t b)
 	return a - b;
 }
 
+#if defined(__PCLMUL__)
 void clmul(simd128& a)
 {
 	// https://clang.llvm.org/doxygen/____wmmintrin__pclmul_8h.html
@@ -144,3 +145,6 @@ void clmul(uint64_t& hi, uint64_t& lo)
 uint64_t clmul_mix_xor(uint64_t a, uint64_t b) { clmul(a, b); return a ^ b; }
 uint64_t clmul_mix_add(uint64_t a, uint64_t b) { clmul(a, b); return a + b; }
 uint64_t clmul_mix_sub(uint64_t a, uint64_t b) { clmul(a, b); return a - b; }
+#else
+#warning "__PCLMUL__ not defined"
+#endif

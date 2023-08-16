@@ -15,6 +15,7 @@
 
 // _rd{rand,seed}{16,32,64}_step returns 0 if a random value was NOT generated
 
+#if defined(__RDRND__)
 inline auto
 rdrand16()
 {
@@ -41,7 +42,11 @@ rdrand64()
 	{}
 	return ret;
 }
+#else
+#warning "__RDRND__ not defined"
+#endif
 
+#if defined(__RDSEED__)
 inline auto
 rdseed16()
 {
@@ -68,3 +73,6 @@ rdseed64()
 	{}
 	return ret;
 }
+#else
+#warning "__RDSEED__ not defined"
+#endif

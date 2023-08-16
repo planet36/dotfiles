@@ -17,6 +17,7 @@
 
 #include <immintrin.h>
 
+#if defined(__AES__)
 DEF_URBG_CLASS(aesencrand, simd128, uint64_t)
 {
 	static constexpr simd128 roundKey{.u64{byteprimes[0], byteprimes[1]}};
@@ -35,3 +36,6 @@ DEF_URBG_CLASS(aesdecrand, simd128, uint64_t)
 	const __m128i result = _mm_aesdec_si128(penultimate, roundKey.i64);
 	return result[0];
 }
+#else
+#warning "__AES__ not defined"
+#endif
