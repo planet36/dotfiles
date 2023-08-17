@@ -54,9 +54,9 @@ def parse_duration(duration: str) -> timedelta:
 
         '12.3456 hours' => datetime.timedelta(seconds=44444, microseconds=160000)
 
-        '11 days, 22:33:44.555666' => '11 days, 22:33:44.555666'
+        '11 days, 22:33:44.555666' => datetime.timedelta(days=11, seconds=81224, microseconds=555666)
 
-        '1:02:03.444555' => '1:02:03.444555'
+        '1:02:03.444555' => datetime.timedelta(seconds=3723, microseconds=444555)
 
         '12:34' => ValueError
 
