@@ -193,13 +193,15 @@ export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
 # https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
 export CPPFLAGS="-iquote $HOME/.local/include"
 
-# Print recent C standards supported
-# gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=(c|gnu)[^+]' | grep -F 'Conform to the ISO 202'
+# Print latest C standards supported
+# gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=c2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}'
+# gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=gnu2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}'
 
 export CFLAGS="$GCC_COMMON_OPTIONS -std=gnu2x -Wc++-compat"
 
-# Print recent C++ standards supported
-# gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=(c|gnu)\+\+' | grep -F 'Conform to the ISO 202'
+# Print latest C++ standards supported
+# gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=c\+\+2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}'
+# gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=gnu\+\+2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}'
 
 export CXXFLAGS="$GCC_COMMON_OPTIONS -std=gnu++23 -fchar8_t -fdiagnostics-show-template-tree -fstrict-enums -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
 
