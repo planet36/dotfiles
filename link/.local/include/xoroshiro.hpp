@@ -107,42 +107,6 @@
 		}                                                            \
 	}
 
-/** This is xoroshiro64* 1.0, our best and fastest 32-bit small-state generator
- * for 32-bit floating-point numbers. We suggest to use its upper bits for
- * floating-point generation, as it is slightly faster than xoroshiro64**. It
- * passes all tests we are aware of except for linearity tests, as the lowest
- * six bits have low linear complexity, so if low linear complexity is not
- * considered an issue (as it is usually the case) it can be used to generate
- * 32-bit outputs, too.
- *
- * We suggest to use a sign test to extract a random Boolean value, and right
- * shifts to extract subsets of bits.
- *
- * The state must be seeded so that it is not everywhere zero.
- */
-struct xoroshiro64star
-{
-	using state_type = std::array<uint32_t, 2>;
-	using result_type = uint32_t;
-
-DEF_URBG_CLASS_DETAILS(xoroshiro64star)
-
-	// XXX: must not give zero seed
-
-	result_type next()
-	{
-		const auto s0 = s[0];
-		auto s1 = s[1];
-		const auto result = s0 * 0x9E3779BB;
-
-		s1 ^= s0;
-		s[0] = std::rotl(s0, 26) ^ s1 ^ (s1 << 9); // a, b
-		s[1] = std::rotl(s1, 13); // c
-
-		return result;
-	}
-};
-
 /** This is xoroshiro64** 1.0, our 32-bit all-purpose, rock-solid, small-state
  * generator. It is extremely fast and it passes all tests we are aware of, but
  * its state space is not large enough for any parallel application.
@@ -173,69 +137,6 @@ DEF_URBG_CLASS_DETAILS(xoroshiro64starstar)
 
 		return result;
 	}
-};
-
-/** This is xoroshiro128+ 1.0, our best and fastest small-state generator for
- * floating-point numbers. We suggest to use its upper bits for floating-point
- * generation, as it is slightly faster than xoroshiro128++/xoroshiro128**. It
- * passes all tests we are aware of except for the four lower bits, which might
- * fail linearity tests (and just those), so if low linear complexity is not
- * considered an issue (as it is usually the case) it can be used to generate
- * 64-bit outputs, too; moreover, this generator has a very mild Hamming-weight
- * dependency making our test (http://prng.di.unimi.it/hwd.php) fail after 5 TB
- * of output; we believe this slight bias cannot affect any application. If you
- * are concerned, use xoroshiro128++, xoroshiro128** or xoshiro256+.
- *
- * We suggest to use a sign test to extract a random Boolean value, and right
- * shifts to extract subsets of bits.
- *
- * The state must be seeded so that it is not everywhere zero. If you have a
- * 64-bit seed, we suggest to seed a splitmix64 generator and use its output to
- * fill s.
- *
- * NOTE: the parameters (a=24, b=16, b=37) of this version give slightly better
- * results in our test than the 2016 version (a=55, b=14, c=36).
- */
-struct xoroshiro128plus
-{
-	using state_type = std::array<uint64_t, 2>;
-	using result_type = uint64_t;
-
-private:
-	static constexpr state_type JUMP{
-	    0xdf900294d8f554a5, 0x170865df4b3201fc};
-	static constexpr state_type LONG_JUMP{
-	    0xd2a98b26625eee7b, 0xdddf9b1090aa7ac1};
-
-DEF_URBG_CLASS_DETAILS(xoroshiro128plus)
-
-	// XXX: must not give zero seed
-
-	result_type next()
-	{
-		const auto s0 = s[0];
-		auto s1 = s[1];
-		const auto result = s0 + s1;
-
-		s1 ^= s0;
-		s[0] = std::rotl(s0, 24) ^ s1 ^ (s1 << 16); // a, b
-		s[1] = std::rotl(s1, 37); // c
-
-		return result;
-	}
-
-	/** This is the jump function for the generator. It is equivalent to 2^64
-	 * calls to next(); it can be used to generate 2^64 non-overlapping
-	 * subsequences for parallel computations.
-	 */
-	DEF_JUMP
-
-	/** This is the long-jump function for the generator. It is equivalent to
-	 * 2^96 calls to next(); it can be used to generate 2^32 starting points,
-	 * from each of which jump() will generate 2^32 non-overlapping
-	 * subsequences for parallel distributed computations.
-	 */
-	DEF_LONG_JUMP
 };
 
 /** This is xoroshiro128++ 1.0, one of our all-purpose, rock-solid, small-state
@@ -389,79 +290,6 @@ DEF_URBG_CLASS_DETAILS(xoroshiro1024plusplus)
 		const auto s0 = s[p];
 		auto s15 = s[q];
 		const auto result = std::rotl(s0 + s15, 23) + s15;
-
-		s15 ^= s0;
-		s[q] = std::rotl(s0, 25) ^ s15 ^ (s15 << 27);
-		s[p] = std::rotl(s15, 36);
-
-		return result;
-	}
-
-	/** This is the jump function for the generator. It is equivalent to 2^512
-	 * calls to next(); it can be used to generate 2^512 non-overlapping
-	 * subsequences for parallel computations.
-	 */
-	DEF_JUMP_2
-
-	/** This is the long-jump function for the generator. It is equivalent to
-	 * 2^768 calls to next(); it can be used to generate 2^256 starting points,
-	 * from each of which jump() will generate 2^256 non-overlapping
-	 * subsequences for parallel distributed computations.
-	 */
-	DEF_LONG_JUMP_2
-};
-
-/** This is xoroshiro1024* 1.0, our large-state generator for floating-point
- * numbers. We suggest to use its upper bits for floating-point generation, as
- * it is slightly faster than xoroshiro1024++/xoroshiro1024**.  Its state
- * however is too large--in general, the xoshiro256 family should be preferred.
- * It is a better replacement for xorshift1024*.
- *
- * It passes all tests we are aware of except for the lowest three bits, which
- * might fail linearity tests (and just those), so if low linear complexity is
- * not considered an issue (as it is usually the case) it can be used to
- * generate 64-bit outputs, too.
- *
- * We suggest to use a sign test to extract a random Boolean value, and right
- * shifts to extract subsets of bits.
- *
- * The state must be seeded so that it is not everywhere zero. If you have a
- * 64-bit seed, we suggest to seed a splitmix64 generator and use its output to
- * fill s.
- */
-struct xoroshiro1024star
-{
-	using state_type = std::array<uint64_t, 16>;
-	using result_type = uint64_t;
-
-private:
-	unsigned int p{};
-	static constexpr state_type JUMP{
-	    0x931197d8e3177f17, 0xb59422e0b9138c5f, 0xf06a6afb49d668bb,
-	    0xacb8a6412c8a1401, 0x12304ec85f0b3468, 0xb7dfe7079209891e,
-	    0x405b7eec77d9eb14, 0x34ead68280c44e4a, 0xe0e4ba3e0ac9e366,
-	    0x8f46eda8348905b7, 0x328bf4dbad90d6ff, 0xc8fd6fb31c9effc3,
-	    0xe899d452d4b67652, 0x45f387286ade3205, 0x03864f454a8920bd,
-	    0xa68fa28725b1b384};
-	static constexpr state_type LONG_JUMP{
-	    0x7374156360bbf00f, 0x4630c2efa3b3c1f6, 0x6654183a892786b1,
-	    0x94f7bfcbfb0f1661, 0x27d8243d3d13eb2d, 0x9701730f3dfb300f,
-	    0x2f293baae6f604ad, 0xa661831cb60cd8b6, 0x68280c77d9fe008c,
-	    0x50554160f5ba9459, 0x2fc20b17ec7b2a9a, 0x49189bbdc8ec9f8f,
-	    0x92a65bca41852cc1, 0xf46820dd0509c12a, 0x52b00c35fbf92185,
-	    0x1e5b3b7f589e03c1};
-
-DEF_URBG_CLASS_DETAILS(xoroshiro1024star)
-
-	// XXX: must not give zero seed
-
-	result_type next()
-	{
-		const auto q = p;
-		p = (p + 1) % s.size();
-		const auto s0 = s[p];
-		auto s15 = s[q];
-		const auto result = s0 * 0x9e3779b97f4a7c13;
 
 		s15 ^= s0;
 		s[q] = std::rotl(s0, 25) ^ s15 ^ (s15 << 27);
