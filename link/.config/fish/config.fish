@@ -58,6 +58,10 @@ end
 
 # {{{ Install fisher plugins
 
+# To install fisher:
+# curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+# https://github.com/jorgebucaran/fisher#installation
+
 if functions --query fisher
 
     # {{{ Install z
