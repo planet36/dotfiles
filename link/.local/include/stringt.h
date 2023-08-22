@@ -1,167 +1,76 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// safe strncat, strncpy, wcsncat, wcsncpy (without truncation)
+/// string copy & concatenate, and report truncation
 /**
 \file
 \author Steven Ward
 \sa https://nrk.neocities.org/articles/not-a-fan-of-strlcpy
+Inspired by https://software.codidact.com/posts/285946
 */
 
 #pragma once
 
-#include "likely.h"
-
-#include <stdint.h>
 #include <string.h>
-#include <wchar.h>
 
-inline static size_t
-strtcat_helper(char* restrict dest,
-               const char* restrict src,
-               size_t dest_sz,
-               size_t dest_len)
-{
-	// includes terminating NUL character
-	const size_t src_sz = strlen(src) + 1;
-
-	if (unlikely(dest_len > SIZE_MAX - src_sz))
-		// dest_len + src_sz overflows
-		return SIZE_MAX;
-
-	if (dest_len + src_sz > dest_sz)
-		return dest_len + src_sz - dest_sz;
-
-	(void)memcpy(dest + dest_len, src, src_sz);
-	return 0;
-}
-
-/// String concatenate without truncation
+/// String copy, report truncation
 /**
 * DESCRIPTION
-*   Concatenate \a src to \a dest, including the terminating NUL character.
+*   Copy \a src to \a dst, including the terminating NUL character.
+*   If \a src cannot be copied completely to \a dst (i.e. truncation happens)
+*   and \a trunc_at is not \c nullptr, then \a *trunc_at will point to the
+*   first character in \a src that was not copied to \a dst.
 *
 * PREREQUISITES
-*   \a dest must be NUL-terminated.
-*   \a src must be NUL-terminated.
-*   \a dest_sz is the capacity (in characters) of \a dest.
+*   \a buf_last points to the last character in the buffer containing \a dst.
+*   \a src is NUL-terminated.
 *
 * CAVEATS
-*   If \a dest and \a src overlap, the behavior is undefined.
-*   If \a dest_sz is insufficient, the operation will not be performed, and a
-*   positive integer will be returned.
+*   If memory areas \a dst and \a src overlap, the results are undefined.
 *
 * RETURN VALUE
-*   0  : Success
-*   >0 : Failure
-*     The operation was not performed because \a dest_sz was insufficient.
-*     The returned value is the number of characters \a dest must be enlarged by
-*     for the operation to be performed.
+*   Return a pointer to the new terminating NUL character of \a dst.
+*
+* SEE ALSO
+*   \c memccpy(3)
 */
-static size_t
-strtcat(char* restrict dest, const char* restrict src, size_t dest_sz)
+[[nodiscard]] static char*
+strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
+[[gnu::returns_nonnull]]
 {
-	return strtcat_helper(dest, src, dest_sz, strlen(dest));
+	//[[assume(dst != nullptr)]];
+	//[[assume(src != nullptr)]];
+	//[[assume(buf_last != nullptr)]];
+	//[[assume(dst <= buf_last)]];
+
+	const size_t gap = buf_last - dst + 1; // includes the terminating NUL character
+
+	char* after_nul = (char*)memccpy(dst, src, '\0', gap);
+
+	if (after_nul != nullptr)
+		return after_nul - 1;
+
+	// truncation happened: NUL character not found within gap characters
+	// in src
+
+	if (trunc_at != nullptr)
+		*trunc_at = &src[gap - 1];
+
+	*buf_last = '\0';
+	return buf_last;
 }
 
-/// String copy without truncation
+/// String concatenate, report truncation
 /**
-* DESCRIPTION
-*   Copy \a src to \a dest, including the terminating NUL character.
+* See docs of \c strtcpy for details.
 *
 * PREREQUISITES
-*   \a src must be NUL-terminated.
-*   \a dest_sz is the capacity (in characters) of \a dest.
-*
-* CAVEATS
-*   If \a dest and \a src overlap, the behavior is undefined.
-*   If \a dest_sz is insufficient, the operation will not be performed, and a
-*   positive integer will be returned.
-*
-* RETURN VALUE
-*   0  : Success
-*   >0 : Failure
-*     The operation was not performed because \a dest_sz was insufficient.
-*     The returned value is the number of characters \a dest must be enlarged by
-*     for the operation to be performed.
+*   \a dst is NUL-terminated.
 */
-static size_t
-strtcpy(char* restrict dest, const char* restrict src, size_t dest_sz)
+[[nodiscard]] static char*
+strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
+[[gnu::returns_nonnull]]
 {
-	return strtcat_helper(dest, src, dest_sz, 0);
-}
-
-inline static size_t
-wstrtcat_helper(wchar_t* restrict dest,
-                const wchar_t* restrict src,
-                size_t dest_sz,
-                size_t dest_len)
-{
-	// includes terminating NUL wide character
-	const size_t src_sz = wcslen(src) + 1;
-
-	if (unlikely(dest_len > SIZE_MAX - src_sz))
-		// dest_len + src_sz overflows
-		return SIZE_MAX;
-
-	if (dest_len + src_sz > dest_sz)
-		return dest_len + src_sz - dest_sz;
-
-	(void)wmemcpy(dest + dest_len, src, src_sz);
-	return 0;
-}
-
-/// Wide string concatenate without truncation
-/**
-* DESCRIPTION
-*   Concatenate \a src to \a dest, including the terminating NUL wide character.
-*
-* PREREQUISITES
-*   \a dest must be NUL-terminated.
-*   \a src must be NUL-terminated.
-*   \a dest_sz is the capacity (in wide characters) of \a dest.
-*
-* CAVEATS
-*   If \a dest and \a src overlap, the behavior is undefined.
-*   If \a dest_sz is insufficient, the operation will not be performed, and a
-*   positive integer will be returned.
-*
-* RETURN VALUE
-*   0  : Success
-*   >0 : Failure
-*     The operation was not performed because \a dest_sz was insufficient.
-*     The returned value is the number of wide characters \a dest must be
-*     enlarged by for the operation to be performed.
-*/
-static size_t
-wstrtcat(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
-{
-	return wstrtcat_helper(dest, src, dest_sz, wcslen(dest));
-}
-
-/// Wide string copy without truncation
-/**
-* DESCRIPTION
-*   Copy \a src to \a dest, including the terminating NUL wide character.
-*
-* PREREQUISITES
-*   \a src must be NUL-terminated.
-*   \a dest_sz is the capacity (in wide characters) of \a dest.
-*
-* CAVEATS
-*   If \a dest and \a src overlap, the behavior is undefined.
-*   If \a dest_sz is insufficient, the operation will not be performed, and a
-*   positive integer will be returned.
-*
-* RETURN VALUE
-*   0  : Success
-*   >0 : Failure
-*     The operation was not performed because \a dest_sz was insufficient.
-*     The returned value is the number of wide characters \a dest must be
-*     enlarged by for the operation to be performed.
-*/
-static size_t
-wstrtcpy(wchar_t* restrict dest, const wchar_t* restrict src, size_t dest_sz)
-{
-	return wstrtcat_helper(dest, src, dest_sz, 0);
+	dst += strlen(dst);
+	return strtcpy(dst, buf_last, src, trunc_at);
 }
