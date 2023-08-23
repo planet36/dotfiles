@@ -4,6 +4,7 @@
 # shellcheck shell=bash disable=SC1090,SC1091
 
 ulimit -c unlimited
+#ulimit -s 16384
 
 # Prepend user path
 PATH="$HOME/.local/bin:$PATH"
