@@ -85,7 +85,7 @@ template <std::unsigned_integral T>
 constexpr void
 mul(T& hi, T& lo)
 {
-	// When T is uint64_t, the multiplication is optimized the same as _mulx_u64.
+	// When T is uint64_t, this is optimized the same as _mulx_u64.
 	using T2 = next_larger<T>;
 	const T2 r = static_cast<T2>(hi) * static_cast<T2>(lo);
 	hi = static_cast<T>(r >> std::numeric_limits<T>::digits);
