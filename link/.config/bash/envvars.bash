@@ -89,9 +89,9 @@ export TRASH_DIR="$XDG_DATA_HOME"/Trash
 
 # https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08_03
 # https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
-#export TZ=':America/New_York'
+export TZ=':America/New_York'
 #export TZ='EST+5'
-export TZ='UTC+5'
+#export TZ='UTC+5'
 
 export VCS_REPOS_MATCH='( -type d -and ( -name CVS -or -name .svn -or -name .git -or -name .hg ) )'
 printf -v VCS_REPOS_PRUNE '( %s -prune , -not %s )' "$VCS_REPOS_MATCH" "$VCS_REPOS_MATCH"
