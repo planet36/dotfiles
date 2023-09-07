@@ -18,7 +18,41 @@ export DIFFPROG="$VISUAL -d"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # man 5 eza_colors
-export EXA_COLORS='ur=32:uw=33:ux=31:ue=31:gr=32:gw=33:gx=31:tr=32:tw=33:tx=31:nb=34:nk=36:nm=35:ng=31:ub=34:uk=36:um=35:ug=31:uu=0:un=37:gu=0:gn=37:xx=0:da=32:'
+# https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
+
+EXA_COLORS_ARR=(
+ur=32
+uw=33
+ux=31
+ue=31
+gr=32
+gw=33
+gx=31
+tr=32
+tw=33
+tx=31
+nb=34
+nk=36
+nm=35
+ng=31
+ub=34
+uk=36
+um=35
+ug=31
+#uu=0
+#uu=33
+uu=30
+un=37
+#gu=0
+#gu=38\;5\;208
+gu=30
+gn=37
+xx=0
+da=32
+)
+
+printf -v EXA_COLORS '%s:' "${EXA_COLORS_ARR[@]}"
+export EXA_COLORS
 
 export FZF_DEFAULT_OPTS='--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
 
