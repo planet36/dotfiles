@@ -41,14 +41,14 @@ um=35
 ug=31
 #uu=0
 #uu=33
-uu=30
-un=37
+uu=37
+un=0
 #gu=0
 #gu=38\;5\;208
-gu=30
-gn=37
+gu=37
+gn=0
 xx=0
-da=32
+da=38\;5\;208
 )
 
 printf -v EXA_COLORS '%s:' "${EXA_COLORS_ARR[@]}"
