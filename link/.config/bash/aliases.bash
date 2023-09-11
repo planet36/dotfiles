@@ -53,6 +53,7 @@ alias sha512=sha512sum
 alias tiem=time
 alias tm=tmux
 alias trahs=trash
+alias trsah=trash
 alias treu=true
 alias tyep=type
 # shellcheck disable=SC2139
