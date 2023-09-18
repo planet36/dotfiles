@@ -21,7 +21,7 @@ pow_int_func()
 	if constexpr (E < 0)
 	{
 		// https://mathworld.wolfram.com/DivisionbyZero.html
-		static_assert(B != 0, "undefined");
+		static_assert(B != 0, "division by zero is undefined");
 
 		static_assert(E != std::numeric_limits<decltype(E)>::min(),
 		              "signed integer underflow");
