@@ -31,9 +31,12 @@ pow_int_func()
 	}
 	else if constexpr (E == 0)
 	{
+		// define 0**0 == 1
+		/*
 		// https://mathworld.wolfram.com/Indeterminate.html
 		// https://en.wikipedia.org/wiki/Zero_to_the_power_of_zero
 		static_assert(B != 0, "undefined");
+		*/
 
 		// https://en.wikipedia.org/wiki/Exponentiation#Zero_exponent
 		return 1;
@@ -60,9 +63,12 @@ pow_uint_func()
 {
 	if constexpr (E == 0)
 	{
+		// define 0**0 == 1
+		/*
 		// https://mathworld.wolfram.com/Indeterminate.html
 		// https://en.wikipedia.org/wiki/Zero_to_the_power_of_zero
 		static_assert(B != 0, "undefined");
+		*/
 
 		// https://en.wikipedia.org/wiki/Exponentiation#Zero_exponent
 		return 1;
