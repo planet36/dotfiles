@@ -20,7 +20,7 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # man 5 eza_colors
 # https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
 
-EXA_COLORS_ARR=(
+EZA_COLORS_ARR=(
 ur=32
 uw=33
 ux=31
@@ -36,8 +36,8 @@ gu=37
 da=38\;5\;208
 )
 
-printf -v EXA_COLORS '%s:' "${EXA_COLORS_ARR[@]}"
-export EXA_COLORS
+printf -v EZA_COLORS '%s:' "${EZA_COLORS_ARR[@]}"
+export EZA_COLORS
 
 export FZF_DEFAULT_OPTS='--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
 
