@@ -92,15 +92,6 @@ mul(T& hi, T& lo)
 	lo = static_cast<T>(r);
 }
 
-/// Multiply \a a and \a b and return the sum of the high and low parts of the product
-template <std::unsigned_integral T>
-constexpr T
-muma(T a, T b)
-{
-	mul(a, b);
-	return a + b;
-}
-
 /// Multiply \a a and \a b and return the XOR of the high and low parts of the product
 template <std::unsigned_integral T>
 constexpr T
@@ -108,6 +99,15 @@ mumx(T a, T b)
 {
 	mul(a, b);
 	return a ^ b;
+}
+
+/// Multiply \a a and \a b and return the sum of the high and low parts of the product
+template <std::unsigned_integral T>
+constexpr T
+muma(T a, T b)
+{
+	mul(a, b);
+	return a + b;
 }
 
 /// Multiply \a a and \a b and return the difference of the high and low parts of the product
