@@ -23,5 +23,5 @@ DEF_URBG_CLASS(clmulrand, simd128, uint64_t)
 	static_assert(inc.u64[1] & 1, "must be odd");
 
 	s.u64 += inc.u64;
-	return clmul_mix_sub(s);
+	return clmums(s);
 }

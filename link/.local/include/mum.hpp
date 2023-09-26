@@ -134,9 +134,9 @@ void clmul(simd128& a)
 	a.i64 = _mm_clmulepi64_si128(a.i64, a.i64, 0x10);
 }
 
-uint64_t clmul_mix_xor(simd128 a) { clmul(a); return a.u64[1] ^ a.u64[0]; }
-uint64_t clmul_mix_add(simd128 a) { clmul(a); return a.u64[1] + a.u64[0]; }
-uint64_t clmul_mix_sub(simd128 a) { clmul(a); return a.u64[1] - a.u64[0]; }
+uint64_t clmumx(simd128 a) { clmul(a); return a.u64[1] ^ a.u64[0]; }
+uint64_t clmuma(simd128 a) { clmul(a); return a.u64[1] + a.u64[0]; }
+uint64_t clmums(simd128 a) { clmul(a); return a.u64[1] - a.u64[0]; }
 
 void clmul(uint64_t& hi, uint64_t& lo)
 {
@@ -148,9 +148,9 @@ void clmul(uint64_t& hi, uint64_t& lo)
 	lo = result.u64[0];
 }
 
-uint64_t clmul_mix_xor(uint64_t a, uint64_t b) { clmul(a, b); return a ^ b; }
-uint64_t clmul_mix_add(uint64_t a, uint64_t b) { clmul(a, b); return a + b; }
-uint64_t clmul_mix_sub(uint64_t a, uint64_t b) { clmul(a, b); return a - b; }
+uint64_t clmumx(uint64_t a, uint64_t b) { clmul(a, b); return a ^ b; }
+uint64_t clmuma(uint64_t a, uint64_t b) { clmul(a, b); return a + b; }
+uint64_t clmums(uint64_t a, uint64_t b) { clmul(a, b); return a - b; }
 #else
 #warning "__PCLMUL__ not defined"
 #endif
