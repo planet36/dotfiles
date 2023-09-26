@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "mum_mix.hpp"
+#include "mum.hpp"
 #include "wyprimes.hpp"
 
 constexpr uint64_t

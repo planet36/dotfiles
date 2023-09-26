@@ -13,7 +13,7 @@
 
 #include "byteprimes.hpp"
 #include "def_urbg_class.hpp"
-#include "mum_mix.hpp"
+#include "mum.hpp"
 #include "simd-types.hpp"
 
 DEF_URBG_CLASS(clmulrand, simd128, uint64_t)
