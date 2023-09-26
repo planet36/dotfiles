@@ -95,7 +95,7 @@ mul(T& hi, T& lo)
 /// Multiply \a a and \a b and return the sum of the high and low parts of the product
 template <std::unsigned_integral T>
 constexpr T
-mum_mix_add(T a, T b)
+muma(T a, T b)
 {
 	mul(a, b);
 	return a + b;
@@ -104,7 +104,7 @@ mum_mix_add(T a, T b)
 /// Multiply \a a and \a b and return the XOR of the high and low parts of the product
 template <std::unsigned_integral T>
 constexpr T
-mum_mix_xor(T a, T b)
+mumx(T a, T b)
 {
 	mul(a, b);
 	return a ^ b;
@@ -113,7 +113,7 @@ mum_mix_xor(T a, T b)
 /// Multiply \a a and \a b and return the difference of the high and low parts of the product
 template <std::unsigned_integral T>
 constexpr T
-mum_mix_sub(T a, T b)
+mums(T a, T b)
 {
 	mul(a, b);
 	return a - b;

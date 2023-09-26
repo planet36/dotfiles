@@ -19,5 +19,5 @@
 DEF_URBG_CLASS(wyrand, uint64_t, uint64_t)
 {
 	s += _wyp[0];
-	return mum_mix_xor(s, s ^ _wyp[1]);
+	return mumx(s, s ^ _wyp[1]);
 }
