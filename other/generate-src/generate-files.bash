@@ -21,6 +21,7 @@ python3 generate-math-const.py                           > "$OUT_DIR"/include/ma
 bash generate-x11_colors.bash                            > "$OUT_DIR"/lib/python/x11_colors.py
 
 cat <<EOT
+
 # Run these commands:
 
 git diff \
@@ -30,4 +31,11 @@ $OUT_DIR/lib/python/x11_colors.py
 git commit -m 'Update generated source code files' \
 $OUT_DIR/include/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp \
 $OUT_DIR/lib/python/x11_colors.py
+
+# Or reset the changes
+
+git checkout \
+$OUT_DIR/include/{ascii,aux-lat-conv,gcc-machine-modes-typedefs,math-const,utm-ups-const}.hpp \
+$OUT_DIR/lib/python/x11_colors.py
+
 EOT
