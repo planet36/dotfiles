@@ -98,15 +98,15 @@ rand_uint_half_open(const T s, G& gen)
 	using T2 = next_larger<T>;
 	T2 m;
 
-	m = rand_int<T>(gen); // x in [0, 2^L)
-	m *= s; // x in [0, s * 2^L)
+	m = rand_int<T>(gen); // in [0, 2^L)
+	m *= s; // in [0, s * 2^L)
 	if (static_cast<T>(m) < s)
 	{
 		const T min = std::numeric_limits<T>::max() % s; // 2^L mod s
 		while (static_cast<T>(m) < min)
 		{
-			m = rand_int<T>(gen); // x in [0, 2^L)
-			m *= s; // x in [0, s * 2^L)
+			m = rand_int<T>(gen); // in [0, 2^L)
+			m *= s; // in [0, s * 2^L)
 		}
 	}
 
