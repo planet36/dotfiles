@@ -1,6 +1,7 @@
 #include "Xresources-xft"
 
-! xrdb -merge Xresources
+! xrdb -load ~/.config/xorg/Xresources
+! xrdb -merge ~/.config/xorg/Xresources
 
 Sxiv.background: Black
 Sxiv.foreground: Gray
