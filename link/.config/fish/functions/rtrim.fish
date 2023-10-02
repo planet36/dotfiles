@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function rtrim --description 'trim trailing whitespace'
+function rtrim --wraps perl --description 'trim trailing whitespace'
 
     # \s matches newline
     #perl -p -i~ -e 's/\s+$//' -- $argv
