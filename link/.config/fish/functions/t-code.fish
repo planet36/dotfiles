@@ -4,7 +4,7 @@
 function t-code --description 'clean and tar ~/code'
 	cd || return
 	clean code || return
-	find code -type f \( -name '*.out' \) -delete || return
+	find code -type f \( -name '*.out' -o -name 'core' -o -name 'core.[[:digit:]]*' \) -delete || return
 	t code || return
 	command xz --verbose -9 -e code.tar || return
 	mv code.tar.xz Downloads/ || return
