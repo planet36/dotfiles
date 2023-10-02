@@ -5,6 +5,7 @@ TOPTARGETS := all clone clean install uninstall lint
 
 BUILD_DIRS = \
 dwm \
+PractRand \
 slstatus \
 st \
 stw
@@ -27,7 +28,7 @@ clone: | $(SUBDIRS)
 clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-arch-install stw:
+arch-install PractRand stw:
 	git clone --quiet https://github.com/planet36/$@.git
 
 # My repos (forked from suckless)
