@@ -4,7 +4,7 @@
 # pylint: disable=invalid-name
 
 '''
-Filter the colors from https://github.com/freedesktop/xorg-xserver/blob/master/os/oscolor.c
+Filter the colors from https://gitlab.freedesktop.org/xorg/xserver/-/raw/master/os/oscolor.c
 and print them as a Python dict.
 '''
 
