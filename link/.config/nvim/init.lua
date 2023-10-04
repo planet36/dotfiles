@@ -294,7 +294,7 @@ vim.g.orig_colorscheme = get_colorscheme()
 vim.g.diff_colorscheme = "murphy"
 
 -- https://github.com/srcery-colors/srcery-vim/blob/master/autoload/srcery.vim#L17
--- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L352
+-- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L326
 -- Use yellow instead of bright magenta
 vim.cmd.highlight("Constant", "guifg=#FBB829")
 vim.cmd.highlight("Character", "guifg=#FBB829")
