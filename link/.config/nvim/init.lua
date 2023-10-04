@@ -296,10 +296,11 @@ vim.g.diff_colorscheme = "murphy"
 -- https://github.com/srcery-colors/srcery-vim/blob/master/autoload/srcery.vim#L17
 -- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L326
 -- Use yellow instead of bright magenta
-vim.cmd.highlight("Constant", "guifg=#FBB829")
-vim.cmd.highlight("Character", "guifg=#FBB829")
-vim.cmd.highlight("Boolean", "guifg=#FBB829")
-vim.cmd.highlight("Number", "guifg=#FBB829")
-vim.cmd.highlight("Float", "guifg=#FBB829")
+local srcery_yellow = '#FBB829'
+vim.cmd.highlight("Constant", "guifg=" .. srcery_yellow)
+vim.cmd.highlight("Character", "guifg=" .. srcery_yellow)
+vim.cmd.highlight("Boolean", "guifg=" .. srcery_yellow)
+vim.cmd.highlight("Number", "guifg=" .. srcery_yellow)
+vim.cmd.highlight("Float", "guifg=" .. srcery_yellow)
 
 -- }}}
