@@ -278,6 +278,8 @@ local colorscheme_list = {
 	"OceanicNext",
 	"github_dark_default",
 	"gruvbox",
+	"retrobox",
+	"wildcharm",
 	"murphy",
 }
 
