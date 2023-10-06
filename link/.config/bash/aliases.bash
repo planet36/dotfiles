@@ -12,6 +12,7 @@ alias bahs=bash
 alias blake2=b2sum
 alias c=clear
 alias cdl=cld
+alias celan=clean
 alias clena=clean
 alias dc=cd
 # shellcheck disable=SC2139
