@@ -26,7 +26,7 @@ class Ellipsoid:
         # defining parameters
         a = _a # semi-major axis (equatorial radius of the earth) (meters)
         f = 1 / _f_recip # (a-b)/a # flattening factor of the earth
-        GM = _GM # geocentric gravitational constant (m^3/s^2)
+        GM = _GM # geocentric gravitational constant (m³/s²)
         omega = _omega # nominal mean angular velocity of the earth (rad/s)
 
         # derived geometric constants
@@ -46,8 +46,8 @@ class Ellipsoid:
         alpha = math.asin(e) # angular eccentricity # acos(b/a)
 
         # derived physical constants
-        gamma_e = 9.7803253359 # normal gravity at the equator (on the ellipsoid) (m/s^2)
-        gamma_p = 9.8321849379 # normal gravity at the poles (on the ellipsoid) (m/s^2)
+        gamma_e = 9.7803253359 # normal gravity at the equator (on the ellipsoid) (m/s²)
+        gamma_p = 9.8321849379 # normal gravity at the poles (on the ellipsoid) (m/s²)
         k = (1 - f) * gamma_p / gamma_e - 1 # Somigliana's Formula - normal gravity formula constant
         m = omega * omega * a2 * b / GM # normal gravity formula constant
 
@@ -99,7 +99,7 @@ class Ellipsoid:
     def get_ht(self, w: np.array, z: np.array, sin_lat: np.array, cos_lat: np.array, Rn: np.array) -> np.array:
         # pylint: disable=no-else-return
         # https://www.gnu.org/software/libc/manual/html_node/Mathematical-Constants.html
-        # cos(45 deg) == 1/sqrt(2)
+        # cos(45°) == 1/√(2)
         if cos_lat > 1 / np.sqrt(2): # Equatorial
             return w / cos_lat - Rn
         else: # Polar
@@ -168,7 +168,7 @@ Converted to Python and modified by Steven Ward.  No rights reserved.
         c = 0
         ss = 0
 
-        # cos(45 deg)^2 == 0.5
+        # cos(45°)² == ½
         if c2 > 0.5: # Equatorial
             s = (z / r) * (1 + c2 * (a1 + u + s2 * v) / r)
             lat_rad = np.asin(s)
@@ -228,7 +228,7 @@ Converted to Python and modified by Steven Ward.  No rights reserved.
         c = 0
         ss = 0
 
-        # cos(45 deg)^2 == 0.5
+        # cos(45°)² == ½
         if c2 > 0.5: # Equatorial
             s = (z / r) * (1 + c2 * (a1 + u + s2 * v) / r)
             lat_rad = np.asin(s)
