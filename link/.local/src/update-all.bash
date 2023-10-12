@@ -14,7 +14,7 @@ do
     git pull || break
     #git fsck || break
     #git gc || break
-    cd - &> /dev/null || break
+    cd - > /dev/null || break
   else
     echo "Not a git repo"
   fi
