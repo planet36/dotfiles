@@ -10,6 +10,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// https://stackoverflow.com/a/76899758
+// Permit constexpr if older than C23
+#if !defined(__cplusplus) && !defined(constexpr) && \
+    (!defined(__STDC_VERSION__) || (__STDC_VERSION__ <= 201710L))
+#define constexpr const
+#endif
+
 const char* program_author = "Steven Ward";
 const char* program_version = "1.0.2";
 const char* program_license = "OSL-3.0";

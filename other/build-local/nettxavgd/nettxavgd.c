@@ -25,6 +25,13 @@
 #include <time.h>
 #include <unistd.h>
 
+// https://stackoverflow.com/a/76899758
+// Permit constexpr if older than C23
+#if !defined(__cplusplus) && !defined(constexpr) && \
+    (!defined(__STDC_VERSION__) || (__STDC_VERSION__ <= 201710L))
+#define constexpr const
+#endif
+
 int
 scandir_filter(const struct dirent* dirent)
 {
