@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Copied from
+// Adapted from
 // https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/lib/string.c#n118
 // https://elixir.bootlin.com/linux/latest/source/tools/lib/string.c#L118
 
