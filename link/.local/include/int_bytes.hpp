@@ -82,3 +82,9 @@ template <std::integral T>
 using next_larger = std::conditional_t<std::is_signed_v<T>,
                                        int_bytes<sizeof(T) * 2>,
                                        uint_bytes<sizeof(T) * 2>>;
+
+template <typename T, typename T2>
+using smaller = std::conditional_t<sizeof(T) <= sizeof(T2), T, T2>;
+
+template <typename T, typename T2>
+using larger = std::conditional_t<sizeof(T) >= sizeof(T2), T, T2>;
