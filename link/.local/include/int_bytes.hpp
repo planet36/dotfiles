@@ -88,3 +88,14 @@ using smaller_of = std::conditional_t<sizeof(T) <= sizeof(T2), T, T2>;
 
 template <typename T, typename T2>
 using larger_of = std::conditional_t<sizeof(T) >= sizeof(T2), T, T2>;
+
+/**
+\return \a n cast to the next larger integer type
+*/
+template <std::integral T>
+constexpr auto
+widen(const T n)
+{
+	using T2 = next_larger<T>;
+	return static_cast<T2>(n);
+}
