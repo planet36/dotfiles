@@ -84,7 +84,7 @@ using next_larger = std::conditional_t<std::is_signed_v<T>,
                                        uint_bytes<sizeof(T) * 2>>;
 
 template <typename T, typename T2>
-using smaller = std::conditional_t<sizeof(T) <= sizeof(T2), T, T2>;
+using smaller_of = std::conditional_t<sizeof(T) <= sizeof(T2), T, T2>;
 
 template <typename T, typename T2>
-using larger = std::conditional_t<sizeof(T) >= sizeof(T2), T, T2>;
+using larger_of = std::conditional_t<sizeof(T) >= sizeof(T2), T, T2>;
