@@ -10,6 +10,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdint>
 #include <iterator>
 #include <random>
 
@@ -63,3 +64,43 @@ random_device_seeded()
 	thread_local random_device_seed_seq rd_ss;
 	return PRNG{rd_ss};
 }
+
+/// A seed sequence (mimicking \c std::seed_seq) that uses a constant value
+/**
+This partially satisfies the named requirement \c SeedSequence.
+
+\sa https://en.cppreference.com/w/cpp/named_req/SeedSequence
+\sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
+\sa https://en.cppreference.com/w/cpp/algorithm/fill
+*/
+template <std::uint_least32_t value = 0>
+struct fill_seed_seq
+{
+	using result_type = std::seed_seq::result_type;
+
+	template <std::random_access_iterator Iter>
+	void generate(Iter first, Iter last)
+	{
+		std::fill(first, last, value);
+	}
+};
+
+/// A seed sequence (mimicking \c std::seed_seq) that uses sequentially increasing values
+/**
+This partially satisfies the named requirement \c SeedSequence.
+
+\sa https://en.cppreference.com/w/cpp/named_req/SeedSequence
+\sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
+\sa https://en.cppreference.com/w/cpp/algorithm/iota
+*/
+template <std::uint_least32_t value = 0>
+struct iota_seed_seq
+{
+	using result_type = std::seed_seq::result_type;
+
+	template <std::random_access_iterator Iter>
+	void generate(Iter first, Iter last)
+	{
+		std::iota(first, last, value);
+	}
+};
