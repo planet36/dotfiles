@@ -57,7 +57,7 @@ auto rng = random_device_seeded<std::mt19937_64>();
 Adapted from the following source.
 \sa http://www.gockelhut.com/cpp-pirate/random-seed.html
 */
-template <typename PRNG>
+template <typename PRNG = std::mt19937_64>
 PRNG
 random_device_seeded()
 {
