@@ -1,10 +1,20 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// A seed sequence that uses \c std::random_device
+/// Seed sequences (mimicking \c std::seed_seq) that use \c std::random_device, constant values, or increasing values
 /**
 \file
 \author Steven Ward
+
+These partially satisfy the named requirement \c SeedSequence.
+
+\sa https://en.cppreference.com/w/cpp/named_req/SeedSequence
+\sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
+\sa https://en.cppreference.com/w/cpp/numeric/random/random_device
+\sa https://en.cppreference.com/w/cpp/algorithm/generate
+\sa https://en.cppreference.com/w/cpp/algorithm/fill
+\sa https://en.cppreference.com/w/cpp/algorithm/iota
+\sa https://www.pcg-random.org/posts/cpp-seeding-surprises.html
 */
 
 #pragma once
@@ -13,20 +23,12 @@
 #include <iterator>
 #include <random>
 
-/// A seed sequence (mimicking \c std::seed_seq) that uses \c std::random_device
+/// A seed sequence that uses \c std::random_device
 /**
-This partially satisfies the named requirement \c SeedSequence.
-
-\sa https://en.cppreference.com/w/cpp/named_req/SeedSequence
-\sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
-\sa https://en.cppreference.com/w/cpp/algorithm/generate
-
 Adapted from the following sources.
 \sa https://old.reddit.com/r/cpp/comments/31857s/random_number_generation_it_might_be_harder_than/cq08lli/
 \sa https://probablydance.com/2016/12/29/random_seed_seq-a-small-utility-to-properly-seed-random-number-generators-in-c/
 \sa https://codingnest.com/generating-random-numbers-using-c-standard-library-the-solutions/
-
-\sa https://www.pcg-random.org/posts/cpp-seeding-surprises.html
 */
 struct random_device_seed_seq
 {
@@ -42,15 +44,20 @@ private:
 	std::random_device random_device;
 };
 
-/// Return an instance of \c PRNG that has been seeded with \c random_device_seed_seq
+/// Return an instance of \a PRNG that has been seeded with \c random_device_seed_seq
 /**
 \pre \a PRNG satisfies the named requirement \c RandomNumberEngine.
 
 \sa https://en.cppreference.com/w/cpp/named_req/RandomNumberEngine
 
-Use it like this
+The following are code examples of how to use it.
 \code{.cpp}
+// Specify PRNG
 auto rng = random_device_seeded<std::mt19937_64>();
+\endcode
+\code{.cpp}
+// Use default PRNG
+auto rng = random_device_seeded();
 \endcode
 
 Adapted from the following source.
@@ -64,14 +71,7 @@ random_device_seeded()
 	return PRNG{rd_ss};
 }
 
-/// A seed sequence (mimicking \c std::seed_seq) that uses a constant value
-/**
-This partially satisfies the named requirement \c SeedSequence.
-
-\sa https://en.cppreference.com/w/cpp/named_req/SeedSequence
-\sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
-\sa https://en.cppreference.com/w/cpp/algorithm/fill
-*/
+/// A seed sequence that uses a constant value
 template <std::seed_seq::result_type value = 0>
 struct fill_seed_seq
 {
@@ -84,14 +84,7 @@ struct fill_seed_seq
 	}
 };
 
-/// A seed sequence (mimicking \c std::seed_seq) that uses sequentially increasing values
-/**
-This partially satisfies the named requirement \c SeedSequence.
-
-\sa https://en.cppreference.com/w/cpp/named_req/SeedSequence
-\sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
-\sa https://en.cppreference.com/w/cpp/algorithm/iota
-*/
+/// A seed sequence that uses sequentially increasing values
 template <std::seed_seq::result_type value = 0>
 struct iota_seed_seq
 {
