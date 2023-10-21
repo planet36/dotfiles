@@ -10,7 +10,6 @@
 #pragma once
 
 #include <algorithm>
-#include <cstdint>
 #include <iterator>
 #include <random>
 
@@ -73,7 +72,7 @@ This partially satisfies the named requirement \c SeedSequence.
 \sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
 \sa https://en.cppreference.com/w/cpp/algorithm/fill
 */
-template <std::uint_least32_t value = 0>
+template <std::seed_seq::result_type value = 0>
 struct fill_seed_seq
 {
 	using result_type = std::seed_seq::result_type;
@@ -93,7 +92,7 @@ This partially satisfies the named requirement \c SeedSequence.
 \sa https://en.cppreference.com/w/cpp/numeric/random/seed_seq/generate
 \sa https://en.cppreference.com/w/cpp/algorithm/iota
 */
-template <std::uint_least32_t value = 0>
+template <std::seed_seq::result_type value = 0>
 struct iota_seed_seq
 {
 	using result_type = std::seed_seq::result_type;
