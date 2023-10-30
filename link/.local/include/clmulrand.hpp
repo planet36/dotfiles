@@ -12,8 +12,8 @@
 #pragma once
 
 #include "byteprimes.hpp"
+#include "clmum.hpp"
 #include "def_urbg_class.hpp"
-#include "mum.hpp"
 #include "simd-types.hpp"
 
 DEF_URBG_CLASS(clmulrand, simd128, uint64_t)
