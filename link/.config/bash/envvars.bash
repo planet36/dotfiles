@@ -196,12 +196,11 @@ GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
 #GCC_COMMON_OPTIONS+=' -ftrivial-auto-var-init=zero'
 
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
-#OPTIMIZE_OPTIONS='-O3 -march=native -fassociative-math -fno-math-errno -freciprocal-math -fno-signed-zeros -fno-trapping-math'
 # Using -fsigned-zeros disables associative-math
-#OPTIMIZE_OPTIONS='-O3 -march=native -fno-math-errno -freciprocal-math -fno-trapping-math'
-export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native'
-#OPTIMIZE_OPTIONS+=' -fno-math-errno'
-#OPTIMIZE_OPTIONS+=' -funsafe-math-optimizations'
+export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native -fno-math-errno'
+#OPTIMIZE_OPTIONS+=' -fassociative-math -fno-signed-zeros -fno-trapping-math'
+# Do not use -freciprocal-math (enabled with -funsafe-math-optimizations (enabled with -ffast-math (enabled with -Ofast)))
+# Do not use -ffinite-math-only (enabled with -ffast-math (enabled with -Ofast))
 
 export DEBUG_OPTIONS='-Og -g3'
 # https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
