@@ -1,0 +1,22 @@
+#!/usr/bin/awk -f
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# Print the longest line.
+
+BEGIN {
+	max_length = 0
+	longest_line = ""
+}
+
+{
+	len = length($0)
+	if (len > max_length) {
+		max_length = len
+		longest_line = $0
+	}
+}
+
+END {
+	print longest_line
+}
