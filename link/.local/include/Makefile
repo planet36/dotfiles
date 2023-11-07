@@ -1,7 +1,10 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
+export LC_ALL := C
+
 CPPFLAGS += -MMD -MP
+CPPFLAGS += `pkg-config --cflags libutf8proc`
 
 CXXFLAGS += -march=native
 CXXFLAGS += -Werror -Wno-error=pedantic
@@ -9,6 +12,7 @@ CXXFLAGS += -Werror -Wno-error=pedantic
 #LDFLAGS +=
 
 #LDLIBS +=
+LDLIBS += `pkg-config --libs fmt libutf8proc`
 
 C_HDRS := $(wildcard *.h)
 CXX_HDRS := $(wildcard *.hpp)
