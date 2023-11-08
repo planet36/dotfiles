@@ -11,6 +11,8 @@
 \sa https://www.felixcloutier.com/x86/aesdec
 */
 
+#pragma once
+
 #include "byteprimes.hpp"
 #include "def_urbg_class.hpp"
 #include "simd-types.hpp"
