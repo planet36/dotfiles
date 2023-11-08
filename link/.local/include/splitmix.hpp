@@ -28,7 +28,8 @@ DEF_URBG_CLASS(splitmix32, uint64_t, uint32_t)
 	static_assert((M2 & 1) != 0, "must be odd");
 
 	// Not result_type
-	auto x = (s += inc);
+	auto x = s;
+	s += inc; // (SDW)
 
 	x ^= x >> S1;
 	x *= M1;
@@ -56,7 +57,8 @@ DEF_URBG_CLASS(splitmix64, uint64_t, uint64_t)
 	static_assert((M1 & 1) != 0, "must be odd");
 	static_assert((M2 & 1) != 0, "must be odd");
 
-	auto x = (s += inc);
+	auto x = s;
+	s += inc; // (SDW)
 
 	x ^= x >> S1;
 	x *= M1;
