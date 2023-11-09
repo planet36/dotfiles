@@ -21,16 +21,16 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
 
 EZA_COLORS_ARR=(
-ur=32
-uw=33
-ux=31
-ue=31
-gr=32
-gw=33
-gx=31
-tr=32
-tw=33
-tx=31
+#ur=32
+#uw=33
+#ux=31
+#ue=31
+#gr=32
+#gw=33
+#gx=31
+#tr=32
+#tw=33
+#tx=31
 uu=37
 gu=37
 da=38\;5\;208
