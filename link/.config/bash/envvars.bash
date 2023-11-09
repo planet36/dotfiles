@@ -31,9 +31,9 @@ EZA_COLORS_ARR=(
 #tr=32
 #tw=33
 #tx=31
-uu=37
+uu=38\;5\;208
 gu=37
-da=38\;5\;208
+da=35
 )
 
 printf -v EZA_COLORS '%s:' "${EZA_COLORS_ARR[@]}"
