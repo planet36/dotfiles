@@ -20,10 +20,10 @@
 
 DEF_URBG_CLASS(lehmer64, __uint128_t, uint64_t)
 {
-	static constexpr uint64_t M1 = 0xda942042e4dd58b5; // not prime (popcount = 29)
-	static_assert((M1 & 1) != 0, "must be odd");
+	static constexpr uint64_t M = 0xda942042e4dd58b5; // not prime (popcount = 29)
+	static_assert((M & 1) != 0, "must be odd");
 
 	++s; // (SDW)
-	s *= M1;
+	s *= M;
 	return s >> 64;
 }
