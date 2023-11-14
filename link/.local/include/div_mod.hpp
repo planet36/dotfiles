@@ -341,26 +341,30 @@ round_mod(const auto x, const auto y)
 constexpr auto
 trunc_amod(const auto x, const auto y)
 {
-	return trunc_mod(x, y) == 0 ? y : trunc_mod(x, y);
+	const auto result = trunc_mod(x, y);
+	return result == 0 ? y : result;
 }
 
 /// get the adjusted remainder of the _floored_ division
 constexpr auto
 floor_amod(const auto x, const auto y)
 {
-	return floor_mod(x, y) == 0 ? y : floor_mod(x, y);
+	const auto result = floor_mod(x, y);
+	return result == 0 ? y : result;
 }
 
 /// get the adjusted remainder of the _ceiling_ division
 constexpr auto
 ceil_amod(const auto x, const auto y)
 {
-	return ceil_mod(x, y) == 0 ? y : ceil_mod(x, y);
+	const auto result = ceil_mod(x, y);
+	return result == 0 ? y : result;
 }
 
 /// get the adjusted remainder of the _rounded_ division
 constexpr auto
 round_amod(const auto x, const auto y)
 {
-	return round_mod(x, y) == 0 ? y : round_mod(x, y);
+	const auto result = round_mod(x, y);
+	return result == 0 ? y : result;
 }
