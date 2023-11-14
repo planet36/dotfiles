@@ -17,12 +17,12 @@
 #include <utility>
 
 /// get the quotient and remainder of the _truncated_ integer division
-template <std::integral T>
-constexpr void
-trunc_div_mod(const T x, const T y, T& quo, T& rem)
+constexpr auto
+trunc_div_mod(const std::integral auto x, const std::integral auto y)
 {
-	quo = x / y;
-	rem = x % y;
+	const auto quo = x / y;
+	const auto rem = x % y;
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient and remainder of the _floored_ integer division
@@ -68,12 +68,11 @@ Example of floored division:
 Mod[x, y] == x - y * Quotient[x, y]
 \endverbatim
 */
-template <std::integral T>
-constexpr void
-floor_div_mod(const T x, const T y, T& quo, T& rem)
+constexpr auto
+floor_div_mod(const std::integral auto x, const std::integral auto y)
 {
-	quo = x / y;
-	rem = x % y;
+	auto quo = x / y;
+	auto rem = x % y;
 
 	if (y < 0)
 	{
@@ -91,15 +90,16 @@ floor_div_mod(const T x, const T y, T& quo, T& rem)
 			quo--;
 		}
 	}
+
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient and remainder of the _ceiling_ integer division
-template <std::integral T>
-constexpr void
-ceil_div_mod(const T x, const T y, T& quo, T& rem)
+constexpr auto
+ceil_div_mod(const std::integral auto x, const std::integral auto y)
 {
-	quo = x / y;
-	rem = x % y;
+	auto quo = x / y;
+	auto rem = x % y;
 
 	if (y > 0)
 	{
@@ -117,15 +117,16 @@ ceil_div_mod(const T x, const T y, T& quo, T& rem)
 			quo++;
 		}
 	}
+
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient and remainder of the _rounded_ integer division
-template <std::integral T>
-constexpr void
-round_div_mod(const T x, const T y, T& quo, T& rem)
+constexpr auto
+round_div_mod(const std::integral auto x, const std::integral auto y)
 {
-	quo = x / y;
-	rem = x % y;
+	auto quo = x / y;
+	auto rem = x % y;
 
 	if (y < 0)
 	{
@@ -165,87 +166,45 @@ round_div_mod(const T x, const T y, T& quo, T& rem)
 			}
 		}
 	}
+
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient and remainder of the _truncated_ floating-point division
-template <std::floating_point T>
-constexpr void
-trunc_div_mod(const T x, const T y, T& quo, T& rem)
+constexpr auto
+trunc_div_mod(const std::floating_point auto x, const std::floating_point auto y)
 {
-	quo = std::trunc(x / y);
-	rem = x - quo * y;
+	const auto quo = std::trunc(x / y);
+	const auto rem = x - quo * y;
 	// fmod is less accurate than division and trunc
-	//rem = std::fmod(x, y);
+	//const auto rem = std::fmod(x, y);
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient and remainder of the _floored_ floating-point division
-template <std::floating_point T>
-constexpr void
-floor_div_mod(const T x, const T y, T& quo, T& rem)
+constexpr auto
+floor_div_mod(const std::floating_point auto x, const std::floating_point auto y)
 {
-	quo = std::floor(x / y);
-	rem = x - quo * y;
+	const auto quo = std::floor(x / y);
+	const auto rem = x - quo * y;
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient and remainder of the _ceiling_ floating-point division
-template <std::floating_point T>
-constexpr void
-ceil_div_mod(const T x, const T y, T& quo, T& rem)
+constexpr auto
+ceil_div_mod(const std::floating_point auto x, const std::floating_point auto y)
 {
-	quo = std::ceil(x / y);
-	rem = x - quo * y;
+	const auto quo = std::ceil(x / y);
+	const auto rem = x - quo * y;
+	return std::make_pair(quo, rem);
 }
 
 /// get the quotient and remainder of the _rounded_ floating-point division
-template <std::floating_point T>
-constexpr void
-round_div_mod(const T x, const T y, T& quo, T& rem)
-{
-	quo = std::round(x / y);
-	rem = x - quo * y;
-}
-
-/// get the quotient and remainder of the _truncated_ division
 constexpr auto
-trunc_div_mod(const auto x, const auto y)
+round_div_mod(const std::floating_point auto x, const std::floating_point auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	trunc_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
-	return std::make_pair(quo, rem);
-}
-
-/// get the quotient and remainder of the _floored_ division
-constexpr auto
-floor_div_mod(const auto x, const auto y)
-{
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	floor_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
-	return std::make_pair(quo, rem);
-}
-
-/// get the quotient and remainder of the _ceiling_ division
-constexpr auto
-ceil_div_mod(const auto x, const auto y)
-{
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	ceil_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
-	return std::make_pair(quo, rem);
-}
-
-/// get the quotient and remainder of the _rounded_ division
-constexpr auto
-round_div_mod(const auto x, const auto y)
-{
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	round_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto quo = std::round(x / y);
+	const auto rem = x - quo * y;
 	return std::make_pair(quo, rem);
 }
 
@@ -253,10 +212,7 @@ round_div_mod(const auto x, const auto y)
 constexpr auto
 trunc_div(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	trunc_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = trunc_div_mod(x, y);
 	return quo;
 }
 
@@ -264,10 +220,7 @@ trunc_div(const auto x, const auto y)
 constexpr auto
 floor_div(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	floor_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = floor_div_mod(x, y);
 	return quo;
 }
 
@@ -275,10 +228,7 @@ floor_div(const auto x, const auto y)
 constexpr auto
 ceil_div(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	ceil_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = ceil_div_mod(x, y);
 	return quo;
 }
 
@@ -286,10 +236,7 @@ ceil_div(const auto x, const auto y)
 constexpr auto
 round_div(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	round_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = round_div_mod(x, y);
 	return quo;
 }
 
@@ -297,10 +244,7 @@ round_div(const auto x, const auto y)
 constexpr auto
 trunc_mod(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	trunc_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = trunc_div_mod(x, y);
 	return rem;
 }
 
@@ -308,10 +252,7 @@ trunc_mod(const auto x, const auto y)
 constexpr auto
 floor_mod(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	floor_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = floor_div_mod(x, y);
 	return rem;
 }
 
@@ -319,10 +260,7 @@ floor_mod(const auto x, const auto y)
 constexpr auto
 ceil_mod(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	ceil_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = ceil_div_mod(x, y);
 	return rem;
 }
 
@@ -330,10 +268,7 @@ ceil_mod(const auto x, const auto y)
 constexpr auto
 round_mod(const auto x, const auto y)
 {
-	using T = std::common_type_t<decltype(x), decltype(y)>;
-	T quo;
-	T rem;
-	round_div_mod(static_cast<T>(x), static_cast<T>(y), quo, rem);
+	const auto [quo, rem] = round_div_mod(x, y);
 	return rem;
 }
 
