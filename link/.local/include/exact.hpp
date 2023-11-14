@@ -78,10 +78,7 @@ T ceilDivExact(const T x, const T y)
 {
 	DIVIDE_CHECK
 
-	T quo{};
-	T rem{};
-	ceil_div_mod(x, y, quo, rem);
-	return quo;
+	return ceil_div(x, y);
 }
 
 template <std::integral T>
@@ -105,10 +102,7 @@ T floorDivExact(const T x, const T y)
 {
 	DIVIDE_CHECK
 
-	T quo{};
-	T rem{};
-	floor_div_mod(x, y, quo, rem);
-	return quo;
+	return floor_div(x, y);
 }
 
 template <std::integral T>
@@ -154,10 +148,7 @@ T roundDivExact(const T x, const T y)
 {
 	DIVIDE_CHECK
 
-	T quo{};
-	T rem{};
-	round_div_mod(x, y, quo, rem);
-	return quo;
+	return round_div(x, y);
 }
 
 template <std::integral T>
