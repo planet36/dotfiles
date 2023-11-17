@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Fill an array of unsigned ints with random values
+/// Fill a buffer with random values
 /**
 \file
 \author Steven Ward
