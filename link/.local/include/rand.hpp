@@ -13,7 +13,7 @@
 #include "int_bytes.hpp"
 #include "integral_number.hpp"
 #include "make_unit_float.hpp"
-#include "sfc.hpp"
+#include "wyrand.hpp"
 
 #include <concepts>
 #include <limits>
@@ -22,7 +22,7 @@
 namespace
 {
 // This must satisfy std::uniform_random_bit_generator.
-thread_local sfc64 per_thread_random_number_engine;
+thread_local wyrand per_thread_random_number_engine;
 }
 
 /**
