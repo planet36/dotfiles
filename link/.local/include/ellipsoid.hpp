@@ -53,6 +53,11 @@ struct Ellipsoid
 	const T a;
 
 	/// flattening factor of the earth
+	/**
+	* f == 0: sphere
+	* f >  0: oblate ellipsoid
+	* f <  0: prolate ellipsoid
+	*/
 	const T f; // (a - b) / a
 
 	/// geocentric gravitational constant (m³/s²)
