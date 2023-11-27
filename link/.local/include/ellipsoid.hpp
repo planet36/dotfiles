@@ -43,6 +43,10 @@ Table 3.4 Special WGS 84 Parameters
 (some of) Table 3.6 WGS 84 Derived Physical Constants
 
 Table 3.7 WGS 84 Derived Moments of Inertia
+
+\sa https://arxiv.org/pdf/2212.05818.pdf
+\sa https://en.wikipedia.org/wiki/Flattening
+\sa https://en.wikipedia.org/wiki/Eccentricity_(mathematics)
 */
 template <std::floating_point T>
 struct Ellipsoid
