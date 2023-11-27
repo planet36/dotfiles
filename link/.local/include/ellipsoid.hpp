@@ -87,25 +87,25 @@ struct Ellipsoid
 	const T e2 = f * (2 - f); // (a2 - b2) / a2
 
 	/// first eccentricity
-	const T e = std::sqrt(e2);
+	const T e = std::sqrt(std::abs(e2));
 
 	/// second eccentricity squared
 	const T ep2 = e2 / (1 - e2); // (a2 - b2) / b2
 
 	/// second eccentricity
-	const T ep = std::sqrt(ep2);
+	const T ep = std::sqrt(std::abs(ep2));
 
 	/// third eccentricity squared
 	const T epp2 = e2 / (2 - e2); // (a2 - b2) / (a2 + b2)
 
 	/// third eccentricity
-	const T epp = std::sqrt(epp2);
+	const T epp = std::sqrt(std::abs(epp2));
 
 	/// linear eccentricity squared
 	const T c2 = a2 - b2;
 
 	/// linear eccentricity
-	const T c = std::sqrt(c2);
+	const T c = std::sqrt(std::abs(c2));
 
 	/// angular eccentricity
 	const T alpha = std::asin(e); // std::acos(b / a)
