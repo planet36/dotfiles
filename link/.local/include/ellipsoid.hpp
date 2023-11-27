@@ -26,6 +26,7 @@ Version 1.0.0
 
 #include <cmath>
 #include <concepts>
+#include <stdexcept>
 
 /// An ellipsoid and all its defining parameters and derived geometric constants
 /**
@@ -125,7 +126,19 @@ struct Ellipsoid
 	                    const T GM_ = 3.986004418E14L,
 	                    const T omega_ = 7.292115E-5L):
 	a(a_), f(1 / f_recip_), GM(GM_), omega(omega_)
-	{}
+	{
+		if (a <= T{})
+			throw std::invalid_argument("a must be positive");
+
+		if (!std::isfinite(a))
+			throw std::invalid_argument("a must be finite");
+
+		if (b <= T{})
+			throw std::invalid_argument("b must be positive");
+
+		if (!std::isfinite(b))
+			throw std::invalid_argument("b must be finite");
+	}
 
 	/// get the radius of curvature in the prime vertical (meters)
 	/**
