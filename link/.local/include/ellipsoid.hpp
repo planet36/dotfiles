@@ -137,16 +137,16 @@ struct Ellipsoid
 	a(a_), f(1 / f_recip_), GM(GM_), omega(omega_)
 	{
 		if (a <= T{})
-			throw std::invalid_argument("a must be positive");
+			throw std::invalid_argument("Equatorial radius must be positive");
 
 		if (!std::isfinite(a))
-			throw std::invalid_argument("a must be finite");
+			throw std::invalid_argument("Equatorial radius must be finite");
 
 		if (b <= T{})
-			throw std::invalid_argument("b must be positive");
+			throw std::invalid_argument("Polar radius must be positive");
 
 		if (!std::isfinite(b))
-			throw std::invalid_argument("b must be finite");
+			throw std::invalid_argument("Polar radius must be finite");
 	}
 
 	/// get the radius of curvature in the prime vertical (meters)
