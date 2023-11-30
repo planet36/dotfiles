@@ -7,7 +7,7 @@
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2022-09-08'
+SCRIPT_VERSION='2023-11-30'
 SCRIPT_AUTHOR='Steven Ward'
 SCRIPT_LICENSE='OSL-3.0'
 
@@ -109,7 +109,7 @@ BINARIES=(
     #'btm'
     #'choose'
     #'delta'
-    'gotop'
+    #'gotop'
     #'lsd'
     'paru'
     'yay'
@@ -122,7 +122,7 @@ BINARY_TO_USER_REPO=(
     #['btm']='ClementTsang/bottom'
     #['choose']='theryangeary/choose'
     #['delta']='dandavison/delta'
-    ['gotop']='xxxserxxx/gotop'
+    #['gotop']='xxxserxxx/gotop'
     #['lsd']='Peltoche/lsd'
     ['paru']='Morganamilo/paru'
     ['yay']='Jguer/yay'
@@ -135,7 +135,7 @@ BINARY_TO_PART_RELEASE_FILE=(
     #['btm']='x86_64-unknown-linux-gnu'
     #['choose']='x86_64-unknown-linux-gnu'
     #['delta']='x86_64-unknown-linux-gnu'
-    ['gotop']='linux_amd64'
+    #['gotop']='linux_amd64'
     #['lsd']='x86_64-unknown-linux-gnu'
     ['paru']='x86_64'
     ['yay']='x86_64'
