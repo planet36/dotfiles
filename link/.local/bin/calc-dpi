@@ -80,10 +80,10 @@ def main(argv = None):
 
     def print_help():
         """Print the help message"""
-        print(f"""Usage: {program_name} [OPTIONS] DIAGONAL_IN
+        print(f"""Usage: {program_name} [OPTIONS] DIAGONAL_INCHES
 Calculate the DPI from the given display dimentions.
 
-DIAGONAL_IN is the diagonal size (in inches) of the display.
+DIAGONAL_INCHES is the diagonal size (in inches) of the display.
 It must be a positive real number.
 If absent, you will be prompted to enter a value for it.
 
