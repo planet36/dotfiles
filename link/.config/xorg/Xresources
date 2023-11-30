@@ -25,20 +25,6 @@ Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
 Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
 
-Zutty.altScroll:  true
-Zutty.autoCopy:   true
-Zutty.boldColors: false
-Zutty.border:     2
-Zutty.geometry:   239x61
-Zutty.font:       Hack
-Zutty.fontpath:   /usr/share/fonts/TTF
-Zutty.fontsize:   14
-Zutty.saveLines:  10000
-Zutty.fg:         #fce8c3
-Zutty.bg:         #1c1b19
-Zutty.cr:         #fbb829
-
-
 ! https://github.com/srcery-colors/srcery-terminal/blob/master/xresources/srcery.xresources
 ! https://raw.githubusercontent.com/srcery-colors/srcery-terminal/master/xresources/srcery.xresources
 
