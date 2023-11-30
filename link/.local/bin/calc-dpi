@@ -80,8 +80,13 @@ def main(argv = None):
 
     def print_help():
         """Print the help message"""
-        print(f"""Usage: {program_name} [OPTIONS] DIAGONAL_INCHES
+        print(f"""Usage: {program_name} [OPTIONS] [RESOLUTION] DIAGONAL_INCHES
 Calculate the DPI from the given display dimentions.
+
+RESOLUTION is the resolution (in pixels) of the display.
+The format of RESOLUTION is "<WIDTH>x<HEIGHT>".
+WIDTH and HEIGHT must be positive integers.
+(default: {default_width_px}x{default_height_px})
 
 DIAGONAL_INCHES is the diagonal size (in inches) of the display.
 It must be a positive real number.
@@ -163,7 +168,13 @@ OPTIONS
     if not remaining_args: # empty
         diagonal_in = input('Enter the diagonal size (in inches) of the display: ')
     else:
-        diagonal_in = remaining_args[0]
+        for s in remaining_args:
+            if 'x' in s: # resolution given
+                (w, h) = s.split('x')
+                width_px = int(w)
+                height_px = int(h)
+            else: # diagonal given
+                diagonal_in = s
 
     diagonal_in = float(diagonal_in)
 
