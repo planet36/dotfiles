@@ -92,7 +92,7 @@ OPTIONS
 -V, --version
     Print the version information, then exit.
 
---help
+-h, --help
     Print this message, then exit.
 
 -v, --verbose
@@ -124,7 +124,7 @@ OPTIONS
     (default: {default_max_dpi})
 """)
 
-    short_options = 'Vvs:'
+    short_options = 'Vhvs:'
     long_options = ['version', 'help', 'verbose',
         'width=', 'height=',
         'scale=', 'min=', 'max=',
@@ -141,7 +141,7 @@ OPTIONS
         if option in ['-V', '--version']:
             print_version()
             return 0
-        elif option in ['--help']:
+        elif option in ['-h', '--help']:
             print_help()
             return 0
         elif option in ['-v', '--verbose']:
