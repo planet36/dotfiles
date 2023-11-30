@@ -1,7 +1,8 @@
-#include "Xresources-xft"
 
 ! xrdb -load ~/.config/xorg/Xresources
 ! xrdb -merge ~/.config/xorg/Xresources
+
+!Xft.dpi: 96
 
 Sxiv.background: Black
 Sxiv.foreground: Gray
