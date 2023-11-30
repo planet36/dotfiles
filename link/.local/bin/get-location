@@ -1,0 +1,8 @@
+#!/usr/bin/sh
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# https://ip-api.com/docs/api:json
+
+curl --fail --silent --show-error --output "$XDG_RUNTIME_DIR"/location.json -- \
+	'http://ip-api.com/json/?fields=lat,lon'
