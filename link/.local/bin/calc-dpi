@@ -127,6 +127,12 @@ OPTIONS
     Specify the maximum DPI.
     It must be a positive integer not less than the minimum DPI.
     (default: {default_max_dpi})
+
+EXAMPLES
+    calc-dpi 27
+    calc-dpi 1920x1200 16
+    calc-dpi --scale=1.1 --width 1920 --height 1200 24
+    calc-dpi $(xdpyinfo | awk '/dimensions/{{print $2}}') 18
 """)
 
     short_options = 'Vhvs:'
