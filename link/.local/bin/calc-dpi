@@ -98,12 +98,12 @@ OPTIONS
 -v, --verbose
     Print diagnostics.
 
--w, --width WIDTH_PX
+--width WIDTH_PX
     Specify the width (in pixels) of the display.
     It must be a positive integer.
     (default: {default_width_px})
 
--h, --height HEIGHT_PX
+--height HEIGHT_PX
     Specify the height (in pixels) of the display.
     It must be a positive integer.
     (default: {default_height_px})
@@ -124,7 +124,7 @@ OPTIONS
     (default: {default_max_dpi})
 """)
 
-    short_options = 'Vvw:h:s:'
+    short_options = 'Vvs:'
     long_options = ['version', 'help', 'verbose',
         'width=', 'height=',
         'scale=', 'min=', 'max=',
@@ -146,9 +146,9 @@ OPTIONS
             return 0
         elif option in ['-v', '--verbose']:
             verbose = True
-        elif option in ['-w', '--width']:
+        elif option in ['--width']:
             width_px = int(value)
-        elif option in ['-h', '--height']:
+        elif option in ['--height']:
             height_px = int(value)
         elif option in ['-s', '--scale']:
             scale_factor = float(value)
