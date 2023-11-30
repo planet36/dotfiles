@@ -1,0 +1,48 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# 1) get location
+
+declare -r LOCATION_JSON="$XDG_RUNTIME_DIR"/location.json
+
+if [[ ! -f "$LOCATION_JSON" ]]
+then
+	get-location || exit
+fi
+
+# 2) get location metadata
+
+# https://weather-gov.github.io/api/general-faqs
+
+declare -r LOCATION_METADATA_JSON="$XDG_RUNTIME_DIR"/weather-gov-location-metadata.json
+
+if [[ ! -f "$LOCATION_METADATA_JSON" ]]
+then
+	LAT_LON="$(jq -r '{lat,lon}|join(",")' < "$LOCATION_JSON")" || exit
+	readonly LAT_LON
+
+	curl --fail --silent --show-error --output "$LOCATION_METADATA_JSON" -- \
+		"https://api.weather.gov/points/$LAT_LON" || exit
+fi
+
+# 3) get the radar file
+
+# https://radar.weather.gov/region/conus/standard
+
+RADAR_STATION="$(jq -r '.properties.radarStation' < "$LOCATION_METADATA_JSON")" || exit
+readonly RADAR_STATION
+
+declare -r URL="https://radar.weather.gov/ridge/standard/${RADAR_STATION}_loop.gif"
+
+RADAR_IMG="$XDG_CACHE_HOME/$(basename -- "$URL")" || exit
+readonly RADAR_IMG
+
+if [[ ! -f "$RADAR_IMG" ]]
+then
+	curl --fail --silent --show-error --output "$RADAR_IMG"                          -- "$URL" || exit
+else
+	curl --fail --silent --show-error --output "$RADAR_IMG" --time-cond "$RADAR_IMG" -- "$URL" || exit
+fi
+
+sxiv -a -- "$RADAR_IMG"
