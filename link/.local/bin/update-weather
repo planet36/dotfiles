@@ -20,7 +20,7 @@ fi
 # Possible values: standard, metric, imperial
 declare -r UNITS=imperial
 
-declare -r WEATHER_JSON="$XDG_RUNTIME_DIR"/weather.json
+declare -r WEATHER_JSON="$XDG_RUNTIME_DIR"/openweathermap-org-current.json
 
 # https://openweathermap.org/appid
 # Weather data is updated every 10 minutes or so.
