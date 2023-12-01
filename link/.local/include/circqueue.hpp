@@ -109,7 +109,8 @@ public:
 	* \retval PUSHED_BUT_SIZE_UNCHANGED if \a x was pushed but the size did not change because the queue was full
 	* \retval PUSHED_AND_SIZE_INCREASED if \a x was pushed and the size increased
 	*/
-	[[nodiscard]] PUSH_RESULT push(const T& x, const bool overwrite_if_full = false)
+	[[nodiscard]] PUSH_RESULT push(const T& x,
+	                               const bool overwrite_if_full = false)
 	{
 		std::unique_lock lock{mtx};
 
@@ -122,7 +123,7 @@ public:
 		if (is_full())
 		{
 			if (++head == N) // inc head
-				head = 0; // head rollover
+				head = 0;    // head rollover
 
 			ret = PUSHED_BUT_SIZE_UNCHANGED;
 		}
@@ -134,7 +135,7 @@ public:
 		}
 
 		if (++tail == N) // inc tail
-			tail = 0; // tail rollover
+			tail = 0;    // tail rollover
 
 		return ret;
 	}
@@ -148,12 +149,12 @@ public:
 			return std::nullopt;
 
 		std::optional<T> ret{buf[head]}; // get from head
-		buf[head] = T{}; // reset element
+		buf[head] = T{};                 // reset element
 
 		--size;
 
 		if (++head == N) // inc head
-			head = 0; // head rollover
+			head = 0;    // head rollover
 
 		return ret;
 	}

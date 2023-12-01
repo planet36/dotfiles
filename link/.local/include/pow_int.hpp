@@ -48,7 +48,7 @@ pow_int_func()
 	else
 	{
 		// https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-		return B * pow_int_func<T, B, E-1>();
+		return B * pow_int_func<T, B, E - 1>();
 	}
 }
 
@@ -80,7 +80,7 @@ pow_uint_func()
 	else
 	{
 		// https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-		return B * pow_uint_func<T, B, E-1>();
+		return B * pow_uint_func<T, B, E - 1>();
 	}
 }
 

@@ -20,7 +20,8 @@ This is similar to \c wcswidth
 #include <utf8proc.h>
 
 /// Get the number of columns needed to represent a UTF-8 string
-size_t utf8width(const std::string& s)
+size_t
+utf8width(const std::string& s)
 {
 	// https://juliastrings.github.io/utf8proc/doc/utf8proc_8h.html#a0a18a541ba5bedeb5c3e150024063c2d
 	static constexpr unsigned int options = 0
@@ -38,9 +39,9 @@ size_t utf8width(const std::string& s)
 
 	uint8_t* dst = nullptr;
 
-	const ssize_t dstlen = utf8proc_map(
-			reinterpret_cast<const uint8_t*>(s.c_str()),
-			s.size(), &dst, static_cast<utf8proc_option_t>(options));
+	const ssize_t dstlen =
+	    utf8proc_map(reinterpret_cast<const uint8_t*>(s.c_str()), s.size(),
+	                 &dst, static_cast<utf8proc_option_t>(options));
 
 	if (dstlen < 0)
 		throw std::runtime_error(utf8proc_errmsg(dstlen));

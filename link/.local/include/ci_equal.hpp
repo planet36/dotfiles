@@ -39,9 +39,8 @@ ci_equal(const std::basic_string<CharT, Traits, Allocator>& s1,
          const std::basic_string<CharT, Traits, Allocator>& s2)
 {
 	return std::equal(s1.begin(), s1.end(), s2.begin(), s2.end(),
-	                  [](const CharT& c1, const CharT& c2) {
-	                      return ci_equal(c1, c2);
-	                  });
+	                  [](const CharT& c1, const CharT& c2)
+	                  { return ci_equal(c1, c2); });
 }
 
 /// case-insensitive equal strings (with locale)
@@ -54,9 +53,8 @@ ci_equal(const std::basic_string<CharT, Traits, Allocator>& s1,
          const std::locale& loc)
 {
 	return std::equal(s1.begin(), s1.end(), s2.begin(), s2.end(),
-	                  [loc](const CharT& c1, const CharT& c2) {
-	                      return ci_equal(c1, c2, loc);
-	                  });
+	                  [loc](const CharT& c1, const CharT& c2)
+	                  { return ci_equal(c1, c2, loc); });
 }
 
 /// case-insensitive equal strings

@@ -63,8 +63,8 @@ is_word(const char c)
 constexpr bool
 is_hexadecimal(const char c)
 {
-	return is_decimal(c) ||
-	       ((c >= 'A') && (c <= 'F')) || ((c >= 'a') && (c <= 'f'));
+	return is_decimal(c) || ((c >= 'A') && (c <= 'F')) ||
+	       ((c >= 'a') && (c <= 'f'));
 }
 
 constexpr bool
@@ -82,8 +82,8 @@ is_binary(const char c)
 constexpr bool
 is_whitespace(const char c)
 {
-	return (c == '\t') || (c == '\n') || (c == '\v') ||
-	       (c == '\f') || (c == '\r') || (c == ' ');
+	return (c == '\t') || (c == '\n') || (c == '\v') || (c == '\f') ||
+	       (c == '\r') || (c == ' ');
 }
 
 constexpr bool
@@ -116,9 +116,10 @@ is_punctuation(const char c)
 	return is_visible(c) && !is_alphanumeric(c);
 }
 
-#define DEF_CHAR_PRED(NAME) \
-const unary_predicate_wrapper<char> is_ ## NAME ## _pred = is_ ## NAME; \
-const unary_predicate_wrapper<char> is_non_ ## NAME ## _pred = std::not_fn(is_ ## NAME ## _pred);
+#define DEF_CHAR_PRED(NAME)                                           \
+	const unary_predicate_wrapper<char> is_##NAME##_pred = is_##NAME; \
+	const unary_predicate_wrapper<char> is_non_##NAME##_pred =        \
+	    std::not_fn(is_##NAME##_pred);
 
 DEF_CHAR_PRED(ascii       )
 DEF_CHAR_PRED(uppercase   )
@@ -185,26 +186,35 @@ to_othercase(char c)
 	return c;
 #else
 	return is_uppercase(c) ? c + ('a' - 'A') :
-	      (is_lowercase(c) ? c - ('a' - 'A') : c);
+	                         (is_lowercase(c) ? c - ('a' - 'A') : c);
 #endif
 }
 
 void
 to_uppercase(std::string& s)
 {
-	for (auto& c : s) { c = to_uppercase(c); }
+	for (auto& c : s)
+	{
+		c = to_uppercase(c);
+	}
 }
 
 void
 to_lowercase(std::string& s)
 {
-	for (auto& c : s) { c = to_lowercase(c); }
+	for (auto& c : s)
+	{
+		c = to_lowercase(c);
+	}
 }
 
 void
 to_othercase(std::string& s)
 {
-	for (auto& c : s) { c = to_othercase(c); }
+	for (auto& c : s)
+	{
+		c = to_othercase(c);
+	}
 }
 
 std::string

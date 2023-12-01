@@ -33,31 +33,73 @@ public:
 	angle() = default;
 
 	/// ctor
-	constexpr angle(const T x): value(x) {}
+	constexpr angle(const T x) : value(x) {}
 
 	/// copy ctor
 	angle(const angle&) = default;
 
 	/// conversion ctor
 	template <angle_unit U2, std::floating_point T2>
-	constexpr angle(const angle<U2, T2>& a):
-		value(convert_from<U2, U>(a.scalar()))
+	constexpr angle(const angle<U2, T2>& a) :
+	value(convert_from<U2, U>(a.scalar()))
 	{}
 
 	/// default assignment
 	angle& operator=(const angle&) = default;
 
-	constexpr angle& operator+=(const angle& that) {value += that.value; return *this;}
-	constexpr angle& operator-=(const angle& that) {value -= that.value; return *this;}
-	constexpr angle& operator*=(const T& x) {value *= x; return *this;}
-	constexpr angle& operator/=(const T& x) {value /= x; return *this;}
+	constexpr angle& operator+=(const angle& that)
+	{
+		value += that.value;
+		return *this;
+	}
 
-	constexpr T to_mrad() const {return convert_from<U, angle_unit::milliradian>(value);}
-	constexpr T to_rad() const {return convert_from<U, angle_unit::radian>(value);}
-	constexpr T to_rev() const {return convert_from<U, angle_unit::revolution>(value);}
-	constexpr T to_deg() const {return convert_from<U, angle_unit::degree>(value);}
-	constexpr T to_arcmin() const {return convert_from<U, angle_unit::arcminute>(value);}
-	constexpr T to_arcsec() const {return convert_from<U, angle_unit::arcsecond>(value);}
+	constexpr angle& operator-=(const angle& that)
+	{
+		value -= that.value;
+		return *this;
+	}
+
+	constexpr angle& operator*=(const T& x)
+	{
+		value *= x;
+		return *this;
+	}
+
+	constexpr angle& operator/=(const T& x)
+	{
+		value /= x;
+		return *this;
+	}
+
+	constexpr T to_mrad() const
+	{
+		return convert_from<U, angle_unit::milliradian>(value);
+	}
+
+	constexpr T to_rad() const
+	{
+		return convert_from<U, angle_unit::radian>(value);
+	}
+
+	constexpr T to_rev() const
+	{
+		return convert_from<U, angle_unit::revolution>(value);
+	}
+
+	constexpr T to_deg() const
+	{
+		return convert_from<U, angle_unit::degree>(value);
+	}
+
+	constexpr T to_arcmin() const
+	{
+		return convert_from<U, angle_unit::arcminute>(value);
+	}
+
+	constexpr T to_arcsec() const
+	{
+		return convert_from<U, angle_unit::arcsecond>(value);
+	}
 
 	/// get the scalar value of the angle (in angle units)
 	/**
@@ -71,15 +113,24 @@ public:
 
 	/// convert to a different data type
 	template <std::floating_point T2>
-	constexpr auto to() const {return angle<U, T2>{*this};}
+	constexpr auto to() const
+	{
+		return angle<U, T2>{*this};
+	}
 
 	/// convert to a different angle unit
 	template <angle_unit U2>
-	constexpr auto to() const {return angle<U2, T>{*this};}
+	constexpr auto to() const
+	{
+		return angle<U2, T>{*this};
+	}
 
 	/// convert to a different angle unit and data type
 	template <angle_unit U2, std::floating_point T2>
-	constexpr auto to() const {return angle<U2, T2>{*this};}
+	constexpr auto to() const
+	{
+		return angle<U2, T2>{*this};
+	}
 
 	auto operator<=>(const angle&) const = default;
 };
@@ -618,8 +669,10 @@ operator/(const angle<U, T>& a1, const angle<U, T2>& a2)
 }
 
 /// angle<U, T> + angle<U2, T2>
-template <angle_unit U, std::floating_point T,
-          angle_unit U2, std::floating_point T2>
+template <angle_unit U,
+          std::floating_point T,
+          angle_unit U2,
+          std::floating_point T2>
 constexpr auto
 operator+(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
@@ -627,8 +680,10 @@ operator+(const angle<U, T>& a1, const angle<U2, T2>& a2)
 }
 
 /// angle<U, T> - angle<U2, T2>
-template <angle_unit U, std::floating_point T,
-          angle_unit U2, std::floating_point T2>
+template <angle_unit U,
+          std::floating_point T,
+          angle_unit U2,
+          std::floating_point T2>
 constexpr auto
 operator-(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
@@ -636,8 +691,10 @@ operator-(const angle<U, T>& a1, const angle<U2, T2>& a2)
 }
 
 /// angle<U, T> / angle<U2, T2>
-template <angle_unit U, std::floating_point T,
-          angle_unit U2, std::floating_point T2>
+template <angle_unit U,
+          std::floating_point T,
+          angle_unit U2,
+          std::floating_point T2>
 constexpr auto
 operator/(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
@@ -781,7 +838,8 @@ are_complementary(const angle<U, T>& a1, const angle<U, T>& a2)
 */
 template <angle_unit U, std::floating_point T>
 constexpr bool
-are_complementary_approx(const angle<U, T>& a1, const angle<U, T>& a2,
+are_complementary_approx(const angle<U, T>& a1,
+                         const angle<U, T>& a2,
                          const T allowed_rel_diff = 1E-12,
                          const T allowed_abs_diff = 0)
 {
@@ -807,7 +865,8 @@ are_supplementary(const angle<U, T>& a1, const angle<U, T>& a2)
 */
 template <angle_unit U, std::floating_point T>
 constexpr bool
-are_supplementary_approx(const angle<U, T>& a1, const angle<U, T>& a2,
+are_supplementary_approx(const angle<U, T>& a1,
+                         const angle<U, T>& a2,
                          const T allowed_rel_diff = 1E-12,
                          const T allowed_abs_diff = 0)
 {
@@ -953,8 +1012,10 @@ ieee_remainder(const angle<U, T>& a1, const angle<U, T>& a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, std::floating_point T,
-          angle_unit U2, std::floating_point T2>
+template <angle_unit U,
+          std::floating_point T,
+          angle_unit U2,
+          std::floating_point T2>
 constexpr auto
 ieee_remainder(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
@@ -980,8 +1041,10 @@ fmod_remainder(const angle<U, T>& a1, const angle<U, T>& a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, std::floating_point T,
-          angle_unit U2, std::floating_point T2>
+template <angle_unit U,
+          std::floating_point T,
+          angle_unit U2,
+          std::floating_point T2>
 constexpr auto
 fmod_remainder(const angle<U, T>& a1, const angle<U2, T2>& a2)
 {
@@ -1107,8 +1170,10 @@ angle_diff(angle<U, T> a1, angle<U, T> a2)
 \param a1 the first angle
 \param a2 the second angle
 */
-template <angle_unit U, std::floating_point T,
-          angle_unit U2, std::floating_point T2>
+template <angle_unit U,
+          std::floating_point T,
+          angle_unit U2,
+          std::floating_point T2>
 constexpr auto
 angle_diff(angle<U, T> a1, angle<U2, T2> a2)
 {

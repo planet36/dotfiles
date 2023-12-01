@@ -407,21 +407,24 @@ trim_not_copy(StringT s, const StringT& delim_set)
 
 template <typename StringT>
 void
-rtrim(StringT& s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
+rtrim(StringT& s,
+      const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
 	(void)s.erase(std::find_if_not(s.rbegin(), s.rend(), pred).base(), s.end());
 }
 
 template <typename StringT>
 void
-ltrim(StringT& s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
+ltrim(StringT& s,
+      const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
 	(void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), pred));
 }
 
 template <typename StringT>
 void
-trim(StringT& s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
+trim(StringT& s,
+     const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
 	rtrim(s, pred);
 	ltrim(s, pred);
@@ -429,7 +432,8 @@ trim(StringT& s, const unary_predicate_wrapper<typename StringT::value_type>& pr
 
 template <typename StringT>
 auto
-rtrim_copy(StringT s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
+rtrim_copy(StringT s,
+           const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
 	rtrim(s, pred);
 	return s;
@@ -437,7 +441,8 @@ rtrim_copy(StringT s, const unary_predicate_wrapper<typename StringT::value_type
 
 template <typename StringT>
 auto
-ltrim_copy(StringT s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
+ltrim_copy(StringT s,
+           const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
 	ltrim(s, pred);
 	return s;
@@ -445,7 +450,8 @@ ltrim_copy(StringT s, const unary_predicate_wrapper<typename StringT::value_type
 
 template <typename StringT>
 auto
-trim_copy(StringT s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
+trim_copy(StringT s,
+          const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
 	trim(s, pred);
 	return s;

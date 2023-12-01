@@ -189,8 +189,12 @@ map_to_uint(double x, size_t b)
 * \a blocks_len is the length of the wide character array used for the meter.
 */
 static void
-calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
-                    size_t* left_width, size_t* blocks_index, size_t* right_width)
+calc_meter_segments(double x,
+                    size_t meter_width,
+                    size_t blocks_len,
+                    size_t* left_width,
+                    size_t* blocks_index,
+                    size_t* right_width)
 {
 	*left_width = 0;
 	*blocks_index = (size_t)-1;
@@ -207,7 +211,8 @@ calc_meter_segments(double x, size_t meter_width, size_t blocks_len,
 	if (*left_width == meter_width)
 		return;
 
-	const double frac = x * (double)meter_width - (double)((size_t)(x * (double)meter_width));
+	const double frac =
+	    x * (double)meter_width - (double)((size_t)(x * (double)meter_width));
 	// This produces a preferred distribution at the ends of the meter.
 	// round to nearest int
 	*blocks_index = (size_t)(frac * (double)(blocks_len - 1U) + 0.5);
@@ -270,8 +275,8 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 	if (meter_width == 0)
 		return;
 
-	calc_meter_segments(x, meter_width, num_left_blocks,
-	                    &left_width, &blocks_index, &right_width);
+	calc_meter_segments(x, meter_width, num_left_blocks, &left_width,
+	                    &blocks_index, &right_width);
 
 	for (i = 0; i < left_width; ++i)
 	{
@@ -307,8 +312,8 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 	if (meter_width == 0)
 		return;
 
-	calc_meter_segments(x, meter_width, num_ver_lines,
-	                    &left_width, &blocks_index, &right_width);
+	calc_meter_segments(x, meter_width, num_ver_lines, &left_width,
+	                    &blocks_index, &right_width);
 
 	if (left_width == meter_width)
 	{
@@ -357,8 +362,8 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 	if (meter_width == 0)
 		return;
 
-	calc_meter_segments(x, meter_width, num_right_blocks,
-	                    &left_width, &blocks_index, &right_width);
+	calc_meter_segments(x, meter_width, num_right_blocks, &left_width,
+	                    &blocks_index, &right_width);
 
 	// left_width and right_width are swapped
 

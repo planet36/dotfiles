@@ -31,15 +31,15 @@ trailing newline) to stderr.
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
 #ifdef __cplusplus
-#define TIME_THIS (void)fflush(stdout);                     \
-	__attribute__((cleanup(print_timerdata_now_diff)))      \
-	const timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
-	timerdata_now()
+#define TIME_THIS                                                      \
+	(void)fflush(stdout);                                              \
+	__attribute__((cleanup(print_timerdata_now_diff))) const timerdata \
+	TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()
 #else
-#define TIME_THIS (void)fflush(stdout);                            \
-	__attribute__((cleanup(print_timerdata_now_diff)))             \
-	const struct timerdata TOKENPASTE2(_time_this_, __COUNTER__) = \
-	timerdata_now()
+#define TIME_THIS                                                             \
+	(void)fflush(stdout);                                                     \
+	__attribute__((cleanup(print_timerdata_now_diff))) const struct timerdata \
+	TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()
 #endif
 
 // https://stackoverflow.com/a/1597129/1892784
@@ -49,8 +49,8 @@ trailing newline) to stderr.
 struct timerdata
 {
 	struct timespec rtime; // real
-	struct timeval utime; // user
-	struct timeval stime; // system
+	struct timeval utime;  // user
+	struct timeval stime;  // system
 };
 
 static struct timerdata
@@ -79,10 +79,8 @@ print_timerdata_now_diff(const struct timerdata* t0)
 	timevalsub(&t1.utime, &t0->utime, &diff.utime);
 	timevalsub(&t1.stime, &t0->stime, &diff.stime);
 	(void)fflush(stdout);
-	(void)fprintf(stderr, "%.2f  %.2f  %.2f\n",
-	              timespec_to_sec(&diff.rtime),
-	              timeval_to_sec(&diff.utime),
-	              timeval_to_sec(&diff.stime));
+	(void)fprintf(stderr, "%.2f  %.2f  %.2f\n", timespec_to_sec(&diff.rtime),
+	              timeval_to_sec(&diff.utime), timeval_to_sec(&diff.stime));
 }
 
 #ifdef __cplusplus

@@ -13,12 +13,14 @@
 #include <concepts>
 #include <limits>
 
-auto binary_to_gray(std::unsigned_integral auto x) -> decltype(x)
+auto
+binary_to_gray(std::unsigned_integral auto x) -> decltype(x)
 {
 	return x ^ (x >> 1);
 }
 
-auto gray_to_binary(std::unsigned_integral auto x) -> decltype(x)
+auto
+gray_to_binary(std::unsigned_integral auto x) -> decltype(x)
 {
 	unsigned short shift = std::numeric_limits<decltype(x)>::digits;
 

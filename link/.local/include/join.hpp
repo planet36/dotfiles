@@ -19,9 +19,10 @@ Note: Only \c std::string is supported.
 #include <string_view>
 
 template <std::input_iterator Iter>
-requires type_any_of<std::remove_cv_t<typename std::iterator_traits<Iter>::value_type>,
-	std::string,
-	std::string_view>
+requires type_any_of<
+    std::remove_cv_t<typename std::iterator_traits<Iter>::value_type>,
+    std::string,
+    std::string_view>
 auto
 join(const Iter& first, const Iter& last, const std::string& joiner = ", ")
 {
@@ -42,9 +43,8 @@ join(const Iter& first, const Iter& last, const std::string& joiner = ", ")
 }
 
 template <std::input_iterator Iter>
-requires std::same_as<
-	typename std::iterator_traits<Iter>::value_type,
-	const char*>
+requires std::same_as<typename std::iterator_traits<Iter>::value_type,
+                      const char*>
 auto
 join(const Iter& first, const Iter& last, const std::string& joiner = ", ")
 {
@@ -66,10 +66,7 @@ join(const Iter& first, const Iter& last, const std::string& joiner = ", ")
 
 // template template parameter
 template <template <typename> typename Container, typename StringT>
-requires type_any_of<StringT,
-	std::string,
-	std::string_view,
-	const char*>
+requires type_any_of<StringT, std::string, std::string_view, const char*>
 auto
 join(const Container<StringT>& c, const std::string& joiner = ", ")
 {
@@ -77,9 +74,10 @@ join(const Container<StringT>& c, const std::string& joiner = ", ")
 }
 
 template <std::input_iterator Iter>
-requires type_any_of<std::remove_cv_t<typename std::iterator_traits<Iter>::value_type>,
-	std::string,
-	std::string_view>
+requires type_any_of<
+    std::remove_cv_t<typename std::iterator_traits<Iter>::value_type>,
+    std::string,
+    std::string_view>
 auto
 concatenate(const Iter& first, const Iter& last)
 {
@@ -87,9 +85,8 @@ concatenate(const Iter& first, const Iter& last)
 }
 
 template <std::input_iterator Iter>
-requires std::same_as<
-	typename std::iterator_traits<Iter>::value_type,
-	const char*>
+requires std::same_as<typename std::iterator_traits<Iter>::value_type,
+                      const char*>
 auto
 concatenate(const Iter& first, const Iter& last)
 {
@@ -98,10 +95,7 @@ concatenate(const Iter& first, const Iter& last)
 
 // template template parameter
 template <template <typename> typename Container, typename StringT>
-requires type_any_of<StringT,
-	std::string,
-	std::string_view,
-	const char*>
+requires type_any_of<StringT, std::string, std::string_view, const char*>
 auto
 concatenate(const Container<StringT>& c)
 {

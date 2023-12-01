@@ -38,7 +38,7 @@ timespecsub(const struct timespec* t1,
 	if (diff->tv_nsec < 0)
 	{
 		diff->tv_sec--;
-		diff->tv_nsec += 1000000000L;
+		diff->tv_nsec += 1'000'000'000L;
 	}
 }
 

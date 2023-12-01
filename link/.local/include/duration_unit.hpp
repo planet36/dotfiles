@@ -71,10 +71,12 @@ to_string(const duration_unit unit)
 	}
 }
 
-std::ostream& operator<<(std::ostream& os, const duration_unit unit)
+std::ostream&
+operator<<(std::ostream& os, const duration_unit unit)
 {
 	return os << to_string(unit);
 }
 
 template <>
-struct fmt::formatter<duration_unit> : ostream_formatter {};
+struct fmt::formatter<duration_unit> : ostream_formatter
+{};

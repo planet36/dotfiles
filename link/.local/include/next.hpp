@@ -14,14 +14,16 @@
 #include <limits>
 
 template <std::floating_point T>
-constexpr T next_less(const T x)
+constexpr T
+next_less(const T x)
 {
 	// TODO: use std::nextdown when available
 	return std::nextafter(x, -std::numeric_limits<T>::infinity());
 }
 
 template <std::floating_point T>
-constexpr T next_greater(const T x)
+constexpr T
+next_greater(const T x)
 {
 	// TODO: use std::nextup when available
 	return std::nextafter(x, std::numeric_limits<T>::infinity());

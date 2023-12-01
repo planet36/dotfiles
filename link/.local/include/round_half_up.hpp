@@ -22,7 +22,8 @@ This is faster than \c std::round.
 \sa https://en.cppreference.com/w/cpp/numeric/math/round
 */
 template <std::floating_point T>
-constexpr T round_half_up(const T x)
+constexpr T
+round_half_up(const T x)
 {
 	// NOTE: next-less-than 0.5 is necessary when x == +/-0.49999999999999994
 	static constexpr T almost_half = next_less(T{0.5});

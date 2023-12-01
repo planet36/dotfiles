@@ -47,7 +47,7 @@ timevalsub(const struct timeval* t1,
 	if (diff->tv_usec < 0)
 	{
 		diff->tv_sec--;
-		diff->tv_usec += 1000000L;
+		diff->tv_usec += 1'000'000L;
 	}
 }
 

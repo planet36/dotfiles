@@ -99,14 +99,14 @@ rand_uint_half_open(const T s, G& gen)
 	T2 m;
 
 	m = rand_int<T>(gen); // in [0, 2^L)
-	m *= s; // in [0, s * 2^L)
+	m *= s;               // in [0, s * 2^L)
 	if (static_cast<T>(m) < s)
 	{
 		const T min = std::numeric_limits<T>::max() % s; // 2^L mod s
 		while (static_cast<T>(m) < min)
 		{
 			m = rand_int<T>(gen); // in [0, 2^L)
-			m *= s; // in [0, s * 2^L)
+			m *= s;               // in [0, s * 2^L)
 		}
 	}
 
@@ -337,7 +337,7 @@ bool
 rand_bool(G& gen)
 {
 	using T = typename G::result_type;
-	static constexpr T mask_one_msb = T{1} << (std::numeric_limits<T>::digits-1);
+	static constexpr T mask_one_msb = T{1} << (std::numeric_limits<T>::digits - 1);
 	static thread_local T x = 1;
 
 	if (x == 1) [[unlikely]]
