@@ -79,12 +79,12 @@ ut_from_c(const char c)
 }
 
 constexpr unsigned long seconds_per[UT_MAX] = {
-	[UT_SECOND] =        1UL,
-	[UT_MINUTE] =       60UL,
-	[UT_HOUR  ] =     3600UL, // 60*60
-	[UT_DAY   ] =    86400UL, // 60*60*24
-	[UT_WEEK  ] =   604800UL, // 60*60*24*7
-	[UT_YEAR  ] = 31556952UL, // 60*60*24*365.2425
+	[UT_SECOND] =          1UL,
+	[UT_MINUTE] =         60UL,
+	[UT_HOUR  ] =      3'600UL, // 60*60
+	[UT_DAY   ] =     86'400UL, // 60*60*24
+	[UT_WEEK  ] =    604'800UL, // 60*60*24*7
+	[UT_YEAR  ] = 31'556'952UL, // 60*60*24*365.2425
 };
 
 struct durfmt_opts
@@ -134,11 +134,8 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
 			dur_secs = dur_secs % seconds_per[ut];
 
 			if (dur_ut > 0 || opts->print_all_zero_values ||
-				(
-					(printed_something || last_ut == ut) &&
-					opts->print_inter_zero_values
-				)
-			)
+			    ((printed_something || last_ut == ut) &&
+			     opts->print_inter_zero_values))
 			{
 				if (printed_something)
 					putchar(' ');
@@ -199,7 +196,8 @@ print_usage()
 	printf("\n");
 }
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
 	struct durfmt_opts opts;
 	const char* ut_to_print = default_ut_to_print;
@@ -231,9 +229,12 @@ int main(int argc, char* argv[])
 
 		case 'w':
 			width = strtol(optarg, NULL, 0);
-			if (width < 0) width = 0;
-			else if (width > max_width) width = max_width;
-			opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = (int)width;
+			if (width < 0)
+				width = 0;
+			else if (width > max_width)
+				width = max_width;
+			opts.width[UT_SECOND] = opts.width[UT_MINUTE] =
+			    opts.width[UT_HOUR] = (int)width;
 			break;
 
 		case '0':

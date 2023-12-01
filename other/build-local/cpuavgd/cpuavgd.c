@@ -127,7 +127,8 @@ print_usage()
 	printf("\n");
 }
 
-int main(int argc, char* const argv[])
+int
+main(int argc, char* const argv[])
 {
 	unsigned int init_delay_msec = default_init_delay_msec;
 	unsigned int interval_msec = default_interval_msec;
@@ -197,8 +198,8 @@ int main(int argc, char* const argv[])
 		SIGUSR2,
 	};
 
-	constexpr size_t num_signals_to_handle = sizeof(signals_to_handle) /
-	                                     sizeof(signals_to_handle[0]);
+	constexpr size_t num_signals_to_handle =
+	    sizeof(signals_to_handle) / sizeof(signals_to_handle[0]);
 	for (size_t i = 0; i < num_signals_to_handle; ++i)
 	{
 		if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)

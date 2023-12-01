@@ -60,7 +60,8 @@ strtolower(char* s)
 }
 
 // Evaluate the given string as a boolean
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
 	int result = EXIT_SUCCESS;
 
@@ -76,31 +77,28 @@ int main(int argc, char* argv[])
 		{
 			result = EXIT_FAILURE;
 		}
-		else if (
-			strcmp(s, "1") == 0 ||
-			strcmp(s, "yes") == 0 ||
-			strcmp(s, "y") == 0 ||
-			strcmp(s, "true") == 0 ||
-			strcmp(s, "on") == 0)
+		else if (strcmp(s, "1") == 0 ||
+		         strcmp(s, "yes") == 0 ||
+		         strcmp(s, "y") == 0 ||
+		         strcmp(s, "true") == 0 ||
+		         strcmp(s, "on") == 0)
 		{
 			result = EXIT_SUCCESS;
 		}
-		else if (
-			strcmp(s, "0") == 0 ||
-			strcmp(s, "no") == 0 ||
-			strcmp(s, "n") == 0 ||
-			strcmp(s, "false") == 0 ||
-			strcmp(s, "off") == 0)
+		else if (strcmp(s, "0") == 0 ||
+		         strcmp(s, "no") == 0 ||
+		         strcmp(s, "n") == 0 ||
+		         strcmp(s, "false") == 0 ||
+		         strcmp(s, "off") == 0)
 		{
 			result = EXIT_FAILURE;
 		}
-		else if (
-			strcmp(s, "null") == 0 ||
-			strcmp(s, "nil") == 0 ||
-			strcmp(s, "none") == 0 ||
-			strcmp(s, "nan") == 0 ||
-			strcmp(s, "undefined") == 0 ||
-			strcmp(s, "-0") == 0)
+		else if (strcmp(s, "null") == 0 ||
+		         strcmp(s, "nil") == 0 ||
+		         strcmp(s, "none") == 0 ||
+		         strcmp(s, "nan") == 0 ||
+		         strcmp(s, "undefined") == 0 ||
+		         strcmp(s, "-0") == 0)
 		{
 			result = EXIT_FAILURE;
 		}

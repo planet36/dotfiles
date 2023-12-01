@@ -132,7 +132,8 @@ print_usage()
 	printf("\n");
 }
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
 	struct meter_opts opts;
 	meter_opts_init(&opts);
@@ -154,8 +155,10 @@ int main(int argc, char* argv[])
 
 		case 'w':
 			width = strtol(optarg, NULL, 0);
-			if (width < 0) width = 0;
-			if (width > max_width) width = max_width;
+			if (width < 0)
+				width = 0;
+			if (width > max_width)
+				width = max_width;
 			opts.width = (int)width;
 			break;
 
@@ -164,8 +167,8 @@ int main(int argc, char* argv[])
 			if (!isprint(opts.fill))
 			{
 				errx(EXIT_FAILURE,
-				     "option '%c' received invalid option value: '\\x%x'",
-				     oc, opts.fill);
+				     "option '%c' received invalid option value: '\\x%x'", oc,
+				     opts.fill);
 			}
 			break;
 
@@ -174,8 +177,8 @@ int main(int argc, char* argv[])
 			if (!isprint(opts.unfill))
 			{
 				errx(EXIT_FAILURE,
-				     "option '%c' received invalid option value: '\\x%x'",
-				     oc, opts.unfill);
+				     "option '%c' received invalid option value: '\\x%x'", oc,
+				     opts.unfill);
 			}
 			break;
 
