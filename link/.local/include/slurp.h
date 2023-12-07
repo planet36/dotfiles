@@ -53,6 +53,14 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		return -1;
 	}
 
+	if (!S_ISREG(statbuf.st_mode) && !S_ISLNK(statbuf.st_mode))
+	{
+		(void)close(fd);
+		errno = EOPNOTSUPP;
+		warn("%s \"%s\"", __func__, path);
+		return -1;
+	}
+
 	assert(statbuf.st_size >= 0);
 
 	const size_t get_bytes = (size_t)statbuf.st_size;
@@ -109,6 +117,14 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	{
 		(void)fclose(fp);
 		errno = EISDIR;
+		warn("%s \"%s\"", __func__, path);
+		return -1;
+	}
+
+	if (!S_ISREG(statbuf.st_mode) && !S_ISLNK(statbuf.st_mode))
+	{
+		(void)fclose(fp);
+		errno = EOPNOTSUPP;
 		warn("%s \"%s\"", __func__, path);
 		return -1;
 	}
