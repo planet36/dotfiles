@@ -3,7 +3,7 @@
 
 export LC_ALL := C
 
-CPPFLAGS += -MMD -MP
+CPPFLAGS = -MMD -MP
 CPPFLAGS += `pkg-config --cflags libutf8proc`
 
 CXXFLAGS += -march=native
