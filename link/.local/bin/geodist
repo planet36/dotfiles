@@ -10,89 +10,15 @@
 # All circular angles are in degrees.
 
 __author__ = 'Steven Ward'
-__version__ = '2022-09-08'
+__version__ = '2023-12-11'
 __license__ = 'OSL-3.0'
 
 import math
 import sys
 
-from ellipsoid import WGS84
-
-# https://mathworld.wolfram.com/Haversine.html
-# https://en.wikipedia.org/wiki/Haversine_formula
-def hav_rad(a_rad: float) -> float:
-    '''Return the haversine of the given angle (radians).'''
-    return math.sin(a_rad/2)**2
-
-def normalize_angle_deg_signed(a_deg: float) -> float:
-    return math.remainder(a_deg, 360)
-
-def normalize_latitude_deg(lat_deg: float) -> float:
-    lat_deg = normalize_angle_deg_signed(lat_deg)
-    if lat_deg < -90:
-        lat_deg = -180 - lat_deg
-    elif lat_deg > 90:
-        lat_deg = 180 - lat_deg
-    return lat_deg
-
-def normalize_longitude_deg(lon_deg: float) -> float:
-    lon_deg = normalize_angle_deg_signed(lon_deg)
-    return lon_deg
-
-def normalize_geodetic_deg(lat_deg: float, lon_deg: float) -> tuple:
-    lat_deg = normalize_angle_deg_signed(lat_deg)
-
-    if lat_deg < -90:
-        lat_deg = -180 - lat_deg
-        lon_deg += 180
-    elif lat_deg > 90:
-        lat_deg = 180 - lat_deg
-        lon_deg += 180
-
-    lon_deg = normalize_longitude_deg(lon_deg)
-
-    return (lat_deg, lon_deg)
-
-def angle_deg_diff(a1_deg: float, a2_deg: float) -> float:
-    return normalize_angle_deg_signed(a2_deg - a1_deg)
-
-# TODO: maybe allow user to specify radius
-# https://en.wikipedia.org/wiki/Earth_radius
-
-# https://en.wikipedia.org/wiki/Haversine_formula
-# https://www.movable-type.co.uk/scripts/latlong.html
-def haversine_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_deg: float) -> float:
-    # pylint: disable=redefined-outer-name
-    '''Calculate the haversine distance (in meters) between 2 geodetic coordinates (in degrees).'''
-
-    sin_lat1 = math.sin(math.radians(lat1_deg))
-    cos_lat1 = math.cos(math.radians(lat1_deg))
-
-    sin_lat2 = math.sin(math.radians(lat2_deg))
-    cos_lat2 = math.cos(math.radians(lat2_deg))
-
-    R1 = WGS84.get_R(sin_lat1)
-    R2 = WGS84.get_R(sin_lat2)
-    R = (R1+R2)/2
-
-    lat_diff_rad = math.radians(angle_deg_diff(lat1_deg, lat2_deg))
-    lon_diff_rad = math.radians(angle_deg_diff(lon1_deg, lon2_deg))
-
-    # a is the square of half the chord length between the points
-    a = hav_rad(lat_diff_rad) + cos_lat1 * cos_lat2 * hav_rad(lon_diff_rad)
-
-    # c is the angular distance in radians
-    c = 2 * math.asin(math.sqrt(a))
-
-    return R * c
-
-# https://en.wikipedia.org/wiki/Euclidean_distance
-def euclidian_deg_dist(lat1_deg: float, lon1_deg: float, lat2_deg: float, lon2_deg: float) -> float:
-    # pylint: disable=redefined-outer-name
-    '''Calculate the Euclidian distance (in meters) between 2 geodetic coordinates (in degrees).'''
-    (x1, y1, z1) = WGS84.geodetic_to_ecef(lat1_deg, lon1_deg, 0)
-    (x2, y2, z2) = WGS84.geodetic_to_ecef(lat2_deg, lon2_deg, 0)
-    return math.dist((x1, y1, z1), (x2, y2, z2))
+# https://geopy.readthedocs.io/en/stable/#module-geopy.distance
+import geopy.distance
+import geopy.point
 
 # pylint: disable=too-many-locals
 def main(argv = None):
@@ -109,13 +35,13 @@ def main(argv = None):
 
     # possible values
     possible_dist_funcs = {
-            'euclidian': euclidian_deg_dist,
-            'haversine': haversine_deg_dist,
+            'geodesic': geopy.distance.geodesic,
+            'great_circle': geopy.distance.great_circle,
             }
 
     # default values
     default_verbose = False
-    default_method = 'haversine'
+    default_method = 'geodesic'
 
     # mutable values
     verbose = default_verbose
@@ -178,13 +104,13 @@ OPTIONS
 
 EXAMPLES
 
-cat <<EOT | geodist --method haversine
+cat <<EOT | geodist --method geodesic
 40.056667 -78.905833 38.889722 -77.008889
 40.056667 -78.905833 38.8977 -77.0365
 38.889722 -77.008889 38.8977 -77.0365
 EOT
 
-cat <<EOT | geodist --method euclidian
+cat <<EOT | geodist --method great_circle
 40.056667 -78.905833 38.889722 -77.008889
 40.056667 -78.905833 38.8977 -77.0365
 38.889722 -77.008889 38.8977 -77.0365
@@ -224,13 +150,12 @@ EOT
 
     for line in sys.stdin:
         (lat1_deg, lon1_deg, lat2_deg, lon2_deg) = map(float, line.strip(os.linesep).split()[0:4])
-        (lat1_deg, lon1_deg) = normalize_geodetic_deg(lat1_deg, lon1_deg)
-        (lat2_deg, lon2_deg) = normalize_geodetic_deg(lat2_deg, lon2_deg)
+        p1 = geopy.Point(lat1_deg, lon1_deg)
+        p2 = geopy.Point(lat2_deg, lon2_deg)
 
-        print_verbose(f'{lat1_deg=} {lon1_deg=}')
-        print_verbose(f'{lat2_deg=} {lon2_deg=}')
+        print_verbose(f'{p1=} {p2=}')
 
-        distance = dist_func(lat1_deg, lon1_deg, lat2_deg, lon2_deg)
+        distance = dist_func(p1, p2).meters
         print(f'{distance:.1f}')
 
 if __name__ == '__main__':
