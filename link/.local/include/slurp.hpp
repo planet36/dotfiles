@@ -66,24 +66,32 @@ slurp(const std::filesystem::path& path)
 	const size_t get_bytes = static_cast<size_t>(statbuf.st_size);
 
 	std::vector<uint8_t> result;
-	try
-	{
-		result.resize(get_bytes);
-	}
-	catch (...)
-	{
-		(void)std::fclose(fp);
-		throw;
-	}
 
-	// https://man7.org/linux/man-pages/man3/fread.3p.html#RETURN_VALUE
-	// fread(3p) returns the number of items read
-	// In our case, each item is 1 byte
-	const size_t got_bytes = std::fread(result.data(), 1, result.size(), fp);
-	if (got_bytes != get_bytes)
+	if (get_bytes == 0)
 	{
-		(void)std::fclose(fp);
-		throw std::system_error(std::make_error_code(std::errc{errno}), path);
+		result.clear();
+	}
+	else
+	{
+		try
+		{
+			result.resize(get_bytes);
+		}
+		catch (...)
+		{
+			(void)std::fclose(fp);
+			throw;
+		}
+
+		// https://man7.org/linux/man-pages/man3/fread.3p.html#RETURN_VALUE
+		// fread(3p) returns the number of items read
+		// In our case, each item is 1 byte
+		const size_t got_bytes = std::fread(result.data(), 1, result.size(), fp);
+		if (got_bytes != get_bytes)
+		{
+			(void)std::fclose(fp);
+			throw std::system_error(std::make_error_code(std::errc{errno}), path);
+		}
 	}
 
 	(void)std::fclose(fp);
@@ -133,23 +141,31 @@ slurp(const std::filesystem::path& path)
 	const size_t get_bytes = static_cast<size_t>(statbuf.st_size);
 
 	std::vector<uint8_t> result;
-	try
-	{
-		result.resize(get_bytes);
-	}
-	catch (...)
-	{
-		(void)::close(fd);
-		throw;
-	}
 
-	// https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
-	// read(3p) returns either an error code or the number of bytes read
-	const ssize_t got_bytes = ::read(fd, result.data(), result.size());
-	if (got_bytes < 0 || static_cast<size_t>(got_bytes) != get_bytes)
+	if (get_bytes == 0)
 	{
-		(void)::close(fd);
-		throw std::system_error(std::make_error_code(std::errc{errno}), path);
+		result.clear();
+	}
+	else
+	{
+		try
+		{
+			result.resize(get_bytes);
+		}
+		catch (...)
+		{
+			(void)::close(fd);
+			throw;
+		}
+
+		// https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
+		// read(3p) returns either an error code or the number of bytes read
+		const ssize_t got_bytes = ::read(fd, result.data(), result.size());
+		if (got_bytes < 0 || static_cast<size_t>(got_bytes) != get_bytes)
+		{
+			(void)::close(fd);
+			throw std::system_error(std::make_error_code(std::errc{errno}), path);
+		}
 	}
 
 	(void)::close(fd);
