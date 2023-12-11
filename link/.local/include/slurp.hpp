@@ -29,7 +29,7 @@
 std::vector<uint8_t>
 slurp(const std::filesystem::path& path)
 {
-	std::FILE* fp = std::fopen(path.c_str(), "rb");
+	std::FILE* fp = std::fopen(path.c_str(), "r");
 	if (fp == nullptr)
 	{
 		throw std::system_error(std::make_error_code(std::errc{errno}), path);
