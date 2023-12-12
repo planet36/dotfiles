@@ -11,7 +11,6 @@
 
 #include "angle_unit.hpp"
 #include "isclose.hpp"
-#include "sin_cos.hpp"
 
 /// an angle class where the scalar value and unit of measurement are preserved
 template <angle_unit U, std::floating_point T>
@@ -912,7 +911,8 @@ template <angle_unit U, std::floating_point T>
 constexpr void
 sin_cos(const angle<U, T>& a, T& s, T& c)
 {
-	sin_cos(a.to_rad(), s, c);
+	s = std::sin(a.to_rad());
+	c = std::cos(a.to_rad());
 }
 
 /// inverse sin
@@ -1313,8 +1313,8 @@ template <angle_unit U, std::floating_point T>
 constexpr T
 tan_r(const angle<U, T>& a)
 {
-	T s = 0;
-	T c = 0;
+	T s{};
+	T c{};
 	sin_cos_r(a, s, c);
 
 	return s / c;
