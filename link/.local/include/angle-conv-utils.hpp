@@ -9,17 +9,15 @@
 
 #pragma once
 
-#include "math-const.hpp"
-
 #include <cmath>
 #include <concepts>
+#include <numbers>
 
 /// milliradians per radian
 inline constexpr unsigned short mrad_per_rad = 1'000;
 
 /// radians per revolution
-template <std::floating_point T>
-inline constexpr T rad_per_rev = M_2_pi<T>;
+inline constexpr double rad_per_rev = 2 * std::numbers::pi;
 
 /// degrees per revolution
 inline constexpr unsigned short deg_per_rev = 360;
@@ -31,8 +29,7 @@ inline constexpr unsigned short arcmin_per_deg = 60;
 inline constexpr unsigned short arcsec_per_arcmin = 60;
 
 /// degrees per radian
-template <std::floating_point T>
-inline constexpr T deg_per_rad = 180 / M_pi<T>;
+inline constexpr double deg_per_rad = 180 / std::numbers::pi;
 
 inline constexpr unsigned short quadrants_per_rev = 4;
 inline constexpr unsigned short sextants_per_rev = 6;
@@ -62,7 +59,7 @@ template <std::floating_point T>
 constexpr T
 rev_from_rad(const T x_rad)
 {
-	return x_rad / rad_per_rev<T>;
+	return x_rad / rad_per_rev;
 }
 
 /// convert to radians from revolutions
@@ -70,7 +67,7 @@ template <std::floating_point T>
 constexpr T
 rad_from_rev(const T x_rev)
 {
-	return rad_per_rev<T> * x_rev;
+	return rad_per_rev * x_rev;
 }
 
 /// convert to revolutions from degrees
@@ -126,7 +123,7 @@ template <std::floating_point T>
 constexpr T
 rad_from_deg(const T x_deg)
 {
-	return x_deg / deg_per_rad<T>;
+	return x_deg / deg_per_rad;
 }
 
 /// convert to degrees from radians
@@ -134,7 +131,7 @@ template <std::floating_point T>
 constexpr T
 deg_from_rad(const T x_rad)
 {
-	return deg_per_rad<T> * x_rad;
+	return deg_per_rad * x_rad;
 }
 
 /// convert from degrees to degees and arcminutes
