@@ -11,7 +11,6 @@
 
 #include "angle_unit.hpp"
 #include "isclose.hpp"
-#include "number.hpp"
 #include "sin_cos.hpp"
 
 /// an angle class where the scalar value and unit of measurement are preserved
@@ -634,7 +633,8 @@ operator-(const angle<U, T>& a1, const angle<U, T2>& a2)
 }
 
 /// angle<U, T> * T2
-template <angle_unit U, std::floating_point T, number T2>
+template <angle_unit U, std::floating_point T, typename T2>
+requires std::is_arithmetic_v<T2>
 constexpr auto
 operator*(const angle<U, T>& a, const T2& x)
 {
@@ -643,7 +643,8 @@ operator*(const angle<U, T>& a, const T2& x)
 }
 
 /// T2 * angle<U, T>
-template <angle_unit U, std::floating_point T, number T2>
+template <angle_unit U, std::floating_point T, typename T2>
+requires std::is_arithmetic_v<T2>
 constexpr auto
 operator*(const T2& x, const angle<U, T>& a)
 {
@@ -652,7 +653,8 @@ operator*(const T2& x, const angle<U, T>& a)
 }
 
 /// angle<U, T> / T2
-template <angle_unit U, std::floating_point T, number T2>
+template <angle_unit U, std::floating_point T, typename T2>
+requires std::is_arithmetic_v<T2>
 constexpr auto
 operator/(const angle<U, T>& a, const T2& x)
 {
