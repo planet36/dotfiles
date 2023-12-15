@@ -76,7 +76,9 @@ contains_shell_special_chars(const std::string& s)
 
 /// Is the character special for C?
 /**
+\sa https://en.cppreference.com/w/c/language/escape
 \sa https://en.cppreference.com/w/cpp/language/escape
+\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
 */
 constexpr bool
 is_special_char_c(const char c)
