@@ -131,6 +131,38 @@ quote_char(const char c)
 	return result;
 }
 
+/// Escape the character for C
+/**
+\sa https://en.cppreference.com/w/c/language/escape
+\sa https://en.cppreference.com/w/cpp/language/escape
+\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
+*/
+std::string
+escape_char_c(const char c)
+{
+	// simple escape sequence
+	switch (c)
+	{
+	case '\a': return std::string{backslash, 'a'};
+	case '\b': return std::string{backslash, 'b'};
+	case '\t': return std::string{backslash, 't'};
+	case '\n': return std::string{backslash, 'n'};
+	case '\v': return std::string{backslash, 'v'};
+	case '\f': return std::string{backslash, 'f'};
+	case '\r': return std::string{backslash, 'r'};
+	case '\"': return std::string{backslash, c};
+	case '\'': return std::string{backslash, c};
+	case '\?': return std::string{backslash, c};
+	case '\\': return std::string{backslash, c};
+	default: break;
+	}
+
+	if (std::isprint(static_cast<unsigned char>(c)))
+		return std::string{c};
+	else
+		return as_hex_str(c);
+}
+
 /**
 \sa https://en.cppreference.com/w/cpp/io/manip/quoted
 */
