@@ -74,27 +74,6 @@ contains_shell_special_chars(const std::string& s)
 	return false;
 }
 
-/// Is the character special for C?
-/**
-\sa https://en.cppreference.com/w/c/language/escape
-\sa https://en.cppreference.com/w/cpp/language/escape
-\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
-*/
-constexpr bool
-is_special_char_c(const char c)
-{
-	return (c == '\a') ||
-	       (c == '\b') ||
-	       (c == '\t') ||
-	       (c == '\n') ||
-	       (c == '\v') ||
-	       (c == '\f') ||
-	       (c == '\r') ||
-	       (c == '\"') ||
-	       (c == '\'') ||
-	       (c == '\\');
-}
-
 /// Get the octal representation of the byte
 std::string
 as_oct_str(const unsigned char c)
