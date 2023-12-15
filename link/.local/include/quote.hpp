@@ -100,11 +100,11 @@ std::string
 as_oct_str(const unsigned char c)
 {
 	static constexpr std::string_view oct_digits{"01234567"};
-	std::string result(3, '\0');
-	result[0] = oct_digits[(c & 0700) >> 6];
-	result[1] = oct_digits[(c & 0070) >> 3];
-	result[2] = oct_digits[(c & 0007)     ];
-	return result;
+	return std::string{backslash,
+		oct_digits[(c & 0700) >> 6],
+		oct_digits[(c & 0070) >> 3],
+		oct_digits[(c & 0007)     ],
+	};
 }
 
 /// Get the hexadecimal representation of the byte
@@ -112,10 +112,10 @@ std::string
 as_hex_str(const unsigned char c)
 {
 	static constexpr std::string_view hex_digits{"0123456789ABCDEF"};
-	std::string result(2, '\0');
-	result[0] = hex_digits[(c & 0xF0) >> 4];
-	result[1] = hex_digits[(c & 0x0F)     ];
-	return result;
+	return std::string{backslash, 'x',
+		hex_digits[(c & 0xF0) >> 4],
+		hex_digits[(c & 0x0F)     ],
+	};
 }
 
 /// Escape the character for C
