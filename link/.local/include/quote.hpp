@@ -71,8 +71,9 @@ contains_shell_special_chars(const std::string& s)
 }
 
 auto
-quote_char(const char c, const char delim = single_quote)
+quote_char(const char c)
 {
+	static constexpr char delim = single_quote;
 	std::string result;
 	result.reserve(4 + 2);
 	result.push_back(delim);
