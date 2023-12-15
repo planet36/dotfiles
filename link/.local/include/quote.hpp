@@ -135,9 +135,18 @@ quote(const char* s,
 	return result;
 }
 
+/**
+\sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
+<blockquote>
+Enclosing characters in single quotes (‘'’) preserves the literal value of each
+character within the quotes. A single quote may not occur between single
+quotes, even when preceded by a backslash.
+</blockquote>
+*/
 auto
-quote_shell_always(const std::string& s, const char delim = single_quote)
+quote_shell_always(const std::string& s)
 {
+	constexpr char delim = single_quote;
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
