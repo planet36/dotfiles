@@ -195,7 +195,7 @@ quote_escape(const std::string& s, const char escape = backslash)
 	result.reserve(s.size());
 	for (const auto c : s)
 	{
-		if (std::iscntrl(c))
+		if (std::iscntrl(static_cast<unsigned char>(c)))
 			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
 		else
 		{
@@ -218,7 +218,7 @@ quote_c(const std::string& s)
 	result.push_back(delim);
 	for (const auto c : s)
 	{
-		if (std::iscntrl(c))
+		if (std::iscntrl(static_cast<unsigned char>(c)))
 			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
 		else
 		{
@@ -237,7 +237,7 @@ quote_pcre(const std::string& s)
 {
 	static constexpr auto is_word = [](const char c)
 	{
-		return (c == '_') || std::isalnum(c);
+		return (c == '_') || std::isalnum(static_cast<unsigned char>(c));
 	};
 
 	std::string result;
