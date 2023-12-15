@@ -34,7 +34,7 @@ inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
 constexpr bool
-is_shell_special_char(const char c)
+is_special_char_shell(const char c)
 {
 	return (c == '\t') ||
 	       (c == '\n') ||
@@ -66,7 +66,7 @@ contains_shell_special_chars(const std::string& s)
 {
 	for (const auto c : s)
 	{
-		if (is_shell_special_char(c))
+		if (is_special_char_shell(c))
 			return true;
 	}
 
