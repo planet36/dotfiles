@@ -16,6 +16,7 @@ Note: Only \c std::string is supported.
 #include "ascii.hpp"
 
 #include <cctype>
+#include <cstdint>
 #include <string>
 #include <string_view>
 
@@ -71,6 +72,48 @@ contains_shell_special_chars(const std::string& s)
 	}
 
 	return false;
+}
+
+/// Is the character special for C?
+/**
+\sa https://en.cppreference.com/w/cpp/language/escape
+*/
+constexpr bool
+is_special_char_c(const char c)
+{
+	return (c == '\a') ||
+	       (c == '\b') ||
+	       (c == '\t') ||
+	       (c == '\n') ||
+	       (c == '\v') ||
+	       (c == '\f') ||
+	       (c == '\r') ||
+	       (c == '\"') ||
+	       (c == '\'') ||
+	       (c == '\\');
+}
+
+/// Get the octal representation of the byte
+std::string
+as_oct_str(const unsigned char c)
+{
+	static constexpr std::string_view oct_digits{"01234567"};
+	std::string result(3, '\0');
+	result[0] = oct_digits[(c & 0700) >> 6];
+	result[1] = oct_digits[(c & 0070) >> 3];
+	result[2] = oct_digits[(c & 0007)     ];
+	return result;
+}
+
+/// Get the hexadecimal representation of the byte
+std::string
+as_hex_str(const unsigned char c)
+{
+	static constexpr std::string_view hex_digits{"0123456789ABCDEF"};
+	std::string result(2, '\0');
+	result[0] = hex_digits[(c & 0xF0) >> 4];
+	result[1] = hex_digits[(c & 0x0F)     ];
+	return result;
 }
 
 /// Escape the character for C
