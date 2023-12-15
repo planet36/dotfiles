@@ -16,6 +16,7 @@ Note: Only \c std::string is supported.
 #include "ascii.hpp"
 #include "ctype.hpp"
 
+#include <cctype>
 #include <string>
 #include <string_view>
 
@@ -152,7 +153,7 @@ quote_escape(const std::string& s, const char escape = backslash)
 	result.reserve(s.size());
 	for (const auto c : s)
 	{
-		if (is_control(c))
+		if (std::iscntrl(c))
 			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
 		else
 		{
@@ -175,7 +176,7 @@ quote_c(const std::string& s)
 	result.push_back(delim);
 	for (const auto c : s)
 	{
-		if (is_control(c))
+		if (std::iscntrl(c))
 			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
 		else
 		{
