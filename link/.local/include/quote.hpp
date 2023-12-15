@@ -155,10 +155,10 @@ quote_escape(const std::string& s, const char escape = backslash)
 }
 
 auto
-quote_c(const std::string& s,
-        const char delim = double_quote,
-        const char escape = backslash)
+quote_c(const std::string& s)
 {
+	static constexpr char delim = double_quote;
+	static constexpr char escape = backslash;
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
