@@ -1,11 +1,12 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Quote a string
+/// Quote strings
 /**
 \file
 \author Steven Ward
 \sa https://en.cppreference.com/w/cpp/io/manip/quoted
+\sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
 
 Note: Only \c std::string is supported.
 */
@@ -28,6 +29,7 @@ inline constexpr char double_quote = '"';
 inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 }
 
+/// Is the character special for shell?
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
@@ -58,6 +60,7 @@ is_shell_special_char(const char c)
 	       (c == '~' );
 }
 
+/// Does the string contain special characters for shell?
 bool
 contains_shell_special_chars(const std::string& s)
 {
@@ -70,6 +73,7 @@ contains_shell_special_chars(const std::string& s)
 	return false;
 }
 
+/// Escape the character for C
 auto
 quote_char(const char c)
 {
@@ -82,6 +86,9 @@ quote_char(const char c)
 	return result;
 }
 
+/**
+\sa https://en.cppreference.com/w/cpp/io/manip/quoted
+*/
 auto
 quote(const std::string& s,
       const char delim = double_quote,
@@ -100,6 +107,7 @@ quote(const std::string& s,
 	return result;
 }
 
+/// Quote the string for POSIX shell
 /**
 \sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
 <blockquote>
@@ -126,6 +134,7 @@ quote_shell_always(const std::string& s)
 	return result;
 }
 
+/// Conditionally quote the string for POSIX shell
 auto
 quote_shell(const std::string& s)
 {
@@ -135,6 +144,7 @@ quote_shell(const std::string& s)
 		return s;
 }
 
+/// Escape control characters and space characters in the string
 auto
 quote_escape(const std::string& s, const char escape = backslash)
 {
@@ -154,6 +164,7 @@ quote_escape(const std::string& s, const char escape = backslash)
 	return result;
 }
 
+/// Escape the string for C
 auto
 quote_c(const std::string& s)
 {
@@ -177,6 +188,7 @@ quote_c(const std::string& s)
 	return result;
 }
 
+/// Escape the string for PCRE
 auto
 quote_pcre(const std::string& s)
 {
