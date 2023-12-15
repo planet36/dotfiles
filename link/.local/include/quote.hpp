@@ -100,24 +100,6 @@ quote(const std::string& s,
 }
 
 auto
-quote(const std::string_view& s,
-      const char delim = double_quote,
-      const char escape = backslash)
-{
-	std::string result;
-	result.reserve(s.size() + 2);
-	result.push_back(delim);
-	for (const auto c : s)
-	{
-		if (c == delim || c == escape)
-			result.push_back(escape);
-		result.push_back(c);
-	}
-	result.push_back(delim);
-	return result;
-}
-
-auto
 quote(const char* s,
       const char delim = double_quote,
       const char escape = backslash)
