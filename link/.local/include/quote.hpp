@@ -63,7 +63,7 @@ is_special_char_shell(const char c)
 
 /// Does the string contain special characters for POSIX shell?
 bool
-contains_shell_special_chars(const std::string& s)
+contains_special_chars_shell(const std::string& s)
 {
 	for (const auto c : s)
 	{
@@ -194,7 +194,7 @@ quote_shell_always(const std::string& s)
 auto
 quote_shell(const std::string& s)
 {
-	if (s.empty() || contains_shell_special_chars(s))
+	if (s.empty() || contains_special_chars_shell(s))
 		return quote_shell_always(s);
 	else
 		return s;
