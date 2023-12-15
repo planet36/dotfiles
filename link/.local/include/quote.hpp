@@ -30,7 +30,7 @@ inline constexpr char double_quote = '"';
 inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 }
 
-/// Is the character special for shell?
+/// Is the character special for POSIX shell?
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
@@ -61,7 +61,7 @@ is_special_char_shell(const char c)
 	       (c == '~' );
 }
 
-/// Does the string contain special characters for shell?
+/// Does the string contain special characters for POSIX shell?
 bool
 contains_shell_special_chars(const std::string& s)
 {
