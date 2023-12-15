@@ -53,7 +53,7 @@ is_special_char_shell(const char c)
 	       (c == '<' ) ||
 	       (c == '=' ) ||
 	       (c == '>' ) ||
-	       (c == '\?') ||
+	       (c == '?' ) ||
 	       (c == '[' ) ||
 	       (c == '\\') ||
 	       (c == '`' ) ||
@@ -130,8 +130,8 @@ escape_char_c(const char c)
 	case '\f': return std::string{backslash, 'f'};
 	case '\r': return std::string{backslash, 'r'};
 	case '\"': return std::string{backslash, c};
-	case '\'': return std::string{backslash, c};
-	case '\?': return std::string{backslash, c};
+	//case '\'': return std::string{backslash, c};
+	//case '\?': return std::string{backslash, c};
 	case '\\': return std::string{backslash, c};
 	default: break;
 	}
