@@ -14,7 +14,6 @@ Note: Only \c std::string is supported.
 #pragma once
 
 #include "ascii.hpp"
-#include "ctype.hpp"
 
 #include <cctype>
 #include <string>
@@ -193,6 +192,11 @@ quote_c(const std::string& s)
 auto
 quote_pcre(const std::string& s)
 {
+	static constexpr auto is_word = [](const char c)
+	{
+		return (c == '_') || std::isalnum(c);
+	};
+
 	std::string result;
 	result.reserve(s.size());
 	for (const auto c : s)
