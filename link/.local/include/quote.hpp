@@ -99,24 +99,6 @@ quote(const std::string& s,
 	return result;
 }
 
-auto
-quote(const char* s,
-      const char delim = double_quote,
-      const char escape = backslash)
-{
-	std::string result;
-	result.push_back(delim);
-	while (*s != '\0')
-	{
-		if (*s == delim || *s == escape)
-			result.push_back(escape);
-		result.push_back(*s);
-		++s;
-	}
-	result.push_back(delim);
-	return result;
-}
-
 /**
 \sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
 <blockquote>
