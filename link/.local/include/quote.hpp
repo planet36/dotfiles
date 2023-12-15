@@ -155,7 +155,10 @@ quote_shell_always(const std::string& s, const char delim = single_quote)
 auto
 quote_shell(const std::string& s)
 {
-	return contains_shell_special_chars(s) ? quote_shell_always(s) : s;
+	if (s.empty() || contains_shell_special_chars(s))
+		return quote_shell_always(s);
+	else
+		return s;
 }
 
 auto
