@@ -191,8 +191,9 @@ quote_shell(const std::string& s)
 
 /// Escape control characters and space characters in the string
 auto
-quote_escape(const std::string& s, const char escape = backslash)
+quote_escape(const std::string& s)
 {
+	constexpr char escape = backslash;
 	std::string result;
 	result.reserve(s.size());
 	for (const auto c : s)
