@@ -13,8 +13,6 @@ Note: Only \c std::string is supported.
 
 #pragma once
 
-#include "ascii.hpp"
-
 #include <cctype>
 #include <cstdint>
 #include <string>
@@ -230,7 +228,7 @@ quote_c(const char c)
 	std::string result;
 	result.reserve(4 + 2);
 	result.push_back(delim);
-	result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
+	result += escape_c(c);
 	result.push_back(delim);
 	return result;
 }
@@ -240,20 +238,12 @@ std::string
 quote_c(const std::string& s)
 {
 	static constexpr char delim = double_quote;
-	static constexpr char escape = backslash;
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
 	for (const auto c : s)
 	{
-		if (std::iscntrl(static_cast<unsigned char>(c)))
-			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
-		else
-		{
-			if ((c == delim) || (c == escape))
-				result.push_back(escape);
-			result.push_back(c);
-		}
+		result += escape_c(c);
 	}
 	result.push_back(delim);
 	return result;
