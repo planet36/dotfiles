@@ -97,6 +97,46 @@ as_hex_str(const unsigned char c)
 	};
 }
 
+/// Escape the character for POSIX shell
+/**
+\sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
+*/
+std::string
+escape_char_shell(const char c)
+{
+	switch (c)
+	{
+	case '\t': return std::string{backslash, 't'};
+	case '\n': return std::string{backslash, 'n'};
+	case ' ' :
+	case '"' :
+	case '#' :
+	case '$' :
+	case '%' :
+	case '&' :
+	case '\'':
+	case '(' :
+	case ')' :
+	case '*' :
+	case ';' :
+	case '<' :
+	case '=' :
+	case '>' :
+	case '?' :
+	case '[' :
+	case '\\':
+	case '`' :
+	case '|' :
+	case '~' : return std::string{backslash, c};
+	default: break;
+	}
+
+	if (std::isprint(static_cast<unsigned char>(c)))
+		return std::string{c};
+
+	return as_hex_str(c);
+}
+
 /// Escape the character for C
 auto
 quote_char(const char c)
