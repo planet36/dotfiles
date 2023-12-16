@@ -30,6 +30,29 @@ inline constexpr char double_quote = '"';
 inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 }
 
+/// Get the octal representation of the byte
+std::string
+as_oct_str(const unsigned char c)
+{
+	static constexpr std::string_view oct_digits{"01234567"};
+	return std::string{backslash,
+		oct_digits[(c & 0700) >> 6],
+		oct_digits[(c & 0070) >> 3],
+		oct_digits[(c & 0007)     ],
+	};
+}
+
+/// Get the hexadecimal representation of the byte
+std::string
+as_hex_str(const unsigned char c)
+{
+	static constexpr std::string_view hex_digits{"0123456789ABCDEF"};
+	return std::string{backslash, 'x',
+		hex_digits[(c & 0xF0) >> 4],
+		hex_digits[(c & 0x0F)     ],
+	};
+}
+
 /// Is the character special for POSIX shell?
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
@@ -72,29 +95,6 @@ contains_special_chars_shell(const std::string& s)
 	}
 
 	return false;
-}
-
-/// Get the octal representation of the byte
-std::string
-as_oct_str(const unsigned char c)
-{
-	static constexpr std::string_view oct_digits{"01234567"};
-	return std::string{backslash,
-		oct_digits[(c & 0700) >> 6],
-		oct_digits[(c & 0070) >> 3],
-		oct_digits[(c & 0007)     ],
-	};
-}
-
-/// Get the hexadecimal representation of the byte
-std::string
-as_hex_str(const unsigned char c)
-{
-	static constexpr std::string_view hex_digits{"0123456789ABCDEF"};
-	return std::string{backslash, 'x',
-		hex_digits[(c & 0xF0) >> 4],
-		hex_digits[(c & 0x0F)     ],
-	};
 }
 
 /// Escape the character for POSIX shell
