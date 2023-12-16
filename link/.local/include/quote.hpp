@@ -169,17 +169,17 @@ escape_char_c(const char c)
 	case '\v': return std::string{backslash, 'v'};
 	case '\f': return std::string{backslash, 'f'};
 	case '\r': return std::string{backslash, 'r'};
-	case '\"': return std::string{backslash, c};
-	//case '\'': return std::string{backslash, c};
-	//case '\?': return std::string{backslash, c};
+	case '\"':
+	//case '\'':
+	//case '\?':
 	case '\\': return std::string{backslash, c};
 	default: break;
 	}
 
 	if (std::isprint(static_cast<unsigned char>(c)))
 		return std::string{c};
-	else
-		return as_hex_str(c);
+
+	return as_hex_str(c);
 }
 
 /**
