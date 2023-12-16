@@ -137,73 +137,6 @@ escape_shell(const char c)
 	return as_hex_str(c);
 }
 
-/// Quote the character for C
-std::string
-quote_c(const char c)
-{
-	static constexpr char delim = single_quote;
-	std::string result;
-	result.reserve(4 + 2);
-	result.push_back(delim);
-	result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
-	result.push_back(delim);
-	return result;
-}
-
-/// Escape the character for C
-/**
-\sa https://en.cppreference.com/w/c/language/escape
-\sa https://en.cppreference.com/w/cpp/language/escape
-\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
-*/
-std::string
-escape_c(const char c)
-{
-	// simple escape sequence
-	switch (c)
-	{
-	case '\a': return std::string{backslash, 'a'};
-	case '\b': return std::string{backslash, 'b'};
-	case '\t': return std::string{backslash, 't'};
-	case '\n': return std::string{backslash, 'n'};
-	case '\v': return std::string{backslash, 'v'};
-	case '\f': return std::string{backslash, 'f'};
-	case '\r': return std::string{backslash, 'r'};
-	case '\"':
-	//case '\'':
-	//case '\?':
-	case '\\': return std::string{backslash, c};
-	default: break;
-	}
-
-	if (std::isprint(static_cast<unsigned char>(c)))
-		return std::string{c};
-
-	return as_hex_str(c);
-}
-
-/// Quote the string similar to \c std::quoted
-/**
-\sa https://en.cppreference.com/w/cpp/io/manip/quoted
-*/
-std::string
-quote_simple(const std::string& s,
-             const char delim = double_quote,
-             const char escape = backslash)
-{
-	std::string result;
-	result.reserve(s.size() + 2);
-	result.push_back(delim);
-	for (const auto c : s)
-	{
-		if (c == delim || c == escape)
-			result.push_back(escape);
-		result.push_back(c);
-	}
-	result.push_back(delim);
-	return result;
-}
-
 /// Escape the string for POSIX shell
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
@@ -257,6 +190,51 @@ quote_shell(const std::string& s)
 		return s;
 }
 
+/// Escape the character for C
+/**
+\sa https://en.cppreference.com/w/c/language/escape
+\sa https://en.cppreference.com/w/cpp/language/escape
+\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
+*/
+std::string
+escape_c(const char c)
+{
+	// simple escape sequence
+	switch (c)
+	{
+	case '\a': return std::string{backslash, 'a'};
+	case '\b': return std::string{backslash, 'b'};
+	case '\t': return std::string{backslash, 't'};
+	case '\n': return std::string{backslash, 'n'};
+	case '\v': return std::string{backslash, 'v'};
+	case '\f': return std::string{backslash, 'f'};
+	case '\r': return std::string{backslash, 'r'};
+	case '\"':
+	//case '\'':
+	//case '\?':
+	case '\\': return std::string{backslash, c};
+	default: break;
+	}
+
+	if (std::isprint(static_cast<unsigned char>(c)))
+		return std::string{c};
+
+	return as_hex_str(c);
+}
+
+/// Quote the character for C
+std::string
+quote_c(const char c)
+{
+	static constexpr char delim = single_quote;
+	std::string result;
+	result.reserve(4 + 2);
+	result.push_back(delim);
+	result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
+	result.push_back(delim);
+	return result;
+}
+
 /// Quote the string for C
 std::string
 quote_c(const std::string& s)
@@ -305,4 +283,26 @@ inline std::string
 quote(const std::string& s)
 {
 	return quote_shell_always(s);
+}
+
+/// Quote the string similar to \c std::quoted
+/**
+\sa https://en.cppreference.com/w/cpp/io/manip/quoted
+*/
+std::string
+quote_simple(const std::string& s,
+             const char delim = double_quote,
+             const char escape = backslash)
+{
+	std::string result;
+	result.reserve(s.size() + 2);
+	result.push_back(delim);
+	for (const auto c : s)
+	{
+		if (c == delim || c == escape)
+			result.push_back(escape);
+		result.push_back(c);
+	}
+	result.push_back(delim);
+	return result;
 }
