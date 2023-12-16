@@ -138,7 +138,7 @@ escape_shell(const char c)
 }
 
 /// Quote the character for C
-auto
+std::string
 quote_c(const char c)
 {
 	static constexpr char delim = single_quote;
@@ -185,7 +185,7 @@ escape_c(const char c)
 /**
 \sa https://en.cppreference.com/w/cpp/io/manip/quoted
 */
-auto
+std::string
 quote(const std::string& s,
       const char delim = double_quote,
       const char escape = backslash)
@@ -228,7 +228,7 @@ character within the quotes. A single quote may not occur between single
 quotes, even when preceded by a backslash.
 </blockquote>
 */
-auto
+std::string
 quote_shell_always(const std::string& s)
 {
 	constexpr char delim = single_quote;
@@ -247,7 +247,7 @@ quote_shell_always(const std::string& s)
 }
 
 /// Conditionally quote the string for POSIX shell
-auto
+std::string
 quote_shell(const std::string& s)
 {
 	if (s.empty() || contains_special_chars_shell(s))
@@ -257,7 +257,7 @@ quote_shell(const std::string& s)
 }
 
 /// Escape control characters and space characters in the string
-auto
+std::string
 quote_escape(const std::string& s)
 {
 	constexpr char escape = backslash;
@@ -278,7 +278,7 @@ quote_escape(const std::string& s)
 }
 
 /// Escape the string for C
-auto
+std::string
 quote_c(const std::string& s)
 {
 	static constexpr char delim = double_quote;
@@ -302,7 +302,7 @@ quote_c(const std::string& s)
 }
 
 /// Escape the string for PCRE
-auto
+std::string
 quote_pcre(const std::string& s)
 {
 	static constexpr auto is_word = [](const char c)
