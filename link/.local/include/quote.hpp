@@ -256,27 +256,6 @@ quote_shell(const std::string& s)
 		return s;
 }
 
-/// Escape control characters and space characters in the string
-std::string
-quote_escape(const std::string& s)
-{
-	constexpr char escape = backslash;
-	std::string result;
-	result.reserve(s.size());
-	for (const auto c : s)
-	{
-		if (std::iscntrl(static_cast<unsigned char>(c)))
-			result += c_simple_esc_seq_hex[static_cast<unsigned char>(c)];
-		else
-		{
-			if ((c == ' ') || (c == escape))
-				result.push_back(escape);
-			result.push_back(c);
-		}
-	}
-	return result;
-}
-
 /// Quote the string for C
 std::string
 quote_c(const std::string& s)
