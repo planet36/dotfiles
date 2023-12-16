@@ -303,7 +303,7 @@ quote_c(const std::string& s)
 
 /// Escape the string for PCRE
 std::string
-quote_pcre(const std::string& s)
+escape_pcre(const std::string& s)
 {
 	static constexpr auto is_word = [](const char c)
 	{
