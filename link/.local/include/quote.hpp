@@ -203,6 +203,22 @@ quote(const std::string& s,
 	return result;
 }
 
+/// Escape the string for POSIX shell
+/**
+\sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
+*/
+std::string
+escape_shell(const std::string& s)
+{
+	std::string result;
+	result.reserve(s.size());
+	for (const auto c : s)
+	{
+		result += escape_shell(c);
+	}
+	return result;
+}
+
 /// Quote the string for POSIX shell
 /**
 \sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
