@@ -102,7 +102,7 @@ as_hex_str(const unsigned char c)
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
 std::string
-escape_char_shell(const char c)
+escape_shell(const char c)
 {
 	switch (c)
 	{
@@ -137,9 +137,9 @@ escape_char_shell(const char c)
 	return as_hex_str(c);
 }
 
-/// Escape the character for C
+/// Quote the character for C
 auto
-quote_char(const char c)
+quote_c(const char c)
 {
 	static constexpr char delim = single_quote;
 	std::string result;
@@ -157,7 +157,7 @@ quote_char(const char c)
 \sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
 */
 std::string
-escape_char_c(const char c)
+escape_c(const char c)
 {
 	// simple escape sequence
 	switch (c)
