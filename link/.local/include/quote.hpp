@@ -277,7 +277,7 @@ quote_escape(const std::string& s)
 	return result;
 }
 
-/// Escape the string for C
+/// Quote the string for C
 std::string
 quote_c(const std::string& s)
 {
