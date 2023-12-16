@@ -182,13 +182,14 @@ escape_c(const char c)
 	return as_hex_str(c);
 }
 
+/// Quote the string similar to \c std::quoted
 /**
 \sa https://en.cppreference.com/w/cpp/io/manip/quoted
 */
 std::string
-quote(const std::string& s,
-      const char delim = double_quote,
-      const char escape = backslash)
+quote_simple(const std::string& s,
+             const char delim = double_quote,
+             const char escape = backslash)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -298,4 +299,10 @@ escape_pcre(const std::string& s)
 		result.push_back(c);
 	}
 	return result;
+}
+
+inline std::string
+quote(const std::string& s)
+{
+	return quote_shell_always(s);
 }
