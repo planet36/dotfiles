@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// get/set the bit representation of floating-point values
+/// Union that holds a floating-point value and an unsigned integer of the given size
 /**
 \file
 \author Steven Ward
@@ -12,8 +12,6 @@
 #include "float_bytes.hpp"
 #include "int_bytes.hpp"
 
-#include <bit>
-#include <concepts>
 #include <cstdint>
 
 static_assert(sizeof(uint32_t) == sizeof(float));
@@ -36,19 +34,3 @@ union float_bits_union<8>
 	uint64_t i = 0;
 	double f;
 };
-
-template <std::floating_point T>
-requires (sizeof(T) == 4 || sizeof(T) == 8)
-constexpr auto
-float_to_bits(const T x)
-{
-	return std::bit_cast<uint_bytes<sizeof(T)>>(x);
-}
-
-template <std::unsigned_integral T>
-requires (sizeof(T) == 4 || sizeof(T) == 8)
-constexpr auto
-bits_to_float(const T x)
-{
-	return std::bit_cast<float_bytes<sizeof(T)>>(x);
-}
