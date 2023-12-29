@@ -141,17 +141,6 @@ DEF_CHAR_PRED(punctuation )
 #undef DEF_CHAR_PRED
 
 constexpr char
-to_ascii(char c)
-{
-#if 0
-	c &= 0x7F;
-	return c;
-#else
-	return c & 0x7F;
-#endif
-}
-
-constexpr char
 to_uppercase(char c)
 {
 #if 0
