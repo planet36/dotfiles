@@ -143,40 +143,20 @@ DEF_CHAR_PRED(punctuation )
 constexpr char
 to_uppercase(char c)
 {
-#if 0
-	if (is_lowercase(c))
-		c -= ('a' - 'A');
-	return c;
-#else
 	return is_lowercase(c) ? c - ('a' - 'A') : c;
-#endif
 }
 
 constexpr char
 to_lowercase(char c)
 {
-#if 0
-	if (is_uppercase(c))
-		c += ('a' - 'A');
-	return c;
-#else
 	return is_uppercase(c) ? c + ('a' - 'A') : c;
-#endif
 }
 
 constexpr char
 to_othercase(char c)
 {
-#if 0
-	if (is_uppercase(c))
-		c += ('a' - 'A');
-	else if (is_lowercase(c))
-		c -= ('a' - 'A');
-	return c;
-#else
 	return is_uppercase(c) ? c + ('a' - 'A') :
 	                         (is_lowercase(c) ? c - ('a' - 'A') : c);
-#endif
 }
 
 void
