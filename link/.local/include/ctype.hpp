@@ -141,19 +141,19 @@ DEF_CHAR_PRED(punctuation )
 #undef DEF_CHAR_PRED
 
 constexpr char
-to_uppercase(char c)
+to_uppercase(const char c)
 {
 	return is_lowercase(c) ? c - ('a' - 'A') : c;
 }
 
 constexpr char
-to_lowercase(char c)
+to_lowercase(const char c)
 {
 	return is_uppercase(c) ? c + ('a' - 'A') : c;
 }
 
 constexpr char
-to_othercase(char c)
+to_othercase(const char c)
 {
 	return is_uppercase(c) ? c + ('a' - 'A') :
 	                         (is_lowercase(c) ? c - ('a' - 'A') : c);
