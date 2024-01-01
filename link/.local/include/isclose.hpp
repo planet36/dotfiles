@@ -10,6 +10,7 @@
 #pragma once
 
 #include <cmath>
+#include <concepts>
 
 /// are two floating-point numbers are close to each other?
 /**
