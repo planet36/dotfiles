@@ -27,6 +27,7 @@ alias fiel=file
 alias gi=git
 alias his=history
 alias hist=history
+alias i="$EDITOR -c startinsert"
 alias ip3=ipython3
 alias ipy3=ipython3
 alias m=man

@@ -26,6 +26,7 @@ abbr --add --global fiel file
 abbr --add --global gi git
 abbr --add --global his history
 abbr --add --global hist history
+abbr --add --global i "$EDITOR" -c startinsert
 abbr --add --global ip3 ipython3
 abbr --add --global ipy3 ipython3
 abbr --add --global m man
