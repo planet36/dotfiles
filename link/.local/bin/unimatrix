@@ -47,7 +47,9 @@ OPTIONAL ARGUMENTS
   -g COLOR             Background color (See -c). Defaults to keeping
                        terminal's current background.
 
-  -h                   Show this help message, then exit
+  -h                   Show this help message and exit
+
+  -i                   Ignore keyboard
 
   -l CHARACTER_LIST    Select character set(s) using a string over letter
                        codes (see CHARACTER SETS below.)
@@ -77,16 +79,17 @@ LONG ARGUMENTS
   -f --flashers
   -g --bg-color=COLOR
   -h --help
+  -i --ignore-keyboard
   -l --character-list=CHARACTER_LIST
   -s --speed=SPEED
   -n --no-bold
   -o --status-off
   -t --time
-  -u --custom_characters=CUSTOM_CHARACTERS
-  -w --single_wave
+  -u --custom-characters=CUSTOM_CHARACTERS
+  -w --single-wave
 
 CHARACTER SETS
-  When using '-l' or '--character_list=' option, follow it with one or more of
+  When using '-l' or '--character-list=' option, follow it with one or more of
   the following letters:
 
   a   Lowercase alphabet
@@ -108,7 +111,7 @@ CHARACTER SETS
   S   All common keyboard symbols ( `-=~!z#$%^&*()_+[]{}|\;':",./<>?" )
   u   Custom characters selected using -u switch
 
-  For example: '-l naAS' or '--character_list=naAS' will give something similar
+  For example: '-l naAS' or '--character-list=naAS' will give something similar
   to the output of the original cmatrix program in its default mode.
   '-l ACG' will use all the upper-case character sets. Use the same
   letter multiple times to increase the frequency of the character set. For
@@ -176,7 +179,10 @@ parser.add_argument('-g', '--bg-color',
                     help='background color (see -c)',
                     type=str)
 parser.add_argument('-h', '--help',
-                    help='display extended usage information, then exit.',
+                    help='display extended usage information and exit.',
+                    action='store_true')
+parser.add_argument('-i', '--ignore-keyboard',
+                    help='ignore all keyboard input.',
                     action='store_true')
 parser.add_argument('-l', '--character-list',
                     help='character set. See details below',
@@ -451,6 +457,9 @@ class KeyHandler:
         """
         Handles key presses. Returns True if a key was found, False otherwise.
         """
+        if args.ignore_keyboard:
+            return False;
+
         kp = self.screen.getch()
 
         if kp == -1:
