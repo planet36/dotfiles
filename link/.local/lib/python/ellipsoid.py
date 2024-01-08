@@ -52,6 +52,8 @@ class Ellipsoid:
 
         self.a       = a
         self.f       = f
+        self.GM      = GM
+        self.omega   = omega
         self.b       = b
         self.a2      = a2
         self.b2      = b2
