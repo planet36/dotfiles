@@ -86,17 +86,17 @@ alias du3='du --max-depth=1'
 alias du4='du --separate-dirs'
 alias du='du --bytes --human-readable'
 alias fd='fd -H'
-#alias fe='find -type f -print0 | fzf --read0 --print0 | xargs --null --no-run-if-empty --verbose --open-tty -- "$EDITOR"'
-#alias ff='find -type f | fzf'
-alias file-dates='find -type f -printf "%T@\t%Tc\t%p\n"'
-alias file-lines='find -type f -print0 | wc --lines --files0-from=-'
-alias file-sizes='find -type f -printf "%s\t%p\n"'
+#alias fe='find . -type f -print0 | fzf --read0 --print0 | xargs --null --no-run-if-empty --verbose --open-tty -- "$EDITOR"'
+#alias ff='find . -type f | fzf'
+alias file-dates='find . -type f -printf "%T@\t%Tc\t%p\n"'
+alias file-lines='find . -type f -print0 | wc --lines --files0-from=-'
+alias file-sizes='find . -type f -printf "%s\t%p\n"'
 alias file-times=file-dates
 alias file1-dates='find . -maxdepth 1 -type f -printf "%T@\t%Tc\t%p\n"'
 alias file1-lines='find . -maxdepth 1 -type f -print0 | wc --lines --files0-from=-'
 alias file1-sizes='find . -maxdepth 1 -type f -printf "%s\t%p\n"'
 alias file1-times=file1-dates
-alias find-dangling-symlinks='find -xtype l'
+alias find-dangling-symlinks='find . -xtype l'
 # We don't want an alias named "grep" with so many options
 #alias grep='grep --color --line-number --binary-files=without-match --directories=skip'
 alias g='grep --color --line-number --binary-files=without-match --directories=skip'
@@ -109,7 +109,7 @@ alias mirror2='wget --verbose --force-directories --no-host-directories --html-e
 alias mirror='wget --verbose --mirror --page-requisites'
 alias mv='mv --backup=numbered'
 alias my_ip='curl ipinfo.io'
-alias num-file-extensions="find \( -type f -or -type l \) -printf '%f\n' | awk --field-separator . '{print \$NF}' | sort | uniq --count"
+alias num-file-extensions="find . \( -type f -or -type l \) -printf '%f\n' | awk --field-separator . '{print \$NF}' | sort | uniq --count"
 # XXX: version sort doesn't do case folding
 # List all directories in the current working directory.
 alias only-dirs='find . -maxdepth 1 -type d -not -name ".*" -printf "%f\0" | xargs --null --no-run-if-empty ls --human-readable -o --file-type --color --directory'
@@ -133,7 +133,7 @@ alias rm='rm --preserve-root --interactive'
 alias split='split --verbose --suffix-length=3 --numeric-suffixes'
 alias ssh_my='TERM=xterm-256color ssh_to $MY_WEBSITE'
 alias ssh_to='ssh -Y -o ServerAliveInterval=60'
-alias t-tmp='cd && clean code && find -type f -name a.out -delete && t code/tmp && command xz --verbose -9 -e tmp.tar && mv tmp.tar.xz Downloads/ && cd Downloads/ && printf "del tmp.tar.xz && exit\n"'
+alias t-tmp='cd && clean code && find . -type f -name a.out -delete && t code/tmp && command xz --verbose -9 -e tmp.tar && mv tmp.tar.xz Downloads/ && cd Downloads/ && printf "del tmp.tar.xz && exit\n"'
 alias tma='tmux attach || tmux'
 alias tree='tree -AFCaq'
 alias units='units --history ""'
