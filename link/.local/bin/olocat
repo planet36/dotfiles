@@ -5,6 +5,8 @@
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
+# pylint: disable=no-else-return
+# pylint: disable=redefined-outer-name
 
 __author__ = 'Steven Ward'
 __version__ = '2023-01-13'
