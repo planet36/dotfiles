@@ -10,10 +10,9 @@
 # All circular angles are in degrees.
 
 __author__ = 'Steven Ward'
-__version__ = '2023-12-11'
+__version__ = '2024-01-15'
 __license__ = 'OSL-3.0'
 
-import math
 import sys
 
 # https://geopy.readthedocs.io/en/stable/#module-geopy.distance
