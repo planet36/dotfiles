@@ -28,7 +28,7 @@ inline constexpr uint64_t fnv_offset_basis_64 = UINT64_C(14'695'981'039'346'656'
 
 /// FNV-1 32-bit hash
 constexpr uint32_t
-fnv1_32(const std::string_view& s)
+fnv1_32(const std::string_view s)
 {
 	uint32_t result = fnv_offset_basis_32;
 
@@ -44,7 +44,7 @@ fnv1_32(const std::string_view& s)
 
 /// FNV-1a 32-bit hash
 constexpr uint32_t
-fnv1a_32(const std::string_view& s)
+fnv1a_32(const std::string_view s)
 {
 	uint32_t result = fnv_offset_basis_32;
 
@@ -60,7 +60,7 @@ fnv1a_32(const std::string_view& s)
 
 /// FNV-1 64-bit hash
 constexpr uint64_t
-fnv1_64(const std::string_view& s)
+fnv1_64(const std::string_view s)
 {
 	uint64_t result = fnv_offset_basis_64;
 
@@ -76,7 +76,7 @@ fnv1_64(const std::string_view& s)
 
 /// FNV-1a 64-bit hash
 constexpr uint64_t
-fnv1a_64(const std::string_view& s)
+fnv1a_64(const std::string_view s)
 {
 	uint64_t result = fnv_offset_basis_64;
 

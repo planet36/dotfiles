@@ -17,7 +17,7 @@
 /// Java string.hashCode() hash
 /** NOTE: this operates on bytes, not characters */
 constexpr int32_t
-java_hashCode(const std::string_view& s)
+java_hashCode(const std::string_view s)
 {
 	int32_t result = 0;
 
