@@ -13,6 +13,7 @@ stw
 # These will be cloned but not built
 CLONE_ONLY_DIRS = \
 arch-install \
+ecef-geodetic \
 dwm-suckless \
 slstatus-suckless \
 st-suckless \
@@ -28,7 +29,7 @@ clone: | $(SUBDIRS)
 clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-arch-install PractRand stw:
+arch-install ecef-geodetic PractRand stw:
 	git clone --quiet https://github.com/planet36/$@.git
 
 # My repos (forked from suckless)
