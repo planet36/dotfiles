@@ -87,7 +87,7 @@ set Z_CMD "j"
 
 # {{{ Choose theme
 
-fish_config theme choose 'Tomorrow Night Bright'
+fish_config theme choose 'Dracula'
 
 # }}}
 
