@@ -14,7 +14,6 @@ Note: Only \c std::string is supported.
 #pragma once
 
 #include <cctype>
-#include <cstdint>
 #include <string>
 #include <string_view>
 
