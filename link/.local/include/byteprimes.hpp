@@ -13,7 +13,7 @@ These were inspired by the byte sequence used in AESRand.
 The last number is left padded with "00".
 
 Fish shell commands to generate the numbers:
-\verbatim
+\code{.sh}
 begin
 echo "01"
 openssl prime $(seq 255) | grep -F 'is prime' | cut -d ' ' -f 1 |
@@ -22,10 +22,10 @@ end |
 tac | xargs -n 8 | tac |
 sed -e 's/^/0x/' -e 's/ //g' -e 's/$/,/' |
 tr '[:upper:]' '[:lower:]'
-\endverbatim
+\endcode
 
 Bash shell commands to generate the numbers:
-\verbatim
+\code{.sh}
 # (bash)
 {
 echo "01"
@@ -35,7 +35,7 @@ sed -e 's/^.$/0&/' ; echo "00"
 tac | xargs -n 8 | tac |
 sed -e 's/^/0x/' -e 's/ //g' -e 's/$/,/' |
 tr '[:upper:]' '[:lower:]'
-\endverbatim
+\endcode
 
 The values are are coprime with 2**64.
 https://www.wolframalpha.com/input?i=CoprimeQ%5B0x110d0b0705030201%2C+2%5E64%5D
