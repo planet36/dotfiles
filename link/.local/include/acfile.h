@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ACFILE(varname) \
-	__attribute__((cleanup(cleanup_close_file))) FILE* varname = nullptr
+#define acfile \
+	__attribute__((cleanup(cleanup_close_file))) FILE*
 
 static void
 cleanup_close_file(FILE** fpp)

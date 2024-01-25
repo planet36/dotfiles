@@ -200,9 +200,7 @@ main(int argc, char* const argv[])
 
 	// Test if file is readable
 	{
-		ACFILE(fp);
-
-		fp = fopen(net_iface_path, "r");
+		acfile fp = fopen(net_iface_path, "r");
 		if (fp == NULL)
 			err(EXIT_FAILURE, "%s", net_iface_path);
 	}
@@ -214,9 +212,7 @@ main(int argc, char* const argv[])
 		constexpr mode_t new_mask = 0133; // rw-r--r--
 		(void)umask(new_mask);
 
-		ACFILE(dest_fp);
-
-		dest_fp = fopen(dest_path, "wx");
+		acfile dest_fp = fopen(dest_path, "wx");
 		if (dest_fp == NULL)
 			err(EXIT_FAILURE, "%s", dest_path);
 	}
@@ -315,9 +311,7 @@ main(int argc, char* const argv[])
 
 			if (dest_path != NULL)
 			{
-				ACFILE(dest_fp);
-
-				dest_fp = fopen(dest_path, "w");
+				acfile dest_fp = fopen(dest_path, "w");
 				if (dest_fp == NULL)
 					err(EXIT_FAILURE, "%s", dest_path);
 
