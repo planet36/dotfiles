@@ -15,18 +15,18 @@
 #include <stdlib.h>
 
 #define ACFILE(varname) \
-	__attribute__((cleanup(cleanup_close_file))) FILE* varname = NULL
+	__attribute__((cleanup(cleanup_close_file))) FILE* varname = nullptr
 
 static void
 cleanup_close_file(FILE** fpp)
 {
-	if (*fpp != NULL)
+	if (*fpp != nullptr)
 	{
 		if (fclose(*fpp) < 0)
 		{
-			*fpp = NULL;
+			*fpp = nullptr;
 			err(EXIT_FAILURE, "fclose");
 		}
-		*fpp = NULL;
+		*fpp = nullptr;
 	}
 }

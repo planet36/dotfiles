@@ -58,7 +58,7 @@ circqueue_free(circqueue* cq)
 {
 	(void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
 	free(cq->buf);
-	cq->buf = NULL;
+	cq->buf = nullptr;
 	cq->max_num_elems = 0;
 	cq->sizeof_elem = 0;
 	cq->head = 0;

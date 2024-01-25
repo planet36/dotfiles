@@ -16,6 +16,6 @@
 static unsigned int
 strtou(const char* s)
 {
-	const unsigned long i = strtoul(s, NULL, 0);
+	const unsigned long i = strtoul(s, nullptr, 0);
 	return (i > UINT_MAX) ? UINT_MAX : (unsigned int)i;
 }

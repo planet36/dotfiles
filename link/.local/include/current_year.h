@@ -21,12 +21,12 @@
 static int
 current_year_local()
 {
-	const time_t now_time_t = time(NULL);
+	const time_t now_time_t = time(nullptr);
 	struct tm now_tm = {0};
 #ifdef DEBUG
 	// https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
 	tzset();
-	if (localtime_r(&now_time_t, &now_tm) == NULL)
+	if (localtime_r(&now_time_t, &now_tm) == nullptr)
 	{
 		perror("localtime_r");
 		return INT_MIN;
@@ -40,10 +40,10 @@ current_year_local()
 static int
 current_year_utc()
 {
-	const time_t now_time_t = time(NULL);
+	const time_t now_time_t = time(nullptr);
 	struct tm now_tm = {0};
 #ifdef DEBUG
-	if (gmtime_r(&now_time_t, &now_tm) == NULL)
+	if (gmtime_r(&now_time_t, &now_tm) == nullptr)
 	{
 		perror("gmtime_r");
 		return INT_MIN;

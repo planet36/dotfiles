@@ -27,7 +27,7 @@ pscanf(const char* path, const char* fmt, ...)
 	int n;
 
 	fp = fopen(path, "r");
-	if (fp == NULL)
+	if (fp == nullptr)
 	{
 		warn("fopen '%s'", path);
 		return -1;

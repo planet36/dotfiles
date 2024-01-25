@@ -30,7 +30,7 @@ int
 slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
 	FILE* fp = fopen(path, "rb");
-	if (fp == NULL)
+	if (fp == nullptr)
 	{
 		warn("fopen \"%s\"", path);
 		return -1;
@@ -71,7 +71,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	const size_t get_bytes = (size_t)statbuf.st_size;
 
 	unsigned char* buf = (unsigned char*)malloc(get_bytes);
-	if (buf == NULL)
+	if (buf == nullptr)
 	{
 		(void)fclose(fp);
 		warn("malloc %zu ", get_bytes);
@@ -86,7 +86,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	{
 		(void)fclose(fp);
 		free(buf);
-		buf = NULL;
+		buf = nullptr;
 		warn("fread %zu, returned %zu", get_bytes, got_bytes);
 		return -1;
 	}
@@ -146,7 +146,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	const size_t get_bytes = (size_t)statbuf.st_size;
 
 	unsigned char* buf = (unsigned char*)malloc(get_bytes);
-	if (buf == NULL)
+	if (buf == nullptr)
 	{
 		(void)close(fd);
 		warn("malloc %zu", get_bytes);
@@ -160,7 +160,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	{
 		(void)close(fd);
 		free(buf);
-		buf = NULL;
+		buf = nullptr;
 		warn("read %zu, returned %zd", get_bytes, got_bytes);
 		return -1;
 	}
