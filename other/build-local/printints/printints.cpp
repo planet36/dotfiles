@@ -108,5 +108,5 @@ main(int argc, char* const argv[])
 	else
 		errx(EXIT_FAILURE, "invalid input integer type: %s", type_name.c_str());
 
-	return 0;
+	return EXIT_SUCCESS;
 }

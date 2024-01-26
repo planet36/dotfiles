@@ -213,11 +213,11 @@ main(int argc, char* argv[])
 		{
 		case 'V':
 			print_version();
-			return 0;
+			return EXIT_SUCCESS;
 
 		case 'h':
 			print_usage();
-			return 0;
+			return EXIT_SUCCESS;
 
 		case 'n':
 			opts.suppress_newline = true;
@@ -283,5 +283,5 @@ main(int argc, char* argv[])
 	line = NULL;
 	allocated_size = 0;
 
-	return 0;
+	return EXIT_SUCCESS;
 }
