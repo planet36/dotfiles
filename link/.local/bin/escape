@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env -S bash --noprofile --norc --restricted
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
