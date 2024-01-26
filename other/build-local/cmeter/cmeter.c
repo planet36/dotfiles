@@ -212,10 +212,10 @@ main(int argc, char* argv[])
 		if (!isfinite(x))
 			continue;
 		print_cmeter(clamp(x, 0, 1), &opts);
-		free(line);
-		line = NULL;
-		allocated_size = 0;
 	}
+	free(line);
+	line = NULL;
+	allocated_size = 0;
 
 	return 0;
 }

@@ -278,10 +278,10 @@ main(int argc, char* argv[])
 	{
 		unsigned long dur_secs = strtoul(line, NULL, 0);
 		durfmt(dur_secs, &opts);
-		free(line);
-		line = NULL;
-		allocated_size = 0;
 	}
+	free(line);
+	line = NULL;
+	allocated_size = 0;
 
 	return 0;
 }
