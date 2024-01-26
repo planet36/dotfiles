@@ -27,7 +27,7 @@ inline constexpr char double_quote = '"';
 inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 }
 
-/// Get the octal representation of the byte
+/// Convert the byte to its escaped octal representation
 std::string
 to_oct_str(const unsigned char c)
 {
@@ -39,7 +39,7 @@ to_oct_str(const unsigned char c)
 	};
 }
 
-/// Get the hexadecimal representation of the byte
+/// Convert the byte to its escaped hexadecimal representation
 std::string
 to_hex_str(const unsigned char c)
 {
