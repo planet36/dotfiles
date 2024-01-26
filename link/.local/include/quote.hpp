@@ -50,7 +50,7 @@ as_hex_str(const unsigned char c)
 	};
 }
 
-/// Is the character special for POSIX shell?
+/// Is the character special for a POSIX shell?
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
@@ -81,7 +81,7 @@ is_special_char_shell(const char c)
 	       (c == '~' );
 }
 
-/// Does the string contain special characters for POSIX shell?
+/// Does the string contain special characters for a POSIX shell?
 bool
 contains_special_chars_shell(const std::string& s)
 {
@@ -94,7 +94,7 @@ contains_special_chars_shell(const std::string& s)
 	return false;
 }
 
-/// Escape the character for POSIX shell
+/// Escape the character for a POSIX shell
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
@@ -134,7 +134,7 @@ escape_shell(const char c)
 	return as_hex_str(c);
 }
 
-/// Escape the string for POSIX shell
+/// Escape the string for a POSIX shell
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
@@ -150,7 +150,7 @@ escape_shell(const std::string& s)
 	return result;
 }
 
-/// Quote the string for POSIX shell
+/// Quote the string for a POSIX shell
 /**
 \sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
 <blockquote>
@@ -177,7 +177,7 @@ quote_shell_always(const std::string& s)
 	return result;
 }
 
-/// Conditionally quote the string for POSIX shell
+/// Conditionally quote the string for a POSIX shell
 std::string
 quote_shell(const std::string& s)
 {
@@ -187,7 +187,7 @@ quote_shell(const std::string& s)
 		return s;
 }
 
-/// Escape the character for C
+/// Escape the character for a C character literal
 /**
 \sa https://en.cppreference.com/w/c/language/escape
 \sa https://en.cppreference.com/w/cpp/language/escape
@@ -219,7 +219,7 @@ escape_c(const char c)
 	return as_hex_str(c);
 }
 
-/// Quote the character for C
+/// Quote the character for a C character literal
 std::string
 quote_c(const char c)
 {
@@ -232,7 +232,7 @@ quote_c(const char c)
 	return result;
 }
 
-/// Quote the string for C
+/// Quote the string for a C string literal
 std::string
 quote_c(const std::string& s)
 {
@@ -248,7 +248,7 @@ quote_c(const std::string& s)
 	return result;
 }
 
-/// Escape the string for PCRE
+/// Escape the string for a Perl Compatible Regular Expression (PCRE)
 std::string
 escape_pcre(const std::string& s)
 {
