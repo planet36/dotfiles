@@ -203,10 +203,10 @@ main(int argc, char* argv[])
 	//argv += optind;
 
 	char* line = NULL;
-	size_t n = 0;
+	size_t allocated_size = 0;
 	//ssize_t bytes_read = 0;
-	//while ((bytes_read = getline(&line, &n, stdin)) != EOF)
-	while (getline(&line, &n, stdin) != EOF)
+	//while ((bytes_read = getline(&line, &allocated_size, stdin)) != EOF)
+	while (getline(&line, &allocated_size, stdin) != EOF)
 	{
 		double x = strtod(line, NULL);
 		if (!isfinite(x))
@@ -214,7 +214,7 @@ main(int argc, char* argv[])
 		print_cmeter(clamp(x, 0, 1), &opts);
 		free(line);
 		line = NULL;
-		n = 0;
+		allocated_size = 0;
 	}
 
 	return 0;
