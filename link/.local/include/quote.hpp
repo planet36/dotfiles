@@ -29,7 +29,7 @@ inline constexpr std::string_view single_quote_escaped{R"('\'')"};
 
 /// Get the octal representation of the byte
 std::string
-as_oct_str(const unsigned char c)
+to_oct_str(const unsigned char c)
 {
 	static constexpr std::string_view oct_digits{"01234567"};
 	return std::string{backslash,
@@ -41,7 +41,7 @@ as_oct_str(const unsigned char c)
 
 /// Get the hexadecimal representation of the byte
 std::string
-as_hex_str(const unsigned char c)
+to_hex_str(const unsigned char c)
 {
 	static constexpr std::string_view hex_digits{"0123456789ABCDEF"};
 	return std::string{backslash, 'x',
@@ -131,7 +131,7 @@ escape_shell(const char c)
 	if (std::isprint(static_cast<unsigned char>(c)))
 		return std::string{c};
 
-	return as_hex_str(c);
+	return to_hex_str(c);
 }
 
 /// Escape the string for a POSIX shell
@@ -216,7 +216,7 @@ escape_c(const char c)
 	if (std::isprint(static_cast<unsigned char>(c)))
 		return std::string{c};
 
-	return as_hex_str(c);
+	return to_hex_str(c);
 }
 
 /// Quote the character for a C character literal
