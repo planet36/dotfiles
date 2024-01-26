@@ -204,9 +204,9 @@ main(int argc, char* argv[])
 
 	char* line = NULL;
 	size_t allocated_size = 0;
-	//ssize_t bytes_read = 0;
-	//while ((bytes_read = getline(&line, &allocated_size, stdin)) != EOF)
-	while (getline(&line, &allocated_size, stdin) != EOF)
+	ssize_t bytes_read = 0;
+	while ((bytes_read = getline(&line, &allocated_size, stdin)) != EOF)
+	//while (getline(&line, &allocated_size, stdin) != EOF)
 	{
 		double x = strtod(line, NULL);
 		if (!isfinite(x))
