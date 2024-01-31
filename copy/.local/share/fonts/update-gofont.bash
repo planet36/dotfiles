@@ -4,7 +4,7 @@
 
 # Run this script from the target directory.
 
-# https://blog.golang.org/go-fonts
+# https://go.dev/blog/go-fonts
 # https://go.googlesource.com/image/+/master/font/gofont/ttfs/
 
 curl -O -L https://go.googlesource.com/image/+archive/master/font/gofont/ttfs.tar.gz
