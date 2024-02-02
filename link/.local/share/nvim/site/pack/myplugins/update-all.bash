@@ -23,4 +23,4 @@ do
   fi
   echo
   echo
-done < <(find . -type d -name .git -printf '%h\0' | sort --version-sort --zero-terminated)
+done < <(find . -type d -name .git -printf '%h\0' | sort --ignore-case --version-sort --zero-terminated)
