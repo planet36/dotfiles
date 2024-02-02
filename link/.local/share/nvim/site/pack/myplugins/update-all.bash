@@ -11,7 +11,10 @@ do
   then
     cd "$DIR" || break
     git fetch || break
-    git pull || break
+    if [[ "$(git rev-parse --is-bare-repository)" == 'false' ]]
+    then
+      git pull || break
+    fi
     #git fsck || break
     #git gc || break
     cd - > /dev/null || break
