@@ -87,7 +87,7 @@ contains_special_chars_shell(const std::string& s)
 {
 	for (const auto c : s)
 	{
-		if (is_special_char_shell(c))
+		if (is_special_char_shell(c) || !std::isprint(static_cast<unsigned char>(c)))
 			return true;
 	}
 
