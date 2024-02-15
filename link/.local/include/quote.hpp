@@ -252,6 +252,13 @@ quote_c(const std::string& s)
 std::string
 escape_pcre(const std::string& s)
 {
+	/// Is the character a word character?
+	/**
+	<blockquote>
+	A "word" character is an underscore or any character that is a letter or digit.
+	</blockquote>
+	\sa https://www.pcre.org/original/doc/html/pcrepattern.html#:~:text=A%20%22word%22%20character%20is%20an%20underscore%20or%20any%20character%20that%20is%20a%20letter%20or%20digit.
+	*/
 	static constexpr auto is_word = [](const char c)
 	{
 		return (c == '_') || std::isalnum(static_cast<unsigned char>(c));
