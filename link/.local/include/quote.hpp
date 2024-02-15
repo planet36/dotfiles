@@ -17,37 +17,34 @@ Note: Only \c std::string is supported.
 #include <string>
 #include <string_view>
 
-namespace
-{
-inline constexpr char backslash = '\\';
-inline constexpr char single_quote = '\'';
-inline constexpr char double_quote = '"';
+#define C_BACKSLASH    '\\'
+#define C_SINGLE_QUOTE '\''
+#define C_DOUBLE_QUOTE '"'
 
 // single quote, backslash, single quote, single quote
-inline constexpr std::string_view single_quote_escaped{R"('\'')"};
-}
+//#define S_SINGLE_QUOTE_ESCAPED "'\\''"
+#define S_SINGLE_QUOTE_ESCAPED R"('\'')"
+
+#define OCT_DIGITS "01234567"
+#define HEX_DIGITS "0123456789ABCDEF"
 
 /// Convert the byte to its escaped octal representation
 std::string
 to_oct_str(const unsigned char c)
 {
-	static constexpr std::string_view oct_digits{"01234567"};
-	return std::string{backslash,
-		oct_digits[(c & 0700) >> 6],
-		oct_digits[(c & 0070) >> 3],
-		oct_digits[(c & 0007)     ],
-	};
+	const auto d1 = OCT_DIGITS[(c & 0700) >> 6];
+	const auto d2 = OCT_DIGITS[(c & 0070) >> 3];
+	const auto d3 = OCT_DIGITS[(c & 0007)     ];
+	return std::string{C_BACKSLASH, d1, d2, d3};
 }
 
 /// Convert the byte to its escaped hexadecimal representation
 std::string
 to_hex_str(const unsigned char c)
 {
-	static constexpr std::string_view hex_digits{"0123456789ABCDEF"};
-	return std::string{backslash, 'x',
-		hex_digits[(c & 0xF0) >> 4],
-		hex_digits[(c & 0x0F)     ],
-	};
+	const auto d1 = HEX_DIGITS[(c & 0xF0) >> 4];
+	const auto d2 = HEX_DIGITS[(c & 0x0F)     ];
+	return std::string{C_BACKSLASH, 'x', d1, d2};
 }
 
 /// Is the character special for a POSIX shell?
@@ -103,8 +100,8 @@ escape_shell(const char c)
 {
 	switch (c)
 	{
-	case '\t': return std::string{backslash, 't'};
-	case '\n': return std::string{backslash, 'n'};
+	case '\t': return std::string{C_BACKSLASH, 't'};
+	case '\n': return std::string{C_BACKSLASH, 'n'};
 	case ' ' :
 	case '"' :
 	case '#' :
@@ -124,7 +121,7 @@ escape_shell(const char c)
 	case '\\':
 	case '`' :
 	case '|' :
-	case '~' : return std::string{backslash, c};
+	case '~' : return std::string{C_BACKSLASH, c};
 	default: break;
 	}
 
@@ -162,14 +159,14 @@ quotes, even when preceded by a backslash.
 std::string
 quote_shell_always(const std::string& s)
 {
-	constexpr char delim = single_quote;
+	constexpr auto delim = C_SINGLE_QUOTE;
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
 	for (const auto c : s)
 	{
 		if (c == delim)
-			result += single_quote_escaped;
+			result += S_SINGLE_QUOTE_ESCAPED;
 		else
 			result.push_back(c);
 	}
@@ -199,17 +196,17 @@ escape_c(const char c)
 	// simple escape sequence
 	switch (c)
 	{
-	case '\a': return std::string{backslash, 'a'};
-	case '\b': return std::string{backslash, 'b'};
-	case '\t': return std::string{backslash, 't'};
-	case '\n': return std::string{backslash, 'n'};
-	case '\v': return std::string{backslash, 'v'};
-	case '\f': return std::string{backslash, 'f'};
-	case '\r': return std::string{backslash, 'r'};
+	case '\a': return std::string{C_BACKSLASH, 'a'};
+	case '\b': return std::string{C_BACKSLASH, 'b'};
+	case '\t': return std::string{C_BACKSLASH, 't'};
+	case '\n': return std::string{C_BACKSLASH, 'n'};
+	case '\v': return std::string{C_BACKSLASH, 'v'};
+	case '\f': return std::string{C_BACKSLASH, 'f'};
+	case '\r': return std::string{C_BACKSLASH, 'r'};
 	case '\"':
 	//case '\'':
 	//case '\?':
-	case '\\': return std::string{backslash, c};
+	case '\\': return std::string{C_BACKSLASH, c};
 	default: break;
 	}
 
@@ -223,7 +220,7 @@ escape_c(const char c)
 std::string
 quote_c(const char c)
 {
-	static constexpr char delim = single_quote;
+	static constexpr auto delim = C_SINGLE_QUOTE;
 	std::string result;
 	result.reserve(4 + 2);
 	result.push_back(delim);
@@ -236,7 +233,7 @@ quote_c(const char c)
 std::string
 quote_c(const std::string& s)
 {
-	static constexpr char delim = double_quote;
+	static constexpr auto delim = C_DOUBLE_QUOTE;
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
@@ -269,7 +266,7 @@ escape_pcre(const std::string& s)
 	for (const auto c : s)
 	{
 		if (!is_word(c))
-			result.push_back(backslash);
+			result.push_back(C_BACKSLASH);
 		result.push_back(c);
 	}
 	return result;
@@ -287,8 +284,8 @@ quote(const std::string& s)
 */
 std::string
 quote_simple(const std::string& s,
-             const char delim = double_quote,
-             const char escape = backslash)
+             const char delim = C_DOUBLE_QUOTE,
+             const char escape = C_BACKSLASH)
 {
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -302,3 +299,10 @@ quote_simple(const std::string& s,
 	result.push_back(delim);
 	return result;
 }
+
+#undef C_BACKSLASH
+#undef C_SINGLE_QUOTE
+#undef C_DOUBLE_QUOTE
+#undef S_SINGLE_QUOTE_ESCAPED
+#undef OCT_DIGITS
+#undef HEX_DIGITS
