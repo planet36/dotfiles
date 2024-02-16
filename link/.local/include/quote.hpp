@@ -33,9 +33,9 @@ Note: Only \c std::string is supported.
 std::string
 to_oct_str(const uint8_t c)
 {
-	const auto d1 = OCT_DIGITS[(c & 0700) >> 6];
-	const auto d2 = OCT_DIGITS[(c & 0070) >> 3];
-	const auto d3 = OCT_DIGITS[(c & 0007)     ];
+	const char d1 = OCT_DIGITS[(c & 0700) >> 6];
+	const char d2 = OCT_DIGITS[(c & 0070) >> 3];
+	const char d3 = OCT_DIGITS[(c & 0007)     ];
 	return std::string{C_BACKSLASH, d1, d2, d3};
 }
 
@@ -43,8 +43,8 @@ to_oct_str(const uint8_t c)
 std::string
 to_hex_str(const uint8_t c)
 {
-	const auto d1 = HEX_DIGITS[(c & 0xF0) >> 4];
-	const auto d2 = HEX_DIGITS[(c & 0x0F)     ];
+	const char d1 = HEX_DIGITS[(c & 0xF0) >> 4];
+	const char d2 = HEX_DIGITS[(c & 0x0F)     ];
 	return std::string{C_BACKSLASH, 'x', d1, d2};
 }
 
@@ -173,7 +173,7 @@ quotes, even when preceded by a backslash.
 std::string
 quote_shell_always(const std::string& s)
 {
-	constexpr auto delim = C_SINGLE_QUOTE;
+	constexpr char delim = C_SINGLE_QUOTE;
 	static constexpr std::string_view delim_escaped{S_SINGLE_QUOTE_ESCAPED};
 	std::string result;
 	result.reserve(s.size() + 2);
@@ -235,7 +235,7 @@ escape_c(const char c)
 std::string
 quote_c(const char c)
 {
-	static constexpr auto delim = C_SINGLE_QUOTE;
+	static constexpr char delim = C_SINGLE_QUOTE;
 	std::string result;
 	result.reserve(4 + 2);
 	result.push_back(delim);
@@ -248,7 +248,7 @@ quote_c(const char c)
 std::string
 quote_c(const std::string& s)
 {
-	static constexpr auto delim = C_DOUBLE_QUOTE;
+	static constexpr char delim = C_DOUBLE_QUOTE;
 	std::string result;
 	result.reserve(s.size() + 2);
 	result.push_back(delim);
