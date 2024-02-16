@@ -14,6 +14,7 @@ Note: Only \c std::string is supported.
 #pragma once
 
 #include <cctype>
+#include <cstdint>
 #include <string>
 #include <string_view>
 
@@ -30,7 +31,7 @@ Note: Only \c std::string is supported.
 
 /// Convert the byte to its escaped octal representation
 std::string
-to_oct_str(const unsigned char c)
+to_oct_str(const uint8_t c)
 {
 	const auto d1 = OCT_DIGITS[(c & 0700) >> 6];
 	const auto d2 = OCT_DIGITS[(c & 0070) >> 3];
@@ -40,7 +41,7 @@ to_oct_str(const unsigned char c)
 
 /// Convert the byte to its escaped hexadecimal representation
 std::string
-to_hex_str(const unsigned char c)
+to_hex_str(const uint8_t c)
 {
 	const auto d1 = HEX_DIGITS[(c & 0xF0) >> 4];
 	const auto d2 = HEX_DIGITS[(c & 0x0F)     ];
