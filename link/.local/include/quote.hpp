@@ -259,6 +259,35 @@ quote_c(const std::string& s)
 	return result;
 }
 
+/// Escape the character for a Perl Compatible Regular Expression (PCRE)
+/**
+\sa https://perldoc.perl.org/perlre#Escape-sequences
+\sa https://www.pcre.org/original/doc/html/pcrepattern.html
+\sa https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+*/
+std::string
+escape_pcre(const char c)
+{
+	if (isword(static_cast<unsigned char>(c)))
+		return std::string{c};
+
+	switch (c)
+	{
+	case '\t': return std::string{C_BACKSLASH, 't'};
+	case '\n': return std::string{C_BACKSLASH, 'n'};
+	case '\r': return std::string{C_BACKSLASH, 'r'};
+	case '\f': return std::string{C_BACKSLASH, 'f'};
+	case '\a': return std::string{C_BACKSLASH, 'a'};
+	case 0x1b: return std::string{C_BACKSLASH, 'e'}; // '\e'
+	default: break;
+	}
+
+	if (std::isprint(static_cast<unsigned char>(c)))
+		return std::string{C_BACKSLASH, c};
+
+	return to_hex_str(c);
+}
+
 /// Escape the string for a Perl Compatible Regular Expression (PCRE)
 std::string
 escape_pcre(const std::string& s)
@@ -267,9 +296,7 @@ escape_pcre(const std::string& s)
 	result.reserve(s.size());
 	for (const auto c : s)
 	{
-		if (!isword(c))
-			result.push_back(C_BACKSLASH);
-		result.push_back(c);
+		result += escape_pcre(c);
 	}
 	return result;
 }
