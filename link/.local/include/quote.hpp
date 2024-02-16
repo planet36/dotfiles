@@ -47,6 +47,19 @@ to_hex_str(const unsigned char c)
 	return std::string{C_BACKSLASH, 'x', d1, d2};
 }
 
+/// Is the character a word character?
+/**
+<blockquote>
+A "word" character is an underscore or any character that is a letter or digit.
+</blockquote>
+\sa https://www.pcre.org/original/doc/html/pcrepattern.html#:~:text=A%20%22word%22%20character%20is%20an%20underscore%20or%20any%20character%20that%20is%20a%20letter%20or%20digit.
+*/
+constexpr bool
+isword(const char c)
+{
+	return (c == '_') || std::isalnum(static_cast<unsigned char>(c));
+}
+
 /// Is the character special for a POSIX shell?
 /**
 \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
@@ -249,23 +262,11 @@ quote_c(const std::string& s)
 std::string
 escape_pcre(const std::string& s)
 {
-	/// Is the character a word character?
-	/**
-	<blockquote>
-	A "word" character is an underscore or any character that is a letter or digit.
-	</blockquote>
-	\sa https://www.pcre.org/original/doc/html/pcrepattern.html#:~:text=A%20%22word%22%20character%20is%20an%20underscore%20or%20any%20character%20that%20is%20a%20letter%20or%20digit.
-	*/
-	static constexpr auto is_word = [](const char c)
-	{
-		return (c == '_') || std::isalnum(static_cast<unsigned char>(c));
-	};
-
 	std::string result;
 	result.reserve(s.size());
 	for (const auto c : s)
 	{
-		if (!is_word(c))
+		if (!isword(c))
 			result.push_back(C_BACKSLASH);
 		result.push_back(c);
 	}
