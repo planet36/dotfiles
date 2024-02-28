@@ -10,6 +10,7 @@ alias amek=make
 alias amke=make
 alias bahs=bash
 alias b2=b2sum
+alias b3=b3sum
 alias c=clear
 alias cdl=cld
 alias celan=clean
