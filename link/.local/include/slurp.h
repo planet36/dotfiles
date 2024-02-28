@@ -10,8 +10,8 @@
 
 #pragma once
 
-// https://man.openbsd.org/err.3
-#include <err.h> // libbsd
+// https://man7.org/linux/man-pages/man3/err.3.html
+#include <err.h>
 
 // https://www.man7.org/linux/man-pages/man3/error.3.html
 //#include <error.h> // glibc
