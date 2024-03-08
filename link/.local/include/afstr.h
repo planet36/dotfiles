@@ -20,8 +20,7 @@ afstr s2 = strdup(s);
 
 #include <stdlib.h>
 
-#define afstr \
-	__attribute__((cleanup(cleanup_free_str))) char*
+#define afstr __attribute__((cleanup(cleanup_free_str))) char*
 
 static void
 cleanup_free_str(char** spp)

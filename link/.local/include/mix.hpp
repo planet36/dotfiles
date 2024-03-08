@@ -15,7 +15,8 @@
 #include <array>
 #include <cstdint>
 
-void mix(uint64_t& x0, uint64_t& x1)
+void
+mix(uint64_t& x0, uint64_t& x1)
 {
 	// round 0
 	x0 += _mum_primes[0];
@@ -28,7 +29,8 @@ void mix(uint64_t& x0, uint64_t& x1)
 	x0 = mumx(x0, x1 + _mum_primes[3]);
 }
 
-void mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
+void
+mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 {
 	// round 0
 	x0 += _mum_primes[0];
@@ -48,7 +50,8 @@ void mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 	x1 = mumx(x1, x2 + _mum_primes[8]);
 }
 
-void mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
+void
+mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 {
 	// round 0
 	x0 += _mum_primes[0];
@@ -77,17 +80,20 @@ void mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 	x2 = mumx(x2, x3 + _mum_primes[15]);
 }
 
-void mix(std::array<uint64_t, 2>& x)
+void
+mix(std::array<uint64_t, 2>& x)
 {
 	mix(x[0], x[1]);
 }
 
-void mix(std::array<uint64_t, 3>& x)
+void
+mix(std::array<uint64_t, 3>& x)
 {
 	mix(x[0], x[1], x[2]);
 }
 
-void mix(std::array<uint64_t, 4>& x)
+void
+mix(std::array<uint64_t, 4>& x)
 {
 	mix(x[0], x[1], x[2], x[3]);
 }

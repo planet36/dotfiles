@@ -14,8 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define acfile \
-	__attribute__((cleanup(cleanup_close_file))) FILE*
+#define acfile __attribute__((cleanup(cleanup_close_file))) FILE*
 
 static void
 cleanup_close_file(FILE** fpp)

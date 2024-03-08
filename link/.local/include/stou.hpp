@@ -19,6 +19,6 @@ stou(const std::string& s, std::size_t* pos = nullptr, int base = 10)
 {
 	const unsigned long i = std::stoul(s, pos, base);
 	return (i > std::numeric_limits<unsigned int>::max()) ?
-		std::numeric_limits<unsigned int>::max() :
-		static_cast<unsigned int>(i);
+	           std::numeric_limits<unsigned int>::max() :
+	           static_cast<unsigned int>(i);
 }

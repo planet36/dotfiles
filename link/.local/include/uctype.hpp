@@ -21,16 +21,16 @@ namespace uctype
 * All ASCII characters that are not printable are control characters.
 * All visible characters that are not alpha-numeric are punctuation characters.
 */
-inline constexpr uint8_t mask_cntrl  {0b00000001};
-inline constexpr uint8_t mask_space  {0b00000010};
-inline constexpr uint8_t mask_blank  {0b00000100};
-inline constexpr uint8_t mask_punct  {0b00001000};
-inline constexpr uint8_t mask_upper  {0b00010000};
-inline constexpr uint8_t mask_lower  {0b00100000};
-inline constexpr uint8_t mask_digit  {0b01000000};
-inline constexpr uint8_t mask_xdigit {0b10000000};
+inline constexpr uint8_t mask_cntrl  {0b0000'0001};
+inline constexpr uint8_t mask_space  {0b0000'0010};
+inline constexpr uint8_t mask_blank  {0b0000'0100};
+inline constexpr uint8_t mask_punct  {0b0000'1000};
+inline constexpr uint8_t mask_upper  {0b0001'0000};
+inline constexpr uint8_t mask_lower  {0b0010'0000};
+inline constexpr uint8_t mask_digit  {0b0100'0000};
+inline constexpr uint8_t mask_xdigit {0b1000'0000};
 
-inline constexpr std::array<uint8_t, 128> ascii_masks {
+inline constexpr std::array<uint8_t, 128> ascii_masks{
 	/* NUL   */ mask_cntrl,
 	/* SOH   */ mask_cntrl,
 	/* STX   */ mask_cntrl,
@@ -40,11 +40,11 @@ inline constexpr std::array<uint8_t, 128> ascii_masks {
 	/* ACK   */ mask_cntrl,
 	/* BEL   */ mask_cntrl,
 	/* BS    */ mask_cntrl,
-	/* HT    */ mask_cntrl|mask_space|mask_blank,
-	/* LF    */ mask_cntrl|mask_space,
-	/* VT    */ mask_cntrl|mask_space,
-	/* FF    */ mask_cntrl|mask_space,
-	/* CR    */ mask_cntrl|mask_space,
+	/* HT    */ mask_cntrl | mask_space | mask_blank,
+	/* LF    */ mask_cntrl | mask_space,
+	/* VT    */ mask_cntrl | mask_space,
+	/* FF    */ mask_cntrl | mask_space,
+	/* CR    */ mask_cntrl | mask_space,
 	/* SO    */ mask_cntrl,
 	/* SI    */ mask_cntrl,
 	/* DLE   */ mask_cntrl,
@@ -63,7 +63,7 @@ inline constexpr std::array<uint8_t, 128> ascii_masks {
 	/* GS    */ mask_cntrl,
 	/* RS    */ mask_cntrl,
 	/* US    */ mask_cntrl,
-	/* SPACE */ mask_space|mask_blank,
+	/* SPACE */ mask_space | mask_blank,
 	/* !     */ mask_punct,
 	/* "     */ mask_punct,
 	/* #     */ mask_punct,
@@ -79,16 +79,16 @@ inline constexpr std::array<uint8_t, 128> ascii_masks {
 	/* -     */ mask_punct,
 	/* .     */ mask_punct,
 	/* /     */ mask_punct,
-	/* 0     */ mask_digit|mask_xdigit,
-	/* 1     */ mask_digit|mask_xdigit,
-	/* 2     */ mask_digit|mask_xdigit,
-	/* 3     */ mask_digit|mask_xdigit,
-	/* 4     */ mask_digit|mask_xdigit,
-	/* 5     */ mask_digit|mask_xdigit,
-	/* 6     */ mask_digit|mask_xdigit,
-	/* 7     */ mask_digit|mask_xdigit,
-	/* 8     */ mask_digit|mask_xdigit,
-	/* 9     */ mask_digit|mask_xdigit,
+	/* 0     */ mask_digit | mask_xdigit,
+	/* 1     */ mask_digit | mask_xdigit,
+	/* 2     */ mask_digit | mask_xdigit,
+	/* 3     */ mask_digit | mask_xdigit,
+	/* 4     */ mask_digit | mask_xdigit,
+	/* 5     */ mask_digit | mask_xdigit,
+	/* 6     */ mask_digit | mask_xdigit,
+	/* 7     */ mask_digit | mask_xdigit,
+	/* 8     */ mask_digit | mask_xdigit,
+	/* 9     */ mask_digit | mask_xdigit,
 	/* :     */ mask_punct,
 	/* ;     */ mask_punct,
 	/* <     */ mask_punct,
@@ -96,12 +96,12 @@ inline constexpr std::array<uint8_t, 128> ascii_masks {
 	/* >     */ mask_punct,
 	/* ?     */ mask_punct,
 	/* @     */ mask_punct,
-	/* A     */ mask_upper|mask_xdigit,
-	/* B     */ mask_upper|mask_xdigit,
-	/* C     */ mask_upper|mask_xdigit,
-	/* D     */ mask_upper|mask_xdigit,
-	/* E     */ mask_upper|mask_xdigit,
-	/* F     */ mask_upper|mask_xdigit,
+	/* A     */ mask_upper | mask_xdigit,
+	/* B     */ mask_upper | mask_xdigit,
+	/* C     */ mask_upper | mask_xdigit,
+	/* D     */ mask_upper | mask_xdigit,
+	/* E     */ mask_upper | mask_xdigit,
+	/* F     */ mask_upper | mask_xdigit,
 	/* G     */ mask_upper,
 	/* H     */ mask_upper,
 	/* I     */ mask_upper,
@@ -128,12 +128,12 @@ inline constexpr std::array<uint8_t, 128> ascii_masks {
 	/* ^     */ mask_punct,
 	/* _     */ mask_punct,
 	/* `     */ mask_punct,
-	/* a     */ mask_lower|mask_xdigit,
-	/* b     */ mask_lower|mask_xdigit,
-	/* c     */ mask_lower|mask_xdigit,
-	/* d     */ mask_lower|mask_xdigit,
-	/* e     */ mask_lower|mask_xdigit,
-	/* f     */ mask_lower|mask_xdigit,
+	/* a     */ mask_lower | mask_xdigit,
+	/* b     */ mask_lower | mask_xdigit,
+	/* c     */ mask_lower | mask_xdigit,
+	/* d     */ mask_lower | mask_xdigit,
+	/* e     */ mask_lower | mask_xdigit,
+	/* f     */ mask_lower | mask_xdigit,
 	/* g     */ mask_lower,
 	/* h     */ mask_lower,
 	/* i     */ mask_lower,
@@ -161,11 +161,11 @@ inline constexpr std::array<uint8_t, 128> ascii_masks {
 	/* DEL   */ mask_cntrl,
 };
 
-inline constexpr uint8_t mask_alpha{mask_upper|mask_lower};
-inline constexpr uint8_t mask_alnum{mask_alpha|mask_digit};
-inline constexpr uint8_t mask_graph{mask_alnum|mask_punct};
+inline constexpr uint8_t mask_alpha{mask_upper | mask_lower};
+inline constexpr uint8_t mask_alnum{mask_alpha | mask_digit};
+inline constexpr uint8_t mask_graph{mask_alnum | mask_punct};
 
-constexpr bool isascii(const uint8_t c) { return (c & 0b10000000) == 0; }
+constexpr bool isascii(const uint8_t c) { return (c & 0b1000'0000) == 0; }
 constexpr bool isupper(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_upper) != 0; }
 constexpr bool islower(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_lower) != 0; }
 constexpr bool isalpha(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_alpha) != 0; }
@@ -179,7 +179,7 @@ constexpr bool isprint(const uint8_t c) { return !isascii(c) ? false : (ascii_ma
 constexpr bool iscntrl(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_cntrl) != 0; }
 constexpr bool ispunct(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_punct) != 0; }
 
-constexpr uint8_t tolower(const uint8_t c) { return isupper(c) ? (c | 0b00100000) : c; }
-constexpr uint8_t toupper(const uint8_t c) { return islower(c) ? (c & 0b11011111) : c; }
+constexpr uint8_t tolower(const uint8_t c) { return isupper(c) ? (c | 0b0010'0000) : c; }
+constexpr uint8_t toupper(const uint8_t c) { return islower(c) ? (c & 0b1101'1111) : c; }
 
 }
