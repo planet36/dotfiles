@@ -3,4 +3,4 @@
 # SPDX-License-Identifier: OSL-3.0
 
 # shellcheck disable=SC2086
-command gcc $CPPFLAGS $CFLAGS "${@}"
+command gcc $CPPFLAGS $CFLAGS "${@}" -lm
