@@ -22,7 +22,7 @@ rdrand16()
 {
 	unsigned short ret{};
 	static_assert(sizeof(ret) * CHAR_BIT == 16);
-	while (_rdrand16_step(&ret) == 0)
+	while (_rdrand16_step(&ret) == 0) [[unlikely]]
 	{}
 	return ret;
 }
@@ -32,7 +32,7 @@ rdrand32()
 {
 	unsigned int ret{};
 	static_assert(sizeof(ret) * CHAR_BIT == 32);
-	while (_rdrand32_step(&ret) == 0)
+	while (_rdrand32_step(&ret) == 0) [[unlikely]]
 	{}
 	return ret;
 }
@@ -42,7 +42,7 @@ rdrand64()
 {
 	unsigned long long ret{};
 	static_assert(sizeof(ret) * CHAR_BIT == 64);
-	while (_rdrand64_step(&ret) == 0)
+	while (_rdrand64_step(&ret) == 0) [[unlikely]]
 	{}
 	return ret;
 }
@@ -56,7 +56,7 @@ rdseed16()
 {
 	unsigned short ret{};
 	static_assert(sizeof(ret) * CHAR_BIT == 16);
-	while (_rdseed16_step(&ret) == 0)
+	while (_rdseed16_step(&ret) == 0) [[unlikely]]
 	{}
 	return ret;
 }
@@ -66,7 +66,7 @@ rdseed32()
 {
 	unsigned int ret{};
 	static_assert(sizeof(ret) * CHAR_BIT == 32);
-	while (_rdseed32_step(&ret) == 0)
+	while (_rdseed32_step(&ret) == 0) [[unlikely]]
 	{}
 	return ret;
 }
@@ -76,7 +76,7 @@ rdseed64()
 {
 	unsigned long long ret{};
 	static_assert(sizeof(ret) * CHAR_BIT == 64);
-	while (_rdseed64_step(&ret) == 0)
+	while (_rdseed64_step(&ret) == 0) [[unlikely]]
 	{}
 	return ret;
 }
