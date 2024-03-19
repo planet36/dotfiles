@@ -23,6 +23,7 @@ namespace
 {
 // This must satisfy std::uniform_random_bit_generator.
 thread_local wyrand per_thread_random_number_engine;
+static_assert(std::uniform_random_bit_generator<decltype(per_thread_random_number_engine)>);
 }
 
 /**
