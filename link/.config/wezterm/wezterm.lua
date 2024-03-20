@@ -5,7 +5,7 @@ return {
   enable_scroll_bar = false,
   enable_tab_bar = false,
   font = wezterm.font("Hack"),
-  font_size = 13.0,
+  font_size = 14.0,
   scrollback_lines = 10000,
   window_padding = {
     left = '2px',
