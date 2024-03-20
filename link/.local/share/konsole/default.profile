@@ -1,6 +1,6 @@
 [Appearance]
 AntiAliasFonts=true
-BoldIntense=true
+BoldIntense=false
 ColorScheme=srcery_konsole
 DimmValue=128
 Font=monospace,13,-1,2,50,0,0,0,0,0
