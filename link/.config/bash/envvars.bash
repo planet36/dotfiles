@@ -5,7 +5,7 @@
 
 export ACKRC="$XDG_CONFIG_HOME"/ack/ackrc
 
-export CALCHISTFILE="$XDG_CACHE_HOME"/calc_history
+export CALCHISTFILE="$XDG_STATE_HOME"/calc_history
 
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 
