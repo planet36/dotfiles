@@ -60,7 +60,7 @@ export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 
 export HIGHLIGHT_OPTIONS='--force -t 4 --out-format=ansi'
 
-export HISTFILE="$XDG_STATE_HOME"/bash/history
+export HISTFILE="$XDG_STATE_HOME"/bash_history
 
 export IPYTHONDIR="$XDG_DATA_HOME"/ipython
 
