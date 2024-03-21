@@ -10,9 +10,9 @@ UseFontLineChararacters=false
 
 [Cursor Options]
 CursorShape=0
-CustomCursorColor=255,255,255
+CustomCursorColor=251,184,41
 CustomCursorTextColor=0,0,0
-UseCustomCursorColor=false
+UseCustomCursorColor=true
 
 [Encoding Options]
 DefaultEncoding=UTF-8
