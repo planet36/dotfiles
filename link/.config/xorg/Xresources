@@ -10,7 +10,7 @@ Sxiv.foreground: Gray
 XTerm.vt100.boldColors: false
 XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
 XTerm.vt100.faceName: monospace
-XTerm.vt100.faceSize: 13
+XTerm.vt100.faceSize: 14
 XTerm.vt100.multiScroll: true
 XTerm.vt100.saveLines: 10000
 XTerm.vt100.scrollKey: true
