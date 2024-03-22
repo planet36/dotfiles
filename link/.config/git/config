@@ -13,6 +13,7 @@
 	s = status
 [core]
 	editor = nvim
+	fsmonitor = true
 [diff]
 	tool = nvimdiff
 	guitool = meld
