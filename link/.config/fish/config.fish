@@ -100,7 +100,7 @@ fish_config prompt choose informative_vcs
 set __fish_git_prompt_showcolorhints 1
 set __fish_git_prompt_showdirtystate 1
 set __fish_git_prompt_showstashstate 1
-set __fish_git_prompt_showuntrackedfiles 0
+set __fish_git_prompt_showuntrackedfiles 1
 # }}}
 
 # }}}
