@@ -3,6 +3,7 @@ cmeter/cmeter
 cpuavgd/cpuavgd
 dir_is_empty/dir_is_empty
 durfmt/durfmt
+isprime/isprime
 netrxavgd/netrxavgd
 nettxavgd/nettxavgd
 printints/printints
