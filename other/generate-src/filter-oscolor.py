@@ -34,18 +34,17 @@ print(fr'''# SPDX-FileCopyrightText: {__author__}
 # system information: {system_info}
 ''')
 
-color_pattern = re.compile(r'\s*{(?P<red>\d+),'
-                           r'\s*(?P<green>\d+),'
-                           r'\s*(?P<blue>\d+),'
-                           r'\s*\d+},' # ignore
-                           r'\s*/\*'
-                           r'\s*(?P<name>[^*]+?)' # the name is in a C comment
-                           r'\s*\*/\s*',
-                           re.ASCII)
+color_pattern = re.compile(r'\s*{\s*'
+                           r'(?P<red>\d+)\s*,\s*'
+                           r'(?P<green>\d+)\s*,\s*'
+                           r'(?P<blue>\d+)\s*,\s*'
+                           r'"(?P<name>[^"]+)\"\s*'
+                           r'},', re.ASCII)
 grey_pattern = re.compile('grey', re.ASCII | re.IGNORECASE)
 
 print("name_to_rgb = {")
 for line in sys.stdin:
+    line = line.rstrip(os.linesep)
     match = color_pattern.fullmatch(line)
     if match:
         red = match.group('red')
