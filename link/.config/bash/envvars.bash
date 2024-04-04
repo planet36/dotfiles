@@ -219,11 +219,11 @@ export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
 export CPPFLAGS="-iquote $HOME/.local/include"
 # https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
 CPPFLAGS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ -D__STDC_WANT_IEC_60559_EXT__'
-CPPFLAGS+=' -D_GNU_SOURCE'
 # https://www.gnu.org/software/libc/manual/html_node/Source-Fortification.html
 # https://fedoraproject.org/wiki/Changes/Add_FORTIFY_SOURCE%3D3_to_distribution_build_flags
 # https://developers.redhat.com/articles/2022/09/17/gccs-new-fortification-level
 CPPFLAGS+=' -D_FORTIFY_SOURCE=3'
+CPPFLAGS+=' -D_GNU_SOURCE'
 
 # shellcheck disable=SC2034
 LATEST_C_STD="$(gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=c2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
