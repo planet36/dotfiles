@@ -6,20 +6,20 @@ PREFIX ?= /usr/local
 MANDIR ?= $(PREFIX)/share/man
 
 CPPFLAGS += -MMD -MP
-#CFLAGS +=
-LDLIBS += `pkg-config --libs openssl`
+#CXXFLAGS +=
+LDLIBS += `pkg-config --libs gmpxx`
 
-SRCS = $(wildcard *.c)
-DEPS = $(SRCS:.c=.d)
-OBJS = $(SRCS:.c=.o)
+SRCS = $(wildcard *.cpp)
+DEPS = $(SRCS:.cpp=.d)
+OBJS = $(SRCS:.cpp=.o)
 
 BIN = $(notdir $(CURDIR))
 
 all: $(BIN)
 
 # The built-in recipe for the implicit rule uses $^ instead of $<
-%: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $< -o $@ $(LDLIBS)
+%: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $< -o $@ $(LDLIBS)
 
 clean:
 	@$(RM) --verbose -- $(BIN) $(OBJS) $(DEPS)
@@ -33,7 +33,7 @@ uninstall:
 	@$(RM) --verbose -- "$(DESTDIR)$(PREFIX)/bin/$(BIN)"
 
 lint:
-	-clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS)
+	-clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CXXFLAGS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: all install clean uninstall lint
