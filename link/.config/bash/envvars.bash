@@ -193,9 +193,6 @@ export MANPAGER='less -s -M +Gg --color=d+B --color=u+y'
 # -Wpadded
 # -Wfloat-equal
 GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align=strict -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Werror=return-type -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-error -Wno-format-nonliteral -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
-# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
-GCC_COMMON_OPTIONS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ -D__STDC_WANT_IEC_60559_EXT__'
-GCC_COMMON_OPTIONS+=' -D_GNU_SOURCE -D_FORTIFY_SOURCE=2'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
 GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
@@ -220,6 +217,9 @@ export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
 
 # https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
 export CPPFLAGS="-iquote $HOME/.local/include"
+# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+CPPFLAGS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ -D__STDC_WANT_IEC_60559_EXT__'
+CPPFLAGS+=' -D_GNU_SOURCE -D_FORTIFY_SOURCE=2'
 
 # shellcheck disable=SC2034
 LATEST_C_STD="$(gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=c2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
