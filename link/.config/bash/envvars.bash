@@ -220,7 +220,7 @@ export CPPFLAGS="-iquote $HOME/.local/include"
 # https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
 CPPFLAGS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ -D__STDC_WANT_IEC_60559_EXT__'
 CPPFLAGS+=' -D_GNU_SOURCE'
-CPPFLAGS+=' -D_FORTIFY_SOURCE=2'
+CPPFLAGS+=' -D_FORTIFY_SOURCE=3'
 
 # shellcheck disable=SC2034
 LATEST_C_STD="$(gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=c2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
