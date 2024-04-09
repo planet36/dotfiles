@@ -15,7 +15,7 @@
 #include <array>
 #include <cstdint>
 
-void
+constexpr void
 mix(uint64_t& x0, uint64_t& x1)
 {
 	// step 0
@@ -29,7 +29,7 @@ mix(uint64_t& x0, uint64_t& x1)
 	x0 = mumx(x0, x1 + _mum_primes[3]);
 }
 
-void
+constexpr void
 mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 {
 	// step 0
@@ -50,7 +50,7 @@ mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 	x1 = mumx(x1, x2 + _mum_primes[8]);
 }
 
-void
+constexpr void
 mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 {
 	// step 0
@@ -80,19 +80,19 @@ mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 	x2 = mumx(x2, x3 + _mum_primes[15]);
 }
 
-void
+constexpr void
 mix(std::array<uint64_t, 2>& x)
 {
 	mix(x[0], x[1]);
 }
 
-void
+constexpr void
 mix(std::array<uint64_t, 3>& x)
 {
 	mix(x[0], x[1], x[2]);
 }
 
-void
+constexpr void
 mix(std::array<uint64_t, 4>& x)
 {
 	mix(x[0], x[1], x[2], x[3]);
