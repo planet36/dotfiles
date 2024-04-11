@@ -16,7 +16,7 @@
 #include <cstdint>
 
 constexpr void
-mix(uint64_t& x0, uint64_t& x1)
+mumx_mix(uint64_t& x0, uint64_t& x1)
 {
 	// step 0
 	x0 += _mum_primes[0];
@@ -30,7 +30,7 @@ mix(uint64_t& x0, uint64_t& x1)
 }
 
 constexpr void
-mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
+mumx_mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 {
 	// step 0
 	x0 += _mum_primes[0];
@@ -51,7 +51,7 @@ mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 }
 
 constexpr void
-mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
+mumx_mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 {
 	// step 0
 	x0 += _mum_primes[0];
@@ -81,19 +81,19 @@ mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 }
 
 constexpr void
-mix(std::array<uint64_t, 2>& x)
+mumx_mix(std::array<uint64_t, 2>& x)
 {
-	mix(x[0], x[1]);
+	mumx_mix(x[0], x[1]);
 }
 
 constexpr void
-mix(std::array<uint64_t, 3>& x)
+mumx_mix(std::array<uint64_t, 3>& x)
 {
-	mix(x[0], x[1], x[2]);
+	mumx_mix(x[0], x[1], x[2]);
 }
 
 constexpr void
-mix(std::array<uint64_t, 4>& x)
+mumx_mix(std::array<uint64_t, 4>& x)
 {
-	mix(x[0], x[1], x[2], x[3]);
+	mumx_mix(x[0], x[1], x[2], x[3]);
 }
