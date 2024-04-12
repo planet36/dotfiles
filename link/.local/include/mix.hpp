@@ -13,6 +13,7 @@
 #include "mum.hpp"
 
 #include <array>
+#include <concepts>
 #include <cstdint>
 
 constexpr void
@@ -96,4 +97,28 @@ constexpr void
 mumx_mix(std::array<uint64_t, 4>& x)
 {
 	mumx_mix(x[0], x[1], x[2], x[3]);
+}
+
+template <std::unsigned_integral T>
+constexpr T
+mumx_mix_hash(T a, T b)
+{
+	mumx_mix(a, b);
+	return a ^ b;
+}
+
+template <std::unsigned_integral T>
+constexpr T
+mumx_mix_hash(T a, T b, T c)
+{
+	mumx_mix(a, b, c);
+	return a ^ b ^ c;
+}
+
+template <std::unsigned_integral T>
+constexpr T
+mumx_mix_hash(T a, T b, T c, T d)
+{
+	mumx_mix(a, b, c, d);
+	return a ^ b ^ c ^ d;
 }
