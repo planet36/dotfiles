@@ -27,10 +27,10 @@ inline constexpr uint32_t fnv_offset_basis_32 = UINT32_C(2'166'136'261);
 inline constexpr uint64_t fnv_offset_basis_64 = UINT64_C(14'695'981'039'346'656'037);
 
 /// FNV-1 32-bit hash
-constexpr uint32_t
+constexpr auto
 fnv1_32(const std::string_view s)
 {
-	uint32_t result = fnv_offset_basis_32;
+	auto result = fnv_offset_basis_32;
 
 	for (const auto c : s)
 	{
@@ -43,10 +43,10 @@ fnv1_32(const std::string_view s)
 }
 
 /// FNV-1a 32-bit hash
-constexpr uint32_t
+constexpr auto
 fnv1a_32(const std::string_view s)
 {
-	uint32_t result = fnv_offset_basis_32;
+	auto result = fnv_offset_basis_32;
 
 	for (const auto c : s)
 	{
@@ -59,10 +59,10 @@ fnv1a_32(const std::string_view s)
 }
 
 /// FNV-1 64-bit hash
-constexpr uint64_t
+constexpr auto
 fnv1_64(const std::string_view s)
 {
-	uint64_t result = fnv_offset_basis_64;
+	auto result = fnv_offset_basis_64;
 
 	for (const auto c : s)
 	{
@@ -75,10 +75,10 @@ fnv1_64(const std::string_view s)
 }
 
 /// FNV-1a 64-bit hash
-constexpr uint64_t
+constexpr auto
 fnv1a_64(const std::string_view s)
 {
-	uint64_t result = fnv_offset_basis_64;
+	auto result = fnv_offset_basis_64;
 
 	for (const auto c : s)
 	{
@@ -93,10 +93,10 @@ fnv1a_64(const std::string_view s)
 /// FNV-1 32-bit hash
 template <std::input_iterator Iter>
 requires (sizeof(std::iter_value_t<Iter>) == 1)
-constexpr uint32_t
+constexpr auto
 fnv1_32(Iter first, const Iter last)
 {
-	uint32_t result = fnv_offset_basis_32;
+	auto result = fnv_offset_basis_32;
 
 	while (first != last)
 	{
@@ -111,10 +111,10 @@ fnv1_32(Iter first, const Iter last)
 /// FNV-1a 32-bit hash
 template <std::input_iterator Iter>
 requires (sizeof(std::iter_value_t<Iter>) == 1)
-constexpr uint32_t
+constexpr auto
 fnv1a_32(Iter first, const Iter last)
 {
-	uint32_t result = fnv_offset_basis_32;
+	auto result = fnv_offset_basis_32;
 
 	while (first != last)
 	{
@@ -129,10 +129,10 @@ fnv1a_32(Iter first, const Iter last)
 /// FNV-1 64-bit hash
 template <std::input_iterator Iter>
 requires (sizeof(std::iter_value_t<Iter>) == 1)
-constexpr uint64_t
+constexpr auto
 fnv1_64(Iter first, const Iter last)
 {
-	uint64_t result = fnv_offset_basis_64;
+	auto result = fnv_offset_basis_64;
 
 	while (first != last)
 	{
@@ -147,10 +147,10 @@ fnv1_64(Iter first, const Iter last)
 /// FNV-1a 64-bit hash
 template <std::input_iterator Iter>
 requires (sizeof(std::iter_value_t<Iter>) == 1)
-constexpr uint64_t
+constexpr auto
 fnv1a_64(Iter first, const Iter last)
 {
-	uint64_t result = fnv_offset_basis_64;
+	auto result = fnv_offset_basis_64;
 
 	while (first != last)
 	{
