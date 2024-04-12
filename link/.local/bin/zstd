@@ -1,0 +1,75 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# zstd has some silly default settings/behaviors.
+#   * has 19 compression levels (22 in "ultra" mode)
+#   * is verbose
+#   * keeps input file
+#   * is single-threaded
+#
+# See also:
+# https://github.com/facebook/zstd/pull/919
+# https://github.com/facebook/zstd/issues/1132
+# https://github.com/facebook/zstd/issues/1442
+#
+# This wrapper script aims to make it more compatible with traditional compression programs (e.g. gzip, bzip2, xz).
+#
+# If a normal compression level is given, it's mapped to a comparable zstd compression level.
+#
+# These default options are prepended to input args.
+#declare -a ARGS=('--quiet' '--rm' '--threads=0' '--ultra')
+declare -a ARGS=('--quiet' '--rm' '--ultra')
+
+# Assign if unset.
+: "${ZSTD_CLEVEL:=19}"
+: "${ZSTD_NBTHREADS:=0}"
+
+export ZSTD_CLEVEL
+export ZSTD_NBTHREADS
+
+# Map normal compression level [1, 9] to zstd "ultra" compression level [1, 22].
+# https://www.wolframalpha.com/input?i=round%28%28%2822-1%29+*+Range%5B9%5D+-+%2822-9%29%29+%2F+%289-1%29%29
+# {1, 4, 6, 9, 12, 14, 17, 19, 22}
+
+# Map normal compression level [1, 9] to zstd compression level [1, 19].
+# https://www.wolframalpha.com/input?i=round%28%28%2819-1%29+*+Range%5B9%5D+-+%2819-9%29%29+%2F+%289-1%29%29
+# {1, 3, 6, 8, 10, 12, 14, 17, 19}
+
+# Map zstd "ultra" compression level [1, 22] to normal compression level [1, 9].
+# https://www.wolframalpha.com/input?i=round%28%28%289-1%29+*+Range%5B22%5D+%2B+%2822-9%29%29+%2F+%2822-1%29%29
+# {1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 9, 9}
+
+# Map zstd compression level [1, 19] to normal compression level [1, 9].
+# Map [1, 19] to [1, 9] (silly zstd compression level to normal compression level).
+# https://www.wolframalpha.com/input?i=round%28%28%289-1%29+*+Range%5B19%5D+%2B+%2819-9%29%29+%2F+%2819-1%29%29
+# {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9}
+
+for ARG
+do
+	case "$ARG" in
+		-1) ARG='-1' ;;
+		-2) ARG='-4' ;;
+		-3) ARG='-6' ;;
+		-4) ARG='-9' ;;
+		-5) ARG='-12' ;;
+		-6) ARG='-14' ;;
+		-7) ARG='-17' ;;
+		-8) ARG='-19' ;;
+		-9) ARG='-22' ;;
+		--) break ;; # Stop processing args
+		*) ;;
+	esac
+
+	ARGS+=("$ARG")
+	shift
+done
+
+# Add remaining args
+for ARG
+do
+	ARGS+=("$ARG")
+	shift
+done
+
+command zstd "${ARGS[@]}"
