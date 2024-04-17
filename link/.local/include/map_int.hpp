@@ -27,7 +27,7 @@ map_int(const T x, const T a, const T b)
 		// no mapping needed
 		return x;
 
-	const T interval_range{b - a + 1};
+	const T interval_range = b - a + 1;
 	const auto product = widen(x) * widen(interval_range);
 	return static_cast<T>(product >> std::numeric_limits<T>::digits) + a;
 }
