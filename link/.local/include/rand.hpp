@@ -90,10 +90,10 @@ template <std::unsigned_integral T, std::uniform_random_bit_generator G>
 T
 rand_uint_half_open(const T s, G& gen)
 {
-	if (s == 1)
+	if (s == 1) [[unlikely]]
 		return 0;
 
-	if (s == 0)
+	if (s == 0) [[unlikely]]
 		return rand_int<T>(gen);
 
 	using T2 = next_larger<T>;
