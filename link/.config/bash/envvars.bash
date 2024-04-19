@@ -71,6 +71,8 @@ export IPYTHONDIR="$XDG_DATA_HOME"/ipython
 export LESS='--RAW-CONTROL-CHARS --no-init --use-color'
 export LESSHISTFILE=/dev/null
 
+export MAXIMA_USERDIR="$XDG_CONFIG_HOME"/maxima
+
 # Inhibit these dbind warnings: Couldn't register with accessibility bus
 # https://wiki.archlinux.de/title/GNOME#Tipps_und_Tricks
 # https://askubuntu.com/a/318997
