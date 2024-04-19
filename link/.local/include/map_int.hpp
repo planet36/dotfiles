@@ -17,7 +17,7 @@
 /// map \a x to the inverval <code>[a, b]</code>
 /**
 \pre \a a <= \a b
-\retval \a x if <code>a == MIN</code> and <code>b == MAX</code>
+\retval x if <code>a == MIN</code> and <code>b == MAX</code>
 */
 template <std::unsigned_integral T>
 constexpr T
