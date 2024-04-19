@@ -83,7 +83,7 @@ rand_int()
 /**
 "Fast Random Integer Generation in an Interval" by Daniel Lemire
 \sa https://arxiv.org/abs/1805.10941
-This is faster than \c std::random_uniform_int_distribution.
+This is faster than \c std::uniform_int_distribution.
 \return a uniformly distributed random unsigned integer within the interval [0, \a s)
 */
 template <std::unsigned_integral T, std::uniform_random_bit_generator G>
