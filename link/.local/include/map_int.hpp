@@ -39,11 +39,12 @@ template <std::unsigned_integral T>
 constexpr T
 map_int(const T x, const T a, const T b)
 {
-	if ((a == std::numeric_limits<T>::min()) && (b == std::numeric_limits<T>::max()))
+	/*
+	if ((a == std::numeric_limits<T>::min()) && (b == std::numeric_limits<T>::max())) [[unlikely]]
 		// no mapping needed
 		return x;
+	*/
 
-	const T interval_range = b - a + 1;
-	const auto product = widen(x) * widen(interval_range);
-	return static_cast<T>(product >> std::numeric_limits<T>::digits) + a;
+	const T s = b - a + 1;
+	return map_int(x, s) + a;
 }
