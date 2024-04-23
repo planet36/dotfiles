@@ -14,6 +14,22 @@
 #include <concepts>
 #include <limits>
 
+/// map \a x to the inverval <code>[0, s)</code>
+/**
+\retval x if <code>s == 0</code>
+*/
+template <std::unsigned_integral T>
+constexpr T
+map_int(const T x, const T s)
+{
+	if (s == 0) [[unlikely]]
+		// no mapping needed
+		return x;
+
+	const auto product = widen(x) * widen(s);
+	return static_cast<T>(product >> std::numeric_limits<T>::digits);
+}
+
 /// map \a x to the inverval <code>[a, b]</code>
 /**
 \pre \a a <= \a b
