@@ -83,6 +83,9 @@ rand_int()
 /**
 "Fast Random Integer Generation in an Interval" by Daniel Lemire
 \sa https://arxiv.org/abs/1805.10941
+\sa https://lemire.me/blog/2016/06/30/fast-random-shuffling/
+\sa https://lemire.me/blog/2019/06/06/nearly-divisionless-random-integer-generation-on-various-systems/
+\sa https://www.pcg-random.org/posts/bounded-rands.html
 This is faster than \c std::uniform_int_distribution.
 \return a uniformly distributed random unsigned integer within the interval [0, \a s)
 */
