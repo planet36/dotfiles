@@ -5,6 +5,7 @@
 /**
 \file
 \author Steven Ward
+\sa https://github.com/lemire/fastrange/blob/master/fastrange.h
 \sa https://www.pcg-random.org/posts/bounded-rands.html
 \sa https://arxiv.org/abs/1805.10941
 \sa https://stackoverflow.com/a/29811247/1892784
