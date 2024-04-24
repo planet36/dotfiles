@@ -8,6 +8,7 @@
 \sa https://github.com/lemire/fastrange/blob/master/fastrange.h
 \sa https://www.pcg-random.org/posts/bounded-rands.html
 \sa https://arxiv.org/abs/1805.10941
+\sa https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
 \sa https://stackoverflow.com/a/29811247/1892784
 
 There is a possibility of modulo bias.  See the links above for an explanation.
