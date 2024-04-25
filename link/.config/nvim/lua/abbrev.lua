@@ -3,6 +3,7 @@
 
 vim.cmd.inoreabbrev("amek", "make")
 vim.cmd.inoreabbrev("amke", "make")
+vim.cmd.inoreabbrev("atuo", "auto")
 vim.cmd.inoreabbrev("becuase", "because")
 vim.cmd.inoreabbrev("cdl", "cld")
 vim.cmd.inoreabbrev("clena", "clean")
