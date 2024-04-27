@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// constexpr FNV hash functions for string_view
+/// constexpr FNV hash functions for \c std::string_view
 /**
 \file
 \author Steven Ward
