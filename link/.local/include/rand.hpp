@@ -80,6 +80,7 @@ rand_int()
 	return rand_int<T>(per_thread_random_number_engine);
 }
 
+/// get a random unsigned integer less than \a s
 /**
 "Fast Random Integer Generation in an Interval" by Daniel Lemire
 \sa https://arxiv.org/abs/1805.10941
