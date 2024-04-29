@@ -99,6 +99,9 @@ export PYENV_ROOT="$XDG_DATA_HOME"/pyenv
 
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint.d
 
+# https://docs.python.org/dev/using/cmdline.html#envvar-PYTHON_HISTORY
+export PYTHON_HISTORY="$XDG_STATE_HOME"/python_history
+
 # https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH
 export PYTHONPATH="$HOME"/.local/lib/python
 
