@@ -29,7 +29,7 @@ sample_n(const std::string& in, const size_t num_samples, G& gen)
 
 		for (size_t n = 0; n < num_samples; ++n)
 		{
-			out.push_back(in[rand_uint_half_open(in.size(), gen)]);
+			out.push_back(in[rand_uint_range(in.size(), gen)]);
 		}
 	}
 
@@ -61,7 +61,7 @@ sample_n(const std::vector<T>& in, const size_t num_samples, G& gen)
 
 		for (size_t n = 0; n < num_samples; ++n)
 		{
-			out.push_back(in[rand_uint_half_open(in.size(), gen)]);
+			out.push_back(in[rand_uint_range(in.size(), gen)]);
 		}
 	}
 

@@ -91,7 +91,7 @@ rand_int()
 */
 template <std::unsigned_integral T, std::uniform_random_bit_generator G>
 T
-rand_uint_half_open(const T s, G& gen)
+rand_uint_range(const T s, G& gen)
 {
 	if (s == 1) [[unlikely]]
 		return 0;
@@ -119,16 +119,16 @@ rand_uint_half_open(const T s, G& gen)
 
 template <std::unsigned_integral T, std::uniform_random_bit_generator G>
 T
-rand_uint_half_open(const T s, G&& gen)
+rand_uint_range(const T s, G&& gen)
 {
-	return rand_uint_half_open(s, gen);
+	return rand_uint_range(s, gen);
 }
 
 template <std::unsigned_integral T>
 T
-rand_uint_half_open(const T s)
+rand_uint_range(const T s)
 {
-	return rand_uint_half_open(s, per_thread_random_number_engine);
+	return rand_uint_range(s, per_thread_random_number_engine);
 }
 
 /**
