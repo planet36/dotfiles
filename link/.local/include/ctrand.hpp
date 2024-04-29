@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// compile-time random number
+/// compile-time pseudo-random number
 /**
 \file
 \author Steven Ward
