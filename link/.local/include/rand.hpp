@@ -82,39 +82,15 @@ rand_int()
 
 /// get a random unsigned integer less than \a s
 /**
-"Fast Random Integer Generation in an Interval" by Daniel Lemire
-\sa https://arxiv.org/abs/1805.10941
-\sa https://lemire.me/blog/2016/06/30/fast-random-shuffling/
-\sa https://lemire.me/blog/2019/06/06/nearly-divisionless-random-integer-generation-on-various-systems/
-\sa https://www.pcg-random.org/posts/bounded-rands.html
 \return a uniformly distributed random unsigned integer within the interval [0, \a s)
 */
 template <std::unsigned_integral T, std::uniform_random_bit_generator G>
 T
 rand_uint_range(const T s, G& gen)
 {
-	if (s == 1) [[unlikely]]
-		return 0;
-
-	if (s == 0) [[unlikely]]
-		return rand_int<T>(gen);
-
-	using T2 = next_larger<T>;
-	T2 m;
-
-	m = rand_int<T>(gen); // in [0, 2^L)
-	m *= s;               // in [0, s * 2^L)
-	if (static_cast<T>(m) < s)
-	{
-		const T min = std::numeric_limits<T>::max() % s; // 2^L mod s
-		while (static_cast<T>(m) < min)
-		{
-			m = rand_int<T>(gen); // in [0, 2^L)
-			m *= s;               // in [0, s * 2^L)
-		}
-	}
-
-	return m >> std::numeric_limits<T>::digits; // in [0, s)
+	constexpr T a = 0;
+	const T b = s - 1;
+	return rand_int<T>(a, b, gen);
 }
 
 template <std::unsigned_integral T, std::uniform_random_bit_generator G>
