@@ -9,4 +9,9 @@
 
 #pragma once
 
+#include <limits.h>
+
+static_assert(CHAR_BIT == 8);
+
 #define UINT_SET_BITS(N) ((UINT64_C(1) << (N)) - UINT64_C(1))
+#define UINT_SET_BYTES(N) UINT_SET_BITS((N) * CHAR_BIT)
