@@ -201,7 +201,9 @@ export MANPAGER='less -s -M +Gg --color=d+B --color=u+y'
 # -Wfloat-equal
 GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align=strict -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Werror=return-type -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-error -Wno-format-nonliteral -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
-GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
+#GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fhardened
+GCC_COMMON_OPTIONS+=' -fhardened'
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 #GCC_COMMON_OPTIONS+=' -ftrivial-auto-var-init=zero'
 
@@ -216,7 +218,9 @@ export DEBUG_OPTIONS='-Og -g3'
 # https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
 DEBUG_OPTIONS+=' -UNDEBUG'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
-DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_DEBUG -D_GLIBCXX_SANITIZE_VECTOR'
+#DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS'
+DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG'
+DEBUG_OPTIONS+=' -D_GLIBCXX_SANITIZE_VECTOR'
 
 export PERF_TEST_OPTIONS="$OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre"
 
@@ -229,7 +233,7 @@ CPPFLAGS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT_
 # https://www.gnu.org/software/libc/manual/html_node/Source-Fortification.html
 # https://fedoraproject.org/wiki/Changes/Add_FORTIFY_SOURCE%3D3_to_distribution_build_flags
 # https://developers.redhat.com/articles/2022/09/17/gccs-new-fortification-level
-CPPFLAGS+=' -D_FORTIFY_SOURCE=3'
+#CPPFLAGS+=' -D_FORTIFY_SOURCE=3'
 CPPFLAGS+=' -D_GNU_SOURCE'
 
 # shellcheck disable=SC2034
