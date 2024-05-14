@@ -24,22 +24,15 @@ abbr --add --global emld meld
 abbr --add --global f find
 abbr --add --global fidn find
 abbr --add --global fiel file
-abbr --add --global gi git
-abbr --add --global his history
-abbr --add --global hist history
 abbr --add --global i "$EDITOR" -c startinsert
 abbr --add --global ip3 ipython3
 abbr --add --global ipy3 ipython3
-abbr --add --global m man
-abbr --add --global m. meld .
 abbr --add --global maek make
 abbr --add --global md5 md5sum
 abbr --add --global medl meld
 abbr --add --global mkae make
 abbr --add --global mled meld
-abbr --add --global p2 python2
 abbr --add --global p3 python3
-abbr --add --global py2 python2
 abbr --add --global py3 python3
 abbr --add --global q exit
 abbr --add --global rbn doas reboot now
@@ -60,6 +53,5 @@ abbr --add --global treu true
 abbr --add --global tyep type
 abbr --add --global v "$VISUAL"
 abbr --add --global whcih which
-abbr --add --global xa xargs -r
 
 # }}}

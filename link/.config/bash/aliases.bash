@@ -25,22 +25,15 @@ alias emld=meld
 alias f=find
 alias fidn=find
 alias fiel=file
-alias gi=git
-alias his=history
-alias hist=history
 alias i="$EDITOR -c startinsert"
 alias ip3=ipython3
 alias ipy3=ipython3
-alias m=man
-alias m.='meld .'
 alias maek=make
 alias md5=md5sum
 alias medl=meld
 alias mkae=make
 alias mled=meld
-alias p2=python2
 alias p3=python3
-alias py2=python2
 alias py3=python3
 alias q=exit
 alias rbn='doas reboot now'
@@ -62,7 +55,6 @@ alias tyep=type
 # shellcheck disable=SC2139
 alias v="$VISUAL"
 alias whcih=which
-alias xa='xargs -r'
 
 # }}}
 
