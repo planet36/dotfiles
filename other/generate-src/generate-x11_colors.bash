@@ -4,7 +4,7 @@
 
 set -e
 
-curl --silent --show-error https://gitlab.freedesktop.org/xorg/xserver/-/raw/master/os/oscolor.c | \
+curl --silent --show-error https://gitlab.freedesktop.org/xorg/xserver/-/raw/master/dix/color.c | \
 sed -n -e '/static const BuiltinColor BuiltinColors\[\] = {/, /};/ p' | \
 python3 filter-oscolor.py
 
