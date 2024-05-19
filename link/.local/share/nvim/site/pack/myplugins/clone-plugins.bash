@@ -25,7 +25,7 @@ PLUGINS_START+=('https://github.com/vim-scripts/candycode.vim.git')
 PLUGINS_START+=('https://github.com/fneu/breezy.git')
 PLUGINS_START+=('https://github.com/mhartington/oceanic-next.git') # OceanicNext
 PLUGINS_START+=('https://github.com/projekt0n/github-nvim-theme.git') # github_dark_default
-PLUGINS_START+=('https://github.com/morhetz/gruvbox.git')
+#PLUGINS_START+=('https://github.com/morhetz/gruvbox.git')
 #PLUGINS_START+=('https://github.com/EvitanRelta/vim-colorschemes.git')
 
 mkdir --verbose --parents -- start

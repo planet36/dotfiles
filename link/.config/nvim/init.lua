@@ -277,7 +277,6 @@ local colorscheme_list = {
 	"breezy",
 	"OceanicNext",
 	"github_dark_default",
-	"gruvbox",
 	"retrobox",
 	"wildcharm",
 	"murphy",
