@@ -276,7 +276,6 @@ local colorscheme_list = {
 	"candycode",
 	"breezy",
 	"OceanicNext",
-	"github_dark_default",
 	"retrobox",
 	"wildcharm",
 	"murphy",
