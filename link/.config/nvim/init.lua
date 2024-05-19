@@ -291,7 +291,7 @@ for i, c in ipairs(colorscheme_list) do
 end
 
 vim.g.orig_colorscheme = get_colorscheme()
-vim.g.diff_colorscheme = "murphy"
+vim.g.diff_colorscheme = "wildcharm"
 
 -- https://github.com/srcery-colors/srcery-vim/blob/master/autoload/srcery.vim#L17
 -- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L326
