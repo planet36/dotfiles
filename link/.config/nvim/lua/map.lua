@@ -149,9 +149,9 @@ vim.keymap.set(
 vim.keymap.set("x", "p", "P")
 
 function visual_surround(l_text, r_text)
-	-- https://neovim.io/doc/user/api.html#nvim_replace_termcodes()
+	-- https://neovim.io/doc/user/lua.html#vim.keycode()
 	-- https://neovim.io/doc/user/api.html#nvim_feedkeys()
-	local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+	local esc = vim.keycode("<Esc>")
 	local mode = vim.api.nvim_get_mode().mode
 
 	if mode == "v" or mode == "V" then -- visual or visual line
