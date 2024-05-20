@@ -11,7 +11,7 @@ require('highlight-undo').setup({
     opts = {}
   },
   redo = {
-    hlgroup = 'HighlightUndo',
+    hlgroup = 'HighlightRedo',
     mode = 'n',
     lhs = '<C-r>',
     map = 'redo',
