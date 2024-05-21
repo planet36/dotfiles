@@ -63,7 +63,7 @@ rand_int(G& gen)
 {
 	static_assert(std::numeric_limits<typename G::result_type>::digits >=
 	              std::numeric_limits<T>::digits);
-	return gen();
+	return static_cast<T>(gen());
 }
 
 template <integral_number T, std::uniform_random_bit_generator G>
