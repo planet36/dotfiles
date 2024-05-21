@@ -25,7 +25,7 @@ static_assert(max_samples <= 3);
 static_assert(min_samples <= max_samples);
 }
 
-std::vector<double>
+auto
 get_load_avg(int num_samples = max_samples)
 {
 	if (num_samples < min_samples)
@@ -45,7 +45,7 @@ get_load_avg(int num_samples = max_samples)
 	return load_avg;
 }
 
-std::vector<unsigned int>
+auto
 get_load_avg_int(int num_samples = max_samples)
 {
 	const std::vector<double> load_avg = get_load_avg(num_samples);
