@@ -49,11 +49,11 @@ auto
 get_load_avg_int(int num_samples = max_samples)
 {
 	const std::vector<double> load_avg = get_load_avg(num_samples);
-	std::vector<unsigned int> load_avg_int;
+	std::vector<long int> load_avg_int;
 	load_avg_int.reserve(load_avg.size());
 
 	// https://github.com/torvalds/linux/blob/master/include/linux/sched/loadavg.h#L19
-	constexpr unsigned int factor = 1U << 11;
+	constexpr long int factor = 1U << 11;
 
 	for (const auto& x : load_avg)
 	{
