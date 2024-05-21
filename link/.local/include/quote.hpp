@@ -142,7 +142,7 @@ escape_shell(const char c)
 	if (std::isprint(static_cast<unsigned char>(c)))
 		return std::string{c};
 
-	return to_hex_str(c);
+	return to_hex_str(static_cast<uint8_t>(c));
 }
 
 /// Escape the string for a POSIX shell
@@ -228,7 +228,7 @@ escape_c(const char c)
 	if (std::isprint(static_cast<unsigned char>(c)))
 		return std::string{c};
 
-	return to_hex_str(c);
+	return to_hex_str(static_cast<uint8_t>(c));
 }
 
 /// Quote the character for a C character literal
@@ -286,7 +286,7 @@ escape_pcre(const char c)
 	if (std::isprint(static_cast<unsigned char>(c)))
 		return std::string{C_BACKSLASH, c};
 
-	return to_hex_str(c);
+	return to_hex_str(static_cast<uint8_t>(c));
 }
 
 /// Escape the string for a Perl Compatible Regular Expression (PCRE)
