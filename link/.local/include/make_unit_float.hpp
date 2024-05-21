@@ -25,7 +25,7 @@ make_unit_double(const uint64_t x)
 {
 	// std::numeric_limits<uint64_t>::digits == 64
 	// std::numeric_limits<double>::digits == 53
-	return (x >> (64 - 53)) * 0x1p-53;
+	return static_cast<double>(x >> (64 - 53)) * 0x1p-53;
 }
 
 constexpr long double
