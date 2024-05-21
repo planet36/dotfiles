@@ -269,7 +269,7 @@ quote_c(const std::string& s)
 std::string
 escape_pcre(const char c)
 {
-	if (isword(static_cast<unsigned char>(c)))
+	if (isword(c))
 		return std::string{c};
 
 	switch (c)
