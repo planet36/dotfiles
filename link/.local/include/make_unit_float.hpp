@@ -17,7 +17,7 @@ make_unit_float(const uint32_t x)
 {
 	// std::numeric_limits<uint32_t>::digits == 32
 	// std::numeric_limits<float>::digits == 24
-	return (x >> (32 - 24)) * 0x1p-24F;
+	return static_cast<float>(x >> (32 - 24)) * 0x1p-24F;
 }
 
 constexpr double
