@@ -34,7 +34,7 @@ getdelim(std::string& line,
 	{
 		const bool delim_at_end = (buf[bytes_read - 1] == delim);
 		const bool remove_last_char = strip_delim && delim_at_end;
-		line.assign(buf, bytes_read - remove_last_char);
+		line.assign(buf, static_cast<size_t>(bytes_read - remove_last_char));
 	}
 	else
 	{
