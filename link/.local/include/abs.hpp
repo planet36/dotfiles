@@ -45,9 +45,9 @@ uabs(const std::unsigned_integral auto x)
 
 /// Cast the int to unsigned int
 constexpr auto
-to_unsigned(const std::integral auto x) -> std::make_unsigned_t<decltype(x)>
+to_unsigned(const std::integral auto x)
 {
-	return x;
+	return static_cast<std::make_unsigned_t<decltype(x)>>(x);
 }
 
 /// Cast the int to signed int
