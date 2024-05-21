@@ -120,7 +120,7 @@ rand_float(G& gen)
 	static_assert(std::numeric_limits<typename G::result_type>::digits >=
 	                  std::numeric_limits<T>::digits,
 	              "PRNG does not provide sufficient bits");
-	return make_unit_float(gen());
+	return make_unit_float(static_cast<uint_bytes<sizeof(T)>>(gen()));
 #else
 	if constexpr (std::numeric_limits<T>::digits <=
 	              std::numeric_limits<typename G::result_type>::digits)
