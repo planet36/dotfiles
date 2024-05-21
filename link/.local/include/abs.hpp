@@ -29,9 +29,9 @@ iabs(const std::unsigned_integral auto x)
 \return the absolute value of \a x as an unsigned type
 */
 constexpr auto
-uabs(const std::signed_integral auto x) -> std::make_unsigned_t<decltype(x)>
+uabs(const std::signed_integral auto x)
 {
-	return std::abs(x);
+	return static_cast<std::make_unsigned_t<decltype(x)>>(std::abs(x));
 }
 
 /**
@@ -52,7 +52,7 @@ to_unsigned(const std::integral auto x)
 
 /// Cast the int to signed int
 constexpr auto
-to_signed(const std::integral auto x) -> std::make_signed_t<decltype(x)>
+to_signed(const std::integral auto x)
 {
-	return x;
+	return static_cast<std::make_signed_t<decltype(x)>>(x);
 }
