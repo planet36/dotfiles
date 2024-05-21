@@ -33,5 +33,5 @@ make_unit_long_double(const uint64_t x)
 {
 	// std::numeric_limits<uint64_t>::digits == 64
 	// std::numeric_limits<long double>::digits == 64
-	return (x >> (64 - 64)) * 0x1p-64L;
+	return static_cast<long double>(x >> (64 - 64)) * 0x1p-64L;
 }
