@@ -56,7 +56,7 @@ utf8width(const std::string& s)
 		if (codepoint == 0)
 			break;
 
-		num_cols += utf8proc_charwidth(codepoint);
+		num_cols += static_cast<size_t>(utf8proc_charwidth(codepoint));
 		dst += bytes_read;
 	}
 
