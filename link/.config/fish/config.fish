@@ -11,6 +11,10 @@ if status is-interactive
 set --global fish_greeting
 # }}}
 
+# {{{ Erase fish_command_not_found function
+functions -e fish_command_not_found
+# }}}
+
 # {{{ prevent st unknown escape sequence
 
 # https://github.com/fish-shell/fish-shell/issues/3425
