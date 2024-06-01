@@ -79,27 +79,3 @@ mumx_mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 	x1 = mumx(x1, x3 + _mum_primes[14]);
 	x2 = mumx(x2, x3 + _mum_primes[15]);
 }
-
-template <std::unsigned_integral T>
-constexpr T
-mumx_mix_hash(T a, T b)
-{
-	mumx_mix(a, b);
-	return a ^ b;
-}
-
-template <std::unsigned_integral T>
-constexpr T
-mumx_mix_hash(T a, T b, T c)
-{
-	mumx_mix(a, b, c);
-	return a ^ b ^ c;
-}
-
-template <std::unsigned_integral T>
-constexpr T
-mumx_mix_hash(T a, T b, T c, T d)
-{
-	mumx_mix(a, b, c, d);
-	return a ^ b ^ c ^ d;
-}
