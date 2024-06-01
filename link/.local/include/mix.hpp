@@ -16,7 +16,7 @@
 #include <cstdint>
 
 constexpr void
-mumx_mix(uint64_t& x0, uint64_t& x1)
+mumx_mix_u64x2(uint64_t& x0, uint64_t& x1)
 {
 	// step 0
 	x0 += _mum_primes[0];
@@ -30,7 +30,7 @@ mumx_mix(uint64_t& x0, uint64_t& x1)
 }
 
 constexpr void
-mumx_mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
+mumx_mix_u64x3(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 {
 	// step 0
 	x0 += _mum_primes[0];
@@ -51,7 +51,7 @@ mumx_mix(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 }
 
 constexpr void
-mumx_mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
+mumx_mix_u64x4(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 {
 	// step 0
 	x0 += _mum_primes[0];
