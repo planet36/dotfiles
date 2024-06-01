@@ -12,7 +12,6 @@
 
 #include "mum.hpp"
 
-#include <array>
 #include <concepts>
 #include <cstdint>
 
@@ -79,24 +78,6 @@ mumx_mix(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 	x0 = mumx(x0, x3 + _mum_primes[13]);
 	x1 = mumx(x1, x3 + _mum_primes[14]);
 	x2 = mumx(x2, x3 + _mum_primes[15]);
-}
-
-constexpr void
-mumx_mix(std::array<uint64_t, 2>& x)
-{
-	mumx_mix(x[0], x[1]);
-}
-
-constexpr void
-mumx_mix(std::array<uint64_t, 3>& x)
-{
-	mumx_mix(x[0], x[1], x[2]);
-}
-
-constexpr void
-mumx_mix(std::array<uint64_t, 4>& x)
-{
-	mumx_mix(x[0], x[1], x[2], x[3]);
 }
 
 template <std::unsigned_integral T>
