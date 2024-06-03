@@ -30,14 +30,14 @@ template <typename T, size_t N>
 void
 fill_rand(std::array<T, N>& container) noexcept
 {
-	arc4random_buf(container.data(), sizeof(T) * container.size());
+	arc4random_buf(std::data(container), sizeof(T) * std::size(container));
 }
 
 template <typename T>
 void
 fill_rand(std::vector<T>& container) noexcept
 {
-	arc4random_buf(container.data(), sizeof(T) * container.size());
+	arc4random_buf(std::data(container), sizeof(T) * std::size(container));
 }
 
 #elif defined(_GLIBCXX_HAVE_GETENTROPY)
@@ -66,7 +66,7 @@ requires (sizeof(T) * N <= 256)
 void
 fill_rand(std::array<T, N>& container)
 {
-	if (getentropy(container.data(), sizeof(T) * container.size()) < 0)
+	if (getentropy(std::data(container), sizeof(T) * std::size(container)) < 0)
 	{
 		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
@@ -77,7 +77,7 @@ template <typename T>
 void
 fill_rand(std::vector<T>& container)
 {
-	if (getentropy(container.data(), sizeof(T) * container.size()) < 0)
+	if (getentropy(std::data(container), sizeof(T) * std::size(container)) < 0)
 	{
 		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
