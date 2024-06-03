@@ -28,16 +28,16 @@ fill_rand(T& x) noexcept
 
 template <typename T, size_t N>
 void
-fill_rand(std::array<T, N>& arr) noexcept
+fill_rand(std::array<T, N>& container) noexcept
 {
-	arc4random_buf(arr.data(), sizeof(T) * arr.size());
+	arc4random_buf(container.data(), sizeof(T) * container.size());
 }
 
 template <typename T>
 void
-fill_rand(std::vector<T>& vec) noexcept
+fill_rand(std::vector<T>& container) noexcept
 {
-	arc4random_buf(vec.data(), sizeof(T) * vec.size());
+	arc4random_buf(container.data(), sizeof(T) * container.size());
 }
 
 #elif defined(_GLIBCXX_HAVE_GETENTROPY)
@@ -64,9 +64,9 @@ fill_rand(T& x)
 template <typename T, size_t N>
 requires (sizeof(T) * N <= 256)
 void
-fill_rand(std::array<T, N>& arr)
+fill_rand(std::array<T, N>& container)
 {
-	if (getentropy(arr.data(), sizeof(T) * arr.size()) < 0)
+	if (getentropy(container.data(), sizeof(T) * container.size()) < 0)
 	{
 		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
@@ -75,9 +75,9 @@ fill_rand(std::array<T, N>& arr)
 
 template <typename T>
 void
-fill_rand(std::vector<T>& vec)
+fill_rand(std::vector<T>& container)
 {
-	if (getentropy(vec.data(), sizeof(T) * vec.size()) < 0)
+	if (getentropy(container.data(), sizeof(T) * container.size()) < 0)
 	{
 		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
@@ -111,11 +111,11 @@ fill_rand(T& x)
 
 template <std::unsigned_integral T, size_t N>
 void
-fill_rand(std::array<T, N>& arr)
+fill_rand(std::array<T, N>& container)
 {
 	static std::random_device rd;
 
-	for (T& x : arr)
+	for (T& x : container)
 	{
 		// std::random_device::result_type is unsigned int
 		// https://en.cppreference.com/w/cpp/numeric/random/random_device
@@ -132,11 +132,11 @@ fill_rand(std::array<T, N>& arr)
 
 template <std::unsigned_integral T>
 void
-fill_rand(std::vector<T>& vec)
+fill_rand(std::vector<T>& container)
 {
 	static std::random_device rd;
 
-	for (T& x : vec)
+	for (T& x : container)
 	{
 		// std::random_device::result_type is unsigned int
 		// https://en.cppreference.com/w/cpp/numeric/random/random_device
