@@ -35,11 +35,15 @@ abbr --add --global mled meld
 abbr --add --global p3 python3
 abbr --add --global py3 python3
 abbr --add --global q exit
-abbr --add --global rbn doas reboot now
+#abbr --add --global rbn doas reboot now
+# log out, then reboot
+abbr --add --global rbn doas systemctl reboot   --when=+3s \& disown \; exit 0
 abbr --add --global reutrn return
 abbr --add --global rtash trash
 abbr --add --global sctl systemctl
-abbr --add --global sdn doas shutdown now
+#abbr --add --global sdn doas shutdown now
+# log out, then poweroff
+abbr --add --global sdn doas systemctl poweroff --when=+3s \& disown \; exit 0
 abbr --add --global sha1 sha1sum
 abbr --add --global sha224 sha224sum
 abbr --add --global sha256 sha256sum
