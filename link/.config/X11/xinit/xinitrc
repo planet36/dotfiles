@@ -119,7 +119,7 @@ fi
 
 if command -v numlockx > /dev/null
 then
-    numlockx on
+    numlockx off
 fi
 
 # }}}
