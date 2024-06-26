@@ -9,6 +9,7 @@
 	lg = log --color --decorate --oneline --graph
 	lgg = log --color --decorate --oneline --graph --all
 	lggg = log --color --decorate --oneline --graph --all --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset %s%Cred%d%Creset %Cgreen%an%Creset' --date=short
+	pr = pull --rebase
 	ss = status -s
 	s = status
 [core]
