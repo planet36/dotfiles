@@ -10,14 +10,14 @@
 	lgg = log --color --decorate --oneline --graph --all
 	lggg = log --color --decorate --oneline --graph --all --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset %s%Cred%d%Creset %Cgreen%an%Creset' --date=short
 	pr = pull --rebase
-	ss = status -s
 	s = status
+	ss = status -s
 [core]
 	editor = nvim
 	fsmonitor = true
 [diff]
-	tool = nvimdiff
 	guitool = meld
+	tool = nvimdiff
 [difftool]
 	prompt = false
 [include]
@@ -25,8 +25,8 @@
 [init]
 	defaultBranch = main
 [merge]
-	tool = nvimdiff
 	guitool = meld
+	tool = nvimdiff
 [mergetool "meld"]
 	hasOutput = true
 	useAutoMerge = true
@@ -46,5 +46,5 @@
 	whitespace-error-style = 22 reverse
 [delta "decorations"]
 	commit-decoration-style = bold yellow box ul
-	file-style = bold yellow ul
 	file-decoration-style = none
+	file-style = bold yellow ul
