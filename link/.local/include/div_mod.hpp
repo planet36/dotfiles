@@ -18,7 +18,7 @@
 
 /// get the quotient and remainder of the _truncated_ integer division
 constexpr auto
-trunc_div_mod(const std::integral auto x, const std::integral auto y)
+div_mod_trunc(const std::integral auto x, const std::integral auto y)
 {
 	const auto quo = x / y;
 	const auto rem = x % y;
@@ -69,7 +69,7 @@ Mod[x, y] == x - y * Quotient[x, y]
 \endverbatim
 */
 constexpr auto
-floor_div_mod(const std::integral auto x, const std::integral auto y)
+div_mod_floor(const std::integral auto x, const std::integral auto y)
 {
 	auto quo = x / y;
 	auto rem = x % y;
@@ -96,7 +96,7 @@ floor_div_mod(const std::integral auto x, const std::integral auto y)
 
 /// get the quotient and remainder of the _ceiling_ integer division
 constexpr auto
-ceil_div_mod(const std::integral auto x, const std::integral auto y)
+div_mod_ceil(const std::integral auto x, const std::integral auto y)
 {
 	auto quo = x / y;
 	auto rem = x % y;
@@ -123,7 +123,7 @@ ceil_div_mod(const std::integral auto x, const std::integral auto y)
 
 /// get the quotient and remainder of the _rounded_ integer division
 constexpr auto
-round_div_mod(const std::integral auto x, const std::integral auto y)
+div_mod_round(const std::integral auto x, const std::integral auto y)
 {
 	auto quo = x / y;
 	auto rem = x % y;
@@ -172,7 +172,7 @@ round_div_mod(const std::integral auto x, const std::integral auto y)
 
 /// get the quotient and remainder of the _truncated_ floating-point division
 constexpr auto
-trunc_div_mod(const std::floating_point auto x,
+div_mod_trunc(const std::floating_point auto x,
               const std::floating_point auto y)
 {
 	const auto quo = std::trunc(x / y);
@@ -184,7 +184,7 @@ trunc_div_mod(const std::floating_point auto x,
 
 /// get the quotient and remainder of the _floored_ floating-point division
 constexpr auto
-floor_div_mod(const std::floating_point auto x,
+div_mod_floor(const std::floating_point auto x,
               const std::floating_point auto y)
 {
 	const auto quo = std::floor(x / y);
@@ -194,7 +194,7 @@ floor_div_mod(const std::floating_point auto x,
 
 /// get the quotient and remainder of the _ceiling_ floating-point division
 constexpr auto
-ceil_div_mod(const std::floating_point auto x, const std::floating_point auto y)
+div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
 {
 	const auto quo = std::ceil(x / y);
 	const auto rem = x - quo * y;
@@ -203,7 +203,7 @@ ceil_div_mod(const std::floating_point auto x, const std::floating_point auto y)
 
 /// get the quotient and remainder of the _rounded_ floating-point division
 constexpr auto
-round_div_mod(const std::floating_point auto x,
+div_mod_round(const std::floating_point auto x,
               const std::floating_point auto y)
 {
 	const auto quo = std::round(x / y);
@@ -213,96 +213,96 @@ round_div_mod(const std::floating_point auto x,
 
 /// get the quotient of the _truncated_ division
 constexpr auto
-trunc_div(const auto x, const auto y)
+div_trunc(const auto x, const auto y)
 {
-	const auto [quo, rem] = trunc_div_mod(x, y);
+	const auto [quo, rem] = div_mod_trunc(x, y);
 	return quo;
 }
 
 /// get the quotient of the _floored_ division
 constexpr auto
-floor_div(const auto x, const auto y)
+div_floor(const auto x, const auto y)
 {
-	const auto [quo, rem] = floor_div_mod(x, y);
+	const auto [quo, rem] = div_mod_floor(x, y);
 	return quo;
 }
 
 /// get the quotient of the _ceiling_ division
 constexpr auto
-ceil_div(const auto x, const auto y)
+div_ceil(const auto x, const auto y)
 {
-	const auto [quo, rem] = ceil_div_mod(x, y);
+	const auto [quo, rem] = div_mod_ceil(x, y);
 	return quo;
 }
 
 /// get the quotient of the _rounded_ division
 constexpr auto
-round_div(const auto x, const auto y)
+div_round(const auto x, const auto y)
 {
-	const auto [quo, rem] = round_div_mod(x, y);
+	const auto [quo, rem] = div_mod_round(x, y);
 	return quo;
 }
 
 /// get the remainder of the _truncated_ division
 constexpr auto
-trunc_mod(const auto x, const auto y)
+mod_trunc(const auto x, const auto y)
 {
-	const auto [quo, rem] = trunc_div_mod(x, y);
+	const auto [quo, rem] = div_mod_trunc(x, y);
 	return rem;
 }
 
 /// get the remainder of the _floored_ division
 constexpr auto
-floor_mod(const auto x, const auto y)
+mod_floor(const auto x, const auto y)
 {
-	const auto [quo, rem] = floor_div_mod(x, y);
+	const auto [quo, rem] = div_mod_floor(x, y);
 	return rem;
 }
 
 /// get the remainder of the _ceiling_ division
 constexpr auto
-ceil_mod(const auto x, const auto y)
+mod_ceil(const auto x, const auto y)
 {
-	const auto [quo, rem] = ceil_div_mod(x, y);
+	const auto [quo, rem] = div_mod_ceil(x, y);
 	return rem;
 }
 
 /// get the remainder of the _rounded_ division
 constexpr auto
-round_mod(const auto x, const auto y)
+mod_round(const auto x, const auto y)
 {
-	const auto [quo, rem] = round_div_mod(x, y);
+	const auto [quo, rem] = div_mod_round(x, y);
 	return rem;
 }
 
 /// get the adjusted remainder of the _truncated_ division
 constexpr auto
-trunc_amod(const auto x, const auto y)
+amod_trunc(const auto x, const auto y)
 {
-	const auto result = trunc_mod(x, y);
+	const auto result = mod_trunc(x, y);
 	return result == 0 ? y : result;
 }
 
 /// get the adjusted remainder of the _floored_ division
 constexpr auto
-floor_amod(const auto x, const auto y)
+amod_floor(const auto x, const auto y)
 {
-	const auto result = floor_mod(x, y);
+	const auto result = mod_floor(x, y);
 	return result == 0 ? y : result;
 }
 
 /// get the adjusted remainder of the _ceiling_ division
 constexpr auto
-ceil_amod(const auto x, const auto y)
+amod_ceil(const auto x, const auto y)
 {
-	const auto result = ceil_mod(x, y);
+	const auto result = mod_ceil(x, y);
 	return result == 0 ? y : result;
 }
 
 /// get the adjusted remainder of the _rounded_ division
 constexpr auto
-round_amod(const auto x, const auto y)
+amod_round(const auto x, const auto y)
 {
-	const auto result = round_mod(x, y);
+	const auto result = mod_round(x, y);
 	return result == 0 ? y : result;
 }

@@ -49,8 +49,8 @@ linspace(const T start, const T stop, const bool endpoint = true)
 			*
 			* This is noticeable when start is negative.
 			*/
-			//result[i] = round_div(i * delta, div) + start;
-			result[i] = round_div(i * delta + offset, div);
+			//result[i] = div_round(i * delta, div) + start;
+			result[i] = div_round(i * delta + offset, div);
 		}
 
 		if (endpoint)
