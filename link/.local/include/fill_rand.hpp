@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include <array>
-#include <vector>
+#include <ranges>
+#include <span>
 
 #if defined(_GLIBCXX_HAVE_ARC4RANDOM)
 
@@ -20,24 +20,18 @@
 // https://www.gnu.org/software/libc/manual/html_node/High-Quality-Random.html
 
 template <typename T>
+requires (!std::ranges::contiguous_range<T>)
 void
 fill_rand(T& x) noexcept
 {
 	arc4random_buf(&x, sizeof(T));
 }
 
-template <typename T, size_t N>
 void
-fill_rand(std::array<T, N>& container) noexcept
+fill_rand(std::ranges::contiguous_range auto & container)
 {
-	arc4random_buf(std::data(container), sizeof(T) * std::size(container));
-}
-
-template <typename T>
-void
-fill_rand(std::vector<T>& container) noexcept
-{
-	arc4random_buf(std::data(container), sizeof(T) * std::size(container));
+	auto span_bytes = std::as_writable_bytes(std::span{container});
+	arc4random_buf(std::data(span_bytes), span_bytes.size_bytes());
 }
 
 #elif defined(_GLIBCXX_HAVE_GETENTROPY)
@@ -50,7 +44,7 @@ fill_rand(std::vector<T>& container) noexcept
 // Max num bytes allowed is 256
 
 template <typename T>
-requires (sizeof(T) <= 256)
+requires (!std::ranges::contiguous_range<T> && (sizeof(T) <= 256))
 void
 fill_rand(T& x)
 {
@@ -61,23 +55,12 @@ fill_rand(T& x)
 	}
 }
 
-template <typename T, size_t N>
-requires (sizeof(T) * N <= 256)
 void
-fill_rand(std::array<T, N>& container)
+fill_rand(std::ranges::contiguous_range auto & container)
 {
-	if (getentropy(std::data(container), sizeof(T) * std::size(container)) < 0)
-	{
-		throw std::system_error(std::make_error_code(std::errc{errno}),
-		                        "getentropy");
-	}
-}
+	auto span_bytes = std::as_writable_bytes(std::span{container});
 
-template <typename T>
-void
-fill_rand(std::vector<T>& container)
-{
-	if (getentropy(std::data(container), sizeof(T) * std::size(container)) < 0)
+	if (getentropy(std::data(span_bytes), span_bytes.size_bytes()) < 0)
 	{
 		throw std::system_error(std::make_error_code(std::errc{errno}),
 		                        "getentropy");
