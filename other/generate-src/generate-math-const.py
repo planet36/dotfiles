@@ -315,6 +315,8 @@ def mpc_to_cpp_literal(x):
 
 log10_of_2 = gmpy2.log10(2)
 
+binary512_digits10 = int(gmpy2.ceil(log10_of_2 * gmpy2.ieee(512).precision))
+# 148
 binary256_digits10 = int(gmpy2.ceil(log10_of_2 * gmpy2.ieee(256).precision))
 # 72
 binary192_digits10 = int(gmpy2.ceil(log10_of_2 * gmpy2.ieee(192).precision))
