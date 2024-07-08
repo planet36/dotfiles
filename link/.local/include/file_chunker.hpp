@@ -54,9 +54,9 @@ file_chunker(FILE* fp , const auto& func_process_chunk)
 			assert(std::feof(fp) != 0); // DEBUG
 		}
 
-		const std::span<std::byte> s{std::data(buf), num_bytes_read};
+		const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
 
-		std::ranges::for_each(std::views::chunk(s, chunk_size), func_process_chunk);
+		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size), func_process_chunk);
 	}
 	while (continue_reading);
 }
@@ -121,9 +121,9 @@ file_chunker_padded(FILE* fp , const auto& func_process_chunk)
 
 		assert((num_bytes_read % chunk_size) == 0); // DEBUG
 
-		const std::span<std::byte> s{std::data(buf), num_bytes_read};
+		const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
 
-		std::ranges::for_each(std::views::chunk(s, chunk_size), func_process_chunk);
+		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size), func_process_chunk);
 	}
 	while (continue_reading);
 }
