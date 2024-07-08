@@ -47,7 +47,6 @@ alias sha256=sha256sum
 alias sha384=sha384sum
 alias sha512=sha512sum
 alias tiem=time
-alias tm=tmux
 alias trahs=trash
 alias trsah=trash
 alias treu=true
