@@ -12,6 +12,11 @@
 
 #include <immintrin.h>
 
+#ifdef __cplusplus
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#endif
+
 #if defined(__SSE2__)
 inline __m128i
 to_m128i(const void* mem_addr)
@@ -67,4 +72,8 @@ from_m512i(void* mem_addr, const __m512i a)
 	// CPUID Flags: AVX512F
 	_mm512_store_si512(mem_addr, a);
 }
+#endif
+
+#ifdef __cplusplus
+#pragma GCC diagnostic pop
 #endif
