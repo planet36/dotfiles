@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Fill a buffer with random values
+/// Fill a buffer with random bytes
 /**
 \file
 \author Steven Ward
