@@ -18,7 +18,7 @@
 #endif
 
 #if defined(__SSE2__)
-inline __m128i
+static inline __m128i
 to_m128i(const void* mem_addr)
 {
 	// Instruction: movdqu xmm, m128
@@ -26,7 +26,7 @@ to_m128i(const void* mem_addr)
 	return _mm_loadu_si128((const __m128i*)(mem_addr));
 }
 
-inline void
+static inline void
 from_m128i(void* mem_addr, const __m128i a)
 {
 	// Instruction: movdqa m128, xmm
@@ -37,7 +37,7 @@ from_m128i(void* mem_addr, const __m128i a)
 #endif
 
 #if defined(__AVX__)
-inline __m256i
+static inline __m256i
 to_m256i(const void* mem_addr)
 {
 	// Instruction: vmovdqu ymm, m256
@@ -45,7 +45,7 @@ to_m256i(const void* mem_addr)
 	return _mm256_loadu_si256((const __m256i*)(mem_addr));
 }
 
-inline void
+static inline void
 from_m256i(void* mem_addr, const __m256i a)
 {
 	// Instruction: vmovdqa m256, ymm
@@ -56,7 +56,7 @@ from_m256i(void* mem_addr, const __m256i a)
 #endif
 
 #if defined(__AVX512F__)
-inline __m512i
+static inline __m512i
 to_m512i(const void* mem_addr)
 {
 	// Instruction: vmovdqu32 zmm, m512
@@ -64,7 +64,7 @@ to_m512i(const void* mem_addr)
 	return _mm512_loadu_si512(mem_addr);
 }
 
-inline void
+static inline void
 from_m512i(void* mem_addr, const __m512i a)
 {
 	// Instruction: vmovdqa32 m512, zmm

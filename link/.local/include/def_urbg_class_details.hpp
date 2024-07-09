@@ -52,7 +52,7 @@ public:                                                                  \
 	}                                                                    \
 	/* https://eel.is/c++draft/rand.req.eng#3.1 */                       \
 	static_assert(sizeof(state_type) % sizeof(result_type) == 0);        \
-	/* dtor  */                                                          \
+	/* dtor */                                                           \
 	~CLASS_NAME()                                                        \
 	{                                                                    \
 		zeroize();                                                       \
@@ -70,6 +70,9 @@ public:                                                                  \
 	{                                                                    \
 		seed(bytes);                                                     \
 	}                                                                    \
+	CLASS_NAME(const CLASS_NAME&) = default;                             \
+	/* copy assignment operator */                                       \
+	CLASS_NAME& operator=(const CLASS_NAME&) = default;                  \
 	/* seed functions */                                                 \
 	void seed() noexcept                                                 \
 	{                                                                    \
@@ -79,7 +82,7 @@ public:                                                                  \
 	{                                                                    \
 		s = new_s;                                                       \
 	}                                                                    \
-	constexpr void seed(const seed_bytes_type& bytes) noexcept           \
+	void seed(const seed_bytes_type& bytes) noexcept                     \
 	{                                                                    \
 		(void)std::memcpy(&s, bytes.data(), sizeof(state_type));         \
 	}                                                                    \

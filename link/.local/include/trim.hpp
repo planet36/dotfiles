@@ -185,7 +185,7 @@ template <class CharT,
 auto
 trim_copy(std::basic_string<CharT, Traits, Allocator> s, const std::locale& loc)
 {
-	trim(s);
+	trim(s, loc);
 	return s;
 }
 

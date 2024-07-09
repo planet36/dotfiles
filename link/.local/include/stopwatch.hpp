@@ -48,7 +48,7 @@ public:
 		running = false;
 	}
 
-	std::chrono::duration<double> get_elapsed_time() const noexcept
+	[[nodiscard]] std::chrono::duration<double> get_elapsed_time() const noexcept
 	{
 		if (!running)
 			return dt;
@@ -56,7 +56,7 @@ public:
 			return dt + (stopwatch_clock::now() - t0);
 	}
 
-	bool is_running() const noexcept { return running; }
+	[[nodiscard]] bool is_running() const noexcept { return running; }
 
 private:
 	std::chrono::time_point<stopwatch_clock> t0{};
