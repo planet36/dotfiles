@@ -13,5 +13,6 @@
 
 static_assert(CHAR_BIT == 8);
 
-#define UINT_SET_BITS(N) ((N >= 64) ? UINT64_MAX : (UINT64_C(1) << (N)) - UINT64_C(1))
+#define UINT_SET_BITS(N) \
+	((N >= 64) ? UINT64_MAX : (UINT64_C(1) << (N)) - UINT64_C(1))
 #define UINT_SET_BYTES(N) UINT_SET_BITS((N) * CHAR_BIT)

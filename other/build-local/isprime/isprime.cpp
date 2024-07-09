@@ -15,7 +15,7 @@ constexpr std::string_view program_license = "OSL-3.0";
 constexpr int default_reps = 30;
 
 /// Primality probability category descriptions
-constexpr std::array<std::string_view, 3> ppc_descriptions {
+constexpr std::array<std::string_view, 3> ppc_descriptions{
 	"not ",
 	"probably ",
 	"",

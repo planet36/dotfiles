@@ -61,7 +61,10 @@ public:                                                                  \
 	/* https://eel.is/c++draft/rand.req.eng#3.1 */                       \
 	static_assert(sizeof(state_type) % sizeof(result_type) == 0);        \
 	/* dtor  */                                                          \
-	~CLASS_NAME() { zeroize(); }                                         \
+	~CLASS_NAME()                                                        \
+	{                                                                    \
+		zeroize();                                                       \
+	}                                                                    \
 	/* ctors */                                                          \
 	constexpr CLASS_NAME() noexcept                                      \
 	{                                                                    \

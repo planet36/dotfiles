@@ -58,7 +58,8 @@ get_load_avg_int(int num_samples = max_samples)
 
 	for (const auto& x : load_avg)
 	{
-		load_avg_int.push_back(static_cast<decltype(load_avg_int)::value_type>(std::lround(x * factor)));
+		load_avg_int.push_back(static_cast<decltype(load_avg_int)::value_type>(
+		    std::lround(x * factor)));
 	}
 
 	return load_avg_int;

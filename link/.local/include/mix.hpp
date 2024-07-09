@@ -11,7 +11,7 @@
 #pragma once
 
 #include "bit_patterns.hpp"
-#if defined (USE_CTRAND)
+#if defined(USE_CTRAND)
 #include "ctrand.hpp"
 #include "map_int.hpp"
 #endif
@@ -25,7 +25,7 @@ mumx_mix_u32x2(uint32_t& x0, uint32_t& x1)
 {
 	using namespace bit_patterns_32;
 
-#if defined (USE_CTRAND)
+#if defined(USE_CTRAND)
 	// step 0
 	x0 += C[map_int(CTRAND64, C.size())];
 	x1 += C[map_int(CTRAND64, C.size())];
@@ -53,7 +53,7 @@ mumx_mix_u32x3(uint32_t& x0, uint32_t& x1, uint32_t& x2)
 {
 	using namespace bit_patterns_32;
 
-#if defined (USE_CTRAND)
+#if defined(USE_CTRAND)
 	// step 0
 	x0 += C[map_int(CTRAND64, C.size())];
 	x1 += C[map_int(CTRAND64, C.size())];
@@ -95,7 +95,7 @@ mumx_mix_u32x4(uint32_t& x0, uint32_t& x1, uint32_t& x2, uint32_t& x3)
 {
 	using namespace bit_patterns_32;
 
-#if defined (USE_CTRAND)
+#if defined(USE_CTRAND)
 	// step 0
 	x0 += C[map_int(CTRAND64, C.size())];
 	x1 += C[map_int(CTRAND64, C.size())];
@@ -155,7 +155,7 @@ mumx_mix_u64x2(uint64_t& x0, uint64_t& x1)
 {
 	using namespace bit_patterns_64;
 
-#if defined (USE_CTRAND)
+#if defined(USE_CTRAND)
 	// step 0
 	x0 += C[map_int(CTRAND64, C.size())];
 	x1 += C[map_int(CTRAND64, C.size())];
@@ -183,7 +183,7 @@ mumx_mix_u64x3(uint64_t& x0, uint64_t& x1, uint64_t& x2)
 {
 	using namespace bit_patterns_64;
 
-#if defined (USE_CTRAND)
+#if defined(USE_CTRAND)
 	// step 0
 	x0 += C[map_int(CTRAND64, C.size())];
 	x1 += C[map_int(CTRAND64, C.size())];
@@ -225,7 +225,7 @@ mumx_mix_u64x4(uint64_t& x0, uint64_t& x1, uint64_t& x2, uint64_t& x3)
 {
 	using namespace bit_patterns_64;
 
-#if defined (USE_CTRAND)
+#if defined(USE_CTRAND)
 	// step 0
 	x0 += C[map_int(CTRAND64, C.size())];
 	x1 += C[map_int(CTRAND64, C.size())];

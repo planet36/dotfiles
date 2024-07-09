@@ -23,8 +23,7 @@ The endpoint of the interval can optionally be excluded.
 */
 template <unsigned int NUM, std::integral T>
 requires (NUM > 0)
-constexpr
-std::array<T, NUM>
+constexpr std::array<T, NUM>
 linspace(const T start, const T stop, const bool endpoint = true)
 {
 	std::array<T, NUM> result;
@@ -67,8 +66,7 @@ The endpoint of the interval can optionally be excluded.
 */
 template <unsigned int NUM>
 requires (NUM > 0)
-constexpr
-std::array<double, NUM>
+constexpr std::array<double, NUM>
 linspace(const double start, const double stop, const bool endpoint = true)
 {
 	std::array<double, NUM> result;

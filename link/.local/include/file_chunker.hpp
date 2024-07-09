@@ -30,7 +30,7 @@
 */
 template <size_t chunk_size, size_t buf_size = 32 * 1024>
 void
-file_chunker(FILE* fp , const auto& func_process_chunk)
+file_chunker(FILE* fp, const auto& func_process_chunk)
 {
 	static_assert(chunk_size >= 1);
 	static_assert(chunk_size <= buf_size);
@@ -56,11 +56,11 @@ file_chunker(FILE* fp , const auto& func_process_chunk)
 
 		const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
 
-		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size), func_process_chunk);
+		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size),
+		                      func_process_chunk);
 	}
 	while (continue_reading);
 }
-
 
 /// Process the file stream \a fp in discrete chunks, and apply length padding
 /**
@@ -82,12 +82,14 @@ file_chunker(FILE* fp , const auto& func_process_chunk)
 */
 template <size_t chunk_size, size_t buf_size = 32 * 1024>
 void
-file_chunker_padded(FILE* fp , const auto& func_process_chunk)
+file_chunker_padded(FILE* fp, const auto& func_process_chunk)
 {
 	static_assert(chunk_size >= 1);
 	static_assert(chunk_size <= buf_size);
-	static_assert(chunk_size <= UINT8_MAX, "The maximum value of a padding byte is 255.");
-	static_assert((buf_size % chunk_size) == 0, "buf_size must be an even multiple of chunk_size.");
+	static_assert(chunk_size <= UINT8_MAX,
+	              "The maximum value of a padding byte is 255.");
+	static_assert((buf_size % chunk_size) == 0,
+	              "buf_size must be an even multiple of chunk_size.");
 
 	std::array<std::byte, buf_size> buf;
 
@@ -108,7 +110,8 @@ file_chunker_padded(FILE* fp , const auto& func_process_chunk)
 			assert(std::feof(fp) != 0); // DEBUG
 
 			// pad to the next chunk boundary
-			const size_t num_bytes_to_pad = chunk_size - num_bytes_read % chunk_size;
+			const size_t num_bytes_to_pad =
+			    chunk_size - num_bytes_read % chunk_size;
 
 			assert(num_bytes_read + num_bytes_to_pad <= buf_size); // DEBUG
 
@@ -123,7 +126,8 @@ file_chunker_padded(FILE* fp , const auto& func_process_chunk)
 
 		const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
 
-		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size), func_process_chunk);
+		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size),
+		                      func_process_chunk);
 	}
 	while (continue_reading);
 }

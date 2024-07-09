@@ -90,7 +90,8 @@ slurp(const std::filesystem::path& path)
 		if (got_bytes != get_bytes)
 		{
 			(void)std::fclose(fp);
-			throw std::system_error(std::make_error_code(std::errc{errno}), path);
+			throw std::system_error(std::make_error_code(std::errc{errno}),
+			                        path);
 		}
 	}
 
@@ -164,7 +165,8 @@ slurp(const std::filesystem::path& path)
 		if (got_bytes < 0 || static_cast<size_t>(got_bytes) != get_bytes)
 		{
 			(void)::close(fd);
-			throw std::system_error(std::make_error_code(std::errc{errno}), path);
+			throw std::system_error(std::make_error_code(std::errc{errno}),
+			                        path);
 		}
 	}
 

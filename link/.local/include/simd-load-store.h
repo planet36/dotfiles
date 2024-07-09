@@ -45,7 +45,6 @@ to_m256i(const void* mem_addr)
 	return _mm256_loadu_si256((const __m256i*)(mem_addr));
 }
 
-
 inline void
 from_m256i(void* mem_addr, const __m256i a)
 {

@@ -19,7 +19,7 @@
 \sa https://en.cppreference.com/w/cpp/ranges/random_access_range
 */
 void
-fisher_yates(std::ranges::random_access_range auto & container)
+fisher_yates(std::ranges::random_access_range auto& container)
 {
 	for (size_t i = std::size(container); i > 1;)
 	{
