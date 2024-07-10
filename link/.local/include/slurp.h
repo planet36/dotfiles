@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "iobytes.h"
+
 // https://man7.org/linux/man-pages/man3/err.3.html
 #include <err.h>
 
@@ -78,10 +80,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		return -1;
 	}
 
-	// https://man7.org/linux/man-pages/man3/fread.3p.html#RETURN_VALUE
-	// fread(3p) returns the number of items read
-	// In our case, each item is 1 byte
-	const size_t got_bytes = fread(buf, 1, get_bytes, fp);
+	const size_t got_bytes = fread_bytes(buf, get_bytes, fp);
 	if (got_bytes != get_bytes)
 	{
 		(void)fclose(fp);

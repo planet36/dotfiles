@@ -13,6 +13,8 @@
 // Description of values for errno
 // https://www.gnu.org/software/libc/manual/html_node/Error-Codes.html
 
+#include "iobytes.h"
+
 #include <cerrno>
 #include <cstdint>
 #include <cstdio>
@@ -83,10 +85,7 @@ slurp(const std::filesystem::path& path)
 			throw;
 		}
 
-		// https://man7.org/linux/man-pages/man3/fread.3p.html#RETURN_VALUE
-		// fread(3p) returns the number of items read
-		// In our case, each item is 1 byte
-		const size_t got_bytes = std::fread(result.data(), 1, result.size(), fp);
+		const size_t got_bytes = fread_bytes(result.data(), result.size(), fp);
 		if (got_bytes != get_bytes)
 		{
 			(void)std::fclose(fp);
