@@ -48,16 +48,31 @@ trailing newline) to stderr.
 
 struct timerdata
 {
+#ifdef __cplusplus
+	timespec rtime{}; // real
+	timeval utime{};  // user
+	timeval stime{};  // system
+#else
 	struct timespec rtime; // real
 	struct timeval utime;  // user
 	struct timeval stime;  // system
+#endif
 };
 
+#ifdef __cplusplus
+static timerdata
+#else
 static struct timerdata
+#endif
 timerdata_now()
 {
-	struct timerdata now;
-	struct rusage ru;
+#ifdef __cplusplus
+	timerdata now{};
+	rusage ru{};
+#else
+	struct timerdata now = {0};
+	struct rusage ru = {0};
+#endif
 
 	// https://pubs.opengroup.org/onlinepubs/9699919799/functions/getrusage.html
 	(void)getrusage(RUSAGE_SELF, &ru);
@@ -71,10 +86,19 @@ timerdata_now()
 }
 
 static void
+#ifdef __cplusplus
+print_timerdata_now_diff(const timerdata* t0)
+#else
 print_timerdata_now_diff(const struct timerdata* t0)
+#endif
 {
+#ifdef __cplusplus
+	const timerdata t1 = timerdata_now();
+	timerdata diff{};
+#else
 	const struct timerdata t1 = timerdata_now();
-	struct timerdata diff;
+	struct timerdata diff = {0};
+#endif
 	timespecsub(&t1.rtime, &t0->rtime, &diff.rtime);
 	timevalsub(&t1.utime, &t0->utime, &diff.utime);
 	timevalsub(&t1.stime, &t0->stime, &diff.stime);

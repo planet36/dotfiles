@@ -36,7 +36,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		return -1;
 	}
 
-	struct stat statbuf;
+	struct stat statbuf = {0};
 	if (stat(path, &statbuf) < 0)
 	{
 		(void)fclose(fp);
@@ -111,7 +111,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		return -1;
 	}
 
-	struct stat statbuf;
+	struct stat statbuf = {0};
 	if (fstat(fd, &statbuf) < 0)
 	{
 		(void)close(fd);

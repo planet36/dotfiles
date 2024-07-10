@@ -35,7 +35,7 @@ slurp(const std::filesystem::path& path)
 		throw std::system_error(std::make_error_code(std::errc{errno}), path);
 	}
 
-	struct stat statbuf;
+	struct stat statbuf{};
 	if (::stat(path.c_str(), &statbuf) < 0)
 	{
 		(void)std::fclose(fp);
@@ -111,7 +111,7 @@ slurp(const std::filesystem::path& path)
 		throw std::system_error(std::make_error_code(std::errc{errno}), path);
 	}
 
-	struct stat statbuf;
+	struct stat statbuf{};
 	if (::fstat(fd, &statbuf) < 0)
 	{
 		(void)::close(fd);
