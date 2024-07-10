@@ -16,7 +16,7 @@
 
 /// rotate \a s left by \a n places
 void
-rotl(std::string& s, unsigned int n)
+rotl(std::string& s, size_t n)
 {
 	n %= std::size(s);
 	auto new_first = std::begin(s);
@@ -26,7 +26,7 @@ rotl(std::string& s, unsigned int n)
 
 /// rotate \a s left by \a n places
 inline std::string
-rotl_copy(std::string s, unsigned int n) // intentionally pass by value
+rotl_copy(std::string s, size_t n) // intentionally pass by value
 {
 	rotl(s, n);
 	return s;
@@ -34,7 +34,7 @@ rotl_copy(std::string s, unsigned int n) // intentionally pass by value
 
 /// rotate \a s right by \a n places
 void
-rotr(std::string& s, unsigned int n)
+rotr(std::string& s, size_t n)
 {
 	n %= std::size(s);
 	auto new_first = std::rbegin(s);
@@ -44,7 +44,7 @@ rotr(std::string& s, unsigned int n)
 
 /// rotate \a s right by \a n places
 inline std::string
-rotr_copy(std::string s, unsigned int n) // intentionally pass by value
+rotr_copy(std::string s, size_t n) // intentionally pass by value
 {
 	rotr(s, n);
 	return s;
