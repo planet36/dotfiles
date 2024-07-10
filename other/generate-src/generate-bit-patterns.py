@@ -276,7 +276,7 @@ for bits in (16, 32, 64):
 
     print(f'namespace bit_patterns_{bits} {{') # namespace begin
 
-    print(f'inline constexpr std::array<uint{bits}_t, {to_dec_thou_str_cpp(len(bit_patterns[bits]))}> C {{')
+    print(f'inline constexpr std::array<uint{bits}_t, {to_dec_thou_str_cpp(len(bit_patterns[bits]))}> C{{')
     print('    // {{{')
     for i in bit_patterns[bits]:
         print(f'    {to_hex_str(i, bits)}, // {to_bin_str(i, bits)}')
@@ -292,7 +292,7 @@ for bits in (16, 32, 64):
     random.shuffle(shuffled_indexes)
 
     print('/// shuffled indexes')
-    print(f'inline constexpr std::array<unsigned int, {to_dec_thou_str_cpp(len(bit_patterns[bits]))}> shuf_i {{')
+    print(f'inline constexpr std::array<unsigned int, {to_dec_thou_str_cpp(len(bit_patterns[bits]))}> shuf_i{{')
     print('    // {{{')
     for i, shuffled_index in enumerate(shuffled_indexes):
         print(f'    {to_dec_thou_str_cpp(shuffled_index, max_len)}, // {to_dec_thou_str_cpp(i, max_len)}')

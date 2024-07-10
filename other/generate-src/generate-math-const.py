@@ -383,7 +383,7 @@ def generate_math_const(x):
     if desc:
         print(f'/** {desc} */')
     print('template <std::floating_point T> inline constexpr T')
-    print(f'{name} {{ {hex_str}L }};')
+    print(f'{name}{{ {hex_str}L }};')
 
 now = dt.datetime.now(dt.timezone.utc)
 brief_description = 'math constants'
