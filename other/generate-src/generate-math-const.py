@@ -343,9 +343,9 @@ def generate_math_const(x):
         try:
             val = eval(expr)
         except (NameError, SyntaxError):
-            print(f'# x={x}')
-            print(f'# name={name}')
-            print(f'# expr={expr}')
+            print(f'# {x=}')
+            print(f'# {name=}')
+            print(f'# {expr=}')
             raise
     else:
         raise Warning('The list must contain dicts or strings')
@@ -367,9 +367,9 @@ def generate_math_const(x):
         #dec_str = ('{:.' + str(binary192_digits10) + 'NG}').format(val)
         dec_str = f'{val:.{binary192_digits10}NG}'
     except ValueError:
-        print(f'# val={val} ({type(val)})')
-        print(f'# binary192_digits10={binary192_digits10}')
-        print(f'# dec_str={dec_str}')
+        print(f'# {val=} ({type(val)})')
+        print(f'# {binary192_digits10=}')
+        print(f'# {dec_str=}')
         print('Error: The value must be a gmpy2 type')
         raise
 
