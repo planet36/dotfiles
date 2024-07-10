@@ -70,28 +70,28 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		return -1;
 	}
 
-	const size_t get_bytes = (size_t)statbuf.st_size;
+	const size_t expected_size_bytes = (size_t)statbuf.st_size;
 
-	unsigned char* buf = (unsigned char*)malloc(get_bytes);
+	unsigned char* buf = (unsigned char*)malloc(expected_size_bytes);
 	if (buf == nullptr)
 	{
 		(void)fclose(fp);
-		warn("malloc %zu ", get_bytes);
+		warn("malloc %zu ", expected_size_bytes);
 		return -1;
 	}
 
-	const size_t got_bytes = fread_bytes(buf, get_bytes, fp);
-	if (got_bytes != get_bytes)
+	const size_t actual_size_bytes = fread_bytes(buf, expected_size_bytes, fp);
+	if (actual_size_bytes != expected_size_bytes)
 	{
 		(void)fclose(fp);
 		free(buf);
 		buf = nullptr;
-		warn("fread %zu, returned %zu", get_bytes, got_bytes);
+		warn("fread %zu, returned %zu", expected_size_bytes, actual_size_bytes);
 		return -1;
 	}
 
 	*bytes = buf;
-	*num_bytes = get_bytes;
+	*num_bytes = expected_size_bytes;
 
 	(void)fclose(fp);
 	return 0;
@@ -142,30 +142,30 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 		return -1;
 	}
 
-	const size_t get_bytes = (size_t)statbuf.st_size;
+	const size_t expected_size_bytes = (size_t)statbuf.st_size;
 
-	unsigned char* buf = (unsigned char*)malloc(get_bytes);
+	unsigned char* buf = (unsigned char*)malloc(expected_size_bytes);
 	if (buf == nullptr)
 	{
 		(void)close(fd);
-		warn("malloc %zu", get_bytes);
+		warn("malloc %zu", expected_size_bytes);
 		return -1;
 	}
 
 	// https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
 	// read(3p) returns either an error code or the number of bytes read
-	const ssize_t got_bytes = read(fd, buf, get_bytes);
-	if (got_bytes < 0 || (size_t)got_bytes != get_bytes)
+	const ssize_t actual_size_bytes = read(fd, buf, expected_size_bytes);
+	if (actual_size_bytes < 0 || (size_t)actual_size_bytes != expected_size_bytes)
 	{
 		(void)close(fd);
 		free(buf);
 		buf = nullptr;
-		warn("read %zu, returned %zd", get_bytes, got_bytes);
+		warn("read %zu, returned %zd", expected_size_bytes, actual_size_bytes);
 		return -1;
 	}
 
 	*bytes = buf;
-	*num_bytes = get_bytes;
+	*num_bytes = expected_size_bytes;
 
 	(void)close(fd);
 	return 0;

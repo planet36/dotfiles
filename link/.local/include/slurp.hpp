@@ -65,11 +65,11 @@ slurp(const std::filesystem::path& path)
 		throw std::system_error(std::make_error_code(std::errc{errno}), path);
 	}
 
-	const size_t get_bytes = static_cast<size_t>(statbuf.st_size);
+	const size_t expected_size_bytes = static_cast<size_t>(statbuf.st_size);
 
 	std::vector<uint8_t> result;
 
-	if (get_bytes == 0)
+	if (expected_size_bytes == 0)
 	{
 		result.clear();
 	}
@@ -77,7 +77,7 @@ slurp(const std::filesystem::path& path)
 	{
 		try
 		{
-			result.resize(get_bytes);
+			result.resize(expected_size_bytes);
 		}
 		catch (...)
 		{
@@ -85,8 +85,8 @@ slurp(const std::filesystem::path& path)
 			throw;
 		}
 
-		const size_t got_bytes = fread_bytes(result.data(), result.size(), fp);
-		if (got_bytes != get_bytes)
+		const size_t actual_size_bytes = fread_bytes(result.data(), result.size(), fp);
+		if (actual_size_bytes != expected_size_bytes)
 		{
 			(void)std::fclose(fp);
 			throw std::system_error(std::make_error_code(std::errc{errno}),
@@ -138,11 +138,11 @@ slurp(const std::filesystem::path& path)
 		throw std::system_error(std::make_error_code(std::errc{errno}), path);
 	}
 
-	const size_t get_bytes = static_cast<size_t>(statbuf.st_size);
+	const size_t expected_size_bytes = static_cast<size_t>(statbuf.st_size);
 
 	std::vector<uint8_t> result;
 
-	if (get_bytes == 0)
+	if (expected_size_bytes == 0)
 	{
 		result.clear();
 	}
@@ -150,7 +150,7 @@ slurp(const std::filesystem::path& path)
 	{
 		try
 		{
-			result.resize(get_bytes);
+			result.resize(expected_size_bytes);
 		}
 		catch (...)
 		{
@@ -160,8 +160,8 @@ slurp(const std::filesystem::path& path)
 
 		// https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
 		// read(3p) returns either an error code or the number of bytes read
-		const ssize_t got_bytes = ::read(fd, result.data(), result.size());
-		if (got_bytes < 0 || static_cast<size_t>(got_bytes) != get_bytes)
+		const ssize_t actual_size_bytes = ::read(fd, result.data(), result.size());
+		if (actual_size_bytes < 0 || static_cast<size_t>(actual_size_bytes) != expected_size_bytes)
 		{
 			(void)::close(fd);
 			throw std::system_error(std::make_error_code(std::errc{errno}),
