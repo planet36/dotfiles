@@ -226,7 +226,11 @@ aes128_dec(__m128i data, const std::array<__m128i, N>& round_keys_dec)
 }
 #pragma GCC diagnostic pop
 
-/// Do \c _mm_aesenc_si128 \a N times on data \a a and key \a key
+/// Do \c _mm_aesenc_si128 \a N times on data \a a with key \a key
+/**
+\pre \a N must be at least \c 1.
+\tparam N the number of rounds of encryption to perform
+*/
 template <unsigned int N = 3>
 requires (N >= 1)
 inline __m128i
@@ -244,7 +248,8 @@ aes_mix(__m128i a, const __m128i key)
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
 \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
-\tparam N the number of iterations of encryption to perform
+\pre \a N must be at least \c 1.
+\tparam N the number of rounds of encryption to perform
 \param H the previous hash value
 \param m the block of the message
 \return the next hash value
