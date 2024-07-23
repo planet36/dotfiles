@@ -7,7 +7,7 @@ CPPFLAGS = -MMD -MP
 CPPFLAGS += `pkg-config --cflags libutf8proc`
 
 CXXFLAGS = -pipe -Wall -Wextra -Wpedantic -Wfatal-errors
-CXXFLAGS += -std=c++26
+CXXFLAGS += -std=gnu++26
 CXXFLAGS += -O3 -flto=auto -march=native -fno-math-errno
 CXXFLAGS += -Werror -Wno-error=pedantic
 
