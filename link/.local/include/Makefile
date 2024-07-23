@@ -6,6 +6,12 @@ export LC_ALL := C
 CPPFLAGS = -MMD -MP
 CPPFLAGS += `pkg-config --cflags libutf8proc`
 
+CFLAGS = -pipe -Wall -Wextra -Wpedantic -Wfatal-errors
+CFLAGS += -Wno-unused-function
+CFLAGS += -std=gnu23
+CFLAGS += -O3 -flto=auto -march=native -fno-math-errno
+CFLAGS += -Werror -Wno-error=pedantic
+
 CXXFLAGS = -pipe -Wall -Wextra -Wpedantic -Wfatal-errors
 CXXFLAGS += -Wno-unused-function
 CXXFLAGS += -std=gnu++26
