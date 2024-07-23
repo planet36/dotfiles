@@ -19,7 +19,7 @@
 static unsigned short
 rdrand16()
 {
-	unsigned short ret{};
+	unsigned short ret = 0;
 	static_assert(sizeof(ret) * 8 == 16);
 	while (_rdrand16_step(&ret) == 0)
 	{}
@@ -29,7 +29,7 @@ rdrand16()
 static unsigned int
 rdrand32()
 {
-	unsigned int ret{};
+	unsigned int ret = 0;
 	static_assert(sizeof(ret) * 8 == 32);
 	while (_rdrand32_step(&ret) == 0)
 	{}
@@ -39,7 +39,7 @@ rdrand32()
 static unsigned long long
 rdrand64()
 {
-	unsigned long long ret{};
+	unsigned long long ret = 0;
 	static_assert(sizeof(ret) * 8 == 64);
 	while (_rdrand64_step(&ret) == 0)
 	{}
@@ -53,7 +53,7 @@ rdrand64()
 static unsigned short
 rdseed16()
 {
-	unsigned short ret{};
+	unsigned short ret = 0;
 	static_assert(sizeof(ret) * 8 == 16);
 	while (_rdseed16_step(&ret) == 0)
 	{}
@@ -63,7 +63,7 @@ rdseed16()
 static unsigned int
 rdseed32()
 {
-	unsigned int ret{};
+	unsigned int ret = 0;
 	static_assert(sizeof(ret) * 8 == 32);
 	while (_rdseed32_step(&ret) == 0)
 	{}
@@ -73,7 +73,7 @@ rdseed32()
 static unsigned long long
 rdseed64()
 {
-	unsigned long long ret{};
+	unsigned long long ret = 0;
 	static_assert(sizeof(ret) * 8 == 64);
 	while (_rdseed64_step(&ret) == 0)
 	{}
