@@ -50,7 +50,7 @@ aes_next_rcon(uint8_t rcon_i, const uint8_t i)
 	{
 		// get the most significant bit before shifting
 		const bool msb = rcon_i & 0b10000000;
-		rcon_i <<= 1;
+		rcon_i = static_cast<decltype(rcon_i)>(rcon_i << 1);
 		if (msb)
 			rcon_i ^= 0b00011011;
 	}
