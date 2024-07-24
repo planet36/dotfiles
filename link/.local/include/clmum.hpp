@@ -56,7 +56,7 @@ clmums(__m128i a)
 static void
 clmul(uint64_t& hi, uint64_t& lo)
 {
-	__m128i result = _mm_set_epi64x(hi, lo); // order of hi, lo doesn't matter
+	__m128i result = _mm_set_epi64x(static_cast<long long int>(hi), static_cast<long long int>(lo)); // order of hi, lo doesn't matter
 
 	clmul(result);
 
