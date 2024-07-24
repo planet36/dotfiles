@@ -234,7 +234,7 @@ aes128_dec(__m128i data, const std::array<__m128i, N>& round_keys_dec)
 template <unsigned int N = 3>
 requires (N >= 1)
 inline __m128i
-aes_mix(__m128i a, const __m128i key)
+aes128_enc_mix(__m128i a, const __m128i key)
 {
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
 #pragma GCC unroll N
@@ -257,7 +257,7 @@ aes_mix(__m128i a, const __m128i key)
 template <unsigned int N = 3>
 requires (N >= 1)
 inline __m128i
-aes_davies_meyer(const __m128i H, const __m128i m)
+aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 {
-	return _mm_xor_si128(H, aes_mix<N>(H, m));
+	return _mm_xor_si128(H, aes128_enc_mix<N>(H, m));
 }
