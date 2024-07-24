@@ -245,6 +245,25 @@ aes128_enc_mix(__m128i a, const __m128i key)
 	return a;
 }
 
+/// Do \c _mm_aesdec_si128 \a N times on data \a a with key \a key
+/**
+\pre \a N must be at least \c 1.
+\tparam N the number of rounds of decryption to perform
+*/
+template <unsigned int N = 3>
+requires (N >= 1)
+inline __m128i
+aes128_dec_mix(__m128i a, const __m128i key)
+{
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (unsigned int round = 0; round < N; ++round)
+	{
+		a = _mm_aesdec_si128(a, key);
+	}
+	return a;
+}
+
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
 \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
@@ -260,4 +279,21 @@ inline __m128i
 aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 {
 	return _mm_xor_si128(H, aes128_enc_mix<N>(H, m));
+}
+
+/// Davies-Meyer single-block-length compression function that uses AES as the block cipher
+/**
+\sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
+\pre \a N must be at least \c 1.
+\tparam N the number of rounds of decryption to perform
+\param H the previous hash value
+\param m the block of the message
+\return the next hash value
+*/
+template <unsigned int N = 3>
+requires (N >= 1)
+inline __m128i
+aes128_dec_davies_meyer(const __m128i H, const __m128i m)
+{
+	return _mm_xor_si128(H, aes128_dec_mix<N>(H, m));
 }
