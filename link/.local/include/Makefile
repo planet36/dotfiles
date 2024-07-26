@@ -25,7 +25,7 @@ LDLIBS += `pkg-config --libs fmt libutf8proc`
 
 C_HDRS := $(wildcard *.h)
 CXX_HDRS := $(wildcard *.hpp)
-DEPS = $(C_HDRS:.h=.d) $(CXX_HDRS:.hpp=.d)
+DEPS := $(C_HDRS:.h=.d) $(CXX_HDRS:.hpp=.d)
 OBJS := $(addsuffix .o, $(basename $(C_HDRS))) $(addsuffix .o, $(basename $(CXX_HDRS)))
 BINS := $(addsuffix .out, $(basename $(C_HDRS))) $(addsuffix .out, $(basename $(CXX_HDRS)))
 
