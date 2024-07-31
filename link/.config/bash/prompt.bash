@@ -224,7 +224,7 @@ GIT_PS1_SHOWSTASHSTATE=1
 #GIT_PS1_SHOWUNTRACKEDFILES=1 # slow
 GIT_PS1_SHOWUPSTREAM=verbose
 
-type -p __git_ps1 && PS1+='\[${FG_YELLOW}\]$(__git_ps1)\[${RESET}\]'
+type -p __git_ps1 && PS1+='$(__git_ps1)'
 PS1+=' \$ '
 
 # https://en.wikipedia.org/wiki/ANSI_escape_code#Escape_sequences
