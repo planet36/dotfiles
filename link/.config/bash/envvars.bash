@@ -45,12 +45,10 @@ export EZA_COLORS
 
 export FZF_DEFAULT_OPTS='--multi --inline-info --ansi --tabstop=4 --color=bg+:25,fg+:220,gutter:-1 --preview-window=right'
 
-if command -v highlight > /dev/null
+if command -v bat > /dev/null
 then
-    #FZF_DEFAULT_OPTS+=' --preview "highlight -- {} | head -n $FZF_PREVIEW_LINES"'
-    # --line-range option added in highlight 3.43 (2018-04-30)
     # shellcheck disable=SC2016
-    FZF_DEFAULT_OPTS+=' --preview "highlight --line-range=1-$FZF_PREVIEW_LINES -- {}"'
+    FZF_DEFAULT_OPTS+=' --preview "bat --color=always --style=plain --tabs=4 --line-range=:$FZF_PREVIEW_LINES -- {}"'
 else
     # shellcheck disable=SC2016
     FZF_DEFAULT_OPTS+=' --preview "head -n $FZF_PREVIEW_LINES -- {}"'
