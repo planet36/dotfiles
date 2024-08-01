@@ -5,6 +5,8 @@
 
 export ACKRC="$XDG_CONFIG_HOME"/ack/ackrc
 
+export BAT_THEME=ansi
+
 export CALCHISTFILE="$XDG_STATE_HOME"/calc_history
 
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
