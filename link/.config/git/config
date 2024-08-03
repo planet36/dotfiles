@@ -12,6 +12,8 @@
 	pr = pull --rebase
 	s = status
 	ss = status -s
+[commit]
+	verbose = true
 [core]
 	editor = nvim
 	fsmonitor = true
@@ -24,14 +26,20 @@
 	path = ~/.config/git/private.gitconfig
 [init]
 	defaultBranch = main
+[log]
+	date = iso
 [merge]
+	conflictstyle = zdiff3
 	guitool = meld
+	keepbackup = false
 	tool = nvimdiff
 [mergetool "meld"]
 	hasOutput = true
 	useAutoMerge = true
 [pull]
 	rebase = false
+[rebase]
+	autostash = true
 [sendemail]
 	suppresscc = self
 
