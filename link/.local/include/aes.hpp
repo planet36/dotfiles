@@ -155,12 +155,12 @@ aes128_expand_key(__m128i key, __m128i tmp)
 /**
 \pre <code>round_keys_enc[0]</code> has the cipher key
 */
-template <size_t N>
-requires (N >= 2)
+template <size_t Nk>
+requires (Nk >= 2)
 void
-aes128_gen_round_keys_enc(std::array<__m128i, N>& round_keys_enc)
+aes128_gen_round_keys_enc(std::array<__m128i, Nk>& round_keys_enc)
 {
-	for (unsigned int round = 1; round < N; ++round)
+	for (unsigned int round = 1; round < Nk; ++round)
 	{
 		const __m128i tmp = aes_keygenassist_round(round_keys_enc[round-1], round);
 		round_keys_enc[round] = aes128_expand_key(round_keys_enc[round-1], tmp);
@@ -173,37 +173,37 @@ aes128_gen_round_keys_enc(std::array<__m128i, N>& round_keys_enc)
 /**
 \pre \a round_keys_enc have been properly prepared
 */
-template <size_t N>
-requires (N >= 2)
+template <size_t Nk>
+requires (Nk >= 2)
 void
-aes128_gen_round_keys_dec(const std::array<__m128i, N>& round_keys_enc,
-		std::array<__m128i, N>& round_keys_dec)
+aes128_gen_round_keys_dec(const std::array<__m128i, Nk>& round_keys_enc,
+		std::array<__m128i, Nk>& round_keys_dec)
 {
 	// See "Intel Advanced Encryption Standard (AES) New Instructions Set"
 	// Figure 6. Preparing the Decryption Round Keys
-	round_keys_dec[0] = round_keys_enc[N-1];
-	for (unsigned int round = 1; round < N-1; ++round)
+	round_keys_dec[0] = round_keys_enc[Nk-1];
+	for (unsigned int round = 1; round < Nk-1; ++round)
 	{
-		round_keys_dec[round] = _mm_aesimc_si128(round_keys_enc[N-1 - round]);
+		round_keys_dec[round] = _mm_aesimc_si128(round_keys_enc[Nk-1 - round]);
 	}
-	round_keys_dec[N-1] = round_keys_enc[0];
+	round_keys_dec[Nk-1] = round_keys_enc[0];
 }
 #pragma GCC diagnostic pop
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 /// Do AES 128 encryption
-template <size_t N>
-requires (N >= 2)
+template <size_t Nk>
+requires (Nk >= 2)
 __m128i
-aes128_enc(__m128i data, const std::array<__m128i, N>& round_keys_enc)
+aes128_enc(__m128i data, const std::array<__m128i, Nk>& round_keys_enc)
 {
 	data = _mm_xor_si128(data, round_keys_enc[0]);
-	for (unsigned int round = 1; round < N-1; ++round)
+	for (unsigned int round = 1; round < Nk-1; ++round)
 	{
 		data = _mm_aesenc_si128(data, round_keys_enc[round]);
 	}
-	data = _mm_aesenclast_si128(data, round_keys_enc[N-1]);
+	data = _mm_aesenclast_si128(data, round_keys_enc[Nk-1]);
 	return data;
 }
 #pragma GCC diagnostic pop
@@ -211,53 +211,53 @@ aes128_enc(__m128i data, const std::array<__m128i, N>& round_keys_enc)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 /// Do AES 128 decryption
-template <size_t N>
-requires (N >= 2)
+template <size_t Nk>
+requires (Nk >= 2)
 __m128i
-aes128_dec(__m128i data, const std::array<__m128i, N>& round_keys_dec)
+aes128_dec(__m128i data, const std::array<__m128i, Nk>& round_keys_dec)
 {
 	data = _mm_xor_si128(data, round_keys_dec[0]);
-	for (unsigned int round = 1; round < N-1; ++round)
+	for (unsigned int round = 1; round < Nk-1; ++round)
 	{
 		data = _mm_aesdec_si128(data, round_keys_dec[round]);
 	}
-	data = _mm_aesdeclast_si128(data, round_keys_dec[N-1]);
+	data = _mm_aesdeclast_si128(data, round_keys_dec[Nk-1]);
 	return data;
 }
 #pragma GCC diagnostic pop
 
-/// Do \c _mm_aesenc_si128 \a N times on data \a a with key \a key
+/// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key \a key
 /**
-\pre \a N must be at least \c 1.
-\tparam N the number of rounds of encryption to perform
+\pre \a Nr must be at least \c 1.
+\tparam Nr the number of rounds of encryption to perform
 */
-template <unsigned int N = 3>
-requires (N >= 1)
+template <unsigned int Nr = 3>
+requires (Nr >= 1)
 inline __m128i
 aes128_enc_mix(__m128i a, const __m128i key)
 {
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
-	for (unsigned int round = 0; round < N; ++round)
+#pragma GCC unroll Nr
+	for (unsigned int round = 0; round < Nr; ++round)
 	{
 		a = _mm_aesenc_si128(a, key);
 	}
 	return a;
 }
 
-/// Do \c _mm_aesdec_si128 \a N times on data \a a with key \a key
+/// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key \a key
 /**
-\pre \a N must be at least \c 1.
-\tparam N the number of rounds of decryption to perform
+\pre \a Nr must be at least \c 1.
+\tparam Nr the number of rounds of decryption to perform
 */
-template <unsigned int N = 3>
-requires (N >= 1)
+template <unsigned int Nr = 3>
+requires (Nr >= 1)
 inline __m128i
 aes128_dec_mix(__m128i a, const __m128i key)
 {
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
-	for (unsigned int round = 0; round < N; ++round)
+#pragma GCC unroll Nr
+	for (unsigned int round = 0; round < Nr; ++round)
 	{
 		a = _mm_aesdec_si128(a, key);
 	}
@@ -267,33 +267,33 @@ aes128_dec_mix(__m128i a, const __m128i key)
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
 \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
-\pre \a N must be at least \c 1.
-\tparam N the number of rounds of encryption to perform
+\pre \a Nr must be at least \c 1.
+\tparam Nr the number of rounds of encryption to perform
 \param H the previous hash value
 \param m the block of the message
 \return the next hash value
 */
-template <unsigned int N = 3>
-requires (N >= 1)
+template <unsigned int Nr = 3>
+requires (Nr >= 1)
 inline __m128i
 aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 {
-	return _mm_xor_si128(H, aes128_enc_mix<N>(H, m));
+	return _mm_xor_si128(H, aes128_enc_mix<Nr>(H, m));
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
 \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
-\pre \a N must be at least \c 1.
-\tparam N the number of rounds of decryption to perform
+\pre \a Nr must be at least \c 1.
+\tparam Nr the number of rounds of decryption to perform
 \param H the previous hash value
 \param m the block of the message
 \return the next hash value
 */
-template <unsigned int N = 3>
-requires (N >= 1)
+template <unsigned int Nr = 3>
+requires (Nr >= 1)
 inline __m128i
 aes128_dec_davies_meyer(const __m128i H, const __m128i m)
 {
-	return _mm_xor_si128(H, aes128_dec_mix<N>(H, m));
+	return _mm_xor_si128(H, aes128_dec_mix<Nr>(H, m));
 }
