@@ -31,8 +31,9 @@
 [merge]
 	conflictStyle = zdiff3
 	guitool = meld
-	keepBackup = false
 	tool = nvimdiff
+[mergetool]
+	keepBackup = false
 [mergetool "meld"]
 	hasOutput = true
 	useAutoMerge = true
