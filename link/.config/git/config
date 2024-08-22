@@ -29,9 +29,9 @@
 [log]
 	date = iso
 [merge]
-	conflictstyle = zdiff3
+	conflictStyle = zdiff3
 	guitool = meld
-	keepbackup = false
+	keepBackup = false
 	tool = nvimdiff
 [mergetool "meld"]
 	hasOutput = true
@@ -39,7 +39,7 @@
 [pull]
 	rebase = false
 [rebase]
-	autostash = true
+	autoStash = true
 [sendemail]
 	suppresscc = self
 
