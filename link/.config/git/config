@@ -39,6 +39,8 @@
 	useAutoMerge = true
 [pull]
 	rebase = false
+[push]
+	autoSetupRemote = true
 [rebase]
 	autoStash = true
 [sendemail]
