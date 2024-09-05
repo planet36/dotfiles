@@ -7,7 +7,9 @@
 
 union union_128
 {
-	__m128i xmm;
+#if defined(__SIZEOF_INT128__)
 	__int128_t i128;
 	__uint128_t u128;
+#endif
+	__m128i xmm;
 };
