@@ -199,13 +199,14 @@ export MANPAGER='less -s -M +Gg --color=d+B --color=u+y'
 # Too many benign warnings:
 # -Wpadded
 # -Wfloat-equal
-GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Werror=return-type -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-error -Wno-format-nonliteral -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
+GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors'
+# https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html#index-funsigned-char
+GCC_COMMON_OPTIONS+=' -funsigned-char'
+GCC_COMMON_OPTIONS+=' -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicated-cond -Werror=return-type -Wformat-overflow=2 -Wformat=2 -Wlogical-op -Wmissing-include-dirs -Wno-error -Wno-format-nonliteral -Wno-unused-function -Wshadow -Wswitch-default -Wswitch-enum -Wuninitialized -Wunsafe-loop-optimizations'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
 #GCC_COMMON_OPTIONS+=' -fstack-protector -fstack-clash-protection'
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 #GCC_COMMON_OPTIONS+=' -ftrivial-auto-var-init=zero'
-# https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html#index-funsigned-char
-GCC_COMMON_OPTIONS+=' -funsigned-char'
 
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 # Using -fsigned-zeros disables associative-math
