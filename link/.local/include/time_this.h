@@ -25,6 +25,11 @@ trailing newline) to stderr.
 #include <time.h>
 
 #ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#ifdef __cplusplus
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
@@ -109,4 +114,8 @@ print_timerdata_now_diff(const struct timerdata* t0)
 
 #ifdef __cplusplus
 #pragma GCC diagnostic pop
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif

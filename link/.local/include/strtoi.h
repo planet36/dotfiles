@@ -13,6 +13,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 static int8_t
 strtoi8(const char* s)
 {
@@ -68,3 +73,7 @@ strtou64(const char* s)
 	const uintmax_t i = strtoumax(s, nullptr, 0);
 	return i > UINT64_MAX ? UINT64_MAX : (uint64_t)i;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

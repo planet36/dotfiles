@@ -14,6 +14,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define acfile __attribute__((cleanup(cleanup_close_file))) FILE*
 
 static void
@@ -29,3 +34,7 @@ cleanup_close_file(FILE** fpp)
 		*fpp = nullptr;
 	}
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

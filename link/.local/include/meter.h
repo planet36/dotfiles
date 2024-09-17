@@ -11,6 +11,11 @@
 
 #include <wchar.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 // https://stackoverflow.com/a/76899758
 // Permit constexpr if older than C23
 #if !defined(__cplusplus) && !defined(constexpr) && \
@@ -452,3 +457,7 @@ right_char_meter(double x, char* meter, size_t meter_width,
 		meter[i] = fill;
 	}
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

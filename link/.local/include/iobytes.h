@@ -13,6 +13,11 @@
 
 #include <stdio.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 inline size_t
 fread_bytes(void* buf, const size_t buf_size, FILE* fp)
 {
@@ -36,3 +41,7 @@ fwrite_bytes(const void* buf, const size_t buf_size, FILE* fp)
 
 	return num_bytes_written;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

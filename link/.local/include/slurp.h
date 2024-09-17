@@ -25,6 +25,11 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #if 1
 
 // this version calls fopen, stat, fread, fclose
@@ -171,4 +176,8 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 	return 0;
 }
 
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif

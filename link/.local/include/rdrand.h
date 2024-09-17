@@ -13,6 +13,11 @@
 
 #include <immintrin.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 // _rd{rand,seed}{16,32,64}_step returns 0 if a random value was NOT generated
 
 #if defined(__RDRND__)
@@ -81,4 +86,8 @@ rdseed64()
 }
 #else
 #warning "__RDSEED__ not defined"
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif

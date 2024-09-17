@@ -11,6 +11,11 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 _Static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
 
 uint16_t
@@ -62,4 +67,8 @@ int_join_u64(const uint64_t hi, const uint64_t lo)
 	return u.whole;
 	_Static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif

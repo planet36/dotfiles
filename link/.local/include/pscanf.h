@@ -15,6 +15,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 // adapted from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
 
@@ -42,3 +47,7 @@ pscanf(const char* path, const char* fmt, ...)
 
 	return (n == EOF) ? -1 : n;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

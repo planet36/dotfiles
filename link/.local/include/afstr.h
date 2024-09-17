@@ -20,6 +20,11 @@ afstr s2 = strdup(s);
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #define afstr __attribute__((cleanup(cleanup_free_str))) char*
 
 static void
@@ -27,3 +32,7 @@ cleanup_free_str(char** spp)
 {
 	free(*spp);
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

@@ -15,6 +15,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 // https://stackoverflow.com/a/76899758
 // Permit constexpr if older than C23
 #if !defined(__cplusplus) && !defined(constexpr) && \
@@ -61,3 +66,7 @@ getline_strip(char** buf,
 	constexpr char delim = '\n';
 	return getdelim_strip(buf, buf_size, delim, stream, strip_delim);
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

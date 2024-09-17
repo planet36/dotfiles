@@ -13,9 +13,18 @@
 #include <limits.h>
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 static unsigned int
 strtou(const char* s)
 {
 	const unsigned long i = strtoul(s, nullptr, 0);
 	return (i > UINT_MAX) ? UINT_MAX : (unsigned int)i;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

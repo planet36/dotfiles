@@ -13,6 +13,11 @@
 #include <immintrin.h>
 
 #ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#ifdef __cplusplus
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #endif
@@ -75,4 +80,8 @@ from_m512i(void* mem_addr, const __m512i a)
 
 #ifdef __cplusplus
 #pragma GCC diagnostic pop
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif

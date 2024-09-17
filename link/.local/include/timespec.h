@@ -14,6 +14,11 @@
 #include <time.h>
 
 #ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#ifdef __cplusplus
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
@@ -44,4 +49,8 @@ timespecsub(const struct timespec* t1,
 
 #ifdef __cplusplus
 #pragma GCC diagnostic pop
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif

@@ -13,6 +13,11 @@ Inspired by https://software.codidact.com/posts/285946
 
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /// String copy, report truncation
 /**
 * DESCRIPTION
@@ -74,3 +79,7 @@ strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
 	dst += strlen(dst);
 	return strtcpy(dst, buf_last, src, trunc_at);
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

@@ -16,6 +16,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 typedef struct
 {
 	void* buf;
@@ -134,3 +139,7 @@ circqueue_reset(circqueue* cq)
 	cq->tail = 0;
 	cq->num_elems = 0;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
