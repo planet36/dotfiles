@@ -16,7 +16,7 @@ extern "C"
 {
 #endif
 
-_Static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
+static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
 
 uint16_t
 int_join_u8(const uint8_t hi, const uint8_t lo)
@@ -27,7 +27,7 @@ int_join_u8(const uint8_t hi, const uint8_t lo)
 		uint8_t parts[2];
 	} u = {.parts = {lo, hi}};
 	return u.whole;
-	_Static_assert(sizeof(u.whole) == sizeof(u.parts));
+	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
 uint32_t
@@ -39,7 +39,7 @@ int_join_u16(const uint16_t hi, const uint16_t lo)
 		uint16_t parts[2];
 	} u = {.parts = {lo, hi}};
 	return u.whole;
-	_Static_assert(sizeof(u.whole) == sizeof(u.parts));
+	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
 uint64_t
@@ -51,7 +51,7 @@ int_join_u32(const uint32_t hi, const uint32_t lo)
 		uint32_t parts[2];
 	} u = {.parts = {lo, hi}};
 	return u.whole;
-	_Static_assert(sizeof(u.whole) == sizeof(u.parts));
+	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
 #if defined(__SIZEOF_INT128__)
@@ -65,7 +65,7 @@ int_join_u64(const uint64_t hi, const uint64_t lo)
 		uint64_t parts[2];
 	} u = {.parts = {lo, hi}};
 	return u.whole;
-	_Static_assert(sizeof(u.whole) == sizeof(u.parts));
+	static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 #endif
 
