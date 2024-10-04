@@ -15,8 +15,7 @@
 #include <stdlib.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #define acfile __attribute__((cleanup(cleanup_close_file))) FILE*

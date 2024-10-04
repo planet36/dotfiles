@@ -12,8 +12,7 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #define XSTR(s) STR(s)

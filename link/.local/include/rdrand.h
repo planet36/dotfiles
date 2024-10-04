@@ -14,8 +14,7 @@
 #include <immintrin.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 // _rd{rand,seed}{16,32,64}_step returns 0 if a random value was NOT generated

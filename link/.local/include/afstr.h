@@ -21,8 +21,7 @@ afstr s2 = strdup(s);
 #include <stdlib.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #define afstr __attribute__((cleanup(cleanup_free_str))) char*

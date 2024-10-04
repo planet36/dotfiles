@@ -14,8 +14,7 @@ Inspired by https://software.codidact.com/posts/285946
 #include <string.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /// String copy, report truncation

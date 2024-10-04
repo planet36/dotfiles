@@ -12,8 +12,7 @@
 #include <wchar.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 // https://stackoverflow.com/a/76899758

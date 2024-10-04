@@ -12,8 +12,7 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
