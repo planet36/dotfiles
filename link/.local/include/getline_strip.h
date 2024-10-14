@@ -19,13 +19,6 @@
 extern "C" {
 #endif
 
-// https://stackoverflow.com/a/76899758
-// Permit constexpr if older than C23
-#if !defined(__cplusplus) && !defined(constexpr) && \
-    (!defined(__STDC_VERSION__) || (__STDC_VERSION__ <= 201710L))
-#define constexpr const
-#endif
-
 /// wrapper for \c getdelim with param \a strip_delim
 /**
 \param strip_delim if the \a delim should be stripped from the result
