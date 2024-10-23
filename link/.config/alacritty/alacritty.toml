@@ -27,7 +27,7 @@ background = "#1c1b19"
 foreground = "#fce8c3"
 
 [font]
-size = 14.0
+size = 13.5
 
 [[keyboard.bindings]]
 action = "SpawnNewInstance"
