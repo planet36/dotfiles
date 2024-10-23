@@ -25,7 +25,7 @@
 #include <concepts>
 #include <cstdint>
 #include <err.h>
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
