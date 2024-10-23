@@ -38,5 +38,5 @@ mods = "Control|Shift"
 save_to_clipboard = true
 
 [window.padding]
-x = 3
-y = 3
+x = 2
+y = 2
