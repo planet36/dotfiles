@@ -8,6 +8,8 @@ Sxiv.background: Black
 Sxiv.foreground: Gray
 
 XTerm.vt100.boldColors: false
+! https://invisible-island.net/xterm/manpage/xterm.html#h2-CHARACTER-CLASSES
+XTerm.vt100.charClass: 45-47:48,64:48,94:48,126:48
 XTerm.vt100.disallowedWindowOps: 20,21,SetXprop
 XTerm.vt100.faceName: monospace
 XTerm.vt100.faceSize: 13
