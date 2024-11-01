@@ -54,6 +54,8 @@ abbr --add --global trahs trash
 abbr --add --global trsah trash
 abbr --add --global treu true
 abbr --add --global tyep type
+abbr --add --global upd doas pacman -Syw
+abbr --add --global upg doas pacman -Syu
 abbr --add --global v "$VISUAL"
 abbr --add --global whcih which
 

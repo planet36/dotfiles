@@ -49,6 +49,8 @@ alias trahs=trash
 alias trsah=trash
 alias treu=true
 alias tyep=type
+alias upd='doas pacman -Syw'
+alias upg='doas pacman -Syu'
 # shellcheck disable=SC2139
 alias v="$VISUAL"
 alias whcih=which
@@ -148,8 +150,6 @@ alias yinst='yay -S --needed --answerclean None --answerdiff None'
 alias uninst='doas pacman -Rs'
 alias yuninst='yay -Rs'
 alias autorm='pacman -Qdtq | doas pacman -Rs -'
-alias upd='doas pacman -Syw'
-alias upg='doas pacman -Syu'
 alias pf="pacman -Sl | fzf --nth 2.. --preview 'pacman -Si {2}'"
 
 # https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Browsing_packages
