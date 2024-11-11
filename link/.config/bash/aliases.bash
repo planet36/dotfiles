@@ -89,12 +89,10 @@ alias file1-lines='find . -maxdepth 1 -type f -print0 | wc --lines --files0-from
 alias file1-sizes='find . -maxdepth 1 -type f -printf "%s\t%p\n"'
 alias file1-times=file1-dates
 alias find-dangling-symlinks='find . -xtype l'
-# We don't want an alias named "grep" with so many options
-#alias grep='grep --color --line-number --binary-files=without-match --directories=skip'
-alias g='grep --color --line-number --binary-files=without-match --directories=skip'
+alias grep='grep --color=auto --line-number --binary-files=without-match --directories=skip'
 alias gf='git log --oneline --decorate --color | fzf --no-sort --layout=reverse-list --preview "git show --color=always {1}"'
 alias gif2png='gif2png -m -n -s -O'
-alias gr='g --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+alias grepr='grep --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias jpegtran2='jpegtran -optimize -copy all'
 alias longest_line="awk 'length > l {r = NR; l = length} END{print r, l}'"
 alias mirror2='wget --verbose --force-directories --no-host-directories --html-extension --mirror --convert-links --backup-converted --page-requisites --relative --no-parent'
