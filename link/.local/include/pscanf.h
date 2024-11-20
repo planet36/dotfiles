@@ -19,7 +19,7 @@
 extern "C" {
 #endif
 
-// adapted from my slstatus
+// Adapted from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
 
 static

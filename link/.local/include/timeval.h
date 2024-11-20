@@ -22,7 +22,7 @@ extern "C" {
 #pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
 
-// copied from my slstatus
+// Copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
 static struct timeval
 msec_to_timeval(unsigned int msec)

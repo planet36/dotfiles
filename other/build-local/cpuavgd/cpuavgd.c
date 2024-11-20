@@ -23,7 +23,7 @@
 #include <time.h>
 #include <unistd.h>
 
-// {{{ copied from my slstatus
+// {{{ Copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/components/cpu.c
 
 int

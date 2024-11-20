@@ -22,7 +22,7 @@ extern "C" {
 #pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
 
-// copied from my slstatus
+// Copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
 static double
 timespec_to_sec(const struct timespec* ts)

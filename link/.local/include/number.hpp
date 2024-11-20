@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-// adapted from
+// Adapted from
 // https://www.sandordargo.com/blog/2021/03/24/concepts-in-real-life
 template <typename T>
 concept number = std::is_arithmetic_v<std::remove_cv_t<T>> &&
