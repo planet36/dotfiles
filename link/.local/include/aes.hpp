@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// AES 128 utilities
+/// AES-128 utilities
 /**
 \file
 \author Steven Ward
@@ -192,7 +192,7 @@ aes128_gen_round_keys_dec(const std::array<__m128i, Nk>& round_keys_enc,
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do AES 128 encryption
+/// Do AES-128 encryption
 template <size_t Nk>
 requires (Nk >= 2)
 __m128i
@@ -210,7 +210,7 @@ aes128_enc(__m128i data, const std::array<__m128i, Nk>& round_keys_enc)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do AES 128 decryption
+/// Do AES-128 decryption
 template <size_t Nk>
 requires (Nk >= 2)
 __m128i
