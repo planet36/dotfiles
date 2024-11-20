@@ -202,9 +202,7 @@ function count_tabpage_windows_diffed()
   local windows_diffed = 0
 
   for i, win_hndl in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-    if vim.api.nvim_win_get_option(win_hndl, 'diff') then
-      windows_diffed = windows_diffed + 1
-    end
+    if vim.api.nvim_win_get_option(win_hndl, 'diff') then windows_diffed = windows_diffed + 1 end
   end
 
   return windows_diffed
