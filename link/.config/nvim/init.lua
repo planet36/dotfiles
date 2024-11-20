@@ -226,8 +226,7 @@ function handle_diff_change_colorscheme()
     end
 end
 
-local change_colors_in_diff =
-    vim.api.nvim_create_augroup("change_colors_in_diff", {})
+local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", {})
 
 vim.api.nvim_create_autocmd("ColorScheme", {
     group = change_colors_in_diff,
@@ -236,14 +235,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 -- https://vi.stackexchange.com/a/13395
-vim.api.nvim_create_autocmd(
-    { "VimEnter", "BufWinEnter", "BufWinLeave", "TabEnter", "TabLeave" },
-    {
-        group = change_colors_in_diff,
-        pattern = { "*" },
-        callback = function() handle_diff_change_colorscheme() end,
-    }
-)
+vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "BufWinLeave", "TabEnter", "TabLeave" }, {
+    group = change_colors_in_diff,
+    pattern = { "*" },
+    callback = function() handle_diff_change_colorscheme() end,
+})
 
 -- https://vi.stackexchange.com/a/12852
 vim.api.nvim_create_autocmd("OptionSet", {
