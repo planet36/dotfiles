@@ -27,12 +27,12 @@ vim.o.undofile = true
 vim.opt.backupdir:remove({ '.' })
 
 vim.api.nvim_create_autocmd('BufWritePre', {
-    group = vim.api.nvim_create_augroup('backup_extension_timestamp', {}),
-    pattern = { '*' },
-    callback = function()
-        -- String which is appended to a file name to make the name of the backup file.
-        vim.o.backupext = '~' .. os.date('%Y%m%dT%H%M%S') .. '~'
-    end,
+  group = vim.api.nvim_create_augroup('backup_extension_timestamp', {}),
+  pattern = { '*' },
+  callback = function()
+    -- String which is appended to a file name to make the name of the backup file.
+    vim.o.backupext = '~' .. os.date('%Y%m%dT%H%M%S') .. '~'
+  end,
 })
 
 -- }}}
@@ -59,13 +59,13 @@ vim.o.number = true
 -- {{{ File type
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-    pattern = { '*.cal' },
-    callback = function() vim.o.filetype = 'c' end,
+  pattern = { '*.cal' },
+  callback = function() vim.o.filetype = 'c' end,
 })
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-    pattern = { '*.fish' },
-    callback = function() vim.o.filetype = 'sh' end,
+  pattern = { '*.fish' },
+  callback = function() vim.o.filetype = 'sh' end,
 })
 
 -- }}}
@@ -115,12 +115,12 @@ vim.opt.formatoptions:append('/p')
 -- {{{ C/C++ block comments
 
 vim.api.nvim_create_autocmd('FileType', {
-    group = vim.api.nvim_create_augroup('c_cpp_block_comments', {}),
-    pattern = { 'c,cpp' }, -- matched against filetype
-    callback = function()
-        -- :help format-comments
-        vim.o.comments = string.gsub(vim.o.comments, 's1:', 's:')
-    end,
+  group = vim.api.nvim_create_augroup('c_cpp_block_comments', {}),
+  pattern = { 'c,cpp' }, -- matched against filetype
+  callback = function()
+    -- :help format-comments
+    vim.o.comments = string.gsub(vim.o.comments, 's1:', 's:')
+  end,
 })
 
 -- }}}
@@ -158,11 +158,11 @@ vim.o.splitright = true
 
 -- Open help window in a vertical split to the right.
 vim.api.nvim_create_autocmd('BufWinEnter', {
-    group = vim.api.nvim_create_augroup('help_window_right', {}),
-    pattern = { '*.txt' },
-    callback = function()
-        if vim.o.filetype == 'help' then vim.cmd.wincmd('L') end
-    end,
+  group = vim.api.nvim_create_augroup('help_window_right', {}),
+  pattern = { '*.txt' },
+  callback = function()
+    if vim.o.filetype == 'help' then vim.cmd.wincmd('L') end
+  end,
 })
 
 -- }}}
@@ -189,70 +189,70 @@ require('abbrev')
 -- {{{ Diff
 
 function get_colorscheme()
-    -- https://neovim.io/doc/user/api.html#nvim_exec2()
-    -- XXX: vim.cmd.colorscheme() prints (not returns) the current colorscheme.
-    return vim.api.nvim_exec2('colorscheme', { output = true }).output
+  -- https://neovim.io/doc/user/api.html#nvim_exec2()
+  -- XXX: vim.cmd.colorscheme() prints (not returns) the current colorscheme.
+  return vim.api.nvim_exec2('colorscheme', { output = true }).output
 end
 
 -- Count the windows in the current tabpage for which diff is true.
 function count_tabpage_windows_diffed()
-    -- https://neovim.io/doc/user/api.html#nvim_tabpage_list_wins()
-    -- https://neovim.io/doc/user/api.html#nvim_win_get_option()
+  -- https://neovim.io/doc/user/api.html#nvim_tabpage_list_wins()
+  -- https://neovim.io/doc/user/api.html#nvim_win_get_option()
 
-    local windows_diffed = 0
+  local windows_diffed = 0
 
-    for i, win_hndl in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-        if vim.api.nvim_win_get_option(win_hndl, 'diff') then
-            windows_diffed = windows_diffed + 1
-        end
+  for i, win_hndl in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.api.nvim_win_get_option(win_hndl, 'diff') then
+      windows_diffed = windows_diffed + 1
     end
+  end
 
-    return windows_diffed
+  return windows_diffed
 end
 
 -- https://vi.stackexchange.com/questions/39637/detect-when-a-diff-begins-and-ends
 -- Change colorscheme when diff mode begins/ends.
 function handle_diff_change_colorscheme()
-    local num_windows_diffed = count_tabpage_windows_diffed()
+  local num_windows_diffed = count_tabpage_windows_diffed()
 
-    if num_windows_diffed > 1 then
-        if get_colorscheme() ~= vim.g.diff_colorscheme then
-            vim.cmd.colorscheme(vim.g.diff_colorscheme)
-        end
-    else
-        if get_colorscheme() ~= vim.g.orig_colorscheme then
-            vim.cmd.colorscheme(vim.g.orig_colorscheme)
-        end
+  if num_windows_diffed > 1 then
+    if get_colorscheme() ~= vim.g.diff_colorscheme then
+      vim.cmd.colorscheme(vim.g.diff_colorscheme)
     end
+  else
+    if get_colorscheme() ~= vim.g.orig_colorscheme then
+      vim.cmd.colorscheme(vim.g.orig_colorscheme)
+    end
+  end
 end
 
 local change_colors_in_diff = vim.api.nvim_create_augroup('change_colors_in_diff', {})
 
 vim.api.nvim_create_autocmd('ColorScheme', {
-    group = change_colors_in_diff,
-    pattern = { '*' },
-    callback = function() vim.g.orig_colorscheme = get_colorscheme() end,
+  group = change_colors_in_diff,
+  pattern = { '*' },
+  callback = function() vim.g.orig_colorscheme = get_colorscheme() end,
 })
 
 -- https://vi.stackexchange.com/a/13395
 vim.api.nvim_create_autocmd({ 'VimEnter', 'BufWinEnter', 'BufWinLeave', 'TabEnter', 'TabLeave' }, {
-    group = change_colors_in_diff,
-    pattern = { '*' },
-    callback = function() handle_diff_change_colorscheme() end,
+  group = change_colors_in_diff,
+  pattern = { '*' },
+  callback = function() handle_diff_change_colorscheme() end,
 })
 
 -- https://vi.stackexchange.com/a/12852
 vim.api.nvim_create_autocmd('OptionSet', {
-    group = change_colors_in_diff,
-    pattern = { 'diff' },
-    callback = function() handle_diff_change_colorscheme() end,
+  group = change_colors_in_diff,
+  pattern = { 'diff' },
+  callback = function() handle_diff_change_colorscheme() end,
 })
 
 -- :help DiffOrig
 vim.api.nvim_create_user_command(
-    'DiffOrig',
-    'vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis',
-    {}
+  'DiffOrig',
+  'vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis',
+  {}
 )
 
 -- }}}
@@ -268,20 +268,20 @@ vim.g.python3_host_prog = '/usr/bin/python3'
 vim.o.cursorline = true
 
 local colorscheme_list = {
-    'srcery',
-    'candycode',
-    'breezy',
-    'OceanicNext',
-    'retrobox',
-    'wildcharm',
-    'murphy',
+  'srcery',
+  'candycode',
+  'breezy',
+  'OceanicNext',
+  'retrobox',
+  'wildcharm',
+  'murphy',
 }
 
 -- https://www.lua.org/pil/7.3.html
 -- https://www.lua.org/pil/8.4.html
 -- https://stackoverflow.com/a/55109411/1892784
 for i, c in ipairs(colorscheme_list) do
-    if pcall(vim.cmd.colorscheme, c) then break end
+  if pcall(vim.cmd.colorscheme, c) then break end
 end
 
 vim.g.orig_colorscheme = get_colorscheme()
