@@ -14,7 +14,7 @@ vim.g.loaded_perl_provider = 0
 -- {{{ Clipboard
 
 -- This option is a list of comma separated names.
-vim.opt.clipboard:append({ "unnamedplus" })
+vim.opt.clipboard:append({ 'unnamedplus' })
 
 -- }}}
 
@@ -24,14 +24,14 @@ vim.o.backup = true
 
 vim.o.undofile = true
 
-vim.opt.backupdir:remove({ "." })
+vim.opt.backupdir:remove({ '.' })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("backup_extension_timestamp", {}),
-    pattern = { "*" },
+vim.api.nvim_create_autocmd('BufWritePre', {
+    group = vim.api.nvim_create_augroup('backup_extension_timestamp', {}),
+    pattern = { '*' },
     callback = function()
         -- String which is appended to a file name to make the name of the backup file.
-        vim.o.backupext = "~" .. os.date("%Y%m%dT%H%M%S") .. "~"
+        vim.o.backupext = '~' .. os.date('%Y%m%dT%H%M%S') .. '~'
     end,
 })
 
@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- {{{ Include path
 
-vim.opt.path:append({ vim.fs.normalize("~/.local/include") })
+vim.opt.path:append({ vim.fs.normalize('~/.local/include') })
 
 -- }}}
 
@@ -58,14 +58,14 @@ vim.o.number = true
 
 -- {{{ File type
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.cal" },
-    callback = function() vim.o.filetype = "c" end,
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+    pattern = { '*.cal' },
+    callback = function() vim.o.filetype = 'c' end,
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.fish" },
-    callback = function() vim.o.filetype = "sh" end,
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+    pattern = { '*.fish' },
+    callback = function() vim.o.filetype = 'sh' end,
 })
 
 -- }}}
@@ -73,7 +73,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- {{{ Syntax highlighting
 
 -- :help syn-sync
-vim.cmd.syntax("sync", "fromstart")
+vim.cmd.syntax('sync', 'fromstart')
 
 vim.o.termguicolors = true
 
@@ -105,21 +105,21 @@ vim.o.tabstop = 4
 -- {{{ Formatting
 
 -- :help cinoptions-values
-vim.o.cinoptions = ":0,g0,N-s,E-s,t0,c0,C1"
+vim.o.cinoptions = ':0,g0,N-s,E-s,t0,c0,C1'
 
 -- :help fo-table
-vim.opt.formatoptions:append("/p")
+vim.opt.formatoptions:append('/p')
 
 -- }}}
 
 -- {{{ C/C++ block comments
 
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("c_cpp_block_comments", {}),
-    pattern = { "c,cpp" }, -- matched against filetype
+vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('c_cpp_block_comments', {}),
+    pattern = { 'c,cpp' }, -- matched against filetype
     callback = function()
         -- :help format-comments
-        vim.o.comments = string.gsub(vim.o.comments, "s1:", "s:")
+        vim.o.comments = string.gsub(vim.o.comments, 's1:', 's:')
     end,
 })
 
@@ -135,14 +135,14 @@ vim.o.smartcase = true
 
 -- {{{ Disable mouse support if inside tmux
 
-if vim.env.TMUX ~= nil then vim.o.mouse = "" end
+if vim.env.TMUX ~= nil then vim.o.mouse = '' end
 
 -- }}}
 
 -- {{{ UI
 
-vim.o.whichwrap = "<,>,[,]"
-vim.opt.matchpairs:append({ "<:>" })
+vim.o.whichwrap = '<,>,[,]'
+vim.opt.matchpairs:append({ '<:>' })
 vim.o.scrolloff = 6
 
 -- }}}
@@ -157,11 +157,11 @@ vim.o.splitright = true
 -- {{{ Windows
 
 -- Open help window in a vertical split to the right.
-vim.api.nvim_create_autocmd("BufWinEnter", {
-    group = vim.api.nvim_create_augroup("help_window_right", {}),
-    pattern = { "*.txt" },
+vim.api.nvim_create_autocmd('BufWinEnter', {
+    group = vim.api.nvim_create_augroup('help_window_right', {}),
+    pattern = { '*.txt' },
     callback = function()
-        if vim.o.filetype == "help" then vim.cmd.wincmd("L") end
+        if vim.o.filetype == 'help' then vim.cmd.wincmd('L') end
     end,
 })
 
@@ -169,20 +169,20 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 
 -- {{{ Folding
 
-vim.o.foldmethod = "marker"
+vim.o.foldmethod = 'marker'
 vim.o.foldlevelstart = 99
 
 -- }}}
 
 -- {{{ Maps
 
-require("map")
+require('map')
 
 -- }}}
 
 -- {{{ Abbreviations
 
-require("abbrev")
+require('abbrev')
 
 -- }}}
 
@@ -191,7 +191,7 @@ require("abbrev")
 function get_colorscheme()
     -- https://neovim.io/doc/user/api.html#nvim_exec2()
     -- XXX: vim.cmd.colorscheme() prints (not returns) the current colorscheme.
-    return vim.api.nvim_exec2("colorscheme", { output = true }).output
+    return vim.api.nvim_exec2('colorscheme', { output = true }).output
 end
 
 -- Count the windows in the current tabpage for which diff is true.
@@ -202,7 +202,7 @@ function count_tabpage_windows_diffed()
     local windows_diffed = 0
 
     for i, win_hndl in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-        if vim.api.nvim_win_get_option(win_hndl, "diff") then
+        if vim.api.nvim_win_get_option(win_hndl, 'diff') then
             windows_diffed = windows_diffed + 1
         end
     end
@@ -226,32 +226,32 @@ function handle_diff_change_colorscheme()
     end
 end
 
-local change_colors_in_diff = vim.api.nvim_create_augroup("change_colors_in_diff", {})
+local change_colors_in_diff = vim.api.nvim_create_augroup('change_colors_in_diff', {})
 
-vim.api.nvim_create_autocmd("ColorScheme", {
+vim.api.nvim_create_autocmd('ColorScheme', {
     group = change_colors_in_diff,
-    pattern = { "*" },
+    pattern = { '*' },
     callback = function() vim.g.orig_colorscheme = get_colorscheme() end,
 })
 
 -- https://vi.stackexchange.com/a/13395
-vim.api.nvim_create_autocmd({ "VimEnter", "BufWinEnter", "BufWinLeave", "TabEnter", "TabLeave" }, {
+vim.api.nvim_create_autocmd({ 'VimEnter', 'BufWinEnter', 'BufWinLeave', 'TabEnter', 'TabLeave' }, {
     group = change_colors_in_diff,
-    pattern = { "*" },
+    pattern = { '*' },
     callback = function() handle_diff_change_colorscheme() end,
 })
 
 -- https://vi.stackexchange.com/a/12852
-vim.api.nvim_create_autocmd("OptionSet", {
+vim.api.nvim_create_autocmd('OptionSet', {
     group = change_colors_in_diff,
-    pattern = { "diff" },
+    pattern = { 'diff' },
     callback = function() handle_diff_change_colorscheme() end,
 })
 
 -- :help DiffOrig
 vim.api.nvim_create_user_command(
-    "DiffOrig",
-    "vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis",
+    'DiffOrig',
+    'vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis',
     {}
 )
 
@@ -259,7 +259,7 @@ vim.api.nvim_create_user_command(
 
 -- {{{ Command to start Python 3
 
-vim.g.python3_host_prog = "/usr/bin/python3"
+vim.g.python3_host_prog = '/usr/bin/python3'
 
 -- }}}
 
@@ -268,13 +268,13 @@ vim.g.python3_host_prog = "/usr/bin/python3"
 vim.o.cursorline = true
 
 local colorscheme_list = {
-    "srcery",
-    "candycode",
-    "breezy",
-    "OceanicNext",
-    "retrobox",
-    "wildcharm",
-    "murphy",
+    'srcery',
+    'candycode',
+    'breezy',
+    'OceanicNext',
+    'retrobox',
+    'wildcharm',
+    'murphy',
 }
 
 -- https://www.lua.org/pil/7.3.html
@@ -285,16 +285,16 @@ for i, c in ipairs(colorscheme_list) do
 end
 
 vim.g.orig_colorscheme = get_colorscheme()
-vim.g.diff_colorscheme = "wildcharm"
+vim.g.diff_colorscheme = 'wildcharm'
 
 -- https://github.com/srcery-colors/srcery-vim/blob/master/autoload/srcery.vim#L17
 -- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L326
 -- Use yellow instead of bright magenta
 local srcery_yellow = '#FBB829'
-vim.cmd.highlight("Constant", "guifg=" .. srcery_yellow)
-vim.cmd.highlight("Character", "guifg=" .. srcery_yellow)
-vim.cmd.highlight("Boolean", "guifg=" .. srcery_yellow)
-vim.cmd.highlight("Number", "guifg=" .. srcery_yellow)
-vim.cmd.highlight("Float", "guifg=" .. srcery_yellow)
+vim.cmd.highlight('Constant', 'guifg=' .. srcery_yellow)
+vim.cmd.highlight('Character', 'guifg=' .. srcery_yellow)
+vim.cmd.highlight('Boolean', 'guifg=' .. srcery_yellow)
+vim.cmd.highlight('Number', 'guifg=' .. srcery_yellow)
+vim.cmd.highlight('Float', 'guifg=' .. srcery_yellow)
 
 -- }}}
