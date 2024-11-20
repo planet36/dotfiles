@@ -15,23 +15,23 @@ require("get_visual_selection")
 
 ---@private
 local function _search_for_visual_selection(search_prefix)
-	if search_prefix ~= "/" and search_prefix ~= "?" then return end
-	-- Escape these characters
-	local replacements = {
-		[search_prefix] = [[\]] .. search_prefix,
-		[ [[\]] ] = [[\\]],
-		["\t"] = [[\t]],
-		["\n"] = [[\n]],
-	}
-	local pattern = "[" .. table.concat(vim.tbl_keys(replacements), "") .. "]"
-	local visual_selection = get_visual_selection(false)
-	local escaped_visual_selection =
-		string.gsub(visual_selection, pattern, replacements)
-	local search_cmd = search_prefix
-		.. [[\V]]
-		.. escaped_visual_selection
-		.. "\n"
-	vim.api.nvim_feedkeys(search_cmd, "nx", true)
+    if search_prefix ~= "/" and search_prefix ~= "?" then return end
+    -- Escape these characters
+    local replacements = {
+        [search_prefix] = [[\]] .. search_prefix,
+        [ [[\]] ] = [[\\]],
+        ["\t"] = [[\t]],
+        ["\n"] = [[\n]],
+    }
+    local pattern = "[" .. table.concat(vim.tbl_keys(replacements), "") .. "]"
+    local visual_selection = get_visual_selection(false)
+    local escaped_visual_selection =
+        string.gsub(visual_selection, pattern, replacements)
+    local search_cmd = search_prefix
+        .. [[\V]]
+        .. escaped_visual_selection
+        .. "\n"
+    vim.api.nvim_feedkeys(search_cmd, "nx", true)
 end
 
 vim.keymap.set("x", "*", function() _search_for_visual_selection("/") end)
@@ -42,9 +42,9 @@ vim.keymap.set("x", "<C-r>", [[y:%s/<C-R>"//gc<Left><Left><Left>]])
 
 -- Use \V, and escape slashes in the selected text before replacing
 vim.keymap.set(
-	"x",
-	"<C-e>",
-	[[y:%s/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL>//gc<Left><Left><Left>]]
+    "x",
+    "<C-e>",
+    [[y:%s/\V<C-R>=substitute(escape(@", '/\'), '\n', '\\n', 'g')<NL>//gc<Left><Left><Left>]]
 )
 
 vim.keymap.set("n", "<Leader>h", function() vim.cmd.split() end)
@@ -100,16 +100,16 @@ vim.keymap.set({ "n", "x" }, "<Down>", "gj")
 vim.keymap.set({ "n", "x" }, "<Up>", "gk")
 
 function remove_trailing_whitespace()
-	-- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
-	-- https://neovim.io/doc/user/builtin.html#getreginfo()
-	-- https://neovim.io/doc/user/builtin.html#setreg()
-	-- https://neovim.io/doc/user/api.html#nvim_win_set_cursor()
-	local cursor_pos = vim.api.nvim_win_get_cursor(0)
-	local reg_info = vim.fn.getreginfo("/")
-	vim.cmd([[%s/\v\s+$//e]])
-	-- / is the last search pattern register
-	vim.fn.setreg("/", reg_info)
-	vim.api.nvim_win_set_cursor(0, cursor_pos)
+    -- https://neovim.io/doc/user/api.html#nvim_win_get_cursor()
+    -- https://neovim.io/doc/user/builtin.html#getreginfo()
+    -- https://neovim.io/doc/user/builtin.html#setreg()
+    -- https://neovim.io/doc/user/api.html#nvim_win_set_cursor()
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    local reg_info = vim.fn.getreginfo("/")
+    vim.cmd([[%s/\v\s+$//e]])
+    -- / is the last search pattern register
+    vim.fn.setreg("/", reg_info)
+    vim.api.nvim_win_set_cursor(0, cursor_pos)
 end
 
 -- Remove trailing whitespace
@@ -117,56 +117,56 @@ vim.keymap.set("n", "<Leader>S", function() remove_trailing_whitespace() end)
 
 -- Highlight trailing whitespace
 vim.keymap.set(
-	"n",
-	"<Leader>w",
-	function() vim.cmd.match("ErrorMsg", [[/\v\s+$/]]) end
+    "n",
+    "<Leader>w",
+    function() vim.cmd.match("ErrorMsg", [[/\v\s+$/]]) end
 )
 vim.keymap.set("n", "<Leader>W", function() vim.cmd.match("none") end)
 
 -- Highlight text beyond 80 columns
 vim.keymap.set(
-	"n",
-	"<Leader>c",
-	function() vim.cmd([[2match ErrorMsg /\v%>80v.+/]]) end
+    "n",
+    "<Leader>c",
+    function() vim.cmd([[2match ErrorMsg /\v%>80v.+/]]) end
 )
 vim.keymap.set("n", "<Leader>C", function() vim.cmd("2match none") end)
 
 -- Edit $MYVIMRC
 vim.keymap.set(
-	"n",
-	"<Leader>ev",
-	function() vim.cmd.vsplit(vim.env.MYVIMRC) end
+    "n",
+    "<Leader>ev",
+    function() vim.cmd.vsplit(vim.env.MYVIMRC) end
 )
 
 -- Source $MYVIMRC
 vim.keymap.set(
-	"n",
-	"<Leader>sv",
-	function() vim.cmd.source(vim.env.MYVIMRC) end
+    "n",
+    "<Leader>sv",
+    function() vim.cmd.source(vim.env.MYVIMRC) end
 )
 
 -- https://stackoverflow.com/a/74935585
 vim.keymap.set("x", "p", "P")
 
 function visual_surround(l_text, r_text)
-	-- https://neovim.io/doc/user/lua.html#vim.keycode()
-	-- https://neovim.io/doc/user/api.html#nvim_feedkeys()
-	local esc = vim.keycode("<Esc>")
-	local mode = vim.api.nvim_get_mode().mode
+    -- https://neovim.io/doc/user/lua.html#vim.keycode()
+    -- https://neovim.io/doc/user/api.html#nvim_feedkeys()
+    local esc = vim.keycode("<Esc>")
+    local mode = vim.api.nvim_get_mode().mode
 
-	if mode == "v" or mode == "V" then -- visual or visual line
-		vim.api.nvim_feedkeys(
-			esc .. "`>a" .. r_text .. esc .. "`<i" .. l_text,
-			"x",
-			false
-		)
-	elseif mode:byte() == 22 then -- visual block
-		vim.api.nvim_feedkeys(
-			"A" .. r_text .. esc .. "gvI" .. l_text,
-			"x",
-			false
-		)
-	end
+    if mode == "v" or mode == "V" then -- visual or visual line
+        vim.api.nvim_feedkeys(
+            esc .. "`>a" .. r_text .. esc .. "`<i" .. l_text,
+            "x",
+            false
+        )
+    elseif mode:byte() == 22 then -- visual block
+        vim.api.nvim_feedkeys(
+            "A" .. r_text .. esc .. "gvI" .. l_text,
+            "x",
+            false
+        )
+    end
 end
 
 vim.keymap.set("x", "<Leader>`", function() visual_surround("`", "`") end)
