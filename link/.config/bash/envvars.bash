@@ -90,6 +90,8 @@ export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME"/pass
 
+export PASTEL_COLOR_MODE=24bit
+
 export PREFIX="$HOME"/.local
 
 #export PS_FORMAT='pid,nice,pri,user,stime,etime,sz,pmem,pcpu,command'
