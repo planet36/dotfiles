@@ -12,7 +12,7 @@
 #include <array>
 #include <immintrin.h>
 
-/// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \Bbb{Z}_{\ge 0} \f$
+/// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \mathbb{Z}^{+} \f$
 /**
 Mathematica expression: <code>RealDigits[E^(Pi*sqrt(Range[20])), 256, 16, -1]</code>
 \sa https://www.wolframalpha.com/input?i=RealDigits%5BE%5E%28Pi*sqrt%28Range%5B20%5D%29%29%2C+256%2C+16%2C+-1%5D
