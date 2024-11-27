@@ -19,8 +19,9 @@ extern "C" {
 
 #if !defined(_mulx_u32)
 // https://github.com/gcc-mirror/gcc/blob/dfe0d4389a3ce43179563a63046ad3e74d615a08/gcc/config/i386/bmi2intrin.h#L95
+// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-nonnull-function-attribute
 static inline unsigned int
-_mulx_u32(unsigned int a, unsigned int b, unsigned int* hi)
+_mulx_u32(unsigned int a, unsigned int b, unsigned int* hi) [[gnu::nonnull]]
 {
 	unsigned long long r = (unsigned long long)a * (unsigned long long)b;
 	*hi = (unsigned int)(r >> 32);
