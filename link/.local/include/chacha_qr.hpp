@@ -6,7 +6,7 @@
 \file
 \author Steven Ward
 \sa https://cr.yp.to/chacha/chacha-20080128.pdf
-\sa https://datatracker.ietf.org/doc/html/rfc7539#section-2.1
+\sa https://datatracker.ietf.org/doc/html/rfc8439#section-2.1
 */
 
 #pragma once
