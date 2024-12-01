@@ -107,7 +107,7 @@ print_version()
 void
 print_usage()
 {
-	printf("Usage: %s [OPTIONS]\n", program_invocation_short_name);
+	printf("Usage: %s [OPTION]...\n", program_invocation_short_name);
 	printf("\n");
 	printf("Continuously measure the average network receive speed at a regular interval, and write the measurement to stdout or a temporary file.\n");
 	printf("\n");

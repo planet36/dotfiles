@@ -28,7 +28,7 @@ EOT
 
 function print_help
 {
-    printf 'Usage: %q [OPTIONS] BINARY USER_REPO PART_RELEASE_FILE\n' "$SCRIPT_NAME"
+    printf 'Usage: %q [OPTION]... BINARY USER_REPO PART_RELEASE_FILE\n' "$SCRIPT_NAME"
     cat <<EOT
 
 Get the program from github.  Run this script from the target directory.

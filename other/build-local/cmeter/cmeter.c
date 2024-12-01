@@ -94,7 +94,7 @@ print_version()
 void
 print_usage()
 {
-	printf("Usage: %s [OPTIONS]\n", program_invocation_short_name);
+	printf("Usage: %s [OPTION]...\n", program_invocation_short_name);
 	printf("\n");
 	printf("Read a number (within the interval [0, 1]) from stdin and\n");
 	printf("print a meter (filled proportional to the number) using ASCII characters.\n");

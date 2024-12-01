@@ -36,7 +36,7 @@ EOT
     function print_help
     {
         cat <<EOT
-Usage: ${SCRIPT_NAME} [OPTIONS] PATHNAME...
+Usage: ${SCRIPT_NAME} [OPTION]... PATHNAME...
 
 Tar PATHNAME.  Create a tar file with the same name as PATHNAME but with the appropriate extension appended.
 

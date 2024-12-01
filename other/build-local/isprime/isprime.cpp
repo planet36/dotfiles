@@ -32,7 +32,7 @@ print_version()
 void
 print_usage()
 {
-	std::cout << "Usage: " << program_invocation_short_name << " [OPTIONS]\n";
+	std::cout << "Usage: " << program_invocation_short_name << " [OPTION]...\n";
 	std::cout << '\n';
 
 	std::cout << "Read decimal numbers from stdin, and print whether they are prime or not.\n";

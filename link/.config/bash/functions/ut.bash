@@ -31,7 +31,7 @@ EOT
     function print_help
     {
         cat <<EOT
-Usage: $SCRIPT_NAME [OPTIONS] FILE...
+Usage: $SCRIPT_NAME [OPTION]... FILE...
 
 Untar FILE.
 

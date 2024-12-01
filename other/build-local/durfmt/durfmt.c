@@ -154,7 +154,7 @@ print_version()
 void
 print_usage()
 {
-	printf("Usage: %s [OPTIONS]\n", program_invocation_short_name);
+	printf("Usage: %s [OPTION]...\n", program_invocation_short_name);
 	printf("\n");
 	printf("Read a non-negative duration (in seconds) from stdin.\n");
 	printf("Break down the duration into whole numbers of\n");

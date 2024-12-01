@@ -77,7 +77,7 @@ def main(argv = None):
 
     def print_help():
         """Print the help message"""
-        print(f"""Usage: {program_name} [OPTIONS]
+        print(f"""Usage: {program_name} [OPTION]...
 
 Calculate the distance (in meters) between geodetic coordinates (in decimal degrees).
 

@@ -100,7 +100,7 @@ def main(argv = None):
 
     def print_help():
         """Print the help message"""
-        print(f"""Usage: {program_name} [OPTIONS] FILE...
+        print(f"""Usage: {program_name} [OPTION]... FILE...
 Print a command to create a backup of the given input file.
 The extension ".bakN" (where "N" is a positive integer) is appended to the backup file name.
 

@@ -257,7 +257,7 @@ def main(argv = None):
     def print_help():
         """Print the help message"""
 
-        print(f"""Usage: {program_name} [OPTIONS] [FILE...]
+        print(f"""Usage: {program_name} [OPTION]... [FILE]...
 Quote the lines of FILE according to a quoting style.
 
 If FILE is absent, or if FILE is '-', read standard input.
