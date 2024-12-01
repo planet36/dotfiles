@@ -12,11 +12,10 @@
 #pragma once
 
 #include <bit>
-#include <concepts>
+#include <cstdint>
 
-template <std::unsigned_integral T>
 constexpr void
-chacha_qr(T& a, T& b, T& c, T& d)
+chacha_qr(uint32_t& a, uint32_t& b, uint32_t& c, uint32_t& d)
 {
 	a += b; d = std::rotl(a ^ d, 16);
 	c += d; b = std::rotl(b ^ c, 12);
