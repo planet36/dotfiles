@@ -14,6 +14,7 @@
 
 #include <cstdint>
 #include <iterator>
+#include <span>
 #include <string_view>
 
 namespace fnv_const_32
@@ -177,6 +178,78 @@ fnv1a_64(Iter first, const Iter last)
 		result ^= static_cast<uint8_t>(*first);
 		result *= fnv_prime;
 		++first;
+	}
+
+	return result;
+}
+
+/// FNV-1 32-bit hash
+constexpr auto
+fnv1_32(const std::span<const std::byte> bytes)
+{
+	using namespace fnv_const_32;
+
+	auto result = fnv_offset_basis;
+
+	for (const auto b : bytes)
+	{
+		const auto octet = static_cast<uint8_t>(b);
+		result *= fnv_prime;
+		result ^= octet;
+	}
+
+	return result;
+}
+
+/// FNV-1a 32-bit hash
+constexpr auto
+fnv1a_32(const std::span<const std::byte> bytes)
+{
+	using namespace fnv_const_32;
+
+	auto result = fnv_offset_basis;
+
+	for (const auto b : bytes)
+	{
+		const auto octet = static_cast<uint8_t>(b);
+		result ^= octet;
+		result *= fnv_prime;
+	}
+
+	return result;
+}
+
+/// FNV-1 64-bit hash
+constexpr auto
+fnv1_64(const std::span<const std::byte> bytes)
+{
+	using namespace fnv_const_64;
+
+	auto result = fnv_offset_basis;
+
+	for (const auto b : bytes)
+	{
+		const auto octet = static_cast<uint8_t>(b);
+		result *= fnv_prime;
+		result ^= octet;
+	}
+
+	return result;
+}
+
+/// FNV-1a 64-bit hash
+constexpr auto
+fnv1a_64(const std::span<const std::byte> bytes)
+{
+	using namespace fnv_const_64;
+
+	auto result = fnv_offset_basis;
+
+	for (const auto b : bytes)
+	{
+		const auto octet = static_cast<uint8_t>(b);
+		result ^= octet;
+		result *= fnv_prime;
 	}
 
 	return result;
