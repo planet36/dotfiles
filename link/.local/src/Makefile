@@ -31,7 +31,7 @@ clone: | $(SUBDIRS)
 clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-arch-install ecef-geodetic PractRand stw:
+arch-install ecef-geodetic PractRand:
 	git clone --quiet https://github.com/planet36/$@.git
 
 # My repos (forked from suckless)
@@ -49,6 +49,16 @@ dwm-suckless slstatus-suckless st-suckless:
 
 stw-sineemore:
 	git clone --quiet https://github.com/sineemore/$(subst -sineemore,,$@).git $@
+
+# My repos (forked from github)
+# Clone and add upstream remotes
+stw:
+	git clone --quiet https://github.com/planet36/$@.git
+	cd $@ ; \
+	git remote add upstream https://github.com/sineemore/$@.git ; \
+	git remote set-url --push upstream DISABLE ; \
+	git fetch --quiet upstream ; \
+	cd - > /dev/null
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: $(TOPTARGETS)
