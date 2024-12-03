@@ -15,6 +15,8 @@ CLONE_ONLY_DIRS = \
 arch-install \
 ecef-geodetic \
 dwm-suckless \
+prng-test-bench \
+randp \
 slstatus-suckless \
 st-suckless \
 stw-sineemore
