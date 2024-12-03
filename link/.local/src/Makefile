@@ -35,7 +35,7 @@ arch-install ecef-geodetic PractRand stw:
 	git clone --quiet https://github.com/planet36/$@.git
 
 # My repos (forked from suckless)
-# Clone and add remotes to the respective suckless repos
+# Clone and add upstream remotes
 dwm slstatus st:
 	git clone --quiet https://github.com/planet36/$@.git
 	cd $@ ; \
