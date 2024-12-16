@@ -72,7 +72,6 @@ alias t-tmp='cd && clean code && find . -type f -name a.out -delete && t code/tm
 alias tma='tmux attach-session || tmux'
 alias tmd='tmux detach-client'
 alias tree='tree -AFCaq'
-alias units='units --history ""'
 alias watch='watch --differences'
 alias wc2='echo "  lines   words file" ; wc --lines --words'
 alias wc3='wc --lines --words ; echo "  lines   words"'
