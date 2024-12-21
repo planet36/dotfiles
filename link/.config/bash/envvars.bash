@@ -136,6 +136,8 @@ export W3M_DIR="$XDG_DATA_HOME"/w3m
 
 export XAUTHORITY="$XDG_CACHE_HOME"/xorg/Xauthority
 
+export XCURSOR_SIZE=32
+
 export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 
 export ZSTD_NBTHREADS=0
