@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Rijndael S-box
+/// Rijndael/AES Forward and Inverse S-boxes
 /**
 \file
 \author Steven Ward
