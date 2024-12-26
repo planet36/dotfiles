@@ -22,7 +22,7 @@ Mathematica expression: <code>RealDigits[E^(Pi*sqrt(Range[20])), 256, 16, -1]</c
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-const std::array<__m128i, 20> tn_hexdigits {
+const std::array<__m128i, 20> tn_hexdigits_m128i {
 	// most significant byte first
 	_mm_set_epi8( 36,   4, 110, 176, 147,  57, 158, 205, 167,  72, 159, 154, 183, 105,  77,  49),
 	_mm_set_epi8(  5,  10, 191,   3, 143, 250, 189, 152, 117,  63,  29,  98, 184, 155, 133,  23),
