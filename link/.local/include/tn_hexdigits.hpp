@@ -5,6 +5,9 @@
 /**
 \file
 \author Steven Ward
+\sa https://mathworld.wolfram.com/TranscendentalNumber.html
+\sa https://mathworld.wolfram.com/GelfondsTheorem.html
+\sa https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
 */
 
 #pragma once
@@ -16,9 +19,6 @@
 /**
 Mathematica expression: <code>RealDigits[E^(Pi*sqrt(Range[20])), 256, 16, -1]</code>
 \sa https://www.wolframalpha.com/input?i=RealDigits%5BE%5E%28Pi*sqrt%28Range%5B20%5D%29%29%2C+256%2C+16%2C+-1%5D
-\sa https://mathworld.wolfram.com/TranscendentalNumber.html
-\sa https://mathworld.wolfram.com/GelfondsTheorem.html
-\sa https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
