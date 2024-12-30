@@ -20,18 +20,17 @@ def is_pangram(s: str) -> bool:
 
 
 # pylint: disable=missing-function-docstring
-def main(argv = None):
-
-    if argv is None:
-        argv = sys.argv
+def main():
 
     for line in sys.stdin:
         line = line.rstrip(os.linesep)
+
         if not line: # empty
             continue
+
         # Use conversion flag '!a' when printing the input string.
         print(f'{is_pangram(line)}\t{line!a}')
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    main()
