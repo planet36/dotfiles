@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=missing-module-docstring
+
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+__version__ = '2024-12-30'
+
+import os
+import string
+import sys
+
+
+def is_pangram(s: str) -> bool:
+    '''Determine if \a s is a pangram.'''
+    alphabet_set = frozenset(string.ascii_lowercase)
+    return alphabet_set.issubset(s.lower())
+
+
+# pylint: disable=missing-function-docstring
+def main(argv = None):
+
+    if argv is None:
+        argv = sys.argv
+
+    for line in sys.stdin:
+        line = line.rstrip(os.linesep)
+        if not line: # empty
+            continue
+        # Use conversion flag '!a' when printing the input string.
+        print(f'{is_pangram(line)}\t{line!a}')
+
+
+if __name__ == '__main__':
+    sys.exit(main())
