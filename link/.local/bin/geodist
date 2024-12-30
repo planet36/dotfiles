@@ -10,8 +10,8 @@
 # All circular angles are in degrees.
 
 __author__ = 'Steven Ward'
-__version__ = '2024-01-15'
 __license__ = 'OSL-3.0'
+__version__ = '2024-01-15'
 
 import sys
 

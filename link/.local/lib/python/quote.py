@@ -9,8 +9,8 @@
 # pylint: disable=pointless-string-statement
 
 __author__ = 'Steven Ward'
-__version__ = '2022-09-08'
 __license__ = 'OSL-3.0'
+__version__ = '2022-09-08'
 
 import re
 import string

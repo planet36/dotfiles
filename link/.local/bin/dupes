@@ -10,8 +10,8 @@
 # pylint: disable=pointless-string-statement
 
 __author__ = 'Steven Ward'
-__version__ = '2023-02-23'
 __license__ = 'OSL-3.0'
+__version__ = '2023-02-23'
 
 import collections
 import concurrent.futures

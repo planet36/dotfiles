@@ -7,8 +7,8 @@
 # pylint: disable=missing-module-docstring
 
 __author__ = 'Steven Ward'
-__version__ = '2023-11-29'
 __license__ = 'OSL-3.0'
+__version__ = '2023-11-29'
 
 import math
 import sys

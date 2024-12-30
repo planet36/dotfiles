@@ -27,8 +27,8 @@ https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_
 """
 
 __author__ = 'Steven Ward'
-__version__ = '2022-11-07'
 __license__ = 'OSL-3.0'
+__version__ = '2022-11-07'
 
 set_ascii_all          = frozenset(range(128))
 set_ascii_uppercase    = frozenset(range(ord('A'), ord('Z') + 1))
