@@ -39,6 +39,10 @@ def main():
 
         output = [str(result), ascii(line)]
 
+        if not result:
+            missing_letters = ''.join(sorted(pangram_missing(line)))
+            output.append(missing_letters)
+
         print('\t'.join(output))
 
 
