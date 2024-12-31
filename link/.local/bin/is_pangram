@@ -35,8 +35,11 @@ def main():
         if not line: # empty
             continue
 
-        # Use conversion flag '!a' when printing the input string.
-        print(f'{is_pangram(line)}\t{line!a}')
+        result = is_pangram(line)
+
+        output = [str(result), ascii(line)]
+
+        print('\t'.join(output))
 
 
 if __name__ == '__main__':
