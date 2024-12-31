@@ -8,6 +8,7 @@ __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
 __version__ = '2024-12-30'
 
+import argparse
 import os
 import string
 import sys
@@ -28,6 +29,23 @@ def pangram_missing(s: str) -> type(alphabet_set):
 
 # pylint: disable=missing-function-docstring
 def main():
+
+    description_lines = (
+            'Read from stdin and determine if each line is a pangram.',
+            'If a line is not a pangram, the missing letters are printed in the last field.'
+            )
+
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
+
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
+
+    parser.parse_args()
 
     for line in sys.stdin:
         line = line.rstrip(os.linesep)
