@@ -13,9 +13,11 @@ import string
 import sys
 
 
+alphabet_set = frozenset(string.ascii_lowercase)
+
+
 def is_pangram(s: str) -> bool:
     '''Determine if \a s is a pangram.'''
-    alphabet_set = frozenset(string.ascii_lowercase)
     return alphabet_set.issubset(s.lower())
 
 
