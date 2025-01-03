@@ -11,12 +11,12 @@
 #include <numeric>
 #include <ranges>
 
-template <std::ranges::forward_range R>
+template <std::ranges::forward_range R, typename T = std::ranges::range_value_t<R>>
 inline void
-iota(R& container, std::ranges::range_value_t<R> value = {})
+iota(R& container, T value = {})
 {
 	static_assert(std::ranges::output_range<R,
-	                                        std::ranges::range_value_t<R>>,
+	                                        T>,
 	              "The range must be writable");
 	std::iota(std::ranges::begin(container), std::ranges::end(container), value);
 }
