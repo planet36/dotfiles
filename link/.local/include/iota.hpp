@@ -16,6 +16,7 @@ inline void
 iota(R& container, std::ranges::range_value_t<R> value = {})
 {
 	static_assert(std::ranges::output_range<R,
-	                                        std::ranges::range_value_t<R>>);
+	                                        std::ranges::range_value_t<R>>,
+	              "The range must be writable");
 	std::iota(std::ranges::begin(container), std::ranges::end(container), value);
 }
