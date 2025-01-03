@@ -14,5 +14,7 @@
 inline void
 iota(std::ranges::forward_range auto& container, std::ranges::range_value_t<decltype(container)> value = {})
 {
+	static_assert(std::ranges::output_range<decltype(container),
+	                                        std::ranges::range_value_t<decltype(container)>>);
 	std::iota(std::ranges::begin(container), std::ranges::end(container), value);
 }
