@@ -14,10 +14,17 @@
 
 #include <algorithm>
 #include <concepts>
+#include <ranges>
 
 template <std::random_access_iterator RandomIt>
 void
 shuffle(RandomIt first, RandomIt last)
 {
 	std::shuffle(first, last, per_thread_random_number_engine);
+}
+
+void
+shuffle(std::ranges::contiguous_range auto& container)
+{
+	(void)std::ranges::shuffle(container, per_thread_random_number_engine);
 }
