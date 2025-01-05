@@ -245,6 +245,20 @@ aes128_enc_mix(__m128i a, const __m128i key)
 	return a;
 }
 
+/// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key of \c 0
+/**
+\pre \a Nr must be at least \c 1.
+\tparam Nr the number of rounds of encryption to perform
+*/
+template <unsigned int Nr = 3>
+requires (Nr >= 1)
+inline __m128i
+aes128_enc_mix(__m128i a)
+{
+	const __m128i key = _mm_setzero_si128();
+	return aes128_enc_mix<Nr>(a, key);
+}
+
 /// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key \a key
 /**
 \pre \a Nr must be at least \c 1.
@@ -262,6 +276,20 @@ aes128_dec_mix(__m128i a, const __m128i key)
 		a = _mm_aesdec_si128(a, key);
 	}
 	return a;
+}
+
+/// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key of \c 0
+/**
+\pre \a Nr must be at least \c 1.
+\tparam Nr the number of rounds of decryption to perform
+*/
+template <unsigned int Nr = 3>
+requires (Nr >= 1)
+inline __m128i
+aes128_dec_mix(__m128i a)
+{
+	const __m128i key = _mm_setzero_si128();
+	return aes128_dec_mix<Nr>(a, key);
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
