@@ -111,6 +111,7 @@ alias only-files-all='find . -maxdepth 1 -type f -not -name "." -printf "%f\0" |
 alias optijpg='jpegoptim --preserve --strip-none'
 alias optipng='optipng -fix -preserve -quiet -o 2 -i 0'
 alias palindromes='paste --delimiters="\n" /usr/share/dict/words <(rev /usr/share/dict/words) | uniq --repeated'
+alias pcal='python3 -m calendar -f 6'
 alias prettyjson='python3 -m json.tool'
 alias ps1='ps --forest --headers -e                    --sort pid'
 alias ps2='ps --forest --headers -U root -u root -N    --sort pid'
