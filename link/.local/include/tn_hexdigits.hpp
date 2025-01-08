@@ -22,7 +22,7 @@ Mathematica expression: <code>RealDigits[E^(Pi*sqrt(Range[20])), 256, 16, -1]</c
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-const std::array<__m128i, 20> tn_hexdigits_m128i {
+const auto tn_hexdigits_m128i = std::to_array({
     // most significant byte first
     _mm_set_epi8( 36,   4, 110, 176, 147,  57, 158, 205, 167,  72, 159, 154, 183, 105,  77,  49),
     _mm_set_epi8(  5,  10, 191,   3, 143, 250, 189, 152, 117,  63,  29,  98, 184, 155, 133,  23),
@@ -44,7 +44,7 @@ const std::array<__m128i, 20> tn_hexdigits_m128i {
     _mm_set_epi8(254,  45, 192, 129,   0, 183,  99,  54, 221, 108, 168,  52, 198, 218, 150, 181),
     _mm_set_epi8(199,  22,  11, 237, 140, 235, 238, 253, 180,   5,  73, 129,  66, 192,  76, 225),
     _mm_set_epi8(192, 240, 194, 237,  56, 204, 193,  23,  58,  14, 114, 103, 234,  12,  10, 162),
-};
+});
 #pragma GCC diagnostic pop
 
 /// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \mathbb{Z}^{+} \f$
@@ -54,7 +54,7 @@ Mathematica expression: <code>RealDigits[exp(Pi*sqrt(Range[8])), 256, 32, -1]</c
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-const std::array<__m256i, 20> tn_hexdigits_m256i {
+const auto tn_hexdigits_m256i = std::to_array({
     // most significant byte first
     _mm256_set_epi8( 36,   4, 110, 176, 147,  57, 158, 205, 167,  72, 159, 154, 183, 105,  77,  49, 250,  25, 110, 146,  46, 146, 215,  21,  37, 242,  43,  84,  98,  16,  31,  47),
     _mm256_set_epi8(  5,  10, 191,   3, 143, 250, 189, 152, 117,  63,  29,  98, 184, 155, 133,  23, 173, 125, 228, 111,  43, 227, 178,  18,  99,  56,  64,  12, 186,  28, 135,  18),
@@ -76,5 +76,5 @@ const std::array<__m256i, 20> tn_hexdigits_m256i {
     _mm256_set_epi8(254,  45, 192, 129,   0, 183,  99,  54, 221, 108, 168,  52, 198, 218, 150, 181,  16, 192,  43,  50,  51, 189, 157,  34, 108, 156, 226, 148, 154,  48, 136, 165),
     _mm256_set_epi8(199,  22,  11, 237, 140, 235, 238, 253, 180,   5,  73, 129,  66, 192,  76, 225,  40,  67, 125, 107, 176, 149,  76,  52, 253,  97,  62, 148, 130,  26, 208,  70),
     _mm256_set_epi8(192, 240, 194, 237,  56, 204, 193,  23,  58,  14, 114, 103, 234,  12,  10, 162,  81, 213,  21,  42, 228, 232,  80, 122, 180, 120,  10, 135, 179, 132, 189, 151),
-};
+});
 #pragma GCC diagnostic pop
