@@ -50,11 +50,21 @@ sub block is mapped to the third sub block of output, etc.
 #include <cstdint>
 
 /// Get the maximum diffusion round (DRmax)
-/** DRmax ≅ 2×log₂(k) */
-constexpr auto
-gfs_drmax(const unsigned int k)
+/** DRmax ≅ ⌈2×log₂(k)⌉ */
+template <unsigned int k>
+constexpr unsigned int
+gfs_drmax()
 {
-	return 2 * (std::bit_width(k) - 1); // 2 * log₂(k)
+	static_assert(k >= 6);
+	static_assert(k <= 16);
+	static_assert(k % 2 == 0);
+
+	if constexpr      (k ==  6) return 6;
+	else if constexpr (k ==  8) return 6;
+	else if constexpr (k == 10) return 7;
+	else if constexpr (k == 12) return 8;
+	else if constexpr (k == 14) return 8;
+	else if constexpr (k == 16) return 8;
 }
 
 /// Get the optimum block shuffle permutation π for \a k.
