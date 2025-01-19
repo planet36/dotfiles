@@ -306,7 +306,16 @@ requires (Nr >= 1)
 inline __m128i
 aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 {
-	return _mm_xor_si128(H, aes128_enc_mix<Nr>(H, m));
+	__m128i a = H;
+
+	// scramble Nr-1 times
+	for (unsigned int round = 1; round < Nr; ++round)
+	{
+		a = _mm_aesenc_si128(a, m);
+	}
+
+	// scramble 1 time and XOR with H
+	return _mm_aesenc_si128(a, H);
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
@@ -323,5 +332,14 @@ requires (Nr >= 1)
 inline __m128i
 aes128_dec_davies_meyer(const __m128i H, const __m128i m)
 {
-	return _mm_xor_si128(H, aes128_dec_mix<Nr>(H, m));
+	__m128i a = H;
+
+	// scramble Nr-1 times
+	for (unsigned int round = 1; round < Nr; ++round)
+	{
+		a = _mm_aesdec_si128(a, m);
+	}
+
+	// scramble 1 time and XOR with H
+	return _mm_aesdec_si128(a, H);
 }
