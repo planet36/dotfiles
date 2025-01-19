@@ -304,16 +304,9 @@ aes128_dec_mix(__m128i a)
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline __m128i
-aes128_enc_davies_meyer(const __m128i H, __m128i m)
+aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 {
-	const __m128i key = _mm_setzero_si128();
-
-	for (unsigned int round = 1; round < Nr; ++round)
-	{
-		m = _mm_aesenc_si128(m, key);
-	}
-
-	return _mm_aesenc_si128(m, H);
+	return _mm_xor_si128(H, aes128_enc_mix<Nr>(H, m));
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
@@ -328,14 +321,7 @@ aes128_enc_davies_meyer(const __m128i H, __m128i m)
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline __m128i
-aes128_dec_davies_meyer(const __m128i H, __m128i m)
+aes128_dec_davies_meyer(const __m128i H, const __m128i m)
 {
-	const __m128i key = _mm_setzero_si128();
-
-	for (unsigned int round = 1; round < Nr; ++round)
-	{
-		m = _mm_aesdec_si128(m, key);
-	}
-
-	return _mm_aesdec_si128(m, H);
+	return _mm_xor_si128(H, aes128_dec_mix<Nr>(H, m));
 }
