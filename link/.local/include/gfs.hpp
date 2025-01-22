@@ -67,11 +67,11 @@ gfs_drmax()
 	else if constexpr (k == 16) return 8;
 }
 
-/// Get the optimum block shuffle permutation π for \a k.
+/// Get the optimum, non-cyclic block shuffle permutation (π) for \a k.
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
-gfs_p()
+gfs_noncyclic_p()
 {
 	static_assert(k >= 6);
 	static_assert(k <= 16);
@@ -85,11 +85,11 @@ gfs_p()
 	else if constexpr (k == 16) return {1,2,9,4,15,6,5,8,13,10,7,14,11,12,3,0};
 }
 
-/// Get the optimum block shuffle permutation inverse π⁻¹ for \a k.
+/// Get the optimum, non-cyclic block shuffle permutation inverse (π⁻¹) for \a k.
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
-gfs_p_inv()
+gfs_noncyclic_p_inv()
 {
 	static_assert(k >= 6);
 	static_assert(k <= 16);
