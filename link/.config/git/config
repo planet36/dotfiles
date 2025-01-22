@@ -12,6 +12,7 @@
 	pr = pull --rebase
 	s = status
 	ss = status -s
+	sw = switch
 [commit]
 	verbose = true
 [core]
