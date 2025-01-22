@@ -49,7 +49,7 @@ sub block is mapped to the third sub block of output, etc.
 #include <bit>
 #include <cstdint>
 
-/// Get the maximum diffusion round (DRmax)
+/// Get the maximum diffusion round (DRmax) when using the optimal non-cyclic block shuffle permutation
 /** DRmax ≅ ⌈2×log₂(k)⌉ */
 template <unsigned int k>
 constexpr unsigned int
@@ -67,7 +67,7 @@ gfs_drmax()
 	else if constexpr (k == 16) return 8;
 }
 
-/// Get the optimum, non-cyclic block shuffle permutation (π) for \a k.
+/// Get the optimal non-cyclic block shuffle permutation (π) for \a k.
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
@@ -85,7 +85,7 @@ gfs_noncyclic_p()
 	else if constexpr (k == 16) return {1,2,9,4,15,6,5,8,13,10,7,14,11,12,3,0};
 }
 
-/// Get the optimum, non-cyclic block shuffle permutation inverse (π⁻¹) for \a k.
+/// Get the optimal non-cyclic block shuffle permutation inverse (π⁻¹) for \a k.
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
