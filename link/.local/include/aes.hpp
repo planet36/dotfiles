@@ -245,7 +245,7 @@ aes128_enc_mix(__m128i a, const __m128i key)
 	return a;
 }
 
-/// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key of \c 0
+/// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key \c 0
 /**
 \pre \a Nr must be at least \c 1.
 \tparam Nr the number of rounds of encryption to perform
@@ -278,7 +278,7 @@ aes128_dec_mix(__m128i a, const __m128i key)
 	return a;
 }
 
-/// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key of \c 0
+/// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key \c 0
 /**
 \pre \a Nr must be at least \c 1.
 \tparam Nr the number of rounds of decryption to perform
