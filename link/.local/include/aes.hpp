@@ -253,10 +253,17 @@ aes128_enc_mix(__m128i a, const __m128i key)
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline __m128i
-aes128_enc_mix(__m128i a)
+aes128_enc_permute(__m128i a)
 {
 	const __m128i key = _mm_setzero_si128();
-	return aes128_enc_mix<Nr>(a, key);
+
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll Nr
+	for (unsigned int round = 0; round < Nr; ++round)
+	{
+		a = _mm_aesenc_si128(a, key);
+	}
+	return a;
 }
 
 /// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key \a key
@@ -286,10 +293,17 @@ aes128_dec_mix(__m128i a, const __m128i key)
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline __m128i
-aes128_dec_mix(__m128i a)
+aes128_dec_permute(__m128i a)
 {
 	const __m128i key = _mm_setzero_si128();
-	return aes128_dec_mix<Nr>(a, key);
+
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll Nr
+	for (unsigned int round = 0; round < Nr; ++round)
+	{
+		a = _mm_aesdec_si128(a, key);
+	}
+	return a;
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
