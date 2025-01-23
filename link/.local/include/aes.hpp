@@ -226,25 +226,6 @@ aes128_dec(__m128i data, const std::array<__m128i, Nk>& round_keys_dec)
 }
 #pragma GCC diagnostic pop
 
-/// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key \a key
-/**
-\pre \a Nr must be at least \c 1.
-\tparam Nr the number of rounds of encryption to perform
-*/
-template <unsigned int Nr = 3>
-requires (Nr >= 1)
-inline __m128i
-aes128_enc_mix(__m128i a, const __m128i key)
-{
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll Nr
-	for (unsigned int round = 0; round < Nr; ++round)
-	{
-		a = _mm_aesenc_si128(a, key);
-	}
-	return a;
-}
-
 /// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key \c 0
 /**
 \pre \a Nr must be at least \c 1.
@@ -262,25 +243,6 @@ aes128_enc_permute(__m128i a)
 	for (unsigned int round = 0; round < Nr; ++round)
 	{
 		a = _mm_aesenc_si128(a, key);
-	}
-	return a;
-}
-
-/// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key \a key
-/**
-\pre \a Nr must be at least \c 1.
-\tparam Nr the number of rounds of decryption to perform
-*/
-template <unsigned int Nr = 3>
-requires (Nr >= 1)
-inline __m128i
-aes128_dec_mix(__m128i a, const __m128i key)
-{
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll Nr
-	for (unsigned int round = 0; round < Nr; ++round)
-	{
-		a = _mm_aesdec_si128(a, key);
 	}
 	return a;
 }
