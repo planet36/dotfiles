@@ -53,7 +53,7 @@ sub block is mapped to the third sub block of output, etc.
 /** DRmax ≅ ⌈2×log₂(k)⌉ */
 template <unsigned int k>
 constexpr unsigned int
-gfs_drmax()
+gfs2_noncyclic_drmax()
 {
 	static_assert(k >= 6);
 	static_assert(k <= 16);
@@ -71,7 +71,7 @@ gfs_drmax()
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
-gfs_noncyclic_p()
+gfs2_noncyclic_p()
 {
 	static_assert(k >= 6);
 	static_assert(k <= 16);
@@ -89,7 +89,7 @@ gfs_noncyclic_p()
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
-gfs_noncyclic_p_inv()
+gfs2_noncyclic_p_inv()
 {
 	static_assert(k >= 6);
 	static_assert(k <= 16);
