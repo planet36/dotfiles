@@ -49,6 +49,39 @@ sub block is mapped to the third sub block of output, etc.
 #include <bit>
 #include <cstdint>
 
+/**
+* DRmax = 2k-1
+* \pre \a k is even
+* \pre \a k is >= 2
+*/
+constexpr unsigned int
+gfs1_cyclic_drmax(unsigned int k)
+{
+	return 2 * k - 1;
+}
+
+/**
+* DRmax = k+1
+* \pre \a k is even
+* \pre \a k is >= 2
+*/
+constexpr unsigned int
+gfs2_cyclic_drmax(unsigned int k)
+{
+	return k + 1;
+}
+
+/**
+* DRmax = k+1
+* \pre \a k is even
+* \pre \a k is >= 2
+*/
+constexpr unsigned int
+gfs3_cyclic_drmax(unsigned int k)
+{
+	return k + 1;
+}
+
 /// Get the maximum diffusion round (DRmax) when using the optimal non-cyclic block shuffle permutation
 /** DRmax ≅ ⌈2×log₂(k)⌉ */
 template <unsigned int k>
