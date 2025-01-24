@@ -5,7 +5,27 @@
 /**
 \file
 \author Steven Ward
+\sa https://link.springer.com/chapter/10.1007/0-387-34805-0_42
 \sa https://doi.org/10.1007/978-3-642-13858-4_2
+
+Zheng, Y., Matsumoto, T., Imai, H. (1990). _On the Construction of Block Ciphers Provably Secure and Not Relying on Any Unproved Hypotheses_
+
+Page 8 (468)
+> Let E be a permutation consisting of 2k-1 rounds of Type-1, or k+1 rounds of
+Type-2, or k+1 rounds of Type-3 transformations, each of which is chosen
+randomly and independently. The following Theorems 1-3 say that no oracle
+circuit with polynomially many oracle gates can distinguish between E and a
+truly random function.
+
+Page 10 (470)
+> PSBC consists principally of s rounds of Generalized Type-2 transformations
+where s ≥ k+2. The reason for choosing s ≥ k+2 is as follows: When s = k+1, our
+block cipher PSBC is secure against chosen plaintext attack, but not secure
+against chosen plaintext/ciphertext attack. When s ≥ k+2, PSBC is secure
+against chosen plaintext/ciphertext attack. See Appendix C and [LR]
+
+(PSBC = Provably Secure Block Cipher)
+
 
 Suzaki, T., Minematsu, K. (2010). _Improving the Generalized Feistel_.
 
