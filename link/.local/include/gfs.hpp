@@ -128,7 +128,7 @@ for k in range(2, 16+1, 2):
     print(l[1:] + l[:1])
 \endcode
 */
-template <size_t k>
+template <unsigned int k>
 constexpr std::array<uint8_t, k>
 gfs_cyclic_p()
 {
