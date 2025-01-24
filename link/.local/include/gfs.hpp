@@ -100,6 +100,32 @@ gfs2_noncyclic_drmax()
 	else if constexpr (k == 16) return 8;
 }
 
+/**
+Python snippet to generate the arrays
+\code{.py}
+for k in range(2, 16+1, 2):
+    l = list(range(k))
+    print(l[1:] + l[:1])
+\endcode
+*/
+template <size_t k>
+constexpr std::array<uint8_t, k>
+gfs_cyclic_p()
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert(k % 2 == 0);
+
+	if constexpr      (k ==  2) return {1, 0};
+	else if constexpr (k ==  4) return {1, 2, 3, 0};
+	else if constexpr (k ==  6) return {1, 2, 3, 4, 5, 0};
+	else if constexpr (k ==  8) return {1, 2, 3, 4, 5, 6, 7, 0};
+	else if constexpr (k == 10) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+	else if constexpr (k == 12) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0};
+	else if constexpr (k == 14) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0};
+	else if constexpr (k == 16) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
+}
+
 /// Get the optimal non-cyclic block shuffle permutation (π) for \a k.
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
