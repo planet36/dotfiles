@@ -12,6 +12,25 @@
 #include <algorithm>
 #include <array>
 
+template <size_t COUNT, typename T, size_t N>
+constexpr std::array<T, COUNT>
+subarr(const std::array<T, N>& arr)
+{
+	static_assert(N >= COUNT);
+	static_assert(COUNT >= 1);
+
+	std::array<T, COUNT> result;
+
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll COUNT
+	for (size_t i = 0; i < COUNT; ++i)
+	{
+		result[i] = arr[i];
+	}
+
+	return result;
+}
+
 template <size_t POS, size_t COUNT, typename T, size_t N>
 constexpr std::array<T, COUNT>
 subarr(const std::array<T, N>& arr)
