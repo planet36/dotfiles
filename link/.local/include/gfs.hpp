@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Non-cyclic permutation for Type-II generalized Feistel structure (GFS) (a.k.a. generalized Feistel network)
+/// Utilities for generalized Feistel structures (GFS) (a.k.a. generalized Feistel network)
 /**
 \file
 \author Steven Ward
@@ -65,9 +65,13 @@ sub block is mapped to the third sub block of output, etc.
 
 #pragma once
 
+#include "permute.hpp"
+
 #include <array>
 #include <bit>
+#include <cstddef>
 #include <cstdint>
+#include <functional>
 
 /**
 * DRmax = 2k-1
@@ -103,7 +107,9 @@ gfs3_cyclic_drmax(unsigned int k)
 }
 
 /// Get the maximum diffusion round (DRmax) when using the optimal non-cyclic block shuffle permutation
-/** DRmax ≅ ⌈2×log₂(k)⌉ */
+/**
+* DRmax ≅ ⌈2×log₂(k)⌉
+*/
 template <unsigned int k>
 constexpr unsigned int
 gfs2_noncyclic_drmax()
@@ -180,4 +186,216 @@ gfs2_noncyclic_p_inv()
 	else if constexpr (k == 12) return {1,10,3,0,5,8,11,2,7,4,9,6};
 	else if constexpr (k == 14) return {13,0,1,4,3,12,5,8,7,2,9,10,11,6};
 	else if constexpr (k == 16) return {15,0,1,14,3,6,5,10,7,2,9,12,13,8,11,4};
+}
+
+/// Type-1 GFS round
+/**
+* \param x the state
+* \param f the non-linear permutation function
+*/
+template <typename T, size_t k>
+void
+gfs1_round(std::array<T, k>& x,
+           const std::function<T(T)>& f)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	unsigned int i = 1;
+	{
+		x[i] ^= f(x[i-1]);
+	}
+}
+
+/// Type-2 GFS round
+/**
+* \param x the state
+* \param f the non-linear permutation function
+*/
+template <typename T, size_t k>
+void
+gfs2_round(std::array<T, k>& x,
+           const std::function<T(T)>& f)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	for (unsigned int i = 1; i <= k-1; i += 2)
+	{
+		x[i] ^= f(x[i-1]);
+	}
+}
+
+/// Type-3 GFS round
+/**
+* \param x the state
+* \param f the non-linear permutation function
+*/
+template <typename T, size_t k>
+void
+gfs3_round(std::array<T, k>& x,
+           const std::function<T(T)>& f)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	// Reverse order
+	for (unsigned int i = k-1; i > 0; --i)
+	{
+		x[i] ^= f(x[i-1]);
+	}
+}
+
+/// Type-1 GFS stir
+/**
+* \param x the state
+* \param f the non-linear permutation function
+* \param p the permutation array
+* \param r the number of rounds to perform
+*/
+template <typename T, size_t k>
+void
+gfs1_stir(std::array<T, k>& x,
+          const std::function<T(T)>& f,
+          const std::array<uint8_t, k>& p,
+          unsigned int r)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	while (r-- > 0)
+	{
+		gfs1_round(x, f);
+		permute_from(x, p);
+	}
+}
+
+/// Type-2 GFS stir
+/**
+* \param x the state
+* \param f the non-linear permutation function
+* \param p the permutation array
+* \param r the number of rounds to perform
+*/
+template <typename T, size_t k>
+void
+gfs2_stir(std::array<T, k>& x,
+          const std::function<T(T)>& f,
+          const std::array<uint8_t, k>& p,
+          unsigned int r)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	while (r-- > 0)
+	{
+		gfs2_round(x, f);
+		permute_from(x, p);
+	}
+}
+
+/// Type-3 GFS stir
+/**
+* \param x the state
+* \param f the non-linear permutation function
+* \param p the permutation array
+* \param r the number of rounds to perform
+*/
+template <typename T, size_t k>
+void
+gfs3_stir(std::array<T, k>& x,
+          const std::function<T(T)>& f,
+          const std::array<uint8_t, k>& p,
+          unsigned int r)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	while (r-- > 0)
+	{
+		gfs3_round(x, f);
+		permute_from(x, p);
+	}
+}
+
+/// Type-1 GFS stir (cyclic shift)
+/**
+* \param x the state
+* \param f the non-linear permutation function
+*/
+template <typename T, size_t k>
+inline void
+gfs1_stir_cyclic(std::array<T, k>& x,
+                 const std::function<T(T)>& f)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
+	constexpr unsigned int r = gfs1_cyclic_drmax(k);
+	gfs1_stir(x, f, p, r);
+}
+
+/// Type-2 GFS stir (cyclic shift)
+/**
+* \param x the state
+* \param f the non-linear permutation function
+*/
+template <typename T, size_t k>
+inline void
+gfs2_stir_cyclic(std::array<T, k>& x,
+                 const std::function<T(T)>& f)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
+	constexpr unsigned int r = gfs2_cyclic_drmax(k);
+	gfs2_stir(x, f, p, r);
+}
+
+/// Type-2 GFS stir (non-cyclic block shuffle)
+/**
+* \param x the state
+* \param f the non-linear permutation function
+*/
+template <typename T, size_t k>
+inline void
+gfs2_stir_noncyclic(std::array<T, k>& x,
+                    const std::function<T(T)>& f)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	constexpr std::array<uint8_t, k> p = gfs2_noncyclic_p_inv<k>(); // p_inv is intentional
+	constexpr unsigned int r = gfs2_noncyclic_drmax<k>();
+	gfs2_stir(x, f, p, r);
+}
+
+/// Type-3 GFS stir (cyclic shift)
+/**
+* \param x the state
+* \param f the non-linear permutation function
+*/
+template <typename T, size_t k>
+inline void
+gfs3_stir_cyclic(std::array<T, k>& x,
+                 const std::function<T(T)>& f)
+{
+	static_assert(k >= 2);
+	static_assert(k <= 16);
+	static_assert((k % 2) == 0);
+
+	constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
+	constexpr unsigned int r = gfs3_cyclic_drmax(k);
+	gfs3_stir(x, f, p, r);
 }
