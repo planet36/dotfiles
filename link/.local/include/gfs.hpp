@@ -120,8 +120,8 @@ gfs2_noncyclic_drmax()
 
 	if constexpr      (k ==  2) return 2;
 	else if constexpr (k ==  4) return 4;
-	else if constexpr (k ==  6) return 6;
-	else if constexpr (k ==  8) return 6;
+	else if constexpr (k ==  6) return 5;
+	else if constexpr (k ==  8) return 7;
 	else if constexpr (k == 10) return 7;
 	else if constexpr (k == 12) return 8;
 	else if constexpr (k == 14) return 8;
