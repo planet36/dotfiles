@@ -333,7 +333,7 @@ gfs3_stir(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs1_stir_cyclic(std::array<T, k>& x,
+gfs1_cyclic_stir(std::array<T, k>& x,
                  const std::function<T(T)>& f)
 {
 	static_assert(k >= 2);
@@ -352,7 +352,7 @@ gfs1_stir_cyclic(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs2_stir_cyclic(std::array<T, k>& x,
+gfs2_cyclic_stir(std::array<T, k>& x,
                  const std::function<T(T)>& f)
 {
 	static_assert(k >= 2);
@@ -371,7 +371,7 @@ gfs2_stir_cyclic(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs2_stir_noncyclic(std::array<T, k>& x,
+gfs2_noncyclic_stir(std::array<T, k>& x,
                     const std::function<T(T)>& f)
 {
 	static_assert(k >= 2);
@@ -390,7 +390,7 @@ gfs2_stir_noncyclic(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs3_stir_cyclic(std::array<T, k>& x,
+gfs3_cyclic_stir(std::array<T, k>& x,
                  const std::function<T(T)>& f)
 {
 	static_assert(k >= 2);
