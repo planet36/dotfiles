@@ -11,7 +11,7 @@ function t
     renice --priority 19 --pid $BASHPID > /dev/null
 
     declare -r SCRIPT_NAME="${FUNCNAME[0]}"
-    declare -r SCRIPT_VERSION='2022-09-08'
+    declare -r SCRIPT_VERSION='2025-02-05'
     declare -r SCRIPT_AUTHOR='Steven Ward'
     declare -r SCRIPT_LICENSE='OSL-3.0'
 
@@ -253,9 +253,9 @@ EOT
             BASENAME_2=$(basename -- "${INFILE}")
             print_verbose 'BASENAME_2=%q' "${BASENAME_2}"
 
-            tar --create --auto-compress --file="${OUTFILE}" "${TAR_OPTIONS[@]}" --directory "${DIRNAME}" -- "${BASENAME_2}" || exit
+            tar --create --auto-compress --file="${OUTFILE}" --owner=0 --group=0 "${TAR_OPTIONS[@]}" --directory "${DIRNAME}" -- "${BASENAME_2}" || exit
         else
-            tar --create --auto-compress --file="${OUTFILE}" "${TAR_OPTIONS[@]}" -- "${INFILE}" || exit
+            tar --create --auto-compress --file="${OUTFILE}" --owner=0 --group=0 "${TAR_OPTIONS[@]}" -- "${INFILE}" || exit
         fi
 
         if ${PRESERVE_TIMESTAMP}

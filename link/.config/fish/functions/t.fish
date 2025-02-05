@@ -36,9 +36,9 @@ function t --description 'tar a folder'
             set DIRNAME $(dirname -- "$INDIR")
             set BASENAME $(basename -- "$INDIR")
 
-            tar --create --file="$OUTFILE" --directory "$DIRNAME" -- "$BASENAME" || return
+            tar --create --file="$OUTFILE" --owner=0 --group=0 --directory "$DIRNAME" -- "$BASENAME" || return
         else
-            tar --create --file="$OUTFILE" -- "$INDIR" || return
+            tar --create --file="$OUTFILE" --owner=0 --group=0 -- "$INDIR" || return
         end
     end
 end
