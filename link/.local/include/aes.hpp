@@ -310,16 +310,7 @@ requires (Nr >= 1)
 inline auto
 aesenc_davies_meyer(const __m128i H, const __m128i m)
 {
-	auto a = H;
-
-	// scramble H Nr-1 times with m as the key
-	for (unsigned int round = 1; round < Nr; ++round)
-	{
-		a = aesenc(a, m);
-	}
-
-	// scramble Hʹ 1 time with H as the key
-	return aesenc(a, H);
+	return _mm_xor_si128(H, aesenc_permute<Nr>(m));
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
@@ -336,14 +327,5 @@ requires (Nr >= 1)
 inline auto
 aesdec_davies_meyer(const __m128i H, const __m128i m)
 {
-	auto a = H;
-
-	// scramble H Nr-1 times with m as the key
-	for (unsigned int round = 1; round < Nr; ++round)
-	{
-		a = aesdec(a, m);
-	}
-
-	// scramble Hʹ 1 time with H as the key
-	return aesdec(a, H);
+	return _mm_xor_si128(H, aesdec_permute<Nr>(m));
 }
