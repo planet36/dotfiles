@@ -233,24 +233,24 @@ aes128_dec(__m128i data, const std::array<__m128i, Nk>& round_keys_dec)
 #pragma GCC diagnostic pop
 
 /// Wrapper for \c _mm_aesenc_si128
-inline __m128i aesenc(const __m128i a, const __m128i key) { return _mm_aesenc_si128(a, key); }
+inline auto aesenc(const __m128i a, const __m128i key) { return _mm_aesenc_si128(a, key); }
 
 /// Wrapper for \c _mm_aesdec_si128
-inline __m128i aesdec(const __m128i a, const __m128i key) { return _mm_aesdec_si128(a, key); }
+inline auto aesdec(const __m128i a, const __m128i key) { return _mm_aesdec_si128(a, key); }
 
 #if defined(__VAES__)
 
 /// Wrapper for \c _mm256_aesenc_epi128
-inline __m256i aesenc(const __m256i a, const __m256i key) { return _mm256_aesenc_epi128(a, key); }
+inline auto aesenc(const __m256i a, const __m256i key) { return _mm256_aesenc_epi128(a, key); }
 
 /// Wrapper for \c _mm256_aesdec_epi128
-inline __m256i aesdec(const __m256i a, const __m256i key) { return _mm256_aesdec_epi128(a, key); }
+inline auto aesdec(const __m256i a, const __m256i key) { return _mm256_aesdec_epi128(a, key); }
 
 /// Wrapper for \c _mm512_aesenc_epi128
-inline __m512i aesenc(const __m512i a, const __m512i key) { return _mm512_aesenc_epi128(a, key); }
+inline auto aesenc(const __m512i a, const __m512i key) { return _mm512_aesenc_epi128(a, key); }
 
 /// Wrapper for \c _mm512_aesdec_epi128
-inline __m512i aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_epi128(a, key); }
+inline auto aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_epi128(a, key); }
 
 #endif
 
@@ -261,7 +261,7 @@ inline __m512i aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec
 */
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
-inline __m128i
+inline auto
 aes128_enc_permute(__m128i a)
 {
 	const decltype(a) key{};
@@ -282,7 +282,7 @@ aes128_enc_permute(__m128i a)
 */
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
-inline __m128i
+inline auto
 aes128_dec_permute(__m128i a)
 {
 	const decltype(a) key{};
@@ -307,7 +307,7 @@ aes128_dec_permute(__m128i a)
 */
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
-inline __m128i
+inline auto
 aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 {
 	auto a = H;
@@ -333,7 +333,7 @@ aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 */
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
-inline __m128i
+inline auto
 aes128_dec_davies_meyer(const __m128i H, const __m128i m)
 {
 	auto a = H;
