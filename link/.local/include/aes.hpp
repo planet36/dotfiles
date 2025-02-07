@@ -254,7 +254,7 @@ inline __m512i aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec
 
 #endif
 
-/// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key \c 0
+/// Do \c aesenc \a Nr times on data \a a with key \c 0
 /**
 \pre \a Nr must be at least \c 1.
 \tparam Nr the number of rounds of encryption to perform
@@ -270,12 +270,12 @@ aes128_enc_permute(__m128i a)
 #pragma GCC unroll Nr
 	for (unsigned int round = 0; round < Nr; ++round)
 	{
-		a = _mm_aesenc_si128(a, key);
+		a = aesenc(a, key);
 	}
 	return a;
 }
 
-/// Do \c _mm_aesdec_si128 \a Nr times on data \a a with key \c 0
+/// Do \c aesdec \a Nr times on data \a a with key \c 0
 /**
 \pre \a Nr must be at least \c 1.
 \tparam Nr the number of rounds of decryption to perform
@@ -291,7 +291,7 @@ aes128_dec_permute(__m128i a)
 #pragma GCC unroll Nr
 	for (unsigned int round = 0; round < Nr; ++round)
 	{
-		a = _mm_aesdec_si128(a, key);
+		a = aesdec(a, key);
 	}
 	return a;
 }
@@ -315,11 +315,11 @@ aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 	// scramble H Nr-1 times with m as the key
 	for (unsigned int round = 1; round < Nr; ++round)
 	{
-		a = _mm_aesenc_si128(a, m);
+		a = aesenc(a, m);
 	}
 
 	// scramble Hʹ 1 time with H as the key
-	return _mm_aesenc_si128(a, H);
+	return aesenc(a, H);
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
@@ -341,9 +341,9 @@ aes128_dec_davies_meyer(const __m128i H, const __m128i m)
 	// scramble H Nr-1 times with m as the key
 	for (unsigned int round = 1; round < Nr; ++round)
 	{
-		a = _mm_aesdec_si128(a, m);
+		a = aesdec(a, m);
 	}
 
 	// scramble Hʹ 1 time with H as the key
-	return _mm_aesdec_si128(a, H);
+	return aesdec(a, H);
 }
