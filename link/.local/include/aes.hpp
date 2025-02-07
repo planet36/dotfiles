@@ -310,7 +310,15 @@ requires (Nr >= 1)
 inline auto
 aesenc_davies_meyer(const __m128i H, const __m128i m)
 {
-	return H ^ aesenc_permute<Nr>(m);
+	auto a = H;
+
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll Nr
+	for (unsigned int round = 0; round < Nr; ++round)
+	{
+		a = aesenc(a, m);
+	}
+	return H ^ a;
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
@@ -327,5 +335,13 @@ requires (Nr >= 1)
 inline auto
 aesdec_davies_meyer(const __m128i H, const __m128i m)
 {
-	return H ^ aesdec_permute<Nr>(m);
+	auto a = H;
+
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll Nr
+	for (unsigned int round = 0; round < Nr; ++round)
+	{
+		a = aesdec(a, m);
+	}
+	return H ^ a;
 }
