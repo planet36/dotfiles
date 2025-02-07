@@ -35,6 +35,12 @@ equal_m256i(const __m256i& a, const __m256i& b)
 	return std::memcmp(&a, &b, sizeof(__m256i)) == 0;
 }
 
+inline bool
+equal_m512i(const __m512i& a, const __m512i& b)
+{
+	return std::memcmp(&a, &b, sizeof(__m512i)) == 0;
+}
+
 /// Get the next AES round constant
 /**
 \sa https://en.wikipedia.org/wiki/AES_key_schedule#Round_constants
