@@ -128,7 +128,7 @@ aes_keygenassist_round(const __m128i key, const unsigned int round)
 	case 50: return _mm_aeskeygenassist_si128(key, 0xcb);
 	case 51: return _mm_aeskeygenassist_si128(key, 0x8d);
 	default: /*std::unreachable();*/ break;
-	//default: return _mm_setzero_si128(); break; // unreachable
+	//default: return {}; break; // unreachable
 	}
 	std::unreachable();
 }
@@ -242,7 +242,7 @@ requires (Nr >= 1)
 inline __m128i
 aes128_enc_permute(__m128i a)
 {
-	const __m128i key = _mm_setzero_si128();
+	const __m128i key{};
 
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
 #pragma GCC unroll Nr
@@ -263,7 +263,7 @@ requires (Nr >= 1)
 inline __m128i
 aes128_dec_permute(__m128i a)
 {
-	const __m128i key = _mm_setzero_si128();
+	const __m128i key{};
 
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
 #pragma GCC unroll Nr
