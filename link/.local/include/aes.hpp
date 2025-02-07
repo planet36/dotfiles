@@ -232,6 +232,28 @@ aes128_dec(__m128i data, const std::array<__m128i, Nk>& round_keys_dec)
 }
 #pragma GCC diagnostic pop
 
+/// Wrapper for \c _mm_aesenc_si128
+inline __m128i aesenc(const __m128i a, const __m128i key) { return _mm_aesenc_si128(a, key); }
+
+/// Wrapper for \c _mm_aesdec_si128
+inline __m128i aesdec(const __m128i a, const __m128i key) { return _mm_aesdec_si128(a, key); }
+
+#if defined(__VAES__)
+
+/// Wrapper for \c _mm256_aesenc_epi128
+inline __m256i aesenc(const __m256i a, const __m256i key) { return _mm256_aesenc_epi128(a, key); }
+
+/// Wrapper for \c _mm256_aesdec_epi128
+inline __m256i aesdec(const __m256i a, const __m256i key) { return _mm256_aesdec_epi128(a, key); }
+
+/// Wrapper for \c _mm512_aesenc_epi128
+inline __m512i aesenc(const __m512i a, const __m512i key) { return _mm512_aesenc_epi128(a, key); }
+
+/// Wrapper for \c _mm512_aesdec_epi128
+inline __m512i aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_epi128(a, key); }
+
+#endif
+
 /// Do \c _mm_aesenc_si128 \a Nr times on data \a a with key \c 0
 /**
 \pre \a Nr must be at least \c 1.
