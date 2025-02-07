@@ -310,7 +310,7 @@ requires (Nr >= 1)
 inline auto
 aesenc_davies_meyer(const __m128i H, const __m128i m)
 {
-	return _mm_xor_si128(H, aesenc_permute<Nr>(m));
+	return H ^ aesenc_permute<Nr>(m);
 }
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
@@ -327,5 +327,5 @@ requires (Nr >= 1)
 inline auto
 aesdec_davies_meyer(const __m128i H, const __m128i m)
 {
-	return _mm_xor_si128(H, aesdec_permute<Nr>(m));
+	return H ^ aesdec_permute<Nr>(m);
 }
