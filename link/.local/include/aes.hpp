@@ -262,7 +262,7 @@ inline auto aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_ep
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aes128_enc_permute(__m128i a)
+aesenc_permute(__m128i a)
 {
 	const decltype(a) key{};
 
@@ -283,7 +283,7 @@ aes128_enc_permute(__m128i a)
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aes128_dec_permute(__m128i a)
+aesdec_permute(__m128i a)
 {
 	const decltype(a) key{};
 
@@ -308,7 +308,7 @@ aes128_dec_permute(__m128i a)
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aes128_enc_davies_meyer(const __m128i H, const __m128i m)
+aesenc_davies_meyer(const __m128i H, const __m128i m)
 {
 	auto a = H;
 
@@ -334,7 +334,7 @@ aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 template <unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aes128_dec_davies_meyer(const __m128i H, const __m128i m)
+aesdec_davies_meyer(const __m128i H, const __m128i m)
 {
 	auto a = H;
 
