@@ -242,7 +242,7 @@ requires (Nr >= 1)
 inline __m128i
 aes128_enc_permute(__m128i a)
 {
-	const __m128i key{};
+	const decltype(a) key{};
 
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
 #pragma GCC unroll Nr
@@ -263,7 +263,7 @@ requires (Nr >= 1)
 inline __m128i
 aes128_dec_permute(__m128i a)
 {
-	const __m128i key{};
+	const decltype(a) key{};
 
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
 #pragma GCC unroll Nr
@@ -288,7 +288,7 @@ requires (Nr >= 1)
 inline __m128i
 aes128_enc_davies_meyer(const __m128i H, const __m128i m)
 {
-	__m128i a = H;
+	auto a = H;
 
 	// scramble H Nr-1 times with m as the key
 	for (unsigned int round = 1; round < Nr; ++round)
@@ -314,7 +314,7 @@ requires (Nr >= 1)
 inline __m128i
 aes128_dec_davies_meyer(const __m128i H, const __m128i m)
 {
-	__m128i a = H;
+	auto a = H;
 
 	// scramble H Nr-1 times with m as the key
 	for (unsigned int round = 1; round < Nr; ++round)
