@@ -22,7 +22,6 @@ union alignas(__m128i) union_128
 	std::array<uint32_t, 16/sizeof(uint32_t)> u32;
 	std::array<uint64_t, 16/sizeof(uint64_t)> u64;
 #if defined(__SIZEOF_INT128__)
-	__int128_t i128;
 	__uint128_t u128;
 #endif
 	__m128i xmm;
