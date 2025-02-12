@@ -18,10 +18,22 @@
 #pragma once
 
 #include <array>
+#include <concepts>
 #include <cstdint>
 #include <cstring>
 #include <immintrin.h>
 #include <utility>
+
+/**
+Typedefs defined in emmintrin.h, avxintrin.h, avx512fintrin.h
+*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+template <typename T>
+concept simd_int_t = std::same_as<T, __m128i> ||
+                     std::same_as<T, __m256i> ||
+                     std::same_as<T, __m512i>;
+#pragma GCC diagnostic pop
 
 inline bool
 equal_m128i(const __m128i& a, const __m128i& b)
