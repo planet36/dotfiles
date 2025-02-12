@@ -271,10 +271,10 @@ inline auto aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_ep
 \pre \a Nr must be at least \c 1.
 \tparam Nr the number of rounds of encryption to perform
 */
-template <unsigned int Nr = 3>
+template <simd_int_t T, unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aesenc_permute(__m128i a)
+aesenc_permute(T a)
 {
 	const decltype(a) key{};
 
@@ -292,10 +292,10 @@ aesenc_permute(__m128i a)
 \pre \a Nr must be at least \c 1.
 \tparam Nr the number of rounds of decryption to perform
 */
-template <unsigned int Nr = 3>
+template <simd_int_t T, unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aesdec_permute(__m128i a)
+aesdec_permute(T a)
 {
 	const decltype(a) key{};
 
@@ -317,10 +317,10 @@ aesdec_permute(__m128i a)
 \param m the block of the message
 \return the next hash value
 */
-template <unsigned int Nr = 3>
+template <simd_int_t T, unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aesenc_davies_meyer(const __m128i H, const __m128i m)
+aesenc_davies_meyer(const T H, const T m)
 {
 	auto a = H;
 
@@ -342,10 +342,10 @@ aesenc_davies_meyer(const __m128i H, const __m128i m)
 \param m the block of the message
 \return the next hash value
 */
-template <unsigned int Nr = 3>
+template <simd_int_t T, unsigned int Nr = 3>
 requires (Nr >= 1)
 inline auto
-aesdec_davies_meyer(const __m128i H, const __m128i m)
+aesdec_davies_meyer(const T H, const T m)
 {
 	auto a = H;
 
