@@ -310,7 +310,7 @@ aesdec_permute(T a)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesenc with key \c key on all elements of array \a arr
+/// Do \c aesenc on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
 aesenc_array(std::array<T, N>& arr, const T key)
@@ -326,7 +326,7 @@ aesenc_array(std::array<T, N>& arr, const T key)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesdec with key \c key on all elements of array \a arr
+/// Do \c aesdec on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
 aesdec_array(std::array<T, N>& arr, const T key)
