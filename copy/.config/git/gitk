@@ -1,6 +1,6 @@
-set mainfont {{sans} 14}
-set textfont {{monospace} 14}
-set uifont {{sans} 14}
+set mainfont {sans 12}
+set textfont {monospace 12}
+set uifont {sans 12 bold}
 set tabstop 4
 set findmergefiles 0
 set maxgraphpct 50
