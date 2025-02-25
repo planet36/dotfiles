@@ -55,6 +55,14 @@ set linkfgcolor blue
 set circleoutlinecolor black
 set diffbgcolors {"#fff3f3" "#f0fff0"}
 set web_browser xdg-open
+set geometry(main) 1920x1080+0+26
+set geometry(state) normal
+set geometry(topwidth) 1828
+set geometry(topheight) 285
+set geometry(pwsash0) "980 1"
+set geometry(pwsash1) "1600 1"
+set geometry(botwidth) 1400
+set geometry(botheight) 784
 set permviews {}
 # https://raw.githubusercontent.com/dracula/gitk/master/gitk
 set uicolor #44475a
