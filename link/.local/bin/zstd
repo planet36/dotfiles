@@ -72,4 +72,4 @@ do
 	shift
 done
 
-command zstd "${ARGS[@]}"
+env -i zstd "${ARGS[@]}"
