@@ -340,6 +340,38 @@ aesdec_array(std::array<T, N>& arr, const T key)
 }
 #pragma GCC diagnostic pop
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+/// Do \c aesenc on each element of array \a arr with the corresponding key from \a keys
+template <simd_int_t T, size_t N>
+inline void
+aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys)
+{
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		arr[i] = aesenc(arr[i], keys[i]);
+	}
+}
+#pragma GCC diagnostic pop
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+/// Do \c aesdec on each element of array \a arr with the corresponding key from \a keys
+template <simd_int_t T, size_t N>
+inline void
+aesdec_array(std::array<T, N>& arr, const std::array<T, N>& keys)
+{
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		arr[i] = aesdec(arr[i], keys[i]);
+	}
+}
+#pragma GCC diagnostic pop
+
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
 \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
