@@ -18,15 +18,7 @@
 # If a normal compression level is given, it's mapped to a comparable zstd compression level.
 #
 # These default options are prepended to input args.
-#declare -a ARGS=('--quiet' '--rm' '--threads=0' '--ultra')
 declare -a ARGS=('--quiet' '--rm' '--ultra')
-
-# Assign if unset.
-: "${ZSTD_CLEVEL:=19}"
-: "${ZSTD_NBTHREADS:=0}"
-
-export ZSTD_CLEVEL
-export ZSTD_NBTHREADS
 
 # Map normal compression level [1, 9] to zstd "ultra" compression level [1, 22].
 # https://www.wolframalpha.com/input?i=round%28%28%2822-1%29+*+Range%5B9%5D+-+%2822-9%29%29+%2F+%289-1%29%29

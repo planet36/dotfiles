@@ -140,8 +140,6 @@ export XCURSOR_SIZE=32
 
 export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 
-export ZSTD_NBTHREADS=0
-
 # {{{ pager colors
 
 # https://unix.stackexchange.com/a/147
