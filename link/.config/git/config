@@ -71,6 +71,7 @@
 [interactive]
 	diffFilter = delta --color-only
 [delta]
-	features = side-by-side line-numbers
+	line-numbers = true
+	side-by-side = true
 	tabs = 4
 	whitespace-error-style = 22 reverse
