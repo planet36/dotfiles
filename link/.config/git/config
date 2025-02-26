@@ -66,6 +66,7 @@
 	sort = version:refname
 
 # https://github.com/dandavison/delta
+# https://dandavison.github.io/delta/full---help-output.html
 [core]
 	pager = delta
 [interactive]
