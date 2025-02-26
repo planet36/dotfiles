@@ -15,7 +15,7 @@
 
 #include "byteprimes.hpp"
 #include "def_urbg_class.hpp"
-#include "union_128.hpp"
+#include "simd-union.hpp"
 
 #include <cstdint>
 #include <immintrin.h>
