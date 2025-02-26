@@ -13,16 +13,27 @@
 	s = status
 	ss = status -s
 	sw = switch
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
 [commit]
 	verbose = true
 [core]
 	editor = nvim
 	fsmonitor = true
 [diff]
+	algorithm = histogram
+	colorMoved = plain
 	guitool = meld
+	mnemonicPrefix = true
 	tool = nvimdiff
 [difftool]
 	prompt = false
+[fetch]
+	all = true
+[help]
+	autoCorrect = prompt
 [include]
 	path = ~/.config/git/private.gitconfig
 [init]
@@ -43,9 +54,16 @@
 [push]
 	autoSetupRemote = true
 [rebase]
+	autoSquash = true
 	autoStash = true
+	updateRefs = true
+[rerere]
+	autoupdate = true
+	enabled = true
 [sendemail]
 	suppresscc = self
+[tag]
+	sort = version:refname
 
 # https://github.com/dandavison/delta
 [core]
