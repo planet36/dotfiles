@@ -73,5 +73,7 @@
 	diffFilter = delta --color-only
 [delta]
 	line-numbers = true
+	line-numbers-left-format = "{nm:>4}┊"
+	line-numbers-right-format = "{np:>4}│"
 	side-by-side = true
 	tabs = 4
