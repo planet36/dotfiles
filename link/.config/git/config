@@ -77,3 +77,10 @@
 	line-numbers-right-format = "{np:>4}│"
 	side-by-side = true
 	tabs = 4
+
+# │    U+2502  &boxv;            BOX DRAWINGS LIGHT VERTICAL (So) (vv)                    https://unicode-table.com/en/2502/
+# ┃    U+2503  &#x2503;          BOX DRAWINGS HEAVY VERTICAL (So) (VV)                    https://unicode-table.com/en/2503/
+# ┆    U+2506  &#x2506;          BOX DRAWINGS LIGHT TRIPLE DASH VERTICAL (So) (3!)        https://unicode-table.com/en/2506/
+# ┇    U+2507  &#x2507;          BOX DRAWINGS HEAVY TRIPLE DASH VERTICAL (So) (3/)        https://unicode-table.com/en/2507/
+# ┊    U+250A  &#x250A;          BOX DRAWINGS LIGHT QUADRUPLE DASH VERTICAL (So) (4!)     https://unicode-table.com/en/250A/
+# ┋    U+250B  &#x250B;          BOX DRAWINGS HEAVY QUADRUPLE DASH VERTICAL (So) (4/)     https://unicode-table.com/en/250B/
