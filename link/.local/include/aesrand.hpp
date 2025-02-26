@@ -27,7 +27,7 @@ DEF_URBG_CLASS(aesencrand, __m128i, __uint128_t)
 	__m128i result = _mm_aesenc_si128(s, roundKey);
 	result = _mm_aesenc_si128(result, roundKey);
 	s = _mm_add_epi64(s, roundKey);
-	return union_128{.xmm = result}.u128;
+	return simd_128{.xmm = result}.u128;
 }
 
 DEF_URBG_CLASS(aesdecrand, __m128i, __uint128_t)
@@ -36,7 +36,7 @@ DEF_URBG_CLASS(aesdecrand, __m128i, __uint128_t)
 	__m128i result = _mm_aesdec_si128(s, roundKey); // (SDW)
 	result = _mm_aesdec_si128(result, roundKey);
 	s = _mm_add_epi64(s, roundKey);
-	return union_128{.xmm = result}.u128;
+	return simd_128{.xmm = result}.u128;
 }
 #else
 #warning "__AES__ not defined"
