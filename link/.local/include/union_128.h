@@ -28,7 +28,7 @@ union union_128
 	__m128i xmm;
 };
 
-static_assert(sizeof(union union_128) == 128/8);
+static_assert(sizeof(union union_128) == 16);
 
 #ifdef __cplusplus
 } // extern "C"
