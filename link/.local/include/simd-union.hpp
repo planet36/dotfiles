@@ -75,3 +75,105 @@ union alignas(__m512i) simd_512
 };
 
 static_assert(sizeof(simd_512) == 64);
+
+template <size_t N>
+inline auto
+arr_m128i_to_simd_128(const arr_m128i<N>& x)
+{
+	std::array<simd_128, N> y;
+
+	// __m128i to simd_128
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		y[i].xmm = x[i];
+	}
+
+	return y;
+}
+
+template <size_t N>
+inline auto
+arr_m256i_to_simd_256(const arr_m256i<N>& x)
+{
+	std::array<simd_256, N> y;
+
+	// __m256i to simd_256
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		y[i].xmm = x[i];
+	}
+
+	return y;
+}
+
+template <size_t N>
+inline auto
+arr_m512i_to_simd_512(const arr_m512i<N>& x)
+{
+	std::array<simd_512, N> y;
+
+	// __m512i to simd_512
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		y[i].xmm = x[i];
+	}
+
+	return y;
+}
+
+template <size_t N>
+inline auto
+arr_simd_128_to_m128i(const std::array<simd_128, N>& x)
+{
+	arr_m128i<N> y;
+
+	// simd_128 to __m128i
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		y[i] = x[i].xmm;
+	}
+
+	return y;
+}
+
+template <size_t N>
+inline auto
+arr_simd_256_to_m256i(const std::array<simd_256, N>& x)
+{
+	arr_m256i<N> y;
+
+	// simd_256 to __m256i
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		y[i] = x[i].xmm;
+	}
+
+	return y;
+}
+
+template <size_t N>
+inline auto
+arr_simd_512_to_m512i(const std::array<simd_512, N>& x)
+{
+	arr_m512i<N> y;
+
+	// simd_512 to __m512i
+	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
+#pragma GCC unroll N
+	for (size_t i = 0; i < N; ++i)
+	{
+		y[i] = x[i].xmm;
+	}
+
+	return y;
+}
