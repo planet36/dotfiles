@@ -14,6 +14,20 @@
 #include <cstdint>
 #include <immintrin.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+
+template <size_t N>
+using arr_m128i = std::array<__m128i, N>;
+
+template <size_t N>
+using arr_m256i = std::array<__m256i, N>;
+
+template <size_t N>
+using arr_m512i = std::array<__m512i, N>;
+
+#pragma GCC diagnostic pop
+
 union alignas(__m128i) simd_128
 {
 	std::array<std::byte, 16 / sizeof(std::byte)> bytes;
@@ -24,10 +38,7 @@ union alignas(__m128i) simd_128
 #if defined(__SIZEOF_INT128__)
 	std::array<__uint128_t, 16 / sizeof(__uint128_t)> u128;
 #endif
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
 	__m128i xmm;
-#pragma GCC diagnostic pop
 };
 
 static_assert(sizeof(simd_128) == 16);
@@ -42,11 +53,8 @@ union alignas(__m256i) simd_256
 #if defined(__SIZEOF_INT128__)
 	std::array<__uint128_t, 32 / sizeof(__uint128_t)> u128;
 #endif
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-	std::array<__m128i, 32 / sizeof(__m128i)> xmm;
+	arr_m128i<32 / sizeof(__m128i)> xmm;
 	__m256i ymm;
-#pragma GCC diagnostic pop
 };
 
 static_assert(sizeof(simd_256) == 32);
@@ -61,12 +69,9 @@ union alignas(__m512i) simd_512
 #if defined(__SIZEOF_INT128__)
 	std::array<__uint128_t, 64 / sizeof(__uint128_t)> u128;
 #endif
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-	std::array<__m128i, 64 / sizeof(__m128i)> xmm;
-	std::array<__m256i, 64 / sizeof(__m256i)> ymm;
+	arr_m128i<64 / sizeof(__m128i)> xmm;
+	arr_m256i<64 / sizeof(__m256i)> ymm;
 	__m512i zmm;
-#pragma GCC diagnostic pop
 };
 
 static_assert(sizeof(simd_512) == 64);
