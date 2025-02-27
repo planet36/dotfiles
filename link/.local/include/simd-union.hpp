@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Union of size 128 bits with integer data members
+/// Unions with data members that are standard integers and SIMD types
 /**
 \file
 \author Steven Ward
