@@ -9,14 +9,10 @@
 
 #pragma once
 
+#include "simd-array.hpp"
+
 #include <array>
 #include <immintrin.h>
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-template <size_t N>
-using arr_m128i = std::array<__m128i, N>;
-#pragma GCC diagnostic pop
 
 inline void
 transpose_2(arr_m128i<2>& x)

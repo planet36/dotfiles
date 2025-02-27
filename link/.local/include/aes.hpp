@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "simd-array.hpp"
 #include "simd-concepts.hpp"
 
 #include <array>
@@ -139,15 +140,13 @@ aes128_expand_key(__m128i key, __m128i tmp)
 	return _mm_xor_si128(key, tmp);
 }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
 /**
 \pre <code>round_keys_enc[0]</code> has the cipher key
 */
 template <size_t Nk>
 requires (Nk >= 2)
 void
-aes128_gen_round_keys_enc(std::array<__m128i, Nk>& round_keys_enc)
+aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc)
 {
 	for (unsigned int round = 1; round < Nk; ++round)
 	{
@@ -155,18 +154,15 @@ aes128_gen_round_keys_enc(std::array<__m128i, Nk>& round_keys_enc)
 		round_keys_enc[round] = aes128_expand_key(round_keys_enc[round-1], tmp);
 	}
 }
-#pragma GCC diagnostic pop
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
 /**
 \pre \a round_keys_enc have been properly prepared
 */
 template <size_t Nk>
 requires (Nk >= 2)
 void
-aes128_gen_round_keys_dec(const std::array<__m128i, Nk>& round_keys_enc,
-		std::array<__m128i, Nk>& round_keys_dec)
+aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc,
+		arr_m128i<Nk>& round_keys_dec)
 {
 	// See "Intel Advanced Encryption Standard (AES) New Instructions Set"
 	// Figure 6. Preparing the Decryption Round Keys
@@ -177,15 +173,12 @@ aes128_gen_round_keys_dec(const std::array<__m128i, Nk>& round_keys_enc,
 	}
 	round_keys_dec[Nk-1] = round_keys_enc[0];
 }
-#pragma GCC diagnostic pop
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
 /// Do AES-128 encryption
 template <size_t Nk>
 requires (Nk >= 2)
 __m128i
-aes128_enc(__m128i data, const std::array<__m128i, Nk>& round_keys_enc)
+aes128_enc(__m128i data, const arr_m128i<Nk>& round_keys_enc)
 {
 	data = _mm_xor_si128(data, round_keys_enc[0]);
 	for (unsigned int round = 1; round < Nk-1; ++round)
@@ -195,15 +188,12 @@ aes128_enc(__m128i data, const std::array<__m128i, Nk>& round_keys_enc)
 	data = _mm_aesenclast_si128(data, round_keys_enc[Nk-1]);
 	return data;
 }
-#pragma GCC diagnostic pop
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
 /// Do AES-128 decryption
 template <size_t Nk>
 requires (Nk >= 2)
 __m128i
-aes128_dec(__m128i data, const std::array<__m128i, Nk>& round_keys_dec)
+aes128_dec(__m128i data, const arr_m128i<Nk>& round_keys_dec)
 {
 	data = _mm_xor_si128(data, round_keys_dec[0]);
 	for (unsigned int round = 1; round < Nk-1; ++round)
@@ -213,7 +203,6 @@ aes128_dec(__m128i data, const std::array<__m128i, Nk>& round_keys_dec)
 	data = _mm_aesdeclast_si128(data, round_keys_dec[Nk-1]);
 	return data;
 }
-#pragma GCC diagnostic pop
 
 /// Wrapper for \c _mm_aesenc_si128
 inline auto aesenc(const __m128i a, const __m128i key) { return _mm_aesenc_si128(a, key); }
