@@ -33,11 +33,11 @@ transpose_4(arr_m128i<4>& x)
 {
 	const __m128i a01_b01 = _mm_unpacklo_epi32(x[0], x[1]);
 	const __m128i a23_b23 = _mm_unpackhi_epi32(x[0], x[1]);
-	const __m128i c01_b01 = _mm_unpacklo_epi32(x[2], x[3]);
+	const __m128i c01_d01 = _mm_unpacklo_epi32(x[2], x[3]);
 	const __m128i c23_d23 = _mm_unpackhi_epi32(x[2], x[3]);
 
-	x[0] = _mm_unpacklo_epi64(a01_b01, c01_b01); // a0_b0_c0_d0
-	x[1] = _mm_unpackhi_epi64(a01_b01, c01_b01); // a1_b1_c1_d1
+	x[0] = _mm_unpacklo_epi64(a01_b01, c01_d01); // a0_b0_c0_d0
+	x[1] = _mm_unpackhi_epi64(a01_b01, c01_d01); // a1_b1_c1_d1
 	x[2] = _mm_unpacklo_epi64(a23_b23, c23_d23); // a2_b2_c2_d2
 	x[3] = _mm_unpackhi_epi64(a23_b23, c23_d23); // a3_b3_c3_d3
 }
