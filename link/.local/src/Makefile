@@ -31,7 +31,7 @@ clone: | $(SUBDIRS)
 clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-arch-install ecef-geodetic PractRand:
+arch-install ecef-geodetic PractRand prng-test-bench randp:
 	git clone --quiet https://github.com/planet36/$@.git
 
 # My repos (forked from suckless)
