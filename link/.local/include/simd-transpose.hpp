@@ -16,7 +16,7 @@
 
 /// Treat \a x as a 2x2 array of \c uint64_t
 inline void
-transpose_2(arr_m128i<2>& x)
+transpose(arr_m128i<2>& x)
 {
 	const __m128i a0_b0 = _mm_unpacklo_epi64(x[0], x[1]);
 	const __m128i a1_b1 = _mm_unpackhi_epi64(x[0], x[1]);
@@ -31,7 +31,7 @@ transpose_2(arr_m128i<2>& x)
 \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
 */
 void
-transpose_4(arr_m128i<4>& x)
+transpose(arr_m128i<4>& x)
 {
 	const __m128i a01_b01 = _mm_unpacklo_epi32(x[0], x[1]);
 	const __m128i a23_b23 = _mm_unpackhi_epi32(x[0], x[1]);
@@ -53,7 +53,7 @@ Cast your __m128i variables into __m128 variables (using _mm_castsi128_ps), use 
 \endverbatim
 */
 void
-transpose_4_macro(arr_m128i<4>& x)
+transpose_macro(arr_m128i<4>& x)
 {
 	__m128 a = _mm_castsi128_ps(x[0]);
 	__m128 b = _mm_castsi128_ps(x[1]);
@@ -74,7 +74,7 @@ transpose_4_macro(arr_m128i<4>& x)
 \sa https://stackoverflow.com/a/4951060/1892784
 */
 void
-transpose_8(arr_m128i<8>& x)
+transpose(arr_m128i<8>& x)
 {
 	const __m128i a03_b03 = _mm_unpacklo_epi16(x[0], x[1]);
 	const __m128i a47_b47 = _mm_unpackhi_epi16(x[0], x[1]);
@@ -107,7 +107,7 @@ transpose_8(arr_m128i<8>& x)
 
 /// Treat \a x as a 16x16 array of \c uint8_t
 void
-transpose_16(arr_m128i<16>& x)
+transpose(arr_m128i<16>& x)
 {
 	const __m128i a07_b07 = _mm_unpacklo_epi8(x[0x0], x[0x1]);
 	const __m128i a8f_b8f = _mm_unpackhi_epi8(x[0x0], x[0x1]);
@@ -176,29 +176,4 @@ transpose_16(arr_m128i<16>& x)
 	x[0xd] = _mm_unpackhi_epi64(acd_bcd_ccd_dcd_ecd_fcd_gcd_hcd, icd_jcd_kcd_lcd_mcd_ncd_ocd_pcd); // ad_bd_cd_dd_ed_fd_gd_hd_id_jd_kd_ld_md_nd_od_pd
 	x[0xe] = _mm_unpacklo_epi64(aef_bef_cef_def_eef_fef_gef_hef, ief_jef_kef_lef_mef_nef_oef_pef); // ae_be_ce_de_ee_fe_ge_he_ie_je_ke_le_me_ne_oe_pe
 	x[0xf] = _mm_unpackhi_epi64(aef_bef_cef_def_eef_fef_gef_hef, ief_jef_kef_lef_mef_nef_oef_pef); // af_bf_cf_df_ef_ff_gf_hf_if_jf_kf_lf_mf_nf_of_pf
-}
-
-
-template <size_t N>
-inline void
-transpose(arr_m128i<N>& x)
-{
-	static_assert(
-			(N == 1) ||
-			(N == 2) ||
-			(N == 4) ||
-			(N == 8) ||
-			(N == 16)
-			);
-
-	if constexpr (N == 1)
-		return; // No-op
-	else if constexpr (N == 2)
-		transpose_2(x);
-	else if constexpr (N == 4)
-		transpose_4(x);
-	else if constexpr (N == 8)
-		transpose_8(x);
-	else if constexpr (N == 16)
-		transpose_16(x);
 }
