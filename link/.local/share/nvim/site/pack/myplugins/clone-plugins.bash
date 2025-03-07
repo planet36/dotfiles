@@ -21,9 +21,9 @@ PLUGINS_START+=('https://github.com/tzachar/highlight-undo.nvim.git')
 
 # color schemes
 PLUGINS_START+=('https://github.com/srcery-colors/srcery-vim.git') # srcery
-PLUGINS_START+=('https://github.com/vim-scripts/candycode.vim.git')
-PLUGINS_START+=('https://github.com/fneu/breezy.git')
-PLUGINS_START+=('https://github.com/mhartington/oceanic-next.git') # OceanicNext
+#PLUGINS_START+=('https://github.com/vim-scripts/candycode.vim.git')
+#PLUGINS_START+=('https://github.com/fneu/breezy.git')
+#PLUGINS_START+=('https://github.com/mhartington/oceanic-next.git') # OceanicNext
 #PLUGINS_START+=('https://github.com/projekt0n/github-nvim-theme.git') # github_dark_default
 #PLUGINS_START+=('https://github.com/morhetz/gruvbox.git')
 #PLUGINS_START+=('https://github.com/EvitanRelta/vim-colorschemes.git')

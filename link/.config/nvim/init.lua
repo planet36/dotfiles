@@ -267,9 +267,9 @@ vim.o.cursorline = true
 
 local colorscheme_list = {
   'srcery',
-  'candycode',
-  'breezy',
-  'OceanicNext',
+  --'candycode',
+  --'breezy',
+  --'OceanicNext',
   'retrobox',
   'wildcharm',
   'murphy',
