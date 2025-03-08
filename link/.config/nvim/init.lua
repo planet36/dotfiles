@@ -296,3 +296,17 @@ vim.cmd.highlight('Number', 'guifg=' .. srcery_yellow)
 vim.cmd.highlight('Float', 'guifg=' .. srcery_yellow)
 
 -- }}}
+
+-- {{{ Statusline plugin
+
+require('lualine').setup {
+  options = {
+    theme = 'powerline_dark'
+  },
+  sections = { lualine_a = {
+      { 'mode', fmt = function(str) return str:sub(1,1) end },
+    },
+  }
+}
+
+-- }}}
