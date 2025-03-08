@@ -15,6 +15,12 @@ set --global fish_greeting
 functions -e fish_command_not_found
 # }}}
 
+# {{{ Change ctrl-c key binding from clear-commandline to cancel-commandline
+
+bind --user ctrl-c cancel-commandline
+
+# }}}
+
 # {{{ prevent st unknown escape sequence
 
 # https://github.com/fish-shell/fish-shell/issues/3425
