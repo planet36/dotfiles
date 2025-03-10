@@ -4,6 +4,7 @@
 export LC_ALL := C
 
 CPPFLAGS = -MMD -MP
+CPPFLAGS += -D_GNU_SOURCE
 CPPFLAGS += `pkg-config --cflags libutf8proc`
 
 CFLAGS += $(OPTIMIZE_OPTIONS)
