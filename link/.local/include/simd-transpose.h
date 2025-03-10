@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Transpose an array of \c __m128i, treating it as a square matrix of integers
+/// Transpose an array of \c __m128i (treating it as a square matrix of integers) using SSE2 instructions
 /**
 \file
 \author Steven Ward
