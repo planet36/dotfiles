@@ -6,6 +6,8 @@
 \file
 \author Steven Ward
 \sa https://www.gnu.org/software/libc/manual/html_node/File-Locks.html
+\sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks.html
+\sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks-Example.html
 \sa https://man7.org/linux/man-pages/man2/fcntl.2.html
 */
 
