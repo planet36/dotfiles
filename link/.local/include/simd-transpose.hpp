@@ -15,7 +15,7 @@
 #include <immintrin.h>
 
 /// Treat \a x as a 2x2 array of \c uint64_t
-inline void
+void
 transpose(arr_m128i<2>& x)
 {
 	const __m128i A0_B0 = _mm_unpacklo_epi64(x[0], x[1]);
