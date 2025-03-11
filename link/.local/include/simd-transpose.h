@@ -11,7 +11,7 @@
 
 #include <immintrin.h>
 
-/// Treat \a x as a 2x2 array of \c uint64_t
+/// Transpose \a x (treating it as a 2x2 array of \c uint64_t) using SSE2 instructions
 void
 transpose_m128ix2(__m128i x[static restrict 2])
 {
@@ -23,7 +23,7 @@ transpose_m128ix2(__m128i x[static restrict 2])
 }
 
 
-/// Treat \a x as a 4x4 array of \c uint32_t
+/// Transpose \a x (treating it as a 4x4 array of \c uint32_t) using SSE2 instructions
 /**
 \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
 */
@@ -42,7 +42,7 @@ transpose_m128ix4(__m128i x[static restrict 4])
 }
 
 
-/// Treat \a x as a 4x4 array of \c uint32_t
+/// Transpose \a x (treating it as a 4x4 array of \c uint32_t) using the \c _MM_TRANSPOSE4_PS macro
 /**
 \sa https://community.intel.com/t5/Intel-ISA-Extensions/4x4-matrix-transpose-using-sse2-intrinsics/m-p/785883#M353
 \verbatim
@@ -66,7 +66,7 @@ transpose_m128ix4_macro(__m128i x[static restrict 4])
 }
 
 
-/// Treat \a x as an 8x8 array of \c uint16_t
+/// Transpose \a x (treating it as an 8x8 array of \c uint16_t) using SSE2 instructions
 /**
 \sa https://stackoverflow.com/a/4951060/1892784
 */
@@ -102,7 +102,7 @@ transpose_m128ix8(__m128i x[static restrict 8])
 }
 
 
-/// Treat \a x as a 16x16 array of \c uint8_t
+/// Transpose \a x (treating it as a 16x16 array of \c uint8_t) using SSE2 instructions
 void
 transpose_m128ix16(__m128i x[static restrict 16])
 {
