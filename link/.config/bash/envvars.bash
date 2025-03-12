@@ -5,7 +5,7 @@
 
 export ACKRC="$XDG_CONFIG_HOME"/ack/ackrc
 
-export BAT_THEME=gruvbox-dark
+export BAT_THEME=ansi
 
 export CALCHISTFILE="$XDG_STATE_HOME"/calc_history
 
