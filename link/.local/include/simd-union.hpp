@@ -16,7 +16,7 @@
 #include <cstdint>
 #include <immintrin.h>
 
-union alignas(__m128i) simd128i
+union alignas(sizeof(__m128i)) simd128i
 {
 	std::array<std::byte, 16 / sizeof(std::byte)> bytes;
 	std::array<uint8_t, 16 / sizeof(uint8_t)> u8;
@@ -31,7 +31,7 @@ union alignas(__m128i) simd128i
 
 static_assert(sizeof(simd128i) == 16);
 
-union alignas(__m256i) simd256i
+union alignas(sizeof(__m256i)) simd256i
 {
 	std::array<std::byte, 32 / sizeof(std::byte)> bytes;
 	std::array<uint8_t, 32 / sizeof(uint8_t)> u8;
@@ -47,7 +47,7 @@ union alignas(__m256i) simd256i
 
 static_assert(sizeof(simd256i) == 32);
 
-union alignas(__m512i) simd512i
+union alignas(sizeof(__m512i)) simd512i
 {
 	std::array<std::byte, 64 / sizeof(std::byte)> bytes;
 	std::array<uint8_t, 64 / sizeof(uint8_t)> u8;
