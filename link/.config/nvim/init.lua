@@ -301,7 +301,7 @@ vim.cmd.highlight('Float', 'guifg=' .. srcery_yellow)
 
 require('lualine').setup {
   options = {
-    theme = 'powerline_dark'
+    theme = 'codedark'
   },
   sections = { lualine_a = {
       { 'mode', fmt = function(str) return str:sub(1,1) end },
