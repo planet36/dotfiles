@@ -218,11 +218,13 @@ inline auto aesenc(const __m256i a, const __m256i key) { return _mm256_aesenc_ep
 /// Wrapper for \c _mm256_aesdec_epi128
 inline auto aesdec(const __m256i a, const __m256i key) { return _mm256_aesdec_epi128(a, key); }
 
+#if defined(__AVX512F__)
 /// Wrapper for \c _mm512_aesenc_epi128
 inline auto aesenc(const __m512i a, const __m512i key) { return _mm512_aesenc_epi128(a, key); }
 
 /// Wrapper for \c _mm512_aesdec_epi128
 inline auto aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_epi128(a, key); }
+#endif
 
 #endif
 
