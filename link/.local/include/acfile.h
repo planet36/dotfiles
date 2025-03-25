@@ -18,10 +18,10 @@
 extern "C" {
 #endif
 
-#define ACFILEPTR __attribute__((cleanup(cleanup_close_file))) FILE*
+#define ACFILEPTR __attribute__((cleanup(cleanup_close_file_ptr))) FILE*
 
 static void
-cleanup_close_file(FILE** fpp)
+cleanup_close_file_ptr(FILE** fpp)
 {
 	if (*fpp != nullptr)
 	{
