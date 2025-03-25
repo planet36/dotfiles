@@ -21,16 +21,16 @@ extern "C" {
 #define ACFILEPTR __attribute__((cleanup(cleanup_close_file_ptr))) FILE*
 
 static void
-cleanup_close_file_ptr(FILE** fpp)
+cleanup_close_file_ptr(FILE** fp_ptr)
 {
-	if (*fpp != nullptr)
+	if (*fp_ptr != nullptr)
 	{
-		if (fclose(*fpp) < 0)
+		if (fclose(*fp_ptr) < 0)
 		{
-			*fpp = nullptr;
+			*fp_ptr = nullptr;
 			err(EXIT_FAILURE, "fclose");
 		}
-		*fpp = nullptr;
+		*fp_ptr = nullptr;
 	}
 }
 
