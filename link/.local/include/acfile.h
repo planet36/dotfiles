@@ -39,15 +39,10 @@ cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 #define ACFD __attribute__((cleanup(cleanup_close_fd))) int
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-nonnull-function-attribute
-static void
-cleanup_close_fd(int* fd_ptr) [[gnu::nonnull]]
+static inline void
+cleanup_close_fd(const int* fd_ptr) [[gnu::nonnull]]
 {
-	if (close(*fd_ptr) < 0)
-	{
-		*fd_ptr = -1;
-		err(EXIT_FAILURE, "close");
-	}
-	*fd_ptr = -1;
+	(void)close(*fd_ptr);
 }
 
 #ifdef __cplusplus
