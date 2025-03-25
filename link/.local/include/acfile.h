@@ -20,8 +20,9 @@ extern "C" {
 
 #define ACFILEPTR __attribute__((cleanup(cleanup_close_file_ptr))) FILE*
 
+// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-nonnull-function-attribute
 static void
-cleanup_close_file_ptr(FILE** fp_ptr)
+cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 {
 	if (*fp_ptr != nullptr)
 	{
