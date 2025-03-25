@@ -18,7 +18,7 @@
 extern "C" {
 #endif
 
-#define acfile __attribute__((cleanup(cleanup_close_file))) FILE*
+#define ACFILEPTR __attribute__((cleanup(cleanup_close_file))) FILE*
 
 static void
 cleanup_close_file(FILE** fpp)
