@@ -252,16 +252,16 @@ CPPFLAGS+=' -D_GNU_SOURCE'
 #CPPFLAGS+=' -D__STDCPP_WANT_MATH_SPEC_FUNCS__'
 
 # shellcheck disable=SC2034
-LATEST_C_STD="$(gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=c2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
+LATEST_C_STD="$(COLUMNS=200 gcc -v --help 2>/dev/null | command grep -E -- '^\s*-std=c2' | command grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
 # shellcheck disable=SC2034
-LATEST_GNU_STD="$(gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=gnu2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
+LATEST_GNU_STD="$(COLUMNS=200 gcc -v --help 2>/dev/null | command grep -E -- '^\s*-std=gnu2' | command grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
 
 export CFLAGS="$GCC_COMMON_OPTIONS $LATEST_GNU_STD -Wc++-compat"
 
 # shellcheck disable=SC2034
-LATEST_CXX_STD="$(gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=c\+\+2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
+LATEST_CXX_STD="$(COLUMNS=200 gcc -v --help 2>/dev/null | command grep -E -- '^\s*-std=c\+\+2' | command grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
 # shellcheck disable=SC2034
-LATEST_GNUXX_STD="$(gcc -v --help 2>/dev/null | grep -E -- '^\s*-std=gnu\+\+2' | grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
+LATEST_GNUXX_STD="$(COLUMNS=200 gcc -v --help 2>/dev/null | command grep -E -- '^\s*-std=gnu\+\+2' | command grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
 
 export CXXFLAGS="$GCC_COMMON_OPTIONS $LATEST_GNUXX_STD -fchar8_t -fdiagnostics-show-template-tree -fstrict-enums -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
 
