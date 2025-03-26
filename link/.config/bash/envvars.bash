@@ -220,6 +220,7 @@ export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native -fno-math-errno'
 # Do not use -ffinite-math-only (enabled with -ffast-math (enabled with -Ofast))
 
 # In a VirtualBox guest, lscpu doesn't report all CPU flags available to my processors.
+# https://openbenchmarking.org/processors/VAES
 # https://openbenchmarking.org/s/Intel+Core+i9-13950HX
 # https://openbenchmarking.org/s/Intel+Core+i9-13980HX
 #OPTIMIZE_OPTIONS+=' -march=raptorlake'
