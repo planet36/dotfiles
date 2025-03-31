@@ -21,8 +21,6 @@ subarr(const std::array<T, N>& arr)
 
 	std::array<T, COUNT> result;
 
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll COUNT
 	for (size_t i = 0; i < COUNT; ++i)
 	{
 		result[i] = arr[i];

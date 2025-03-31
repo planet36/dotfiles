@@ -24,8 +24,6 @@ permute_from(std::array<T, N>& x, const std::array<I, N>& p)
 {
 	std::remove_reference_t<decltype(x)> y;
 
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
 	for (size_t i = 0; i < N; ++i)
 	{
 		y[i] = x[p[i]];
@@ -44,8 +42,6 @@ permute_to(std::array<T, N>& x, const std::array<I, N>& p)
 {
 	std::remove_reference_t<decltype(x)> y;
 
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
 	for (size_t i = 0; i < N; ++i)
 	{
 		y[p[i]] = x[i];

@@ -240,8 +240,6 @@ aesenc_permute(T a)
 {
 	const T key{};
 
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll Nr
 	for (unsigned int round = 0; round < Nr; ++round)
 	{
 		a = aesenc(a, key);
@@ -261,8 +259,6 @@ aesdec_permute(T a)
 {
 	const T key{};
 
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll Nr
 	for (unsigned int round = 0; round < Nr; ++round)
 	{
 		a = aesdec(a, key);
@@ -277,8 +273,6 @@ template <simd_int_t T, size_t N>
 inline void
 aesenc_array(std::array<T, N>& arr, const T key)
 {
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
 	for (size_t i = 0; i < N; ++i)
 	{
 		arr[i] = aesenc(arr[i], key);
@@ -293,8 +287,6 @@ template <simd_int_t T, size_t N>
 inline void
 aesdec_array(std::array<T, N>& arr, const T key)
 {
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
 	for (size_t i = 0; i < N; ++i)
 	{
 		arr[i] = aesdec(arr[i], key);
@@ -309,8 +301,6 @@ template <simd_int_t T, size_t N>
 inline void
 aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys)
 {
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
 	for (size_t i = 0; i < N; ++i)
 	{
 		arr[i] = aesenc(arr[i], keys[i]);
@@ -325,8 +315,6 @@ template <simd_int_t T, size_t N>
 inline void
 aesdec_array(std::array<T, N>& arr, const std::array<T, N>& keys)
 {
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll N
 	for (size_t i = 0; i < N; ++i)
 	{
 		arr[i] = aesdec(arr[i], keys[i]);
@@ -350,8 +338,6 @@ aesenc_davies_meyer(const T H, const T m)
 {
 	auto a = H;
 
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll Nr
 	for (unsigned int round = 0; round < Nr; ++round)
 	{
 		a = aesenc(a, m);
@@ -375,8 +361,6 @@ aesdec_davies_meyer(const T H, const T m)
 {
 	auto a = H;
 
-	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
-#pragma GCC unroll Nr
 	for (unsigned int round = 0; round < Nr; ++round)
 	{
 		a = aesdec(a, m);
