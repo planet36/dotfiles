@@ -238,7 +238,7 @@ requires (Nr >= 1)
 inline auto
 aesenc_permute(T a)
 {
-	const decltype(a) key{};
+	const T key{};
 
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
 #pragma GCC unroll Nr
@@ -259,7 +259,7 @@ requires (Nr >= 1)
 inline auto
 aesdec_permute(T a)
 {
-	const decltype(a) key{};
+	const T key{};
 
 	// https://gcc.gnu.org/onlinedocs/gcc/Loop-Specific-Pragmas.html#index-pragma-GCC-unroll-n
 #pragma GCC unroll Nr
