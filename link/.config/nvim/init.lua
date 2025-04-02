@@ -314,6 +314,9 @@ require('lualine').setup {
       {
         'filename',
         path = 1,
+        symbols = {
+          readonly = '[RO]'
+        },
       },
     },
   },
@@ -322,6 +325,9 @@ require('lualine').setup {
       {
         'filename',
         path = 1,
+        symbols = {
+          readonly = '[RO]'
+        },
       },
     },
   },
