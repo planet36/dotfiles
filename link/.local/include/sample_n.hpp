@@ -17,9 +17,9 @@
 #include <type_traits>
 #include <vector>
 
-template <std::uniform_random_bit_generator G>
+template <std::uniform_random_bit_generator URBG>
 auto
-sample_n(const std::string& in, const size_t num_samples, G& gen)
+sample_n(const std::string& in, const size_t num_samples, URBG& gen)
 {
 	std::remove_cvref_t<decltype(in)> out;
 
@@ -36,9 +36,9 @@ sample_n(const std::string& in, const size_t num_samples, G& gen)
 	return out;
 }
 
-template <std::uniform_random_bit_generator G>
+template <std::uniform_random_bit_generator URBG>
 auto
-sample_n(const std::string& in, const size_t num_samples, G&& gen)
+sample_n(const std::string& in, const size_t num_samples, URBG&& gen)
 {
 	return sample_n(in, num_samples, gen);
 }
@@ -49,9 +49,9 @@ sample_n(const std::string& in, const size_t num_samples)
 	return sample_n(in, num_samples, per_thread_random_number_engine);
 }
 
-template <typename T, std::uniform_random_bit_generator G>
+template <typename T, std::uniform_random_bit_generator URBG>
 auto
-sample_n(const std::vector<T>& in, const size_t num_samples, G& gen)
+sample_n(const std::vector<T>& in, const size_t num_samples, URBG& gen)
 {
 	std::remove_cvref_t<decltype(in)> out;
 
@@ -68,9 +68,9 @@ sample_n(const std::vector<T>& in, const size_t num_samples, G& gen)
 	return out;
 }
 
-template <typename T, std::uniform_random_bit_generator G>
+template <typename T, std::uniform_random_bit_generator URBG>
 auto
-sample_n(const std::vector<T>& in, const size_t num_samples, G&& gen)
+sample_n(const std::vector<T>& in, const size_t num_samples, URBG&& gen)
 {
 	return sample_n(in, num_samples, gen);
 }
