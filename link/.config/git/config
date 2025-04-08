@@ -13,6 +13,7 @@
 	s = status
 	ss = status -s
 	sw = switch
+	unstage = restore --staged
 [branch]
 	sort = -committerdate
 [column]
