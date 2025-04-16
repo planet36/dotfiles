@@ -28,6 +28,7 @@ abbr --add --global g git
 abbr --add --global i "$EDITOR" -c startinsert
 abbr --add --global ip3 ipython3
 abbr --add --global ipy3 ipython3
+abbr --add --global m make
 abbr --add --global maek make
 abbr --add --global md5 md5sum
 abbr --add --global medl meld

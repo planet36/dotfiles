@@ -28,6 +28,7 @@ alias fiel=file
 alias i="$EDITOR -c startinsert"
 alias ip3=ipython3
 alias ipy3=ipython3
+alias m=make
 alias maek=make
 alias md5=md5sum
 alias medl=meld
