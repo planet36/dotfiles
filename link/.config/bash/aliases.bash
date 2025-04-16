@@ -30,6 +30,7 @@ alias ip3=ipython3
 alias ipy3=ipython3
 alias m=make
 alias maek=make
+alias mc='make clean'
 alias md5=md5sum
 alias medl=meld
 alias mkae=make
