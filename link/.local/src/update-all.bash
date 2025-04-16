@@ -10,10 +10,11 @@ do
   if test -d "$DIR"/.git
   then
     cd "$DIR" || break
-    git fetch || break
     if [[ "$(git rev-parse --is-bare-repository)" == 'false' ]]
     then
-      git pull || break
+      git pull --no-all || break
+    else
+      git fetch --no-all || break
     fi
     #git fsck || break
     #git gc || break
