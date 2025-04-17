@@ -12,7 +12,7 @@
 #include <immintrin.h>
 
 /// Transpose \a x (treating it as a 2x2 array of \c uint64_t) using SSE2 instructions
-void
+static void
 transpose_m128ix2(__m128i x[static restrict 2])
 {
 	const __m128i A0_B0 = _mm_unpacklo_epi64(x[0], x[1]);
@@ -27,7 +27,7 @@ transpose_m128ix2(__m128i x[static restrict 2])
 /**
 \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
 */
-void
+static void
 transpose_m128ix4(__m128i x[static restrict 4])
 {
 	const __m128i A01_B01 = _mm_unpacklo_epi32(x[0], x[1]);
@@ -49,7 +49,7 @@ transpose_m128ix4(__m128i x[static restrict 4])
 Cast your __m128i variables into __m128 variables (using _mm_castsi128_ps), use the macro _MM_TRANSPOSE_PS, then cast back using _mm_castps_si128.
 \endverbatim
 */
-void
+static void
 transpose_m128ix4_macro(__m128i x[static restrict 4])
 {
 	__m128 A = _mm_castsi128_ps(x[0]);
@@ -70,7 +70,7 @@ transpose_m128ix4_macro(__m128i x[static restrict 4])
 /**
 \sa https://stackoverflow.com/a/4951060/1892784
 */
-void
+static void
 transpose_m128ix8(__m128i x[static restrict 8])
 {
 	const __m128i A03_B03 = _mm_unpacklo_epi16(x[0], x[1]);
@@ -103,7 +103,7 @@ transpose_m128ix8(__m128i x[static restrict 8])
 
 
 /// Transpose \a x (treating it as a 16x16 array of \c uint8_t) using SSE2 instructions
-void
+static void
 transpose_m128ix16(__m128i x[static restrict 16])
 {
 	const __m128i A07_B07 = _mm_unpacklo_epi8(x[0x0], x[0x1]);
