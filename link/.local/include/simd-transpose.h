@@ -5,6 +5,7 @@
 /**
 \file
 \author Steven Ward
+\sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
 */
 
 #pragma once
