@@ -29,19 +29,19 @@
 int
 calc_idle(uintmax_t* idle, uintmax_t* sum)
 {
-	uintmax_t a[6];
+    uintmax_t a[6];
 
-	// cpu user nice system idle iowait irq softirq
-	if (pscanf("/proc/stat", "%*s %ju %ju %ju %ju %*s %ju %ju",
-	           &a[0], &a[1], &a[2], &a[3], &a[4], &a[5]) != 6)
-	{
-		return -1;
-	}
+    // cpu user nice system idle iowait irq softirq
+    if (pscanf("/proc/stat", "%*s %ju %ju %ju %ju %*s %ju %ju",
+               &a[0], &a[1], &a[2], &a[3], &a[4], &a[5]) != 6)
+    {
+        return -1;
+    }
 
-	*idle = a[3];
-	*sum = a[0] + a[1] + a[2] + a[3] + a[4] + a[5];
+    *idle = a[3];
+    *sum = a[0] + a[1] + a[2] + a[3] + a[4] + a[5];
 
-	return 0;
+    return 0;
 }
 
 // }}}
@@ -61,218 +61,218 @@ volatile sig_atomic_t reset_alarm = 1;
 void
 signal_handler(int signum)
 {
-	switch (signum)
-	{
-	case SIGALRM:
-		// no op
-		break;
+    switch (signum)
+    {
+    case SIGALRM:
+        // no op
+        break;
 
-	case SIGUSR1:
-	case SIGUSR2:
-		reset_alarm = 1;
-		break;
+    case SIGUSR1:
+    case SIGUSR2:
+        reset_alarm = 1;
+        break;
 
-	default:
-		done = 1;
-		break;
-	}
+    default:
+        done = 1;
+        break;
+    }
 }
 
 void
 atexit_cleanup()
 {
-	if (dest_path != NULL && done)
-		if (remove(dest_path) < 0)
-			perror("remove");
+    if (dest_path != NULL && done)
+        if (remove(dest_path) < 0)
+            perror("remove");
 }
 
 void
 print_version()
 {
-	printf("%s %s\n", program_invocation_short_name, program_version);
-	printf("License: %s\n", program_license);
-	printf("Written by %s\n", program_author);
+    printf("%s %s\n", program_invocation_short_name, program_version);
+    printf("License: %s\n", program_license);
+    printf("Written by %s\n", program_author);
 }
 
 void
 print_usage()
 {
-	printf("Usage: %s [OPTION]...\n", program_invocation_short_name);
-	printf("\n");
-	printf("Continuously measure the average CPU usage at a regular interval, and write the measurement to stdout or a temporary file.\n");
-	printf("\n");
-	printf("CPU usage is a real number within the interval [0, 1].\n");
-	printf("\n");
+    printf("Usage: %s [OPTION]...\n", program_invocation_short_name);
+    printf("\n");
+    printf("Continuously measure the average CPU usage at a regular interval, and write the measurement to stdout or a temporary file.\n");
+    printf("\n");
+    printf("CPU usage is a real number within the interval [0, 1].\n");
+    printf("\n");
 
-	printf("OPTIONS\n");
-	printf("  -V       Print the version information, then exit.\n");
-	printf("\n");
-	printf("  -h       Print this message, then exit.\n");
-	printf("\n");
-	printf("  -f FILE  Specify the temporary output file.\n");
-	printf("           FILE must not exist when this daemon starts.\n");
-	printf("           FILE is truncated before every measurement is written.\n");
-	printf("           FILE is removed when this daemon exits successfully.\n");
-	printf("\n");
-	printf("  -i MSEC  Specify the interval (in milliseconds) between measurements.\n");
-	printf("           MSEC must be a positive integer.\n");
-	printf("           The default value is %u.\n", default_interval_msec);
-	printf("\n");
+    printf("OPTIONS\n");
+    printf("  -V       Print the version information, then exit.\n");
+    printf("\n");
+    printf("  -h       Print this message, then exit.\n");
+    printf("\n");
+    printf("  -f FILE  Specify the temporary output file.\n");
+    printf("           FILE must not exist when this daemon starts.\n");
+    printf("           FILE is truncated before every measurement is written.\n");
+    printf("           FILE is removed when this daemon exits successfully.\n");
+    printf("\n");
+    printf("  -i MSEC  Specify the interval (in milliseconds) between measurements.\n");
+    printf("           MSEC must be a positive integer.\n");
+    printf("           The default value is %u.\n", default_interval_msec);
+    printf("\n");
 }
 
 int
 main(int argc, char* const argv[])
 {
-	unsigned int init_delay_msec = default_init_delay_msec;
-	unsigned int interval_msec = default_interval_msec;
+    unsigned int init_delay_msec = default_init_delay_msec;
+    unsigned int interval_msec = default_interval_msec;
 
-	int oc;
-	const char* short_options = "+:Vhf:i:";
-	while ((oc = getopt(argc, argv, short_options)) != -1)
-	{
-		switch (oc)
-		{
-		case 'V':
-			print_version();
-			return EXIT_SUCCESS;
+    int oc;
+    const char* short_options = "+:Vhf:i:";
+    while ((oc = getopt(argc, argv, short_options)) != -1)
+    {
+        switch (oc)
+        {
+        case 'V':
+            print_version();
+            return EXIT_SUCCESS;
 
-		case 'h':
-			print_usage();
-			return EXIT_SUCCESS;
+        case 'h':
+            print_usage();
+            return EXIT_SUCCESS;
 
-		case 'f':
-			dest_path = optarg;
-			break;
+        case 'f':
+            dest_path = optarg;
+            break;
 
-		case 'i':
-			interval_msec = strtou(optarg);
-			if (interval_msec == 0)
-				errx(EXIT_FAILURE, "invalid interval: %u", interval_msec);
+        case 'i':
+            interval_msec = strtou(optarg);
+            if (interval_msec == 0)
+                errx(EXIT_FAILURE, "invalid interval: %u", interval_msec);
 
-			// There is no option for specifying the initial delay.
-			init_delay_msec = interval_msec;
-			break;
+            // There is no option for specifying the initial delay.
+            init_delay_msec = interval_msec;
+            break;
 
-		default:
-			exit(EXIT_FAILURE);
-		}
-	}
+        default:
+            exit(EXIT_FAILURE);
+        }
+    }
 
-	assert(atexit(atexit_cleanup) == 0);
+    assert(atexit(atexit_cleanup) == 0);
 
-	if (dest_path != NULL)
-	{
-		constexpr mode_t new_mask = 0133; // rw-r--r--
-		(void)umask(new_mask);
+    if (dest_path != NULL)
+    {
+        constexpr mode_t new_mask = 0133; // rw-r--r--
+        (void)umask(new_mask);
 
-		ACFILEPTR dest_fp = fopen(dest_path, "wx");
-		if (dest_fp == NULL)
-			err(EXIT_FAILURE, "%s", dest_path);
-	}
+        ACFILEPTR dest_fp = fopen(dest_path, "wx");
+        if (dest_fp == NULL)
+            err(EXIT_FAILURE, "%s", dest_path);
+    }
 
-	struct sigaction signal_action;
-	(void)memset(&signal_action, 0, sizeof(signal_action));
-	signal_action.sa_flags = SA_RESTART;
-	signal_action.sa_handler = signal_handler;
+    struct sigaction signal_action;
+    (void)memset(&signal_action, 0, sizeof(signal_action));
+    signal_action.sa_flags = SA_RESTART;
+    signal_action.sa_handler = signal_handler;
 
-	if (sigfillset(&signal_action.sa_mask) < 0)
-		err(EXIT_FAILURE, "sigfillset");
+    if (sigfillset(&signal_action.sa_mask) < 0)
+        err(EXIT_FAILURE, "sigfillset");
 
-	constexpr int signals_to_handle[] = {
-		SIGALRM,
-		SIGHUP,
-		SIGINT,
-		SIGPIPE,
-		SIGQUIT,
-		SIGTERM,
-		SIGUSR1,
-		SIGUSR2,
-	};
+    constexpr int signals_to_handle[] = {
+        SIGALRM,
+        SIGHUP,
+        SIGINT,
+        SIGPIPE,
+        SIGQUIT,
+        SIGTERM,
+        SIGUSR1,
+        SIGUSR2,
+    };
 
-	constexpr size_t num_signals_to_handle =
-	    sizeof(signals_to_handle) / sizeof(signals_to_handle[0]);
-	for (size_t i = 0; i < num_signals_to_handle; ++i)
-	{
-		if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
-			err(EXIT_FAILURE, "sigaction");
-	}
+    constexpr size_t num_signals_to_handle =
+        sizeof(signals_to_handle) / sizeof(signals_to_handle[0]);
+    for (size_t i = 0; i < num_signals_to_handle; ++i)
+    {
+        if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
+            err(EXIT_FAILURE, "sigaction");
+    }
 
-	sigset_t empty_mask;
-	if (sigemptyset(&empty_mask) < 0)
-		err(EXIT_FAILURE, "sigemptyset");
+    sigset_t empty_mask;
+    if (sigemptyset(&empty_mask) < 0)
+        err(EXIT_FAILURE, "sigemptyset");
 
-	sigset_t full_mask;
-	if (sigfillset(&full_mask) < 0)
-		err(EXIT_FAILURE, "sigfillset");
+    sigset_t full_mask;
+    if (sigfillset(&full_mask) < 0)
+        err(EXIT_FAILURE, "sigfillset");
 
-	sigset_t orig_mask;
-	// block everything and save current signal mask
-	if (sigprocmask(SIG_BLOCK, &full_mask, &orig_mask) < 0)
-		err(EXIT_FAILURE, "sigprocmask");
+    sigset_t orig_mask;
+    // block everything and save current signal mask
+    if (sigprocmask(SIG_BLOCK, &full_mask, &orig_mask) < 0)
+        err(EXIT_FAILURE, "sigprocmask");
 
-	const struct timeval init_delay = msec_to_timeval(init_delay_msec);
-	const struct timeval interval = msec_to_timeval(interval_msec);
+    const struct timeval init_delay = msec_to_timeval(init_delay_msec);
+    const struct timeval interval = msec_to_timeval(interval_msec);
 
-	const struct itimerval itv = {
-	    .it_interval = interval,
-	    .it_value = init_delay, // If zero, the alarm is disabled.
-	};
+    const struct itimerval itv = {
+        .it_interval = interval,
+        .it_value = init_delay, // If zero, the alarm is disabled.
+    };
 
-	bool first_iteration = true;
-	uintmax_t prev_idle_ticks = 0;
-	uintmax_t prev_sum_ticks = 0;
+    bool first_iteration = true;
+    uintmax_t prev_idle_ticks = 0;
+    uintmax_t prev_sum_ticks = 0;
 
-	do
-	{
-		if (reset_alarm)
-		{
-			if (setitimer(ITIMER_REAL, &itv, NULL) < 0)
-				err(EXIT_FAILURE, "setitimer");
-			reset_alarm = 0;
-		}
+    do
+    {
+        if (reset_alarm)
+        {
+            if (setitimer(ITIMER_REAL, &itv, NULL) < 0)
+                err(EXIT_FAILURE, "setitimer");
+            reset_alarm = 0;
+        }
 
-		uintmax_t idle_ticks = 0;
-		uintmax_t sum_ticks = 0;
+        uintmax_t idle_ticks = 0;
+        uintmax_t sum_ticks = 0;
 
-		if (calc_idle(&idle_ticks, &sum_ticks) < 0)
-			errx(EXIT_FAILURE, "error scanning /proc/stat");
+        if (calc_idle(&idle_ticks, &sum_ticks) < 0)
+            errx(EXIT_FAILURE, "error scanning /proc/stat");
 
-		if (first_iteration)
-			first_iteration = false;
-		else
-		{
-			double cpu_usage = 0;
+        if (first_iteration)
+            first_iteration = false;
+        else
+        {
+            double cpu_usage = 0;
 
-			if (sum_ticks - prev_sum_ticks != 0)
-				cpu_usage = 1 - (double)(idle_ticks - prev_idle_ticks) /
-				                (double)(sum_ticks - prev_sum_ticks);
+            if (sum_ticks - prev_sum_ticks != 0)
+                cpu_usage = 1 - (double)(idle_ticks - prev_idle_ticks) /
+                                (double)(sum_ticks - prev_sum_ticks);
 
-			char dest_buf[32] = {'\0'};
-			(void)snprintf(dest_buf, sizeof(dest_buf), "%.6f", cpu_usage);
+            char dest_buf[32] = {'\0'};
+            (void)snprintf(dest_buf, sizeof(dest_buf), "%.6f", cpu_usage);
 
-			if (dest_path != NULL)
-			{
-				ACFILEPTR dest_fp = fopen(dest_path, "w");
-				if (dest_fp == NULL)
-					err(EXIT_FAILURE, "%s", dest_path);
+            if (dest_path != NULL)
+            {
+                ACFILEPTR dest_fp = fopen(dest_path, "w");
+                if (dest_fp == NULL)
+                    err(EXIT_FAILURE, "%s", dest_path);
 
-				if (fputs(dest_buf, dest_fp) < 0)
-					err(EXIT_FAILURE, "fputs");
-			}
-			else if (puts(dest_buf) < 0)
-				err(EXIT_FAILURE, "puts");
-		}
+                if (fputs(dest_buf, dest_fp) < 0)
+                    err(EXIT_FAILURE, "fputs");
+            }
+            else if (puts(dest_buf) < 0)
+                err(EXIT_FAILURE, "puts");
+        }
 
-		prev_idle_ticks = idle_ticks;
-		prev_sum_ticks = sum_ticks;
+        prev_idle_ticks = idle_ticks;
+        prev_sum_ticks = sum_ticks;
 
-		if (!done)
-			(void)sigsuspend(&empty_mask);
-	}
-	while (!done);
+        if (!done)
+            (void)sigsuspend(&empty_mask);
+    }
+    while (!done);
 
-	if (sigprocmask(SIG_SETMASK, &orig_mask, NULL) < 0)
-		err(EXIT_FAILURE, "sigprocmask");
+    if (sigprocmask(SIG_SETMASK, &orig_mask, NULL) < 0)
+        err(EXIT_FAILURE, "sigprocmask");
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

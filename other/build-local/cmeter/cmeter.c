@@ -23,28 +23,28 @@ constexpr int max_width = 1000;
 double
 clamp(double x, double min, double max)
 {
-	double xx = x < min ? min : x;
-	return xx > max ? max : xx;
-	//return fmin(fmax(x, min), max);
+    double xx = x < min ? min : x;
+    return xx > max ? max : xx;
+    //return fmin(fmax(x, min), max);
 }
 
 struct meter_opts
 {
-	int width;
-	char fill;
-	char unfill;
-	bool left_to_right;
-	bool suppress_newline;
+    int width;
+    char fill;
+    char unfill;
+    bool left_to_right;
+    bool suppress_newline;
 };
 
 void
 meter_opts_init(struct meter_opts* opts)
 {
-	opts->width = default_width;
-	opts->fill = default_fill;
-	opts->unfill = default_unfill;
-	opts->left_to_right = true;
-	opts->suppress_newline = false;
+    opts->width = default_width;
+    opts->fill = default_fill;
+    opts->unfill = default_unfill;
+    opts->left_to_right = true;
+    opts->suppress_newline = false;
 }
 
 // x is within the interval [0, 1].
@@ -52,164 +52,164 @@ meter_opts_init(struct meter_opts* opts)
 void
 print_cmeter(double x, const struct meter_opts* opts)
 {
-	// round to nearest int
-	const int num_filled = (int)(x * opts->width + 0.5);
-	const int num_unfilled = opts->width - num_filled;
+    // round to nearest int
+    const int num_filled = (int)(x * opts->width + 0.5);
+    const int num_unfilled = opts->width - num_filled;
 
-	if (opts->left_to_right)
-	{
-		for (int i = 0; i < num_filled; ++i)
-		{
-			putchar(opts->fill);
-		}
-		for (int i = 0; i < num_unfilled; ++i)
-		{
-			putchar(opts->unfill);
-		}
-	}
-	else
-	{
-		for (int i = 0; i < num_unfilled; ++i)
-		{
-			putchar(opts->unfill);
-		}
-		for (int i = 0; i < num_filled; ++i)
-		{
-			putchar(opts->fill);
-		}
-	}
+    if (opts->left_to_right)
+    {
+        for (int i = 0; i < num_filled; ++i)
+        {
+            putchar(opts->fill);
+        }
+        for (int i = 0; i < num_unfilled; ++i)
+        {
+            putchar(opts->unfill);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < num_unfilled; ++i)
+        {
+            putchar(opts->unfill);
+        }
+        for (int i = 0; i < num_filled; ++i)
+        {
+            putchar(opts->fill);
+        }
+    }
 
-	if (!opts->suppress_newline)
-		putchar('\n');
+    if (!opts->suppress_newline)
+        putchar('\n');
 }
 
 void
 print_version()
 {
-	printf("%s %s\n", program_invocation_short_name, program_version);
-	printf("License: %s\n", program_license);
-	printf("Written by %s\n", program_author);
+    printf("%s %s\n", program_invocation_short_name, program_version);
+    printf("License: %s\n", program_license);
+    printf("Written by %s\n", program_author);
 }
 
 void
 print_usage()
 {
-	printf("Usage: %s [OPTION]...\n", program_invocation_short_name);
-	printf("\n");
-	printf("Read a number (within the interval [0, 1]) from stdin and\n");
-	printf("print a meter (filled proportional to the number) using ASCII characters.\n");
-	printf("\n");
+    printf("Usage: %s [OPTION]...\n", program_invocation_short_name);
+    printf("\n");
+    printf("Read a number (within the interval [0, 1]) from stdin and\n");
+    printf("print a meter (filled proportional to the number) using ASCII characters.\n");
+    printf("\n");
 
-	printf("OPTIONS\n");
-	printf("  -V        Print the version information, then exit.\n");
-	printf("\n");
-	printf("  -h        Print this message, then exit.\n");
-	printf("\n");
-	printf("  -l        Specify that the meter grows from left to right.\n");
-	printf("            This is the default behavior.\n");
-	printf("\n");
-	printf("  -f CHAR   Specify the fill character of the meter.\n");
-	printf("            CHAR must be a printable character.\n");
-	printf("            The default value is '%c'.\n", default_fill);
-	printf("\n");
-	printf("  -n        Do not print a trailing newline character.\n");
-	printf("\n");
-	printf("  -r        Specify that the meter grows from right to left.\n");
-	printf("\n");
-	printf("  -u CHAR   Specify the unfill character of the meter.\n");
-	printf("            CHAR must be a printable character.\n");
-	printf("            The default value is '%c'.\n", default_unfill);
-	printf("\n");
-	printf("  -w WIDTH  Specify the width of the meter.\n");
-	printf("            WIDTH must be a non-negative integer.\n");
-	printf("            The default value is %hu.\n", default_width);
-	printf("\n");
+    printf("OPTIONS\n");
+    printf("  -V        Print the version information, then exit.\n");
+    printf("\n");
+    printf("  -h        Print this message, then exit.\n");
+    printf("\n");
+    printf("  -l        Specify that the meter grows from left to right.\n");
+    printf("            This is the default behavior.\n");
+    printf("\n");
+    printf("  -f CHAR   Specify the fill character of the meter.\n");
+    printf("            CHAR must be a printable character.\n");
+    printf("            The default value is '%c'.\n", default_fill);
+    printf("\n");
+    printf("  -n        Do not print a trailing newline character.\n");
+    printf("\n");
+    printf("  -r        Specify that the meter grows from right to left.\n");
+    printf("\n");
+    printf("  -u CHAR   Specify the unfill character of the meter.\n");
+    printf("            CHAR must be a printable character.\n");
+    printf("            The default value is '%c'.\n", default_unfill);
+    printf("\n");
+    printf("  -w WIDTH  Specify the width of the meter.\n");
+    printf("            WIDTH must be a non-negative integer.\n");
+    printf("            The default value is %hu.\n", default_width);
+    printf("\n");
 }
 
 int
 main(int argc, char* argv[])
 {
-	struct meter_opts opts;
-	meter_opts_init(&opts);
+    struct meter_opts opts;
+    meter_opts_init(&opts);
 
-	int oc;
-	const char* short_options = "+:Vhf:lnru:w:";
-	long width = 0;
-	while ((oc = getopt(argc, argv, short_options)) != -1)
-	{
-		switch (oc)
-		{
-		case 'V':
-			print_version();
-			return EXIT_SUCCESS;
+    int oc;
+    const char* short_options = "+:Vhf:lnru:w:";
+    long width = 0;
+    while ((oc = getopt(argc, argv, short_options)) != -1)
+    {
+        switch (oc)
+        {
+        case 'V':
+            print_version();
+            return EXIT_SUCCESS;
 
-		case 'h':
-			print_usage();
-			return EXIT_SUCCESS;
+        case 'h':
+            print_usage();
+            return EXIT_SUCCESS;
 
-		case 'w':
-			width = strtol(optarg, NULL, 0);
-			if (width < 0)
-				width = 0;
-			if (width > max_width)
-				width = max_width;
-			opts.width = (int)width;
-			break;
+        case 'w':
+            width = strtol(optarg, NULL, 0);
+            if (width < 0)
+                width = 0;
+            if (width > max_width)
+                width = max_width;
+            opts.width = (int)width;
+            break;
 
-		case 'f':
-			opts.fill = optarg[0];
-			if (!isprint(opts.fill))
-			{
-				errx(EXIT_FAILURE,
-				     "option '%c' received invalid option value: '\\x%x'", oc,
-				     opts.fill);
-			}
-			break;
+        case 'f':
+            opts.fill = optarg[0];
+            if (!isprint(opts.fill))
+            {
+                errx(EXIT_FAILURE,
+                     "option '%c' received invalid option value: '\\x%x'", oc,
+                     opts.fill);
+            }
+            break;
 
-		case 'u':
-			opts.unfill = optarg[0];
-			if (!isprint(opts.unfill))
-			{
-				errx(EXIT_FAILURE,
-				     "option '%c' received invalid option value: '\\x%x'", oc,
-				     opts.unfill);
-			}
-			break;
+        case 'u':
+            opts.unfill = optarg[0];
+            if (!isprint(opts.unfill))
+            {
+                errx(EXIT_FAILURE,
+                     "option '%c' received invalid option value: '\\x%x'", oc,
+                     opts.unfill);
+            }
+            break;
 
-		case 'l':
-			opts.left_to_right = true;
-			break;
+        case 'l':
+            opts.left_to_right = true;
+            break;
 
-		case 'r':
-			opts.left_to_right = false;
-			break;
+        case 'r':
+            opts.left_to_right = false;
+            break;
 
-		case 'n':
-			opts.suppress_newline = true;
-			break;
+        case 'n':
+            opts.suppress_newline = true;
+            break;
 
-		default:
-			exit(EXIT_FAILURE);
-		}
-	}
+        default:
+            exit(EXIT_FAILURE);
+        }
+    }
 
-	//argc -= optind;
-	//argv += optind;
+    //argc -= optind;
+    //argv += optind;
 
-	char* line = NULL;
-	size_t allocated_size = 0;
-	ssize_t bytes_read = 0;
-	while ((bytes_read = getline(&line, &allocated_size, stdin)) != EOF)
-	//while (getline(&line, &allocated_size, stdin) != EOF)
-	{
-		double x = strtod(line, NULL);
-		if (!isfinite(x))
-			continue;
-		print_cmeter(clamp(x, 0, 1), &opts);
-	}
-	free(line);
-	line = NULL;
-	allocated_size = 0;
+    char* line = NULL;
+    size_t allocated_size = 0;
+    ssize_t bytes_read = 0;
+    while ((bytes_read = getline(&line, &allocated_size, stdin)) != EOF)
+    //while (getline(&line, &allocated_size, stdin) != EOF)
+    {
+        double x = strtod(line, NULL);
+        if (!isfinite(x))
+            continue;
+        print_cmeter(clamp(x, 0, 1), &opts);
+    }
+    free(line);
+    line = NULL;
+    allocated_size = 0;
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
