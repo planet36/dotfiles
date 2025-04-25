@@ -81,7 +81,7 @@ sub block is mapped to the third sub block of output, etc.
 constexpr unsigned int
 gfs1_cyclic_drmax(unsigned int k)
 {
-	return 2 * k - 1;
+    return 2 * k - 1;
 }
 
 /**
@@ -92,7 +92,7 @@ gfs1_cyclic_drmax(unsigned int k)
 constexpr unsigned int
 gfs2_cyclic_drmax(unsigned int k)
 {
-	return k + 1;
+    return k + 1;
 }
 
 /**
@@ -103,7 +103,7 @@ gfs2_cyclic_drmax(unsigned int k)
 constexpr unsigned int
 gfs3_cyclic_drmax(unsigned int k)
 {
-	return k + 1;
+    return k + 1;
 }
 
 /// Get the maximum diffusion round (DRmax) when using the optimal non-cyclic block shuffle permutation
@@ -114,18 +114,18 @@ template <unsigned int k>
 constexpr unsigned int
 gfs2_noncyclic_drmax()
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert(k % 2 == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert(k % 2 == 0);
 
-	if constexpr      (k ==  2) return 2;
-	else if constexpr (k ==  4) return 4;
-	else if constexpr (k ==  6) return 5;
-	else if constexpr (k ==  8) return 7;
-	else if constexpr (k == 10) return 7;
-	else if constexpr (k == 12) return 8;
-	else if constexpr (k == 14) return 8;
-	else if constexpr (k == 16) return 8;
+    if constexpr      (k ==  2) return 2;
+    else if constexpr (k ==  4) return 4;
+    else if constexpr (k ==  6) return 5;
+    else if constexpr (k ==  8) return 7;
+    else if constexpr (k == 10) return 7;
+    else if constexpr (k == 12) return 8;
+    else if constexpr (k == 14) return 8;
+    else if constexpr (k == 16) return 8;
 }
 
 /**
@@ -140,18 +140,18 @@ template <unsigned int k>
 constexpr std::array<uint8_t, k>
 gfs_cyclic_p()
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert(k % 2 == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert(k % 2 == 0);
 
-	if constexpr      (k ==  2) return {1, 0};
-	else if constexpr (k ==  4) return {1, 2, 3, 0};
-	else if constexpr (k ==  6) return {1, 2, 3, 4, 5, 0};
-	else if constexpr (k ==  8) return {1, 2, 3, 4, 5, 6, 7, 0};
-	else if constexpr (k == 10) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-	else if constexpr (k == 12) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0};
-	else if constexpr (k == 14) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0};
-	else if constexpr (k == 16) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
+    if constexpr      (k ==  2) return {1, 0};
+    else if constexpr (k ==  4) return {1, 2, 3, 0};
+    else if constexpr (k ==  6) return {1, 2, 3, 4, 5, 0};
+    else if constexpr (k ==  8) return {1, 2, 3, 4, 5, 6, 7, 0};
+    else if constexpr (k == 10) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+    else if constexpr (k == 12) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0};
+    else if constexpr (k == 14) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0};
+    else if constexpr (k == 16) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
 }
 
 /// Get the optimal non-cyclic block shuffle permutation (π) for \a k.
@@ -160,16 +160,16 @@ template <unsigned int k>
 constexpr std::array<uint8_t, k>
 gfs2_noncyclic_p()
 {
-	static_assert(k >= 6);
-	static_assert(k <= 16);
-	static_assert(k % 2 == 0);
+    static_assert(k >= 6);
+    static_assert(k <= 16);
+    static_assert(k % 2 == 0);
 
-	if constexpr      (k ==  6) return {3,0,1,4,5,2};
-	else if constexpr (k ==  8) return {3,0,1,4,7,2,5,6};
-	else if constexpr (k == 10) return {5,0,7,2,9,6,3,8,1,4};
-	else if constexpr (k == 12) return {3,0,7,2,9,4,11,8,5,10,1,6};
-	else if constexpr (k == 14) return {1,2,9,4,3,6,13,8,7,10,11,12,5,0};
-	else if constexpr (k == 16) return {1,2,9,4,15,6,5,8,13,10,7,14,11,12,3,0};
+    if constexpr      (k ==  6) return {3,0,1,4,5,2};
+    else if constexpr (k ==  8) return {3,0,1,4,7,2,5,6};
+    else if constexpr (k == 10) return {5,0,7,2,9,6,3,8,1,4};
+    else if constexpr (k == 12) return {3,0,7,2,9,4,11,8,5,10,1,6};
+    else if constexpr (k == 14) return {1,2,9,4,3,6,13,8,7,10,11,12,5,0};
+    else if constexpr (k == 16) return {1,2,9,4,15,6,5,8,13,10,7,14,11,12,3,0};
 }
 
 /// Get the optimal non-cyclic block shuffle permutation inverse (π⁻¹) for \a k.
@@ -178,16 +178,16 @@ template <unsigned int k>
 constexpr std::array<uint8_t, k>
 gfs2_noncyclic_p_inv()
 {
-	static_assert(k >= 6);
-	static_assert(k <= 16);
-	static_assert(k % 2 == 0);
+    static_assert(k >= 6);
+    static_assert(k <= 16);
+    static_assert(k % 2 == 0);
 
-	if constexpr      (k ==  6) return {1,2,5,0,3,4};
-	else if constexpr (k ==  8) return {1,2,5,0,3,6,7,4};
-	else if constexpr (k == 10) return {1,8,3,6,9,0,5,2,7,4};
-	else if constexpr (k == 12) return {1,10,3,0,5,8,11,2,7,4,9,6};
-	else if constexpr (k == 14) return {13,0,1,4,3,12,5,8,7,2,9,10,11,6};
-	else if constexpr (k == 16) return {15,0,1,14,3,6,5,10,7,2,9,12,13,8,11,4};
+    if constexpr      (k ==  6) return {1,2,5,0,3,4};
+    else if constexpr (k ==  8) return {1,2,5,0,3,6,7,4};
+    else if constexpr (k == 10) return {1,8,3,6,9,0,5,2,7,4};
+    else if constexpr (k == 12) return {1,10,3,0,5,8,11,2,7,4,9,6};
+    else if constexpr (k == 14) return {13,0,1,4,3,12,5,8,7,2,9,10,11,6};
+    else if constexpr (k == 16) return {15,0,1,14,3,6,5,10,7,2,9,12,13,8,11,4};
 }
 
 /// Type-1 GFS round
@@ -200,14 +200,14 @@ void
 gfs1_round(std::array<T, k>& x,
            const std::function<T(T)>& f)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	unsigned int i = 1;
-	{
-		x[i] ^= f(x[i-1]);
-	}
+    unsigned int i = 1;
+    {
+        x[i] ^= f(x[i-1]);
+    }
 }
 
 /// Type-2 GFS round
@@ -220,14 +220,14 @@ void
 gfs2_round(std::array<T, k>& x,
            const std::function<T(T)>& f)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	for (unsigned int i = 1; i <= k-1; i += 2)
-	{
-		x[i] ^= f(x[i-1]);
-	}
+    for (unsigned int i = 1; i <= k-1; i += 2)
+    {
+        x[i] ^= f(x[i-1]);
+    }
 }
 
 /// Type-3 GFS round
@@ -240,15 +240,15 @@ void
 gfs3_round(std::array<T, k>& x,
            const std::function<T(T)>& f)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	// Reverse order
-	for (unsigned int i = k-1; i > 0; --i)
-	{
-		x[i] ^= f(x[i-1]);
-	}
+    // Reverse order
+    for (unsigned int i = k-1; i > 0; --i)
+    {
+        x[i] ^= f(x[i-1]);
+    }
 }
 
 /// Type-1 GFS stir
@@ -265,15 +265,15 @@ gfs1_stir(std::array<T, k>& x,
           const std::array<uint8_t, k>& p,
           unsigned int r)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	while (r-- > 0)
-	{
-		gfs1_round(x, f);
-		permute_from(x, p);
-	}
+    while (r-- > 0)
+    {
+        gfs1_round(x, f);
+        permute_from(x, p);
+    }
 }
 
 /// Type-2 GFS stir
@@ -290,15 +290,15 @@ gfs2_stir(std::array<T, k>& x,
           const std::array<uint8_t, k>& p,
           unsigned int r)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	while (r-- > 0)
-	{
-		gfs2_round(x, f);
-		permute_from(x, p);
-	}
+    while (r-- > 0)
+    {
+        gfs2_round(x, f);
+        permute_from(x, p);
+    }
 }
 
 /// Type-3 GFS stir
@@ -315,15 +315,15 @@ gfs3_stir(std::array<T, k>& x,
           const std::array<uint8_t, k>& p,
           unsigned int r)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	while (r-- > 0)
-	{
-		gfs3_round(x, f);
-		permute_from(x, p);
-	}
+    while (r-- > 0)
+    {
+        gfs3_round(x, f);
+        permute_from(x, p);
+    }
 }
 
 /// Type-1 GFS stir (cyclic shift)
@@ -336,13 +336,13 @@ inline void
 gfs1_cyclic_stir(std::array<T, k>& x,
                  const std::function<T(T)>& f)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
-	constexpr unsigned int r = gfs1_cyclic_drmax(k);
-	gfs1_stir(x, f, p, r);
+    constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
+    constexpr unsigned int r = gfs1_cyclic_drmax(k);
+    gfs1_stir(x, f, p, r);
 }
 
 /// Type-2 GFS stir (cyclic shift)
@@ -355,13 +355,13 @@ inline void
 gfs2_cyclic_stir(std::array<T, k>& x,
                  const std::function<T(T)>& f)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
-	constexpr unsigned int r = gfs2_cyclic_drmax(k);
-	gfs2_stir(x, f, p, r);
+    constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
+    constexpr unsigned int r = gfs2_cyclic_drmax(k);
+    gfs2_stir(x, f, p, r);
 }
 
 /// Type-2 GFS stir (non-cyclic block shuffle)
@@ -374,13 +374,13 @@ inline void
 gfs2_noncyclic_stir(std::array<T, k>& x,
                     const std::function<T(T)>& f)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	constexpr std::array<uint8_t, k> p = gfs2_noncyclic_p_inv<k>(); // p_inv is intentional
-	constexpr unsigned int r = gfs2_noncyclic_drmax<k>();
-	gfs2_stir(x, f, p, r);
+    constexpr std::array<uint8_t, k> p = gfs2_noncyclic_p_inv<k>(); // p_inv is intentional
+    constexpr unsigned int r = gfs2_noncyclic_drmax<k>();
+    gfs2_stir(x, f, p, r);
 }
 
 /// Type-3 GFS stir (cyclic shift)
@@ -393,11 +393,11 @@ inline void
 gfs3_cyclic_stir(std::array<T, k>& x,
                  const std::function<T(T)>& f)
 {
-	static_assert(k >= 2);
-	static_assert(k <= 16);
-	static_assert((k % 2) == 0);
+    static_assert(k >= 2);
+    static_assert(k <= 16);
+    static_assert((k % 2) == 0);
 
-	constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
-	constexpr unsigned int r = gfs3_cyclic_drmax(k);
-	gfs3_stir(x, f, p, r);
+    constexpr std::array<uint8_t, k> p = gfs_cyclic_p<k>();
+    constexpr unsigned int r = gfs3_cyclic_drmax(k);
+    gfs3_stir(x, f, p, r);
 }

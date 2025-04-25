@@ -38,7 +38,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_one(const unsigned int i)
 {
-	return T{1} << i;
+    return T{1} << i;
 }
 
 /// get a bitmask where bit \a i is not set (0) and the rest are set (1)
@@ -47,7 +47,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_zero(const unsigned int i)
 {
-	return ~bitmask_one<T>(i);
+    return ~bitmask_one<T>(i);
 }
 
 /// get a bitmask where low-order bits (less significant than bit \a i) are set (1) and the rest are not set (0)
@@ -56,7 +56,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_lowpass(const unsigned int i)
 {
-	return bitmask_one<T>(i) - 1U;
+    return bitmask_one<T>(i) - 1U;
 }
 
 /// get a bitmask where high-order bits (not less significant than bit \a i) are set (1) and the rest are not set (0)
@@ -65,7 +65,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_highpass(const unsigned int i)
 {
-	return bitmask_zero<T>(i) + 1U;
+    return bitmask_zero<T>(i) + 1U;
 }
 
 /// get bit \a i in \a x
@@ -74,7 +74,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr bool
 get_bit(const T& x, const unsigned int i)
 {
-	return x & bitmask_one<T>(i);
+    return x & bitmask_one<T>(i);
 }
 
 /// set bit \a i in \a x
@@ -83,7 +83,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr void
 set_bit(T& x, const unsigned int i)
 {
-	x |= bitmask_one<T>(i);
+    x |= bitmask_one<T>(i);
 }
 
 /// reset bit \a i in \a x
@@ -92,7 +92,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr void
 reset_bit(T& x, const unsigned int i)
 {
-	x &= bitmask_zero<T>(i);
+    x &= bitmask_zero<T>(i);
 }
 
 /// toggle bit \a i in \a x
@@ -101,5 +101,5 @@ requires (!std::is_same_v<T, bool>)
 constexpr void
 toggle_bit(T& x, const unsigned int i)
 {
-	x ^= bitmask_one<T>(i);
+    x ^= bitmask_one<T>(i);
 }

@@ -17,11 +17,11 @@
 constexpr uint64_t
 wyhash64(uint64_t a, uint64_t b)
 {
-	a ^= _wyp[0];
-	b ^= _wyp[1];
-	mul(a, b);
-	a ^= _wyp[0];
-	b ^= _wyp[1];
-	mul(a, b);
-	return a ^ b;
+    a ^= _wyp[0];
+    b ^= _wyp[1];
+    mul(a, b);
+    a ^= _wyp[0];
+    b ^= _wyp[1];
+    mul(a, b);
+    return a ^ b;
 }

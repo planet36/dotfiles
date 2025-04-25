@@ -30,19 +30,19 @@ getdelim_strip(char** buf,
                FILE* stream,
                const bool strip_delim)
 {
-	ssize_t bytes_read = getdelim(buf, buf_size, delim, stream);
-	if (bytes_read > 0)
-	{
-		const bool remove_last_char =
-		    strip_delim && ((*buf)[bytes_read - 1] == delim);
-		if (remove_last_char)
-		{
-			// Even if delim == '\0', bytes_read must be decremented.
-			(*buf)[bytes_read - 1] = '\0';
-			--bytes_read;
-		}
-	}
-	return bytes_read;
+    ssize_t bytes_read = getdelim(buf, buf_size, delim, stream);
+    if (bytes_read > 0)
+    {
+        const bool remove_last_char =
+            strip_delim && ((*buf)[bytes_read - 1] == delim);
+        if (remove_last_char)
+        {
+            // Even if delim == '\0', bytes_read must be decremented.
+            (*buf)[bytes_read - 1] = '\0';
+            --bytes_read;
+        }
+    }
+    return bytes_read;
 }
 
 /// wrapper for \c getline with param \a strip_delim
@@ -55,8 +55,8 @@ getline_strip(char** buf,
               FILE* stream,
               const bool strip_delim)
 {
-	constexpr char delim = '\n';
-	return getdelim_strip(buf, buf_size, delim, stream, strip_delim);
+    constexpr char delim = '\n';
+    return getdelim_strip(buf, buf_size, delim, stream, strip_delim);
 }
 
 #ifdef __cplusplus

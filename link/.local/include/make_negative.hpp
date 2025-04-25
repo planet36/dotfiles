@@ -15,17 +15,17 @@
 constexpr auto
 make_negative(const std::signed_integral auto x)
 {
-	if (x < 0)
-		return x;
-	else
-		return -x;
+    if (x < 0)
+        return x;
+    else
+        return -x;
 }
 
 constexpr auto
 make_negative(const std::floating_point auto x)
 {
-	if (std::signbit(x))
-		return x;
-	else
-		return std::copysign(x, decltype(x){-1});
+    if (std::signbit(x))
+        return x;
+    else
+        return std::copysign(x, decltype(x){-1});
 }

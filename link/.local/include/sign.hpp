@@ -27,38 +27,38 @@ Two numbers have the same sign if both are non-positive or non-negative.
 constexpr int
 sign(const auto x)
 {
-	return (x > 0) ? 1 : ((x < 0) ? -1 : 0);
+    return (x > 0) ? 1 : ((x < 0) ? -1 : 0);
 }
 
 constexpr bool
 same_sign([[maybe_unused]] const std::unsigned_integral auto x,
           [[maybe_unused]] const std::unsigned_integral auto y)
 {
-	return true;
+    return true;
 }
 
 constexpr bool
 same_sign(const std::unsigned_integral auto x,
           const std::signed_integral auto y)
 {
-	return ((x == 0) && (y <= 0)) || (y >= 0);
+    return ((x == 0) && (y <= 0)) || (y >= 0);
 }
 
 constexpr bool
 same_sign(const std::signed_integral auto x,
           const std::unsigned_integral auto y)
 {
-	return ((x <= 0) && (y == 0)) || (x >= 0);
+    return ((x <= 0) && (y == 0)) || (x >= 0);
 }
 
 constexpr bool
 same_sign(const std::signed_integral auto x, const std::signed_integral auto y)
 {
-	return ((x <= 0) && (y <= 0)) || ((x >= 0) && (y >= 0));
+    return ((x <= 0) && (y <= 0)) || ((x >= 0) && (y >= 0));
 }
 
 constexpr bool
 same_sign(const std::floating_point auto x, const std::floating_point auto y)
 {
-	return ((x <= 0) && (y <= 0)) || ((x >= 0) && (y >= 0));
+    return ((x <= 0) && (y <= 0)) || ((x >= 0) && (y >= 0));
 }

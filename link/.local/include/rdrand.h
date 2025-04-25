@@ -23,31 +23,31 @@ extern "C" {
 static unsigned short
 rdrand16()
 {
-	unsigned short ret = 0;
-	static_assert(sizeof(ret) * 8 == 16);
-	while (_rdrand16_step(&ret) == 0)
-	{}
-	return ret;
+    unsigned short ret = 0;
+    static_assert(sizeof(ret) * 8 == 16);
+    while (_rdrand16_step(&ret) == 0)
+    {}
+    return ret;
 }
 
 static unsigned int
 rdrand32()
 {
-	unsigned int ret = 0;
-	static_assert(sizeof(ret) * 8 == 32);
-	while (_rdrand32_step(&ret) == 0)
-	{}
-	return ret;
+    unsigned int ret = 0;
+    static_assert(sizeof(ret) * 8 == 32);
+    while (_rdrand32_step(&ret) == 0)
+    {}
+    return ret;
 }
 
 static unsigned long long
 rdrand64()
 {
-	unsigned long long ret = 0;
-	static_assert(sizeof(ret) * 8 == 64);
-	while (_rdrand64_step(&ret) == 0)
-	{}
-	return ret;
+    unsigned long long ret = 0;
+    static_assert(sizeof(ret) * 8 == 64);
+    while (_rdrand64_step(&ret) == 0)
+    {}
+    return ret;
 }
 #else
 #warning "__RDRND__ not defined"
@@ -57,31 +57,31 @@ rdrand64()
 static unsigned short
 rdseed16()
 {
-	unsigned short ret = 0;
-	static_assert(sizeof(ret) * 8 == 16);
-	while (_rdseed16_step(&ret) == 0)
-	{}
-	return ret;
+    unsigned short ret = 0;
+    static_assert(sizeof(ret) * 8 == 16);
+    while (_rdseed16_step(&ret) == 0)
+    {}
+    return ret;
 }
 
 static unsigned int
 rdseed32()
 {
-	unsigned int ret = 0;
-	static_assert(sizeof(ret) * 8 == 32);
-	while (_rdseed32_step(&ret) == 0)
-	{}
-	return ret;
+    unsigned int ret = 0;
+    static_assert(sizeof(ret) * 8 == 32);
+    while (_rdseed32_step(&ret) == 0)
+    {}
+    return ret;
 }
 
 static unsigned long long
 rdseed64()
 {
-	unsigned long long ret = 0;
-	static_assert(sizeof(ret) * 8 == 64);
-	while (_rdseed64_step(&ret) == 0)
-	{}
-	return ret;
+    unsigned long long ret = 0;
+    static_assert(sizeof(ret) * 8 == 64);
+    while (_rdseed64_step(&ret) == 0)
+    {}
+    return ret;
 }
 #else
 #warning "__RDSEED__ not defined"

@@ -22,14 +22,14 @@ template <typename T, size_t N, std::unsigned_integral I>
 void
 permute_from(std::array<T, N>& x, const std::array<I, N>& p)
 {
-	std::remove_reference_t<decltype(x)> y;
+    std::remove_reference_t<decltype(x)> y;
 
-	for (size_t i = 0; i < N; ++i)
-	{
-		y[i] = x[p[i]];
-	}
+    for (size_t i = 0; i < N; ++i)
+    {
+        y[i] = x[p[i]];
+    }
 
-	x = y;
+    x = y;
 }
 
 /// y[p[i]] ← x[i]
@@ -40,12 +40,12 @@ template <typename T, size_t N, std::unsigned_integral I>
 void
 permute_to(std::array<T, N>& x, const std::array<I, N>& p)
 {
-	std::remove_reference_t<decltype(x)> y;
+    std::remove_reference_t<decltype(x)> y;
 
-	for (size_t i = 0; i < N; ++i)
-	{
-		y[p[i]] = x[i];
-	}
+    for (size_t i = 0; i < N; ++i)
+    {
+        y[p[i]] = x[i];
+    }
 
-	x = y;
+    x = y;
 }

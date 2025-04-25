@@ -19,6 +19,6 @@
 constexpr auto
 i_to_f(const std::integral auto x)
 {
-	using result_type = float_bits<std::numeric_limits<decltype(x)>::digits>;
-	return static_cast<result_type>(x);
+    using result_type = float_bits<std::numeric_limits<decltype(x)>::digits>;
+    return static_cast<result_type>(x);
 }

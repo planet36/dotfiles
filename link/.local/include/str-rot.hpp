@@ -18,34 +18,34 @@
 void
 rotl(std::string& s, size_t n)
 {
-	n %= std::size(s);
-	auto new_first = std::begin(s);
-	std::advance(new_first, n);
-	(void)std::rotate(std::begin(s), new_first, std::end(s));
+    n %= std::size(s);
+    auto new_first = std::begin(s);
+    std::advance(new_first, n);
+    (void)std::rotate(std::begin(s), new_first, std::end(s));
 }
 
 /// rotate \a s left by \a n places
 inline std::string
 rotl_copy(std::string s, size_t n) // intentionally pass by value
 {
-	rotl(s, n);
-	return s;
+    rotl(s, n);
+    return s;
 }
 
 /// rotate \a s right by \a n places
 void
 rotr(std::string& s, size_t n)
 {
-	n %= std::size(s);
-	auto new_first = std::rbegin(s);
-	std::advance(new_first, n);
-	(void)std::rotate(std::rbegin(s), new_first, std::rend(s));
+    n %= std::size(s);
+    auto new_first = std::rbegin(s);
+    std::advance(new_first, n);
+    (void)std::rotate(std::rbegin(s), new_first, std::rend(s));
 }
 
 /// rotate \a s right by \a n places
 inline std::string
 rotr_copy(std::string s, size_t n) // intentionally pass by value
 {
-	rotr(s, n);
-	return s;
+    rotr(s, n);
+    return s;
 }

@@ -17,19 +17,19 @@ namespace sse
 inline float
 sqrt(float x)
 {
-	return sse_sqrtf(x);
+    return sse_sqrtf(x);
 }
 
 inline double
 sqrt(double x)
 {
-	return sse_sqrt(x);
+    return sse_sqrt(x);
 }
 
 inline float
 rsqrt(float x)
 {
-	return sse_rsqrtf(x);
+    return sse_rsqrtf(x);
 }
 
 }

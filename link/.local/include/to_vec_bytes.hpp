@@ -16,6 +16,6 @@
 auto
 to_vec_bytes(const std::ranges::contiguous_range auto & container)
 {
-	const auto sp_bytes = std::as_bytes(std::span(container));
-	return std::vector(std::cbegin(sp_bytes), std::cend(sp_bytes));
+    const auto sp_bytes = std::as_bytes(std::span(container));
+    return std::vector(std::cbegin(sp_bytes), std::cend(sp_bytes));
 }

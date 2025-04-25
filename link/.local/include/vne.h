@@ -13,10 +13,10 @@
 inline int
 von_neumann_extractor(unsigned char x)
 {
-	switch (x & 0b11)
-	{
-	case 0b10: return 0;
-	case 0b01: return 1;
-	default: return -1;
-	}
+    switch (x & 0b11)
+    {
+    case 0b10: return 0;
+    case 0b01: return 1;
+    default: return -1;
+    }
 }

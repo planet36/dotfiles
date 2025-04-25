@@ -19,22 +19,22 @@
 std::string
 demangle(const char* mangled_name)
 {
-	char* demangled_name =
-	    abi::__cxa_demangle(mangled_name, nullptr, nullptr, nullptr);
-	std::string result =
-	    (demangled_name == nullptr) ? mangled_name : demangled_name;
-	std::free(demangled_name);
-	return result;
+    char* demangled_name =
+        abi::__cxa_demangle(mangled_name, nullptr, nullptr, nullptr);
+    std::string result =
+        (demangled_name == nullptr) ? mangled_name : demangled_name;
+    std::free(demangled_name);
+    return result;
 }
 
 std::string
 demangle(const std::string& mangled_name)
 {
-	return demangle(mangled_name.c_str());
+    return demangle(mangled_name.c_str());
 }
 
 std::string
 demangle(const std::type_info& ti)
 {
-	return demangle(ti.name());
+    return demangle(ti.name());
 }

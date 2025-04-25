@@ -24,13 +24,13 @@ union float_bits_union;
 template <>
 union float_bits_union<4>
 {
-	uint32_t i = 0;
-	float f;
+    uint32_t i = 0;
+    float f;
 };
 
 template <>
 union float_bits_union<8>
 {
-	uint64_t i = 0;
-	double f;
+    uint64_t i = 0;
+    double f;
 };

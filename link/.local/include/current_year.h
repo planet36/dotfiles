@@ -25,37 +25,37 @@ extern "C" {
 static int
 current_year_local()
 {
-	const time_t now_time_t = time(nullptr);
-	struct tm now_tm = {0};
+    const time_t now_time_t = time(nullptr);
+    struct tm now_tm = {0};
 #ifdef DEBUG
-	// https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
-	tzset();
-	if (localtime_r(&now_time_t, &now_tm) == nullptr)
-	{
-		perror("localtime_r");
-		return INT_MIN;
-	}
+    // https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
+    tzset();
+    if (localtime_r(&now_time_t, &now_tm) == nullptr)
+    {
+        perror("localtime_r");
+        return INT_MIN;
+    }
 #else
-	return localtime(&now_time_t)->tm_year + 1900;
+    return localtime(&now_time_t)->tm_year + 1900;
 #endif
-	return now_tm.tm_year + 1900;
+    return now_tm.tm_year + 1900;
 }
 
 static int
 current_year_utc()
 {
-	const time_t now_time_t = time(nullptr);
-	struct tm now_tm = {0};
+    const time_t now_time_t = time(nullptr);
+    struct tm now_tm = {0};
 #ifdef DEBUG
-	if (gmtime_r(&now_time_t, &now_tm) == nullptr)
-	{
-		perror("gmtime_r");
-		return INT_MIN;
-	}
+    if (gmtime_r(&now_time_t, &now_tm) == nullptr)
+    {
+        perror("gmtime_r");
+        return INT_MIN;
+    }
 #else
-	now_tm = *gmtime(&now_time_t);
+    now_tm = *gmtime(&now_time_t);
 #endif
-	return now_tm.tm_year + 1900;
+    return now_tm.tm_year + 1900;
 }
 
 #ifdef __cplusplus

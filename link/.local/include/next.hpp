@@ -17,12 +17,12 @@ template <std::floating_point T>
 constexpr T
 next_less(const T x)
 {
-	return std::nextafter(x, -std::numeric_limits<T>::infinity());
+    return std::nextafter(x, -std::numeric_limits<T>::infinity());
 }
 
 template <std::floating_point T>
 constexpr T
 next_greater(const T x)
 {
-	return std::nextafter(x, std::numeric_limits<T>::infinity());
+    return std::nextafter(x, std::numeric_limits<T>::infinity());
 }

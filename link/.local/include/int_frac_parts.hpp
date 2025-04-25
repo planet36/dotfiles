@@ -17,7 +17,7 @@ template <std::floating_point T>
 constexpr void
 int_frac_parts(const T x, T& i, T& f)
 {
-	f = std::modf(x, &i);
+    f = std::modf(x, &i);
 }
 
 /// get the integer part of a floating-point number
@@ -25,10 +25,10 @@ template <std::floating_point T>
 constexpr T
 int_part(const T x)
 {
-	T i{};
-	T f{};
-	int_frac_parts(x, i, f);
-	return i;
+    T i{};
+    T f{};
+    int_frac_parts(x, i, f);
+    return i;
 }
 
 /// get the fractional part of a floating-pointing point number
@@ -36,8 +36,8 @@ template <std::floating_point T>
 constexpr T
 frac_part(const T x)
 {
-	T i{};
-	T f{};
-	int_frac_parts(x, i, f);
-	return f;
+    T i{};
+    T f{};
+    int_frac_parts(x, i, f);
+    return f;
 }

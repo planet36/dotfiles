@@ -16,13 +16,13 @@
 constexpr auto
 iabs(const std::signed_integral auto x)
 {
-	return std::abs(x);
+    return std::abs(x);
 }
 
 constexpr auto
 iabs(const std::unsigned_integral auto x)
 {
-	return x;
+    return x;
 }
 
 /**
@@ -31,7 +31,7 @@ iabs(const std::unsigned_integral auto x)
 constexpr auto
 uabs(const std::signed_integral auto x)
 {
-	return static_cast<std::make_unsigned_t<decltype(x)>>(std::abs(x));
+    return static_cast<std::make_unsigned_t<decltype(x)>>(std::abs(x));
 }
 
 /**
@@ -40,19 +40,19 @@ uabs(const std::signed_integral auto x)
 constexpr auto
 uabs(const std::unsigned_integral auto x)
 {
-	return x;
+    return x;
 }
 
 /// Cast the int to unsigned int
 constexpr auto
 to_unsigned(const std::integral auto x)
 {
-	return static_cast<std::make_unsigned_t<decltype(x)>>(x);
+    return static_cast<std::make_unsigned_t<decltype(x)>>(x);
 }
 
 /// Cast the int to signed int
 constexpr auto
 to_signed(const std::integral auto x)
 {
-	return static_cast<std::make_signed_t<decltype(x)>>(x);
+    return static_cast<std::make_signed_t<decltype(x)>>(x);
 }

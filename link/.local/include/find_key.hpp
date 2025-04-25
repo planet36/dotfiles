@@ -19,10 +19,10 @@ template <AssociativeContainer C>
 typename C::const_iterator
 find_key_less(const C& c, const typename C::key_type& key)
 {
-	auto iter = c.lower_bound(key);
-	if (iter == c.cbegin())
-		return c.cend();
-	return --iter;
+    auto iter = c.lower_bound(key);
+    if (iter == c.cbegin())
+        return c.cend();
+    return --iter;
 }
 
 /**
@@ -33,10 +33,10 @@ template <AssociativeContainer C>
 typename C::const_iterator
 find_key_less_equal(const C& c, const typename C::key_type& key)
 {
-	auto iter = c.upper_bound(key);
-	if (iter == c.cbegin())
-		return c.cend();
-	return --iter;
+    auto iter = c.upper_bound(key);
+    if (iter == c.cbegin())
+        return c.cend();
+    return --iter;
 }
 
 /**
@@ -47,7 +47,7 @@ template <AssociativeContainer C>
 typename C::const_iterator
 find_key_greater_equal(const C& c, const typename C::key_type& key)
 {
-	return c.lower_bound(key);
+    return c.lower_bound(key);
 }
 
 /**
@@ -58,5 +58,5 @@ template <AssociativeContainer C>
 typename C::const_iterator
 find_key_greater(const C& c, const typename C::key_type& key)
 {
-	return c.upper_bound(key);
+    return c.upper_bound(key);
 }

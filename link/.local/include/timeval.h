@@ -27,17 +27,17 @@ extern "C" {
 static struct timeval
 msec_to_timeval(unsigned int msec)
 {
-	return (struct timeval){
-	    .tv_sec = msec / 1000U,
-	    .tv_usec = (msec % 1000U) * 1000L,
-	};
+    return (struct timeval){
+        .tv_sec = msec / 1000U,
+        .tv_usec = (msec % 1000U) * 1000L,
+    };
 }
 
 static double
 timeval_to_sec(const struct timeval* tv)
 {
-	return (double)tv->tv_sec +
-	       copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
+    return (double)tv->tv_sec +
+           copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132
@@ -46,13 +46,13 @@ timevalsub(const struct timeval* t1,
            const struct timeval* t0,
            struct timeval* diff)
 {
-	diff->tv_sec = t1->tv_sec - t0->tv_sec;
-	diff->tv_usec = t1->tv_usec - t0->tv_usec;
-	if (diff->tv_usec < 0)
-	{
-		diff->tv_sec--;
-		diff->tv_usec += 1'000'000L;
-	}
+    diff->tv_sec = t1->tv_sec - t0->tv_sec;
+    diff->tv_usec = t1->tv_usec - t0->tv_usec;
+    if (diff->tv_usec < 0)
+    {
+        diff->tv_sec--;
+        diff->tv_usec += 1'000'000L;
+    }
 }
 
 #ifdef __cplusplus

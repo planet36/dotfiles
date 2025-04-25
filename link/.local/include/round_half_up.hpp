@@ -25,8 +25,8 @@ template <std::floating_point T>
 constexpr T
 round_half_up(const T x)
 {
-	// NOTE: next-less-than 0.5 is necessary when x == +/-0.49999999999999994
-	static constexpr T almost_half = next_less(T{0.5});
+    // NOTE: next-less-than 0.5 is necessary when x == +/-0.49999999999999994
+    static constexpr T almost_half = next_less(T{0.5});
 
-	return std::trunc(x + std::copysign(almost_half, x));
+    return std::trunc(x + std::copysign(almost_half, x));
 }

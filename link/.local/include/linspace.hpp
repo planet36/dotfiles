@@ -26,37 +26,37 @@ requires (NUM > 0)
 constexpr std::array<T, NUM>
 linspace(const T start, const T stop, const bool endpoint = true)
 {
-	std::array<T, NUM> result;
+    std::array<T, NUM> result;
 
-	result.front() = start;
+    result.front() = start;
 
-	if constexpr (NUM > 1)
-	{
-		const auto delta = to_signed(widen(stop)) - to_signed(widen(start));
-		const auto div = to_signed(widen(NUM - endpoint));
-		const auto offset = to_signed(widen(start)) * div;
+    if constexpr (NUM > 1)
+    {
+        const auto delta = to_signed(widen(stop)) - to_signed(widen(start));
+        const auto div = to_signed(widen(NUM - endpoint));
+        const auto offset = to_signed(widen(start)) * div;
 
-		for (std::remove_cv_t<decltype(div)> i = 1; i < div; ++i)
-		{
-			/*
-			* The rounding must happen last.
-			*
-			*   round(i * delta / div) + start
-			* should be
-			*   round(i * delta / div + start) ==
-			*   round((i * delta + start * div) / div)
-			*
-			* This is noticeable when start is negative.
-			*/
-			//result[i] = div_round(i * delta, div) + start;
-			result[i] = div_round(i * delta + offset, div);
-		}
+        for (std::remove_cv_t<decltype(div)> i = 1; i < div; ++i)
+        {
+            /*
+            * The rounding must happen last.
+            *
+            *   round(i * delta / div) + start
+            * should be
+            *   round(i * delta / div + start) ==
+            *   round((i * delta + start * div) / div)
+            *
+            * This is noticeable when start is negative.
+            */
+            //result[i] = div_round(i * delta, div) + start;
+            result[i] = div_round(i * delta + offset, div);
+        }
 
-		if (endpoint)
-			result.back() = stop;
-	}
+        if (endpoint)
+            result.back() = stop;
+    }
 
-	return result;
+    return result;
 }
 
 /**
@@ -69,23 +69,23 @@ requires (NUM > 0)
 constexpr std::array<double, NUM>
 linspace(const double start, const double stop, const bool endpoint = true)
 {
-	std::array<double, NUM> result;
+    std::array<double, NUM> result;
 
-	result.front() = start;
+    result.front() = start;
 
-	if constexpr (NUM > 1)
-	{
-		const auto delta = stop - start;
-		const size_t div = NUM - endpoint;
+    if constexpr (NUM > 1)
+    {
+        const auto delta = stop - start;
+        const size_t div = NUM - endpoint;
 
-		for (size_t i = 1; i < div; ++i)
-		{
-			result[i] = i * delta / div + start;
-		}
+        for (size_t i = 1; i < div; ++i)
+        {
+            result[i] = i * delta / div + start;
+        }
 
-		if (endpoint)
-			result.back() = stop;
-	}
+        if (endpoint)
+            result.back() = stop;
+    }
 
-	return result;
+    return result;
 }

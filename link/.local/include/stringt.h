@@ -42,26 +42,26 @@ extern "C" {
 strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 [[gnu::returns_nonnull]]
 {
-	//[[assume(dst != nullptr)]];
-	//[[assume(src != nullptr)]];
-	//[[assume(buf_last != nullptr)]];
-	//[[assume(dst <= buf_last)]];
+    //[[assume(dst != nullptr)]];
+    //[[assume(src != nullptr)]];
+    //[[assume(buf_last != nullptr)]];
+    //[[assume(dst <= buf_last)]];
 
-	const size_t gap = buf_last - dst + 1; // includes the terminating NUL character
+    const size_t gap = buf_last - dst + 1; // includes the terminating NUL character
 
-	char* after_nul = (char*)memccpy(dst, src, '\0', gap);
+    char* after_nul = (char*)memccpy(dst, src, '\0', gap);
 
-	if (after_nul != nullptr)
-		return after_nul - 1;
+    if (after_nul != nullptr)
+        return after_nul - 1;
 
-	// truncation happened: NUL character not found within gap characters
-	// in src
+    // truncation happened: NUL character not found within gap characters
+    // in src
 
-	if (trunc_at != nullptr)
-		*trunc_at = &src[gap - 1];
+    if (trunc_at != nullptr)
+        *trunc_at = &src[gap - 1];
 
-	*buf_last = '\0';
-	return buf_last;
+    *buf_last = '\0';
+    return buf_last;
 }
 
 /// String concatenate, report truncation
@@ -75,8 +75,8 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
 [[gnu::returns_nonnull]]
 {
-	dst += strlen(dst);
-	return strtcpy(dst, buf_last, src, trunc_at);
+    dst += strlen(dst);
+    return strtcpy(dst, buf_last, src, trunc_at);
 }
 
 #ifdef __cplusplus

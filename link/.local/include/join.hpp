@@ -26,20 +26,20 @@ requires type_any_of<
 auto
 join(const Iter& first, const Iter& last, const std::string& joiner = ", ")
 {
-	std::string result;
+    std::string result;
 
-	for (Iter i = first; i != last; i = std::next(i))
-	{
-		if (i->empty())
-			continue;
+    for (Iter i = first; i != last; i = std::next(i))
+    {
+        if (i->empty())
+            continue;
 
-		if (!result.empty())
-			result += joiner;
+        if (!result.empty())
+            result += joiner;
 
-		result += *i;
-	}
+        result += *i;
+    }
 
-	return result;
+    return result;
 }
 
 template <std::input_iterator Iter>
@@ -48,20 +48,20 @@ requires std::same_as<typename std::iterator_traits<Iter>::value_type,
 auto
 join(const Iter& first, const Iter& last, const std::string& joiner = ", ")
 {
-	std::string result;
+    std::string result;
 
-	for (Iter i = first; i != last; i = std::next(i))
-	{
-		if (*i == nullptr || (*i)[0] == '\0')
-			continue;
+    for (Iter i = first; i != last; i = std::next(i))
+    {
+        if (*i == nullptr || (*i)[0] == '\0')
+            continue;
 
-		if (!result.empty())
-			result += joiner;
+        if (!result.empty())
+            result += joiner;
 
-		result += *i;
-	}
+        result += *i;
+    }
 
-	return result;
+    return result;
 }
 
 // template template parameter
@@ -70,7 +70,7 @@ requires type_any_of<StringT, std::string, std::string_view, const char*>
 auto
 join(const Container<StringT>& c, const std::string& joiner = ", ")
 {
-	return join(c.cbegin(), c.cend(), joiner);
+    return join(c.cbegin(), c.cend(), joiner);
 }
 
 template <std::input_iterator Iter>
@@ -81,7 +81,7 @@ requires type_any_of<
 auto
 concatenate(const Iter& first, const Iter& last)
 {
-	return join(first, last, std::string{});
+    return join(first, last, std::string{});
 }
 
 template <std::input_iterator Iter>
@@ -90,7 +90,7 @@ requires std::same_as<typename std::iterator_traits<Iter>::value_type,
 auto
 concatenate(const Iter& first, const Iter& last)
 {
-	return join(first, last, std::string{});
+    return join(first, last, std::string{});
 }
 
 // template template parameter
@@ -99,5 +99,5 @@ requires type_any_of<StringT, std::string, std::string_view, const char*>
 auto
 concatenate(const Container<StringT>& c)
 {
-	return join(c.cbegin(), c.cend(), std::string{});
+    return join(c.cbegin(), c.cend(), std::string{});
 }

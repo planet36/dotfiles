@@ -27,26 +27,26 @@ getdelim(std::string& line,
          FILE* stream,
          const bool strip_delim = false)
 {
-	char* buf = nullptr;
-	size_t buf_size = 0;
-	const ssize_t bytes_read = ::getdelim(&buf, &buf_size, delim, stream);
-	if (bytes_read > 0)
-	{
-		const bool delim_at_end = (buf[bytes_read - 1] == delim);
-		const bool remove_last_char = strip_delim && delim_at_end;
-		line.assign(buf, static_cast<size_t>(bytes_read - remove_last_char));
-	}
-	else
-	{
-		line.clear();
-	}
-	std::free(buf);
-	return bytes_read != -1;
+    char* buf = nullptr;
+    size_t buf_size = 0;
+    const ssize_t bytes_read = ::getdelim(&buf, &buf_size, delim, stream);
+    if (bytes_read > 0)
+    {
+        const bool delim_at_end = (buf[bytes_read - 1] == delim);
+        const bool remove_last_char = strip_delim && delim_at_end;
+        line.assign(buf, static_cast<size_t>(bytes_read - remove_last_char));
+    }
+    else
+    {
+        line.clear();
+    }
+    std::free(buf);
+    return bytes_read != -1;
 }
 
 bool
 getline(std::string& line, FILE* stream, const bool strip_delim = false)
 {
-	constexpr char delim = '\n';
-	return getdelim(line, delim, stream, strip_delim);
+    constexpr char delim = '\n';
+    return getdelim(line, delim, stream, strip_delim);
 }

@@ -20,7 +20,7 @@ requires (sizeof(T) == 4 || sizeof(T) == 8)
 constexpr auto
 float_to_bits(const T x)
 {
-	return std::bit_cast<uint_bytes<sizeof(T)>>(x);
+    return std::bit_cast<uint_bytes<sizeof(T)>>(x);
 }
 
 template <std::unsigned_integral T>
@@ -28,5 +28,5 @@ requires (sizeof(T) == 4 || sizeof(T) == 8)
 constexpr auto
 bits_to_float(const T x)
 {
-	return std::bit_cast<float_bytes<sizeof(T)>>(x);
+    return std::bit_cast<float_bytes<sizeof(T)>>(x);
 }

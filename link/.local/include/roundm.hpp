@@ -18,8 +18,8 @@ template <std::integral T>
 constexpr T
 roundm_trunc(const T x, const T m)
 {
-	return x - x % m;
-	//return (x / m) * m;
+    return x - x % m;
+    //return (x / m) * m;
 }
 
 /**
@@ -29,17 +29,17 @@ template <std::integral T>
 constexpr T
 roundm_floor(const T x, const T m)
 {
-	const auto t = roundm_trunc(x, m);
+    const auto t = roundm_trunc(x, m);
 
-	// necessary for x < 0
-	//if (x % m == 0)
-	if (x == t)
-		return x;
+    // necessary for x < 0
+    //if (x % m == 0)
+    if (x == t)
+        return x;
 
-	if (x < 0)
-		return t - m;
-	else
-		return t;
+    if (x < 0)
+        return t - m;
+    else
+        return t;
 }
 
 /**
@@ -49,17 +49,17 @@ template <std::integral T>
 constexpr T
 roundm_ceil(const T x, const T m)
 {
-	const auto t = roundm_trunc(x, m);
+    const auto t = roundm_trunc(x, m);
 
-	// necessary for x > 0
-	//if (x % m == 0)
-	if (x == t)
-		return x;
+    // necessary for x > 0
+    //if (x % m == 0)
+    if (x == t)
+        return x;
 
-	if (x < 0)
-		return t;
-	else
-		return t + m;
+    if (x < 0)
+        return t;
+    else
+        return t + m;
 }
 
 // away from zero
@@ -70,16 +70,16 @@ template <std::integral T>
 constexpr T
 roundm_up(const T x, const T m)
 {
-	const auto t = roundm_trunc(x, m);
+    const auto t = roundm_trunc(x, m);
 
-	//if (x % m == 0)
-	if (x == t)
-		return x;
+    //if (x % m == 0)
+    if (x == t)
+        return x;
 
-	if (x < 0)
-		return t - m;
-	else
-		return t + m;
+    if (x < 0)
+        return t - m;
+    else
+        return t + m;
 }
 
 /**
@@ -89,10 +89,10 @@ template <std::integral T>
 constexpr T
 roundm_nearest(const T x, const T m)
 {
-	const auto t = roundm_trunc(x, m);
+    const auto t = roundm_trunc(x, m);
 
-	if (x < 0)
-		return (x % m < -(m / 2)) ? t - m : t;
-	else
-		return (x % m >  (m / 2)) ? t + m : t;
+    if (x < 0)
+        return (x % m < -(m / 2)) ? t - m : t;
+    else
+        return (x % m >  (m / 2)) ? t + m : t;
 }

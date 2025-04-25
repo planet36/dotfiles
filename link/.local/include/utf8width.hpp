@@ -23,47 +23,47 @@ This is similar to \c wcswidth
 size_t
 utf8width(const std::string& s)
 {
-	// https://juliastrings.github.io/utf8proc/doc/utf8proc_8h.html#a0a18a541ba5bedeb5c3e150024063c2d
-	static constexpr unsigned int options = 0
-		| UTF8PROC_NULLTERM
-		| UTF8PROC_STABLE
-		| UTF8PROC_COMPOSE
-		//| UTF8PROC_IGNORE // removes 00AD
-		| UTF8PROC_STRIPCC
-		//| UTF8PROC_LUMP // converts FF0D to 002D
-		| UTF8PROC_STRIPMARK
-		| UTF8PROC_STRIPNA
-	;
+    // https://juliastrings.github.io/utf8proc/doc/utf8proc_8h.html#a0a18a541ba5bedeb5c3e150024063c2d
+    static constexpr unsigned int options = 0
+        | UTF8PROC_NULLTERM
+        | UTF8PROC_STABLE
+        | UTF8PROC_COMPOSE
+        //| UTF8PROC_IGNORE // removes 00AD
+        | UTF8PROC_STRIPCC
+        //| UTF8PROC_LUMP // converts FF0D to 002D
+        | UTF8PROC_STRIPMARK
+        | UTF8PROC_STRIPNA
+    ;
 
-	size_t num_cols = 0;
+    size_t num_cols = 0;
 
-	uint8_t* dst = nullptr;
+    uint8_t* dst = nullptr;
 
-	const ssize_t dstlen =
-	    utf8proc_map(reinterpret_cast<const uint8_t*>(s.c_str()), static_cast<ssize_t>(s.size()),
-	                 &dst, static_cast<utf8proc_option_t>(options));
+    const ssize_t dstlen =
+        utf8proc_map(reinterpret_cast<const uint8_t*>(s.c_str()), static_cast<ssize_t>(s.size()),
+                     &dst, static_cast<utf8proc_option_t>(options));
 
-	if (dstlen < 0)
-		throw std::runtime_error(utf8proc_errmsg(dstlen));
+    if (dstlen < 0)
+        throw std::runtime_error(utf8proc_errmsg(dstlen));
 
-	uint8_t* dst_copy = dst;
+    uint8_t* dst_copy = dst;
 
-	ssize_t bytes_read = 0;
-	int32_t codepoint = 0;
+    ssize_t bytes_read = 0;
+    int32_t codepoint = 0;
 
-	while ((bytes_read = utf8proc_iterate(dst, -1, &codepoint)) > 0)
-	{
-		if (codepoint == 0)
-			break;
+    while ((bytes_read = utf8proc_iterate(dst, -1, &codepoint)) > 0)
+    {
+        if (codepoint == 0)
+            break;
 
-		num_cols += static_cast<size_t>(utf8proc_charwidth(codepoint));
-		dst += bytes_read;
-	}
+        num_cols += static_cast<size_t>(utf8proc_charwidth(codepoint));
+        dst += bytes_read;
+    }
 
-	std::free(dst_copy);
+    std::free(dst_copy);
 
-	if (bytes_read < 0)
-		throw std::runtime_error(utf8proc_errmsg(bytes_read));
+    if (bytes_read < 0)
+        throw std::runtime_error(utf8proc_errmsg(bytes_read));
 
-	return num_cols;
+    return num_cols;
 }

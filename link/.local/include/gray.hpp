@@ -16,18 +16,18 @@
 constexpr auto
 binary_to_gray(std::unsigned_integral auto x) -> decltype(x)
 {
-	return x ^ (x >> 1);
+    return x ^ (x >> 1);
 }
 
 constexpr auto
 gray_to_binary(std::unsigned_integral auto x) -> decltype(x)
 {
-	unsigned short shift = std::numeric_limits<decltype(x)>::digits;
+    unsigned short shift = std::numeric_limits<decltype(x)>::digits;
 
-	while (shift /= 2)
-	{
-		x ^= (x >> shift);
-	}
+    while (shift /= 2)
+    {
+        x ^= (x >> shift);
+    }
 
-	return x;
+    return x;
 }

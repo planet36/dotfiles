@@ -16,33 +16,33 @@ template <size_t COUNT, typename T, size_t N>
 constexpr std::array<T, COUNT>
 subarr(const std::array<T, N>& arr)
 {
-	static_assert(N >= COUNT);
-	static_assert(COUNT >= 1);
+    static_assert(N >= COUNT);
+    static_assert(COUNT >= 1);
 
-	std::array<T, COUNT> result;
+    std::array<T, COUNT> result;
 
-	for (size_t i = 0; i < COUNT; ++i)
-	{
-		result[i] = arr[i];
-	}
+    for (size_t i = 0; i < COUNT; ++i)
+    {
+        result[i] = arr[i];
+    }
 
-	return result;
+    return result;
 }
 
 template <size_t POS, size_t COUNT, typename T, size_t N>
 constexpr std::array<T, COUNT>
 subarr(const std::array<T, N>& arr)
 {
-	static_assert(N >= COUNT);
-	static_assert(COUNT >= 1);
-	static_assert(POS < N);
-	static_assert(POS <= N - COUNT);
+    static_assert(N >= COUNT);
+    static_assert(COUNT >= 1);
+    static_assert(POS < N);
+    static_assert(POS <= N - COUNT);
 
-	std::array<T, COUNT> result;
+    std::array<T, COUNT> result;
 
-	auto first = std::next(std::cbegin(arr), POS);
-	auto last = std::next(first, COUNT);
-	(void)std::copy(first, last, std::begin(result));
+    auto first = std::next(std::cbegin(arr), POS);
+    auto last = std::next(first, COUNT);
+    (void)std::copy(first, last, std::begin(result));
 
-	return result;
+    return result;
 }

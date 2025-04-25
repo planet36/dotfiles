@@ -35,72 +35,72 @@ inline constexpr uint64_t fnv_offset_basis = UINT64_C(14'695'981'039'346'656'037
 constexpr auto
 fnv1_32(const std::string_view s)
 {
-	using namespace fnv_const_32;
+    using namespace fnv_const_32;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto c : s)
-	{
-		const auto octet = static_cast<uint8_t>(c);
-		result *= fnv_prime;
-		result ^= octet;
-	}
+    for (const auto c : s)
+    {
+        const auto octet = static_cast<uint8_t>(c);
+        result *= fnv_prime;
+        result ^= octet;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1a 32-bit hash
 constexpr auto
 fnv1a_32(const std::string_view s)
 {
-	using namespace fnv_const_32;
+    using namespace fnv_const_32;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto c : s)
-	{
-		const auto octet = static_cast<uint8_t>(c);
-		result ^= octet;
-		result *= fnv_prime;
-	}
+    for (const auto c : s)
+    {
+        const auto octet = static_cast<uint8_t>(c);
+        result ^= octet;
+        result *= fnv_prime;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1 64-bit hash
 constexpr auto
 fnv1_64(const std::string_view s)
 {
-	using namespace fnv_const_64;
+    using namespace fnv_const_64;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto c : s)
-	{
-		const auto octet = static_cast<uint8_t>(c);
-		result *= fnv_prime;
-		result ^= octet;
-	}
+    for (const auto c : s)
+    {
+        const auto octet = static_cast<uint8_t>(c);
+        result *= fnv_prime;
+        result ^= octet;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1a 64-bit hash
 constexpr auto
 fnv1a_64(const std::string_view s)
 {
-	using namespace fnv_const_64;
+    using namespace fnv_const_64;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto c : s)
-	{
-		const auto octet = static_cast<uint8_t>(c);
-		result ^= octet;
-		result *= fnv_prime;
-	}
+    for (const auto c : s)
+    {
+        const auto octet = static_cast<uint8_t>(c);
+        result ^= octet;
+        result *= fnv_prime;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1 32-bit hash
@@ -109,18 +109,18 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1_32(Iter first, const Iter last)
 {
-	using namespace fnv_const_32;
+    using namespace fnv_const_32;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	while (first != last)
-	{
-		result *= fnv_prime;
-		result ^= static_cast<uint8_t>(*first);
-		++first;
-	}
+    while (first != last)
+    {
+        result *= fnv_prime;
+        result ^= static_cast<uint8_t>(*first);
+        ++first;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1a 32-bit hash
@@ -129,18 +129,18 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1a_32(Iter first, const Iter last)
 {
-	using namespace fnv_const_32;
+    using namespace fnv_const_32;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	while (first != last)
-	{
-		result ^= static_cast<uint8_t>(*first);
-		result *= fnv_prime;
-		++first;
-	}
+    while (first != last)
+    {
+        result ^= static_cast<uint8_t>(*first);
+        result *= fnv_prime;
+        ++first;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1 64-bit hash
@@ -149,18 +149,18 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1_64(Iter first, const Iter last)
 {
-	using namespace fnv_const_64;
+    using namespace fnv_const_64;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	while (first != last)
-	{
-		result *= fnv_prime;
-		result ^= static_cast<uint8_t>(*first);
-		++first;
-	}
+    while (first != last)
+    {
+        result *= fnv_prime;
+        result ^= static_cast<uint8_t>(*first);
+        ++first;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1a 64-bit hash
@@ -169,88 +169,88 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1a_64(Iter first, const Iter last)
 {
-	using namespace fnv_const_64;
+    using namespace fnv_const_64;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	while (first != last)
-	{
-		result ^= static_cast<uint8_t>(*first);
-		result *= fnv_prime;
-		++first;
-	}
+    while (first != last)
+    {
+        result ^= static_cast<uint8_t>(*first);
+        result *= fnv_prime;
+        ++first;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1 32-bit hash
 constexpr auto
 fnv1_32(const std::span<const std::byte> bytes)
 {
-	using namespace fnv_const_32;
+    using namespace fnv_const_32;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto b : bytes)
-	{
-		const auto octet = static_cast<uint8_t>(b);
-		result *= fnv_prime;
-		result ^= octet;
-	}
+    for (const auto b : bytes)
+    {
+        const auto octet = static_cast<uint8_t>(b);
+        result *= fnv_prime;
+        result ^= octet;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1a 32-bit hash
 constexpr auto
 fnv1a_32(const std::span<const std::byte> bytes)
 {
-	using namespace fnv_const_32;
+    using namespace fnv_const_32;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto b : bytes)
-	{
-		const auto octet = static_cast<uint8_t>(b);
-		result ^= octet;
-		result *= fnv_prime;
-	}
+    for (const auto b : bytes)
+    {
+        const auto octet = static_cast<uint8_t>(b);
+        result ^= octet;
+        result *= fnv_prime;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1 64-bit hash
 constexpr auto
 fnv1_64(const std::span<const std::byte> bytes)
 {
-	using namespace fnv_const_64;
+    using namespace fnv_const_64;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto b : bytes)
-	{
-		const auto octet = static_cast<uint8_t>(b);
-		result *= fnv_prime;
-		result ^= octet;
-	}
+    for (const auto b : bytes)
+    {
+        const auto octet = static_cast<uint8_t>(b);
+        result *= fnv_prime;
+        result ^= octet;
+    }
 
-	return result;
+    return result;
 }
 
 /// FNV-1a 64-bit hash
 constexpr auto
 fnv1a_64(const std::span<const std::byte> bytes)
 {
-	using namespace fnv_const_64;
+    using namespace fnv_const_64;
 
-	auto result = fnv_offset_basis;
+    auto result = fnv_offset_basis;
 
-	for (const auto b : bytes)
-	{
-		const auto octet = static_cast<uint8_t>(b);
-		result ^= octet;
-		result *= fnv_prime;
-	}
+    for (const auto b : bytes)
+    {
+        const auto octet = static_cast<uint8_t>(b);
+        result ^= octet;
+        result *= fnv_prime;
+    }
 
-	return result;
+    return result;
 }

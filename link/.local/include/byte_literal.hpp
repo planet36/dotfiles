@@ -14,5 +14,5 @@
 constexpr std::byte
 operator""_b(unsigned long long x)
 {
-	return std::byte{static_cast<unsigned char>(x)};
+    return std::byte{static_cast<unsigned char>(x)};
 }

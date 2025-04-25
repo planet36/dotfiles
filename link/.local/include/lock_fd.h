@@ -23,57 +23,57 @@ static inline int
 acq_read_lock_fd(int fd)
 {
 #ifdef __cplusplus
-	using flock_t = flock;
+    using flock_t = flock;
 #else
-	typedef struct flock flock_t;
+    typedef struct flock flock_t;
 #endif
 
-	flock_t lock = {
-		.l_type = F_RDLCK,
-		.l_whence = SEEK_SET,
-		.l_start = 0,
-		.l_len = 0,
-		.l_pid = 0,
-	};
-	return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
+    flock_t lock = {
+        .l_type = F_RDLCK,
+        .l_whence = SEEK_SET,
+        .l_start = 0,
+        .l_len = 0,
+        .l_pid = 0,
+    };
+    return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
 }
 
 static inline int
 acq_write_lock_fd(int fd)
 {
 #ifdef __cplusplus
-	using flock_t = flock;
+    using flock_t = flock;
 #else
-	typedef struct flock flock_t;
+    typedef struct flock flock_t;
 #endif
 
-	flock_t lock = {
-		.l_type = F_WRLCK,
-		.l_whence = SEEK_SET,
-		.l_start = 0,
-		.l_len = 0,
-		.l_pid = 0,
-	};
-	return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
+    flock_t lock = {
+        .l_type = F_WRLCK,
+        .l_whence = SEEK_SET,
+        .l_start = 0,
+        .l_len = 0,
+        .l_pid = 0,
+    };
+    return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
 }
 
 static inline int
 rel_lock_fd(int fd)
 {
 #ifdef __cplusplus
-	using flock_t = flock;
+    using flock_t = flock;
 #else
-	typedef struct flock flock_t;
+    typedef struct flock flock_t;
 #endif
 
-	flock_t lock = {
-		.l_type = F_UNLCK,
-		.l_whence = SEEK_SET,
-		.l_start = 0,
-		.l_len = 0,
-		.l_pid = 0,
-	};
-	return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
+    flock_t lock = {
+        .l_type = F_UNLCK,
+        .l_whence = SEEK_SET,
+        .l_start = 0,
+        .l_len = 0,
+        .l_pid = 0,
+    };
+    return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
 }
 
 #ifdef __cplusplus

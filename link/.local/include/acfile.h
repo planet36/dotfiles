@@ -25,15 +25,15 @@ extern "C" {
 static void
 cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 {
-	if (*fp_ptr != nullptr)
-	{
-		if (fclose(*fp_ptr) < 0)
-		{
-			*fp_ptr = nullptr;
-			err(EXIT_FAILURE, "fclose");
-		}
-		*fp_ptr = nullptr;
-	}
+    if (*fp_ptr != nullptr)
+    {
+        if (fclose(*fp_ptr) < 0)
+        {
+            *fp_ptr = nullptr;
+            err(EXIT_FAILURE, "fclose");
+        }
+        *fp_ptr = nullptr;
+    }
 }
 
 #define ACFD __attribute__((cleanup(cleanup_close_fd))) int
@@ -42,7 +42,7 @@ cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 static inline void
 cleanup_close_fd(const int* fd_ptr) [[gnu::nonnull]]
 {
-	(void)close(*fd_ptr);
+    (void)close(*fd_ptr);
 }
 
 #ifdef __cplusplus

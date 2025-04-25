@@ -29,7 +29,7 @@ extern "C" {
 static void
 cleanup_free_str(char** spp)
 {
-	free(*spp);
+    free(*spp);
 }
 
 #ifdef __cplusplus

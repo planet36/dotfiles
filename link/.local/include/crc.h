@@ -20,83 +20,83 @@
 uint8_t
 crc8(const void* buf, size_t len)
 {
-	typedef uint8_t T;
-	const uint8_t* bytes = (const uint8_t*)(buf);
-	// input bytes will be applied to the most sig. byte of the CRC
-	constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
-	constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
-	constexpr T POLYNOMIAL = 0x07;
-	T crc = 0x00;
+    typedef uint8_t T;
+    const uint8_t* bytes = (const uint8_t*)(buf);
+    // input bytes will be applied to the most sig. byte of the CRC
+    constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
+    constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
+    constexpr T POLYNOMIAL = 0x07;
+    T crc = 0x00;
 
-	for (size_t i = 0; i < len; ++i)
-	{
-		crc ^= bytes[i] << SHIFTL;
+    for (size_t i = 0; i < len; ++i)
+    {
+        crc ^= bytes[i] << SHIFTL;
 
-		for (int j = 0; j < 8; ++j)
-		{
-			if (crc & MSB)
-				crc = (crc << 1) ^ POLYNOMIAL;
-			else
-				crc <<= 1;
-		}
-	}
+        for (int j = 0; j < 8; ++j)
+        {
+            if (crc & MSB)
+                crc = (crc << 1) ^ POLYNOMIAL;
+            else
+                crc <<= 1;
+        }
+    }
 
-	return crc;
+    return crc;
 }
 
 // CRC-16-CCITT
 uint16_t
 crc16(const void* buf, size_t len)
 {
-	typedef uint16_t T;
-	const uint8_t* bytes = (const uint8_t*)(buf);
-	// input bytes will be applied to the most sig. byte of the CRC
-	constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
-	constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
-	constexpr T POLYNOMIAL = 0x1021;
-	T crc = 0xFFFF;
+    typedef uint16_t T;
+    const uint8_t* bytes = (const uint8_t*)(buf);
+    // input bytes will be applied to the most sig. byte of the CRC
+    constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
+    constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
+    constexpr T POLYNOMIAL = 0x1021;
+    T crc = 0xFFFF;
 
-	for (size_t i = 0; i < len; ++i)
-	{
-		crc ^= bytes[i] << SHIFTL;
+    for (size_t i = 0; i < len; ++i)
+    {
+        crc ^= bytes[i] << SHIFTL;
 
-		for (int j = 0; j < 8; ++j)
-		{
-			if (crc & MSB)
-				crc = (crc << 1) ^ POLYNOMIAL;
-			else
-				crc <<= 1;
-		}
-	}
+        for (int j = 0; j < 8; ++j)
+        {
+            if (crc & MSB)
+                crc = (crc << 1) ^ POLYNOMIAL;
+            else
+                crc <<= 1;
+        }
+    }
 
-	return crc;
+    return crc;
 }
 
 // CRC-32
 uint32_t
 crc32(const void* buf, size_t len)
 {
-	typedef uint32_t T;
-	const uint8_t* bytes = (const uint8_t*)(buf);
-	// input bytes will be applied to the most sig. byte of the CRC
-	constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
-	constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
-	constexpr T POLYNOMIAL = 0x04C11DB7;
-	T crc = 0xFFFFFFFF;
+    typedef uint32_t T;
+    const uint8_t* bytes = (const uint8_t*)(buf);
+    // input bytes will be applied to the most sig. byte of the CRC
+    constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
+    constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
+    constexpr T POLYNOMIAL = 0x04C11DB7;
+    T crc = 0xFFFFFFFF;
 
-	for (size_t i = 0; i < len; ++i)
-	{
-		crc ^= bytes[i] << SHIFTL;
+    for (size_t i = 0; i < len; ++i)
+    {
+        crc ^= bytes[i] << SHIFTL;
 
-		for (int j = 0; j < 8; ++j)
-		{
-			if (crc & MSB)
-				crc = (crc << 1) ^ POLYNOMIAL;
-			else
-				crc <<= 1;
-		}
-	}
+        for (int j = 0; j < 8; ++j)
+        {
+            if (crc & MSB)
+                crc = (crc << 1) ^ POLYNOMIAL;
+            else
+                crc <<= 1;
+        }
+    }
 
-	crc ^= 0xFFFFFFFF;
-	return crc;
+    crc ^= 0xFFFFFFFF;
+    return crc;
 }

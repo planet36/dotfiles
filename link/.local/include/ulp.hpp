@@ -26,13 +26,13 @@ requires std::numeric_limits<T>::is_iec559
 T
 ulp(T x)
 {
-	x = std::abs(x);
+    x = std::abs(x);
 
-	if (std::isinf(x))
-		return x;
+    if (std::isinf(x))
+        return x;
 
-	float_bits_union<sizeof(T)> u{.f = x};
-	u.i ^= 1;
+    float_bits_union<sizeof(T)> u{.f = x};
+    u.i ^= 1;
 
-	return u.i & 1 ? u.f - x : x - u.f;
+    return u.i & 1 ? u.f - x : x - u.f;
 }

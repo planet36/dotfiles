@@ -32,34 +32,34 @@ template <size_t chunk_size, size_t buf_size = 32 * 1024>
 void
 file_chunker(FILE* fp, const auto& func_process_chunk)
 {
-	static_assert(chunk_size >= 1);
-	static_assert(chunk_size <= buf_size);
+    static_assert(chunk_size >= 1);
+    static_assert(chunk_size <= buf_size);
 
-	std::array<std::byte, buf_size> buf;
+    std::array<std::byte, buf_size> buf;
 
-	bool continue_reading = true;
+    bool continue_reading = true;
 
-	do
-	{
-		size_t num_bytes_read = fread_bytes(std::data(buf), buf_size, fp);
+    do
+    {
+        size_t num_bytes_read = fread_bytes(std::data(buf), buf_size, fp);
 
-		continue_reading = (num_bytes_read == buf_size);
+        continue_reading = (num_bytes_read == buf_size);
 
-		if (num_bytes_read != buf_size)
-		{
-			// https://www.gnu.org/software/libc/manual/html_node/EOF-and-Errors.html
-			if (std::ferror(fp) != 0)
-				throw std::system_error(std::make_error_code(std::errc{errno}));
+        if (num_bytes_read != buf_size)
+        {
+            // https://www.gnu.org/software/libc/manual/html_node/EOF-and-Errors.html
+            if (std::ferror(fp) != 0)
+                throw std::system_error(std::make_error_code(std::errc{errno}));
 
-			assert(std::feof(fp) != 0); // DEBUG
-		}
+            assert(std::feof(fp) != 0); // DEBUG
+        }
 
-		const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
+        const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
 
-		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size),
-		                      func_process_chunk);
-	}
-	while (continue_reading);
+        std::ranges::for_each(std::views::chunk(span_bytes, chunk_size),
+                              func_process_chunk);
+    }
+    while (continue_reading);
 }
 
 /// Process the file stream \a fp in discrete chunks, and apply length padding
@@ -84,50 +84,50 @@ template <size_t chunk_size, size_t buf_size = 32 * 1024>
 void
 file_chunker_padded(FILE* fp, const auto& func_process_chunk)
 {
-	static_assert(chunk_size >= 1);
-	static_assert(chunk_size <= buf_size);
-	static_assert(chunk_size <= UINT8_MAX,
-	              "The maximum value of a padding byte is 255.");
-	static_assert((buf_size % chunk_size) == 0,
-	              "buf_size must be an even multiple of chunk_size.");
+    static_assert(chunk_size >= 1);
+    static_assert(chunk_size <= buf_size);
+    static_assert(chunk_size <= UINT8_MAX,
+                  "The maximum value of a padding byte is 255.");
+    static_assert((buf_size % chunk_size) == 0,
+                  "buf_size must be an even multiple of chunk_size.");
 
-	std::array<std::byte, buf_size> buf;
+    std::array<std::byte, buf_size> buf;
 
-	bool continue_reading = true;
+    bool continue_reading = true;
 
-	do
-	{
-		size_t num_bytes_read = fread_bytes(std::data(buf), buf_size, fp);
+    do
+    {
+        size_t num_bytes_read = fread_bytes(std::data(buf), buf_size, fp);
 
-		continue_reading = (num_bytes_read == buf_size);
+        continue_reading = (num_bytes_read == buf_size);
 
-		if (num_bytes_read != buf_size)
-		{
-			// https://www.gnu.org/software/libc/manual/html_node/EOF-and-Errors.html
-			if (std::ferror(fp) != 0)
-				throw std::system_error(std::make_error_code(std::errc{errno}));
+        if (num_bytes_read != buf_size)
+        {
+            // https://www.gnu.org/software/libc/manual/html_node/EOF-and-Errors.html
+            if (std::ferror(fp) != 0)
+                throw std::system_error(std::make_error_code(std::errc{errno}));
 
-			assert(std::feof(fp) != 0); // DEBUG
+            assert(std::feof(fp) != 0); // DEBUG
 
-			// pad to the next chunk boundary
-			const size_t num_bytes_to_pad =
-			    chunk_size - num_bytes_read % chunk_size;
+            // pad to the next chunk boundary
+            const size_t num_bytes_to_pad =
+                chunk_size - num_bytes_read % chunk_size;
 
-			assert(num_bytes_read + num_bytes_to_pad <= buf_size); // DEBUG
+            assert(num_bytes_read + num_bytes_to_pad <= buf_size); // DEBUG
 
-			// The padding bytes are 1..num_bytes_to_pad
-			for (size_t i = 1; i <= num_bytes_to_pad; ++i)
-			{
-				buf[num_bytes_read++] = std::byte{static_cast<uint8_t>(i)};
-			}
-		}
+            // The padding bytes are 1..num_bytes_to_pad
+            for (size_t i = 1; i <= num_bytes_to_pad; ++i)
+            {
+                buf[num_bytes_read++] = std::byte{static_cast<uint8_t>(i)};
+            }
+        }
 
-		assert((num_bytes_read % chunk_size) == 0); // DEBUG
+        assert((num_bytes_read % chunk_size) == 0); // DEBUG
 
-		const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
+        const std::span<std::byte> span_bytes{std::data(buf), num_bytes_read};
 
-		std::ranges::for_each(std::views::chunk(span_bytes, chunk_size),
-		                      func_process_chunk);
-	}
-	while (continue_reading);
+        std::ranges::for_each(std::views::chunk(span_bytes, chunk_size),
+                              func_process_chunk);
+    }
+    while (continue_reading);
 }

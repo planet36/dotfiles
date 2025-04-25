@@ -26,25 +26,25 @@ static
 int
 pscanf(const char* path, const char* fmt, ...)
 {
-	FILE* fp;
-	va_list ap;
-	int n;
+    FILE* fp;
+    va_list ap;
+    int n;
 
-	fp = fopen(path, "r");
-	if (fp == nullptr)
-	{
-		warn("fopen '%s'", path);
-		return -1;
-	}
-	va_start(ap, fmt);
-	n = vfscanf(fp, fmt, ap);
-	va_end(ap);
-	if (fclose(fp) < 0)
-	{
-		err(EXIT_FAILURE, "fclose");
-	}
+    fp = fopen(path, "r");
+    if (fp == nullptr)
+    {
+        warn("fopen '%s'", path);
+        return -1;
+    }
+    va_start(ap, fmt);
+    n = vfscanf(fp, fmt, ap);
+    va_end(ap);
+    if (fclose(fp) < 0)
+    {
+        err(EXIT_FAILURE, "fclose");
+    }
 
-	return (n == EOF) ? -1 : n;
+    return (n == EOF) ? -1 : n;
 }
 
 #ifdef __cplusplus

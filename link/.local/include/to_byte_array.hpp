@@ -16,5 +16,5 @@
 constexpr auto
 to_byte_array(const auto& x)
 {
-	return std::bit_cast<std::array<std::byte, sizeof(x)>>(x);
+    return std::bit_cast<std::array<std::byte, sizeof(x)>>(x);
 }

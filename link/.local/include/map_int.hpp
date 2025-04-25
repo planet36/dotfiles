@@ -129,12 +129,12 @@ template <std::unsigned_integral T>
 constexpr T
 map_int(const T x, const T s)
 {
-	if (s == 0) [[unlikely]]
-		// no mapping needed
-		return x;
+    if (s == 0) [[unlikely]]
+        // no mapping needed
+        return x;
 
-	const auto product = widen(x) * widen(s);
-	return static_cast<T>(product >> std::numeric_limits<T>::digits);
+    const auto product = widen(x) * widen(s);
+    return static_cast<T>(product >> std::numeric_limits<T>::digits);
 }
 
 /// map \a x to the inverval <code>[a, b]</code>
@@ -146,12 +146,12 @@ template <std::unsigned_integral T>
 constexpr T
 map_int(const T x, const T a, const T b)
 {
-	/*
-	if ((a == std::numeric_limits<T>::min()) && (b == std::numeric_limits<T>::max())) [[unlikely]]
-		// no mapping needed
-		return x;
-	*/
+    /*
+    if ((a == std::numeric_limits<T>::min()) && (b == std::numeric_limits<T>::max())) [[unlikely]]
+        // no mapping needed
+        return x;
+    */
 
-	const T s = b - a + 1;
-	return map_int(x, s) + a;
+    const T s = b - a + 1;
+    return map_int(x, s) + a;
 }

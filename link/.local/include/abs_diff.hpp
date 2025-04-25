@@ -17,12 +17,12 @@ template <std::unsigned_integral T, std::unsigned_integral U>
 constexpr std::common_type_t<T, U>
 abs_diff(const T a, const U b)
 {
-	return (a < b) ? b - a : a - b;
+    return (a < b) ? b - a : a - b;
 }
 
 template <std::signed_integral T, std::signed_integral U>
 constexpr std::make_unsigned_t<std::common_type_t<T, U>>
 abs_diff(const T a, const U b)
 {
-	return (a < b) ? b - a : a - b;
+    return (a < b) ? b - a : a - b;
 }

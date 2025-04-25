@@ -21,63 +21,63 @@ template <std::uniform_random_bit_generator URBG>
 auto
 sample_n(const std::string& in, const size_t num_samples, URBG& gen)
 {
-	std::remove_cvref_t<decltype(in)> out;
+    std::remove_cvref_t<decltype(in)> out;
 
-	if (!in.empty())
-	{
-		out.reserve(num_samples);
+    if (!in.empty())
+    {
+        out.reserve(num_samples);
 
-		for (size_t n = 0; n < num_samples; ++n)
-		{
-			out.push_back(in[rand_uint_range(in.size(), gen)]);
-		}
-	}
+        for (size_t n = 0; n < num_samples; ++n)
+        {
+            out.push_back(in[rand_uint_range(in.size(), gen)]);
+        }
+    }
 
-	return out;
+    return out;
 }
 
 template <std::uniform_random_bit_generator URBG>
 auto
 sample_n(const std::string& in, const size_t num_samples, URBG&& gen)
 {
-	return sample_n(in, num_samples, gen);
+    return sample_n(in, num_samples, gen);
 }
 
 auto
 sample_n(const std::string& in, const size_t num_samples)
 {
-	return sample_n(in, num_samples, per_thread_random_number_engine);
+    return sample_n(in, num_samples, per_thread_random_number_engine);
 }
 
 template <typename T, std::uniform_random_bit_generator URBG>
 auto
 sample_n(const std::vector<T>& in, const size_t num_samples, URBG& gen)
 {
-	std::remove_cvref_t<decltype(in)> out;
+    std::remove_cvref_t<decltype(in)> out;
 
-	if (!in.empty())
-	{
-		out.reserve(num_samples);
+    if (!in.empty())
+    {
+        out.reserve(num_samples);
 
-		for (size_t n = 0; n < num_samples; ++n)
-		{
-			out.push_back(in[rand_uint_range(in.size(), gen)]);
-		}
-	}
+        for (size_t n = 0; n < num_samples; ++n)
+        {
+            out.push_back(in[rand_uint_range(in.size(), gen)]);
+        }
+    }
 
-	return out;
+    return out;
 }
 
 template <typename T, std::uniform_random_bit_generator URBG>
 auto
 sample_n(const std::vector<T>& in, const size_t num_samples, URBG&& gen)
 {
-	return sample_n(in, num_samples, gen);
+    return sample_n(in, num_samples, gen);
 }
 
 template <typename T>
 auto
 sample_n(const std::vector<T>& in, const size_t num_samples)
 {
-	return sample_n(in, num_samples, per_thread_random_number_engine);
+    return sample_n(in, num_samples, per_thread_random_number_engine);
 }

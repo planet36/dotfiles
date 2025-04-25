@@ -74,8 +74,8 @@ _mm_xor_si128
 inline __m128i
 AddRoundKey(__m128i data, __m128i key)
 {
-	data = _mm_xor_si128(data, key);
-	return data;
+    data = _mm_xor_si128(data, key);
+    return data;
 }
 
 /**
@@ -86,9 +86,9 @@ PSHUFB xmm0, 0x0b06010c07020d08030e09040f0a0500
 inline __m128i
 ShiftRows(__m128i data)
 {
-	const __m128i ISOLATE_SROWS_MASK = _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
-	data = _mm_shuffle_epi8(data, ISOLATE_SROWS_MASK);
-	return data;
+    const __m128i ISOLATE_SROWS_MASK = _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
+    data = _mm_shuffle_epi8(data, ISOLATE_SROWS_MASK);
+    return data;
 }
 
 /**
@@ -99,9 +99,9 @@ PSHUFB xmm0, 0x0306090c0f0205080b0e0104070a0d00
 inline __m128i
 InvShiftRows(__m128i data)
 {
-	const __m128i ISOLATE_SBOX_MASK = _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
-	data = _mm_shuffle_epi8(data, ISOLATE_SBOX_MASK);
-	return data;
+    const __m128i ISOLATE_SBOX_MASK = _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
+    data = _mm_shuffle_epi8(data, ISOLATE_SBOX_MASK);
+    return data;
 }
 
 /**
@@ -113,10 +113,10 @@ AESENC xmm0, 0x00000000000000000000000000000000
 inline __m128i
 MixColumns(__m128i data)
 {
-	const __m128i ZERO = _mm_setzero_si128();
-	data = _mm_aesdeclast_si128(data, ZERO);
-	data = _mm_aesenc_si128(data, ZERO);
-	return data;
+    const __m128i ZERO = _mm_setzero_si128();
+    data = _mm_aesdeclast_si128(data, ZERO);
+    data = _mm_aesenc_si128(data, ZERO);
+    return data;
 }
 
 /**
@@ -128,15 +128,15 @@ AESDEC xmm0, 0x00000000000000000000000000000000
 inline __m128i
 InvMixColumns(__m128i data)
 {
-	// the performance of these two is practically identical
+    // the performance of these two is practically identical
 #if 0
-	const __m128i ZERO = _mm_setzero_si128(); // Latency = 1; Throughput (CPI) = 0.333...
-	data = _mm_aesenclast_si128(data, ZERO); // Latency = 3; Throughput (CPI) = 0.5
-	data = _mm_aesdec_si128(data, ZERO); // Latency = 3; Throughput (CPI) = 0.5
+    const __m128i ZERO = _mm_setzero_si128(); // Latency = 1; Throughput (CPI) = 0.333...
+    data = _mm_aesenclast_si128(data, ZERO); // Latency = 3; Throughput (CPI) = 0.5
+    data = _mm_aesdec_si128(data, ZERO); // Latency = 3; Throughput (CPI) = 0.5
 #else
-	data = _mm_aesimc_si128(data); // Latency = 6; Throughput (CPI) = 1
+    data = _mm_aesimc_si128(data); // Latency = 6; Throughput (CPI) = 1
 #endif
-	return data;
+    return data;
 }
 
 /**
@@ -148,11 +148,11 @@ AESENCLAST xmm0, 0x00000000000000000000000000000000
 inline __m128i
 SubBytes(__m128i data)
 {
-	const __m128i ZERO = _mm_setzero_si128();
-	const __m128i ISOLATE_SBOX_MASK = _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
-	data = _mm_shuffle_epi8(data, ISOLATE_SBOX_MASK);
-	data = _mm_aesenclast_si128(data, ZERO);
-	return data;
+    const __m128i ZERO = _mm_setzero_si128();
+    const __m128i ISOLATE_SBOX_MASK = _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
+    data = _mm_shuffle_epi8(data, ISOLATE_SBOX_MASK);
+    data = _mm_aesenclast_si128(data, ZERO);
+    return data;
 }
 
 /**
@@ -164,9 +164,9 @@ AESDECLAST xmm0, 0x00000000000000000000000000000000
 inline __m128i
 InvSubBytes(__m128i data)
 {
-	const __m128i ZERO = _mm_setzero_si128();
-	const __m128i ISOLATE_SROWS_MASK = _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
-	data = _mm_shuffle_epi8(data, ISOLATE_SROWS_MASK);
-	data = _mm_aesdeclast_si128(data, ZERO);
-	return data;
+    const __m128i ZERO = _mm_setzero_si128();
+    const __m128i ISOLATE_SROWS_MASK = _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
+    data = _mm_shuffle_epi8(data, ISOLATE_SROWS_MASK);
+    data = _mm_aesdeclast_si128(data, ZERO);
+    return data;
 }

@@ -19,33 +19,33 @@ extern "C" {
 static inline bool
 is_seekable(const int fd)
 {
-	return lseek(fd, 0, SEEK_CUR) != -1;
+    return lseek(fd, 0, SEEK_CUR) != -1;
 }
 
 static inline long
 get_file_size(const int fd)
 {
-	struct stat statbuf;
+    struct stat statbuf;
 
-	if (fstat(fd, &statbuf) < 0)
-		return -1;
+    if (fstat(fd, &statbuf) < 0)
+        return -1;
 
-	return statbuf.st_size;
+    return statbuf.st_size;
 }
 
 static inline long
 get_mmap_size(const long file_size)
 {
-	const long page_size = sysconf(_SC_PAGESIZE);
+    const long page_size = sysconf(_SC_PAGESIZE);
 
-	if (file_size == 0)
-		return page_size;
+    if (file_size == 0)
+        return page_size;
 
-	if ((file_size % page_size) == 0)
-		return file_size;
+    if ((file_size % page_size) == 0)
+        return file_size;
 
-	// align on page boundary
-	return file_size + (page_size - (file_size % page_size));
+    // align on page boundary
+    return file_size + (page_size - (file_size % page_size));
 }
 
 #ifdef __cplusplus

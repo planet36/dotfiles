@@ -16,8 +16,8 @@ template <std::ranges::forward_range R,
 inline void
 iota(R& container, T value = {})
 {
-	static_assert(std::ranges::output_range<R, T>,
-	              "The range must be writable");
-	std::iota(std::ranges::begin(container),
-	          std::ranges::end(container), value);
+    static_assert(std::ranges::output_range<R, T>,
+                  "The range must be writable");
+    std::iota(std::ranges::begin(container),
+              std::ranges::end(container), value);
 }
