@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: OSL-3.0
 
 @F13
-	xte 'mouseclick 1' 'mouseclick 1'
+    xte 'mouseclick 1' 'mouseclick 1'
 
 @F14
-	xte 'mouseclick 1' 'mouseclick 1' 'mouseclick 1'
+    xte 'mouseclick 1' 'mouseclick 1' 'mouseclick 1'

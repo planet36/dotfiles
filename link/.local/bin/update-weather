@@ -6,14 +6,14 @@ declare -r LOCATION_SH="$XDG_RUNTIME_DIR"/location.sh
 
 if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
 then
-	update-location || exit
-	source "$LOCATION_SH" || exit
+    update-location || exit
+    source "$LOCATION_SH" || exit
 
-	if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
-	then
-		echo 'Error: Both LAT and LON must be set'
-		exit 1
-	fi
+    if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
+    then
+        echo 'Error: Both LAT and LON must be set'
+        exit 1
+    fi
 fi
 
 # https://openweathermap.org/current#data
@@ -27,14 +27,14 @@ declare -r WEATHER_JSON="$XDG_RUNTIME_DIR"/openweathermap-org-current.json
 #if [[ ! -f "$WEATHER_JSON" ]] || (( $(date -r "$WEATHER_JSON" +%s) < $(date -d '10 minutes ago' +%s) ))
 if [[ ! -f "$WEATHER_JSON" ]] || (( $(stat --printf %Y -- "$WEATHER_JSON") < EPOCHSECONDS-60*10 ))
 then
-	if [[ -z "$OPENWEATHERMAP_API_KEY" ]]
-	then
-		echo 'Error: Must have OpenWeather API key'
-		echo 'https://openweathermap.org/api'
-		exit 1
-	fi
+    if [[ -z "$OPENWEATHERMAP_API_KEY" ]]
+    then
+        echo 'Error: Must have OpenWeather API key'
+        echo 'https://openweathermap.org/api'
+        exit 1
+    fi
 
-	declare -r WEATHER_URI="https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&units=${UNITS}&appid=${OPENWEATHERMAP_API_KEY}"
+    declare -r WEATHER_URI="https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&units=${UNITS}&appid=${OPENWEATHERMAP_API_KEY}"
 
-	curl -s -f "$WEATHER_URI" > "$WEATHER_JSON" || exit
+    curl -s -f "$WEATHER_URI" > "$WEATHER_JSON" || exit
 fi

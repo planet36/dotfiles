@@ -98,39 +98,39 @@ EOT
 */
 define abs(x)
 {
-	if (x < 0)
-	{
-		return -x
-	} else
-	{
-		return x
-	}
+    if (x < 0)
+    {
+        return -x
+    } else
+    {
+        return x
+    }
 }
 
 
 # get the minimum value
 define min(x, y)
 {
-	if (x < y)
-	{
-		return x
-	} else
-	{
-		return y
-	}
+    if (x < y)
+    {
+        return x
+    } else
+    {
+        return y
+    }
 }
 
 
 # get the maximum value
 define max(x, y)
 {
-	if (x < y)
-	{
-		return y
-	} else
-	{
-		return x
-	}
+    if (x < y)
+    {
+        return y
+    } else
+    {
+        return x
+    }
 }
 
 
@@ -138,7 +138,7 @@ define max(x, y)
 # This is also called "signum" or "sgn".
 define sign(x)
 {
-	return (x > 0) - (x < 0)
+    return (x > 0) - (x < 0)
 }
 
 
@@ -161,7 +161,7 @@ EOT
 */
 define sin(x)
 {
-	return s(x)
+    return s(x)
 }
 
 
@@ -183,7 +183,7 @@ EOT
 */
 define cos(x)
 {
-	return c(x)
+    return c(x)
 }
 
 
@@ -205,8 +205,8 @@ EOT
 */
 define tan(x)
 {
-	# definition
-	return sin(x) / cos(x)
+    # definition
+    return sin(x) / cos(x)
 }
 
 
@@ -232,12 +232,12 @@ EOT
 */
 define asin(x)
 {
-	if (x == 1) return pi / 2
-	#if (x == 0) return 0
-	if (x == -1) return -pi / 2
+    if (x == 1) return pi / 2
+    #if (x == 0) return 0
+    if (x == -1) return -pi / 2
 
-	##### need to prove this (shown on the mathworld website)
-	return atan(x / sqrt(1 - x * x))
+    ##### need to prove this (shown on the mathworld website)
+    return atan(x / sqrt(1 - x * x))
 }
 
 
@@ -261,7 +261,7 @@ EOT
 */
 define acos(x)
 {
-	return pi / 2 - asin(x)
+    return pi / 2 - asin(x)
 }
 
 
@@ -283,7 +283,7 @@ EOT
 */
 define atan(x)
 {
-	return a(x)
+    return a(x)
 }
 
 
@@ -297,8 +297,8 @@ https://mathworld.wolfram.com/Cosecant.html
 */
 define csc(x)
 {
-	# definition
-	return 1 / sin(x)
+    # definition
+    return 1 / sin(x)
 }
 
 
@@ -310,8 +310,8 @@ https://mathworld.wolfram.com/Secant.html
 */
 define sec(x)
 {
-	# definition
-	return 1 / cos(x)
+    # definition
+    return 1 / cos(x)
 }
 
 
@@ -323,8 +323,8 @@ https://mathworld.wolfram.com/Cotangent.html
 */
 define cot(x)
 {
-	# definition
-	return 1 / tan(x)
+    # definition
+    return 1 / tan(x)
 }
 
 
@@ -338,7 +338,7 @@ https://mathworld.wolfram.com/InverseCosecant.html
 */
 define acsc(x)
 {
-	return asin(1 / x)
+    return asin(1 / x)
 }
 
 
@@ -350,7 +350,7 @@ https://mathworld.wolfram.com/InverseSecant.html
 */
 define asec(x)
 {
-	return acos(1 / x)
+    return acos(1 / x)
 }
 
 
@@ -362,16 +362,16 @@ https://mathworld.wolfram.com/InverseCotangent.html
 */
 define acot(x)
 {
-	##### is this true?
-	#return atan(1 / x)
+    ##### is this true?
+    #return atan(1 / x)
 
-	if (x < 0)
-	{
-		return -pi / 2 - atan(x)
-	} else
-	{
-		return pi / 2 - atan(x)
-	}
+    if (x < 0)
+    {
+        return -pi / 2 - atan(x)
+    } else
+    {
+        return pi / 2 - atan(x)
+    }
 }
 
 
@@ -401,8 +401,8 @@ EOT
 */
 define sinh(x)
 {
-	# definition
-	return (exp(x) - exp(-x)) / 2
+    # definition
+    return (exp(x) - exp(-x)) / 2
 }
 
 
@@ -430,8 +430,8 @@ EOT
 */
 define cosh(x)
 {
-	# definition
-	return (exp(x) + exp(-x)) / 2
+    # definition
+    return (exp(x) + exp(-x)) / 2
 }
 
 
@@ -459,8 +459,8 @@ EOT
 */
 define tanh(x)
 {
-	# definition
-	return sinh(x) / cosh(x)
+    # definition
+    return sinh(x) / cosh(x)
 }
 
 
@@ -490,10 +490,10 @@ EOT
 */
 define asinh(x)
 {
-	##### can this be represented in terms of atanh ???
+    ##### can this be represented in terms of atanh ???
 
-	# verified in gnuplot
-	return log(x + sqrt(x * x + 1))
+    # verified in gnuplot
+    return log(x + sqrt(x * x + 1))
 }
 
 
@@ -521,12 +521,12 @@ EOT
 */
 define acosh(x)
 {
-	##### can this be represented in terms of atanh ???
+    ##### can this be represented in terms of atanh ???
 
-	# x >= 1
+    # x >= 1
 
-	# verified in gnuplot
-	return log(x + sqrt(x * x - 1))
+    # verified in gnuplot
+    return log(x + sqrt(x * x - 1))
 }
 
 
@@ -554,11 +554,11 @@ EOT
 */
 define atanh(x)
 {
-	# (x > -1) && (x < 1)
+    # (x > -1) && (x < 1)
 
-	# verified in gnuplot
-	return log((1 + x) / (1 - x)) / 2
-	#return (log(1 + x) - log(1 - x)) / 2
+    # verified in gnuplot
+    return log((1 + x) / (1 - x)) / 2
+    #return (log(1 + x) - log(1 - x)) / 2
 }
 
 
@@ -572,8 +572,8 @@ https://mathworld.wolfram.com/HyperbolicCosecant.html
 */
 define csch(x)
 {
-	# definition
-	return 1 / sinh(x)
+    # definition
+    return 1 / sinh(x)
 }
 
 
@@ -585,8 +585,8 @@ https://mathworld.wolfram.com/HyperbolicSecant.html
 */
 define sech(x)
 {
-	# definition
-	return 1 / cosh(x)
+    # definition
+    return 1 / cosh(x)
 }
 
 
@@ -598,8 +598,8 @@ https://mathworld.wolfram.com/HyperbolicCotangent.html
 */
 define coth(x)
 {
-	# definition
-	return 1 / tanh(x)
+    # definition
+    return 1 / tanh(x)
 }
 
 
@@ -614,19 +614,19 @@ https://mathworld.wolfram.com/InverseHyperbolicCosecant.html
 define acsch(x)
 {
 /*
-	# simplified
-	if (x < 0)
-	{
-		return log((1 - sqrt(1 + x * x)) / x)
-	} else
-	{
-		return log((1 + sqrt(1 + x * x)) / x)
-	}
+    # simplified
+    if (x < 0)
+    {
+        return log((1 - sqrt(1 + x * x)) / x)
+    } else
+    {
+        return log((1 + sqrt(1 + x * x)) / x)
+    }
 */
 
-	# verified in gnuplot
-	#return log(1 / x + sqrt(1 / (x * x) + 1))
-	return asinh(1 / x)
+    # verified in gnuplot
+    #return log(1 / x + sqrt(1 / (x * x) + 1))
+    return asinh(1 / x)
 }
 
 
@@ -641,23 +641,23 @@ define asech(x)
 /*
 if (x < 0)
 {
-	return log((1 - sqrt(1 - x * x)) / x)
+    return log((1 - sqrt(1 - x * x)) / x)
 } else
 {
-	return log((1 + sqrt(1 - x * x)) / x)
+    return log((1 + sqrt(1 - x * x)) / x)
 }
 */
 #plot \
 #log((1 - sqrt(1 - x * x)) / x), \
 #log((1 + sqrt(1 - x * x)) / x)
 
-	# verified in gnuplot
+    # verified in gnuplot
 
 
 
 
-	return log(1 / x + sqrt(1 / (x * x) - 1))
-	return acosh(1 / x)
+    return log(1 / x + sqrt(1 / (x * x) - 1))
+    return acosh(1 / x)
 }
 
 
@@ -669,7 +669,7 @@ https://mathworld.wolfram.com/InverseHyperbolicCotangent.html
 */
 define acoth(x)
 {
-	return atanh(1 / x)
+    return atanh(1 / x)
 }
 
 
@@ -680,7 +680,7 @@ log base e (natural logarithm)
 */
 define log(x)
 {
-	return l(x)
+    return l(x)
 }
 
 
@@ -692,7 +692,7 @@ log base 2
 */
 define log2(x)
 {
-	return log(x) / log(2)
+    return log(x) / log(2)
 }
 
 
@@ -701,7 +701,7 @@ log base 10
 */
 define log10(x)
 {
-	return log(x) / log(10)
+    return log(x) / log(10)
 }
 
 
@@ -710,8 +710,8 @@ x to the power y
 */
 define pow(x, y)
 {
-	# x ^ y does not work when the exponent has a fractional part
-	return exp(y * log(x))
+    # x ^ y does not work when the exponent has a fractional part
+    return exp(y * log(x))
 }
 
 
@@ -720,7 +720,7 @@ cube root of x
 */
 define cbrt(x)
 {
-	return pow(x, 1/3)
+    return pow(x, 1/3)
 }
 
 
@@ -729,7 +729,7 @@ The bessel function (of integer order n) of x
 */
 define bessel(n, x)
 {
-	return j(n, x)
+    return j(n, x)
 }
 
 
@@ -740,7 +740,7 @@ e ^ x
 */
 define exp(x)
 {
-	return e(x)
+    return e(x)
 }
 
 
@@ -749,7 +749,7 @@ define exp(x)
 */
 define exp2(x)
 {
-	return pow(2, x)
+    return pow(2, x)
 }
 
 /*
@@ -757,7 +757,7 @@ define exp2(x)
 */
 define exp10(x)
 {
-	return pow(10, x)
+    return pow(10, x)
 }
 
 
@@ -769,20 +769,20 @@ get the integer remainder
 */
 define mod(x, y)
 {
-	auto s
+    auto s
 
-	# save the scale
-	s = scale
+    # save the scale
+    s = scale
 
-	scale = 0
+    scale = 0
 
-	#x - (x / y) * y
-	x %= y
+    #x - (x / y) * y
+    x %= y
 
-	# restore the scale
-	scale = s
+    # restore the scale
+    scale = s
 
-	return x
+    return x
 }
 
 
@@ -791,13 +791,13 @@ get the factorial using a recursive algorithm
 */
 define factorial_recursive(n)
 {
-	if (n <= 1)
-	{
-		return 1
-	} else
-	{
-		return factorial_recursive(n - 1) * n
-	}
+    if (n <= 1)
+    {
+        return 1
+    } else
+    {
+        return factorial_recursive(n - 1) * n
+    }
 }
 
 
@@ -806,16 +806,16 @@ get the factorial using an iterative algorithm
 */
 define factorial_iterative(n)
 {
-	auto result
+    auto result
 
-	result = 1
+    result = 1
 
-	for (i = 2; i <= n; ++i)
-	{
-		result *= i
-	}
+    for (i = 2; i <= n; ++i)
+    {
+        result *= i
+    }
 
-	return result
+    return result
 }
 
 
@@ -824,7 +824,7 @@ get the factorial
 */
 define factorial(n)
 {
-	return factorial_iterative(n)
+    return factorial_iterative(n)
 }
 
 
@@ -835,11 +835,11 @@ https://en.wikipedia.org/wiki/Binomial_coefficient
 */
 define n_choose_k(n, k)
 {
-	if (n < 0) return 0
-	if (k < 0) return 0
-	if (n < k) return 0
+    if (n < 0) return 0
+    if (k < 0) return 0
+    if (n < k) return 0
 
-	return factorial(n) / (factorial(k) * factorial(n - k))
+    return factorial(n) / (factorial(k) * factorial(n - k))
 }
 
 
@@ -853,16 +853,16 @@ https://en.wikipedia.org/wiki/Binomial_probability
 */
 define binomial_probability(p, n, k)
 {
-	auto q
+    auto q
 
-	if ((p < 0) || (p > 1))
-	{
-		return 0
-	}
+    if ((p < 0) || (p > 1))
+    {
+        return 0
+    }
 
-	q = (1 - p)
+    q = (1 - p)
 
-	return n_choose_k(n, k) * (p ^ k) * (q ^ (n - k))
+    return n_choose_k(n, k) * (p ^ k) * (q ^ (n - k))
 }
 
 
@@ -873,30 +873,30 @@ get the greatest common factor of two numbers
 */
 define gcf(a, b)
 {
-	a = abs(a)
+    a = abs(a)
 
-	b = abs(b)
+    b = abs(b)
 
-	while (1)
-	{
-		if (a == 0)
-		{
-			return b
-		}
+    while (1)
+    {
+        if (a == 0)
+        {
+            return b
+        }
 
-		##### modulus operator doesn't work when the scale isn't 0
-		#b %= a
-		b = mod(b, a)
+        ##### modulus operator doesn't work when the scale isn't 0
+        #b %= a
+        b = mod(b, a)
 
-		if (b == 0)
-		{
-			return a
-		}
+        if (b == 0)
+        {
+            return a
+        }
 
-		##### modulus operator doesn't work when the scale isn't 0
-		#a %= b
-		a = mod(a, b)
-	}
+        ##### modulus operator doesn't work when the scale isn't 0
+        #a %= b
+        a = mod(a, b)
+    }
 }
 
 
@@ -905,16 +905,16 @@ get the least common multiple of two numbers
 */
 define lcm(a, b)
 {
-	a = abs(a)
+    a = abs(a)
 
-	b = abs(b)
+    b = abs(b)
 
-	if ((a == 0) || (b == 0))
-	{
-		return 0
-	}
+    if ((a == 0) || (b == 0))
+    {
+        return 0
+    }
 
-	return int_part((a * b) / gcf(a, b))
+    return int_part((a * b) / gcf(a, b))
 }
 
 
@@ -923,32 +923,32 @@ define lcm(a, b)
 ##### this doesn't seem to be any faster than the one above
 define gcf_2(a, b)
 {
-	auto tmp
+    auto tmp
 
-	a = abs(a)
+    a = abs(a)
 
-	b = abs(b)
+    b = abs(b)
 
-	if (a == 0)
-	{
-		return b
-	}
+    if (a == 0)
+    {
+        return b
+    }
 
-	if (b == 0)
-	{
-		return a
-	}
+    if (b == 0)
+    {
+        return a
+    }
 
-	tmp = mod(a, b)
+    tmp = mod(a, b)
 
-	while (tmp != 0)
-	{
-		a = b
-		b = tmp
-		tmp = mod(a, b)
-	}
+    while (tmp != 0)
+    {
+        a = b
+        b = tmp
+        tmp = mod(a, b)
+    }
 
-	return b
+    return b
 }
 
 
@@ -959,20 +959,20 @@ get the integer part of the number
 */
 define int_part(x)
 {
-	auto s
+    auto s
 
-	# save the scale
-	s = scale
+    # save the scale
+    s = scale
 
-	scale = 0
+    scale = 0
 
-	# multiplication by 1 does not work
-	x /= 1
+    # multiplication by 1 does not work
+    x /= 1
 
-	# restore the scale
-	scale = s
+    # restore the scale
+    scale = s
 
-	return x
+    return x
 }
 
 
@@ -981,7 +981,7 @@ get the fraction part of the number
 */
 define frac_part(x)
 {
-	return x - int_part(x)
+    return x - int_part(x)
 }
 
 
@@ -990,7 +990,7 @@ determine if the number is an integer
 */
 define is_integer(x)
 {
-	return x == int_part(x)
+    return x == int_part(x)
 }
 
 
@@ -998,76 +998,76 @@ define is_integer(x)
 
 define round_toward_zero(x)
 {
-	return int_part(x)
+    return int_part(x)
 }
 
 
 define round_away_from_zero(x)
 {
-	auto x2
+    auto x2
 
-	x2 = int_part(x)
+    x2 = int_part(x)
 
-	# if x is an integer
-	if (x == x2)
-	{
-		return x2
-	}
+    # if x is an integer
+    if (x == x2)
+    {
+        return x2
+    }
 
-	if (x2 < 0)
-	{
-		x2 -= 1
-	} else
-	{
-		x2 += 1
-	}
+    if (x2 < 0)
+    {
+        x2 -= 1
+    } else
+    {
+        x2 += 1
+    }
 
-	return x2
+    return x2
 }
 
 
 ##### test this:
 define round_away_from_zero_2(x)
 {
-	auto f
+    auto f
 
-	f = frac_part(x)
+    f = frac_part(x)
 
-	if (f < 0)
-	{
-		return int_part(x - 1)
-	} else
-	if (f > 0)
-	{
-		return int_part(x + 1)
-	} else
-	{
-		return x
-	}
+    if (f < 0)
+    {
+        return int_part(x - 1)
+    } else
+    if (f > 0)
+    {
+        return int_part(x + 1)
+    } else
+    {
+        return x
+    }
 }
 
 
 define round_toward_pos_infinity(x)
 {
-	if (x < 0)
-	{
-		return round_toward_zero(x)
-	} else
-	{
-		return round_away_from_zero(x)
-	}
+    if (x < 0)
+    {
+        return round_toward_zero(x)
+    } else
+    {
+        return round_away_from_zero(x)
+    }
 }
 
 
 define round_toward_neg_infinity(x)
 {
-	if (x < 0)
-	{
-		return round_away_from_zero(x)
-	} else
-	{
-		return round_toward_zero(x)
-	}
+    if (x < 0)
+    {
+        return round_away_from_zero(x)
+    } else
+    {
+        return round_toward_zero(x)
+    }
 }
 
 
@@ -1081,19 +1081,19 @@ define round_toward_neg_infinity(x)
 
 define trunc(x)
 {
-	return round_toward_zero(x)
+    return round_toward_zero(x)
 }
 
 
 define ceil(x)
 {
-	return round_toward_pos_infinity(x)
+    return round_toward_pos_infinity(x)
 }
 
 
 define floor(x)
 {
-	return round_toward_neg_infinity(x)
+    return round_toward_neg_infinity(x)
 }
 
 
@@ -1131,16 +1131,16 @@ define floor(x)
 # round a number to the nearest integer with ties going away from zero (round-half-up)
 define round(x)
 {
-	#if (x < 0) return int_part(x -= 0.5) else return int_part(x + 0.5)
-	if (x < 0)
-	{
-		x -= 0.5
-	} else
-	{
-		x += 0.5
-	}
+    #if (x < 0) return int_part(x -= 0.5) else return int_part(x + 0.5)
+    if (x < 0)
+    {
+        x -= 0.5
+    } else
+    {
+        x += 0.5
+    }
 
-	return int_part(x)
+    return int_part(x)
 }
 
 
@@ -1151,12 +1151,12 @@ define round(x)
 
 for (x = -2.0; x <= 2.0; x += 0.1)
 {
-	print "x: ", x, "\n"
-	print "round_toward_zero: ", round_toward_zero(x), "\n"
-	print "round_away_from_zero: ", round_away_from_zero(x), "\n"
-	print "round_toward_pos_infinity: ", round_toward_pos_infinity(x), "\n"
-	print "round_toward_neg_infinity: ", round_toward_neg_infinity(x), "\n"
-	print "\n"
+    print "x: ", x, "\n"
+    print "round_toward_zero: ", round_toward_zero(x), "\n"
+    print "round_away_from_zero: ", round_away_from_zero(x), "\n"
+    print "round_toward_pos_infinity: ", round_toward_pos_infinity(x), "\n"
+    print "round_toward_neg_infinity: ", round_toward_neg_infinity(x), "\n"
+    print "\n"
 }
 
 */
@@ -1347,7 +1347,7 @@ total=0;
 
 for (k = 1; k <= n; ++k)
 {
-	total += 1/k
+    total += 1/k
 }
 
 total -= l(n)

@@ -8,7 +8,7 @@ declare -r LOCATION_JSON="$XDG_RUNTIME_DIR"/location.json
 
 if [[ ! -f "$LOCATION_JSON" ]]
 then
-	get-location || exit
+    get-location || exit
 fi
 
 # 2) get location metadata
@@ -19,11 +19,11 @@ declare -r LOCATION_METADATA_JSON="$XDG_RUNTIME_DIR"/weather-gov-location-metada
 
 if [[ ! -f "$LOCATION_METADATA_JSON" ]]
 then
-	LAT_LON="$(jq -r '{lat,lon}|join(",")' < "$LOCATION_JSON")" || exit
-	readonly LAT_LON
+    LAT_LON="$(jq -r '{lat,lon}|join(",")' < "$LOCATION_JSON")" || exit
+    readonly LAT_LON
 
-	curl --fail --silent --show-error --output "$LOCATION_METADATA_JSON" -- \
-		"https://api.weather.gov/points/$LAT_LON" || exit
+    curl --fail --silent --show-error --output "$LOCATION_METADATA_JSON" -- \
+        "https://api.weather.gov/points/$LAT_LON" || exit
 fi
 
 # 3) get the radar file
@@ -40,9 +40,9 @@ readonly RADAR_IMG
 
 if [[ ! -f "$RADAR_IMG" ]]
 then
-	curl --fail --silent --show-error --output "$RADAR_IMG"                          -- "$URL" || exit
+    curl --fail --silent --show-error --output "$RADAR_IMG"                          -- "$URL" || exit
 else
-	curl --fail --silent --show-error --output "$RADAR_IMG" --time-cond "$RADAR_IMG" -- "$URL" || exit
+    curl --fail --silent --show-error --output "$RADAR_IMG" --time-cond "$RADAR_IMG" -- "$URL" || exit
 fi
 
 sxiv -a -- "$RADAR_IMG"

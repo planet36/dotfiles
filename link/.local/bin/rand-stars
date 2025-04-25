@@ -18,14 +18,14 @@ DEFAULT_VERBOSE=false
 
 while getopts 'fp:r:v' OPTION
 do
-	case $OPTION in
-		f) FORCE=true ;;
-		p) POW="$OPTARG" ;;
-		r) RES="$OPTARG" ;;
-		v) VERBOSE=true ;;
-		\?) exit 1 ;;
-		*) ;;
-	esac
+    case $OPTION in
+        f) FORCE=true ;;
+        p) POW="$OPTARG" ;;
+        r) RES="$OPTARG" ;;
+        v) VERBOSE=true ;;
+        \?) exit 1 ;;
+        *) ;;
+    esac
 done
 
 shift $((OPTIND - 1)) || exit
@@ -34,36 +34,36 @@ OUTFILE="$1"
 
 if [ -z "$OUTFILE" ]
 then
-	echo 'Error: output image path not given' 1>&2
-	exit 1
+    echo 'Error: output image path not given' 1>&2
+    exit 1
 fi
 
 if [ -e "$OUTFILE" ]
 then
-	if ! $FORCE
-	then
-		echo 'Error: output image path already exists' 1>&2
-		exit 1
-	fi
+    if ! $FORCE
+    then
+        echo 'Error: output image path already exists' 1>&2
+        exit 1
+    fi
 fi
 
 if ! command -v magick > /dev/null
 then
-	echo 'Error: "magick" command not found' 1>&2
-	exit 1
+    echo 'Error: "magick" command not found' 1>&2
+    exit 1
 fi
 
 if $VERBOSE
 then
-	set -x
+    set -x
 fi
 
 magick \
-	-size "$RES" \
-	canvas:black \
-	-colorspace Gray \
-	+noise Laplacian \
-	-evaluate Pow "$POW" \
-	-normalize \
-	-depth 4 \
-	"$OUTFILE"
+    -size "$RES" \
+    canvas:black \
+    -colorspace Gray \
+    +noise Laplacian \
+    -evaluate Pow "$POW" \
+    -normalize \
+    -depth 4 \
+    "$OUTFILE"

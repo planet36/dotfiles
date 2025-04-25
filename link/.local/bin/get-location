@@ -5,4 +5,4 @@
 # https://ip-api.com/docs/api:json
 
 curl --fail --silent --show-error --output "$XDG_RUNTIME_DIR"/location.json -- \
-	'http://ip-api.com/json/?fields=lat,lon'
+    'http://ip-api.com/json/?fields=lat,lon'

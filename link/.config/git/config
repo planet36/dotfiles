@@ -1,83 +1,83 @@
 [alias]
-	br = branch
-	ci = commit
-	co = checkout
-	d = diff
-	dt = difftool
-	f = fetch
-	info = remote -v show
-	lg = log --color --decorate --oneline --graph
-	lgg = log --color --decorate --oneline --graph --all
-	lggg = log --color --decorate --oneline --graph --all --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset %s%Cred%d%Creset %Cgreen%an%Creset' --date=short
-	pr = pull --rebase
-	s = status
-	ss = status -s
-	sw = switch
-	unstage = restore --staged
+    br = branch
+    ci = commit
+    co = checkout
+    d = diff
+    dt = difftool
+    f = fetch
+    info = remote -v show
+    lg = log --color --decorate --oneline --graph
+    lgg = log --color --decorate --oneline --graph --all
+    lggg = log --color --decorate --oneline --graph --all --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset %s%Cred%d%Creset %Cgreen%an%Creset' --date=short
+    pr = pull --rebase
+    s = status
+    ss = status -s
+    sw = switch
+    unstage = restore --staged
 [branch]
-	sort = -committerdate
+    sort = -committerdate
 [column]
-	ui = auto
+    ui = auto
 [commit]
-	verbose = true
+    verbose = true
 [core]
-	editor = nvim
-	fsmonitor = true
+    editor = nvim
+    fsmonitor = true
 [diff]
-	algorithm = histogram
-	colorMoved = plain
-	guitool = meld
-	mnemonicPrefix = true
-	tool = nvimdiff
+    algorithm = histogram
+    colorMoved = plain
+    guitool = meld
+    mnemonicPrefix = true
+    tool = nvimdiff
 [difftool]
-	prompt = false
+    prompt = false
 [fetch]
-	all = true
+    all = true
 [help]
-	autoCorrect = prompt
+    autoCorrect = prompt
 [include]
-	path = ~/.config/git/private.gitconfig
+    path = ~/.config/git/private.gitconfig
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [log]
-	date = iso
+    date = iso
 [merge]
-	conflictStyle = zdiff3
-	guitool = meld
-	tool = nvimdiff
+    conflictStyle = zdiff3
+    guitool = meld
+    tool = nvimdiff
 [mergetool]
-	keepBackup = false
+    keepBackup = false
 [mergetool "meld"]
-	hasOutput = true
-	useAutoMerge = true
+    hasOutput = true
+    useAutoMerge = true
 [pull]
-	rebase = false
+    rebase = false
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
 [rebase]
-	autoSquash = true
-	autoStash = true
-	updateRefs = true
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
 [rerere]
-	autoupdate = true
-	enabled = true
+    autoupdate = true
+    enabled = true
 [sendemail]
-	suppresscc = self
+    suppresscc = self
 [tag]
-	sort = version:refname
+    sort = version:refname
 
 # https://github.com/dandavison/delta
 # https://dandavison.github.io/delta/full---help-output.html
 [core]
-	pager = delta
+    pager = delta
 [interactive]
-	diffFilter = delta --color-only
+    diffFilter = delta --color-only
 [delta]
-	line-numbers = true
-	line-numbers-left-format = "{nm:>4}┊"
-	line-numbers-right-format = "{np:>4}│"
-	side-by-side = true
-	tabs = 4
+    line-numbers = true
+    line-numbers-left-format = "{nm:>4}┊"
+    line-numbers-right-format = "{np:>4}│"
+    side-by-side = true
+    tabs = 4
 
 # │    U+2502  &boxv;            BOX DRAWINGS LIGHT VERTICAL (So) (vv)                    https://unicode-table.com/en/2502/
 # ┃    U+2503  &#x2503;          BOX DRAWINGS HEAVY VERTICAL (So) (VV)                    https://unicode-table.com/en/2503/

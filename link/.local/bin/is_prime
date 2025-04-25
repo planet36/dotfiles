@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: OSL-3.0
 
 factor | awk '{
-	is_prime = (NF==1 || NF==2)
-	n = substr($1, 1, length($1) - 1)
-	if (is_prime)
-		print n, "is prime"
-	else
-		print n, "is not prime"
+    is_prime = (NF==1 || NF==2)
+    n = substr($1, 1, length($1) - 1)
+    if (is_prime)
+        print n, "is prime"
+    else
+        print n, "is not prime"
 }'

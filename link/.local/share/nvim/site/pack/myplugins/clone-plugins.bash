@@ -36,17 +36,17 @@ echo
 
 for PLUGIN in "${PLUGINS_START[@]}"
 do
-	declare -l DIR="$(basename --suffix .git -- "$PLUGIN")"
-	echo "# cloning $DIR"
+    declare -l DIR="$(basename --suffix .git -- "$PLUGIN")"
+    echo "# cloning $DIR"
 
-	if [[ ! -d "$DIR" ]]
-	then
-		git clone --quiet -- "$PLUGIN" || break
-	else
-		echo "(already exists)"
-	fi
+    if [[ ! -d "$DIR" ]]
+    then
+        git clone --quiet -- "$PLUGIN" || break
+    else
+        echo "(already exists)"
+    fi
 
-	echo
+    echo
 done
 
 cd - > /dev/null || exit
@@ -58,17 +58,17 @@ echo
 
 for PLUGIN in "${PLUGINS_OPT[@]}"
 do
-	declare -l DIR="$(basename --suffix .git -- "$PLUGIN")"
-	echo "# cloning $DIR"
+    declare -l DIR="$(basename --suffix .git -- "$PLUGIN")"
+    echo "# cloning $DIR"
 
-	if [[ ! -d "$DIR" ]]
-	then
-		git clone --quiet -- "$PLUGIN" || break
-	else
-		echo "(already exists)"
-	fi
+    if [[ ! -d "$DIR" ]]
+    then
+        git clone --quiet -- "$PLUGIN" || break
+    else
+        echo "(already exists)"
+    fi
 
-	echo
+    echo
 done
 
 cd - > /dev/null || exit

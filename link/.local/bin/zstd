@@ -39,29 +39,29 @@ declare -a ARGS=('--quiet' '--rm' '--ultra')
 
 for ARG
 do
-	case "$ARG" in
-		-1) ARG='-1' ;;
-		-2) ARG='-4' ;;
-		-3) ARG='-6' ;;
-		-4) ARG='-9' ;;
-		-5) ARG='-12' ;;
-		-6) ARG='-14' ;;
-		-7) ARG='-17' ;;
-		-8) ARG='-19' ;;
-		-9) ARG='-22' ;;
-		--) break ;; # Stop processing args
-		*) ;;
-	esac
+    case "$ARG" in
+        -1) ARG='-1' ;;
+        -2) ARG='-4' ;;
+        -3) ARG='-6' ;;
+        -4) ARG='-9' ;;
+        -5) ARG='-12' ;;
+        -6) ARG='-14' ;;
+        -7) ARG='-17' ;;
+        -8) ARG='-19' ;;
+        -9) ARG='-22' ;;
+        --) break ;; # Stop processing args
+        *) ;;
+    esac
 
-	ARGS+=("$ARG")
-	shift
+    ARGS+=("$ARG")
+    shift
 done
 
 # Add remaining args
 for ARG
 do
-	ARGS+=("$ARG")
-	shift
+    ARGS+=("$ARG")
+    shift
 done
 
 env -i zstd "${ARGS[@]}"
