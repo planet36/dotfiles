@@ -5,7 +5,6 @@
 /**
 \file
 \author Steven Ward
-\sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
 */
 
 #pragma once
@@ -114,6 +113,9 @@ transpose(arr_m128i<8>& x)
 
 
 /// Transpose \a x (treating it as a 16x16 matrix of \c uint8_t) using SSE2 intrinsics
+/**
+\sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
+*/
 static void
 transpose(arr_m128i<16>& x)
 {
