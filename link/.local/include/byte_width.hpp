@@ -16,6 +16,6 @@ constexpr unsigned int
 byte_width(const size_t x)
 {
     // std::bit_width(0) returns 0, but we want it to be 1
-    const unsigned int w = std::max(std::bit_width(x), 1);
+    const unsigned int w = std::max(static_cast<unsigned int>(std::bit_width(x)), 1U);
     return (w / 8) + (w % 8 != 0);
 }
