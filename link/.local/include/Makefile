@@ -8,11 +8,15 @@ CPPFLAGS += -D_GNU_SOURCE
 CPPFLAGS += `pkg-config --cflags libutf8proc`
 
 CFLAGS += $(OPTIMIZE_OPTIONS)
-CFLAGS += -Werror -Wno-error=pedantic -Wno-error=useless-cast
+CFLAGS += -Werror
+CFLAGS += -Wno-error=pedantic
+CFLAGS += -Wno-error=useless-cast
 CFLAGS += -Wno-unused-function
 
 CXXFLAGS += $(OPTIMIZE_OPTIONS)
-CXXFLAGS += -Werror -Wno-error=pedantic -Wno-error=useless-cast
+CXXFLAGS += -Werror
+CXXFLAGS += -Wno-error=pedantic
+CXXFLAGS += -Wno-error=useless-cast
 CXXFLAGS += -Wno-unused-function
 
 #LDFLAGS +=
