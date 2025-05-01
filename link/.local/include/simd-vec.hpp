@@ -15,10 +15,10 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 
-using vec_m128i = std::vector<alignas(sizeof(__m128i)) __m128i>;
+using vec_m128i = std::vector<__m128i>;
 
-using vec_m256i = std::vector<alignas(sizeof(__m256i)) __m256i>;
+using vec_m256i = std::vector<__m256i>;
 
-using vec_m512i = std::vector<alignas(sizeof(__m512i)) __m512i>;
+using vec_m512i = std::vector<__m512i>;
 
 #pragma GCC diagnostic pop
