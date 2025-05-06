@@ -115,22 +115,22 @@ constexpr std::array<uint16_t, 16> bitmask16_array_zero{
 };
 
 constexpr std::array<uint16_t, 16> bitmask16_array_lowpass{
-    bitmask16_array_one[ 0] - 1U,
-    bitmask16_array_one[ 1] - 1U,
-    bitmask16_array_one[ 2] - 1U,
-    bitmask16_array_one[ 3] - 1U,
-    bitmask16_array_one[ 4] - 1U,
-    bitmask16_array_one[ 5] - 1U,
-    bitmask16_array_one[ 6] - 1U,
-    bitmask16_array_one[ 7] - 1U,
-    bitmask16_array_one[ 8] - 1U,
-    bitmask16_array_one[ 9] - 1U,
-    bitmask16_array_one[10] - 1U,
-    bitmask16_array_one[11] - 1U,
-    bitmask16_array_one[12] - 1U,
-    bitmask16_array_one[13] - 1U,
-    bitmask16_array_one[14] - 1U,
-    bitmask16_array_one[15] - 1U,
+    static_cast<uint16_t>(bitmask16_array_one[ 0] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 1] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 2] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 3] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 4] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 5] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 6] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 7] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 8] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[ 9] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[10] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[11] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[12] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[13] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[14] - 1U),
+    static_cast<uint16_t>(bitmask16_array_one[15] - 1U),
 };
 
 constexpr std::array<uint16_t, 16> bitmask16_array_highpass{
