@@ -268,7 +268,7 @@ aesdec_permute(T a)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesenc on all elements of array \a arr with key \a key
+/// Do \c aesenc \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
 aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds = 1)
@@ -285,7 +285,7 @@ aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds =
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesdec on all elements of array \a arr with key \a key
+/// Do \c aesdec \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
 aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds = 1)
@@ -302,7 +302,7 @@ aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds =
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesenc on each element of array \a arr with the corresponding key from \a keys
+/// Do \c aesenc \a num_rounds times on each element of array \a arr with the corresponding key from \a keys
 template <simd_int_t T, size_t N>
 inline void
 aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds = 1)
@@ -319,7 +319,7 @@ aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesdec on each element of array \a arr with the corresponding key from \a keys
+/// Do \c aesdec \a num_rounds times on each element of array \a arr with the corresponding key from \a keys
 template <simd_int_t T, size_t N>
 inline void
 aesdec_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds = 1)
