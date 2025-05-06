@@ -228,44 +228,6 @@ inline auto aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_ep
 
 #endif
 
-/// Do \c aesenc \a Nr times on data \a a with key \c 0
-/**
-\pre \a Nr must be at least \c 1.
-\tparam Nr the number of rounds of encryption to perform
-*/
-template <simd_int_t T, unsigned int Nr = 3>
-requires (Nr >= 1)
-inline auto
-aesenc_permute(T a)
-{
-    const T key{};
-
-    for (unsigned int round = 0; round < Nr; ++round)
-    {
-        a = aesenc(a, key);
-    }
-    return a;
-}
-
-/// Do \c aesdec \a Nr times on data \a a with key \c 0
-/**
-\pre \a Nr must be at least \c 1.
-\tparam Nr the number of rounds of decryption to perform
-*/
-template <simd_int_t T, unsigned int Nr = 3>
-requires (Nr >= 1)
-inline auto
-aesdec_permute(T a)
-{
-    const T key{};
-
-    for (unsigned int round = 0; round < Nr; ++round)
-    {
-        a = aesdec(a, key);
-    }
-    return a;
-}
-
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 /// Do \c aesenc \a num_rounds times on all elements of array \a arr with key \a key
@@ -295,40 +257,6 @@ aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
         for (unsigned int round = 0; round < num_rounds; ++round)
         {
             arr[i] = aesdec(arr[i], key);
-        }
-    }
-}
-#pragma GCC diagnostic pop
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesenc \a num_rounds times on each element of array \a arr with the corresponding key from \a keys
-template <simd_int_t T, size_t N>
-inline void
-aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds)
-{
-    for (size_t i = 0; i < N; ++i)
-    {
-        for (unsigned int round = 0; round < num_rounds; ++round)
-        {
-            arr[i] = aesenc(arr[i], keys[i]);
-        }
-    }
-}
-#pragma GCC diagnostic pop
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-/// Do \c aesdec \a num_rounds times on each element of array \a arr with the corresponding key from \a keys
-template <simd_int_t T, size_t N>
-inline void
-aesdec_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds)
-{
-    for (size_t i = 0; i < N; ++i)
-    {
-        for (unsigned int round = 0; round < num_rounds; ++round)
-        {
-            arr[i] = aesdec(arr[i], keys[i]);
         }
     }
 }
