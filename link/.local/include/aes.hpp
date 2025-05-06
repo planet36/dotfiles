@@ -271,7 +271,7 @@ aesdec_permute(T a)
 /// Do \c aesenc \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
-aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds = 1)
+aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
 {
     for (size_t i = 0; i < N; ++i)
     {
@@ -288,7 +288,7 @@ aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds =
 /// Do \c aesdec \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
-aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds = 1)
+aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
 {
     for (size_t i = 0; i < N; ++i)
     {
@@ -305,7 +305,7 @@ aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds =
 /// Do \c aesenc \a num_rounds times on each element of array \a arr with the corresponding key from \a keys
 template <simd_int_t T, size_t N>
 inline void
-aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds = 1)
+aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds)
 {
     for (size_t i = 0; i < N; ++i)
     {
@@ -322,7 +322,7 @@ aesenc_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned
 /// Do \c aesdec \a num_rounds times on each element of array \a arr with the corresponding key from \a keys
 template <simd_int_t T, size_t N>
 inline void
-aesdec_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds = 1)
+aesdec_array(std::array<T, N>& arr, const std::array<T, N>& keys, const unsigned int num_rounds)
 {
     for (size_t i = 0; i < N; ++i)
     {
