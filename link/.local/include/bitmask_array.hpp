@@ -55,14 +55,14 @@ constexpr std::array<uint8_t, 8> bitmask8_array_zero{
 };
 
 constexpr std::array<uint8_t, 8> bitmask8_array_lowpass{
-    bitmask8_array_one[ 0] - 1U,
-    bitmask8_array_one[ 1] - 1U,
-    bitmask8_array_one[ 2] - 1U,
-    bitmask8_array_one[ 3] - 1U,
-    bitmask8_array_one[ 4] - 1U,
-    bitmask8_array_one[ 5] - 1U,
-    bitmask8_array_one[ 6] - 1U,
-    bitmask8_array_one[ 7] - 1U,
+    static_cast<uint8_t>(bitmask8_array_one[ 0] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[ 1] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[ 2] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[ 3] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[ 4] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[ 5] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[ 6] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[ 7] - 1U),
 };
 
 constexpr std::array<uint8_t, 8> bitmask8_array_highpass{
