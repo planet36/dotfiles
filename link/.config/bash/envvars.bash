@@ -231,6 +231,7 @@ DEBUG_OPTIONS+=' -UNDEBUG'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
 DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS'
 DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG'
+DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG_PEDANTIC'
 DEBUG_OPTIONS+=' -D_GLIBCXX_SANITIZE_VECTOR'
 # https://www.gnu.org/software/libc/manual/html_node/Source-Fortification.html
 # https://fedoraproject.org/wiki/Changes/Add_FORTIFY_SOURCE%3D3_to_distribution_build_flags
