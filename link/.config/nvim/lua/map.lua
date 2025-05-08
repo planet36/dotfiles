@@ -126,6 +126,7 @@ vim.keymap.set('n', '<Leader>ev', function() vim.cmd.vsplit(vim.env.MYVIMRC) end
 vim.keymap.set('n', '<Leader>sv', function() vim.cmd.source(vim.env.MYVIMRC) end)
 
 -- https://stackoverflow.com/a/74935585/1892784
+-- https://superuser.com/a/1759793/782233
 vim.keymap.set('x', 'p', 'P')
 
 function visual_surround(l_text, r_text)
