@@ -153,3 +153,11 @@ vim.keymap.set('x', '<Leader>*', function() visual_surround('/*', '*/') end)
 
 vim.keymap.set('n', '<M-Up>', '[c')
 vim.keymap.set('n', '<M-Down>', ']c')
+
+-- https://www.reddit.com/r/neovim/comments/1k4efz8/comment/mo9t5xq/
+-- Duplicate line and comment the first line
+vim.keymap.set('n', 'ycc', 'yygccp')
+
+-- https://www.reddit.com/r/neovim/comments/1k4efz8/comment/mo9nalp/
+-- Search within visual selection
+vim.keymap.set('x', '/', [[<Esc>/\%V]])
