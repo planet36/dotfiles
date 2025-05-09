@@ -229,7 +229,6 @@ export DEBUG_OPTIONS='-Og -g3'
 # https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
 DEBUG_OPTIONS+=' -UNDEBUG'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
-DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS'
 DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG'
 DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG_PEDANTIC'
 DEBUG_OPTIONS+=' -D_GLIBCXX_SANITIZE_VECTOR'
