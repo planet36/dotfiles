@@ -190,6 +190,10 @@ then
     elif command -v slock > /dev/null
     then
         xss-lock -- slock &
+
+    elif command -v i3lock > /dev/null
+    then
+        xss-lock -- i3lock &
     fi
 fi
 
