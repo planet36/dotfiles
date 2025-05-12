@@ -253,8 +253,7 @@ for bits in (16, 32, 64):
     for tuple_bytes in iterable:
         # The default argument value for byteorder was added in Python 3.11.
         # https://docs.python.org/3/library/stdtypes.html#int.from_bytes
-        # TODO: When pypy3 is updated to support 3.11, remove the byteorder argument.
-        i = int.from_bytes(tuple_bytes, byteorder='big')
+        i = int.from_bytes(tuple_bytes)
         if i.bit_count() != bits // 2: # redundant check
             continue
         if i % 2 == 0: # even number
