@@ -181,15 +181,15 @@ fi
 
 # {{{ lock X
 
-if command -v xautolock > /dev/null
+if command -v xss-lock > /dev/null
 then
     if command -v xtrlock > /dev/null
     then
-        xautolock -time 15 -locker xtrlock &
+        xss-lock -- xtrlock &
 
     elif command -v slock > /dev/null
     then
-        xautolock -time 15 -locker slock &
+        xss-lock -- slock &
     fi
 fi
 
