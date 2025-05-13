@@ -121,6 +121,13 @@ set __fish_git_prompt_char_invalidstate 'X' # was U+2716 HEAVY MULTIPLICATION X
 
 # }}}
 
+# {{{ Append every command into a separate history file
+# https://fishshell.com/docs/current/language.html#:~:text=the%20first%20parameter.-,fish_postexec,-is%20emitted%20right
+#function log_cmd_postexec --on-event fish_postexec --argument cmd
+#  echo $(echo $cmd | string join '\\n') >> ~/.fish_history
+#end
+# }}}
+
 end # status is-interactive
 
 # }}}
