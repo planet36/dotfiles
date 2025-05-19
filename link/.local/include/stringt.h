@@ -47,7 +47,7 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
     //[[assume(buf_last != nullptr)]];
     //[[assume(dst <= buf_last)]];
 
-    const size_t gap = buf_last - dst + 1; // includes the terminating NUL character
+    const size_t gap = (size_t)(buf_last - dst + 1); // includes the terminating NUL character
 
     char* after_nul = (char*)memccpy(dst, src, '\0', gap);
 
