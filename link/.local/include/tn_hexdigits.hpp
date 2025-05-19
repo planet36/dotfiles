@@ -61,6 +61,7 @@ const auto tn_hexdigits_m128i = std::to_array({
 #pragma GCC diagnostic pop
 #endif
 
+#if defined(__AVX__)
 /// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \mathbb{Z}^{+} \f$
 /**
 Mathematica expression: <code>RealDigits[exp(Pi*sqrt(Range[8])), 256, 32, -1]</code>
@@ -104,3 +105,4 @@ const auto tn_hexdigits_m256i = std::to_array({
     _mm256_set_epi8( 34,  74, 139, 241, 145, 106, 177, 239,  92, 131, 208, 224,  16, 219, 216,  77, 129, 127, 136, 184, 116, 157,  84, 185,  78, 248,  39,  42, 221,  62, 150,  61),
 });
 #pragma GCC diagnostic pop
+#endif
