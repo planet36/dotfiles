@@ -15,6 +15,7 @@
 #include <array>
 #include <immintrin.h>
 
+#if defined(__SSE2__)
 /// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \mathbb{Z}^{+} \f$
 /**
 Mathematica expression: <code>RealDigits[E^(Pi*sqrt(Range[20])), 256, 16, -1]</code>
@@ -58,6 +59,7 @@ const auto tn_hexdigits_m128i = std::to_array({
     _mm_set_epi8( 34,  74, 139, 241, 145, 106, 177, 239,  92, 131, 208, 224,  16, 219, 216,  77),
 });
 #pragma GCC diagnostic pop
+#endif
 
 /// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \mathbb{Z}^{+} \f$
 /**
