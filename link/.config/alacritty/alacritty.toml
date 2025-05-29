@@ -1,31 +1,3 @@
-[colors.bright]
-black = "#918175"
-blue = "#68a8e4"
-cyan = "#2be4d0"
-green = "#98bc37"
-magenta = "#ff5c8f"
-red = "#f75341"
-white = "#fce8c3"
-yellow = "#fed06e"
-
-[colors.cursor]
-cursor = "#fbb829"
-text = "CellBackground"
-
-[colors.normal]
-black = "#1c1b19"
-blue = "#2c78bf"
-cyan = "#0aaeb3"
-green = "#519f50"
-magenta = "#e02c6d"
-red = "#ef2f27"
-white = "#baa67f"
-yellow = "#fbb829"
-
-[colors.primary]
-background = "#1c1b19"
-foreground = "#fce8c3"
-
 [font]
 size = 13.5
 
@@ -40,3 +12,34 @@ save_to_clipboard = true
 [window.padding]
 x = 2
 y = 2
+
+
+# https://github.com/srcery-colors/srcery-terminal/
+
+[colors.primary]
+background = "#1c1b19"
+foreground = "#fce8c3"
+
+[colors.cursor]
+text = "CellBackground"
+cursor = "#fbb829"
+
+[colors.normal]
+black = "#1c1b19"
+red = "#ef2f27"
+green = "#519f50"
+yellow = "#fbb829"
+blue = "#2c78bf"
+magenta = "#e02c6d"
+cyan = "#0aaeb3"
+white = "#baa67f"
+
+[colors.bright]
+black = "#918175"
+red = "#f75341"
+green = "#98bc37"
+yellow = "#fed06e"
+blue = "#68a8e4"
+magenta = "#ff5c8f"
+cyan = "#2be4d0"
+white = "#fce8c3"
