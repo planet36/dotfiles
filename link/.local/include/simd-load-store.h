@@ -37,7 +37,6 @@ from_m128i(void* mem_addr, const __m128i a)
     // CPUID Flags: SSE2
     _mm_store_si128((__m128i*)(mem_addr), a);
 }
-
 #endif
 
 #if defined(__AVX__)
@@ -56,7 +55,6 @@ from_m256i(void* mem_addr, const __m256i a)
     // CPUID Flags: AVX
     _mm256_store_si256((__m256i*)(mem_addr), a);
 }
-
 #endif
 
 #if defined(__AVX512F__)
