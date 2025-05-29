@@ -35,9 +35,9 @@ crc8(const void* buf, size_t len)
         for (int j = 0; j < 8; ++j)
         {
             if (crc & MSB)
-                crc = (crc << 1) ^ POLYNOMIAL;
+                crc = (T)(crc << 1) ^ POLYNOMIAL;
             else
-                crc <<= 1;
+                crc = (T)(crc << 1);
         }
     }
 
