@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# pylint: disable=invalid-name
+# pylint: disable=missing-function-docstring
+
+'''
+yea (pronounced like "yay") is similar to the 'yes' command except an output limit
+can be given.
+See also <https://man7.org/linux/man-pages/man1/yes.1.html> and
+<https://en.wikipedia.org/wiki/Yes_(Unix)>
+'''
+
+__author__ = 'Steven Ward'
+__license__ = 'OSL-3.0'
+__version__ = '2025-05-26'
+
+import argparse
+import sys
+from number_str_to_decimal import number_str_to_decimal
+
+
+MAX_BUF_SIZE = 4096 * 7
+
+
+def number_str_to_int(s: str) -> int:
+    return int(number_str_to_decimal(s))
+
+
+def non_empty_str(s: str) -> str:
+    if not s:  # None or empty
+        raise argparse.ArgumentTypeError("may not be empty")
+    return s
+
+
+parser = argparse.ArgumentParser(
+    description='\n'.join((
+        'Print a string repeatedly until the optional limit is reached.',
+        '',
+        'yea (pronounced like "yay") is similar to the \'yes\' command except:',
+        '  1) an output limit may be given',
+        '  2) trailing newlines may be omitted',
+    )),
+    epilog='\n'.join((
+        'If NUM is negative, it is considered unlimited.',
+        '',
+        'NUM maybe have a multiplier suffix:'
+        'k=10**3, M=10**6, G=10**9, Ki=2**10, Mi=2**20, Gi=2**30, etc.'
+    )),
+    formatter_class=argparse.RawTextHelpFormatter)
+
+parser.add_argument('-V', '--version', action='version', version='\n'.join((
+    f'%(prog)s {__version__}',
+    f'License: {__license__}',
+    f'Written by {__author__}')))
+
+group = parser.add_mutually_exclusive_group()
+
+# --bytes and --lines are mutually exclusive
+
+group.add_argument('-c', '--bytes',
+                   metavar='NUM', type=number_str_to_int, default=-1,
+                   help='print NUM bytes (including appended newlines, unless -o given)')
+
+group.add_argument('-n', '--lines',
+                   metavar='NUM', type=number_str_to_int, default=-1,
+                   help='print NUM lines (or NUM copies of STRING if -o given)')
+
+parser.add_argument('-o',
+                    action='store_true',
+                    help='do not append trailing newlines')
+
+parser.add_argument('STRING',
+                    nargs='*', type=non_empty_str, default='y',
+                    help='the string to be repeated')
+
+args = parser.parse_args()
+
+b = ' '.join(args.STRING).encode()
+
+if not args.o:
+    b += b'\n'
+
+m = max(MAX_BUF_SIZE // len(b), 1)  # ensure it's positive
+
+buf = bytearray(b * m)
+
+count_bytes = False
+count_lines = False
+items_in_buffer = 0
+items_remaining = 0
+
+if args.bytes >= 0:
+    count_bytes = True
+    items_in_buffer = len(buf)
+    items_remaining = args.bytes
+elif args.lines >= 0:
+    count_lines = True
+    items_in_buffer = m
+    items_remaining = args.lines
+
+try:
+    if not count_bytes and not count_lines:  # unlimited
+        while True:
+            sys.stdout.buffer.write(buf)
+    else:
+        while items_remaining > items_in_buffer:
+            sys.stdout.buffer.write(buf)
+            items_remaining -= items_in_buffer
+
+        if items_remaining > 0:
+            partial_buf = b * items_remaining if count_lines else buf[:items_remaining]
+            sys.stdout.buffer.write(partial_buf)
+
+except (BrokenPipeError, KeyboardInterrupt):
+    pass
