@@ -116,8 +116,8 @@ set __fish_git_prompt_showuntrackedfiles 1
 # {{{ Change prompt chars
 # https://github.com/fish-shell/fish-shell/blob/master/share/functions/fish_git_prompt.fish
 # https://raw.githubusercontent.com/fish-shell/fish-shell/refs/heads/master/share/functions/fish_git_prompt.fish
-set __fish_git_prompt_char_dirtystate '+'   # was U+271A HEAVY GREEK CROSS
-set __fish_git_prompt_char_invalidstate 'X' # was U+2716 HEAVY MULTIPLICATION X
+set __fish_git_prompt_char_dirtystate '*'   # was U+271A HEAVY GREEK CROSS
+set __fish_git_prompt_char_invalidstate '#' # was U+2716 HEAVY MULTIPLICATION X
 # }}}
 
 # }}}
