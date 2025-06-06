@@ -24,7 +24,7 @@ crc8(const void* buf, size_t len)
     const uint8_t* bytes = (const uint8_t*)(buf);
     // input bytes will be applied to the most sig. byte of the CRC
     constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
-    constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
+    constexpr T MSB_MASK = 1U << (sizeof(T) * 8 - 1); // most sig. bit
     constexpr T POLYNOMIAL = 0x07;
     T crc = 0x00;
 
@@ -34,7 +34,7 @@ crc8(const void* buf, size_t len)
 
         for (int j = 0; j < 8; ++j)
         {
-            if (crc & MSB)
+            if (crc & MSB_MASK)
                 crc = (T)(crc << 1) ^ POLYNOMIAL;
             else
                 crc = (T)(crc << 1);
@@ -52,7 +52,7 @@ crc16(const void* buf, size_t len)
     const uint8_t* bytes = (const uint8_t*)(buf);
     // input bytes will be applied to the most sig. byte of the CRC
     constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
-    constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
+    constexpr T MSB_MASK = 1U << (sizeof(T) * 8 - 1); // most sig. bit
     constexpr T POLYNOMIAL = 0x1021;
     T crc = 0xFFFF;
 
@@ -62,7 +62,7 @@ crc16(const void* buf, size_t len)
 
         for (int j = 0; j < 8; ++j)
         {
-            if (crc & MSB)
+            if (crc & MSB_MASK)
                 crc = (T)(crc << 1) ^ POLYNOMIAL;
             else
                 crc = (T)(crc << 1);
@@ -80,7 +80,7 @@ crc32(const void* buf, size_t len)
     const uint8_t* bytes = (const uint8_t*)(buf);
     // input bytes will be applied to the most sig. byte of the CRC
     constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
-    constexpr T MSB = 1U << (sizeof(T) * 8 - 1); // most sig. bit
+    constexpr T MSB_MASK = 1U << (sizeof(T) * 8 - 1); // most sig. bit
     constexpr T POLYNOMIAL = 0x04C11DB7;
     T crc = 0xFFFFFFFF;
 
@@ -90,7 +90,7 @@ crc32(const void* buf, size_t len)
 
         for (int j = 0; j < 8; ++j)
         {
-            if (crc & MSB)
+            if (crc & MSB_MASK)
                 crc = (crc << 1) ^ POLYNOMIAL;
             else
                 crc <<= 1;
