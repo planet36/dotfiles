@@ -73,7 +73,9 @@ sample_bytes_limited = [
 // 10 ** 2 = 100
 // math.perm(10, 2) = 90
 // using itertools.product(sample_bytes_all, repeat=bytes_per_int)
-namespace bit_patterns_16 {
+namespace bit_patterns_16
+{
+
 inline constexpr std::array<uint16_t, 60> C{
     // {{{
     0x952b, // 0b1001010100101011
@@ -204,6 +206,7 @@ inline constexpr std::array<unsigned int, 60> shuf_i{
      2, // 59
     // }}}
 };
+
 }
 
 // len(sample_bytes_all) = 26, len(sample_bytes_limited) = 10, bytes_per_int = 4
@@ -212,7 +215,9 @@ inline constexpr std::array<unsigned int, 60> shuf_i{
 // 10 ** 4 = 10,000
 // math.perm(10, 4) = 5,040
 // using itertools.product(sample_bytes_all, repeat=bytes_per_int)
-namespace bit_patterns_32 {
+namespace bit_patterns_32
+{
+
 inline constexpr std::array<uint32_t, 11'289> C{
     // {{{
     0x952b2b2b, // 0b10010101001010110010101100101011
@@ -22801,6 +22806,7 @@ inline constexpr std::array<unsigned int, 11'289> shuf_i{
      4'129, // 11'288
     // }}}
 };
+
 }
 
 // len(sample_bytes_all) = 26, len(sample_bytes_limited) = 10, bytes_per_int = 8
@@ -22809,7 +22815,9 @@ inline constexpr std::array<unsigned int, 11'289> shuf_i{
 // 10 ** 8 = 100,000,000
 // math.perm(10, 8) = 1,814,400
 // using itertools.permutations(sample_bytes_limited, bytes_per_int)
-namespace bit_patterns_64 {
+namespace bit_patterns_64
+{
+
 inline constexpr std::array<uint64_t, 10'180> C{
     // {{{
     0x954b555a6a9aa565, // 0b1001010101001011010101010101101001101010100110101010010101100101
@@ -43180,4 +43188,5 @@ inline constexpr std::array<unsigned int, 10'180> shuf_i{
      1'607, // 10'179
     // }}}
 };
+
 }
