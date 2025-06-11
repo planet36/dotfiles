@@ -127,8 +127,7 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
             dur_secs = dur_secs % seconds_per[ut];
 
             if (dur_ut > 0 || opts->print_all_zero_values ||
-                ((printed_something || last_ut == ut) &&
-                 opts->print_inter_zero_values))
+                ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
             {
                 if (printed_something)
                     putchar(' ');
@@ -226,8 +225,7 @@ main(int argc, char* argv[])
                 width = 0;
             else if (width > max_width)
                 width = max_width;
-            opts.width[UT_SECOND] = opts.width[UT_MINUTE] =
-                opts.width[UT_HOUR] = (int)width;
+            opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = (int)width;
             break;
 
         case '0':

@@ -160,8 +160,7 @@ main(int argc, char* argv[])
             opts.fill = optarg[0];
             if (!isprint(opts.fill))
             {
-                errx(EXIT_FAILURE,
-                     "option '%c' received invalid option value: '\\x%x'", oc,
+                errx(EXIT_FAILURE, "option '%c' received invalid option value: '\\x%x'", oc,
                      opts.fill);
             }
             break;
@@ -170,8 +169,7 @@ main(int argc, char* argv[])
             opts.unfill = optarg[0];
             if (!isprint(opts.unfill))
             {
-                errx(EXIT_FAILURE,
-                     "option '%c' received invalid option value: '\\x%x'", oc,
+                errx(EXIT_FAILURE, "option '%c' received invalid option value: '\\x%x'", oc,
                      opts.unfill);
             }
             break;

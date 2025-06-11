@@ -76,13 +76,11 @@ read_write_int()
         }
         catch (const std::invalid_argument& e)
         {
-            errx(EXIT_FAILURE, "%s: %s: %s", e.what(), "std::invalid_argument",
-                 line.c_str());
+            errx(EXIT_FAILURE, "%s: %s: %s", e.what(), "std::invalid_argument", line.c_str());
         }
         catch (const std::out_of_range& e)
         {
-            errx(EXIT_FAILURE, "%s: %s: %s", e.what(), "std::out_of_range",
-                 line.c_str());
+            errx(EXIT_FAILURE, "%s: %s: %s", e.what(), "std::out_of_range", line.c_str());
         }
     }
 }

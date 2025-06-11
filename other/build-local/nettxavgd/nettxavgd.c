@@ -85,8 +85,7 @@ set_default_net_iface()
     if (n == -1)
         err(EXIT_FAILURE, "scandir");
 
-    (void)strncpy(default_net_iface, namelist[0]->d_name,
-                  sizeof(default_net_iface));
+    (void)strncpy(default_net_iface, namelist[0]->d_name, sizeof(default_net_iface));
     default_net_iface[sizeof(default_net_iface) - 1] = '\0';
 
     while (n--)
@@ -294,9 +293,7 @@ main(int argc, char* const argv[])
             if (delta_time_s != 0)
                 // round to nearest int
                 tx_bytes_per_s = (uintmax_t)(
-                                     (double)(tx_bytes - prev_tx_bytes) /
-                                     delta_time_s
-                                     + 0.5
+                                     (double)(tx_bytes - prev_tx_bytes) / delta_time_s + 0.5
                                  );
 
             char dest_buf[32] = {'\0'};

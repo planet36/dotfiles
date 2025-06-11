@@ -15,8 +15,7 @@ main(int argc, char* argv[])
         {
             const auto dir_iter = std::filesystem::directory_iterator(argv[1]);
 
-            if (std::filesystem::begin(dir_iter) !=
-                std::filesystem::end(dir_iter))
+            if (std::filesystem::begin(dir_iter) != std::filesystem::end(dir_iter))
             {
                 result = EXIT_FAILURE;
             }
