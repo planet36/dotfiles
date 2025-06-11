@@ -33,8 +33,7 @@ getdelim_strip(char** buf,
     ssize_t bytes_read = getdelim(buf, buf_size, delim, stream);
     if (bytes_read > 0)
     {
-        const bool remove_last_char =
-            strip_delim && ((*buf)[bytes_read - 1] == delim);
+        const bool remove_last_char = strip_delim && ((*buf)[bytes_read - 1] == delim);
         if (remove_last_char)
         {
             // Even if delim == '\0', bytes_read must be decremented.

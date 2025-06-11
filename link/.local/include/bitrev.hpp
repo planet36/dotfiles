@@ -22,7 +22,7 @@ for b in range(0, 255+1):
     print(f'    0x{b_rev:02x}, // {b:>3} (0b{b_str}) => {b_rev:>3} (0b{b_str_rev})')
 \endcode
 */
-inline constexpr std::array<unsigned char, 256> bitrev_arr {
+inline constexpr std::array<unsigned char, 256> bitrev_arr{
     0x00, //   0 (0b00000000) =>   0 (0b00000000)
     0x80, //   1 (0b00000001) => 128 (0b10000000)
     0x40, //   2 (0b00000010) =>  64 (0b01000000)

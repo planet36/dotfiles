@@ -33,8 +33,7 @@ f_to_s(const std::floating_point auto x,
     do
     {
         s.resize(s.size() + 64);
-        r = std::to_chars(s.data(), s.data() + s.size(), x, chars_format,
-                          precision);
+        r = std::to_chars(s.data(), s.data() + s.size(), x, chars_format, precision);
     }
     while (r.ec == std::errc::value_too_large);
 

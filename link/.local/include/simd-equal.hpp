@@ -15,4 +15,7 @@
 
 template <simd_t T>
 inline bool
-simd_equal(const T& a, const T& b) { return std::memcmp(&a, &b, sizeof(T)) == 0; }
+simd_equal(const T& a, const T& b)
+{
+    return std::memcmp(&a, &b, sizeof(T)) == 0;
+}

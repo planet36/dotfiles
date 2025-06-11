@@ -89,8 +89,7 @@ slurp(const std::filesystem::path& path)
         if (actual_size_bytes != expected_size_bytes)
         {
             (void)std::fclose(fp);
-            throw std::system_error(std::make_error_code(std::errc{errno}),
-                                    path);
+            throw std::system_error(std::make_error_code(std::errc{errno}), path);
         }
     }
 
@@ -164,8 +163,7 @@ slurp(const std::filesystem::path& path)
         if (actual_size_bytes < 0 || static_cast<size_t>(actual_size_bytes) != expected_size_bytes)
         {
             (void)::close(fd);
-            throw std::system_error(std::make_error_code(std::errc{errno}),
-                                    path);
+            throw std::system_error(std::make_error_code(std::errc{errno}), path);
         }
     }
 

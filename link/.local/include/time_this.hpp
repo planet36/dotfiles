@@ -46,8 +46,7 @@ public:
     {
         const auto t1 = timer_clock::now();
         (void)fflush(stdout);
-        (void)fprintf(stderr, "%.2f\n",
-                      std::chrono::duration<double>(t1 - t0).count());
+        (void)fprintf(stderr, "%.2f\n", std::chrono::duration<double>(t1 - t0).count());
     }
 
 private:

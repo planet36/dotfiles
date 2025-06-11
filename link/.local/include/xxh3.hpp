@@ -49,20 +49,14 @@ public:
     simple_xxh3_64(const simple_xxh3_64&) = delete;
     simple_xxh3_64& operator=(const simple_xxh3_64&) = delete;
 
-    ~simple_xxh3_64()
-    {
-        assert(XXH3_freeState(state_ptr) == XXH_OK);
-    }
+    ~simple_xxh3_64() { assert(XXH3_freeState(state_ptr) == XXH_OK); }
 
     void update(const void* input, size_t len)
     {
         assert(XXH3_64bits_update(state_ptr, input, len) == XXH_OK);
     }
 
-    XXH64_hash_t digest() const
-    {
-        return XXH3_64bits_digest(state_ptr);
-    }
+    XXH64_hash_t digest() const { return XXH3_64bits_digest(state_ptr); }
 };
 
 class simple_xxh3_128
@@ -100,18 +94,12 @@ public:
     simple_xxh3_128(const simple_xxh3_128&) = delete;
     simple_xxh3_128& operator=(const simple_xxh3_128&) = delete;
 
-    ~simple_xxh3_128()
-    {
-        assert(XXH3_freeState(state_ptr) == XXH_OK);
-    }
+    ~simple_xxh3_128() { assert(XXH3_freeState(state_ptr) == XXH_OK); }
 
     void update(const void* input, size_t len)
     {
         assert(XXH3_128bits_update(state_ptr, input, len) == XXH_OK);
     }
 
-    XXH128_hash_t digest() const
-    {
-        return XXH3_128bits_digest(state_ptr);
-    }
+    XXH128_hash_t digest() const { return XXH3_128bits_digest(state_ptr); }
 };

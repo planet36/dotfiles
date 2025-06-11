@@ -22,7 +22,6 @@ transpose_m128ix2(__m128i x[static restrict 2])
     x[1] = A1_B1;
 }
 
-
 /// Transpose \a x (treating it as a 4x4 matrix of \c uint32_t) using SSE2 intrinsics
 /**
 \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
@@ -40,7 +39,6 @@ transpose_m128ix4(__m128i x[static restrict 4])
     x[2] = _mm_unpacklo_epi64(A23_B23, C23_D23); // A2_B2_C2_D2
     x[3] = _mm_unpackhi_epi64(A23_B23, C23_D23); // A3_B3_C3_D3
 }
-
 
 /// Transpose \a x (treating it as a 4x4 matrix of \c uint32_t) using the \c _MM_TRANSPOSE4_PS macro
 /**
@@ -64,7 +62,6 @@ transpose_m128ix4_macro(__m128i x[static restrict 4])
     x[2] = _mm_castps_si128(C);
     x[3] = _mm_castps_si128(D);
 }
-
 
 /// Transpose \a x (treating it as an 8x8 matrix of \c uint16_t) using SSE2 intrinsics
 /**
@@ -100,7 +97,6 @@ transpose_m128ix8(__m128i x[static restrict 8])
     x[6] = _mm_unpacklo_epi64(A67_B67_C67_D67, E67_F67_G67_H67); // A6_B6_C6_D6_E6_F6_G6_H6
     x[7] = _mm_unpackhi_epi64(A67_B67_C67_D67, E67_F67_G67_H67); // A7_B7_C7_D7_E7_F7_G7_H7
 }
-
 
 /// Transpose \a x (treating it as a 16x16 matrix of \c uint8_t) using SSE2 intrinsics
 /**

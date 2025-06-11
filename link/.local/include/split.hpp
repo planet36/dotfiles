@@ -40,11 +40,9 @@ split(const std::string& s, const char delim, const size_t limit = 0)
     std::string::size_type j = 0; // index of the back of a substring
     std::vector<std::string> result;
 
-    while ((result.size() != limit - 1) &&
-           ((j = s.find(delim, i)) != std::string::npos))
+    while ((result.size() != limit - 1) && ((j = s.find(delim, i)) != std::string::npos))
     {
-        result.emplace_back(begin + static_cast<diff_t>(i),
-                            begin + static_cast<diff_t>(j));
+        result.emplace_back(begin + static_cast<diff_t>(i), begin + static_cast<diff_t>(j));
         i = j + 1;
     }
 
@@ -71,11 +69,9 @@ split(const std::string& s, const std::string& delim, const size_t limit = 0)
 
     if (!delim.empty())
     {
-        while ((result.size() != limit - 1) &&
-               ((j = s.find(delim, i)) != std::string::npos))
+        while ((result.size() != limit - 1) && ((j = s.find(delim, i)) != std::string::npos))
         {
-            result.emplace_back(begin + static_cast<diff_t>(i),
-                                begin + static_cast<diff_t>(j));
+            result.emplace_back(begin + static_cast<diff_t>(i), begin + static_cast<diff_t>(j));
             i = j + delim.size();
         }
     }
@@ -92,9 +88,7 @@ If \a limit is greater than \c 0, the result will have no more than \a limit str
 If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
-split_set(const std::string& s,
-          const std::string& delim_set,
-          const size_t limit = 0)
+split_set(const std::string& s, const std::string& delim_set, const size_t limit = 0)
 {
     const auto begin = s.cbegin();
     const auto end = s.cend();
@@ -109,8 +103,7 @@ split_set(const std::string& s,
                (result.size() != limit - 1) &&
                ((j = s.find_first_of(delim_set, i)) != std::string::npos))
         {
-            result.emplace_back(begin + static_cast<diff_t>(i),
-                                begin + static_cast<diff_t>(j));
+            result.emplace_back(begin + static_cast<diff_t>(i), begin + static_cast<diff_t>(j));
         }
     }
 
@@ -133,9 +126,7 @@ If \a limit is greater than \c 0, the result will have no more than \a limit str
 If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
-split_non_set(const std::string& s,
-              const std::string& delim_set,
-              const size_t limit = 0)
+split_non_set(const std::string& s, const std::string& delim_set, const size_t limit = 0)
 {
     const auto begin = s.cbegin();
     const auto end = s.cend();
@@ -150,8 +141,7 @@ split_non_set(const std::string& s,
                (result.size() != limit - 1) &&
                ((j = s.find_first_not_of(delim_set, i)) != std::string::npos))
         {
-            result.emplace_back(begin + static_cast<diff_t>(i),
-                                begin + static_cast<diff_t>(j));
+            result.emplace_back(begin + static_cast<diff_t>(i), begin + static_cast<diff_t>(j));
         }
     }
 

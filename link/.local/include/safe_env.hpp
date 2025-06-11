@@ -21,7 +21,9 @@ namespace safe_env
 {
 namespace
 {
+
 std::mutex mtx;
+
 }
 
 /// similar to \c clearenv

@@ -26,8 +26,7 @@ class cycle
 public:
     cycle() = default;
 
-    explicit constexpr cycle(const value_type n) : val(std::clamp(n, MIN, MAX))
-    {}
+    explicit constexpr cycle(const value_type n) : val(std::clamp(n, MIN, MAX)) {}
 
     constexpr auto operator()() { return next(); }
 
@@ -56,8 +55,7 @@ class cycle2
 public:
     cycle2() = default;
 
-    explicit constexpr cycle2(const value_type n) : val(std::clamp(n, MIN, MAX))
-    {}
+    explicit constexpr cycle2(const value_type n) : val(std::clamp(n, MIN, MAX)) {}
 
     constexpr auto operator()() { return next(); }
 
@@ -87,8 +85,7 @@ class rcycle
 public:
     rcycle() = default;
 
-    explicit constexpr rcycle(const value_type n) : val(std::clamp(n, MIN, MAX))
-    {}
+    explicit constexpr rcycle(const value_type n) : val(std::clamp(n, MIN, MAX)) {}
 
     constexpr auto operator()() { return next(); }
 
@@ -117,9 +114,7 @@ class rcycle2
 public:
     rcycle2() = default;
 
-    explicit constexpr rcycle2(const value_type n) :
-    val(std::clamp(n, MIN, MAX))
-    {}
+    explicit constexpr rcycle2(const value_type n) : val(std::clamp(n, MIN, MAX)) {}
 
     constexpr auto operator()() { return next(); }
 

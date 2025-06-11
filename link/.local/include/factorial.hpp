@@ -21,7 +21,7 @@ for x in range(21):
     print(f"    UINT64_C({math.factorial(x)}), // {x}!")
 \endcode
 */
-inline constexpr auto factorial_arr = std::array {
+inline constexpr auto factorial_arr = std::array{
     UINT64_C(1), // 0!
     UINT64_C(1), // 1!
     UINT64_C(2), // 2!

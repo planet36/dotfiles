@@ -28,7 +28,10 @@ rdtsc(const T time_0 = 0)
     // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92180
 
     _mm_lfence();
-    do { time_1 = static_cast<T>(__builtin_ia32_rdtsc()); }
+    do
+    {
+        time_1 = static_cast<T>(__builtin_ia32_rdtsc());
+    }
     while ((time_1 == 0) || (time_1 == time_0)); [[unlikely]]
     _mm_lfence();
 

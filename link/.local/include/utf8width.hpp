@@ -39,9 +39,9 @@ utf8width(const std::string& s)
 
     uint8_t* dst = nullptr;
 
-    const ssize_t dstlen =
-        utf8proc_map(reinterpret_cast<const uint8_t*>(s.c_str()), static_cast<ssize_t>(s.size()),
-                     &dst, static_cast<utf8proc_option_t>(options));
+    const ssize_t dstlen = utf8proc_map(reinterpret_cast<const uint8_t*>(s.c_str()),
+                                        static_cast<ssize_t>(s.size()), &dst,
+                                        static_cast<utf8proc_option_t>(options));
 
     if (dstlen < 0)
         throw std::runtime_error(utf8proc_errmsg(dstlen));

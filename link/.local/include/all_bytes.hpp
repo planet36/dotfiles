@@ -12,7 +12,7 @@
 #include <array>
 #include <cstddef>
 
-inline constexpr std::array<std::byte, 256> all_bytes {
+inline constexpr std::array<std::byte, 256> all_bytes{
     std::byte{0x00},
     std::byte{0x01},
     std::byte{0x02},

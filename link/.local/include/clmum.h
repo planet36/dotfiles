@@ -24,8 +24,7 @@ static void
 clmul_u64(uint64_t* hi, uint64_t* lo) [[gnu::nonnull]]
 {
     // order of hi, lo doesn't matter
-    __m128i result = _mm_set_epi64x((long long int)(*hi),
-                                    (long long int)(*lo));
+    __m128i result = _mm_set_epi64x((long long int)(*hi), (long long int)(*lo));
 
     // https://clang.llvm.org/doxygen/____wmmintrin__pclmul_8h.html
     // https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/wmmintrin.h#L103

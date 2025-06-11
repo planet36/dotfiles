@@ -197,8 +197,7 @@ gfs2_noncyclic_p_inv()
 */
 template <typename T, size_t k>
 void
-gfs1_round(std::array<T, k>& x,
-           const std::function<T(T)>& f)
+gfs1_round(std::array<T, k>& x, const std::function<T(T)>& f)
 {
     static_assert(k >= 2);
     static_assert(k <= 16);
@@ -217,14 +216,13 @@ gfs1_round(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 void
-gfs2_round(std::array<T, k>& x,
-           const std::function<T(T)>& f)
+gfs2_round(std::array<T, k>& x, const std::function<T(T)>& f)
 {
     static_assert(k >= 2);
     static_assert(k <= 16);
     static_assert((k % 2) == 0);
 
-    for (unsigned int i = 1; i <= k-1; i += 2)
+    for (unsigned int i = 1; i <= k - 1; i += 2)
     {
         x[i] ^= f(x[i-1]);
     }
@@ -237,15 +235,14 @@ gfs2_round(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 void
-gfs3_round(std::array<T, k>& x,
-           const std::function<T(T)>& f)
+gfs3_round(std::array<T, k>& x, const std::function<T(T)>& f)
 {
     static_assert(k >= 2);
     static_assert(k <= 16);
     static_assert((k % 2) == 0);
 
     // Reverse order
-    for (unsigned int i = k-1; i > 0; --i)
+    for (unsigned int i = k - 1; i > 0; --i)
     {
         x[i] ^= f(x[i-1]);
     }
@@ -333,8 +330,7 @@ gfs3_stir(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs1_cyclic_stir(std::array<T, k>& x,
-                 const std::function<T(T)>& f)
+gfs1_cyclic_stir(std::array<T, k>& x, const std::function<T(T)>& f)
 {
     static_assert(k >= 2);
     static_assert(k <= 16);
@@ -352,8 +348,7 @@ gfs1_cyclic_stir(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs2_cyclic_stir(std::array<T, k>& x,
-                 const std::function<T(T)>& f)
+gfs2_cyclic_stir(std::array<T, k>& x, const std::function<T(T)>& f)
 {
     static_assert(k >= 2);
     static_assert(k <= 16);
@@ -371,8 +366,7 @@ gfs2_cyclic_stir(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs2_noncyclic_stir(std::array<T, k>& x,
-                    const std::function<T(T)>& f)
+gfs2_noncyclic_stir(std::array<T, k>& x, const std::function<T(T)>& f)
 {
     static_assert(k >= 2);
     static_assert(k <= 16);
@@ -390,8 +384,7 @@ gfs2_noncyclic_stir(std::array<T, k>& x,
 */
 template <typename T, size_t k>
 inline void
-gfs3_cyclic_stir(std::array<T, k>& x,
-                 const std::function<T(T)>& f)
+gfs3_cyclic_stir(std::array<T, k>& x, const std::function<T(T)>& f)
 {
     static_assert(k >= 2);
     static_assert(k <= 16);

@@ -23,16 +23,14 @@ template <typename T>
 inline constexpr bool is_narrow_character_v = is_narrow_character<T>::value;
 
 template <typename T>
-struct is_wide_character : is_type_any_of<std::remove_cv_t<T>,
-    char16_t, char32_t, wchar_t>
+struct is_wide_character : is_type_any_of<std::remove_cv_t<T>, char16_t, char32_t, wchar_t>
 {};
 
 template <typename T>
 inline constexpr bool is_wide_character_v = is_wide_character<T>::value;
 
 template <typename T>
-struct is_character : std::bool_constant<
-    is_narrow_character_v<T> || is_wide_character_v<T>>
+struct is_character : std::bool_constant<is_narrow_character_v<T> || is_wide_character_v<T>>
 {};
 
 template <typename T>

@@ -26,7 +26,6 @@ _mulx_u32(unsigned int a, unsigned int b, unsigned int* hi) [[gnu::nonnull]]
     unsigned long long r = (unsigned long long)a * (unsigned long long)b;
     *hi = (unsigned int)(r >> 32);
     return (unsigned int)r;
-
 }
 #endif
 

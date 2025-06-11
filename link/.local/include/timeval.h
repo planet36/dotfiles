@@ -36,15 +36,12 @@ msec_to_timeval(unsigned int msec)
 static double
 timeval_to_sec(const struct timeval* tv)
 {
-    return (double)tv->tv_sec +
-           copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
+    return (double)tv->tv_sec + copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132
 static void
-timevalsub(const struct timeval* t1,
-           const struct timeval* t0,
-           struct timeval* diff)
+timevalsub(const struct timeval* t1, const struct timeval* t0, struct timeval* diff)
 {
     diff->tv_sec = t1->tv_sec - t0->tv_sec;
     diff->tv_usec = t1->tv_usec - t0->tv_usec;

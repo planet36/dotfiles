@@ -39,10 +39,10 @@ aes_next_rcon(uint8_t rcon_i, const uint8_t i)
     else
     {
         // get the most significant bit before shifting
-        const bool msb = rcon_i & 0b10000000;
+        const bool msb = rcon_i & 0b1000'0000;
         rcon_i = static_cast<decltype(rcon_i)>(rcon_i << 1);
         if (msb)
-            rcon_i ^= 0b00011011;
+            rcon_i ^= 0b0001'1011;
     }
 
     return rcon_i;
@@ -161,8 +161,7 @@ aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc)
 template <size_t Nk>
 requires (Nk >= 2)
 void
-aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc,
-        arr_m128i<Nk>& round_keys_dec)
+aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc, arr_m128i<Nk>& round_keys_dec)
 {
     // See "Intel Advanced Encryption Standard (AES) New Instructions Set"
     // Figure 6. Preparing the Decryption Round Keys
@@ -205,31 +204,56 @@ aes128_dec(__m128i data, const arr_m128i<Nk>& round_keys_dec)
 }
 
 /// Wrapper for \c _mm_aesenc_si128
-inline auto aesenc(const __m128i a, const __m128i key) { return _mm_aesenc_si128(a, key); }
+inline auto
+aesenc(const __m128i a, const __m128i key)
+{
+    return _mm_aesenc_si128(a, key);
+}
 
 /// Wrapper for \c _mm_aesdec_si128
-inline auto aesdec(const __m128i a, const __m128i key) { return _mm_aesdec_si128(a, key); }
+inline auto
+aesdec(const __m128i a, const __m128i key)
+{
+    return _mm_aesdec_si128(a, key);
+}
 
 #if defined(__VAES__)
 
 /// Wrapper for \c _mm256_aesenc_epi128
-inline auto aesenc(const __m256i a, const __m256i key) { return _mm256_aesenc_epi128(a, key); }
+inline auto
+aesenc(const __m256i a, const __m256i key)
+{
+    return _mm256_aesenc_epi128(a, key);
+}
 
 /// Wrapper for \c _mm256_aesdec_epi128
-inline auto aesdec(const __m256i a, const __m256i key) { return _mm256_aesdec_epi128(a, key); }
+inline auto
+aesdec(const __m256i a, const __m256i key)
+{
+    return _mm256_aesdec_epi128(a, key);
+}
 
 #if defined(__AVX512F__)
 /// Wrapper for \c _mm512_aesenc_epi128
-inline auto aesenc(const __m512i a, const __m512i key) { return _mm512_aesenc_epi128(a, key); }
+inline auto
+aesenc(const __m512i a, const __m512i key)
+{
+    return _mm512_aesenc_epi128(a, key);
+}
 
 /// Wrapper for \c _mm512_aesdec_epi128
-inline auto aesdec(const __m512i a, const __m512i key) { return _mm512_aesdec_epi128(a, key); }
+inline auto
+aesdec(const __m512i a, const __m512i key)
+{
+    return _mm512_aesdec_epi128(a, key);
+}
 #endif
 
 #endif
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
+
 /// Do \c aesenc \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
@@ -243,10 +267,12 @@ aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
         }
     }
 }
+
 #pragma GCC diagnostic pop
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
+
 /// Do \c aesdec \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
@@ -260,6 +286,7 @@ aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
         }
     }
 }
+
 #pragma GCC diagnostic pop
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher

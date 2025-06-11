@@ -38,15 +38,13 @@ same_sign([[maybe_unused]] const std::unsigned_integral auto x,
 }
 
 constexpr bool
-same_sign(const std::unsigned_integral auto x,
-          const std::signed_integral auto y)
+same_sign(const std::unsigned_integral auto x, const std::signed_integral auto y)
 {
     return ((x == 0) && (y <= 0)) || (y >= 0);
 }
 
 constexpr bool
-same_sign(const std::signed_integral auto x,
-          const std::unsigned_integral auto y)
+same_sign(const std::signed_integral auto x, const std::unsigned_integral auto y)
 {
     return ((x <= 0) && (y == 0)) || (x >= 0);
 }

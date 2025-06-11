@@ -16,7 +16,7 @@
 #include "stringize.h"
 
 // The most mutable information should be given first.
-#if defined (_MSC_FULL_VER)
+#if defined(_MSC_FULL_VER)
 #define SEED_STR ( \
         XSTR(__COUNTER__) \
         __TIME__ \

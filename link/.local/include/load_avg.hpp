@@ -17,6 +17,7 @@
 
 namespace
 {
+
 // XXX: Do not change
 constexpr int min_samples = 1;
 constexpr int max_samples = 3;
@@ -24,6 +25,7 @@ constexpr int max_samples = 3;
 static_assert(min_samples >= 1);
 static_assert(max_samples <= 3);
 static_assert(min_samples <= max_samples);
+
 }
 
 auto
