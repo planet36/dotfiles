@@ -32,7 +32,7 @@ rdtsc(const T time_0 = 0)
     {
         time_1 = static_cast<T>(__builtin_ia32_rdtsc());
     }
-    while ((time_1 == 0) || (time_1 == time_0)); [[unlikely]]
+    while ((time_1 == 0) || (time_1 == time_0));
     _mm_lfence();
 
     return time_1;
