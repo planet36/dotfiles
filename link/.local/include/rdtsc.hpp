@@ -28,6 +28,7 @@ rdtsc(const T time_0 = 0)
 
     do
     {
+        _mm_mfence();
         _mm_lfence();
         time_1 = static_cast<T>(__builtin_ia32_rdtsc());
         _mm_lfence();
