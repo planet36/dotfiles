@@ -106,3 +106,18 @@ rdtsc(const uint64_t time_0 = 0)
 
     return time_1;
 }
+
+static inline uint64_t
+rdtscp(unsigned int* aux)
+{
+    const uint64_t tsc = __rdtscp(aux);
+    _mm_lfence();
+    return tsc;
+}
+
+static inline uint64_t
+rdtscp()
+{
+    unsigned int aux;
+    return rdtscp(&aux);
+}
