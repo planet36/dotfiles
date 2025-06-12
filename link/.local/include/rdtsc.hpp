@@ -26,13 +26,13 @@ rdtsc(const T time_0 = 0)
     // Bug 92180 - Missed optimization on casting __builtin_ia32_rdtsc result to int32
     // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92180
 
-    _mm_lfence();
     do
     {
+        _mm_lfence();
         time_1 = static_cast<T>(__builtin_ia32_rdtsc());
+        _mm_lfence();
     }
     while ((time_1 == 0) || (time_1 == time_0));
-    _mm_lfence();
 
     return time_1;
 }
