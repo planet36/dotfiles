@@ -93,14 +93,11 @@ system.
 uint64_t
 rdtsc()
 {
-    uint64_t time_1 = 0;
-
     _mm_mfence();
     _mm_lfence();
-    time_1 = __builtin_ia32_rdtsc();
+    const uint64_t tsc = __builtin_ia32_rdtsc();
     _mm_lfence();
-
-    return time_1;
+    return tsc;
 }
 
 static inline uint64_t
