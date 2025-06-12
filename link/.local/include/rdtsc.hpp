@@ -6,6 +6,7 @@
 \file
 \author Steven Ward
 \sa https://en.wikipedia.org/wiki/Time_Stamp_Counter
+\sa https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
 */
 
 #pragma once
