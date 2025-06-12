@@ -91,18 +91,14 @@ system.
 #include <immintrin.h>
 
 uint64_t
-rdtsc(const uint64_t time_0 = 0)
+rdtsc()
 {
     uint64_t time_1 = 0;
 
-    do
-    {
         _mm_mfence();
         _mm_lfence();
         time_1 = __builtin_ia32_rdtsc();
         _mm_lfence();
-    }
-    while (time_1 == time_0);
 
     return time_1;
 }
