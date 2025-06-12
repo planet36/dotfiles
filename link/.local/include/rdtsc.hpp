@@ -95,7 +95,7 @@ rdtsc()
 {
     _mm_mfence();
     _mm_lfence();
-    const uint64_t tsc = __builtin_ia32_rdtsc();
+    const uint64_t tsc = __rdtsc();
     _mm_lfence();
     return tsc;
 }
