@@ -10,17 +10,13 @@
 
 #pragma once
 
-#include <concepts>
+#include <cstdint>
 #include <immintrin.h>
 
-template <std::unsigned_integral T>
-T
-rdtsc(const T time_0 = 0)
+uint64_t
+rdtsc(const uint64_t time_0 = 0)
 {
-    // enforce integers of size 32-bit or 64-bit
-    static_assert((sizeof(T) == 4) || (sizeof(T) == 8));
-
-    T time_1 = 0;
+    uint64_t time_1 = 0;
 
     // XXX: GCC should optimize the 32-bit cast but does not.
     // Bug 92180 - Missed optimization on casting __builtin_ia32_rdtsc result to int32
@@ -30,7 +26,7 @@ rdtsc(const T time_0 = 0)
     {
         _mm_mfence();
         _mm_lfence();
-        time_1 = static_cast<T>(__builtin_ia32_rdtsc());
+        time_1 = __builtin_ia32_rdtsc();
         _mm_lfence();
     }
     while ((time_1 == 0) || (time_1 == time_0));
