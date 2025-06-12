@@ -11,9 +11,8 @@
 #pragma once
 
 #include <concepts>
-#include <immintrin.h> // _mm_lfence
+#include <immintrin.h>
 
-/// Read Time-Stamp Counter
 template <std::unsigned_integral T>
 T
 rdtsc(const T time_0 = 0)
