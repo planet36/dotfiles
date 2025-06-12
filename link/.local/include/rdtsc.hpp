@@ -18,10 +18,6 @@ rdtsc(const uint64_t time_0 = 0)
 {
     uint64_t time_1 = 0;
 
-    // XXX: GCC should optimize the 32-bit cast but does not.
-    // Bug 92180 - Missed optimization on casting __builtin_ia32_rdtsc result to int32
-    // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92180
-
     do
     {
         _mm_mfence();
