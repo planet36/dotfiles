@@ -90,7 +90,7 @@ system.
 #include <cstdint>
 #include <immintrin.h>
 
-uint64_t
+static inline uint64_t
 rdtsc()
 {
     _mm_mfence();
