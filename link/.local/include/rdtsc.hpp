@@ -29,7 +29,7 @@ rdtsc(const uint64_t time_0 = 0)
         time_1 = __builtin_ia32_rdtsc();
         _mm_lfence();
     }
-    while ((time_1 == 0) || (time_1 == time_0));
+    while (time_1 == time_0);
 
     return time_1;
 }
