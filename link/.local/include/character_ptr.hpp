@@ -22,7 +22,7 @@ inline constexpr bool is_narrow_character_ptr_v = is_narrow_character_ptr<T>::va
 
 template <typename T>
 struct is_wide_character_ptr : std::bool_constant<std::is_pointer_v<std::decay_t<T>> &&
-                                 is_wide_character_v<std::remove_pointer_t<std::decay_t<T>>>>
+                               is_wide_character_v<std::remove_pointer_t<std::decay_t<T>>>>
 {};
 
 template <typename T>
