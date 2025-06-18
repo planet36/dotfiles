@@ -44,3 +44,135 @@ concept wide_character_ptr = is_wide_character_ptr_v<T>;
 
 template <typename T>
 concept character_ptr = narrow_character_ptr<T> || wide_character_ptr<T>;
+
+// {{{ unit tests
+
+// {{{ affirmative tests
+static_assert(narrow_character_ptr<char*>);
+static_assert(narrow_character_ptr<const char*>);
+static_assert(narrow_character_ptr<volatile char*>);
+static_assert(narrow_character_ptr<const volatile char*>);
+static_assert(narrow_character_ptr<signed char*>);
+static_assert(narrow_character_ptr<const signed char*>);
+static_assert(narrow_character_ptr<volatile signed char*>);
+static_assert(narrow_character_ptr<const volatile signed char*>);
+static_assert(narrow_character_ptr<unsigned char*>);
+static_assert(narrow_character_ptr<const unsigned char*>);
+static_assert(narrow_character_ptr<volatile unsigned char*>);
+static_assert(narrow_character_ptr<const volatile unsigned char*>);
+static_assert(narrow_character_ptr<char8_t*>);
+static_assert(narrow_character_ptr<const char8_t*>);
+static_assert(narrow_character_ptr<volatile char8_t*>);
+static_assert(narrow_character_ptr<const volatile char8_t*>);
+static_assert(wide_character_ptr<wchar_t*>);
+static_assert(wide_character_ptr<const wchar_t*>);
+static_assert(wide_character_ptr<volatile wchar_t*>);
+static_assert(wide_character_ptr<const volatile wchar_t*>);
+static_assert(wide_character_ptr<char16_t*>);
+static_assert(wide_character_ptr<const char16_t*>);
+static_assert(wide_character_ptr<volatile char16_t*>);
+static_assert(wide_character_ptr<const volatile char16_t*>);
+static_assert(wide_character_ptr<char32_t*>);
+static_assert(wide_character_ptr<const char32_t*>);
+static_assert(wide_character_ptr<volatile char32_t*>);
+static_assert(wide_character_ptr<const volatile char32_t*>);
+static_assert(narrow_character_ptr<char[2]>);
+static_assert(narrow_character_ptr<const char[2]>);
+static_assert(narrow_character_ptr<volatile char[2]>);
+static_assert(narrow_character_ptr<const volatile char[2]>);
+static_assert(narrow_character_ptr<signed char[2]>);
+static_assert(narrow_character_ptr<const signed char[2]>);
+static_assert(narrow_character_ptr<volatile signed char[2]>);
+static_assert(narrow_character_ptr<const volatile signed char[2]>);
+static_assert(narrow_character_ptr<unsigned char[2]>);
+static_assert(narrow_character_ptr<const unsigned char[2]>);
+static_assert(narrow_character_ptr<volatile unsigned char[2]>);
+static_assert(narrow_character_ptr<const volatile unsigned char[2]>);
+static_assert(narrow_character_ptr<char8_t[2]>);
+static_assert(narrow_character_ptr<const char8_t[2]>);
+static_assert(narrow_character_ptr<volatile char8_t[2]>);
+static_assert(narrow_character_ptr<const volatile char8_t[2]>);
+static_assert(wide_character_ptr<wchar_t[2]>);
+static_assert(wide_character_ptr<const wchar_t[2]>);
+static_assert(wide_character_ptr<volatile wchar_t[2]>);
+static_assert(wide_character_ptr<const volatile wchar_t[2]>);
+static_assert(wide_character_ptr<char16_t[2]>);
+static_assert(wide_character_ptr<const char16_t[2]>);
+static_assert(wide_character_ptr<volatile char16_t[2]>);
+static_assert(wide_character_ptr<const volatile char16_t[2]>);
+static_assert(wide_character_ptr<char32_t[2]>);
+static_assert(wide_character_ptr<const char32_t[2]>);
+static_assert(wide_character_ptr<volatile char32_t[2]>);
+static_assert(wide_character_ptr<const volatile char32_t[2]>);
+// }}}
+
+// {{{ negative tests
+static_assert(!wide_character_ptr<char*>);
+static_assert(!wide_character_ptr<const char*>);
+static_assert(!wide_character_ptr<volatile char*>);
+static_assert(!wide_character_ptr<const volatile char*>);
+static_assert(!wide_character_ptr<signed char*>);
+static_assert(!wide_character_ptr<const signed char*>);
+static_assert(!wide_character_ptr<volatile signed char*>);
+static_assert(!wide_character_ptr<const volatile signed char*>);
+static_assert(!wide_character_ptr<unsigned char*>);
+static_assert(!wide_character_ptr<const unsigned char*>);
+static_assert(!wide_character_ptr<volatile unsigned char*>);
+static_assert(!wide_character_ptr<const volatile unsigned char*>);
+static_assert(!wide_character_ptr<char8_t*>);
+static_assert(!wide_character_ptr<const char8_t*>);
+static_assert(!wide_character_ptr<volatile char8_t*>);
+static_assert(!wide_character_ptr<const volatile char8_t*>);
+static_assert(!narrow_character_ptr<wchar_t*>);
+static_assert(!narrow_character_ptr<const wchar_t*>);
+static_assert(!narrow_character_ptr<volatile wchar_t*>);
+static_assert(!narrow_character_ptr<const volatile wchar_t*>);
+static_assert(!narrow_character_ptr<char16_t*>);
+static_assert(!narrow_character_ptr<const char16_t*>);
+static_assert(!narrow_character_ptr<volatile char16_t*>);
+static_assert(!narrow_character_ptr<const volatile char16_t*>);
+static_assert(!narrow_character_ptr<char32_t*>);
+static_assert(!narrow_character_ptr<const char32_t*>);
+static_assert(!narrow_character_ptr<volatile char32_t*>);
+static_assert(!narrow_character_ptr<const volatile char32_t*>);
+static_assert(!wide_character_ptr<char[2]>);
+static_assert(!wide_character_ptr<const char[2]>);
+static_assert(!wide_character_ptr<volatile char[2]>);
+static_assert(!wide_character_ptr<const volatile char[2]>);
+static_assert(!wide_character_ptr<signed char[2]>);
+static_assert(!wide_character_ptr<const signed char[2]>);
+static_assert(!wide_character_ptr<volatile signed char[2]>);
+static_assert(!wide_character_ptr<const volatile signed char[2]>);
+static_assert(!wide_character_ptr<unsigned char[2]>);
+static_assert(!wide_character_ptr<const unsigned char[2]>);
+static_assert(!wide_character_ptr<volatile unsigned char[2]>);
+static_assert(!wide_character_ptr<const volatile unsigned char[2]>);
+static_assert(!wide_character_ptr<char8_t[2]>);
+static_assert(!wide_character_ptr<const char8_t[2]>);
+static_assert(!wide_character_ptr<volatile char8_t[2]>);
+static_assert(!wide_character_ptr<const volatile char8_t[2]>);
+static_assert(!narrow_character_ptr<wchar_t[2]>);
+static_assert(!narrow_character_ptr<const wchar_t[2]>);
+static_assert(!narrow_character_ptr<volatile wchar_t[2]>);
+static_assert(!narrow_character_ptr<const volatile wchar_t[2]>);
+static_assert(!narrow_character_ptr<char16_t[2]>);
+static_assert(!narrow_character_ptr<const char16_t[2]>);
+static_assert(!narrow_character_ptr<volatile char16_t[2]>);
+static_assert(!narrow_character_ptr<const volatile char16_t[2]>);
+static_assert(!narrow_character_ptr<char32_t[2]>);
+static_assert(!narrow_character_ptr<const char32_t[2]>);
+static_assert(!narrow_character_ptr<volatile char32_t[2]>);
+static_assert(!narrow_character_ptr<const volatile char32_t[2]>);
+// }}}
+
+// {{{ test other types
+static_assert(!character_ptr<int>);
+static_assert(!character_ptr<int*>);
+static_assert(!character_ptr<int[2]>);
+static_assert( character_ptr<char*>);
+static_assert(!character_ptr<char&>);
+static_assert( character_ptr<char[2]>);
+static_assert(!character_ptr<char[2][2]>);
+//}}}
+
+// }}}
