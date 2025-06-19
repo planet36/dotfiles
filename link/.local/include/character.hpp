@@ -112,9 +112,11 @@ static_assert(!narrow_character<const volatile char32_t>);
 // {{{ test other types
 static_assert(!character<int>);
 static_assert(!character<int*>);
+static_assert(!character<double>);
 static_assert(!character<int[2]>);
 static_assert(!character<char*>);
 static_assert(!character<char&>);
+static_assert(!character<void*>);
 static_assert(!character<char[2]>);
 static_assert(!character<char[2][2]>);
 //}}}
