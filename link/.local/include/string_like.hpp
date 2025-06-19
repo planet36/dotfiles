@@ -22,4 +22,4 @@ concept convertible_to_any_string_view =
     std::convertible_to<T, std::u32string_view>;
 
 template<typename T>
-concept string_like = convertible_to_any_string_view<std::remove_reference_t<T>>;
+concept string_like = convertible_to_any_string_view<std::remove_reference_t<std::decay_t<T>>>;
