@@ -17,6 +17,9 @@
 #include <utility>
 
 /// get the quotient and remainder of the _truncated_ integer division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_mod_trunc(const std::integral auto x, const std::integral auto y)
 {
@@ -27,6 +30,7 @@ div_mod_trunc(const std::integral auto x, const std::integral auto y)
 
 /// get the quotient and remainder of the _floored_ integer division
 /**
+* \pre \a y != 0
 \sa https://python-history.blogspot.com/2010/08/why-pythons-integer-division-floors.html
 \sa https://eel.is/c++draft/expr.mul#4
 \sa https://stackoverflow.com/a/3602857
@@ -95,6 +99,9 @@ div_mod_floor(const std::integral auto x, const std::integral auto y)
 }
 
 /// get the quotient and remainder of the _ceiling_ integer division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_mod_ceil(const std::integral auto x, const std::integral auto y)
 {
@@ -122,6 +129,9 @@ div_mod_ceil(const std::integral auto x, const std::integral auto y)
 }
 
 /// get the quotient and remainder of the _rounded_ integer division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_mod_round(const std::integral auto x, const std::integral auto y)
 {
@@ -171,6 +181,9 @@ div_mod_round(const std::integral auto x, const std::integral auto y)
 }
 
 /// get the quotient and remainder of the _truncated_ floating-point division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_mod_trunc(const std::floating_point auto x, const std::floating_point auto y)
 {
@@ -182,6 +195,9 @@ div_mod_trunc(const std::floating_point auto x, const std::floating_point auto y
 }
 
 /// get the quotient and remainder of the _floored_ floating-point division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_mod_floor(const std::floating_point auto x, const std::floating_point auto y)
 {
@@ -191,6 +207,9 @@ div_mod_floor(const std::floating_point auto x, const std::floating_point auto y
 }
 
 /// get the quotient and remainder of the _ceiling_ floating-point division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
 {
@@ -200,6 +219,9 @@ div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
 }
 
 /// get the quotient and remainder of the _rounded_ floating-point division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_mod_round(const std::floating_point auto x, const std::floating_point auto y)
 {
@@ -209,6 +231,9 @@ div_mod_round(const std::floating_point auto x, const std::floating_point auto y
 }
 
 /// get the quotient of the _truncated_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_trunc(const auto x, const auto y)
 {
@@ -217,6 +242,9 @@ div_trunc(const auto x, const auto y)
 }
 
 /// get the quotient of the _floored_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_floor(const auto x, const auto y)
 {
@@ -225,6 +253,9 @@ div_floor(const auto x, const auto y)
 }
 
 /// get the quotient of the _ceiling_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_ceil(const auto x, const auto y)
 {
@@ -233,6 +264,9 @@ div_ceil(const auto x, const auto y)
 }
 
 /// get the quotient of the _rounded_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 div_round(const auto x, const auto y)
 {
@@ -241,6 +275,9 @@ div_round(const auto x, const auto y)
 }
 
 /// get the remainder of the _truncated_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 mod_trunc(const auto x, const auto y)
 {
@@ -249,6 +286,9 @@ mod_trunc(const auto x, const auto y)
 }
 
 /// get the remainder of the _floored_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 mod_floor(const auto x, const auto y)
 {
@@ -257,6 +297,9 @@ mod_floor(const auto x, const auto y)
 }
 
 /// get the remainder of the _ceiling_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 mod_ceil(const auto x, const auto y)
 {
@@ -265,6 +308,9 @@ mod_ceil(const auto x, const auto y)
 }
 
 /// get the remainder of the _rounded_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 mod_round(const auto x, const auto y)
 {
@@ -273,6 +319,9 @@ mod_round(const auto x, const auto y)
 }
 
 /// get the adjusted remainder of the _truncated_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 amod_trunc(const auto x, const auto y)
 {
@@ -281,6 +330,9 @@ amod_trunc(const auto x, const auto y)
 }
 
 /// get the adjusted remainder of the _floored_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 amod_floor(const auto x, const auto y)
 {
@@ -289,6 +341,9 @@ amod_floor(const auto x, const auto y)
 }
 
 /// get the adjusted remainder of the _ceiling_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 amod_ceil(const auto x, const auto y)
 {
@@ -297,6 +352,9 @@ amod_ceil(const auto x, const auto y)
 }
 
 /// get the adjusted remainder of the _rounded_ division
+/**
+* \pre \a y != 0
+*/
 constexpr auto
 amod_round(const auto x, const auto y)
 {
