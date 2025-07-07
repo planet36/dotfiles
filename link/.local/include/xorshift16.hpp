@@ -17,9 +17,9 @@
 constexpr uint16_t
 xorshift16(uint16_t x, const int a, const int b, const int c)
 {
-    x ^= x << a;
-    x ^= x >> b;
-    x ^= x << c;
+    x ^= static_cast<uint16_t>(x << a);
+    x ^= static_cast<uint16_t>(x >> b);
+    x ^= static_cast<uint16_t>(x << c);
     return x;
 }
 
