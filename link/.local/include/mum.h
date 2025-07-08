@@ -58,7 +58,7 @@ mums32(uint32_t a, uint32_t b)
 
 /// Multiply \a a and \a b and return the XOR of the high and low parts of the product
 static inline uint64_t
-mumx_u64(uint64_t a, uint64_t b)
+mumx64(uint64_t a, uint64_t b)
 {
     unsigned long long hi = 0; // unsigned __int64
     unsigned long long lo = _mulx_u64(a, b, &hi);
@@ -67,7 +67,7 @@ mumx_u64(uint64_t a, uint64_t b)
 
 /// Multiply \a a and \a b and return the sum of the high and low parts of the product
 static inline uint64_t
-muma_u64(uint64_t a, uint64_t b)
+muma64(uint64_t a, uint64_t b)
 {
     unsigned long long hi = 0; // unsigned __int64
     unsigned long long lo = _mulx_u64(a, b, &hi);
@@ -76,7 +76,7 @@ muma_u64(uint64_t a, uint64_t b)
 
 /// Multiply \a a and \a b and return the difference of the high and low parts of the product
 static inline uint64_t
-mums_u64(uint64_t a, uint64_t b)
+mums64(uint64_t a, uint64_t b)
 {
     unsigned long long hi = 0; // unsigned __int64
     unsigned long long lo = _mulx_u64(a, b, &hi);
