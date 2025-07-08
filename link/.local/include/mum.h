@@ -31,7 +31,7 @@ _mulx_u32(unsigned int a, unsigned int b, unsigned int* hi) [[gnu::nonnull]]
 
 /// Multiply \a a and \a b and return the XOR of the high and low parts of the product
 static inline uint32_t
-mumx_u32(uint32_t a, uint32_t b)
+mumx32(uint32_t a, uint32_t b)
 {
     unsigned int hi = 0;
     unsigned int lo = _mulx_u32(a, b, &hi);
@@ -40,7 +40,7 @@ mumx_u32(uint32_t a, uint32_t b)
 
 /// Multiply \a a and \a b and return the sum of the high and low parts of the product
 static inline uint32_t
-muma_u32(uint32_t a, uint32_t b)
+muma32(uint32_t a, uint32_t b)
 {
     unsigned int hi = 0;
     unsigned int lo = _mulx_u32(a, b, &hi);
@@ -49,7 +49,7 @@ muma_u32(uint32_t a, uint32_t b)
 
 /// Multiply \a a and \a b and return the difference of the high and low parts of the product
 static inline uint32_t
-mums_u32(uint32_t a, uint32_t b)
+mums32(uint32_t a, uint32_t b)
 {
     unsigned int hi = 0;
     unsigned int lo = _mulx_u32(a, b, &hi);
