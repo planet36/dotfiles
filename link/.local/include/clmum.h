@@ -21,7 +21,7 @@ extern "C" {
 #if defined(__PCLMUL__)
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-nonnull-function-attribute
 static void
-clmul_u64(uint64_t* hi, uint64_t* lo) [[gnu::nonnull]]
+clmul64(uint64_t* hi, uint64_t* lo) [[gnu::nonnull]]
 {
     // order of hi, lo doesn't matter
     __m128i result = _mm_set_epi64x((long long int)(*hi), (long long int)(*lo));
@@ -42,23 +42,23 @@ clmul_u64(uint64_t* hi, uint64_t* lo) [[gnu::nonnull]]
 }
 
 static inline uint64_t
-clmumx_u64(uint64_t a, uint64_t b)
+clmumx64(uint64_t a, uint64_t b)
 {
-    clmul_u64(&a, &b);
+    clmul64(&a, &b);
     return a ^ b;
 }
 
 static inline uint64_t
-clmuma_u64(uint64_t a, uint64_t b)
+clmuma64(uint64_t a, uint64_t b)
 {
-    clmul_u64(&a, &b);
+    clmul64(&a, &b);
     return a + b;
 }
 
 static inline uint64_t
-clmums_u64(uint64_t a, uint64_t b)
+clmums64(uint64_t a, uint64_t b)
 {
-    clmul_u64(&a, &b);
+    clmul64(&a, &b);
     return a - b;
 }
 #else
