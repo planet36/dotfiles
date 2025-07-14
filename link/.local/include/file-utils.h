@@ -33,10 +33,11 @@ get_file_size(const int fd)
     return statbuf.st_size;
 }
 
-static inline long
-get_mmap_size(const long file_size)
+static inline size_t
+get_mmap_size(const size_t file_size)
 {
-    const long page_size = sysconf(_SC_PAGESIZE);
+    // Presume that sysconf(_SC_PAGESIZE) will not fail.
+    const size_t page_size = (size_t)sysconf(_SC_PAGESIZE);
 
     if (file_size == 0)
         return page_size;
