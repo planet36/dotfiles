@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -47,6 +50,42 @@ get_mmap_size(const size_t file_size)
 
     // align on page boundary
     return file_size + (page_size - (file_size % page_size));
+}
+
+static bool
+fadvise_sequential_noreuse(const int fd)
+{
+    int posix_fadvise_result = 0;
+
+    // Expect sequential page references.
+    posix_fadvise_result = posix_fadvise(fd, 0, 0, POSIX_FADV_SEQUENTIAL);
+    if (posix_fadvise_result != 0)
+    {
+        errno = posix_fadvise_result;
+        return true;
+    }
+
+    // Data will be accessed once.
+    posix_fadvise_result = posix_fadvise(fd, 0, 0, POSIX_FADV_NOREUSE);
+    if (posix_fadvise_result != 0)
+    {
+        errno = posix_fadvise_result;
+        return true;
+    }
+
+    return false;
+}
+
+static bool
+madvise_sequential_willneed(void* mmap_addr, const size_t mmap_size)
+{
+    if (posix_madvise(mmap_addr, mmap_size, POSIX_MADV_SEQUENTIAL) < 0)
+        return true;
+
+    if (posix_madvise(mmap_addr, mmap_size, POSIX_MADV_WILLNEED) < 0)
+        return true;
+
+    return false;
 }
 
 #ifdef __cplusplus
