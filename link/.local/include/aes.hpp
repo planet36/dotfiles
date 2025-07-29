@@ -3,16 +3,16 @@
 
 /// AES-128 utilities
 /**
-\file
-\author Steven Ward
-\sa https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf
-\sa https://www.intel.com/content/dam/doc/white-paper/advanced-encryption-standard-new-instructions-set-paper.pdf
-\sa https://doi.org/10.1007/978-3-662-60769-5
-"The Design of Rijndael: The Advanced Encryption Standard (AES), Second Edition"
-> Two rounds of Rijndael provide 'full diffusion' in the following sense:
-> every state bit depends on all state bits two rounds ago, or a change in
-> one state bit is likely to affect half of the state bits after two rounds.
-\sa https://crypto.stackexchange.com/questions/44532/how-2-rounds-in-aes-achieve-full-diffusion
+* \file
+* \author Steven Ward
+* \sa https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf
+* \sa https://www.intel.com/content/dam/doc/white-paper/advanced-encryption-standard-new-instructions-set-paper.pdf
+* \sa https://doi.org/10.1007/978-3-662-60769-5
+* "The Design of Rijndael: The Advanced Encryption Standard (AES), Second Edition"
+* > Two rounds of Rijndael provide 'full diffusion' in the following sense:
+* > every state bit depends on all state bits two rounds ago, or a change in
+* > one state bit is likely to affect half of the state bits after two rounds.
+* \sa https://crypto.stackexchange.com/questions/44532/how-2-rounds-in-aes-achieve-full-diffusion
 */
 
 #pragma once
@@ -27,9 +27,9 @@
 
 /// Get the next AES round constant
 /**
-\sa https://en.wikipedia.org/wiki/AES_key_schedule#Round_constants
-\sa https://engineering.purdue.edu/kak/compsec/NewLectures/Lecture8.pdf
-\sa https://crypto.stackexchange.com/a/2420/110486
+* \sa https://en.wikipedia.org/wiki/AES_key_schedule#Round_constants
+* \sa https://engineering.purdue.edu/kak/compsec/NewLectures/Lecture8.pdf
+* \sa https://crypto.stackexchange.com/a/2420/110486
 */
 inline uint8_t
 aes_next_rcon(uint8_t rcon_i, const uint8_t i)
@@ -122,7 +122,7 @@ constexpr unsigned int aes192_num_rounds = 12;
 constexpr unsigned int aes256_num_rounds = 14;
 
 /**
-\pre \a tmp is the result of \c _mm_aeskeygenassist_si128
+* \pre \a tmp is the result of \c _mm_aeskeygenassist_si128
 */
 inline __m128i
 aes128_expand_key(__m128i key, __m128i tmp)
@@ -141,7 +141,7 @@ aes128_expand_key(__m128i key, __m128i tmp)
 }
 
 /**
-\pre <code>round_keys_enc[0]</code> has the cipher key
+* \pre <code>round_keys_enc[0]</code> has the cipher key
 */
 template <size_t Nk>
 requires (Nk >= 2)
@@ -156,7 +156,7 @@ aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc)
 }
 
 /**
-\pre \a round_keys_enc have been properly prepared
+* \pre \a round_keys_enc have been properly prepared
 */
 template <size_t Nk>
 requires (Nk >= 2)
@@ -291,12 +291,12 @@ aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
-\sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
-\pre \a Nr must be at least \c 1.
-\tparam Nr the number of rounds of encryption to perform
-\param H the previous hash value
-\param m the block of the message
-\return the next hash value
+* \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
+* \pre \a Nr must be at least \c 1.
+* \tparam Nr the number of rounds of encryption to perform
+* \param H the previous hash value
+* \param m the block of the message
+* \return the next hash value
 */
 template <simd_int_t T, unsigned int Nr = 3>
 requires (Nr >= 1)
@@ -314,12 +314,12 @@ aesenc_davies_meyer(const T H, const T m)
 
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
-\sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
-\pre \a Nr must be at least \c 1.
-\tparam Nr the number of rounds of decryption to perform
-\param H the previous hash value
-\param m the block of the message
-\return the next hash value
+* \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
+* \pre \a Nr must be at least \c 1.
+* \tparam Nr the number of rounds of decryption to perform
+* \param H the previous hash value
+* \param m the block of the message
+* \return the next hash value
 */
 template <simd_int_t T, unsigned int Nr = 3>
 requires (Nr >= 1)
