@@ -111,8 +111,7 @@ aes_keygenassist_round(const __m128i key, const unsigned int round)
     case 49: return _mm_aeskeygenassist_si128(key, 0xe8);
     case 50: return _mm_aeskeygenassist_si128(key, 0xcb);
     case 51: return _mm_aeskeygenassist_si128(key, 0x8d);
-    default: /*std::unreachable();*/ break;
-    //default: return {}; break; // unreachable
+    default: break;
     }
     std::unreachable();
 }
