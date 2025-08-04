@@ -13,9 +13,10 @@
 #include <span>
 #include <vector>
 
+/// Convert a container to a \c std::vector of \c std::byte
 auto
 to_vec_bytes(const std::ranges::contiguous_range auto& container)
 {
     const auto sp_bytes = std::as_bytes(std::span(container));
-    return std::vector(std::cbegin(sp_bytes), std::cend(sp_bytes));
+    return sp_bytes | std::ranges::to<std::vector>();
 }
