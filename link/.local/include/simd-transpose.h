@@ -81,10 +81,10 @@ transpose_m128ix8(__m128i x[static restrict 8])
 
     const __m128i ABCD_01 = _mm_unpacklo_epi32(AB_03, CD_03);
     const __m128i ABCD_23 = _mm_unpackhi_epi32(AB_03, CD_03);
-    const __m128i EFGH_01 = _mm_unpacklo_epi32(EF_03, GH_03);
-    const __m128i EFGH_23 = _mm_unpackhi_epi32(EF_03, GH_03);
     const __m128i ABCD_45 = _mm_unpacklo_epi32(AB_47, CD_47);
     const __m128i ABCD_67 = _mm_unpackhi_epi32(AB_47, CD_47);
+    const __m128i EFGH_01 = _mm_unpacklo_epi32(EF_03, GH_03);
+    const __m128i EFGH_23 = _mm_unpackhi_epi32(EF_03, GH_03);
     const __m128i EFGH_45 = _mm_unpacklo_epi32(EF_47, GH_47);
     const __m128i EFGH_67 = _mm_unpackhi_epi32(EF_47, GH_47);
 
@@ -141,18 +141,18 @@ transpose_m128ix16(__m128i x[static restrict 16])
 
     const __m128i ABCDEFGH_01 = _mm_unpacklo_epi32(ABCD_03, EFGH_03);
     const __m128i ABCDEFGH_23 = _mm_unpackhi_epi32(ABCD_03, EFGH_03);
-    const __m128i IJKLMNOP_01 = _mm_unpacklo_epi32(IJKL_03, MNOP_03);
-    const __m128i IJKLMNOP_23 = _mm_unpackhi_epi32(IJKL_03, MNOP_03);
     const __m128i ABCDEFGH_45 = _mm_unpacklo_epi32(ABCD_47, EFGH_47);
     const __m128i ABCDEFGH_67 = _mm_unpackhi_epi32(ABCD_47, EFGH_47);
-    const __m128i IJKLMNOP_45 = _mm_unpacklo_epi32(IJKL_47, MNOP_47);
-    const __m128i IJKLMNOP_67 = _mm_unpackhi_epi32(IJKL_47, MNOP_47);
     const __m128i ABCDEFGH_89 = _mm_unpacklo_epi32(ABCD_8b, EFGH_8b);
     const __m128i ABCDEFGH_ab = _mm_unpackhi_epi32(ABCD_8b, EFGH_8b);
-    const __m128i IJKLMNOP_89 = _mm_unpacklo_epi32(IJKL_8b, MNOP_8b);
-    const __m128i IJKLMNOP_ab = _mm_unpackhi_epi32(IJKL_8b, MNOP_8b);
     const __m128i ABCDEFGH_cd = _mm_unpacklo_epi32(ABCD_cf, EFGH_cf);
     const __m128i ABCDEFGH_ef = _mm_unpackhi_epi32(ABCD_cf, EFGH_cf);
+    const __m128i IJKLMNOP_01 = _mm_unpacklo_epi32(IJKL_03, MNOP_03);
+    const __m128i IJKLMNOP_23 = _mm_unpackhi_epi32(IJKL_03, MNOP_03);
+    const __m128i IJKLMNOP_45 = _mm_unpacklo_epi32(IJKL_47, MNOP_47);
+    const __m128i IJKLMNOP_67 = _mm_unpackhi_epi32(IJKL_47, MNOP_47);
+    const __m128i IJKLMNOP_89 = _mm_unpacklo_epi32(IJKL_8b, MNOP_8b);
+    const __m128i IJKLMNOP_ab = _mm_unpackhi_epi32(IJKL_8b, MNOP_8b);
     const __m128i IJKLMNOP_cd = _mm_unpacklo_epi32(IJKL_cf, MNOP_cf);
     const __m128i IJKLMNOP_ef = _mm_unpackhi_epi32(IJKL_cf, MNOP_cf);
 
