@@ -12,6 +12,7 @@
 #include <bit>
 #include <concepts>
 
+/// Get the byte width of an unsigned integer
 constexpr unsigned int
 byte_width(const std::unsigned_integral auto x)
 {
