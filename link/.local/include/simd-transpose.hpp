@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Transpose an array of \c __m128i (treating it as a square matrix of integers) using SSE2 intrinsics
+/// Transpose an array of 128-bit integer vectors (treating it as a square matrix of integers) using SSE2 intrinsics
 /**
 \file
 \author Steven Ward
