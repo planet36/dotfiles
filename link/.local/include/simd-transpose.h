@@ -3,8 +3,8 @@
 
 /// Transpose an array of 128-bit integer vectors (treating it as a square matrix of integers) using SSE2 intrinsics
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once
@@ -24,7 +24,7 @@ transpose_m128ix2(__m128i x[static restrict 2])
 
 /// Transpose \a x (treating it as a 4x4 matrix of \c uint32_t) using SSE2 intrinsics
 /**
-\sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
+* \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
 */
 static void
 transpose_m128ix4(__m128i x[static restrict 4])
@@ -42,10 +42,9 @@ transpose_m128ix4(__m128i x[static restrict 4])
 
 /// Transpose \a x (treating it as a 4x4 matrix of \c uint32_t) using the \c _MM_TRANSPOSE4_PS macro
 /**
-\sa https://community.intel.com/t5/Intel-ISA-Extensions/4x4-matrix-transpose-using-sse2-intrinsics/m-p/785883#M353
-\verbatim
-Cast your __m128i variables into __m128 variables (using _mm_castsi128_ps), use the macro _MM_TRANSPOSE_PS, then cast back using _mm_castps_si128.
-\endverbatim
+* \sa https://community.intel.com/t5/Intel-ISA-Extensions/4x4-matrix-transpose-using-sse2-intrinsics/m-p/785883#M353
+* > Cast your __m128i variables into __m128 variables (using _mm_castsi128_ps),
+* > use the macro _MM_TRANSPOSE_PS, then cast back using _mm_castps_si128.
 */
 static void
 transpose_m128ix4_macro(__m128i x[static restrict 4])
@@ -65,7 +64,7 @@ transpose_m128ix4_macro(__m128i x[static restrict 4])
 
 /// Transpose \a x (treating it as an 8x8 matrix of \c uint16_t) using SSE2 intrinsics
 /**
-\sa https://stackoverflow.com/a/4951060/1892784
+* \sa https://stackoverflow.com/a/4951060/1892784
 */
 static void
 transpose_m128ix8(__m128i x[static restrict 8])
@@ -100,7 +99,7 @@ transpose_m128ix8(__m128i x[static restrict 8])
 
 /// Transpose \a x (treating it as a 16x16 matrix of \c uint8_t) using SSE2 intrinsics
 /**
-\sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
+* \sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
 */
 static void
 transpose_m128ix16(__m128i x[static restrict 16])
