@@ -9,6 +9,8 @@
 
 #pragma once
 
+#if defined(__x86_64__) && defined(__SSE2__)
+
 #include "simd-array.hpp"
 
 #include <immintrin.h>
@@ -180,3 +182,5 @@ transpose(arr_m128i<16>& x)
     x[0xe] = _mm_unpacklo_epi64(ABCDEFGH_ef, IJKLMNOP_ef); // ABCDEFGHIJKLMNOP_e
     x[0xf] = _mm_unpackhi_epi64(ABCDEFGH_ef, IJKLMNOP_ef); // ABCDEFGHIJKLMNOP_f
 }
+
+#endif
