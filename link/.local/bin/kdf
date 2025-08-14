@@ -7,7 +7,7 @@
 
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
-__version__ = '2022-09-08'
+__version__ = '2025-08-14'
 
 import hashlib
 import sys
@@ -53,10 +53,12 @@ def main(argv = None):
     valid_formats = {
             'b16' : base64.b16encode,
             'b32' : base64.b32encode,
+            'b32hex' : base64.b32hexencode,
             'b64-std' : base64.standard_b64encode,
             'b64-url' : base64.urlsafe_b64encode,
             'a85' : base64.a85encode,
             'b85' : base64.b85encode,
+            'z85' : base64.z85encode,
         }
 
     # default values
