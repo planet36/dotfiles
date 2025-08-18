@@ -15,7 +15,7 @@
 
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using SSE2 intrinsics
 static void
-transpose_m128ix2(__m128i x[static restrict 2])
+transpose_2(__m128i x[static restrict 2])
 {
     const __m128i AB_0 = _mm_unpacklo_epi64(x[0], x[1]);
     const __m128i AB_1 = _mm_unpackhi_epi64(x[0], x[1]);
@@ -29,7 +29,7 @@ transpose_m128ix2(__m128i x[static restrict 2])
 * \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
 */
 static void
-transpose_m128ix4(__m128i x[static restrict 4])
+transpose_4(__m128i x[static restrict 4])
 {
     const __m128i AB_01 = _mm_unpacklo_epi32(x[0], x[1]);
     const __m128i AB_23 = _mm_unpackhi_epi32(x[0], x[1]);
@@ -49,7 +49,7 @@ transpose_m128ix4(__m128i x[static restrict 4])
 * > use the macro _MM_TRANSPOSE_PS, then cast back using _mm_castps_si128.
 */
 static void
-transpose_m128ix4_macro(__m128i x[static restrict 4])
+transpose_4_macro(__m128i x[static restrict 4])
 {
     __m128 A = _mm_castsi128_ps(x[0]);
     __m128 B = _mm_castsi128_ps(x[1]);
@@ -69,7 +69,7 @@ transpose_m128ix4_macro(__m128i x[static restrict 4])
 * \sa https://stackoverflow.com/a/4951060/1892784
 */
 static void
-transpose_m128ix8(__m128i x[static restrict 8])
+transpose_8(__m128i x[static restrict 8])
 {
     const __m128i AB_03 = _mm_unpacklo_epi16(x[0], x[1]);
     const __m128i AB_47 = _mm_unpackhi_epi16(x[0], x[1]);
@@ -104,7 +104,7 @@ transpose_m128ix8(__m128i x[static restrict 8])
 * \sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
 */
 static void
-transpose_m128ix16(__m128i x[static restrict 16])
+transpose_16(__m128i x[static restrict 16])
 {
     const __m128i AB_07 = _mm_unpacklo_epi8(x[0x0], x[0x1]);
     const __m128i AB_8f = _mm_unpackhi_epi8(x[0x0], x[0x1]);
