@@ -26,9 +26,9 @@ LDLIBS += `pkg-config --libs fmt libutf8proc`
 
 C_HDRS := $(wildcard *.h)
 CXX_HDRS := $(wildcard *.hpp)
-DEPS := $(C_HDRS:.h=.d) $(CXX_HDRS:.hpp=.d)
-OBJS := $(addsuffix .o, $(basename $(C_HDRS))) $(addsuffix .o, $(basename $(CXX_HDRS)))
-BINS := $(addsuffix .out, $(basename $(C_HDRS))) $(addsuffix .out, $(basename $(CXX_HDRS)))
+DEPS := $(addsuffix -c.d, $(basename $(C_HDRS))) $(addsuffix -cpp.d, $(basename $(CXX_HDRS)))
+OBJS := $(addsuffix -c.o, $(basename $(C_HDRS))) $(addsuffix -cpp.o, $(basename $(CXX_HDRS)))
+BINS := $(addsuffix -c.out, $(basename $(C_HDRS))) $(addsuffix -cpp.out, $(basename $(CXX_HDRS)))
 
 all: $(OBJS)
 
@@ -36,19 +36,19 @@ bins: $(BINS)
 
 objs: $(OBJS)
 
-%.o: %.h
+%-c.o: %.h
 	@# This is done to prevent "warning: #pragma once in main file".
 	-printf '#include "%s"\n' $< | LC_ALL=C $(CC) $(CPPFLAGS) $(CFLAGS) -x c -o $@ - -c
 
-%.o: %.hpp
+%-cpp.o: %.hpp
 	@# This is done to prevent "warning: #pragma once in main file".
 	-printf '#include "%s"\n' $< | LC_ALL=C $(CXX) $(CPPFLAGS) $(CXXFLAGS) -x c++ -o $@ - -c
 
-%.out: %.h
+%-c.out: %.h
 	@# This is done to prevent "warning: #pragma once in main file".
 	-printf '#include "%s"\nint main(){return 0;}\n' $< | LC_ALL=C $(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -x c -o $@ - $(LDLIBS)
 
-%.out: %.hpp
+%-cpp.out: %.hpp
 	@# This is done to prevent "warning: #pragma once in main file".
 	-printf '#include "%s"\nint main(){return 0;}\n' $< | LC_ALL=C $(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -x c++ -o $@ - $(LDLIBS)
 
