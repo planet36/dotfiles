@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# wrapper for grep that can be used with xargs
+
+if (( $# == 0 ))
+then
+    command grep --color=auto --line-number --binary-files=without-match --directories=skip
+else
+    command grep --color=auto --line-number --binary-files=without-match --directories=skip "${@}"
+fi

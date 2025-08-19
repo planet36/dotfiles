@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: OSL-3.0
+
+# wrapper for recursive grep that can be used with xargs
+
+if (( $# == 0 ))
+then
+    command grep --color=auto --line-number --binary-files=without-match --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}
+else
+    command grep --color=auto --line-number --binary-files=without-match --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn} "${@}"
+fi
