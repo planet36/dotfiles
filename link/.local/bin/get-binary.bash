@@ -11,7 +11,7 @@ set -e
 SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 #SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
-SCRIPT_VERSION='2022-09-08'
+SCRIPT_VERSION='2025-08-19'
 SCRIPT_AUTHOR='Steven Ward'
 SCRIPT_LICENSE='OSL-3.0'
 
@@ -95,7 +95,7 @@ done
 
 shift $((OPTIND - 1))
 
-if [ "$#" -ne 3 ]
+if (( $# != 3 ))
 then
     print_error 'Must give 3 args'
 fi
