@@ -183,13 +183,13 @@ fi
 
 if command -v xss-lock > /dev/null
 then
-    if command -v xtrlock > /dev/null
-    then
-        xss-lock -- xtrlock &
-
-    elif command -v slock > /dev/null
+    if command -v slock > /dev/null
     then
         xss-lock -- slock &
+
+    elif command -v xtrlock > /dev/null
+    then
+        xss-lock -- xtrlock &
 
     elif command -v i3lock > /dev/null
     then
