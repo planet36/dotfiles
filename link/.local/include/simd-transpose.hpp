@@ -13,6 +13,10 @@
 
 #include "simd-transpose.x86.hpp"
 
+#elif defined(__aarch64__) && defined(__ARM_NEON)
+
+#include "simd-transpose.arm.hpp"
+
 #else
 
 #error "Architecture not supported"
