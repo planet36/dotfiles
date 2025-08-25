@@ -13,6 +13,10 @@
 
 #include <immintrin.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using SSE2 intrinsics
 static void
 transpose_2(__m128i x[static restrict 2])
@@ -174,5 +178,9 @@ transpose_16(__m128i x[static restrict 16])
     x[0xe] = _mm_unpacklo_epi64(ABCDEFGH_ef, IJKLMNOP_ef); // ABCDEFGHIJKLMNOP_e
     x[0xf] = _mm_unpackhi_epi64(ABCDEFGH_ef, IJKLMNOP_ef); // ABCDEFGHIJKLMNOP_f
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

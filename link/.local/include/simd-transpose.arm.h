@@ -21,6 +21,10 @@
 
 #include <arm_neon.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using ARM Neon intrinsics
 static void
 transpose_2(uint64x2_t x[static restrict 2])
@@ -182,5 +186,9 @@ transpose_16(uint8x16_t x[static restrict 16])
     x[0xe] = vreinterpretq_u8_u64(ABCDEFGHIJKLMNOP_e);
     x[0xf] = vreinterpretq_u8_u64(ABCDEFGHIJKLMNOP_f);
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif
