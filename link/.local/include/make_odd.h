@@ -9,6 +9,8 @@
 
 #pragma once
 
+#if defined(__x86_64__) && defined(__SSE2__)
+
 #include <immintrin.h>
 
 #ifdef __cplusplus
@@ -45,4 +47,6 @@ mm_make_odd_epu64(const __m128i a)
 
 #ifdef __cplusplus
 } // extern "C"
+#endif
+
 #endif
