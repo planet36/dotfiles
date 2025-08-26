@@ -120,8 +120,7 @@ print_usage()
     printf("\n");
 }
 
-int
-main(int argc, char* const argv[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     unsigned int init_delay_msec = default_init_delay_msec;
     unsigned int interval_msec = default_interval_msec;

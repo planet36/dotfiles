@@ -85,8 +85,7 @@ read_write_int()
     }
 }
 
-int
-main(int argc, char* const argv[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     std::string type_name = "int32";
 

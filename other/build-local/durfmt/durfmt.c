@@ -188,8 +188,7 @@ print_usage()
     printf("\n");
 }
 
-int
-main(int argc, char* argv[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     struct durfmt_opts opts;
     const char* ut_to_print = default_ut_to_print;

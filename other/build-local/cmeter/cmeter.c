@@ -126,8 +126,7 @@ print_usage()
     printf("\n");
 }
 
-int
-main(int argc, char* argv[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     struct meter_opts opts;
     meter_opts_init(&opts);

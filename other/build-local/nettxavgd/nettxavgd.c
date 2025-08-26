@@ -133,8 +133,7 @@ print_usage()
     printf("\n");
 }
 
-int
-main(int argc, char* const argv[])
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     set_default_net_iface();
     unsigned int init_delay_msec = default_init_delay_msec;
