@@ -15,9 +15,6 @@ import os
 import re
 import sys
 
-in_delim = re.compile(r' +|\t')
-out_delim = '\t'
-
 # https://docs.python.org/3/library/functions.html#slice
 # https://docs.python.org/3/reference/expressions.html#slicings
 # https://docs.python.org/3/tutorial/introduction.html#strings
@@ -37,12 +34,12 @@ Slices have the same syntax as in Python.'''
             self.is_index = False
             self.value = slice(*t)
 
-choices = tuple(Choice(arg) for arg in sys.argv[1:])
 
-# Choose fields from each line from stdin.
-for line in sys.stdin:
-    in_fields = in_delim.split(line.rstrip(os.linesep))
+def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
+    '''Choose elements from in_fields according to the choices.'''
+
     out_fields = []
+
     for choice in choices:
         if choice.is_index:
             try:
@@ -51,4 +48,34 @@ for line in sys.stdin:
                 pass
         else:
             out_fields.extend(in_fields[choice.value])
-    print(out_delim.join(out_fields))
+
+    return out_fields
+
+
+# pylint: disable=missing-function-docstring
+def main(argv = None):
+
+    if argv is None:
+        argv = sys.argv
+
+    in_delim = re.compile(r' +|\t')
+    out_delim = '\t'
+
+    choices = tuple(Choice(arg) for arg in argv[1:])
+
+    # Choose fields from each line from stdin.
+    for line in sys.stdin:
+
+        line = line.rstrip(os.linesep)
+
+        in_fields = in_delim.split(line)
+
+        out_fields = choose(choices, in_fields)
+
+        print(out_delim.join(out_fields))
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
