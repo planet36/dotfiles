@@ -51,7 +51,7 @@ print_uint(const T x)
     if (const auto i = static_cast<std::make_signed_t<T>>(x); i < 0)
         fmt::print("\t({:d})", i);
 
-    fmt::print("\n");
+    fmt::println("");
 }
 
 template <std::integral T>
