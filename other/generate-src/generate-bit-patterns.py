@@ -274,7 +274,7 @@ for bits in (16, 32, 64):
         assert i.bit_count() == bits // 2
 
     print(f'namespace bit_patterns_{bits}') # namespace begin
-    print('{{')
+    print('{')
     print()
 
     print(f'inline constexpr std::array<uint{bits}_t, {to_dec_thou_str_cpp(len(bit_patterns[bits]))}> C{{')
