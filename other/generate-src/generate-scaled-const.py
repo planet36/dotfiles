@@ -120,4 +120,4 @@ print('// ⌊2⁶⁴ × frac(√p)⌋')
 for p in primes:
     x = frac(sqrt(p))
     result = int(floor(scale * frac(sqrt(x))))
-    print(f"#define FLOOR_SCALED_FRAC_SQRT_{p:<3} UINT64_C(0x{result:016x})")
+    print(f"#define FLOOR_SCALED_FRAC_SQRT_{p:<3} UINT64_C(0x{result:016x}) // (popcount = {result.bit_count()})")
