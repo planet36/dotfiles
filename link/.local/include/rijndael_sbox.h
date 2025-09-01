@@ -3,12 +3,12 @@
 
 /// Rijndael/AES Forward and Inverse S-boxes
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/Rijndael_S-box
-\sa https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf
-\sa https://cryptography.fandom.com/wiki/Rijndael_S-box
-\sa https://github.com/planet36/rijndael-s-box
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/Rijndael_S-box
+* \sa https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf
+* \sa https://cryptography.fandom.com/wiki/Rijndael_S-box
+* \sa https://github.com/planet36/rijndael-s-box
 */
 
 #pragma once

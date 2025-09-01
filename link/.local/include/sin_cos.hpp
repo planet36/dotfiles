@@ -3,9 +3,9 @@
 
 /// sin_cos functions that use references instead of pointers
 /**
-\file
-\author Steven Ward
-\sa https://www.gnu.org/software/libc/manual/html_node/Trig-Functions.html#index-sincos
+* \file
+* \author Steven Ward
+* \sa https://www.gnu.org/software/libc/manual/html_node/Trig-Functions.html#index-sincos
 */
 
 #pragma once

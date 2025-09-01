@@ -3,16 +3,16 @@
 
 /// Exact integer operations
 /**
-\file
-\author Steven Ward
-
-These integer arithmetic functions throw \c std::overflow_error if the result
-is not representable in the given type.  They are inspired by Java functions of
-similar names.
-
-\sa https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/Math.html
-\sa https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/StrictMath.html
-\sa https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
+* \file
+* \author Steven Ward
+*
+* These integer arithmetic functions throw \c std::overflow_error if the result
+* is not representable in the given type.  They are inspired by Java functions of
+* similar names.
+*
+* \sa https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/Math.html
+* \sa https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/StrictMath.html
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html
 */
 
 #pragma once

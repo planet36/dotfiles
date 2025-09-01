@@ -3,16 +3,16 @@
 
 /// a bitmask array library
 /**
-\file
-\author Steven Ward
-
-For the "one" bitmasks, one bit is set (1) and the rest are not set (0).
-For the "zero" bitmasks, one bit is not set (0) and the rest are set (1).
-For the "lowpass" bitmasks, the low-order bits are set (1) and the high-order bits are not set (0).
-For the "highpass" bitmasks, the high-order bits are set (1) and the low-order bits are not set (0).
-
-Example:
-\verbatim
+* \file
+* \author Steven Ward
+*
+* For the "one" bitmasks, one bit is set (1) and the rest are not set (0).
+* For the "zero" bitmasks, one bit is not set (0) and the rest are set (1).
+* For the "lowpass" bitmasks, the low-order bits are set (1) and the high-order bits are not set (0).
+* For the "highpass" bitmasks, the high-order bits are set (1) and the low-order bits are not set (0).
+*
+* Example:
+* \verbatim
 bitmask of 8 bits
 
  i  one       zero      lowpass   highpass

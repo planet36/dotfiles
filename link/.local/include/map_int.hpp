@@ -3,28 +3,28 @@
 
 /// Map an unsigned integer to an interval
 /**
-\file
-\author Steven Ward
-\sa https://github.com/lemire/fastrange/blob/master/fastrange.h
-\sa https://www.pcg-random.org/posts/bounded-rands.html
-\sa https://arxiv.org/abs/1805.10941
-\sa https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
-\sa https://stackoverflow.com/a/29811247/1892784
-
-There is a possibility of modulo bias.  See the links above for an explanation.
-The portion of random values which should be discarded is <code>discard / (2**L)</code>.
-
-Where
-<code>discard = 2**L mod s</code> is the number of discarded values in the random pool
-\c L is the bit space of the random pool (typically \c 32 or \c 64)
-\c s is the interval range (<code>b - a + 1</code>)
-
-When <code>2**L mod s</code> is \c 0, there is no modulo bias.
-
-Python script that shows how many discarded values:
-
-Python snippet
-\code{.py}
+* \file
+* \author Steven Ward
+* \sa https://github.com/lemire/fastrange/blob/master/fastrange.h
+* \sa https://www.pcg-random.org/posts/bounded-rands.html
+* \sa https://arxiv.org/abs/1805.10941
+* \sa https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
+* \sa https://stackoverflow.com/a/29811247/1892784
+*
+* There is a possibility of modulo bias.  See the links above for an explanation.
+* The portion of random values which should be discarded is <code>discard / (2**L)</code>.
+*
+* Where
+* <code>discard = 2**L mod s</code> is the number of discarded values in the random pool
+* \c L is the bit space of the random pool (typically \c 32 or \c 64)
+* \c s is the interval range (<code>b - a + 1</code>)
+*
+* When <code>2**L mod s</code> is \c 0, there is no modulo bias.
+*
+* Python script that shows how many discarded values:
+*
+* Python snippet
+* \code{.py}
 for L in (3, 4, 5, 8, 16, 32, 64):
     print(f'{L=}')
     for s in range(1, 8+1):
@@ -38,9 +38,9 @@ for L in (3, 4, 5, 8, 16, 32, 64):
             print(f'  {discarded_portion=}')
     print()
 \endcode
-
-Output:
-\verbatim
+*
+* Output:
+* \verbatim
 L=3
   s=1  discard=0  (No bias)
   s=2  discard=0  (No bias)
@@ -111,7 +111,7 @@ L=64
   s=7  discard=2  discarded_portion=1.0842021724855044e-19
   s=8  discard=0  (No bias)
 \endverbatim
-
+*
 */
 
 #pragma once
@@ -123,7 +123,7 @@ L=64
 
 /// map \a x to the inverval <code>[0, s)</code>
 /**
-\retval x if <code>s == 0</code>
+* \retval x if <code>s == 0</code>
 */
 template <std::unsigned_integral T>
 constexpr T
@@ -139,8 +139,8 @@ map_int(const T x, const T s)
 
 /// map \a x to the inverval <code>[a, b]</code>
 /**
-\pre \a a <= \a b
-\retval x if <code>a == MIN</code> and <code>b == MAX</code>
+* \pre \a a <= \a b
+* \retval x if <code>a == MIN</code> and <code>b == MAX</code>
 */
 template <std::unsigned_integral T>
 constexpr T

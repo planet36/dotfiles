@@ -3,9 +3,9 @@
 
 /// similar to \c std::copysign but for signed integers
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/numeric/math/copysign
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/numeric/math/copysign
 */
 
 #pragma once

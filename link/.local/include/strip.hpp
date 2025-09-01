@@ -3,13 +3,13 @@
 
 /// strip leading and trailing characters from a string
 /**
-\file
-\author Steven Ward
-
-Note: Only \c std::string is supported.
-
-The \c strip() functions use \c std::string member functions to find delimiters.
-The \c trim() functions use <code><algorithm></code> functions to find delimiters.
+* \file
+* \author Steven Ward
+*
+* Note: Only \c std::string is supported.
+*
+* The \c strip() functions use \c std::string member functions to find delimiters.
+* The \c trim() functions use <code><algorithm></code> functions to find delimiters.
 */
 
 #pragma once

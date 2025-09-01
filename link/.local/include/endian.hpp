@@ -3,9 +3,9 @@
 
 /// functions to reverse bytes and determine machine endianness (i.e. big endian, little endian)
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/Endianness
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/Endianness
 */
 
 #pragma once

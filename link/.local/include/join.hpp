@@ -3,10 +3,10 @@
 
 /// join strings
 /**
-\file
-\author Steven Ward
-
-Note: Only \c std::string is supported.
+* \file
+* \author Steven Ward
+*
+* Note: Only \c std::string is supported.
 */
 
 #pragma once

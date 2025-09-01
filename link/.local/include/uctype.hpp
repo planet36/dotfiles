@@ -3,9 +3,9 @@
 
 /// functions similar to those in <ctype.h> that operate on unsigned chars in the C locale
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/string/byte
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/string/byte
 */
 
 #pragma once

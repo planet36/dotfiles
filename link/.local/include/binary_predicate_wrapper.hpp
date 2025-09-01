@@ -3,8 +3,8 @@
 
 /// Alias template for \c std::function that takes 2 args and returns \c bool
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

@@ -3,9 +3,9 @@
 
 /// From the given bits, make a floating-point number within the interval [0, 1).
 /**
-\file
-\author Steven Ward
-Inspired by <https://prng.di.unimi.it/>
+* \file
+* \author Steven Ward
+* Inspired by <https://prng.di.unimi.it/>
 */
 
 #pragma once

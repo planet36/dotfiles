@@ -3,8 +3,8 @@
 
 /// non-thread-safe C circular queue
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

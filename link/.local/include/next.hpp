@@ -3,8 +3,8 @@
 
 /// next less/greater than functions
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

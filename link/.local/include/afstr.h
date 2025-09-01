@@ -3,12 +3,12 @@
 
 /// automatically free string
 /**
-\file
-\author Steven Ward
-\sa https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
-
-Example usage
-\code{.c}
+* \file
+* \author Steven Ward
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
+*
+* Example usage
+* \code{.c}
 const char* s = "Hello, world!";
 // Use "afstr" as the declaration of a dynamically allocated string.
 afstr s2 = strdup(s);

@@ -3,8 +3,8 @@
 
 /// Union that holds a floating-point value and an unsigned integer of the given size
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

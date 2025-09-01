@@ -3,8 +3,8 @@
 
 /// Make a signed arithmetic value negative
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

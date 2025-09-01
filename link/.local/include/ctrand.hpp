@@ -3,11 +3,11 @@
 
 /// compile-time pseudo-random number
 /**
-\file
-\author Steven Ward
-\sa https://gcc.gnu.org/onlinedocs/cpp/Standard-Predefined-Macros.html
-\sa https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
-\sa https://learn.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=msvc-170
+* \file
+* \author Steven Ward
+* \sa https://gcc.gnu.org/onlinedocs/cpp/Standard-Predefined-Macros.html
+* \sa https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
+* \sa https://learn.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=msvc-170
 */
 
 #pragma once

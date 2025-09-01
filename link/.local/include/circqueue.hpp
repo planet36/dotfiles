@@ -3,10 +3,10 @@
 
 /// Thread-safe C++ circular buffer
 /**
-\file
-\author Steven Ward
-
-\sa https://codetrips.com/2020/07/26/modern-c-writing-a-thread-safe-queue/
+* \file
+* \author Steven Ward
+*
+* \sa https://codetrips.com/2020/07/26/modern-c-writing-a-thread-safe-queue/
 */
 
 #pragma once

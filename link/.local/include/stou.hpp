@@ -3,10 +3,10 @@
 
 /// string to unsigned int
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/string/basic_string/stoul
-\sa https://en.cppreference.com/w/cpp/string/basic_string/stol
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/string/basic_string/stoul
+* \sa https://en.cppreference.com/w/cpp/string/basic_string/stol
 */
 
 #pragma once

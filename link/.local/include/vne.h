@@ -3,9 +3,9 @@
 
 /// Von Neumann extractor
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/Randomness_extractor#Von_Neumann_extractor
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/Randomness_extractor#Von_Neumann_extractor
 */
 
 #pragma once

@@ -3,18 +3,18 @@
 
 /// SIMD types used with intrinsic/built-in functions
 /**
-\file
-\author Steven Ward
-\sa https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html
-\sa https://clang.llvm.org/docs/LanguageExtensions.html#vectors-and-extended-vectors
-\sa https://gcc.gnu.org/onlinedocs/gcc/Common-Type-Attributes.html
-\sa https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html
-\sa https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-8/details-about-sse-intrinsics.html
-\sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/xmmintrin.h
-\sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/emmintrin.h
-\sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/avxintrin.h
-\sa https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html
-\sa https://developer.arm.com/documentation/den0018/a/NEON-Intrinsics/Vector-data-types-for-NEON-intrinsics?lang=en
+* \file
+* \author Steven Ward
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html
+* \sa https://clang.llvm.org/docs/LanguageExtensions.html#vectors-and-extended-vectors
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Type-Attributes.html
+* \sa https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html
+* \sa https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-8/details-about-sse-intrinsics.html
+* \sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/xmmintrin.h
+* \sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/emmintrin.h
+* \sa https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/avxintrin.h
+* \sa https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html
+* \sa https://developer.arm.com/documentation/den0018/a/NEON-Intrinsics/Vector-data-types-for-NEON-intrinsics?lang=en
 */
 
 #pragma once

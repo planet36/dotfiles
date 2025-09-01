@@ -3,8 +3,8 @@
 
 /// reverse the bits of a byte
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once
@@ -13,8 +13,8 @@
 
 /// an array with the bits reversed for each byte index
 /**
-Python snippet to generate the array
-\code{.py}
+* Python snippet to generate the array
+* \code{.py}
 for b in range(0, 255+1):
     b_str = f'{b:08b}'
     b_str_rev = b_str[::-1]

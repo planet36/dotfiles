@@ -3,10 +3,10 @@
 
 /// Concept to check if a type is the same as any other given types
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/concepts/same_as
-\sa https://en.cppreference.com/w/cpp/types/is_same
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/concepts/same_as
+* \sa https://en.cppreference.com/w/cpp/types/is_same
 */
 
 #pragma once

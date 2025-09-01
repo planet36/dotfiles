@@ -3,13 +3,13 @@
 
 /// get the current year
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/chrono/c/time
-\sa https://en.cppreference.com/w/c/chrono/localtime
-\sa https://en.cppreference.com/w/cpp/chrono/c/localtime
-\sa https://en.cppreference.com/w/cpp/chrono/c/gmtime
-\sa https://en.cppreference.com/w/c/chrono/gmtime
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/chrono/c/time
+* \sa https://en.cppreference.com/w/c/chrono/localtime
+* \sa https://en.cppreference.com/w/cpp/chrono/c/localtime
+* \sa https://en.cppreference.com/w/cpp/chrono/c/gmtime
+* \sa https://en.cppreference.com/w/c/chrono/gmtime
 */
 
 #pragma once

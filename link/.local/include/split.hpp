@@ -3,10 +3,10 @@
 
 /// split strings
 /**
-\file
-\author Steven Ward
-
-Note: Only \c std::string is supported.
+* \file
+* \author Steven Ward
+*
+* Note: Only \c std::string is supported.
 */
 
 #pragma once
@@ -28,7 +28,7 @@ Note: Only \c std::string is supported.
 
 /// split the string about the delimiter character
 /**
-If \a limit is greater than \c 0, the result will have no more than \a limit strings.
+* If \a limit is greater than \c 0, the result will have no more than \a limit strings.
 */
 std::vector<std::string>
 split(const std::string& s, const char delim, const size_t limit = 0)
@@ -53,9 +53,9 @@ split(const std::string& s, const char delim, const size_t limit = 0)
 
 /// split the string about the delimiter string
 /**
-If \a limit is greater than \c 0, the result will have no more than \a limit strings.
-
-If \a delim is empty, the result is a vector with \a s as its only element.
+* If \a limit is greater than \c 0, the result will have no more than \a limit strings.
+*
+* If \a delim is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
 split(const std::string& s, const std::string& delim, const size_t limit = 0)
@@ -83,9 +83,9 @@ split(const std::string& s, const std::string& delim, const size_t limit = 0)
 
 /// split the string about characters in the delimiter set
 /**
-If \a limit is greater than \c 0, the result will have no more than \a limit strings.
-
-If \a delim_set is empty, the result is a vector with \a s as its only element.
+* If \a limit is greater than \c 0, the result will have no more than \a limit strings.
+*
+* If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
 split_set(const std::string& s, const std::string& delim_set, const size_t limit = 0)
@@ -121,9 +121,9 @@ split_set(const std::string& s, const std::string& delim_set, const size_t limit
 
 /// split the string about characters not in the delimiter set
 /**
-If \a limit is greater than \c 0, the result will have no more than \a limit strings.
-
-If \a delim_set is empty, the result is a vector with \a s as its only element.
+* If \a limit is greater than \c 0, the result will have no more than \a limit strings.
+*
+* If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
 std::vector<std::string>
 split_non_set(const std::string& s, const std::string& delim_set, const size_t limit = 0)

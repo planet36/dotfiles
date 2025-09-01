@@ -3,63 +3,63 @@
 
 /// AES Transformations, Isolated
 /**
-\file
-\author Steven Ward
-\sa https://www.intel.com/content/dam/doc/white-paper/advanced-encryption-standard-new-instructions-set-paper.pdf
-
-
-Adapted from
-https://www.intel.com/content/dam/doc/white-paper/advanced-encryption-standard-new-instructions-set-paper.pdf
-"Intel® Advanced Encryption Standard (AES) New Instructions Set"
-
-Page 16
-
-The Four AES Round Instructions
-
-"""
-AESENC, AESENCLAST, AESDEC, AESDECLAST are defined by the pseudo code in the
-following figures (“xmm1” and “xmm2” are aliases to any two xmm
-registers). These instructions perform a grouped sequence of transformations of
-the AES encryption/decryption flows (in fact, they perform the longest sequence
-possible, without introducing a branch in an instruction).
-"""
-
-
-Figure 9. The AESENC and AESENCLAST Instructions
-
-AESENC xmm1, xmm2/m128                 AESENCLAST xmm1, xmm2/m128
-Tmp := xmm1                            Tmp := xmm1
-Round Key := xmm2/m128                 Round Key := xmm2/m128
-Tmp := ShiftRows (Tmp)                 Tmp := Shift Rows (Tmp)
-Tmp := SubBytes (Tmp)                  Tmp := SubBytes (Tmp)
-Tmp := MixColumns (Tmp)
-xmm1 := Tmp xor Round Key              xmm1 := Tmp xor Round Key
-
-
-Figure 10. The AESDEC and AESDECLAST Instructions
-
-AESDEC xmm1, xmm2/m128                 AESDECLAST xmm1, xmm2/m128
-Tmp := xmm1                            Tmp := xmm1
-Round Key := xmm2/m128                 Round Key := xmm2/m128
-Tmp := InvShift Rows (Tmp)             Tmp := InvShift Rows (Tmp)
-Tmp := InvSubBytes (Tmp)               Tmp := InvSubBytes (Tmp)
-Tmp := InvMixColumns (Tmp)
-xmm1 := Tmp xor Round Key              xmm1:= Tmp xor Round Key
-
-
-Page 34
-
-"""
-In particular, the AES transformations can be useful building blocks for hash functions.
-For example, the use the MixColumns transformation provides rapid diffusion and the
-AES S-box is a good nonlinear mixer. Operating on large block sizes could be useful in
-constructing hash functions with a long digest size.
-"""
-
-Figure 31. Isolating the AES Transformations with Combinations of AES Instructions
-
-Figure 32. Isolating the AES Transformations (C Code)
-
+* \file
+* \author Steven Ward
+* \sa https://www.intel.com/content/dam/doc/white-paper/advanced-encryption-standard-new-instructions-set-paper.pdf
+*
+*
+* Adapted from
+* https://www.intel.com/content/dam/doc/white-paper/advanced-encryption-standard-new-instructions-set-paper.pdf
+* "Intel® Advanced Encryption Standard (AES) New Instructions Set"
+*
+* Page 16
+*
+* The Four AES Round Instructions
+*
+* """
+* AESENC, AESENCLAST, AESDEC, AESDECLAST are defined by the pseudo code in the
+* following figures (“xmm1” and “xmm2” are aliases to any two xmm
+* registers). These instructions perform a grouped sequence of transformations of
+* the AES encryption/decryption flows (in fact, they perform the longest sequence
+* possible, without introducing a branch in an instruction).
+* """
+*
+*
+* Figure 9. The AESENC and AESENCLAST Instructions
+*
+* AESENC xmm1, xmm2/m128                 AESENCLAST xmm1, xmm2/m128
+* Tmp := xmm1                            Tmp := xmm1
+* Round Key := xmm2/m128                 Round Key := xmm2/m128
+* Tmp := ShiftRows (Tmp)                 Tmp := Shift Rows (Tmp)
+* Tmp := SubBytes (Tmp)                  Tmp := SubBytes (Tmp)
+* Tmp := MixColumns (Tmp)
+* xmm1 := Tmp xor Round Key              xmm1 := Tmp xor Round Key
+*
+*
+* Figure 10. The AESDEC and AESDECLAST Instructions
+*
+* AESDEC xmm1, xmm2/m128                 AESDECLAST xmm1, xmm2/m128
+* Tmp := xmm1                            Tmp := xmm1
+* Round Key := xmm2/m128                 Round Key := xmm2/m128
+* Tmp := InvShift Rows (Tmp)             Tmp := InvShift Rows (Tmp)
+* Tmp := InvSubBytes (Tmp)               Tmp := InvSubBytes (Tmp)
+* Tmp := InvMixColumns (Tmp)
+* xmm1 := Tmp xor Round Key              xmm1:= Tmp xor Round Key
+*
+*
+* Page 34
+*
+* """
+* In particular, the AES transformations can be useful building blocks for hash functions.
+* For example, the use the MixColumns transformation provides rapid diffusion and the
+* AES S-box is a good nonlinear mixer. Operating on large block sizes could be useful in
+* constructing hash functions with a long digest size.
+* """
+*
+* Figure 31. Isolating the AES Transformations with Combinations of AES Instructions
+*
+* Figure 32. Isolating the AES Transformations (C Code)
+*
 */
 
 #pragma once
@@ -67,7 +67,7 @@ Figure 32. Isolating the AES Transformations (C Code)
 #include <immintrin.h>
 
 /**
-\verbatim
+* \verbatim
 _mm_xor_si128
 \endverbatim
 */
@@ -79,7 +79,7 @@ AddRoundKey(__m128i data, __m128i key)
 }
 
 /**
-\verbatim
+* \verbatim
 PSHUFB xmm0, 0x0b06010c07020d08030e09040f0a0500
 \endverbatim
 */
@@ -92,7 +92,7 @@ ShiftRows(__m128i data)
 }
 
 /**
-\verbatim
+* \verbatim
 PSHUFB xmm0, 0x0306090c0f0205080b0e0104070a0d00
 \endverbatim
 */
@@ -105,7 +105,7 @@ InvShiftRows(__m128i data)
 }
 
 /**
-\verbatim
+* \verbatim
 AESDECLAST xmm0, 0x00000000000000000000000000000000
 AESENC xmm0, 0x00000000000000000000000000000000
 \endverbatim
@@ -120,7 +120,7 @@ MixColumns(__m128i data)
 }
 
 /**
-\verbatim
+* \verbatim
 AESENCLAST xmm0, 0x00000000000000000000000000000000
 AESDEC xmm0, 0x00000000000000000000000000000000
 \endverbatim
@@ -140,7 +140,7 @@ InvMixColumns(__m128i data)
 }
 
 /**
-\verbatim
+* \verbatim
 PSHUFB xmm0, 0x0306090c0f0205080b0e0104070a0d00
 AESENCLAST xmm0, 0x00000000000000000000000000000000
 \endverbatim
@@ -156,7 +156,7 @@ SubBytes(__m128i data)
 }
 
 /**
-\verbatim
+* \verbatim
 PSHUFB xmm0, 0x0b06010c07020d08030e09040f0a0500
 AESDECLAST xmm0, 0x00000000000000000000000000000000
 \endverbatim

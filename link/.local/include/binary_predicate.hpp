@@ -3,9 +3,9 @@
 
 /// binary predicate concept
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/concepts/predicate
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/concepts/predicate
 */
 
 #pragma once

@@ -3,8 +3,8 @@
 
 /// Test if two SIMD values are equal
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

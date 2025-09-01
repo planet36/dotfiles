@@ -3,9 +3,9 @@
 
 /// Wrappers for SIMD load and store functions
 /**
-\file
-\author Steven Ward
-\sa https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html
+* \file
+* \author Steven Ward
+* \sa https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html
 */
 
 #pragma once

@@ -3,9 +3,9 @@
 
 /// Absolute difference between 2 integers as an unsigned integer
 /**
-\file
-\author Steven Ward
-\sa https://doc.rust-lang.org/stable/std/index.html?search=abs_diff&filter-crate=std
+* \file
+* \author Steven Ward
+* \sa https://doc.rust-lang.org/stable/std/index.html?search=abs_diff&filter-crate=std
 */
 
 #pragma once

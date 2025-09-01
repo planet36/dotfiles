@@ -3,8 +3,8 @@
 
 /// Cast floating-point to integer of sufficient size
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

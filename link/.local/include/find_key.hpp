@@ -3,8 +3,8 @@
 
 /// Find a key in an \c AssociativeContainer
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

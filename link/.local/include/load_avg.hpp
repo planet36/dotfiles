@@ -3,10 +3,10 @@
 
 /// Get the load averages of the system
 /**
-\file
-\author Steven Ward
-\sa https://man7.org/linux/man-pages/man3/getloadavg.3.html
-\sa https://www.gnu.org/software/libc/manual/html_node/Processor-Resources.html
+* \file
+* \author Steven Ward
+* \sa https://man7.org/linux/man-pages/man3/getloadavg.3.html
+* \sa https://www.gnu.org/software/libc/manual/html_node/Processor-Resources.html
 */
 
 #pragma once

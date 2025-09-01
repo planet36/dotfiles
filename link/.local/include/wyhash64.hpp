@@ -3,10 +3,10 @@
 
 /// wyhash64
 /**
-\file
-\author Steven Ward
-\sa https://github.com/wangyi-fudan/wyhash/blob/master/wyhash.h
-\sa https://github.com/rurban/smhasher/blob/master/wyhash.h
+* \file
+* \author Steven Ward
+* \sa https://github.com/wangyi-fudan/wyhash/blob/master/wyhash.h
+* \sa https://github.com/rurban/smhasher/blob/master/wyhash.h
 */
 
 #pragma once

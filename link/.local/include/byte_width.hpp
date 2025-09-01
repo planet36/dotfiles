@@ -3,8 +3,8 @@
 
 /// Get the byte width of an unsigned integer
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

@@ -3,9 +3,9 @@
 
 /// Wrapper for \c std::iota that takes a \c std::ranges::forward_range
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/algorithm/iota
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/algorithm/iota
 */
 
 #include <numeric>

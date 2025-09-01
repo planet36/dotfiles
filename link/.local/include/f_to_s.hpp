@@ -3,9 +3,9 @@
 
 /// float-to-string wrapper function for std::to_chars
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/utility/to_chars
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/utility/to_chars
 */
 
 #pragma once

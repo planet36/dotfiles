@@ -3,8 +3,8 @@
 
 /// Convert an object to a \c std::array of \c std::byte
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

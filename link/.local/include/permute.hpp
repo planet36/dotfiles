@@ -3,8 +3,8 @@
 
 /// Permute the elements of an array
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

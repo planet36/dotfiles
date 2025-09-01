@@ -3,10 +3,10 @@
 
 /// Concept for an Unordered Associative Container type
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/named_req/UnorderedAssociativeContainer
-\sa https://eel.is/c++draft/unord.req
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/named_req/UnorderedAssociativeContainer
+* \sa https://eel.is/c++draft/unord.req
 */
 
 #pragma once

@@ -3,9 +3,9 @@
 
 /// Scan the contents of a path
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/c/io/fscanf
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/c/io/fscanf
 */
 
 #pragma once

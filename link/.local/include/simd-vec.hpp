@@ -3,8 +3,8 @@
 
 /// Aliases for vectors of SIMD types
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

@@ -3,8 +3,8 @@
 
 /// Convert a container to a \c std::vector of \c std::byte or \c uint8_t
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

@@ -3,9 +3,9 @@
 
 /// Fisher-Yates shuffle
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
 */
 
 #pragma once
@@ -16,7 +16,7 @@
 #include <ranges>
 
 /**
-\sa https://en.cppreference.com/w/cpp/ranges/random_access_range
+* \sa https://en.cppreference.com/w/cpp/ranges/random_access_range
 */
 void
 fisher_yates(std::ranges::random_access_range auto& container)

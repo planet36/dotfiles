@@ -3,8 +3,8 @@
 
 /// Concept for a "string-like" type
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

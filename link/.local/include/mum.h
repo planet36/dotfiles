@@ -3,9 +3,9 @@
 
 /// MUltiply and Mix ("MUM") functions
 /**
-\file
-\author Steven Ward
-\sa https://github.com/vnmakarov/mum-hash/blob/ad5658e26fa03029c436848eca25fae1a17639be/mum.h#L104
+* \file
+* \author Steven Ward
+* \sa https://github.com/vnmakarov/mum-hash/blob/ad5658e26fa03029c436848eca25fae1a17639be/mum.h#L104
 */
 
 #pragma once

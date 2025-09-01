@@ -3,9 +3,9 @@
 
 /// Convert between binary and gray code
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/Gray_code
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/Gray_code
 */
 
 #pragma once

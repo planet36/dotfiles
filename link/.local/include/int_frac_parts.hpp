@@ -3,8 +3,8 @@
 
 /// Get the integer part and fractional part of a floating-point number
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

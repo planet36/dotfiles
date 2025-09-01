@@ -3,8 +3,8 @@
 
 /// case-insensitive character and string comparison
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

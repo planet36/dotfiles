@@ -3,11 +3,11 @@
 
 /// Xorshift 16-bit
 /**
-\file
-\author Steven Ward
-\sa http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html
-\sa https://codebase64.org/doku.php?id=base:16bit_xorshift_random_generator
-\sa https://www.jstatsoft.org/article/view/v008i14
+* \file
+* \author Steven Ward
+* \sa http://www.retroprogramming.com/2017/07/xorshift-pseudorandom-numbers-in-z80.html
+* \sa https://codebase64.org/doku.php?id=base:16bit_xorshift_random_generator
+* \sa https://www.jstatsoft.org/article/view/v008i14
 */
 
 #pragma once

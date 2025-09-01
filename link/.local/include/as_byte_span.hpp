@@ -3,8 +3,8 @@
 
 /// Get a view to the object as a span of bytes
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

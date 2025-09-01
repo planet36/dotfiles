@@ -3,13 +3,13 @@
 
 /// Get the number of columns needed to represent a UTF-8 string
 /**
-\file
-\author Steven Ward
-\sa https://juliastrings.github.io/utf8proc/doc/
-\sa https://juliastrings.github.io/utf8proc/doc/utf8proc_8h.html
-This is similar to \c wcswidth
-\sa https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcswidth.html
-\sa https://man7.org/linux/man-pages/man3/wcswidth.3.html
+* \file
+* \author Steven Ward
+* \sa https://juliastrings.github.io/utf8proc/doc/
+* \sa https://juliastrings.github.io/utf8proc/doc/utf8proc_8h.html
+* This is similar to \c wcswidth
+* \sa https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcswidth.html
+* \sa https://man7.org/linux/man-pages/man3/wcswidth.3.html
 */
 
 #pragma once

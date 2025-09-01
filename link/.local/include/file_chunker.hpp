@@ -3,8 +3,8 @@
 
 /// Process a file stream in discrete chunks
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

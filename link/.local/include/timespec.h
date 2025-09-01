@@ -3,9 +3,9 @@
 
 /// timespec utils
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/c/chrono/timespec
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/c/chrono/timespec
 */
 
 #pragma once

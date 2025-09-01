@@ -3,10 +3,10 @@
 
 /// Get a random number from the hardware RNG
 /**
-\file
-\author Steven Ward
-\sa https://stackoverflow.com/a/72265912
-\sa https://en.wikipedia.org/wiki/RDRAND
+* \file
+* \author Steven Ward
+* \sa https://stackoverflow.com/a/72265912
+* \sa https://en.wikipedia.org/wiki/RDRAND
 */
 
 #pragma once

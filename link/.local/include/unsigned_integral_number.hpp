@@ -3,9 +3,9 @@
 
 /// Concept for an unsigned integral number type
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/language/type
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/language/type
 */
 
 #pragma once

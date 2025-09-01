@@ -3,11 +3,11 @@
 
 /// C++ wrappers for getline and getdelim
 /**
-\file
-\author Steven Ward
-\sa https://www.man7.org/linux/man-pages/man3/getline.3.html
-\sa https://en.cppreference.com/w/c/experimental/dynamic/getline
-\sa https://www.gnu.org/software/libc/manual/html_node/Line-Input.html
+* \file
+* \author Steven Ward
+* \sa https://www.man7.org/linux/man-pages/man3/getline.3.html
+* \sa https://en.cppreference.com/w/c/experimental/dynamic/getline
+* \sa https://www.gnu.org/software/libc/manual/html_node/Line-Input.html
 */
 
 #pragma once
@@ -17,9 +17,9 @@
 #include <string>
 
 /**
-\retval true success
-\retval false failure
-The return value matches the behavior of https://en.cppreference.com/w/cpp/io/basic_ios/operator_bool
+* \retval true success
+* \retval false failure
+* The return value matches the behavior of https://en.cppreference.com/w/cpp/io/basic_ios/operator_bool
 */
 bool
 getdelim(std::string& line,

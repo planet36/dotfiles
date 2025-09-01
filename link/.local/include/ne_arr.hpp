@@ -3,8 +3,8 @@
 
 /// Alias template for a non-empty array
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

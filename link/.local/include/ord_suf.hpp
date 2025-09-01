@@ -3,11 +3,11 @@
 
 /// Get the English ordinal suffix for an integer
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/English_numerals#Ordinal_numbers
-\sa https://en.wikipedia.org/wiki/Ordinal_indicator#English
-\sa https://en.wikipedia.org/wiki/Ordinal_numeral#English
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/English_numerals#Ordinal_numbers
+* \sa https://en.wikipedia.org/wiki/Ordinal_indicator#English
+* \sa https://en.wikipedia.org/wiki/Ordinal_numeral#English
 */
 
 #pragma once

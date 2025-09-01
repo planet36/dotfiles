@@ -3,8 +3,8 @@
 
 /// Get a sub-array (analogous to \c std::string::substr)
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

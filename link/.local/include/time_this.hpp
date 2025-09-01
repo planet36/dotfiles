@@ -3,14 +3,14 @@
 
 /// Timer macro
 /**
-\file
-\author Steven Ward
-
-The "TIME_THIS" macro creates an anonymous timer object that prints its
-lifetime (as measured by a steady clock) upon destruction.
-
-When the timer object goes out of scope, stdout is flushed, the time (to the
-nearest hundredth of a second) is printed (with a trailing newline) to stderr.
+* \file
+* \author Steven Ward
+*
+* The "TIME_THIS" macro creates an anonymous timer object that prints its
+* lifetime (as measured by a steady clock) upon destruction.
+*
+* When the timer object goes out of scope, stdout is flushed, the time (to the
+* nearest hundredth of a second) is printed (with a trailing newline) to stderr.
 */
 
 #pragma once

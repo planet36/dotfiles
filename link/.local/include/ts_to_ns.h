@@ -3,8 +3,8 @@
 
 /// Convert \c timespec to nanoseconds
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

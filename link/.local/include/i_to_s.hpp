@@ -3,9 +3,9 @@
 
 /// int-to-string wrapper function for std::to_chars
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/utility/to_chars
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/utility/to_chars
 */
 
 #pragma once
@@ -17,7 +17,7 @@
 #include <string>
 
 /**
-\pre \a base must be within the interval [2, 36]
+* \pre \a base must be within the interval [2, 36]
 */
 std::string
 i_to_s(const std::integral auto x, const int base = 10)

@@ -3,11 +3,11 @@
 
 /// Concept for an arithmetic type (excluding boolean and character types)
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/language/types
-\sa https://en.cppreference.com/w/cpp/types/is_arithmetic
-\sa https://en.cppreference.com/w/cpp/types/is_same
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/language/types
+* \sa https://en.cppreference.com/w/cpp/types/is_arithmetic
+* \sa https://en.cppreference.com/w/cpp/types/is_same
 */
 
 #pragma once

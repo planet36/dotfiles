@@ -3,10 +3,10 @@
 
 /// Concept for an Associative Container type
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/named_req/AssociativeContainer
-\sa https://eel.is/c++draft/associative.reqmts
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/named_req/AssociativeContainer
+* \sa https://eel.is/c++draft/associative.reqmts
 */
 
 #pragma once

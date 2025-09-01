@@ -3,9 +3,9 @@
 
 /// Rotate a string left or right by a number of places
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/algorithm/rotate
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/algorithm/rotate
 */
 
 #pragma once

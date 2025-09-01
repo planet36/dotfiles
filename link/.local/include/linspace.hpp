@@ -3,8 +3,8 @@
 
 /// Return evenly spaced numbers over a specified interval
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once
@@ -17,9 +17,9 @@
 #include <concepts>
 
 /**
-Return \a NUM evenly spaced samples, calculated over the interval <code>[\a start, \a stop]</code>.
-The endpoint of the interval can optionally be excluded.
-\sa https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
+* Return \a NUM evenly spaced samples, calculated over the interval <code>[\a start, \a stop]</code>.
+* The endpoint of the interval can optionally be excluded.
+* \sa https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 */
 template <unsigned int NUM, std::integral T>
 requires (NUM > 0)
@@ -60,9 +60,9 @@ linspace(const T start, const T stop, const bool endpoint = true)
 }
 
 /**
-Return \a NUM evenly spaced samples, calculated over the interval <code>[\a start, \a stop]</code>.
-The endpoint of the interval can optionally be excluded.
-\sa https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
+* Return \a NUM evenly spaced samples, calculated over the interval <code>[\a start, \a stop]</code>.
+* The endpoint of the interval can optionally be excluded.
+* \sa https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 */
 template <unsigned int NUM>
 requires (NUM > 0)

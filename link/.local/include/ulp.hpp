@@ -3,9 +3,9 @@
 
 /// Unit in Last Place (ULP) function
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/Unit_in_the_last_place
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/Unit_in_the_last_place
 */
 
 #pragma once
@@ -18,8 +18,8 @@
 
 /// get the Unit in Last Place (ULP) of \a x
 /**
-\sa https://github.com/sonyomega/physbam_public/blob/master/PhysBAM_Tools/Math_Tools/ulp.h
-\sa https://searchcode.com/file/98565256/PhysBAM_Tools/Math_Tools/ulp.h
+* \sa https://github.com/sonyomega/physbam_public/blob/master/PhysBAM_Tools/Math_Tools/ulp.h
+* \sa https://searchcode.com/file/98565256/PhysBAM_Tools/Math_Tools/ulp.h
 */
 template <std::floating_point T>
 requires std::numeric_limits<T>::is_iec559

@@ -3,8 +3,8 @@
 
 /// Thread-safe access to environment variables
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

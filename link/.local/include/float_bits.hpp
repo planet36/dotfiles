@@ -3,8 +3,8 @@
 
 /// get/set the bit representation of floating-point values
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

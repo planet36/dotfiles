@@ -3,20 +3,20 @@
 
 /// Sign functions
 /**
-\file
-\author Steven Ward
-
-This is also called "signum" or "sgn".
-\sa https://en.wikipedia.org/wiki/Sign_function
-\sa https://mathworld.wolfram.com/Sign.html
-\sa https://reference.wolfram.com/language/ref/Sign.html
-
-For a number \c x, <code>sign(x)</code> returns
-\li \c 1, if <code>x > 0</code>
-\li \c -1, if <code>x < 0</code>
-\li \c 0, otherwise (including \c NaN)
-
-Two numbers have the same sign if both are non-positive or non-negative.
+* \file
+* \author Steven Ward
+*
+* This is also called "signum" or "sgn".
+* \sa https://en.wikipedia.org/wiki/Sign_function
+* \sa https://mathworld.wolfram.com/Sign.html
+* \sa https://reference.wolfram.com/language/ref/Sign.html
+*
+* For a number \c x, <code>sign(x)</code> returns
+* \li \c 1, if <code>x > 0</code>
+* \li \c -1, if <code>x < 0</code>
+* \li \c 0, otherwise (including \c NaN)
+*
+* Two numbers have the same sign if both are non-positive or non-negative.
 */
 
 #pragma once

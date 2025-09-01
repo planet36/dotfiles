@@ -3,8 +3,8 @@
 
 /// Determine if an integer should have a plural suffix
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

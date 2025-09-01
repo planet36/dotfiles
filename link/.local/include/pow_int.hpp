@@ -3,9 +3,9 @@
 
 /// constexpr integer exponentiation
 /**
-\file
-\author Steven Ward
-Inspired by https://web.archive.org/web/20200629174939/http://timmurphy.org/2013/06/27/template-metaprogramming-in-c/
+* \file
+* \author Steven Ward
+* Inspired by https://web.archive.org/web/20200629174939/http://timmurphy.org/2013/06/27/template-metaprogramming-in-c/
 */
 
 #pragma once

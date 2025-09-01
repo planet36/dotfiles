@@ -3,10 +3,10 @@
 
 /// string copy & concatenate, and report truncation
 /**
-\file
-\author Steven Ward
-\sa https://nrk.neocities.org/articles/not-a-fan-of-strlcpy
-Inspired by https://software.codidact.com/posts/285946
+* \file
+* \author Steven Ward
+* \sa https://nrk.neocities.org/articles/not-a-fan-of-strlcpy
+* Inspired by https://software.codidact.com/posts/285946
 */
 
 #pragma once

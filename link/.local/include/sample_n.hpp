@@ -3,9 +3,9 @@
 
 /// Get a sample of N elements from a \c string or \c vector
 /**
-\file
-\author Steven Ward
-\c sample_n works on types that satisfy both \c AllocatorAwareContainer and \c ContiguousContainer.
+* \file
+* \author Steven Ward
+* \c sample_n works on types that satisfy both \c AllocatorAwareContainer and \c ContiguousContainer.
 */
 
 #pragma once

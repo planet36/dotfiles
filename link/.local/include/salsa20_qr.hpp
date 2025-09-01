@@ -3,9 +3,9 @@
 
 /// Salsa20 quarter-round function
 /**
-\file
-\author Steven Ward
-\sa https://cr.yp.to/chacha/chacha-20080128.pdf
+* \file
+* \author Steven Ward
+* \sa https://cr.yp.to/chacha/chacha-20080128.pdf
 */
 
 #pragma once

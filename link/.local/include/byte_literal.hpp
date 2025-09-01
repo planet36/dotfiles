@@ -3,8 +3,8 @@
 
 /// User-defined integer literal to create a \c std::byte
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

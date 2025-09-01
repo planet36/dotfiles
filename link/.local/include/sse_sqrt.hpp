@@ -3,8 +3,8 @@
 
 /// C++ wrappers for fast square root functions
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

@@ -3,8 +3,8 @@
 
 /// Calculate the parity of every byte in the \c uint64_t and gather the bits into a \c uint8_t result
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

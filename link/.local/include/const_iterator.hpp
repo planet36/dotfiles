@@ -3,8 +3,8 @@
 
 /// Type trait and concept for a const iterator type
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

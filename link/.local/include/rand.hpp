@@ -3,9 +3,9 @@
 
 /// Get a uniformly distributed random number within an interval
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/experimental/randint
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/experimental/randint
 */
 
 #pragma once
@@ -29,9 +29,9 @@ static_assert(std::uniform_random_bit_generator<decltype(per_thread_random_numbe
 }
 
 /**
-\pre \a a <= \a b
-\sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
-\return a uniformly distributed random integer within the interval [\a a, \a b]
+* \pre \a a <= \a b
+* \sa https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
+* \return a uniformly distributed random integer within the interval [\a a, \a b]
 */
 template <integral_number T, std::uniform_random_bit_generator URBG>
 T
@@ -57,7 +57,7 @@ rand_int(const T a, const T b)
 }
 
 /**
-\return a uniformly distributed random integer within the interval [min, max]
+* \return a uniformly distributed random integer within the interval [min, max]
 */
 template <integral_number T, std::uniform_random_bit_generator URBG>
 T
@@ -84,7 +84,7 @@ rand_int()
 
 /// get a random unsigned integer less than \a s
 /**
-\return a uniformly distributed random unsigned integer within the interval [0, \a s)
+* \return a uniformly distributed random unsigned integer within the interval [0, \a s)
 */
 template <std::unsigned_integral T, std::uniform_random_bit_generator URBG>
 T
@@ -110,7 +110,7 @@ rand_uint_range(const T s)
 }
 
 /**
-\return a uniformly distributed random floating-point number within the interval [0, 1)
+* \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 template <std::uniform_random_bit_generator URBG>
 float
@@ -151,7 +151,7 @@ rand_float()
 }
 
 /**
-\return a uniformly distributed random floating-point number within the interval [0, 1)
+* \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 template <std::uniform_random_bit_generator URBG>
 double
@@ -192,7 +192,7 @@ rand_double()
 }
 
 /**
-\return a uniformly distributed random floating-point number within the interval [0, 1)
+* \return a uniformly distributed random floating-point number within the interval [0, 1)
 */
 template <std::uniform_random_bit_generator URBG>
 long double
@@ -233,8 +233,8 @@ rand_long_double()
 }
 
 /**
-\pre \a a < \a b
-\return a uniformly distributed random floating-point number within the interval [\a a, \a b)
+* \pre \a a < \a b
+* \return a uniformly distributed random floating-point number within the interval [\a a, \a b)
 */
 template <std::uniform_random_bit_generator URBG>
 float
@@ -259,8 +259,8 @@ rand_float(const float a, const float b)
 }
 
 /**
-\pre \a a < \a b
-\return a uniformly distributed random floating-point number within the interval [\a a, \a b)
+* \pre \a a < \a b
+* \return a uniformly distributed random floating-point number within the interval [\a a, \a b)
 */
 template <std::uniform_random_bit_generator URBG>
 double
@@ -285,8 +285,8 @@ rand_double(const double a, const double b)
 }
 
 /**
-\pre \a a < \a b
-\return a uniformly distributed random floating-point number within the interval [\a a, \a b)
+* \pre \a a < \a b
+* \return a uniformly distributed random floating-point number within the interval [\a a, \a b)
 */
 template <std::uniform_random_bit_generator URBG>
 long double

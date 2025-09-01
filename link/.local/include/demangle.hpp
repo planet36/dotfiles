@@ -3,10 +3,10 @@
 
 /// demangle a mangled name
 /**
-\file
-\author Steven Ward
-\sa https://gcc.gnu.org/onlinedocs/libstdc++/manual/ext_demangling.html
-\sa https://en.wikipedia.org/wiki/Name_mangling
+* \file
+* \author Steven Ward
+* \sa https://gcc.gnu.org/onlinedocs/libstdc++/manual/ext_demangling.html
+* \sa https://en.wikipedia.org/wiki/Name_mangling
 */
 
 #pragma once

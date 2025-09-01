@@ -3,9 +3,9 @@
 
 /// aliases for std::chrono built-in types
 /**
-\file
-\author Steven Ward
-\sa https://philippegroarke.com/posts/2018/chrono_for_humans/
+* \file
+* \author Steven Ward
+* \sa https://philippegroarke.com/posts/2018/chrono_for_humans/
 */
 
 #pragma once

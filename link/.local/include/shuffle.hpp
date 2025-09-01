@@ -3,9 +3,9 @@
 
 /// Wrapper for \c std::shuffle with the \c per_thread_random_number_engine given as the URBG
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/algorithm/random_shuffle
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/algorithm/random_shuffle
 */
 
 #pragma once

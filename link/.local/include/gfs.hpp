@@ -3,64 +3,64 @@
 
 /// Utilities for generalized Feistel structures (GFS) (a.k.a. generalized Feistel network)
 /**
-\file
-\author Steven Ward
-\sa https://link.springer.com/chapter/10.1007/0-387-34805-0_42
-\sa https://doi.org/10.1007/978-3-642-13858-4_2
-
-Zheng, Y., Matsumoto, T., Imai, H. (1990). _On the Construction of Block Ciphers Provably Secure and Not Relying on Any Unproved Hypotheses_
-
-Page 8 (468)
-> Let E be a permutation consisting of 2k-1 rounds of Type-1, or k+1 rounds of
-Type-2, or k+1 rounds of Type-3 transformations, each of which is chosen
-randomly and independently. The following Theorems 1-3 say that no oracle
-circuit with polynomially many oracle gates can distinguish between E and a
-truly random function.
-
-Page 10 (470)
-> PSBC consists principally of s rounds of Generalized Type-2 transformations
-where s ≥ k+2. The reason for choosing s ≥ k+2 is as follows: When s = k+1, our
-block cipher PSBC is secure against chosen plaintext attack, but not secure
-against chosen plaintext/ciphertext attack. When s ≥ k+2, PSBC is secure
-against chosen plaintext/ciphertext attack. See Appendix C and [LR]
-
-(PSBC = Provably Secure Block Cipher)
-
-
-Suzaki, T., Minematsu, K. (2010). _Improving the Generalized Feistel_.
-
-Page 20
-> Our goal is to find block shuffles having a better diffusion than the cyclic
-shift. For this purpose, we formally define a criterion for the goodness of
-diffusion called the maximum diffusion round, DRmax, which tells how many
-rounds are needed to achieve the full diffusion. Hence, a smaller DRmax would
-imply a faster, better diffusion. Moreover, we observe that DRmax is closely
-related to the security against impossible differential and saturation attacks,
-and the pseudorandomness analysis. This demonstrates the usefulness of our
-notion.
-
-> In addition, we present a family of highly diffusive shuffles when _k_ is a
-power of two. This is based on the de Bruijn graph, and achieves DRmax being
-about 2 log₂ k. As DRmax of Type-II GFS is _k_, this means a significant
-improvement for a large _k_.
-
-Page 22
-> In this section, we introduce a formal notion of the diffusion property of
-GFS. What we mean by ‘diffusion’ here is the state that a sub block input
-affects all of the sub blocks of output.
-
-> Thus, for any GFSπ, any sub output block is affected by any sub input block
-after DRmax(π) rounds. We call this state the _full diffusion_.
-
-Page 37
-> Table 4, 5 and 6 show the optimum shuffles found in the search and their
-security evaluation. We eliminate isomorphic shuffles. Type-II and Nyberg’s GFN
-are also evaluated. Shuffles based on de Bruijn graph is indicated by ∗. A
-shuffle is presented in list: π = {3, 0, 1, 4, 5, 2} means that the first input
-sub block is mapped to the third sub block of output, etc.
-
-> We evaluated both π and π⁻¹.
-
+* \file
+* \author Steven Ward
+* \sa https://link.springer.com/chapter/10.1007/0-387-34805-0_42
+* \sa https://doi.org/10.1007/978-3-642-13858-4_2
+*
+* Zheng, Y., Matsumoto, T., Imai, H. (1990). _On the Construction of Block Ciphers Provably Secure and Not Relying on Any Unproved Hypotheses_
+*
+* Page 8 (468)
+* > Let E be a permutation consisting of 2k-1 rounds of Type-1, or k+1 rounds of
+* Type-2, or k+1 rounds of Type-3 transformations, each of which is chosen
+* randomly and independently. The following Theorems 1-3 say that no oracle
+* circuit with polynomially many oracle gates can distinguish between E and a
+* truly random function.
+*
+* Page 10 (470)
+* > PSBC consists principally of s rounds of Generalized Type-2 transformations
+* where s ≥ k+2. The reason for choosing s ≥ k+2 is as follows: When s = k+1, our
+* block cipher PSBC is secure against chosen plaintext attack, but not secure
+* against chosen plaintext/ciphertext attack. When s ≥ k+2, PSBC is secure
+* against chosen plaintext/ciphertext attack. See Appendix C and [LR]
+*
+* (PSBC = Provably Secure Block Cipher)
+*
+*
+* Suzaki, T., Minematsu, K. (2010). _Improving the Generalized Feistel_.
+*
+* Page 20
+* > Our goal is to find block shuffles having a better diffusion than the cyclic
+* shift. For this purpose, we formally define a criterion for the goodness of
+* diffusion called the maximum diffusion round, DRmax, which tells how many
+* rounds are needed to achieve the full diffusion. Hence, a smaller DRmax would
+* imply a faster, better diffusion. Moreover, we observe that DRmax is closely
+* related to the security against impossible differential and saturation attacks,
+* and the pseudorandomness analysis. This demonstrates the usefulness of our
+* notion.
+*
+* > In addition, we present a family of highly diffusive shuffles when _k_ is a
+* power of two. This is based on the de Bruijn graph, and achieves DRmax being
+* about 2 log₂ k. As DRmax of Type-II GFS is _k_, this means a significant
+* improvement for a large _k_.
+*
+* Page 22
+* > In this section, we introduce a formal notion of the diffusion property of
+* GFS. What we mean by ‘diffusion’ here is the state that a sub block input
+* affects all of the sub blocks of output.
+*
+* > Thus, for any GFSπ, any sub output block is affected by any sub input block
+* after DRmax(π) rounds. We call this state the _full diffusion_.
+*
+* Page 37
+* > Table 4, 5 and 6 show the optimum shuffles found in the search and their
+* security evaluation. We eliminate isomorphic shuffles. Type-II and Nyberg’s GFN
+* are also evaluated. Shuffles based on de Bruijn graph is indicated by ∗. A
+* shuffle is presented in list: π = {3, 0, 1, 4, 5, 2} means that the first input
+* sub block is mapped to the third sub block of output, etc.
+*
+* > We evaluated both π and π⁻¹.
+*
 */
 
 #pragma once
@@ -129,8 +129,8 @@ gfs2_noncyclic_drmax()
 }
 
 /**
-Python snippet to generate the arrays
-\code{.py}
+* Python snippet to generate the arrays
+* \code{.py}
 for k in range(2, 16+1, 2):
     l = list(range(k))
     print(l[1:] + l[:1])

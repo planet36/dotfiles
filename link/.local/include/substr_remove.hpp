@@ -3,8 +3,8 @@
 
 /// Remove all occurrences of a substring within a string
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

@@ -3,9 +3,9 @@
 
 /// Functions for CRC-8, CRC-16, and CRC-32
 /**
-\file
-\author Steven Ward
-\sa https://en.wikipedia.org/wiki/Cyclic_redundancy_check
+* \file
+* \author Steven Ward
+* \sa https://en.wikipedia.org/wiki/Cyclic_redundancy_check
 */
 
 #pragma once

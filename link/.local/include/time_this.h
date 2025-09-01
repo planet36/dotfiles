@@ -3,16 +3,16 @@
 
 /// Timer macro
 /**
-\file
-\author Steven Ward
-
-The "TIME_THIS" macro creates an anonymous timer object that measures the real
-time, user CPU time, and system CPU time elapsed/used during the lifetime of
-the timer object.
-
-When the timer object is automatically destroyed, stdout is flushed, the times
-(to the nearest hundredth of a second) are printed on a single line (with a
-trailing newline) to stderr.
+* \file
+* \author Steven Ward
+*
+* The "TIME_THIS" macro creates an anonymous timer object that measures the real
+* time, user CPU time, and system CPU time elapsed/used during the lifetime of
+* the timer object.
+*
+* When the timer object is automatically destroyed, stdout is flushed, the times
+* (to the nearest hundredth of a second) are printed on a single line (with a
+* trailing newline) to stderr.
 */
 
 #pragma once

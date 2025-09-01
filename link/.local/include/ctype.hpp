@@ -3,11 +3,11 @@
 
 /// character type predicates and character case conversions
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/header/cctype
-\sa https://en.cppreference.com/w/cpp/string/byte
-\sa https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/header/cctype
+* \sa https://en.cppreference.com/w/cpp/string/byte
+* \sa https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html
 */
 
 #pragma once

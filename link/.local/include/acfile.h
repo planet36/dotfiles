@@ -3,9 +3,9 @@
 
 /// automatically close file stream
 /**
-\file
-\author Steven Ward
-\sa https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
+* \file
+* \author Steven Ward
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
 */
 
 #pragma once

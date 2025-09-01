@@ -3,11 +3,11 @@
 
 /// An array of hexadecimal digits of the fractional part of transcendental numbers
 /**
-\file
-\author Steven Ward
-\sa https://mathworld.wolfram.com/TranscendentalNumber.html
-\sa https://mathworld.wolfram.com/GelfondsTheorem.html
-\sa https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
+* \file
+* \author Steven Ward
+* \sa https://mathworld.wolfram.com/TranscendentalNumber.html
+* \sa https://mathworld.wolfram.com/GelfondsTheorem.html
+* \sa https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
 */
 
 #pragma once
@@ -18,8 +18,8 @@
 #if defined(__SSE2__)
 /// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \mathbb{Z}^{+} \f$
 /**
-Mathematica expression: <code>RealDigits[E^(Pi*sqrt(Range[20])), 256, 16, -1]</code>
-\sa https://www.wolframalpha.com/input?i=RealDigits%5BE%5E%28Pi*sqrt%28Range%5B20%5D%29%29%2C+256%2C+16%2C+-1%5D
+* Mathematica expression: <code>RealDigits[E^(Pi*sqrt(Range[20])), 256, 16, -1]</code>
+* \sa https://www.wolframalpha.com/input?i=RealDigits%5BE%5E%28Pi*sqrt%28Range%5B20%5D%29%29%2C+256%2C+16%2C+-1%5D
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
@@ -64,8 +64,8 @@ const auto tn_hexdigits_m128i = std::to_array({
 #if defined(__AVX__)
 /// an array of hexadecimal digits of the fractional part of transcendental numbers of the form \f$ e^{\pi \sqrt{n}}, n \in \mathbb{Z}^{+} \f$
 /**
-Mathematica expression: <code>RealDigits[exp(Pi*sqrt(Range[8])), 256, 32, -1]</code>
-\sa https://www.wolframalpha.com/input?i=RealDigits%5Bexp%28Pi*sqrt%28Range%5B8%5D%29%29%2C+256%2C+32%2C+-1%5D
+* Mathematica expression: <code>RealDigits[exp(Pi*sqrt(Range[8])), 256, 32, -1]</code>
+* \sa https://www.wolframalpha.com/input?i=RealDigits%5Bexp%28Pi*sqrt%28Range%5B8%5D%29%29%2C+256%2C+32%2C+-1%5D
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"

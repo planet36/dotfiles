@@ -3,10 +3,10 @@
 
 /// Simple wrapper for XXH3
 /**
-\file
-\author Steven Ward
-\sa https://xxhash.com/
-\sa https://github.com/Cyan4973/xxHash
+* \file
+* \author Steven Ward
+* \sa https://xxhash.com/
+* \sa https://github.com/Cyan4973/xxHash
 */
 
 #pragma once

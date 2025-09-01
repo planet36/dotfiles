@@ -3,9 +3,9 @@
 
 /// Slurp a file into memory
 /**
-\file
-\author Steven Ward
-\sa https://www.delftstack.com/howto/cpp/read-file-into-string-cpp/
+* \file
+* \author Steven Ward
+* \sa https://www.delftstack.com/howto/cpp/read-file-into-string-cpp/
 */
 
 #pragma once

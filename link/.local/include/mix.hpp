@@ -3,9 +3,9 @@
 
 /// mix/avalanche the bits of integers
 /**
-\file
-\author Steven Ward
-\sa https://www.pcg-random.org/posts/developing-a-seed_seq-alternative.html
+* \file
+* \author Steven Ward
+* \sa https://www.pcg-random.org/posts/developing-a-seed_seq-alternative.html
 */
 
 #pragma once

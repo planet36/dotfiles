@@ -3,9 +3,9 @@
 
 /// timeval utils
 /**
-\file
-\author Steven Ward
-\sa https://man7.org/linux/man-pages/man0/sys_time.h.0p.html
+* \file
+* \author Steven Ward
+* \sa https://man7.org/linux/man-pages/man0/sys_time.h.0p.html
 */
 
 #pragma once

@@ -3,8 +3,8 @@
 
 /// Macro to create low-pass bitmask
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

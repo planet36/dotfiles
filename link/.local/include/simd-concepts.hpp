@@ -3,13 +3,13 @@
 
 /// Concepts for SIMD types
 /**
-\file
-\author Steven Ward
-Typedefs defined in:
-- xmmintrin.h
-- emmintrin.h
-- avxintrin.h
-- avx512fintrin.h
+* \file
+* \author Steven Ward
+* Typedefs defined in:
+* - xmmintrin.h
+* - emmintrin.h
+* - avxintrin.h
+* - avx512fintrin.h
 */
 
 #pragma once

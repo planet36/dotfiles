@@ -3,10 +3,10 @@
 
 /// A stopwatch
 /**
-\file
-\author Steven Ward
-
-You can start, stop, and reset the stopwatch.
+* \file
+* \author Steven Ward
+*
+* You can start, stop, and reset the stopwatch.
 */
 
 #pragma once

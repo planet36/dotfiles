@@ -3,9 +3,9 @@
 
 /// string to unsigned int
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/c/string/byte/strtoul
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/c/string/byte/strtoul
 */
 
 #pragma once

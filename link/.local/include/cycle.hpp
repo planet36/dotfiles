@@ -3,8 +3,8 @@
 
 /// Cycle through an interval of integers
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once
@@ -13,7 +13,7 @@
 
 /// forward cycle in the interval <code>[0, MAX]</code>
 /**
-The initial value is \c 0.
+* The initial value is \c 0.
 */
 template <unsigned int MAX>
 class cycle
@@ -43,7 +43,7 @@ public:
 
 /// forward cycle in the interval <code>[MIN, MAX]</code>
 /**
-The initial value is \c MIN.
+* The initial value is \c MIN.
 */
 template <unsigned int MIN, unsigned int MAX>
 class cycle2
@@ -72,7 +72,7 @@ public:
 
 /// reverse cycle in the interval <code>[0, MAX]</code>
 /**
-The initial value is \c MAX.
+* The initial value is \c MAX.
 */
 template <unsigned int MAX>
 class rcycle
@@ -102,7 +102,7 @@ public:
 
 /// reverse cycle in the interval <code>[MIN, MAX]</code>
 /**
-The initial value is \c MAX.
+* The initial value is \c MAX.
 */
 template <unsigned int MIN, unsigned int MAX>
 class rcycle2

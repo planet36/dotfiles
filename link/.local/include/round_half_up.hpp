@@ -3,10 +3,10 @@
 
 /// round-half-up function
 /**
-\file
-\author Steven Ward
-\sa https://www.clivemaxfield.com/diycalculator/popup-m-round.shtml
-\sa https://www.eetimes.com/an-introduction-to-different-rounding-algorithms/
+* \file
+* \author Steven Ward
+* \sa https://www.clivemaxfield.com/diycalculator/popup-m-round.shtml
+* \sa https://www.eetimes.com/an-introduction-to-different-rounding-algorithms/
 */
 
 #pragma once
@@ -18,8 +18,8 @@
 
 /// Round to the nearest integer, with halfway cases rounding away from zero.
 /**
-This is faster than \c std::round.
-\sa https://en.cppreference.com/w/cpp/numeric/math/round
+* This is faster than \c std::round.
+* \sa https://en.cppreference.com/w/cpp/numeric/math/round
 */
 template <std::floating_point T>
 constexpr T

@@ -3,8 +3,8 @@
 
 /// array of factorial values
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once
@@ -14,8 +14,8 @@
 
 /// array of factorial values
 /**
-Python snippet to generate the array
-\code{.py}
+* Python snippet to generate the array
+* \code{.py}
 import math
 for x in range(21):
     print(f"    UINT64_C({math.factorial(x)}), // {x}!")

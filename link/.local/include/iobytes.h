@@ -3,10 +3,10 @@
 
 /// Wrappers for \c fread and \c fwrite that enforce bytes as the member type to read and write, respectively
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/c/io/fread
-\sa https://en.cppreference.com/w/c/io/fwrite
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/c/io/fread
+* \sa https://en.cppreference.com/w/c/io/fwrite
 */
 
 #pragma once

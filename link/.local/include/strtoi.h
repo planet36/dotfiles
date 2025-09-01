@@ -3,8 +3,8 @@
 
 /// convert string to integer
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once

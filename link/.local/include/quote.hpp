@@ -3,12 +3,12 @@
 
 /// Quote strings
 /**
-\file
-\author Steven Ward
-\sa https://en.cppreference.com/w/cpp/io/manip/quoted
-\sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
-
-Note: Only \c std::string is supported.
+* \file
+* \author Steven Ward
+* \sa https://en.cppreference.com/w/cpp/io/manip/quoted
+* \sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
+*
+* Note: Only \c std::string is supported.
 */
 
 #pragma once

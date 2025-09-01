@@ -3,8 +3,8 @@
 
 /// Macros wrapping __builtin_expect
 /**
-\file
-\author Steven Ward
+* \file
+* \author Steven Ward
 */
 
 #pragma once
