@@ -1,6 +1,11 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-function cdd --argument-names DIR --wraps cd
-    cd $DIR && d
+function cdd --argument-names path --wraps dirname --description 'If $path is not a directory, assign it the dirname of $path.  Then cd to $path'
+
+    if ! test -d "$path"
+        set path $(dirname $path)
+    end
+
+    cd $path
 end
