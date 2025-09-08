@@ -9,9 +9,20 @@
 
 #pragma once
 
-#include <cstdint>
 #include <memory>
+#include <ranges>
 #include <span>
 
-#define AS_BYTE_SPAN(X) \
-std::span{static_cast<const uint8_t*>(static_cast<const void*>(std::addressof(X))), sizeof(X)}
+template <typename T>
+requires (!std::ranges::contiguous_range<T>)
+constexpr auto
+as_byte_span(const T& x)
+{
+    return std::as_bytes(std::span(std::addressof(x), 1));
+}
+
+constexpr auto
+as_byte_span(const std::ranges::contiguous_range auto & container)
+{
+    return std::as_bytes(std::span{container});
+}
