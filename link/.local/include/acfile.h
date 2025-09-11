@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// automatically close file stream
+/// automatically close file stream, file descriptor
 /**
 * \file
 * \author Steven Ward
