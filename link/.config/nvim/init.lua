@@ -335,7 +335,3 @@ require('lualine').setup {
 }
 
 -- }}}
-
--- {{{ Show cmd
-vim.opt.showcmd = false
--- }}}
