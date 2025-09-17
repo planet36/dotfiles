@@ -11,19 +11,21 @@
 
 #if defined(__x86_64__) && defined(__SSE2__)
 
-#include "simd-array.hpp"
-
+#include <array>
 #include <immintrin.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-attributes"
+
 static inline void
-transpose([[maybe_unused]] arr_m128i<1>& x)
+transpose([[maybe_unused]] std::array<__m128i, 1>& x)
 {
     // NOP
 }
 
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using SSE2 intrinsics
 static void
-transpose(arr_m128i<2>& x)
+transpose(std::array<__m128i, 2>& x)
 {
     const __m128i AB_0 = _mm_unpacklo_epi64(x[0], x[1]);
     const __m128i AB_1 = _mm_unpackhi_epi64(x[0], x[1]);
@@ -37,7 +39,7 @@ transpose(arr_m128i<2>& x)
 * \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
 */
 static void
-transpose(arr_m128i<4>& x)
+transpose(std::array<__m128i, 4>& x)
 {
     const __m128i AB_01 = _mm_unpacklo_epi32(x[0], x[1]);
     const __m128i AB_23 = _mm_unpackhi_epi32(x[0], x[1]);
@@ -57,7 +59,7 @@ transpose(arr_m128i<4>& x)
 * > use the macro _MM_TRANSPOSE_PS, then cast back using _mm_castps_si128.
 */
 static void
-transpose_macro(arr_m128i<4>& x)
+transpose_macro(std::array<__m128i, 4>& x)
 {
     __m128 A = _mm_castsi128_ps(x[0]);
     __m128 B = _mm_castsi128_ps(x[1]);
@@ -77,7 +79,7 @@ transpose_macro(arr_m128i<4>& x)
 * \sa https://stackoverflow.com/a/4951060/1892784
 */
 static void
-transpose(arr_m128i<8>& x)
+transpose(std::array<__m128i, 8>& x)
 {
     const __m128i AB_03 = _mm_unpacklo_epi16(x[0], x[1]);
     const __m128i AB_47 = _mm_unpackhi_epi16(x[0], x[1]);
@@ -112,7 +114,7 @@ transpose(arr_m128i<8>& x)
 * \sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
 */
 static void
-transpose(arr_m128i<16>& x)
+transpose(std::array<__m128i, 16>& x)
 {
     const __m128i AB_07 = _mm_unpacklo_epi8(x[0x0], x[0x1]);
     const __m128i AB_8f = _mm_unpackhi_epi8(x[0x0], x[0x1]);
@@ -182,5 +184,7 @@ transpose(arr_m128i<16>& x)
     x[0xe] = _mm_unpacklo_epi64(ABCDEFGH_ef, IJKLMNOP_ef); // ABCDEFGHIJKLMNOP_e
     x[0xf] = _mm_unpackhi_epi64(ABCDEFGH_ef, IJKLMNOP_ef); // ABCDEFGHIJKLMNOP_f
 }
+
+#pragma GCC diagnostic pop
 
 #endif
