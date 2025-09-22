@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: OSL-3.0
 
 # pylint: disable=invalid-name
-# pylint: disable=missing-function-docstring
 
 '''
 yea (pronounced like "yay") is similar to the 'yes' command except an output limit
@@ -25,10 +24,12 @@ MAX_BUF_SIZE = 4096 * 7
 
 
 def number_str_to_int(s: str) -> int:
+    '''Convert the number string to an int.'''
     return int(number_str_to_decimal(s))
 
 
 def non_empty_str(s: str) -> str:
+    '''Ensure the string is not empty.'''
     if not s:  # None or empty
         raise argparse.ArgumentTypeError("may not be empty")
     return s
