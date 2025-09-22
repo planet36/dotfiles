@@ -8,6 +8,7 @@ import re
 
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
+__version__ = '2025-09-22'
 
 # https://en.wikipedia.org/wiki/Unit_prefix
 # https://en.wikipedia.org/wiki/Metric_prefix
