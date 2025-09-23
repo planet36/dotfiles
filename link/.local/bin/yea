@@ -38,21 +38,24 @@ def non_empty_str(s: str) -> str:
         raise argparse.ArgumentTypeError("may not be empty")
     return s
 
-
-parser = argparse.ArgumentParser(
-    description='\n'.join((
+description_lines = (
         'Print a string repeatedly until the optional limit is reached.',
         '',
         'yea (pronounced like "yay") is similar to the \'yes\' command except:',
         '  1) an output limit may be given',
         '  2) trailing newlines may be omitted',
-    )),
-    epilog='\n'.join((
+    )
+
+epilog_lines = (
         'If NUM is negative, it is considered unlimited.',
         '',
         'NUM maybe have a multiplier suffix:'
         'k=10**3, M=10**6, G=10**9, Ki=2**10, Mi=2**20, Gi=2**30, etc.'
-    )),
+    )
+
+parser = argparse.ArgumentParser(
+    description='\n'.join(description_lines),
+    epilog='\n'.join(epilog_lines),
     formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument('-V', '--version', action='version', version='\n'.join((
