@@ -16,6 +16,7 @@ abbr --add --global c clear
 abbr --add --global cdl cld
 abbr --add --global celan clean
 abbr --add --global clena clean
+abbr --add --global cu checkupdates
 abbr --add --global dc cd
 abbr --add --global e "$EDITOR"
 abbr --add --global ed "$EDITOR"

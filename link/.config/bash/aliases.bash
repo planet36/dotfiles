@@ -15,6 +15,7 @@ alias c=clear
 alias cdl=cld
 alias celan=clean
 alias clena=clean
+alias cu=checkupdates
 alias dc=cd
 # shellcheck disable=SC2139
 alias e="$EDITOR"
