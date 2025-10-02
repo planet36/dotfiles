@@ -65,7 +65,7 @@ def main(argv = None):
     default_verbose = False
     default_hash_algorithm = 'sha256'
     default_format = 'b64-url'
-    default_iterations = 1
+    default_iterations = 1_000_000
     default_silent = False
 
     # mutable values
