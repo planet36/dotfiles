@@ -6,6 +6,11 @@
 #  %q
 #    Causes printf to output the corresponding argument in a format that can be
 #    reused as shell input.
+#
+# https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html#index-REPLY
+#  REPLY
+#    The default variable for the read builtin; set to the line read when read
+#    is not supplied a variable name argument.
 while read -r
 do
     printf '%q\n' "$REPLY"
