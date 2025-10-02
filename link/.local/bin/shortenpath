@@ -14,9 +14,10 @@ import sys
 
 def shortenpath(path: str, maxlen: int, repl: str = '…') -> str:
     '''
-    Shorten path by trimming the largest parts of it.  Horizontal ellipsis (…)
-    replace the trimmed characters. The result length might be more than maxlen
-    because the path parts will not be trimmed below a certain length.
+    Shorten `path` by trimming its longest components.
+    Characters removed from the path are replaced by `repl`.
+    The length of the result string may exceed `maxlen` if some path components
+    could not be trimmed below a minimum length.
     '''
 
     HOME = os.environ['HOME']
