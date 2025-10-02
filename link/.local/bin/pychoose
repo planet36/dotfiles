@@ -10,6 +10,7 @@ Inspired by <https://github.com/theryangeary/choose>.
 
 __author__ = 'Steven Ward'
 __license__ = 'OSL-3.0'
+__version__ = '2025-10-02'
 
 import os
 import re
