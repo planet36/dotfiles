@@ -159,6 +159,7 @@ vim.keymap.set('x', '<Leader>[', function() visual_surround('[', ']') end)
 vim.keymap.set('x', '<Leader>{', function() visual_surround('{', '}') end)
 vim.keymap.set('x', '<Leader><', function() visual_surround('<', '>') end)
 vim.keymap.set('x', '<Leader>*', function() visual_surround('/*', '*/') end)
+vim.keymap.set('x', '<Leader>_', function() visual_surround('_', '_') end)
 
 vim.keymap.set('n', '<M-Up>', '[c')
 vim.keymap.set('n', '<M-Down>', ']c')
