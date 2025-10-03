@@ -115,8 +115,17 @@ vim.keymap.set('n', '<Leader>S', function() remove_trailing_whitespace() end)
 vim.keymap.set('n', '<Leader>w', function() vim.cmd.match('ErrorMsg', [[/\v\s+$/]]) end)
 vim.keymap.set('n', '<Leader>W', function() vim.cmd.match('none') end)
 
--- Highlight text beyond 80 columns
-vim.keymap.set('n', '<Leader>c', function() vim.cmd([[2match ErrorMsg /\v%>80v.+/]]) end)
+-- Get the value of vim.o.textwidth (or a default value if it's nil or 0)
+function get_textwidth()
+    if (vim.o.textwidth == nil) or (vim.o.textwidth == 0) then
+        return 80
+    else
+        return vim.o.textwidth
+    end
+end
+
+-- Highlight text beyond 'textwidth' columns
+vim.keymap.set('n', '<Leader>c', function() vim.cmd([[2match ErrorMsg /\v%>]] .. get_textwidth() .. [[v.+/]]) end)
 vim.keymap.set('n', '<Leader>C', function() vim.cmd('2match none') end)
 
 -- Edit $MYVIMRC
