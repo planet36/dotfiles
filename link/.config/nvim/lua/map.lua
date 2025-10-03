@@ -126,7 +126,7 @@ end
 
 -- Highlight text beyond 'textwidth' columns
 vim.keymap.set('n', '<Leader>c', function() vim.cmd([[2match ErrorMsg /\v%>]] .. get_textwidth() .. [[v.+/]]) end)
-vim.keymap.set('n', '<Leader>C', function() vim.cmd('2match none') end)
+vim.keymap.set('n', '<Leader>C', function() vim.cmd('2match', 'none') end)
 
 -- Edit $MYVIMRC
 vim.keymap.set('n', '<Leader>ev', function() vim.cmd.vsplit(vim.env.MYVIMRC) end)
