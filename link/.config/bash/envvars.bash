@@ -225,7 +225,7 @@ export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native -fno-math-errno'
 # https://openbenchmarking.org/s/Intel+Core+i9-13980HX
 #OPTIMIZE_OPTIONS+=' -march=raptorlake'
 
-export DEBUG_OPTIONS='-Og -g3'
+export DEBUG_OPTIONS='-Og -g3 -DDEBUG'
 # https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
 DEBUG_OPTIONS+=' -UNDEBUG'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
