@@ -22,7 +22,7 @@ export DIFFPROG="$VISUAL -d"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # man 5 eza_colors
-# https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
+# https://en.wikipedia.org/wiki/ANSI_escape_code#Select_Graphic_Rendition_parameters
 
 EZA_COLORS_ARR=(
 #ur=32
@@ -125,7 +125,7 @@ export TIME="real\t%E\nuser\t%U\nsys\t%S\n"
 export TRASH_DIR="$XDG_DATA_HOME"/Trash
 
 # https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08_03
-# https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
+# https://sourceware.org/glibc/manual/latest/html_mono/libc.html#Specifying-the-Time-Zone-with-TZ
 export TZ=':America/New_York'
 #export TZ='EST+5'
 #export TZ='UTC+5'
@@ -144,7 +144,7 @@ export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 
 # {{{ pager colors
 
-# https://unix.stackexchange.com/a/147
+# https://unix.stackexchange.com/questions/119/colors-in-man-pages/147#147
 
 # man 5 terminfo
 # https://man7.org/linux/man-pages/man5/terminfo.5.html
@@ -193,7 +193,7 @@ export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 # For Konsole and Gnome-terminal
 #export GROFF_NO_SGR=1
 
-# https://stackoverflow.com/a/19871578
+# https://stackoverflow.com/questions/1049350/how-to-make-less-indicate-location-in-percentage/19871578#19871578
 export MANPAGER='less -s -M +Gg --color=d+B --color=u+y'
 
 # }}}
@@ -226,13 +226,13 @@ export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native -fno-math-errno'
 #OPTIMIZE_OPTIONS+=' -march=raptorlake'
 
 export DEBUG_OPTIONS='-Og -g3 -DDEBUG'
-# https://www.gnu.org/software/libc/manual/html_node/Consistency-Checking.html
+# https://sourceware.org/glibc/manual/latest/html_mono/libc.html#index-NDEBUG
 DEBUG_OPTIONS+=' -UNDEBUG'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
 DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG'
 DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG_PEDANTIC'
 DEBUG_OPTIONS+=' -D_GLIBCXX_SANITIZE_VECTOR'
-# https://www.gnu.org/software/libc/manual/html_node/Source-Fortification.html
+# https://sourceware.org/glibc/manual/latest/html_mono/libc.html#Source-Fortification
 # https://fedoraproject.org/wiki/Changes/Add_FORTIFY_SOURCE%3D3_to_distribution_build_flags
 # https://developers.redhat.com/articles/2022/09/17/gccs-new-fortification-level
 DEBUG_OPTIONS+=' -D_FORTIFY_SOURCE=3'
@@ -245,7 +245,7 @@ export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
 
 # https://gcc.gnu.org/onlinedocs/cpp/Invocation.html
 export CPPFLAGS="-iquote $HOME/.local/include"
-# https://www.gnu.org/software/libc/manual/html_node/Feature-Test-Macros.html
+# https://sourceware.org/glibc/manual/latest/html_mono/libc.html#Feature-Test-Macros
 CPPFLAGS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ -D__STDC_WANT_IEC_60559_EXT__'
 CPPFLAGS+=' -D_GNU_SOURCE'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
