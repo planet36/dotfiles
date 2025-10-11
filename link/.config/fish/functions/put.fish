@@ -23,7 +23,7 @@ function put
     # --progress               show progress during transfer
     # --itemize-changes, -i    output a change-summary for all updates
     # --password-file=FILE     read daemon-access password from FILE
-    set RSYNC_OPTIONS -v -c -u --mkpath -p -t -r -z -h
+    set RSYNC_OPTIONS -v -c -r -u --mkpath -p -t -z -h
 
     for DIR in $argv
         set SRC "$HOME/$DIR/"
