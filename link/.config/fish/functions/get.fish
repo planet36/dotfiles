@@ -9,20 +9,20 @@ function get
         return 1
     end
 
+    # --verbose, -v            increase verbosity
+    # --checksum, -c           skip based on checksum, not mod-time & size
+    # --recursive, -r          recurse into directories
+    # --update, -u             skip files that are newer on the receiver
+    # --perms, -p              preserve permissions
+    # --times, -t              preserve modification times
+    # --dry-run, -n            perform a trial run with no changes made
+    # --compress, -z           compress file data during the transfer
+    # --cvs-exclude, -C        auto-ignore files in the same way CVS does
+    # --human-readable, -h     output numbers in a human-readable format
+    # --progress               show progress during transfer
+    # --itemize-changes, -i    output a change-summary for all updates
+    # --password-file=FILE     read daemon-access password from FILE
     set RSYNC_OPTIONS -v -c -u -p -t -r -z -h
-    #-v, --verbose               increase verbosity
-    #-c, --checksum              always checksum
-    #-u, --update                update only (don't overwrite newer files)
-    #-p, --perms                 preserve permissions
-    #-t, --times                 preserve times
-    #-n, --dry-run               show what would have been transferred
-    #-r, --recursive             recurse into directories
-    #-z, --compress              compress file data during the transfer
-    #-C, --cvs-exclude           auto ignore files in the same way CVS does
-    #-h, --human-readable        output numbers in a human-readable format
-    #    --progress              show progress during transfer
-    #-i, --itemize-changes       output a change-summary for all updates
-    #    --password-file=FILE    read daemon-access password from FILE
 
     for DIR in $argv
         set SRC "$MY_WEBSITE:$DIR/"
