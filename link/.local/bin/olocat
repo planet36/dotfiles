@@ -62,6 +62,7 @@ def get_angle_deg_diff(a1: float, a2: float) -> float:
 
 # pylint: disable=non-ascii-name
 # pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 def get_cylinder_coord_dist(
         ρ1: float, φ1: float, z1: float,
         ρ2: float, φ2: float, z2: float) -> float:
