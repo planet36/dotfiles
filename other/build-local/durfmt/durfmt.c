@@ -220,7 +220,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             break;
 
         case 'w':
-            width = strtol(optarg, NULL, 0);
+            width = strtol(optarg, nullptr, 0);
             if (width < 0)
                 width = 0;
             else if (width > max_width)
@@ -261,17 +261,17 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         errx(EXIT_FAILURE, "must specify at least one unit of time to be printed");
     }
 
-    char* line = NULL;
+    char* line = nullptr;
     size_t allocated_size = 0;
     ssize_t bytes_read = 0;
     while ((bytes_read = getline(&line, &allocated_size, stdin)) != EOF)
     //while (getline(&line, &allocated_size, stdin) != EOF)
     {
-        unsigned long dur_secs = strtoul(line, NULL, 0);
+        unsigned long dur_secs = strtoul(line, nullptr, 0);
         durfmt(dur_secs, &opts);
     }
     free(line);
-    line = NULL;
+    line = nullptr;
     allocated_size = 0;
 
     return EXIT_SUCCESS;

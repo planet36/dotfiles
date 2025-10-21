@@ -148,7 +148,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             return EXIT_SUCCESS;
 
         case 'w':
-            width = strtol(optarg, NULL, 0);
+            width = strtol(optarg, nullptr, 0);
             if (width < 0)
                 width = 0;
             if (width > max_width)
@@ -194,19 +194,19 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     //argc -= optind;
     //argv += optind;
 
-    char* line = NULL;
+    char* line = nullptr;
     size_t allocated_size = 0;
     ssize_t bytes_read = 0;
     while ((bytes_read = getline(&line, &allocated_size, stdin)) != EOF)
     //while (getline(&line, &allocated_size, stdin) != EOF)
     {
-        double x = strtod(line, NULL);
+        double x = strtod(line, nullptr);
         if (!isfinite(x))
             continue;
         print_cmeter(clamp(x, 0, 1), &opts);
     }
     free(line);
-    line = NULL;
+    line = nullptr;
     allocated_size = 0;
 
     return EXIT_SUCCESS;

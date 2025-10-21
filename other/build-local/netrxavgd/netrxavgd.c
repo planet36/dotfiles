@@ -42,7 +42,7 @@ constexpr unsigned int default_init_delay_msec = 2000;
 constexpr unsigned int default_interval_msec = 2000;
 char default_net_iface[NAME_MAX + 1] = {'\0'};
 
-const char* dest_path = NULL;
+const char* dest_path = nullptr;
 
 volatile sig_atomic_t done = 0;
 volatile sig_atomic_t reset_alarm = 1;
@@ -70,7 +70,7 @@ signal_handler(int signum)
 void
 atexit_cleanup()
 {
-    if (dest_path != NULL && done)
+    if (dest_path != nullptr && done)
         if (remove(dest_path) < 0)
             perror("remove");
 }
@@ -193,19 +193,19 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     // Test if file is readable
     {
         ACFILEPTR fp = fopen(net_iface_path, "r");
-        if (fp == NULL)
+        if (fp == nullptr)
             err(EXIT_FAILURE, "%s", net_iface_path);
     }
 
     assert(atexit(atexit_cleanup) == 0);
 
-    if (dest_path != NULL)
+    if (dest_path != nullptr)
     {
         constexpr mode_t new_mask = 0133; // rw-r--r--
         (void)umask(new_mask);
 
         ACFILEPTR dest_fp = fopen(dest_path, "wx");
-        if (dest_fp == NULL)
+        if (dest_fp == nullptr)
             err(EXIT_FAILURE, "%s", dest_path);
     }
 
@@ -232,7 +232,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         sizeof(signals_to_handle) / sizeof(signals_to_handle[0]);
     for (size_t i = 0; i < num_signals_to_handle; ++i)
     {
-        if (sigaction(signals_to_handle[i], &signal_action, NULL) < 0)
+        if (sigaction(signals_to_handle[i], &signal_action, nullptr) < 0)
             err(EXIT_FAILURE, "sigaction");
     }
 
@@ -265,7 +265,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     {
         if (reset_alarm)
         {
-            if (setitimer(ITIMER_REAL, &itv, NULL) < 0)
+            if (setitimer(ITIMER_REAL, &itv, nullptr) < 0)
                 err(EXIT_FAILURE, "setitimer");
             reset_alarm = 0;
         }
@@ -298,10 +298,10 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             char dest_buf[32] = {'\0'};
             (void)snprintf(dest_buf, sizeof(dest_buf), "%ju", rx_bytes_per_s);
 
-            if (dest_path != NULL)
+            if (dest_path != nullptr)
             {
                 ACFILEPTR dest_fp = fopen(dest_path, "w");
-                if (dest_fp == NULL)
+                if (dest_fp == nullptr)
                     err(EXIT_FAILURE, "%s", dest_path);
 
                 if (fputs(dest_buf, dest_fp) < 0)
@@ -319,7 +319,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     }
     while (!done);
 
-    if (sigprocmask(SIG_SETMASK, &orig_mask, NULL) < 0)
+    if (sigprocmask(SIG_SETMASK, &orig_mask, nullptr) < 0)
         err(EXIT_FAILURE, "sigprocmask");
 
     return EXIT_SUCCESS;
