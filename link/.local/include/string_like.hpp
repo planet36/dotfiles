@@ -14,7 +14,7 @@
 #include <string_view>
 #include <type_traits>
 
-template<typename T>
+template <typename T>
 concept convertible_to_any_string_view =
     std::convertible_to<T, std::string_view> ||
     std::convertible_to<T, std::wstring_view> ||
@@ -22,7 +22,7 @@ concept convertible_to_any_string_view =
     std::convertible_to<T, std::u16string_view> ||
     std::convertible_to<T, std::u32string_view>;
 
-template<typename T>
+template <typename T>
 concept string_like = convertible_to_any_string_view<std::remove_reference_t<std::decay_t<T>>>;
 
 // {{{ unit tests

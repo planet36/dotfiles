@@ -86,7 +86,8 @@ PSHUFB xmm0, 0x0b06010c07020d08030e09040f0a0500
 inline __m128i
 ShiftRows(__m128i data)
 {
-    const __m128i ISOLATE_SROWS_MASK = _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
+    const __m128i ISOLATE_SROWS_MASK =
+        _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
     data = _mm_shuffle_epi8(data, ISOLATE_SROWS_MASK);
     return data;
 }
@@ -99,7 +100,8 @@ PSHUFB xmm0, 0x0306090c0f0205080b0e0104070a0d00
 inline __m128i
 InvShiftRows(__m128i data)
 {
-    const __m128i ISOLATE_SBOX_MASK = _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
+    const __m128i ISOLATE_SBOX_MASK =
+        _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
     data = _mm_shuffle_epi8(data, ISOLATE_SBOX_MASK);
     return data;
 }
@@ -149,7 +151,8 @@ inline __m128i
 SubBytes(__m128i data)
 {
     const __m128i ZERO = _mm_setzero_si128();
-    const __m128i ISOLATE_SBOX_MASK = _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
+    const __m128i ISOLATE_SBOX_MASK =
+        _mm_set_epi32(0x0306090c, 0x0f020508, 0x0b0e0104, 0x070a0d00);
     data = _mm_shuffle_epi8(data, ISOLATE_SBOX_MASK);
     data = _mm_aesenclast_si128(data, ZERO);
     return data;
@@ -165,7 +168,8 @@ inline __m128i
 InvSubBytes(__m128i data)
 {
     const __m128i ZERO = _mm_setzero_si128();
-    const __m128i ISOLATE_SROWS_MASK = _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
+    const __m128i ISOLATE_SROWS_MASK =
+        _mm_set_epi32(0x0b06010c, 0x07020d08, 0x030e0904, 0x0f0a0500);
     data = _mm_shuffle_epi8(data, ISOLATE_SROWS_MASK);
     data = _mm_aesdeclast_si128(data, ZERO);
     return data;

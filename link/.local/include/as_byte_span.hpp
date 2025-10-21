@@ -22,7 +22,7 @@ as_byte_span(const T& x)
 }
 
 constexpr auto
-as_byte_span(const std::ranges::contiguous_range auto & container)
+as_byte_span(const std::ranges::contiguous_range auto& container)
 {
     return std::as_bytes(std::span{container});
 }

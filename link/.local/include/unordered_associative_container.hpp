@@ -17,8 +17,11 @@
 
 template <typename Container>
 concept UnorderedAssociativeContainer =
-   std::derived_from<Container, std::unordered_map<typename Container::key_type, typename Container::mapped_type>>
-|| std::derived_from<Container, std::unordered_multimap<typename Container::key_type, typename Container::mapped_type>>
-|| std::derived_from<Container, std::unordered_set<typename Container::key_type>>
-|| std::derived_from<Container, std::unordered_multiset<typename Container::key_type>>
-;
+    std::derived_from<Container,
+                      std::unordered_map<typename Container::key_type,
+                                         typename Container::mapped_type>> ||
+    std::derived_from<Container,
+                      std::unordered_multimap<typename Container::key_type,
+                                              typename Container::mapped_type>> ||
+    std::derived_from<Container, std::unordered_set<typename Container::key_type>> ||
+    std::derived_from<Container, std::unordered_multiset<typename Container::key_type>>;

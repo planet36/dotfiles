@@ -22,10 +22,7 @@
 * The return value matches the behavior of https://en.cppreference.com/w/cpp/io/basic_ios/operator_bool
 */
 bool
-getdelim(std::string& line,
-         const char delim,
-         FILE* stream,
-         const bool strip_delim = false)
+getdelim(std::string& line, const char delim, FILE* stream, const bool strip_delim = false)
 {
     char* buf = nullptr;
     size_t buf_size = 0;

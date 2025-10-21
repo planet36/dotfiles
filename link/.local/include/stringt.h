@@ -40,7 +40,7 @@ extern "C" {
 */
 [[nodiscard]] static char*
 strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
-[[gnu::returns_nonnull]]
+    [[gnu::returns_nonnull]]
 {
     //[[assume(dst != nullptr)]];
     //[[assume(src != nullptr)]];
@@ -73,7 +73,7 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 */
 [[nodiscard]] static char*
 strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
-[[gnu::returns_nonnull]]
+    [[gnu::returns_nonnull]]
 {
     dst += strlen(dst);
     return strtcpy(dst, buf_last, src, trunc_at);

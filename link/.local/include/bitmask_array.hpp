@@ -44,36 +44,36 @@ constexpr std::array<uint8_t, 8> bitmask8_array_one{
 };
 
 constexpr std::array<uint8_t, 8> bitmask8_array_zero{
-    static_cast<uint8_t>(~bitmask8_array_one[ 0]),
-    static_cast<uint8_t>(~bitmask8_array_one[ 1]),
-    static_cast<uint8_t>(~bitmask8_array_one[ 2]),
-    static_cast<uint8_t>(~bitmask8_array_one[ 3]),
-    static_cast<uint8_t>(~bitmask8_array_one[ 4]),
-    static_cast<uint8_t>(~bitmask8_array_one[ 5]),
-    static_cast<uint8_t>(~bitmask8_array_one[ 6]),
-    static_cast<uint8_t>(~bitmask8_array_one[ 7]),
+    static_cast<uint8_t>(~bitmask8_array_one[0]),
+    static_cast<uint8_t>(~bitmask8_array_one[1]),
+    static_cast<uint8_t>(~bitmask8_array_one[2]),
+    static_cast<uint8_t>(~bitmask8_array_one[3]),
+    static_cast<uint8_t>(~bitmask8_array_one[4]),
+    static_cast<uint8_t>(~bitmask8_array_one[5]),
+    static_cast<uint8_t>(~bitmask8_array_one[6]),
+    static_cast<uint8_t>(~bitmask8_array_one[7]),
 };
 
 constexpr std::array<uint8_t, 8> bitmask8_array_lowpass{
-    static_cast<uint8_t>(bitmask8_array_one[ 0] - 1U),
-    static_cast<uint8_t>(bitmask8_array_one[ 1] - 1U),
-    static_cast<uint8_t>(bitmask8_array_one[ 2] - 1U),
-    static_cast<uint8_t>(bitmask8_array_one[ 3] - 1U),
-    static_cast<uint8_t>(bitmask8_array_one[ 4] - 1U),
-    static_cast<uint8_t>(bitmask8_array_one[ 5] - 1U),
-    static_cast<uint8_t>(bitmask8_array_one[ 6] - 1U),
-    static_cast<uint8_t>(bitmask8_array_one[ 7] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[0] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[1] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[2] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[3] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[4] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[5] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[6] - 1U),
+    static_cast<uint8_t>(bitmask8_array_one[7] - 1U),
 };
 
 constexpr std::array<uint8_t, 8> bitmask8_array_highpass{
-    static_cast<uint8_t>(bitmask8_array_zero[ 0] + 1U),
-    static_cast<uint8_t>(bitmask8_array_zero[ 1] + 1U),
-    static_cast<uint8_t>(bitmask8_array_zero[ 2] + 1U),
-    static_cast<uint8_t>(bitmask8_array_zero[ 3] + 1U),
-    static_cast<uint8_t>(bitmask8_array_zero[ 4] + 1U),
-    static_cast<uint8_t>(bitmask8_array_zero[ 5] + 1U),
-    static_cast<uint8_t>(bitmask8_array_zero[ 6] + 1U),
-    static_cast<uint8_t>(bitmask8_array_zero[ 7] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[0] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[1] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[2] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[3] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[4] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[5] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[6] + 1U),
+    static_cast<uint8_t>(bitmask8_array_zero[7] + 1U),
 };
 
 constexpr std::array<uint16_t, 16> bitmask16_array_one{

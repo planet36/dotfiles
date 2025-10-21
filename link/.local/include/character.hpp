@@ -15,8 +15,8 @@
 #include <type_traits>
 
 template <typename T>
-struct is_narrow_character : is_type_any_of<std::remove_cv_t<T>,
-    char, signed char, unsigned char, char8_t>
+struct is_narrow_character
+: is_type_any_of<std::remove_cv_t<T>, char, signed char, unsigned char, char8_t>
 {};
 
 template <typename T>

@@ -160,7 +160,8 @@ slurp(const std::filesystem::path& path)
         // https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
         // read(3p) returns either an error code or the number of bytes read
         const ssize_t actual_size_bytes = ::read(fd, result.data(), result.size());
-        if (actual_size_bytes < 0 || static_cast<size_t>(actual_size_bytes) != expected_size_bytes)
+        if (actual_size_bytes < 0 ||
+            static_cast<size_t>(actual_size_bytes) != expected_size_bytes)
         {
             (void)::close(fd);
             throw std::system_error(std::make_error_code(std::errc{errno}), path);

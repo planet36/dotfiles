@@ -165,21 +165,94 @@ inline constexpr uint8_t mask_alpha{mask_upper | mask_lower};
 inline constexpr uint8_t mask_alnum{mask_alpha | mask_digit};
 inline constexpr uint8_t mask_graph{mask_alnum | mask_punct};
 
-constexpr bool isascii(const uint8_t c) { return (c & 0b1000'0000) == 0; }
-constexpr bool isupper(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_upper) != 0; }
-constexpr bool islower(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_lower) != 0; }
-constexpr bool isalpha(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_alpha) != 0; }
-constexpr bool isdigit(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_digit) != 0; }
-constexpr bool isalnum(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_alnum) != 0; }
-constexpr bool isxdigit(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_xdigit) != 0; }
-constexpr bool isspace(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_space) != 0; }
-constexpr bool isblank(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_blank) != 0; }
-constexpr bool isgraph(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_graph) != 0; }
-constexpr bool isprint(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_cntrl) == 0; }
-constexpr bool iscntrl(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_cntrl) != 0; }
-constexpr bool ispunct(const uint8_t c) { return !isascii(c) ? false : (ascii_masks[c] & mask_punct) != 0; }
+constexpr bool
+isascii(const uint8_t c)
+{
+    return (c & 0b1000'0000) == 0;
+}
 
-constexpr uint8_t tolower(const uint8_t c) { return isupper(c) ? (c | 0b0010'0000) : c; }
-constexpr uint8_t toupper(const uint8_t c) { return islower(c) ? (c & 0b1101'1111) : c; }
+constexpr bool
+isupper(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_upper) != 0;
+}
+
+constexpr bool
+islower(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_lower) != 0;
+}
+
+constexpr bool
+isalpha(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_alpha) != 0;
+}
+
+constexpr bool
+isdigit(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_digit) != 0;
+}
+
+constexpr bool
+isalnum(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_alnum) != 0;
+}
+
+constexpr bool
+isxdigit(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_xdigit) != 0;
+}
+
+constexpr bool
+isspace(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_space) != 0;
+}
+
+constexpr bool
+isblank(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_blank) != 0;
+}
+
+constexpr bool
+isgraph(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_graph) != 0;
+}
+
+constexpr bool
+isprint(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_cntrl) == 0;
+}
+
+constexpr bool
+iscntrl(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_cntrl) != 0;
+}
+
+constexpr bool
+ispunct(const uint8_t c)
+{
+    return !isascii(c) ? false : (ascii_masks[c] & mask_punct) != 0;
+}
+
+constexpr uint8_t
+tolower(const uint8_t c)
+{
+    return isupper(c) ? (c | 0b0010'0000) : c;
+}
+
+constexpr uint8_t
+toupper(const uint8_t c)
+{
+    return islower(c) ? (c & 0b1101'1111) : c;
+}
 
 }

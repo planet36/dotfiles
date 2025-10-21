@@ -33,7 +33,7 @@ inline constexpr T weeks_per_month{4.348125L}; // days_per_month / days_per_week
 template <std::floating_point T>
 inline constexpr T weeks_per_year{52.1775L}; // days_per_year / days_per_week
 
-inline constexpr unsigned int seconds_per_hour = 3'600;
+inline constexpr unsigned int seconds_per_hour = 3600;
 inline constexpr unsigned int seconds_per_day = 86'400;
 inline constexpr unsigned int seconds_per_week = 604'800;
 inline constexpr unsigned int seconds_per_year = 31'556'952;

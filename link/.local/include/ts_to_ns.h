@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include <time.h>
 #include <stdint.h>
+#include <time.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,7 +35,9 @@ extern "C" {
 */
 inline static uint64_t
 ts_to_ns(const struct timespec* ts)
-{ return (uint64_t)ts->tv_sec * UINT64_C(1'000'000'000) + (uint64_t)ts->tv_nsec; }
+{
+    return (uint64_t)ts->tv_sec * UINT64_C(1'000'000'000) + (uint64_t)ts->tv_nsec;
+}
 
 #ifdef __cplusplus
 #pragma GCC diagnostic pop

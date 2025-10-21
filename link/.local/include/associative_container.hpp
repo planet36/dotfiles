@@ -17,8 +17,11 @@
 
 template <typename Container>
 concept AssociativeContainer =
-   std::derived_from<Container, std::map<typename Container::key_type, typename Container::mapped_type>>
-|| std::derived_from<Container, std::multimap<typename Container::key_type, typename Container::mapped_type>>
-|| std::derived_from<Container, std::set<typename Container::key_type>>
-|| std::derived_from<Container, std::multiset<typename Container::key_type>>
-;
+    std::derived_from<Container,
+                      std::map<typename Container::key_type,
+                               typename Container::mapped_type>> ||
+    std::derived_from<Container,
+                      std::multimap<typename Container::key_type,
+                                    typename Container::mapped_type>> ||
+    std::derived_from<Container, std::set<typename Container::key_type>> ||
+    std::derived_from<Container, std::multiset<typename Container::key_type>>;

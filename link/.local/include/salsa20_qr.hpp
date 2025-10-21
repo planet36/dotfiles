@@ -17,8 +17,8 @@ template <std::unsigned_integral T>
 constexpr void
 salsa20_qr(T& a, T& b, T& c, T& d)
 {
-    b ^= std::rotl(a + d,  7);
-    c ^= std::rotl(a + b,  9);
+    b ^= std::rotl(a + d, 7);
+    c ^= std::rotl(a + b, 9);
     d ^= std::rotl(b + c, 13);
     a ^= std::rotl(c + d, 18);
 }

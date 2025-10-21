@@ -24,11 +24,8 @@ extern "C" {
 * \param strip_delim if the \a delim should be stripped from the result
 */
 ssize_t
-getdelim_strip(char** buf,
-               size_t* buf_size,
-               const int delim,
-               FILE* stream,
-               const bool strip_delim)
+getdelim_strip(
+    char** buf, size_t* buf_size, const int delim, FILE* stream, const bool strip_delim)
 {
     ssize_t bytes_read = getdelim(buf, buf_size, delim, stream);
     if (bytes_read > 0)
@@ -49,10 +46,7 @@ getdelim_strip(char** buf,
 * \param strip_delim if the \a delim should be stripped from the result
 */
 ssize_t
-getline_strip(char** buf,
-              size_t* buf_size,
-              FILE* stream,
-              const bool strip_delim)
+getline_strip(char** buf, size_t* buf_size, FILE* stream, const bool strip_delim)
 {
     constexpr char delim = '\n';
     return getdelim_strip(buf, buf_size, delim, stream, strip_delim);

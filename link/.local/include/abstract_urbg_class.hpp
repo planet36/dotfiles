@@ -39,7 +39,6 @@ template <typename S, std::unsigned_integral R>
 struct AbstractURBG
 {
 public:
-
     using state_type = S;
     using result_type = R;
 
@@ -53,16 +52,14 @@ public:
     static constexpr result_type max() { return std::numeric_limits<result_type>::max(); }
 
 protected:
-
     state_type s{};
 
 public:
-
     // ctors
 
     AbstractURBG() { fill_rand(s); }
 
-    explicit AbstractURBG(const state_type& new_s) : s(new_s) { }
+    explicit AbstractURBG(const state_type& new_s) : s(new_s) {}
 
     explicit AbstractURBG(const seed_bytes_type& bytes)
     {
@@ -98,16 +95,16 @@ public:
 #define SINGLE_ARG(...) __VA_ARGS__
 // Use SINGLE_ARG when a macro arg has a comma.
 
-#define DEF_URBG_SUBCLASS(CLASS_NAME, STATE_TYPE, RESULT_TYPE)                          \
-struct CLASS_NAME final : public AbstractURBG<STATE_TYPE, RESULT_TYPE>                  \
-{                                                                                       \
-protected:                                                                              \
-    void init(); /* must implement this */                                              \
-public:                                                                                 \
-    CLASS_NAME() { init(); }                                                            \
-    explicit CLASS_NAME(const state_type& new_s) : AbstractURBG(new_s) { init(); }      \
-    explicit CLASS_NAME(const seed_bytes_type& bytes) : AbstractURBG(bytes) { init(); } \
-    result_type next() override; /* must implement this */                              \
-};                                                                                      \
-static_assert(std::uniform_random_bit_generator<CLASS_NAME>);                           \
-
+#define DEF_URBG_SUBCLASS(CLASS_NAME, STATE_TYPE, RESULT_TYPE)                              \
+    struct CLASS_NAME final : public AbstractURBG<STATE_TYPE, RESULT_TYPE>                  \
+    {                                                                                       \
+    protected:                                                                              \
+        void init(); /* must implement this */                                              \
+                                                                                            \
+    public:                                                                                 \
+        CLASS_NAME() { init(); }                                                            \
+        explicit CLASS_NAME(const state_type& new_s) : AbstractURBG(new_s) { init(); }      \
+        explicit CLASS_NAME(const seed_bytes_type& bytes) : AbstractURBG(bytes) { init(); } \
+        result_type next() override; /* must implement this */                              \
+    };                                                                                      \
+    static_assert(std::uniform_random_bit_generator<CLASS_NAME>);

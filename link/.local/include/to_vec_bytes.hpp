@@ -25,7 +25,10 @@ to_vec_bytes(const std::ranges::contiguous_range auto& container)
 auto
 to_vec_uint8(const std::ranges::contiguous_range auto& container)
 {
-    auto byte_to_uint8 = [](const std::byte b) { return std::to_integer<uint8_t>(b); };
+    auto byte_to_uint8 = [](const std::byte b)
+    {
+        return std::to_integer<uint8_t>(b);
+    };
     const auto sp_bytes = std::as_bytes(std::span(container));
     return sp_bytes | std::views::transform(byte_to_uint8) | std::ranges::to<std::vector>();
 }
