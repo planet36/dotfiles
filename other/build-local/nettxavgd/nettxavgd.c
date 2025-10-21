@@ -133,7 +133,8 @@ print_usage()
     printf("\n");
 }
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
+int
+main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     set_default_net_iface();
     unsigned int init_delay_msec = default_init_delay_msec;
@@ -291,9 +292,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
             if (delta_time_s != 0)
                 // round to nearest int
-                tx_bytes_per_s = (uintmax_t)(
-                                     (double)(tx_bytes - prev_tx_bytes) / delta_time_s + 0.5
-                                 );
+                tx_bytes_per_s =
+                    (uintmax_t)((double)(tx_bytes - prev_tx_bytes) / delta_time_s + 0.5);
 
             char dest_buf[32] = {'\0'};
             (void)snprintf(dest_buf, sizeof(dest_buf), "%ju", tx_bytes_per_s);

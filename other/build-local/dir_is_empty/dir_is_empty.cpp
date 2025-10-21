@@ -4,7 +4,8 @@
 #include <cstdlib>
 #include <filesystem>
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
+int
+main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     int result = EXIT_SUCCESS;
 
