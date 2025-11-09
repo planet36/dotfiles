@@ -1,0 +1,11 @@
+adjust-cell-height = 2
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+cursor-style-blink = false
+font-family = monospace
+font-size = 14
+freetype-load-flags = false
+shell-integration = none
+theme = Srcery
+window-decoration = none
