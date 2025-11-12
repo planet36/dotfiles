@@ -8,14 +8,14 @@
 #include <string_view>
 #include <unistd.h>
 
-constexpr std::string_view program_author = "Steven Ward";
-constexpr std::string_view program_version = "1.0.0";
-constexpr std::string_view program_license = "OSL-3.0";
+inline constexpr std::string_view program_author = "Steven Ward";
+inline constexpr std::string_view program_version = "1.0.0";
+inline constexpr std::string_view program_license = "OSL-3.0";
 
-constexpr int default_reps = 30;
+inline constexpr int default_reps = 30;
 
 /// Primality probability category descriptions
-constexpr std::array<std::string_view, 3> ppc_descriptions{
+inline constexpr std::array<std::string_view, 3> ppc_descriptions{
     "not ",
     "probably ",
     "",
