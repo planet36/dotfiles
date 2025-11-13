@@ -42,14 +42,6 @@ set PROFILE_OPTIONS   $(string split ' ' -- $PROFILE_OPTIONS  )
 
 # }}}
 
-# {{{ env_parallel
-
-if command --quiet env_parallel
-    source $(which env_parallel.fish)
-end
-
-# }}}
-
 # {{{ Install fisher plugins
 
 # To install fisher:
@@ -113,6 +105,14 @@ set __fish_git_prompt_char_stashstate '$'   # was U+2691 BLACK FLAG
 #function log_cmd_postexec --on-event fish_postexec --argument cmd
 #  echo $(echo $cmd | string join '\\n') >> ~/.fish_history
 #end
+# }}}
+
+# {{{ env_parallel
+
+if command --quiet env_parallel
+    source $(which env_parallel.fish)
+end
+
 # }}}
 
 # {{{ Source other config files
