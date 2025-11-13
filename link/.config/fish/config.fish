@@ -50,22 +50,6 @@ end
 
 # }}}
 
-# {{{ Source other config files
-
-if test -f $(status dirname)/abbrs.fish
-    source $(status dirname)/abbrs.fish
-end
-
-if test -f $(status dirname)/aliases.fish
-    source $(status dirname)/aliases.fish
-end
-
-if test -f $(status dirname)/private.fish
-    source $(status dirname)/private.fish
-end
-
-# }}}
-
 # {{{ Install fisher plugins
 
 # To install fisher:
@@ -129,6 +113,22 @@ set __fish_git_prompt_char_stashstate '$'   # was U+2691 BLACK FLAG
 #function log_cmd_postexec --on-event fish_postexec --argument cmd
 #  echo $(echo $cmd | string join '\\n') >> ~/.fish_history
 #end
+# }}}
+
+# {{{ Source other config files
+
+if test -f $(status dirname)/abbrs.fish
+    source $(status dirname)/abbrs.fish
+end
+
+if test -f $(status dirname)/aliases.fish
+    source $(status dirname)/aliases.fish
+end
+
+if test -f $(status dirname)/private.fish
+    source $(status dirname)/private.fish
+end
+
 # }}}
 
 end # status is-interactive
