@@ -13,11 +13,21 @@ CFLAGS += -Wno-error=pedantic
 CFLAGS += -Wno-error=useless-cast
 CFLAGS += -Wno-unused-function
 
+CFLAGS += -Warith-conversion
+CFLAGS += -Wconversion
+#CFLAGS += -Wfloat-conversion # enabled by -Wconversion
+#CFLAGS += -Wsign-conversion # enabled by -Wconversion (C only)
+
 CXXFLAGS += $(OPTIMIZE_OPTIONS)
 CXXFLAGS += -Werror
 CXXFLAGS += -Wno-error=pedantic
 CXXFLAGS += -Wno-error=useless-cast
 CXXFLAGS += -Wno-unused-function
+
+CXXFLAGS += -Warith-conversion
+CXXFLAGS += -Wconversion
+#CXXFLAGS += -Wfloat-conversion # enabled by -Wconversion
+CXXFLAGS += -Wsign-conversion
 
 #LDFLAGS +=
 
