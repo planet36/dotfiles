@@ -13,6 +13,7 @@ stw
 # These will be cloned but not built
 CLONE_ONLY_DIRS = \
 arch-install \
+Castella \
 ecef-geodetic \
 dwm-suckless \
 prng-test-bench \
@@ -31,7 +32,7 @@ clone: | $(SUBDIRS)
 clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-arch-install ecef-geodetic PractRand prng-test-bench randp:
+arch-install Castella ecef-geodetic PractRand prng-test-bench randp:
 	git clone --quiet https://github.com/planet36/$@.git
 
 # My repos (forked from suckless)
