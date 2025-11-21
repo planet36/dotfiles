@@ -14,6 +14,7 @@ stw
 CLONE_ONLY_DIRS = \
 arch-install \
 Castella \
+cpp-httplib \
 ecef-geodetic \
 dwm-suckless \
 prng-test-bench \
@@ -34,6 +35,9 @@ clean install uninstall lint: clone
 
 arch-install Castella ecef-geodetic PractRand prng-test-bench randp:
 	git clone --quiet https://github.com/planet36/$@.git
+
+cpp-httplib:
+	git clone --quiet https://github.com/yhirose/$@.git
 
 # My repos (forked from suckless)
 # Clone and add upstream remotes
