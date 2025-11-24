@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: OSL-3.0
 
 #include <array>
+#include <err.h>
 #include <gmpxx.h>
 #include <iostream>
 #include <string>
@@ -79,15 +80,12 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             }
             catch (const std::invalid_argument& ex)
             {
-                std::cerr << "invalid_argument: " << ex.what() << ": " << optarg << '\n';
-                return EXIT_FAILURE;
+                errx(EXIT_FAILURE, "invalid argument: %s: \"%s\"", ex.what(), optarg);
             }
             catch (const std::out_of_range& ex)
             {
-                std::cerr << "out_of_range: " << ex.what() << ": " << optarg << '\n';
-                return EXIT_FAILURE;
+                errx(EXIT_FAILURE, "out of range: %s: \"%s\"", ex.what(), optarg);
             }
-
             break;
 
         default:
