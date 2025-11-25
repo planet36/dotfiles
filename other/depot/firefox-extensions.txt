@@ -1,5 +1,5 @@
 https://addons.mozilla.org/en-US/firefox/addon/copy-all-tabs/
-https://addons.mozilla.org/en-US/firefox/addon/darkreader/
+#https://addons.mozilla.org/en-US/firefox/addon/darkreader/
 https://addons.mozilla.org/en-US/firefox/addon/enhancer-for-youtube/
 https://addons.mozilla.org/en-US/firefox/addon/tab-session-manager/
-https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
+#https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
