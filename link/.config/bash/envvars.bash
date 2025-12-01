@@ -229,6 +229,7 @@ export DEBUG_OPTIONS='-Og -g3 -DDEBUG'
 # https://sourceware.org/glibc/manual/latest/html_mono/libc.html#index-NDEBUG
 DEBUG_OPTIONS+=' -UNDEBUG'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
+DEBUG_OPTIONS+=' -D_GLIBCXX_ASSERTIONS'
 DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG'
 DEBUG_OPTIONS+=' -D_GLIBCXX_DEBUG_PEDANTIC'
 DEBUG_OPTIONS+=' -D_GLIBCXX_SANITIZE_VECTOR'
