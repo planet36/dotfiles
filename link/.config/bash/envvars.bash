@@ -250,7 +250,7 @@ export CPPFLAGS="-iquote $HOME/.local/include"
 CPPFLAGS+=' -D__STDC_WANT_IEC_60559_BFP_EXT__ -D__STDC_WANT_IEC_60559_FUNCS_EXT__ -D__STDC_WANT_IEC_60559_TYPES_EXT__ -D__STDC_WANT_IEC_60559_EXT__'
 CPPFLAGS+=' -D_GNU_SOURCE'
 # https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html
-#CPPFLAGS+=' -D__STDCPP_WANT_MATH_SPEC_FUNCS__'
+CPPFLAGS+=' -D__STDCPP_WANT_MATH_SPEC_FUNCS__'
 
 # shellcheck disable=SC2034
 LATEST_C_STD="$(COLUMNS=200 gcc -v --help 2>/dev/null | command grep -E -- '^\s*-std=c2' | command grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
