@@ -1,12 +1,18 @@
 # https://ghostty.org/docs/config/reference
 adjust-cell-height = 2
+clipboard-paste-protection = true
 clipboard-read = allow
+clipboard-trim-trailing-spaces = true
 clipboard-write = allow
+confirm-close-surface = false
 copy-on-select = clipboard
 cursor-style-blink = false
+focus-follows-mouse = true
 font-family = monospace
 font-size = 14
 freetype-load-flags = false
+quit-after-last-window-closed = true
+selection-clear-on-copy = true
 shell-integration = none
 theme = Srcery
 window-decoration = none
