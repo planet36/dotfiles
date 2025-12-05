@@ -1,3 +1,4 @@
+# https://ghostty.org/docs/config/reference
 adjust-cell-height = 2
 clipboard-read = allow
 clipboard-write = allow
