@@ -71,6 +71,19 @@ then
     xrdb -I"$XDG_CONFIG_HOME"/xorg -merge "$XDG_CONFIG_HOME"/xorg/Xresources
 fi
 
+# {{{ DPI
+
+# Get the DPI
+DPI="$(xdpyinfo | command grep 'resolution' | awk '{print $2}' | cut -d x -f 1)"
+
+# Set Xft.dpi dynamically
+if test "$DPI" -gt 0 2> /dev/null
+then
+    echo "Xft.dpi: $DPI" | xrdb -merge
+fi
+
+# }}}
+
 # {{{ keyboard
 
 if command -v xset > /dev/null
