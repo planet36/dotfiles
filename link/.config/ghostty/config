@@ -16,3 +16,5 @@ selection-clear-on-copy = true
 shell-integration = none
 theme = Srcery
 window-decoration = none
+window-padding-x = 1
+window-padding-y = 1
