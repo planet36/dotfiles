@@ -5,9 +5,13 @@ cromulent
 ctor
 dtor
 embiggen
+FileCopyrightText
 Keccak
+m128i
 NIST
+OSL
 PRNG
 Rijndael
 SHA
+SPDX
 zeroize
