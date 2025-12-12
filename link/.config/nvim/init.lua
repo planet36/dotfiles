@@ -80,7 +80,7 @@ vim.o.termguicolors = true
 vim.g.c_comment_strings = 1
 vim.g.c_space_errors = 1
 vim.g.c_curly_error = 1
-vim.g.c_minlines = 1000
+vim.g.c_minlines = 10000
 
 -- :help doxygen-syntax
 vim.g.load_doxygen_syntax = 1
