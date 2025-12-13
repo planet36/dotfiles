@@ -16,6 +16,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // CRC-8-CCITT
 uint8_t
 crc8(const void* buf, size_t len)
@@ -100,3 +104,7 @@ crc32(const void* buf, size_t len)
     crc ^= 0xFFFFFFFF;
     return crc;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

@@ -11,6 +11,10 @@
 
 #include <immintrin.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(__AES__)
 static inline __m128i
 mm_compress128(const __m128i a, const __m128i b)
@@ -24,4 +28,8 @@ mm_compress128(const __m128i a, const __m128i b)
                     a),
                 _mm_setzero_si128());
 }
+#endif
+
+#ifdef __cplusplus
+} // extern "C"
 #endif

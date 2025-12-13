@@ -66,6 +66,10 @@
 
 #include <immintrin.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
 * \verbatim
 _mm_xor_si128
@@ -174,3 +178,7 @@ InvSubBytes(__m128i data)
     data = _mm_aesdeclast_si128(data, ZERO);
     return data;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

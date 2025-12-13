@@ -10,6 +10,10 @@
 
 #pragma once
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 inline int
 von_neumann_extractor(unsigned char x)
 {
@@ -20,3 +24,7 @@ von_neumann_extractor(unsigned char x)
     default: return -1;
     }
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
