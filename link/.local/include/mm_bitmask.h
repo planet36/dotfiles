@@ -73,7 +73,7 @@ mm256_bitmask(const unsigned int bit)
 * \pre \a bit < 512
 */
 static inline __m512i
-mm_bitmask512(const unsigned int bit)
+mm512_bitmask(const unsigned int bit)
 {
 #if defined(DEBUG)
     assert(bit < 512);
