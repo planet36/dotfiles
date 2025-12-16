@@ -27,7 +27,7 @@ extern "C" {
 * \pre \a bit < 128
 */
 static inline __m128i
-mm_bitmask128(const unsigned int bit)
+mm_bitmask(const unsigned int bit)
 {
 #if defined(DEBUG)
     assert(bit < 128);
