@@ -50,7 +50,7 @@ mm_bitmask(const unsigned int bit)
 * \pre \a bit < 256
 */
 static inline __m256i
-mm_bitmask256(const unsigned int bit)
+mm256_bitmask(const unsigned int bit)
 {
 #if defined(DEBUG)
     assert(bit < 256);
