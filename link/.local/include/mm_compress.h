@@ -12,6 +12,9 @@
 #if defined(__x86_64__)
 #include <immintrin.h>
 typedef __m128i simd128_t;
+#elif defined(__aarch64__)
+#include <arm_neon.h>
+typedef uint8x16_t simd128_t;
 #endif
 
 #ifdef __cplusplus
@@ -30,6 +33,15 @@ mm_compress128(const simd128_t a, const simd128_t b)
                         b),
                     a),
                 _mm_setzero_si128());
+#elif defined(__ARM_FEATURE_AES)
+    return
+        vaesmcq_u8(vaeseq_u8(
+                    vaesmcq_u8(vaeseq_u8(
+                            vaesmcq_u8(vaeseq_u8(
+                                    vaesmcq_u8(vaeseq_u8(b, zero)),
+                                    a)),
+                            b)),
+                    a));
 #endif
 }
 
