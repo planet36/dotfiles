@@ -11,6 +11,7 @@
 
 #if defined(__x86_64__)
 #include <immintrin.h>
+typedef __m128i simd128_t;
 #endif
 
 #ifdef __cplusplus
@@ -18,8 +19,8 @@ extern "C" {
 #endif
 
 #if defined(__AES__)
-static inline __m128i
-mm_compress128(const __m128i a, const __m128i b)
+static inline simd128_t
+mm_compress128(const simd128_t a, const simd128_t b)
 {
     return
         _mm_aesenc_si128(
