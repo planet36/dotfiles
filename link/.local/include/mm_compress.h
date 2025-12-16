@@ -18,10 +18,10 @@ typedef __m128i simd128_t;
 extern "C" {
 #endif
 
-#if defined(__AES__)
 static inline simd128_t
 mm_compress128(const simd128_t a, const simd128_t b)
 {
+#if defined(__AES__)
     return
         _mm_aesenc_si128(
                 _mm_aesenc_si128(
@@ -30,8 +30,8 @@ mm_compress128(const simd128_t a, const simd128_t b)
                         b),
                     a),
                 _mm_setzero_si128());
-}
 #endif
+}
 
 #ifdef __cplusplus
 } // extern "C"
