@@ -22,7 +22,7 @@ extern "C" {
 #endif
 
 static inline simd128_t
-mm_compress128(const simd128_t a, const simd128_t b)
+mm_compress(const simd128_t a, const simd128_t b)
 {
 #if defined(__AES__)
     return
