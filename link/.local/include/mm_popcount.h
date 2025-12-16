@@ -44,6 +44,15 @@ mm256_popcount(const __m256i x)
 }
 #endif
 
+#if defined(__AVX512F__)
+static inline int
+mm512_popcount(const __m512i x)
+{
+    return mm256_popcount(_mm512_extracti64x4_epi64(x, 0)) +
+           mm256_popcount(_mm512_extracti64x4_epi64(x, 1));
+}
+#endif
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
