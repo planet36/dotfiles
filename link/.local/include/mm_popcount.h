@@ -12,7 +12,7 @@
 
 #pragma once
 
-#if defined(__x86_64__) && defined(__SSE4_1__)
+#if defined(__x86_64__)
 
 #include <immintrin.h>
 #include <stdint.h>
@@ -21,6 +21,7 @@
 extern "C" {
 #endif
 
+#if defined(__SSE4_1__)
 static inline int
 mm_popcount(const __m128i x)
 {
@@ -28,6 +29,7 @@ mm_popcount(const __m128i x)
     const uint64_t x1 = (uint64_t)_mm_extract_epi64(x, 1);
     return __builtin_popcountg(x0) + __builtin_popcountg(x1);
 }
+#endif
 
 #ifdef __cplusplus
 } // extern "C"
