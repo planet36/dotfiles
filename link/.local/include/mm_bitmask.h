@@ -12,7 +12,9 @@
 #if defined(DEBUG)
 #include <assert.h>
 #endif
+#if defined(__x86_64__)
 #include <immintrin.h>
+#endif
 #include <stdint.h>
 
 #ifdef __cplusplus
