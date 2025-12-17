@@ -13,6 +13,20 @@
 #include <cstdlib>
 #include <type_traits>
 
+/// Cast the int to unsigned int
+constexpr auto
+to_unsigned(const std::integral auto x)
+{
+    return static_cast<std::make_unsigned_t<decltype(x)>>(x);
+}
+
+/// Cast the int to signed int
+constexpr auto
+to_signed(const std::integral auto x)
+{
+    return static_cast<std::make_signed_t<decltype(x)>>(x);
+}
+
 /**
 \return the absolute value of \a x as an unsigned type
 */
@@ -29,18 +43,4 @@ constexpr auto
 uabs(const std::unsigned_integral auto x)
 {
     return x;
-}
-
-/// Cast the int to unsigned int
-constexpr auto
-to_unsigned(const std::integral auto x)
-{
-    return static_cast<std::make_unsigned_t<decltype(x)>>(x);
-}
-
-/// Cast the int to signed int
-constexpr auto
-to_signed(const std::integral auto x)
-{
-    return static_cast<std::make_signed_t<decltype(x)>>(x);
 }
