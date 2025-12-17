@@ -13,18 +13,6 @@
 #include <cstdlib>
 #include <type_traits>
 
-constexpr auto
-iabs(const std::signed_integral auto x)
-{
-    return std::abs(x);
-}
-
-constexpr auto
-iabs(const std::unsigned_integral auto x)
-{
-    return x;
-}
-
 /**
 \return the absolute value of \a x as an unsigned type
 */
