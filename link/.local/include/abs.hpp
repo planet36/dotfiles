@@ -33,7 +33,7 @@ to_signed(const std::integral auto x)
 constexpr auto
 uabs(const std::signed_integral auto x)
 {
-    return static_cast<std::make_unsigned_t<decltype(x)>>(std::abs(x));
+    return to_unsigned(std::abs(x));
 }
 
 /**
