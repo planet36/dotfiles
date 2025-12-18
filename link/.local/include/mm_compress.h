@@ -67,6 +67,7 @@ static inline simd128_t
 mm_compress(const simd128_t a, const simd128_t b)
 {
 #if defined(__AES__)
+    const simd128_t zero = _mm_setzero_si128();
     return
         _mm_aesenc_si128(
                 _mm_aesenc_si128(
@@ -74,8 +75,9 @@ mm_compress(const simd128_t a, const simd128_t b)
                         _mm_aesenc_si128(b, a),
                         b),
                     a),
-                _mm_setzero_si128());
+                zero);
 #elif defined(__ARM_FEATURE_AES)
+    const simd128_t zero = vdupq_n_u8(0);
     return
         vaesmcq_u8(vaeseq_u8(
                     vaesmcq_u8(vaeseq_u8(
