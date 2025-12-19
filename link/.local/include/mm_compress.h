@@ -57,6 +57,8 @@ typedef __m128i simd128_t;
 #elif defined(__aarch64__)
 #include <arm_neon.h>
 typedef uint8x16_t simd128_t;
+#else
+#error "Architecture not supported"
 #endif
 
 #ifdef __cplusplus
