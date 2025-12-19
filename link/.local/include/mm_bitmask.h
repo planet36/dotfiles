@@ -21,6 +21,9 @@
 extern "C" {
 #endif
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+
 #if defined(__SSE2__)
 /// Create a bitmask of a \c __m128i with bit \a bit set
 /**
@@ -91,6 +94,8 @@ mm512_bitmask(const unsigned int bit)
             vals[3], vals[2], vals[1], vals[0]);
 }
 #endif
+
+#pragma GCC diagnostic pop
 
 #ifdef __cplusplus
 } // extern "C"
