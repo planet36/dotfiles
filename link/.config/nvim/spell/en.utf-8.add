@@ -36,6 +36,7 @@ LDLIBS
 localhost
 m128i
 namespace
+neovim
 NIST
 NOLINT
 NOLINTBEGIN
@@ -47,6 +48,7 @@ pseudorandom
 pseudorandomness
 Rijndael
 SHA
+SIMD
 SPDX
 SSE2
 stackoverflow
