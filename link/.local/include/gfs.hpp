@@ -164,6 +164,12 @@ gfs2_noncyclic_p()
     static_assert(k <= 16);
     static_assert(k % 2 == 0);
 
+    /*
+    * Page 24 (6)
+    * > When k=4, we have no gain, as there are only three valid shuffles:
+    * right and left cyclic shifts and Nyberg's GFN and they have DRmax = 4.
+    */
+
     if constexpr      (k ==  6) return {3,0,1,4,5,2};
     else if constexpr (k ==  8) return {3,0,1,4,7,2,5,6};
     else if constexpr (k == 10) return {5,0,7,2,9,6,3,8,1,4};
