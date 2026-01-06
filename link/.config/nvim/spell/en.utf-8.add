@@ -31,6 +31,7 @@ http
 https
 instantiation
 iteratively
+jitter
 Keccak
 KMAC
 LDFLAGS
@@ -48,6 +49,10 @@ planet36
 PRNG
 pseudorandom
 pseudorandomness
+rdrand
+rdseed
+rdtsc
+rdtscp
 Rijndael
 SHA
 SIMD
