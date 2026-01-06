@@ -23,8 +23,9 @@ fisher_yates(std::ranges::random_access_range auto& container)
 {
     for (size_t i = std::size(container); i > 1;)
     {
-        const size_t j = rand_uint_range(i); // [0, i)
+        const size_t j = rand_uint_range(i); // j ∈ [0, i)
         i--; // must decrement after choosing random number, not before
+        // now j ∈ [0, i]
 
         if (i != j)
         {
