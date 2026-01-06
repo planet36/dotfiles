@@ -103,6 +103,7 @@ rdtsc()
 static inline uint64_t
 rdtscp(unsigned int* aux)
 {
+    _mm_mfence();
     const uint64_t tsc = __rdtscp(aux);
     _mm_lfence();
     return tsc;
