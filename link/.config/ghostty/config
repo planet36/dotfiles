@@ -1,5 +1,6 @@
 # https://ghostty.org/docs/config/reference
 adjust-cell-height = 2
+adjust-cell-width = -1
 clipboard-paste-protection = true
 clipboard-read = allow
 clipboard-trim-trailing-spaces = true
