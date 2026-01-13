@@ -149,7 +149,7 @@ export XINITRC="$XDG_CONFIG_HOME"/X11/xinit/xinitrc
 # man 5 terminfo
 # https://man7.org/linux/man-pages/man5/terminfo.5.html
 
-# man terminfo | grep -A 1 -E '\<(mb|md|me|so|se|us|ue|mr|mh|ZN|ZV|ZO|ZW)\>'
+# man terminfo | command grep -A 1 -E '\<(mb|md|me|so|se|us|ue|mr|mh|ZN|ZV|ZO|ZW)\>'
 
 # enter_blink_mode            blink     mb     turn on blinking
 # enter_bold_mode             bold      md     turn on bold (extra bright) mode

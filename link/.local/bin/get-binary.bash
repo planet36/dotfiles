@@ -134,7 +134,7 @@ curl -L -o "$RELEASE_FILE" -- "$URL_LATEST_RELEASE_DOWNLOAD"
 if tar -tf "$RELEASE_FILE" &> /dev/null
 then # it's a tar file
 
-    TAR_MEMBER="$(tar --list -f "$RELEASE_FILE" | grep -E -- "^(.+/)?$BINARY\$")"
+    TAR_MEMBER="$(tar --list -f "$RELEASE_FILE" | command grep -E -- "^(.+/)?$BINARY\$")"
     print_verbose 'TAR_MEMBER=%q' "$TAR_MEMBER"
 
     # Only extract the desired file

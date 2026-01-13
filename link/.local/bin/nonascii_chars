@@ -11,5 +11,5 @@ declare -r PATTERN='[23][0-7][0-7]'
 for FILE
 do
     echo "${FILE}"
-    od --address-radix=n -c "${FILE}" | grep --extended-regexp --word-regexp --context 2 --color "${PATTERN}"
+    od --address-radix=n -c "${FILE}" | command grep --extended-regexp --word-regexp --context 2 --color "${PATTERN}"
 done

@@ -93,7 +93,7 @@ fi
 
 if command -v setxkbmap > /dev/null
 then
-    # grep 'ctrl:nocaps' /usr/share/X11/xkb/rules/base.lst
+    # command grep 'ctrl:nocaps' /usr/share/X11/xkb/rules/base.lst
     setxkbmap -option ctrl:nocaps
     # difference between "caps:ctrl_modifier" and "ctrl:nocaps" explained here:
     # https://www.reddit.com/r/commandline/comments/4gusjx/comment/d2lvni3/
@@ -107,7 +107,7 @@ then
     xmodmap -e 'keycode 49 = asciitilde grave'
 
     # Look for unused KeyCodes
-    #xmodmap -pk | grep -P -x '\s*\d+\s*'
+    #xmodmap -pk | command grep -P -x '\s*\d+\s*'
 
     # Map F13 to an unused KeyCode
     xmodmap -e 'keycode 183 = F13'
