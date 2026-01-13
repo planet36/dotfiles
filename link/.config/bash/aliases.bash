@@ -94,8 +94,6 @@ alias file1-times=file1-dates
 alias find-dangling-symlinks='find . -xtype l'
 alias gf='git log --oneline --decorate --color | fzf --no-sort --layout=reverse-list --preview "git show --color=always {1}"'
 alias gif2png='gif2png -m -n -s -O'
-alias grep='grep --color=auto --line-number --binary-files=without-match --directories=skip'
-alias grepr='grep --directories=recurse --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias jpegtran2='jpegtran -optimize -copy all'
 alias longest_line="awk 'length > l {r = NR; l = length} END{print r, l}'"
 alias mirror2='wget --verbose --force-directories --no-host-directories --html-extension --mirror --convert-links --backup-converted --page-requisites --relative --no-parent'
