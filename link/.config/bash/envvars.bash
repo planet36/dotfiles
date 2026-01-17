@@ -214,7 +214,12 @@ GCC_COMMON_OPTIONS+=' -Wcast-align -Wcast-qual -Wduplicated-branches -Wduplicate
 
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 # Using -fsigned-zeros disables associative-math
-export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native -fno-math-errno'
+export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native'
+
+# "-fno-math-errno causes GCC to consider that malloc does not set errno"
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88576
+#OPTIMIZE_OPTIONS+='-fno-math-errno'
+
 #OPTIMIZE_OPTIONS+=' -fassociative-math -fno-signed-zeros -fno-trapping-math'
 # Do not use -freciprocal-math (enabled with -funsafe-math-optimizations (enabled with -ffast-math (enabled with -Ofast)))
 # Do not use -ffinite-math-only (enabled with -ffast-math (enabled with -Ofast))
@@ -223,7 +228,7 @@ export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native -fno-math-errno'
 # https://openbenchmarking.org/processors/VAES
 # https://openbenchmarking.org/s/Intel+Core+i9-13950HX
 # https://openbenchmarking.org/s/Intel+Core+i9-13980HX
-#OPTIMIZE_OPTIONS+=' -march=raptorlake'
+OPTIMIZE_OPTIONS+=' -march=raptorlake'
 
 export DEBUG_OPTIONS='-Og -g3 -DDEBUG'
 # https://sourceware.org/glibc/manual/latest/html_mono/libc.html#index-NDEBUG
