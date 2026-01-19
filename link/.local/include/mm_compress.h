@@ -9,44 +9,44 @@
 * \sa https://blog.michaelbrase.com/2018/05/08/emulating-x86-aes-intrinsics-on-armv8-a/
 * \sa https://blog.michaelbrase.com/2018/06/04/optimizing-x86-aes-intrinsics-on-armv8-a/
 *
+* ## AES instruction comparison
 * \verbatim
-* AES instruction comparison
-* |--------|---------------|-------------|--------|
-* | Round  | AES Step      | Intel       | ARM    |
-* |--------|---------------|-------------|--------|
-* | 0      | AddRoundKey   | XOR         | AESE   |
-* |--------|---------------|-------------|        |
-* | 1      | SubBytes      | AESENC      |        |
-* |        |               |             |        |
-* |        | ShiftRows     |             |        |
-* |        |               |             |--------|
-* |        | MixColumns    |             | AESMC  |
-* |        |               |             |--------|
-* |        | AddRoundKey   |             | AESE   |
-* |--------|---------------|-------------|        |
-* | 2      | SubBytes      | AESENC      |        |
-* |        |               |             |        |
-* |        | ShiftRows     |             |        |
-* |        |               |             |--------|
-* |        | MixColumns    |             | AESMC  |
-* |        |               |             |--------|
-* |        | AddRoundKey   |             | AESE   |
-* |--------|---------------|-------------|        |
-* | 3      | SubBytes      | AESENC      |        |
-* |        |               |             |        |
-* |        | ShiftRows     |             |        |
-* |        |               |             |--------|
-* |        | MixColumns    |             | AESMC  |
-* |        |               |             |--------|
-* |        | AddRoundKey   |             | AESE   |
-* |--------|---------------|-------------|        |
-* | last   | SubBytes      | AESENCLAST  |        |
-* |        |               |             |        |
-* |        | ShiftRows     |             |        |
-* |        |               |             |--------|
-* |        | AddRoundKey   |             | XOR    |
-* | -------|---------------|-------------|--------|
-* \endverbatim
+|--------|---------------|-------------|--------|
+| Round  | AES Step      | Intel       | ARM    |
+|--------|---------------|-------------|--------|
+| 0      | AddRoundKey   | XOR         | AESE   |
+|--------|---------------|-------------|        |
+| 1      | SubBytes      | AESENC      |        |
+|        |               |             |        |
+|        | ShiftRows     |             |        |
+|        |               |             |--------|
+|        | MixColumns    |             | AESMC  |
+|        |               |             |--------|
+|        | AddRoundKey   |             | AESE   |
+|--------|---------------|-------------|        |
+| 2      | SubBytes      | AESENC      |        |
+|        |               |             |        |
+|        | ShiftRows     |             |        |
+|        |               |             |--------|
+|        | MixColumns    |             | AESMC  |
+|        |               |             |--------|
+|        | AddRoundKey   |             | AESE   |
+|--------|---------------|-------------|        |
+| 3      | SubBytes      | AESENC      |        |
+|        |               |             |        |
+|        | ShiftRows     |             |        |
+|        |               |             |--------|
+|        | MixColumns    |             | AESMC  |
+|        |               |             |--------|
+|        | AddRoundKey   |             | AESE   |
+|--------|---------------|-------------|        |
+| last   | SubBytes      | AESENCLAST  |        |
+|        |               |             |        |
+|        | ShiftRows     |             |        |
+|        |               |             |--------|
+|        | AddRoundKey   |             | XOR    |
+| -------|---------------|-------------|--------|
+\endverbatim
 */
 
 #pragma once
