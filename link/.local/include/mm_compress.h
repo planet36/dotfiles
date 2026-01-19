@@ -51,10 +51,10 @@
 
 #pragma once
 
-#if defined(__x86_64__)
+#if defined(__x86_64__) && defined(__AES__)
 #include <immintrin.h>
 typedef __m128i simd128_t;
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) && defined(__ARM_FEATURE_AES)
 #include <arm_neon.h>
 typedef uint8x16_t simd128_t;
 #else
@@ -70,7 +70,7 @@ extern "C" {
 static inline simd128_t
 mm_compress(const simd128_t a, const simd128_t b)
 {
-#if defined(__AES__)
+#if defined(__x86_64__) && defined(__AES__)
     const simd128_t zero = _mm_setzero_si128();
     return
         _mm_aesenc_si128(
@@ -80,7 +80,7 @@ mm_compress(const simd128_t a, const simd128_t b)
                         b),
                     a),
                 zero);
-#elif defined(__ARM_FEATURE_AES)
+#elif defined(__aarch64__) && defined(__ARM_FEATURE_AES)
     const simd128_t zero = vdupq_n_u8(0);
     return
         vaesmcq_u8(vaeseq_u8(
