@@ -71,25 +71,24 @@ static inline simd128_t
 mm_compress(const simd128_t a, const simd128_t b)
 {
 #if defined(__x86_64__) && defined(__AES__)
-    const simd128_t zero = _mm_setzero_si128();
     return
         _mm_aesenc_si128(
                 _mm_aesenc_si128(
                     _mm_aesenc_si128(
-                        _mm_aesenc_si128(b, a),
-                        b),
-                    a),
-                zero);
+                        _mm_aesenc_si128(a, b),
+                        a),
+                    b),
+                a);
 #elif defined(__aarch64__) && defined(__ARM_FEATURE_AES)
     const simd128_t zero = vdupq_n_u8(0);
     return
         vaesmcq_u8(vaeseq_u8(
                     vaesmcq_u8(vaeseq_u8(
                             vaesmcq_u8(vaeseq_u8(
-                                    vaesmcq_u8(vaeseq_u8(b, zero)),
-                                    a)),
-                            b)),
-                    a));
+                                    vaesmcq_u8(vaeseq_u8(a, zero)),
+                                    b)),
+                            a)),
+                    b)) ^ a;
 #endif
 }
 
