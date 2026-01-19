@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// Compress 2 \c __m128i into 1 \c __m128i non-symmetrically and non-linearly
+/// A compression function for 2 128-bit SIMD registers
 /**
 * \file
 * \author Steven Ward
@@ -65,6 +65,8 @@ typedef uint8x16_t simd128_t;
 extern "C" {
 #endif
 
+/// Compress (via AES operations) 2 128-bit SIMD registers into 1,
+/// non-symmetrically and non-linearly
 static inline simd128_t
 mm_compress(const simd128_t a, const simd128_t b)
 {
