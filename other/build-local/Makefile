@@ -3,9 +3,9 @@
 
 # https://stackoverflow.com/a/17845120/1892784
 
-TOPTARGETS := all clean install uninstall lint
+TOPTARGETS = all clean install uninstall lint
 
-SUBDIRS := $(wildcard */.)
+SUBDIRS = $(wildcard */.)
 
 $(TOPTARGETS): $(SUBDIRS)
 $(SUBDIRS):

@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-TOPTARGETS := all clone clean install uninstall lint
+TOPTARGETS = all clone clean install uninstall lint
 
 BUILD_DIRS = \
 dwm \
@@ -23,7 +23,7 @@ slstatus-suckless \
 st-suckless \
 stw-sineemore
 
-SUBDIRS := $(BUILD_DIRS) $(CLONE_ONLY_DIRS)
+SUBDIRS = $(BUILD_DIRS) $(CLONE_ONLY_DIRS)
 
 all: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR);)

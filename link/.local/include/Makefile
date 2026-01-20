@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: OSL-3.0
 
-export LC_ALL := C
+export LC_ALL = C
 
 CPPFLAGS = -MMD -MP
 CPPFLAGS += -D_GNU_SOURCE
@@ -34,11 +34,11 @@ CXXFLAGS += -Wsign-conversion
 #LDLIBS +=
 LDLIBS += `pkg-config --libs fmt libutf8proc`
 
-C_HDRS := $(wildcard *.h)
-CXX_HDRS := $(wildcard *.hpp)
-DEPS := $(addsuffix -c.d, $(basename $(C_HDRS))) $(addsuffix -cpp.d, $(basename $(CXX_HDRS)))
-OBJS := $(addsuffix -c.o, $(basename $(C_HDRS))) $(addsuffix -cpp.o, $(basename $(CXX_HDRS)))
-BINS := $(addsuffix -c.out, $(basename $(C_HDRS))) $(addsuffix -cpp.out, $(basename $(CXX_HDRS)))
+C_HDRS = $(wildcard *.h)
+CXX_HDRS = $(wildcard *.hpp)
+DEPS = $(addsuffix -c.d, $(basename $(C_HDRS))) $(addsuffix -cpp.d, $(basename $(CXX_HDRS)))
+OBJS = $(addsuffix -c.o, $(basename $(C_HDRS))) $(addsuffix -cpp.o, $(basename $(CXX_HDRS)))
+BINS = $(addsuffix -c.out, $(basename $(C_HDRS))) $(addsuffix -cpp.out, $(basename $(CXX_HDRS)))
 
 all: $(OBJS)
 
