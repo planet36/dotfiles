@@ -68,7 +68,7 @@ extern "C" {
 /// Compress (via AES operations) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
 static inline simd128_t
-mm_compress(const simd128_t a, const simd128_t b)
+compress_aesenc4_128(const simd128_t a, const simd128_t b)
 {
 #if defined(__x86_64__) && defined(__AES__)
     return
