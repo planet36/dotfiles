@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: OSL-3.0
 
-/// A compression function for 2 128-bit SIMD registers
+/// One-way compression functions for 2 SIMD registers
 /**
 * \file
 * \author Steven Ward
