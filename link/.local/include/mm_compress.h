@@ -65,6 +65,29 @@ typedef uint8x16_t simd128_t;
 extern "C" {
 #endif
 
+/// Compress (via 3 rounds of AES encryption) 2 128-bit SIMD registers into 1,
+/// non-symmetrically and non-linearly
+static inline simd128_t
+compress_aesenc3_128(const simd128_t a, const simd128_t b)
+{
+#if defined(__x86_64__) && defined(__AES__)
+    return
+        _mm_aesenc_si128(
+                _mm_aesenc_si128(
+                    _mm_aesenc_si128(b, a),
+                    b),
+                a);
+#elif defined(__aarch64__) && defined(__ARM_FEATURE_AES)
+    const simd128_t zero = vdupq_n_u8(0);
+    return
+        vaesmcq_u8(vaeseq_u8(
+                    vaesmcq_u8(vaeseq_u8(
+                            vaesmcq_u8(vaeseq_u8(b, zero)),
+                            a)),
+                    b)) ^ a;
+#endif
+}
+
 /// Compress (via 4 rounds of AES encryption) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
 static inline simd128_t
