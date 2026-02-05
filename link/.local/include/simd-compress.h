@@ -67,6 +67,10 @@ extern "C" {
 
 /// Compress (via 1 round of AES encryption) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
+/**
+* \li diffusion rate of \a a = 0.8%
+* \li diffusion rate of \a b = 12.6%
+*/
 static inline simd128_t
 compress_aesenc1_128(const simd128_t a, const simd128_t b)
 {
@@ -80,6 +84,10 @@ compress_aesenc1_128(const simd128_t a, const simd128_t b)
 
 /// Compress (via 2 rounds of AES encryption) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
+/**
+* \li diffusion rate of \a a = 50.3%
+* \li diffusion rate of \a b = 12.7%
+*/
 static inline simd128_t
 compress_aesenc2_128(const simd128_t a, const simd128_t b)
 {
@@ -99,6 +107,10 @@ compress_aesenc2_128(const simd128_t a, const simd128_t b)
 
 /// Compress (via 3 rounds of AES encryption) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
+/**
+* \li diffusion rate of \a a = 50.2%
+* \li diffusion rate of \a b = 50.0%
+*/
 static inline simd128_t
 compress_aesenc3_128(const simd128_t a, const simd128_t b)
 {
@@ -122,6 +134,10 @@ compress_aesenc3_128(const simd128_t a, const simd128_t b)
 
 /// Compress (via 4 rounds of AES encryption) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
+/**
+* \li diffusion rate of \a a = 50.0%
+* \li diffusion rate of \a b = 50.0%
+*/
 static inline simd128_t
 compress_aesenc4_128(const simd128_t a, const simd128_t b)
 {
