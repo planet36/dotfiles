@@ -65,7 +65,7 @@ typedef uint8x16_t simd128_t;
 extern "C" {
 #endif
 
-/// Compress (via AES operations) 2 128-bit SIMD registers into 1,
+/// Compress (via 4 rounds of AES encryption) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
 static inline simd128_t
 compress_aesenc4_128(const simd128_t a, const simd128_t b)
