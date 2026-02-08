@@ -53,6 +53,7 @@ rdrand
 rdseed
 rdtsc
 rdtscp
+resizable
 Rijndael
 SHA
 SIMD
