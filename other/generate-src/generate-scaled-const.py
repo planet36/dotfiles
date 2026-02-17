@@ -114,6 +114,17 @@ primes = (
     271,
 )
 
+u32_scale = gmpy2.mpz(2**32)
+u32_nibbles = 32//8*2
+
+print('// ⌊2³² × frac(√p)⌋')
+for p in primes:
+    x = frac(sqrt(p))
+    result = int(floor(u32_scale * frac(sqrt(x))))
+    print(f"#define U32_FLOOR_SCALED_FRAC_SQRT_{p:<3} UINT32_C(0x{result:0{u32_nibbles}x}) // (popcount = {result.bit_count()})")
+
+print()
+
 u64_scale = gmpy2.mpz(2**64)
 u64_nibbles = 64//8*2
 
