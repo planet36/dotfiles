@@ -114,10 +114,10 @@ primes = (
     271,
 )
 
-scale = gmpy2.mpz(2**64)
+u64_scale = gmpy2.mpz(2**64)
 
 print('// ⌊2⁶⁴ × frac(√p)⌋')
 for p in primes:
     x = frac(sqrt(p))
-    result = int(floor(scale * frac(sqrt(x))))
-    print(f"#define FLOOR_SCALED_FRAC_SQRT_{p:<3} UINT64_C(0x{result:016x}) // (popcount = {result.bit_count()})")
+    result = int(floor(u64_scale * frac(sqrt(x))))
+    print(f"#define U64_FLOOR_SCALED_FRAC_SQRT_{p:<3} UINT64_C(0x{result:016x}) // (popcount = {result.bit_count()})")
