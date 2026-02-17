@@ -1,0 +1,6 @@
+[global]
+    font = Monospace 14
+
+[calendar]
+    alignment = center
+    set_stack_tag = "calendar"
