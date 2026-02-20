@@ -68,7 +68,7 @@ EOT
 
 if command -v xrdb > /dev/null && [ -f "$XDG_CONFIG_HOME"/xorg/Xresources ]
 then
-    xrdb -I"$XDG_CONFIG_HOME"/xorg -merge "$XDG_CONFIG_HOME"/xorg/Xresources
+    xrdb -I "$XDG_CONFIG_HOME"/xorg -merge "$XDG_CONFIG_HOME"/xorg/Xresources
 fi
 
 # {{{ DPI
