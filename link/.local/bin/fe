@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # shellcheck disable=SC2086
 command find $VCS_REPOS_PRUNE -type f -print0 | fzf --read0 --print0 | xargs --null --no-run-if-empty --verbose --open-tty -- "$EDITOR"

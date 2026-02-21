@@ -1,6 +1,6 @@
 #!/usr/bin/env -S bash --noprofile --norc --restricted
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html
 #  %q
