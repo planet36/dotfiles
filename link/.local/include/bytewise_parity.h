@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: Steven Ward
-// SPDX-License-Identifier: OSL-3.0
+// SPDX-License-Identifier: MPL-2.0
 
 /// Calculate the parity of every byte in the \c uint64_t and gather the bits into a \c uint8_t result
 /**

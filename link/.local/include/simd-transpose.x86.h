@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: Steven Ward
-// SPDX-License-Identifier: OSL-3.0
+// SPDX-License-Identifier: MPL-2.0
 
 /// Transpose an array of 128-bit integer vectors (treating it as a square matrix of integers) using SSE2 intrinsics
 /**

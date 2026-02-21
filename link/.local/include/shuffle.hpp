@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: Steven Ward
-// SPDX-License-Identifier: OSL-3.0
+// SPDX-License-Identifier: MPL-2.0
 
 /// Wrapper for \c std::shuffle with the \c per_thread_random_number_engine given as the URBG
 /**
