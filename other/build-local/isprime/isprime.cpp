@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: Steven Ward
-// SPDX-License-Identifier: OSL-3.0
+// SPDX-License-Identifier: MPL-2.0
 
 #include <array>
 #include <err.h>
@@ -11,7 +11,7 @@
 
 inline constexpr std::string_view program_author = "Steven Ward";
 inline constexpr std::string_view program_version = "1.0.0";
-inline constexpr std::string_view program_license = "OSL-3.0";
+inline constexpr std::string_view program_license = "MPL-2.0";
 
 inline constexpr int default_reps = 30;
 

@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: Steven Ward
-// SPDX-License-Identifier: OSL-3.0
+// SPDX-License-Identifier: MPL-2.0
 
 #include "acfile.h"
 #include "pscanf.h"
@@ -36,7 +36,7 @@ scandir_filter(const struct dirent* dirent)
 
 const char* program_author = "Steven Ward";
 const char* program_version = "1.2.2";
-const char* program_license = "OSL-3.0";
+const char* program_license = "MPL-2.0";
 
 constexpr unsigned int default_init_delay_msec = 2000;
 constexpr unsigned int default_interval_msec = 2000;

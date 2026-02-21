@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: Steven Ward
-// SPDX-License-Identifier: OSL-3.0
+// SPDX-License-Identifier: MPL-2.0
 
 #include <ctype.h>
 #include <err.h>
@@ -12,7 +12,7 @@
 
 const char* program_author = "Steven Ward";
 const char* program_version = "1.0.2";
-const char* program_license = "OSL-3.0";
+const char* program_license = "MPL-2.0";
 
 constexpr char default_fill = '#';
 constexpr char default_unfill = ' ';
