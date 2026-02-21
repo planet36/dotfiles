@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # pylint: disable=eval-used
 # pylint: disable=fixme
@@ -14,7 +14,7 @@ python3 generate-math-const.py > math-const.hpp
 """
 
 __author__ = 'Steven Ward'
-__license__ = 'OSL-3.0'
+__license__ = 'MPL-2.0'
 
 import datetime as dt
 #import math

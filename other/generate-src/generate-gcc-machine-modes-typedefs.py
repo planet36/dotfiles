@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # pylint: disable=invalid-name
 # pylint: disable=line-too-long
@@ -11,7 +11,7 @@ python3 generate-gcc-machine-modes-typedefs.py > gcc-machine-modes-typedefs.hpp
 """
 
 __author__ = 'Steven Ward'
-__license__ = 'OSL-3.0'
+__license__ = 'MPL-2.0'
 
 import datetime as dt
 import os.path

@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # pylint: disable=invalid-name
 # pylint: disable=no-member
@@ -10,7 +10,7 @@ python3 generate-scaled-const.py > scaled-const.h
 """
 
 __author__ = 'Steven Ward'
-__license__ = 'OSL-3.0'
+__license__ = 'MPL-2.0'
 
 import datetime as dt
 import os.path
