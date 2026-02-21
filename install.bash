@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # Run this script from the target directory.
 
@@ -11,7 +11,7 @@ SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
 SCRIPT_VERSION='2022-09-08'
 SCRIPT_AUTHOR='Steven Ward'
-SCRIPT_LICENSE='OSL-3.0'
+SCRIPT_LICENSE='MPL-2.0'
 
 VERBOSE=false
 RELATIVE=false
