@@ -41,22 +41,22 @@ In both cases, parent directories are created, preserving directory structure.
 
 OPTIONS
 
-  -V : Print the version information, then exit.
+  -V   Print the version information, then exit.
 
-  -h : Print this message, then exit.
+  -h   Print this message, then exit.
 
-  -v : Print extra output.
+  -v   Print extra output.
        Commands such as cp, ln, mkdir, rm, and rmdir are verbose by default.
 
-  -r : Use a relative path when creating symbolic links.
+  -r   Use a relative path when creating symbolic links.
 
-  -c : Copy all files, even those in the "link" directory.
+  -c   Copy all files, even those in the "link" directory.
 
-  -d : Attempt to delete almost everything created by this script.
+  -d   Attempt to delete almost everything created by this script.
        Only attempt to delete files and symbolic links that are identical to their source.
        Only attempt to delete empty folders that contained dotfiles.
 
-  -n : Show what would be done without doing anything.
+  -n   Show what would be done without doing anything.
 
 EOT
 }
