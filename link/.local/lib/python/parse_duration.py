@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 '''
 This module defines a function to parse a duration string into a timedelta object.
@@ -7,7 +7,7 @@ This module defines a function to parse a duration string into a timedelta objec
 
 __all__ = ['parse_duration']
 __author__ = 'Steven Ward'
-__license__ = 'OSL-3.0'
+__license__ = 'MPL-2.0'
 
 from collections import OrderedDict
 from datetime import timedelta

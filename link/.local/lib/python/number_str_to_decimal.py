@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 """
 This module defines the function number_str_to_decimal.
@@ -9,7 +9,7 @@ import decimal
 import re
 
 __author__ = 'Steven Ward'
-__license__ = 'OSL-3.0'
+__license__ = 'MPL-2.0'
 __version__ = '2025-09-22'
 
 # https://en.wikipedia.org/wiki/Unit_prefix
