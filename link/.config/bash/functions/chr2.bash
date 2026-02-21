@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # https://mywiki.wooledge.org/BashFAQ/071
 # converts decimal value to its ASCII character representation

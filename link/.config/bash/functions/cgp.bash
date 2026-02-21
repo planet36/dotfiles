@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 #alias cgp='cd && clean code && get code && put code ; cd - > /dev/null'
 function cgp

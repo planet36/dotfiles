@@ -1,5 +1,5 @@
 -- SPDX-FileCopyrightText: Steven Ward
--- SPDX-License-Identifier: OSL-3.0
+-- SPDX-License-Identifier: MPL-2.0
 
 -- Adapted from
 -- https://github.com/neovim/neovim/commit/abd380e28d48dd155b1e29cd2453f13b28bf7e08

@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 function boottime --description 'Print the boot time'
     set BTIME $(awk '/^btime/{print $2}' /proc/stat)

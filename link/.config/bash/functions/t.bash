@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # shellcheck disable=SC2059
 
@@ -13,7 +13,7 @@ function t
     declare -r SCRIPT_NAME="${FUNCNAME[0]}"
     declare -r SCRIPT_VERSION='2025-02-05'
     declare -r SCRIPT_AUTHOR='Steven Ward'
-    declare -r SCRIPT_LICENSE='OSL-3.0'
+    declare -r SCRIPT_LICENSE='MPL-2.0'
 
     VERBOSE=false
     INCLUDE_DATETIME=false

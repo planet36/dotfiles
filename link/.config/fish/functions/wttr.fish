@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Steven Ward
-# SPDX-License-Identifier: OSL-3.0
+# SPDX-License-Identifier: MPL-2.0
 
 # https://github.com/chubin/wttr.in/blob/master/share/help.txt
 # https://wttr.in/:bash.function
