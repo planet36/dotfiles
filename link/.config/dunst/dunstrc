@@ -5,5 +5,5 @@
     width = (0, 300)
 
 [calendar]
-    alignment = center
+    format = "%b"
     set_stack_tag = "calendar"
