@@ -8,6 +8,7 @@ castella
 CFLAGS
 ChatGPT
 chrono
+const
 constexpr
 cplusplus
 CPPFLAGS
@@ -30,6 +31,7 @@ html
 http
 https
 instantiation
+intrinsics
 iteratively
 jitter
 Keccak
