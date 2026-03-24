@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <array>
+#include <bit>
 #include <concepts>
 #include <cstddef>
 #include <initializer_list>
@@ -28,6 +29,7 @@
 * This is similar to \c std::inplace_vector and \c boost::container::static_vector,
 * except for these important differences:
 *   - The data is stored in a `std::array<T, N>`.
+*   - An alignment for the data may be given.
 *   - \a N elements are value-initialized upon instantiation.
 *   - \c clear(), \c pop_back(), and \c resize() only change the size -- they do not destroy
 *     any removed elements.
@@ -38,15 +40,16 @@
 * \sa https://cppreference.com/w/cpp/container/inplace_vector.html
 * \sa https://www.boost.org/doc/libs/latest/doc/html/doxygen/boost_container_header_reference/classboost_1_1container_1_1static__vector.html
 */
-template <typename T, std::size_t N>
+template <typename T, std::size_t N, std::size_t Align = std::max(alignof(std::size_t), alignof(T))>
 requires (N > 0) && std::default_initializable<T> && std::movable<T> &&
-         std::is_trivially_destructible_v<T>
+         std::is_trivially_destructible_v<T> &&
+         (std::has_single_bit(Align))
 class fixed_vector
 {
 private:
 
     std::size_t size_{};
-    std::array<T, N> data_{};
+    alignas(Align) std::array<T, N> data_{};
 
     /// Check the index \a i against \c size()
     constexpr void check_idx_(const std::size_t i) const
