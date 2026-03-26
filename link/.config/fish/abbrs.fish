@@ -26,6 +26,7 @@ abbr --add --global f find
 abbr --add --global fidn find
 abbr --add --global fiel file
 abbr --add --global g git
+abbr --add --global gk gitk
 abbr --add --global i "$EDITOR" -c startinsert
 abbr --add --global ip3 ipython3
 abbr --add --global ipy3 ipython3
