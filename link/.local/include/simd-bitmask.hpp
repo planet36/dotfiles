@@ -9,12 +9,13 @@
 
 #pragma once
 
+#include <array>
 #include <cstdint>
 
 #if defined(__x86_64__)
 
 #include <immintrin.h>
-typedef __m128i uint8x16_t;
+using uint8x16_t = __m128i;
 
 static inline uint8x16_t
 combine_u64x2(const uint64_t hi, const uint64_t lo)
@@ -43,8 +44,6 @@ combine_u64x2(const uint64_t hi, const uint64_t lo)
 #else
 #error "Architecture not supported"
 #endif
-
-#include <array>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
