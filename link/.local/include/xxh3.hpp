@@ -56,7 +56,7 @@ public:
         assert(XXH3_64bits_update(state_ptr, input, len) == XXH_OK);
     }
 
-    XXH64_hash_t digest() const { return XXH3_64bits_digest(state_ptr); }
+    [[nodiscard]] XXH64_hash_t digest() const { return XXH3_64bits_digest(state_ptr); }
 };
 
 class simple_xxh3_128
@@ -101,5 +101,5 @@ public:
         assert(XXH3_128bits_update(state_ptr, input, len) == XXH_OK);
     }
 
-    XXH128_hash_t digest() const { return XXH3_128bits_digest(state_ptr); }
+    [[nodiscard]] XXH128_hash_t digest() const { return XXH3_128bits_digest(state_ptr); }
 };
