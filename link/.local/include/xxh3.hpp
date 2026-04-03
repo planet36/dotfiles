@@ -26,7 +26,7 @@ public:
         assert(XXH3_64bits_reset(state_ptr) == XXH_OK);
     }
 
-    simple_xxh3_64(XXH64_hash_t seed)
+    explicit simple_xxh3_64(XXH64_hash_t seed)
     {
         assert((state_ptr = XXH3_createState()) != nullptr);
         assert(XXH3_64bits_reset_withSeed(state_ptr, seed) == XXH_OK);
@@ -71,7 +71,7 @@ public:
         assert(XXH3_128bits_reset(state_ptr) == XXH_OK);
     }
 
-    simple_xxh3_128(XXH64_hash_t seed)
+    explicit simple_xxh3_128(XXH64_hash_t seed)
     {
         assert((state_ptr = XXH3_createState()) != nullptr);
         assert(XXH3_128bits_reset_withSeed(state_ptr, seed) == XXH_OK);
