@@ -49,6 +49,9 @@ public:
     simple_xxh3_64(const simple_xxh3_64&) = delete;
     simple_xxh3_64& operator=(const simple_xxh3_64&) = delete;
 
+    simple_xxh3_64(simple_xxh3_64&&) = delete;
+    simple_xxh3_64& operator=(simple_xxh3_64&&) = delete;
+
     ~simple_xxh3_64() { assert(XXH3_freeState(state_ptr) == XXH_OK); }
 
     void update(const void* input, size_t len)
@@ -93,6 +96,9 @@ public:
 
     simple_xxh3_128(const simple_xxh3_128&) = delete;
     simple_xxh3_128& operator=(const simple_xxh3_128&) = delete;
+
+    simple_xxh3_128(simple_xxh3_128&&) = delete;
+    simple_xxh3_128& operator=(simple_xxh3_128&&) = delete;
 
     ~simple_xxh3_128() { assert(XXH3_freeState(state_ptr) == XXH_OK); }
 
