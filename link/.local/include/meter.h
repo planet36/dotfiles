@@ -266,7 +266,7 @@ upper_blocks_1(double x)
 static void
 left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
-    size_t left_width, blocks_index, right_width, i;
+    size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
 
     if (meter_width == 0)
         return;
@@ -303,7 +303,7 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 static void
 ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 {
-    size_t left_width, blocks_index, right_width, i;
+    size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
 
     if (meter_width == 0)
         return;
@@ -353,7 +353,7 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 static void
 right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
-    size_t left_width, blocks_index, right_width, i;
+    size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
 
     if (meter_width == 0)
         return;
@@ -391,7 +391,7 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 static void
 left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfill)
 {
-    size_t i;
+    size_t i = 0;
 
     if (meter_width == 0)
         return;
@@ -426,7 +426,7 @@ left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfil
 static void
 right_char_meter(double x, char* meter, size_t meter_width, char fill, char unfill)
 {
-    size_t i;
+    size_t i = 0;
 
     if (meter_width == 0)
         return;

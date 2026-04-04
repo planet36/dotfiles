@@ -112,6 +112,6 @@ rdtscp(unsigned int* aux)
 static inline uint64_t
 rdtscp()
 {
-    unsigned int aux;
+    unsigned int aux = 0;
     return rdtscp(&aux);
 }

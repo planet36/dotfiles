@@ -113,10 +113,11 @@ public:
     {
         std::unique_lock lock{mtx};
 
-        if (is_full() && !overwrite_if_full)
-            return NOT_PUSHED;
+        PUSH_RESULT ret = NOT_PUSHED;
 
-        PUSH_RESULT ret;
+        if (is_full() && !overwrite_if_full)
+            return ret;
+
         buf[tail] = x; // add to tail
 
         if (is_full())
