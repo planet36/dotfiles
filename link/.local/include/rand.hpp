@@ -318,7 +318,7 @@ template <std::uniform_random_bit_generator URBG>
 bool
 rand_bool(URBG& gen)
 {
-    using T = typename URBG::result_type;
+    using T = URBG::result_type;
     static constexpr T mask_one_msb = T{1} << (std::numeric_limits<T>::digits - 1);
     static thread_local T x = 1;
 

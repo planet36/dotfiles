@@ -31,7 +31,7 @@ struct time_this
 public:
     // https://cplusplus.com/forum/general/187899/#msg913531
     using timer_clock =
-        typename std::conditional_t<std::chrono::high_resolution_clock::is_steady,
+        std::conditional_t<std::chrono::high_resolution_clock::is_steady,
                                     std::chrono::high_resolution_clock,
                                     std::chrono::steady_clock>;
 
