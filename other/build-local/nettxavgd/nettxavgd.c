@@ -78,8 +78,8 @@ atexit_cleanup()
 void
 set_default_net_iface()
 {
-    struct dirent** namelist;
-    int n;
+    struct dirent** namelist = nullptr;
+    int n = 0;
 
     n = scandir("/sys/class/net/", &namelist, scandir_filter, alphasort);
     if (n == -1)
@@ -141,7 +141,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     unsigned int interval_msec = default_interval_msec;
     char* net_iface = default_net_iface;
 
-    int oc;
+    int oc = 0;
     const char* short_options = "+:Vhf:i:";
     while ((oc = getopt(argc, argv, short_options)) != -1)
     {

@@ -126,7 +126,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     unsigned int init_delay_msec = default_init_delay_msec;
     unsigned int interval_msec = default_interval_msec;
 
-    int oc;
+    int oc = 0;
     const char* short_options = "+:Vhf:i:";
     while ((oc = getopt(argc, argv, short_options)) != -1)
     {

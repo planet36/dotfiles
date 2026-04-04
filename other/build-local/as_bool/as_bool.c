@@ -36,8 +36,8 @@ skip_spaces(const char* str)
 char*
 strim(char* s)
 {
-    size_t size;
-    char* end;
+    size_t size = 0;
+    char* end = nullptr;
 
     size = strlen(s);
     if (!size)

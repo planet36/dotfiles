@@ -132,7 +132,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     struct meter_opts opts;
     meter_opts_init(&opts);
 
-    int oc;
+    int oc = 0;
     const char* short_options = "+:Vhf:lnru:w:";
     long width = 0;
     while ((oc = getopt(argc, argv, short_options)) != -1)

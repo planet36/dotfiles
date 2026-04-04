@@ -106,7 +106,7 @@ durfmt_opts_init(struct durfmt_opts* opts)
 void
 durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
 {
-    enum UT last_ut;
+    enum UT last_ut = (enum UT)-1;
     bool printed_something = false;
 
     // Find the least significant unit of time to print.
@@ -196,7 +196,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
     durfmt_opts_init(&opts);
 
-    int oc;
+    int oc = 0;
     const char* short_options = "+:Vhnp:w:0";
     long width = 0;
     while ((oc = getopt(argc, argv, short_options)) != -1)

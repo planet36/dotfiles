@@ -25,9 +25,9 @@ extern "C" {
 static int
 pscanf(const char* path, const char* fmt, ...)
 {
-    FILE* fp;
+    FILE* fp = nullptr;
     va_list ap;
-    int n;
+    int n = 0;
 
     fp = fopen(path, "r");
     if (fp == nullptr)

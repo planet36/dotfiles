@@ -59,7 +59,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     int reps = default_reps;
 
-    int oc;
+    int oc = 0;
     const char* short_options = "+:Vhr:";
     while ((oc = getopt(argc, argv, short_options)) != -1)
     {
