@@ -79,11 +79,21 @@ fadvise_sequential_noreuse(const int fd)
 static bool
 madvise_sequential_willneed(void* mmap_addr, const size_t mmap_size)
 {
-    if (posix_madvise(mmap_addr, mmap_size, POSIX_MADV_SEQUENTIAL) < 0)
-        return true;
+    int posix_madvise_result = 0;
 
-    if (posix_madvise(mmap_addr, mmap_size, POSIX_MADV_WILLNEED) < 0)
+    posix_madvise_result = posix_madvise(mmap_addr, mmap_size, POSIX_MADV_SEQUENTIAL);
+    if (posix_madvise_result != 0)
+    {
+        errno = posix_madvise_result;
         return true;
+    }
+
+    posix_madvise_result = posix_madvise(mmap_addr, mmap_size, POSIX_MADV_WILLNEED);
+    if (posix_madvise_result != 0)
+    {
+        errno = posix_madvise_result;
+        return true;
+    }
 
     return false;
 }
