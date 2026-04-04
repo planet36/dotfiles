@@ -34,9 +34,9 @@ scandir_filter(const struct dirent* dirent)
            strcmp(dirent->d_name, "lo") != 0;
 }
 
-const char* program_author = "Steven Ward";
-const char* program_version = "1.2.2";
-const char* program_license = "MPL-2.0";
+const char* const program_author = "Steven Ward";
+const char* const program_version = "1.2.2";
+const char* const program_license = "MPL-2.0";
 
 constexpr unsigned int default_init_delay_msec = 2000;
 constexpr unsigned int default_interval_msec = 2000;

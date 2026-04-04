@@ -10,9 +10,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-const char* program_author = "Steven Ward";
-const char* program_version = "1.0.2";
-const char* program_license = "MPL-2.0";
+const char* const program_author = "Steven Ward";
+const char* const program_version = "1.0.2";
+const char* const program_license = "MPL-2.0";
 
 constexpr char default_fill = '#';
 constexpr char default_unfill = ' ';

@@ -10,13 +10,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-const char* program_author = "Steven Ward";
-const char* program_version = "1.0.2";
-const char* program_license = "MPL-2.0";
+const char* const program_author = "Steven Ward";
+const char* const program_version = "1.0.2";
+const char* const program_license = "MPL-2.0";
 
 constexpr int default_width = 1;
 constexpr int max_width = 20;
-const char* default_ut_to_print = "ywdhms";
+const char* const default_ut_to_print = "ywdhms";
 
 /// unit of time
 enum UT
