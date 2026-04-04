@@ -238,7 +238,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             errx(EXIT_FAILURE, "error scanning /proc/stat");
 
         if (first_iteration)
+        {
             first_iteration = false;
+        }
         else
         {
             double cpu_usage = 0;
@@ -260,7 +262,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
                     err(EXIT_FAILURE, "fputs");
             }
             else if (puts(dest_buf) < 0)
+            {
                 err(EXIT_FAILURE, "puts");
+            }
         }
 
         prev_idle_ticks = idle_ticks;

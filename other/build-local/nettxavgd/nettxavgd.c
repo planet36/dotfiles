@@ -283,7 +283,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             errx(EXIT_FAILURE, "error scanning '%s'", net_iface_path);
 
         if (first_iteration)
+        {
             first_iteration = false;
+        }
         else
         {
             const double delta_time_s = now_s - prev_now_s;
@@ -305,10 +307,14 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
                     err(EXIT_FAILURE, "%s", dest_path);
 
                 if (fputs(dest_buf, dest_fp) < 0)
+                {
                     err(EXIT_FAILURE, "fputs");
+                }
             }
             else if (puts(dest_buf) < 0)
+            {
                 err(EXIT_FAILURE, "puts");
+            }
         }
 
         prev_now_s = now_s;
