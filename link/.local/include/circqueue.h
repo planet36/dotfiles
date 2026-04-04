@@ -88,8 +88,10 @@ circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
             cq->head = 0;                    // head rollover
     }
     else
+    {
         // was not full
         ++cq->num_elems;
+    }
 
     if (++cq->tail == cq->max_num_elems) // inc tail
         cq->tail = 0;                    // tail rollover

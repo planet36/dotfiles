@@ -35,7 +35,9 @@ inline uint8_t
 aes_next_rcon(uint8_t rcon_i, const uint8_t i)
 {
     if (i == 1)
+    {
         rcon_i = 1;
+    }
     else
     {
         // get the most significant bit before shifting
