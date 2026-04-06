@@ -27,7 +27,7 @@ to_m128i(const void* mem_addr)
 {
     // Instruction: movdqu xmm, m128
     // CPUID Flags: SSE2
-    return _mm_loadu_si128((const __m128i*)(mem_addr));
+    return _mm_loadu_si128((const __m128i*)mem_addr);
 }
 
 static inline void
@@ -35,7 +35,7 @@ from_m128i(void* mem_addr, const __m128i a)
 {
     // Instruction: movdqa m128, xmm
     // CPUID Flags: SSE2
-    _mm_storeu_si128((__m128i*)(mem_addr), a);
+    _mm_storeu_si128((__m128i*)mem_addr, a);
 }
 #endif
 
@@ -45,7 +45,7 @@ to_m256i(const void* mem_addr)
 {
     // Instruction: vmovdqu ymm, m256
     // CPUID Flags: AVX
-    return _mm256_loadu_si256((const __m256i*)(mem_addr));
+    return _mm256_loadu_si256((const __m256i*)mem_addr);
 }
 
 static inline void
@@ -53,7 +53,7 @@ from_m256i(void* mem_addr, const __m256i a)
 {
     // Instruction: vmovdqa m256, ymm
     // CPUID Flags: AVX
-    _mm256_storeu_si256((__m256i*)(mem_addr), a);
+    _mm256_storeu_si256((__m256i*)mem_addr, a);
 }
 #endif
 

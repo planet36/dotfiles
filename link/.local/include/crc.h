@@ -25,7 +25,7 @@ uint8_t
 crc8(const void* buf, size_t len)
 {
     typedef uint8_t T;
-    const uint8_t* bytes = (const uint8_t*)(buf);
+    const uint8_t* bytes = (const uint8_t*)buf;
     // input bytes will be applied to the most sig. byte of the CRC
     constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
     constexpr T MSB_MASK = 1U << (sizeof(T) * 8 - 1); // most sig. bit
@@ -53,7 +53,7 @@ uint16_t
 crc16(const void* buf, size_t len)
 {
     typedef uint16_t T;
-    const uint8_t* bytes = (const uint8_t*)(buf);
+    const uint8_t* bytes = (const uint8_t*)buf;
     // input bytes will be applied to the most sig. byte of the CRC
     constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
     constexpr T MSB_MASK = 1U << (sizeof(T) * 8 - 1); // most sig. bit
@@ -81,7 +81,7 @@ uint32_t
 crc32(const void* buf, size_t len)
 {
     typedef uint32_t T;
-    const uint8_t* bytes = (const uint8_t*)(buf);
+    const uint8_t* bytes = (const uint8_t*)buf;
     // input bytes will be applied to the most sig. byte of the CRC
     constexpr unsigned int SHIFTL = (sizeof(T) - 1) * 8;
     constexpr T MSB_MASK = 1U << (sizeof(T) * 8 - 1); // most sig. bit
