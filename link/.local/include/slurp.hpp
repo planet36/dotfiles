@@ -65,7 +65,7 @@ slurp(const std::filesystem::path& path)
         throw std::system_error(std::make_error_code(std::errc{errno}), path);
     }
 
-    const size_t expected_size_bytes = static_cast<size_t>(statbuf.st_size);
+    const auto expected_size_bytes = static_cast<size_t>(statbuf.st_size);
 
     std::vector<uint8_t> result;
 
