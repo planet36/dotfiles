@@ -42,7 +42,14 @@ circqueue_is_full(const circqueue* cq)
     return cq->num_elems == cq->max_num_elems;
 }
 
-static const circqueue circqueue_default = {0};
+static const circqueue circqueue_default = {
+    .buf=nullptr,
+    .max_num_elems=0,
+    .sizeof_elem=0,
+    .head=0,
+    .tail=0,
+    .num_elems=0,
+};
 
 static circqueue
 circqueue_init(size_t max_num_elems, size_t sizeof_elem)
