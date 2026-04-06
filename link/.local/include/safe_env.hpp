@@ -40,7 +40,7 @@ std::optional<std::string>
 get(const std::string& name)
 {
     std::scoped_lock lock{mtx};
-    const char* value = getenv(name.c_str());
+    const char* const value = getenv(name.c_str());
     return value == nullptr ? std::nullopt : std::optional<std::string>(value);
 }
 
