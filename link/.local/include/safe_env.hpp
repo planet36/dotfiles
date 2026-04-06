@@ -40,7 +40,7 @@ std::optional<std::string>
 get(const std::string& name)
 {
     std::scoped_lock lock{mtx};
-    const char* const value = getenv(name.c_str());
+    const char* const value = std::getenv(name.c_str());
     return value == nullptr ? std::nullopt : std::optional<std::string>(value);
 }
 
@@ -52,7 +52,7 @@ void
 set(const std::string& name, const std::string& value, const bool overwrite = true)
 {
     std::scoped_lock lock{mtx};
-    if (setenv(name.c_str(), value.c_str(), overwrite) < 0)
+    if (::setenv(name.c_str(), value.c_str(), overwrite) < 0)
         throw std::system_error(std::make_error_code(std::errc{errno}), "setenv");
 }
 
@@ -64,7 +64,7 @@ void
 unset(const std::string& name)
 {
     std::scoped_lock lock{mtx};
-    if (unsetenv(name.c_str()) < 0)
+    if (::unsetenv(name.c_str()) < 0)
         throw std::system_error(std::make_error_code(std::errc{errno}), "unsetenv");
 }
 
