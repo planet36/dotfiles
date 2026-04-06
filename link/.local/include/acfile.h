@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -45,6 +45,6 @@ cleanup_close_fd(const int* fd_ptr) [[gnu::nonnull]]
     (void)close(*fd_ptr);
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

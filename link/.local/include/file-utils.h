@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -98,6 +98,6 @@ madvise_sequential_willneed(void* mmap_addr, const size_t mmap_size)
     return false;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

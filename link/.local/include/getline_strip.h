@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -52,6 +52,6 @@ getline_strip(char** buf, size_t* buf_size, FILE* stream, const bool strip_delim
     return getdelim_strip(buf, buf_size, delim, stream, strip_delim);
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

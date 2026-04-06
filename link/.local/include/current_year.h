@@ -18,7 +18,7 @@
 #endif
 #include <time.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -58,6 +58,6 @@ current_year_utc()
     return now_tm.tm_year + 1900;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

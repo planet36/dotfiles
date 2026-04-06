@@ -17,7 +17,7 @@
 #include <immintrin.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -53,7 +53,7 @@ mm512_popcount(const __m512i x)
 }
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

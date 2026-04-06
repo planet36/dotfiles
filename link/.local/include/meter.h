@@ -11,7 +11,7 @@
 
 #include <wchar.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -447,6 +447,6 @@ right_char_meter(double x, char* meter, size_t meter_width, char fill, char unfi
     }
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

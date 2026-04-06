@@ -15,7 +15,7 @@
 #include <immintrin.h>
 #include <string.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -58,7 +58,7 @@ mm_all_equal_epi64(const __m128i a)
 
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

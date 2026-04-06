@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -46,6 +46,6 @@ pscanf(const char* path, const char* fmt, ...)
     return (n == EOF) ? -1 : n;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

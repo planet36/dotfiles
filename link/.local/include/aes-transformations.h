@@ -66,7 +66,7 @@
 
 #include <immintrin.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -179,6 +179,6 @@ InvSubBytes(__m128i data)
     return data;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

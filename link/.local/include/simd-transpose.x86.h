@@ -13,7 +13,7 @@
 
 #include <immintrin.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -179,7 +179,7 @@ transpose_16(__m128i x[static restrict 16])
     x[0xf] = _mm_unpackhi_epi64(ABCDEFGH_ef, IJKLMNOP_ef); // ABCDEFGHIJKLMNOP_f
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

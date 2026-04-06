@@ -13,7 +13,7 @@
 
 #include <stdio.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -41,6 +41,6 @@ fwrite_bytes(const void* buf, const size_t buf_size, FILE* fp)
     return num_bytes_written;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

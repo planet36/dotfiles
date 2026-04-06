@@ -9,7 +9,7 @@
 
 #pragma once
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -18,6 +18,6 @@ extern "C" {
 #define likely(expr)   __builtin_expect(!!(expr), 1)
 #define unlikely(expr) __builtin_expect(!!(expr), 0)
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

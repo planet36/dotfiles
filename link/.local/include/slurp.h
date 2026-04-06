@@ -25,7 +25,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -177,6 +177,6 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

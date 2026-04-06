@@ -13,7 +13,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -73,6 +73,6 @@ strtou64(const char* s)
     return i > UINT64_MAX ? UINT64_MAX : (uint64_t)i;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

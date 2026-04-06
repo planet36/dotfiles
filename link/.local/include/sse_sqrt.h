@@ -20,7 +20,7 @@
 
 #pragma once
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -45,6 +45,6 @@ sse_rsqrtf(float x)
     return x;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

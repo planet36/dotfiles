@@ -13,11 +13,11 @@
 #include <math.h>
 #include <sys/time.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
@@ -52,10 +52,10 @@ timevalsub(const struct timeval* t1, const struct timeval* t0, struct timeval* d
     }
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 #pragma GCC diagnostic pop
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -68,6 +68,6 @@ int_join_u64(const uint64_t hi, const uint64_t lo)
 }
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

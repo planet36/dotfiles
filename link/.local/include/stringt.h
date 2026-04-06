@@ -13,7 +13,7 @@
 
 #include <string.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -79,6 +79,6 @@ strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
     return strtcpy(dst, buf_last, src, trunc_at);
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

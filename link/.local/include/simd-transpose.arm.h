@@ -21,7 +21,7 @@
 
 #include <arm_neon.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -187,7 +187,7 @@ transpose_16(uint8x16_t x[static restrict 16])
     x[0xf] = vreinterpretq_u8_u64(ABCDEFGHIJKLMNOP_f);
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

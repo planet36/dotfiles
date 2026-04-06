@@ -16,7 +16,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -105,6 +105,6 @@ crc32(const void* buf, size_t len)
     return crc;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

@@ -10,7 +10,7 @@
 
 #pragma once
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -25,6 +25,6 @@ von_neumann_extractor(unsigned char x)
     }
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

@@ -14,7 +14,7 @@
 #include <immintrin.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -33,7 +33,7 @@ mm_hxor_epu64(const __m128i a)
     return (uint64_t)_mm_extract_epi64(a, 0) ^ (uint64_t)_mm_extract_epi64(a, 1);
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

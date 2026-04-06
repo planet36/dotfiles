@@ -13,7 +13,7 @@
 #include <limits.h>
 #include <stdlib.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -24,6 +24,6 @@ strtou(const char* s)
     return (i > UINT_MAX) ? UINT_MAX : (unsigned int)i;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

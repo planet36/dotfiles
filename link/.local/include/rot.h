@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -71,6 +71,6 @@ rotr64(uint64_t x, unsigned int r)
     return (r == 0) ? x : (uint64_t)((x >> r) | (x << (64U - r)));
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

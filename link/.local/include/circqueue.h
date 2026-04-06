@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -138,6 +138,6 @@ circqueue_reset(circqueue* cq)
     cq->num_elems = 0;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

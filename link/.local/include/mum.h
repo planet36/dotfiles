@@ -13,7 +13,7 @@
 #include <immintrin.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -84,6 +84,6 @@ mums64(uint64_t a, uint64_t b)
     return hi - lo;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

@@ -17,7 +17,7 @@
 #endif
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -97,6 +97,6 @@ mm512_bitmask(const unsigned int bit)
 
 #pragma GCC diagnostic pop
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

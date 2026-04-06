@@ -14,7 +14,7 @@
 #include <immintrin.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -88,6 +88,6 @@ rdseed64()
 #warning "__RDSEED__ not defined"
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

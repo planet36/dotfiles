@@ -13,7 +13,7 @@
 
 #include <immintrin.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -113,7 +113,7 @@ mm512_make_odd_epu64(const __m512i a)
 
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

@@ -24,17 +24,17 @@
 #include <sys/resource.h>
 #include <time.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
 
 // https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
-#ifdef __cplusplus
+#if defined(__cplusplus)
 #define TIME_THIS                                                      \
     (void)fflush(stdout);                                              \
     __attribute__((cleanup(print_timerdata_now_diff))) const timerdata \
@@ -52,7 +52,7 @@ extern "C" {
 
 struct timerdata
 {
-#ifdef __cplusplus
+#if defined(__cplusplus)
     timespec rtime{}; // real
     timeval utime{};  // user
     timeval stime{};  // system
@@ -63,14 +63,14 @@ struct timerdata
 #endif
 };
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 static timerdata
 #else
 static struct timerdata
 #endif
 timerdata_now()
 {
-#ifdef __cplusplus
+#if defined(__cplusplus)
     timerdata now{};
     rusage ru{};
 #else
@@ -90,13 +90,13 @@ timerdata_now()
 }
 
 static void
-#ifdef __cplusplus
+#if defined(__cplusplus)
 print_timerdata_now_diff(const timerdata* t0)
 #else
 print_timerdata_now_diff(const struct timerdata* t0)
 #endif
 {
-#ifdef __cplusplus
+#if defined(__cplusplus)
     const timerdata t1 = timerdata_now();
     timerdata diff{};
 #else
@@ -111,10 +111,10 @@ print_timerdata_now_diff(const struct timerdata* t0)
                   timeval_to_sec(&diff.utime), timeval_to_sec(&diff.stime));
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 #pragma GCC diagnostic pop
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

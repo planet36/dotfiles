@@ -11,7 +11,7 @@
 
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -34,6 +34,6 @@ bytewise_parity(uint64_t x)
         (uint8_t)(x >> (0x38 - 7));
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

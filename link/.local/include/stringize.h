@@ -11,13 +11,13 @@
 
 #pragma once
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
 #define XSTR(s) STR(s)
 #define STR(s)  #s
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

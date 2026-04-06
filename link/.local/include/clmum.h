@@ -14,7 +14,7 @@
 #include <immintrin.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -65,6 +65,6 @@ clmums64(uint64_t a, uint64_t b)
 #warning "__PCLMUL__ not defined"
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

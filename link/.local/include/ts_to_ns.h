@@ -12,11 +12,11 @@
 #include <stdint.h>
 #include <time.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wno-redundant-tags"
@@ -39,10 +39,10 @@ ts_to_ns(const struct timespec* ts)
     return (uint64_t)ts->tv_sec * UINT64_C(1'000'000'000) + (uint64_t)ts->tv_nsec;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 #pragma GCC diagnostic pop
 #endif
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif

@@ -15,14 +15,14 @@
 
 #include <fcntl.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
 static inline int
 acq_read_lock_fd(int fd)
 {
-#ifdef __cplusplus
+#if defined(__cplusplus)
     using flock_t = flock;
 #else
     typedef struct flock flock_t;
@@ -41,7 +41,7 @@ acq_read_lock_fd(int fd)
 static inline int
 acq_write_lock_fd(int fd)
 {
-#ifdef __cplusplus
+#if defined(__cplusplus)
     using flock_t = flock;
 #else
     typedef struct flock flock_t;
@@ -60,7 +60,7 @@ acq_write_lock_fd(int fd)
 static inline int
 rel_lock_fd(int fd)
 {
-#ifdef __cplusplus
+#if defined(__cplusplus)
     using flock_t = flock;
 #else
     typedef struct flock flock_t;
@@ -76,6 +76,6 @@ rel_lock_fd(int fd)
     return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
