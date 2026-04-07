@@ -19,6 +19,7 @@ do
     #git fsck || break
     #git gc || break
     cd - > /dev/null || break
+    sleep 1s
   else
     echo "Not a git repo"
   fi
