@@ -260,6 +260,42 @@ vim.g.python3_host_prog = '/usr/bin/python3'
 
 -- }}}
 
+-- {{{ Plugins
+
+-- https://neovim.io/doc/user/pack/
+
+-- :help vim.pack.add()
+-- https://neovim.io/doc/user/pack/#vim.pack.add()
+vim.pack.add({
+  'https://github.com/AndrewRadev/linediff.vim',
+  'https://github.com/chrisbra/unicode.vim',
+  'https://github.com/godlygeek/tabular',
+  'https://github.com/junegunn/fzf.vim',
+  'https://github.com/nvim-lualine/lualine.nvim',
+  --'https://github.com/tpope/vim-sensible'
+  'https://github.com/tzachar/highlight-undo.nvim',
+
+  -- color schemes
+  --'https://github.com/EvitanRelta/vim-colorschemes',
+  --'https://github.com/fneu/breezy',
+  --'https://github.com/mhartington/oceanic-next', -- OceanicNext
+  --'https://github.com/morhetz/gruvbox',
+  --'https://github.com/projekt0n/github-nvim-theme', -- github_dark_default
+  'https://github.com/srcery-colors/srcery-vim',
+  --'https://github.com/vim-scripts/candycode.vim',
+})
+
+-- :help vim.pack.update()
+-- https://neovim.io/doc/user/pack/#vim.pack.update()
+
+-- Check health ":checkhealth vim.pack"
+
+-- Show plugins ":lua vim.pack.update(nil, { offline = true })"
+
+-- Update plugins ":lua vim.pack.update()"
+
+-- }}}
+
 -- {{{ Color schemes
 
 vim.o.cursorline = true
