@@ -132,6 +132,12 @@ vim.o.smartcase = true
 
 -- }}}
 
+-- {{{ Auto-complete
+
+--vim.o.autocomplete = true
+
+-- }}}
+
 -- {{{ Disable mouse support if inside tmux
 
 if vim.env.TMUX ~= nil then vim.o.mouse = '' end
