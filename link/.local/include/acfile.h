@@ -20,7 +20,7 @@
 extern "C" {
 #endif
 
-#define ACFILEPTR __attribute__((cleanup(cleanup_close_file_ptr))) FILE*
+#define ACFILEPTR(IDENTIFIER) FILE* IDENTIFIER [[gnu::cleanup(cleanup_close_file_ptr)]]
 
 static void
 cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
@@ -36,7 +36,7 @@ cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
     }
 }
 
-#define ACFD __attribute__((cleanup(cleanup_close_fd))) int
+#define ACFD(IDENTIFIER) int IDENTIFIER [[gnu::cleanup(cleanup_close_fd)]]
 
 static inline void
 cleanup_close_fd(const int* fd_ptr) [[gnu::nonnull]]

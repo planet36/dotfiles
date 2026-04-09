@@ -10,8 +10,8 @@
 * Example usage
 * \code{.c}
 const char* s = "Hello, world!";
-// Use "afstr" as the declaration of a dynamically allocated string.
-afstr s2 = strdup(s);
+// Use "AFSTR" as the declaration of a dynamically allocated string.
+AFSTR(s2) = strdup(s);
 // When s2 goes out of scope, it will be automatically freed.
 \endcode
 */
@@ -24,7 +24,7 @@ afstr s2 = strdup(s);
 extern "C" {
 #endif
 
-#define afstr __attribute__((cleanup(cleanup_free_str))) char*
+#define AFSTR(IDENTIFIER) char* IDENTIFIER [[gnu::cleanup(cleanup_free_str)]]
 
 static void
 cleanup_free_str(char** spp)

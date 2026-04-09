@@ -37,13 +37,13 @@ extern "C" {
 #if defined(__cplusplus)
 #define TIME_THIS                                                      \
     (void)fflush(stdout);                                              \
-    __attribute__((cleanup(print_timerdata_now_diff))) const timerdata \
-    TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()
+    const timerdata TOKENPASTE2(_time_this_, __COUNTER__)              \
+    [[gnu::cleanup(print_timerdata_now_diff)]] = timerdata_now()
 #else
 #define TIME_THIS                                                             \
     (void)fflush(stdout);                                                     \
-    __attribute__((cleanup(print_timerdata_now_diff))) const struct timerdata \
-    TOKENPASTE2(_time_this_, __COUNTER__) = timerdata_now()
+    const struct timerdata TOKENPASTE2(_time_this_, __COUNTER__)              \
+    [[gnu::cleanup(print_timerdata_now_diff)]] = timerdata_now()
 #endif
 
 // https://stackoverflow.com/a/1597129/1892784

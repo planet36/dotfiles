@@ -80,7 +80,7 @@ circqueue_free(circqueue* cq)
 
 // automatically deallocate circqueue
 #define circqueue(varname, max_num_elems, type)                  \
-    __attribute__((cleanup(circqueue_free))) circqueue varname = \
+    circqueue varname [[gnu::cleanup(circqueue_free)]] =         \
         circqueue_init(max_num_elems, sizeof(type));
 
 static bool
