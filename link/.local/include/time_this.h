@@ -5,6 +5,7 @@
 /**
 * \file
 * \author Steven Ward
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-cleanup
 *
 * The "TIME_THIS" macro creates an anonymous timer object that measures the real
 * time, user CPU time, and system CPU time elapsed/used during the lifetime of
@@ -33,7 +34,6 @@ extern "C" {
 #pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
 
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-cleanup-variable-attribute
 #if defined(__cplusplus)
 #define TIME_THIS                                                      \
     (void)fflush(stdout);                                              \

@@ -5,7 +5,7 @@
 /**
 * \file
 * \author Steven Ward
-* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-cleanup
 *
 * Example usage
 * \code{.c}

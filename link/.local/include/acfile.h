@@ -5,7 +5,8 @@
 /**
 * \file
 * \author Steven Ward
-* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-cleanup
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-nonnull
 */
 
 #pragma once
@@ -21,7 +22,6 @@ extern "C" {
 
 #define ACFILEPTR __attribute__((cleanup(cleanup_close_file_ptr))) FILE*
 
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-nonnull-function-attribute
 static void
 cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 {
@@ -38,7 +38,6 @@ cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 
 #define ACFD __attribute__((cleanup(cleanup_close_fd))) int
 
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-nonnull-function-attribute
 static inline void
 cleanup_close_fd(const int* fd_ptr) [[gnu::nonnull]]
 {

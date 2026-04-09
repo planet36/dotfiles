@@ -7,6 +7,7 @@
 * \author Steven Ward
 * \sa https://en.wikipedia.org/wiki/CLMUL_instruction_set
 * \sa https://www.felixcloutier.com/x86/pclmulqdq
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-nonnull
 */
 
 #pragma once
@@ -19,7 +20,6 @@ extern "C" {
 #endif
 
 #if defined(__PCLMUL__)
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-nonnull-function-attribute
 static void
 clmul64(uint64_t* hi, uint64_t* lo) [[gnu::nonnull]]
 {

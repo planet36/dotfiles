@@ -7,6 +7,7 @@
 * \author Steven Ward
 * \sa https://nrk.neocities.org/articles/not-a-fan-of-strlcpy
 * Inspired by https://software.codidact.com/posts/285946
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-returns_005fnonnull
 */
 
 #pragma once

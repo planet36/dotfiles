@@ -5,6 +5,7 @@
 /**
 * \file
 * \author Steven Ward
+* \sa https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-cleanup
 */
 
 #pragma once
@@ -77,7 +78,6 @@ circqueue_free(circqueue* cq)
     cq->num_elems = 0;
 }
 
-// https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html
 // automatically deallocate circqueue
 #define circqueue(varname, max_num_elems, type)                  \
     __attribute__((cleanup(circqueue_free))) circqueue varname = \
