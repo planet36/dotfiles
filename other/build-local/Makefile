@@ -13,3 +13,6 @@ $(SUBDIRS):
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
+
+# https://www.gnu.org/software/make/manual/html_node/Special-Targets.html#index-removing-targets-on-failure
+.DELETE_ON_ERROR:
