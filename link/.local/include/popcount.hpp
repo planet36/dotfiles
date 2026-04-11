@@ -56,7 +56,7 @@ popcount(const __m512i x)
 static inline int
 popcount(const uint8x16_t x)
 {
-    return (int)vaddvq_u8(vcntq_u8(x));
+    return vaddvq_u8(vcntq_u8(x));
 }
 
 static inline int
