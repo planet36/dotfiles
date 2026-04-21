@@ -119,8 +119,7 @@ u32_nibbles = 32//8*2
 
 print('// ⌊2³² × frac(√p)⌋')
 for p in primes:
-    x = frac(sqrt(p))
-    result = int(floor(u32_scale * frac(sqrt(x))))
+    result = int(floor(u32_scale * frac(sqrt(p))))
     print(f"#define U32_FLOOR_SCALED_FRAC_SQRT_{p:<3} UINT32_C(0x{result:0{u32_nibbles}x}) // (popcount = {result.bit_count()})")
 
 print()
@@ -130,6 +129,5 @@ u64_nibbles = 64//8*2
 
 print('// ⌊2⁶⁴ × frac(√p)⌋')
 for p in primes:
-    x = frac(sqrt(p))
-    result = int(floor(u64_scale * frac(sqrt(x))))
+    result = int(floor(u64_scale * frac(sqrt(p))))
     print(f"#define U64_FLOOR_SCALED_FRAC_SQRT_{p:<3} UINT64_C(0x{result:0{u64_nibbles}x}) // (popcount = {result.bit_count()})")
