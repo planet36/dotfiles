@@ -23,8 +23,8 @@
 #define C_DOUBLE_QUOTE '"'
 
 // single quote, backslash, single quote, single quote
-//#define S_SINGLE_QUOTE_ESCAPED "'\\''"
-#define S_SINGLE_QUOTE_ESCAPED R"('\'')"
+//#define SHELL_SINGLE_QUOTE_ESCAPED "'\\''"
+#define SHELL_SINGLE_QUOTE_ESCAPED R"('\'')"
 
 #define OCT_DIGITS "01234567"
 #define HEX_DIGITS "0123456789ABCDEF"
@@ -172,7 +172,7 @@ std::string
 quote_shell_always(const std::string& s)
 {
     static constexpr char delim = C_SINGLE_QUOTE;
-    static constexpr std::string_view delim_escaped{S_SINGLE_QUOTE_ESCAPED};
+    static constexpr std::string_view delim_escaped{SHELL_SINGLE_QUOTE_ESCAPED};
     std::string result;
     result.reserve(s.size() + 2);
     result += delim;
@@ -331,6 +331,6 @@ quote_simple(const std::string& s,
 #undef C_BACKSLASH
 #undef C_SINGLE_QUOTE
 #undef C_DOUBLE_QUOTE
-#undef S_SINGLE_QUOTE_ESCAPED
+#undef SHELL_SINGLE_QUOTE_ESCAPED
 #undef OCT_DIGITS
 #undef HEX_DIGITS
