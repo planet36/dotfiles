@@ -25,7 +25,7 @@
 // single quote, backslash, single quote, single quote
 inline constexpr std::string_view SHELL_SINGLE_QUOTE_ESCAPED = R"('\'')";
 
-#define OCT_DIGITS "01234567"
+inline constexpr std::string_view OCT_DIGITS = "01234567";
 #define HEX_DIGITS "0123456789ABCDEF"
 
 /// Convert the byte to its escaped octal representation
@@ -330,5 +330,4 @@ quote_simple(const std::string& s,
 #undef BACKSLASH
 #undef SINGLE_QUOTE
 #undef DOUBLE_QUOTE
-#undef OCT_DIGITS
 #undef HEX_DIGITS
