@@ -23,7 +23,7 @@
 #define DOUBLE_QUOTE '"'
 
 // single quote, backslash, single quote, single quote
-#define SHELL_SINGLE_QUOTE_ESCAPED R"('\'')"
+inline constexpr std::string_view SHELL_SINGLE_QUOTE_ESCAPED = R"('\'')";
 
 #define OCT_DIGITS "01234567"
 #define HEX_DIGITS "0123456789ABCDEF"
@@ -330,6 +330,5 @@ quote_simple(const std::string& s,
 #undef BACKSLASH
 #undef SINGLE_QUOTE
 #undef DOUBLE_QUOTE
-#undef SHELL_SINGLE_QUOTE_ESCAPED
 #undef OCT_DIGITS
 #undef HEX_DIGITS
