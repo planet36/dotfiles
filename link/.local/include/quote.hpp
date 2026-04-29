@@ -18,7 +18,7 @@
 #include <string>
 #include <string_view>
 
-#define C_BACKSLASH    '\\'
+#define BACKSLASH    '\\'
 #define C_SINGLE_QUOTE '\''
 #define C_DOUBLE_QUOTE '"'
 
@@ -36,7 +36,7 @@ to_oct_str(const uint8_t c)
     const char d1 = OCT_DIGITS[(c & 0700) >> 6];
     const char d2 = OCT_DIGITS[(c & 0070) >> 3];
     const char d3 = OCT_DIGITS[(c & 0007)     ];
-    return std::string{C_BACKSLASH, d1, d2, d3};
+    return std::string{BACKSLASH, d1, d2, d3};
 }
 
 /// Convert the byte to its escaped hexadecimal representation
@@ -45,7 +45,7 @@ to_hex_str(const uint8_t c)
 {
     const char d1 = HEX_DIGITS[(c & 0xF0) >> 4];
     const char d2 = HEX_DIGITS[(c & 0x0F)     ];
-    return std::string{C_BACKSLASH, 'x', d1, d2};
+    return std::string{BACKSLASH, 'x', d1, d2};
 }
 
 /// Is the character a word character?
@@ -112,8 +112,8 @@ escape_shell(const char c)
 {
     switch (c)
     {
-    case '\t': return std::string{C_BACKSLASH, 't'};
-    case '\n': return std::string{C_BACKSLASH, 'n'};
+    case '\t': return std::string{BACKSLASH, 't'};
+    case '\n': return std::string{BACKSLASH, 'n'};
     case ' ' :
     case '"' :
     case '#' :
@@ -133,7 +133,7 @@ escape_shell(const char c)
     case '\\':
     case '`' :
     case '|' :
-    case '~' : return std::string{C_BACKSLASH, c};
+    case '~' : return std::string{BACKSLASH, c};
     default: break;
     }
 
@@ -209,17 +209,17 @@ escape_c(const char c)
     // simple escape sequence
     switch (c)
     {
-    case '\a': return std::string{C_BACKSLASH, 'a'};
-    case '\b': return std::string{C_BACKSLASH, 'b'};
-    case '\t': return std::string{C_BACKSLASH, 't'};
-    case '\n': return std::string{C_BACKSLASH, 'n'};
-    case '\v': return std::string{C_BACKSLASH, 'v'};
-    case '\f': return std::string{C_BACKSLASH, 'f'};
-    case '\r': return std::string{C_BACKSLASH, 'r'};
+    case '\a': return std::string{BACKSLASH, 'a'};
+    case '\b': return std::string{BACKSLASH, 'b'};
+    case '\t': return std::string{BACKSLASH, 't'};
+    case '\n': return std::string{BACKSLASH, 'n'};
+    case '\v': return std::string{BACKSLASH, 'v'};
+    case '\f': return std::string{BACKSLASH, 'f'};
+    case '\r': return std::string{BACKSLASH, 'r'};
     case '\"':
     //case '\'':
     //case '\?':
-    case '\\': return std::string{C_BACKSLASH, c};
+    case '\\': return std::string{BACKSLASH, c};
     default: break;
     }
 
@@ -272,17 +272,17 @@ escape_pcre(const char c)
 
     switch (c)
     {
-    case '\t': return std::string{C_BACKSLASH, 't'};
-    case '\n': return std::string{C_BACKSLASH, 'n'};
-    case '\r': return std::string{C_BACKSLASH, 'r'};
-    case '\f': return std::string{C_BACKSLASH, 'f'};
-    case '\a': return std::string{C_BACKSLASH, 'a'};
-    case 0x1b: return std::string{C_BACKSLASH, 'e'}; // '\e'
+    case '\t': return std::string{BACKSLASH, 't'};
+    case '\n': return std::string{BACKSLASH, 'n'};
+    case '\r': return std::string{BACKSLASH, 'r'};
+    case '\f': return std::string{BACKSLASH, 'f'};
+    case '\a': return std::string{BACKSLASH, 'a'};
+    case 0x1b: return std::string{BACKSLASH, 'e'}; // '\e'
     default: break;
     }
 
     if (std::isprint(static_cast<unsigned char>(c)))
-        return std::string{C_BACKSLASH, c};
+        return std::string{BACKSLASH, c};
 
     return to_hex_str(static_cast<uint8_t>(c));
 }
@@ -313,7 +313,7 @@ quote(const std::string& s)
 std::string
 quote_simple(const std::string& s,
              const char delim = C_DOUBLE_QUOTE,
-             const char escape = C_BACKSLASH)
+             const char escape = BACKSLASH)
 {
     std::string result;
     result.reserve(s.size() + 2);
@@ -328,7 +328,7 @@ quote_simple(const std::string& s,
     return result;
 }
 
-#undef C_BACKSLASH
+#undef BACKSLASH
 #undef C_SINGLE_QUOTE
 #undef C_DOUBLE_QUOTE
 #undef SHELL_SINGLE_QUOTE_ESCAPED
