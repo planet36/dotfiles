@@ -50,10 +50,8 @@ to_hex_str(const uint8_t c)
 
 /// Is the character a word character?
 /**
-<blockquote>
-A "word" character is an underscore or any character that is a letter or digit.
-</blockquote>
-\sa https://www.pcre.org/original/doc/html/pcrepattern.html#:~:text=A%20%22word%22%20character%20is%20an%20underscore%20or%20any%20character%20that%20is%20a%20letter%20or%20digit.
+* <q>A "word" character is an underscore or any character that is a letter or digit.</q>
+* \sa https://www.pcre.org/original/doc/html/pcrepattern.html#:~:text=A%20%22word%22%20character%20is%20an%20underscore%20or%20any%20character%20that%20is%20a%20letter%20or%20digit.
 */
 constexpr bool
 isword(const char c)
@@ -63,7 +61,7 @@ isword(const char c)
 
 /// Is the character special for a POSIX shell?
 /**
-\sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
+* \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
 constexpr bool
 is_special_char_shell(const char c)
@@ -107,7 +105,7 @@ contains_special_chars_shell(const std::string& s)
 
 /// Escape the character for a POSIX shell
 /**
-\sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
+* \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
 std::string
 escape_shell(const char c)
@@ -147,7 +145,7 @@ escape_shell(const char c)
 
 /// Escape the string for a POSIX shell
 /**
-\sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
+* \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
 std::string
 escape_shell(const std::string& s)
@@ -163,8 +161,8 @@ escape_shell(const std::string& s)
 
 /// Quote the string for a POSIX shell
 /**
-\sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
-<blockquote>
+* \sa https://www.gnu.org/software/bash/manual/bash.html#Single-Quotes
+* <blockquote>
 Enclosing characters in single quotes (‘'’) preserves the literal value of each
 character within the quotes. A single quote may not occur between single
 quotes, even when preceded by a backslash.
@@ -201,9 +199,9 @@ quote_shell(const std::string& s)
 
 /// Escape the character for a C character literal
 /**
-\sa https://en.cppreference.com/w/c/language/escape
-\sa https://en.cppreference.com/w/cpp/language/escape
-\sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
+* \sa https://en.cppreference.com/w/c/language/escape
+* \sa https://en.cppreference.com/w/cpp/language/escape
+* \sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
 */
 std::string
 escape_c(const char c)
@@ -262,9 +260,9 @@ quote_c(const std::string& s)
 
 /// Escape the character for a Perl Compatible Regular Expression (PCRE)
 /**
-\sa https://perldoc.perl.org/perlre#Escape-sequences
-\sa https://www.pcre.org/original/doc/html/pcrepattern.html
-\sa https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+* \sa https://perldoc.perl.org/perlre#Escape-sequences
+* \sa https://www.pcre.org/original/doc/html/pcrepattern.html
+* \sa https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
 */
 std::string
 escape_pcre(const char c)
@@ -310,7 +308,7 @@ quote(const std::string& s)
 
 /// Quote the string similar to \c std::quoted
 /**
-\sa https://en.cppreference.com/w/cpp/io/manip/quoted
+* \sa https://en.cppreference.com/w/cpp/io/manip/quoted
 */
 std::string
 quote_simple(const std::string& s,
