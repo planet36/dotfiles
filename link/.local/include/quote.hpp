@@ -18,7 +18,7 @@
 #include <string>
 #include <string_view>
 
-#define BACKSLASH    '\\'
+inline constexpr char BACKSLASH = '\\';
 #define SINGLE_QUOTE '\''
 #define DOUBLE_QUOTE '"'
 
@@ -327,6 +327,5 @@ quote_simple(const std::string& s,
     return result;
 }
 
-#undef BACKSLASH
 #undef SINGLE_QUOTE
 #undef DOUBLE_QUOTE
