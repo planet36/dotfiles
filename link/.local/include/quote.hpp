@@ -19,7 +19,7 @@
 #include <string_view>
 
 #define BACKSLASH    '\\'
-#define C_SINGLE_QUOTE '\''
+#define SINGLE_QUOTE '\''
 #define C_DOUBLE_QUOTE '"'
 
 // single quote, backslash, single quote, single quote
@@ -171,7 +171,7 @@ quotes, even when preceded by a backslash.
 std::string
 quote_shell_always(const std::string& s)
 {
-    static constexpr char delim = C_SINGLE_QUOTE;
+    static constexpr char delim = SINGLE_QUOTE;
     static constexpr std::string_view delim_escaped{SHELL_SINGLE_QUOTE_ESCAPED};
     std::string result;
     result.reserve(s.size() + 2);
@@ -233,7 +233,7 @@ escape_c(const char c)
 std::string
 quote_c(const char c)
 {
-    static constexpr char delim = C_SINGLE_QUOTE;
+    static constexpr char delim = SINGLE_QUOTE;
     std::string result;
     result.reserve(4 + 2);
     result += delim;
@@ -329,7 +329,7 @@ quote_simple(const std::string& s,
 }
 
 #undef BACKSLASH
-#undef C_SINGLE_QUOTE
+#undef SINGLE_QUOTE
 #undef C_DOUBLE_QUOTE
 #undef SHELL_SINGLE_QUOTE_ESCAPED
 #undef OCT_DIGITS
