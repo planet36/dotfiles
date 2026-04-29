@@ -20,7 +20,7 @@
 
 #define BACKSLASH    '\\'
 #define SINGLE_QUOTE '\''
-#define C_DOUBLE_QUOTE '"'
+#define DOUBLE_QUOTE '"'
 
 // single quote, backslash, single quote, single quote
 //#define SHELL_SINGLE_QUOTE_ESCAPED "'\\''"
@@ -246,7 +246,7 @@ quote_c(const char c)
 std::string
 quote_c(const std::string& s)
 {
-    static constexpr char delim = C_DOUBLE_QUOTE;
+    static constexpr char delim = DOUBLE_QUOTE;
     std::string result;
     result.reserve(s.size() + 2);
     result += delim;
@@ -312,7 +312,7 @@ quote(const std::string& s)
 */
 std::string
 quote_simple(const std::string& s,
-             const char delim = C_DOUBLE_QUOTE,
+             const char delim = DOUBLE_QUOTE,
              const char escape = BACKSLASH)
 {
     std::string result;
@@ -330,7 +330,7 @@ quote_simple(const std::string& s,
 
 #undef BACKSLASH
 #undef SINGLE_QUOTE
-#undef C_DOUBLE_QUOTE
+#undef DOUBLE_QUOTE
 #undef SHELL_SINGLE_QUOTE_ESCAPED
 #undef OCT_DIGITS
 #undef HEX_DIGITS
