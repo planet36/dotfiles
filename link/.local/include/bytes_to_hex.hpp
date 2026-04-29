@@ -21,7 +21,7 @@
 static constexpr char
 nibble_char(const uint8_t x) noexcept
 {
-    return x + (x < 10 ? '0' : -10 + 'a');
+    return static_cast<char>(x + (x < 10 ? '0' : -10 + 'a'));
 }
 
 /// Convert a span of bytes to a hexadecimal string
