@@ -171,14 +171,13 @@ std::string
 quote_shell_always(const std::string& s)
 {
     static constexpr char delim = SINGLE_QUOTE;
-    static constexpr std::string_view delim_escaped{SHELL_SINGLE_QUOTE_ESCAPED};
     std::string result;
     result.reserve(s.size() + 2);
     result += delim;
     for (const auto c : s)
     {
         if (c == delim)
-            result += delim_escaped;
+            result += SHELL_SINGLE_QUOTE_ESCAPED;
         else
             result += c;
     }
