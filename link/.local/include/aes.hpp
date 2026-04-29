@@ -123,22 +123,22 @@ constexpr unsigned int aes192_num_rounds = 12;
 constexpr unsigned int aes256_num_rounds = 14;
 
 /**
-* \pre \a tmp is the result of \c _mm_aeskeygenassist_si128
+* \pre \a tmp_assist is the result of \c _mm_aeskeygenassist_si128
 */
 inline __m128i
-aes128_expand_key(__m128i key, __m128i tmp)
+aes128_expand_key(__m128i key, __m128i tmp_assist)
 {
     // get the most significant element (3)
-    const int e3 = _mm_extract_epi32(tmp, 3);
+    const int e3 = _mm_extract_epi32(tmp_assist, 3);
     // copy the most significant element (3) to all elements (0, 1, 2, 3)
-    tmp = _mm_set1_epi32(e3);
+    tmp_assist = _mm_set1_epi32(e3);
 
     // inspired by
     // https://github.com/Tarsnap/tarsnap/blob/master/libcperciva/crypto/crypto_aes_aesni.c#L28
     key = _mm_xor_si128(key, _mm_slli_si128(key, 4));
     key = _mm_xor_si128(key, _mm_slli_si128(key, 8));
 
-    return _mm_xor_si128(key, tmp);
+    return _mm_xor_si128(key, tmp_assist);
 }
 
 /**
@@ -151,8 +151,8 @@ aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc)
 {
     for (unsigned int round = 1; round < Nk; ++round)
     {
-        const __m128i tmp = aes_keygenassist_round(round_keys_enc[round-1], round);
-        round_keys_enc[round] = aes128_expand_key(round_keys_enc[round-1], tmp);
+        const __m128i tmp_assist = aes_keygenassist_round(round_keys_enc[round-1], round);
+        round_keys_enc[round] = aes128_expand_key(round_keys_enc[round-1], tmp_assist);
     }
 }
 
