@@ -175,15 +175,15 @@ quote_shell_always(const std::string& s)
     static constexpr std::string_view delim_escaped{S_SINGLE_QUOTE_ESCAPED};
     std::string result;
     result.reserve(s.size() + 2);
-    result.push_back(delim);
+    result += delim;
     for (const auto c : s)
     {
         if (c == delim)
             result += delim_escaped;
         else
-            result.push_back(c);
+            result += c;
     }
-    result.push_back(delim);
+    result += delim;
     return result;
 }
 
@@ -236,9 +236,9 @@ quote_c(const char c)
     static constexpr char delim = C_SINGLE_QUOTE;
     std::string result;
     result.reserve(4 + 2);
-    result.push_back(delim);
+    result += delim;
     result += escape_c(c);
-    result.push_back(delim);
+    result += delim;
     return result;
 }
 
@@ -249,12 +249,12 @@ quote_c(const std::string& s)
     static constexpr char delim = C_DOUBLE_QUOTE;
     std::string result;
     result.reserve(s.size() + 2);
-    result.push_back(delim);
+    result += delim;
     for (const auto c : s)
     {
         result += escape_c(c);
     }
-    result.push_back(delim);
+    result += delim;
     return result;
 }
 
@@ -317,14 +317,14 @@ quote_simple(const std::string& s,
 {
     std::string result;
     result.reserve(s.size() + 2);
-    result.push_back(delim);
+    result += delim;
     for (const auto c : s)
     {
         if (c == delim || c == escape)
-            result.push_back(escape);
-        result.push_back(c);
+            result += escape;
+        result += c;
     }
-    result.push_back(delim);
+    result += delim;
     return result;
 }
 
