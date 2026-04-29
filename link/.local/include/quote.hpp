@@ -20,7 +20,7 @@
 
 inline constexpr char BACKSLASH = '\\';
 inline constexpr char SINGLE_QUOTE = '\'';
-#define DOUBLE_QUOTE '"'
+inline constexpr char DOUBLE_QUOTE = '"';
 
 // single quote, backslash, single quote, single quote
 inline constexpr std::string_view SHELL_SINGLE_QUOTE_ESCAPED = R"('\'')";
@@ -326,5 +326,3 @@ quote_simple(const std::string& s,
     result += delim;
     return result;
 }
-
-#undef DOUBLE_QUOTE
