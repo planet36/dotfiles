@@ -96,7 +96,9 @@ contains_special_chars_shell(const std::string& s)
     for (const auto c : s)
     {
         if (is_special_char_shell(c) || !std::isprint(static_cast<unsigned char>(c)))
+        {
             return true;
+        }
     }
 
     return false;
@@ -137,7 +139,9 @@ escape_shell(const char c)
     }
 
     if (std::isprint(static_cast<unsigned char>(c)))
+    {
         return std::string{c};
+    }
 
     return to_hex_str(static_cast<uint8_t>(c));
 }
@@ -151,10 +155,12 @@ escape_shell(const std::string& s)
 {
     std::string result;
     result.reserve(s.size());
+
     for (const auto c : s)
     {
         result += escape_shell(c);
     }
+
     return result;
 }
 
@@ -171,17 +177,26 @@ std::string
 quote_shell_always(const std::string& s)
 {
     constexpr char delim = SINGLE_QUOTE;
+
     std::string result;
     result.reserve(s.size() + 2);
+
     result += delim;
+
     for (const auto c : s)
     {
         if (c == delim)
+        {
             result += SHELL_SINGLE_QUOTE_ESCAPED;
+        }
         else
+        {
             result += c;
+        }
     }
+
     result += delim;
+
     return result;
 }
 
@@ -190,9 +205,13 @@ std::string
 quote_shell(const std::string& s)
 {
     if (s.empty() || contains_special_chars_shell(s))
+    {
         return quote_shell_always(s);
+    }
     else
+    {
         return s;
+    }
 }
 
 /// Escape the character for a C character literal
@@ -222,7 +241,9 @@ escape_c(const char c)
     }
 
     if (std::isprint(static_cast<unsigned char>(c)))
+    {
         return std::string{c};
+    }
 
     return to_hex_str(static_cast<uint8_t>(c));
 }
@@ -232,11 +253,14 @@ std::string
 quote_c(const char c)
 {
     constexpr char delim = SINGLE_QUOTE;
+
     std::string result;
     result.reserve(4 + 2);
+
     result += delim;
     result += escape_c(c);
     result += delim;
+
     return result;
 }
 
@@ -245,14 +269,19 @@ std::string
 quote_c(const std::string& s)
 {
     constexpr char delim = DOUBLE_QUOTE;
+
     std::string result;
     result.reserve(s.size() + 2);
+
     result += delim;
+
     for (const auto c : s)
     {
         result += escape_c(c);
     }
+
     result += delim;
+
     return result;
 }
 
@@ -266,7 +295,9 @@ std::string
 escape_pcre(const char c)
 {
     if (isword(c))
+    {
         return std::string{c};
+    }
 
     switch (c)
     {
@@ -280,7 +311,9 @@ escape_pcre(const char c)
     }
 
     if (std::isprint(static_cast<unsigned char>(c)))
+    {
         return std::string{BACKSLASH, c};
+    }
 
     return to_hex_str(static_cast<uint8_t>(c));
 }
@@ -291,10 +324,12 @@ escape_pcre(const std::string& s)
 {
     std::string result;
     result.reserve(s.size());
+
     for (const auto c : s)
     {
         result += escape_pcre(c);
     }
+
     return result;
 }
 
@@ -315,13 +350,20 @@ quote_simple(const std::string& s,
 {
     std::string result;
     result.reserve(s.size() + 2);
+
     result += delim;
+
     for (const auto c : s)
     {
         if (c == delim || c == escape)
+        {
             result += escape;
+        }
+
         result += c;
     }
+
     result += delim;
+
     return result;
 }
