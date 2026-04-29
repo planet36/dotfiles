@@ -170,7 +170,7 @@ quotes, even when preceded by a backslash.
 std::string
 quote_shell_always(const std::string& s)
 {
-    static constexpr char delim = SINGLE_QUOTE;
+    constexpr char delim = SINGLE_QUOTE;
     std::string result;
     result.reserve(s.size() + 2);
     result += delim;
@@ -231,7 +231,7 @@ escape_c(const char c)
 std::string
 quote_c(const char c)
 {
-    static constexpr char delim = SINGLE_QUOTE;
+    constexpr char delim = SINGLE_QUOTE;
     std::string result;
     result.reserve(4 + 2);
     result += delim;
@@ -244,7 +244,7 @@ quote_c(const char c)
 std::string
 quote_c(const std::string& s)
 {
-    static constexpr char delim = DOUBLE_QUOTE;
+    constexpr char delim = DOUBLE_QUOTE;
     std::string result;
     result.reserve(s.size() + 2);
     result += delim;
