@@ -23,7 +23,6 @@
 #define DOUBLE_QUOTE '"'
 
 // single quote, backslash, single quote, single quote
-//#define SHELL_SINGLE_QUOTE_ESCAPED "'\\''"
 #define SHELL_SINGLE_QUOTE_ESCAPED R"('\'')"
 
 #define OCT_DIGITS "01234567"
