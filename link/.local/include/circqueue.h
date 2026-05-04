@@ -44,12 +44,12 @@ circqueue_is_full(const circqueue* cq)
 }
 
 static const circqueue circqueue_default = {
-    .buf=nullptr,
-    .max_num_elems=0,
-    .sizeof_elem=0,
-    .head=0,
-    .tail=0,
-    .num_elems=0,
+    .buf = nullptr,
+    .max_num_elems = 0,
+    .sizeof_elem = 0,
+    .head = 0,
+    .tail = 0,
+    .num_elems = 0,
 };
 
 static circqueue
@@ -79,8 +79,8 @@ circqueue_free(circqueue* cq)
 }
 
 // automatically deallocate circqueue
-#define circqueue(varname, max_num_elems, type)                  \
-    circqueue varname [[gnu::cleanup(circqueue_free)]] =         \
+#define circqueue(varname, max_num_elems, type)          \
+    circqueue varname [[gnu::cleanup(circqueue_free)]] = \
         circqueue_init(max_num_elems, sizeof(type));
 
 static bool

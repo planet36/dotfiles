@@ -71,7 +71,8 @@ split(const std::string& s, const std::string& delim, const size_t limit = 0)
     {
         while ((result.size() != limit - 1) && ((j = s.find(delim, i)) != std::string::npos))
         {
-            result.emplace_back(begin + static_cast<diff_t>(i), begin + static_cast<diff_t>(j));
+            result.emplace_back(begin + static_cast<diff_t>(i),
+                                begin + static_cast<diff_t>(j));
             i = j + delim.size();
         }
     }
@@ -103,7 +104,8 @@ split_set(const std::string& s, const std::string& delim_set, const size_t limit
                (result.size() != limit - 1) &&
                ((j = s.find_first_of(delim_set, i)) != std::string::npos))
         {
-            result.emplace_back(begin + static_cast<diff_t>(i), begin + static_cast<diff_t>(j));
+            result.emplace_back(begin + static_cast<diff_t>(i),
+                                begin + static_cast<diff_t>(j));
         }
     }
 
@@ -141,7 +143,8 @@ split_non_set(const std::string& s, const std::string& delim_set, const size_t l
                (result.size() != limit - 1) &&
                ((j = s.find_first_not_of(delim_set, i)) != std::string::npos))
         {
-            result.emplace_back(begin + static_cast<diff_t>(i), begin + static_cast<diff_t>(j));
+            result.emplace_back(begin + static_cast<diff_t>(i),
+                                begin + static_cast<diff_t>(j));
         }
     }
 

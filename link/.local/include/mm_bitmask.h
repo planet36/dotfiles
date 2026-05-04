@@ -36,7 +36,7 @@ mm_bitmask(const unsigned int bit)
     assert(bit < 128);
 #endif
 
-    uint64_t vals[sizeof(__m128i)/sizeof(uint64_t)] = {0};
+    uint64_t vals[sizeof(__m128i) / sizeof(uint64_t)] = {0};
 
     const unsigned int lane = bit / 64;
     const unsigned int shift = bit % 64;
@@ -59,7 +59,7 @@ mm256_bitmask(const unsigned int bit)
     assert(bit < 256);
 #endif
 
-    uint64_t vals[sizeof(__m256i)/sizeof(uint64_t)] = {0};
+    uint64_t vals[sizeof(__m256i) / sizeof(uint64_t)] = {0};
 
     const unsigned int lane = bit / 64;
     const unsigned int shift = bit % 64;
@@ -82,7 +82,7 @@ mm512_bitmask(const unsigned int bit)
     assert(bit < 512);
 #endif
 
-    uint64_t vals[sizeof(__m512i)/sizeof(uint64_t)] = {0};
+    uint64_t vals[sizeof(__m512i) / sizeof(uint64_t)] = {0};
 
     const unsigned int lane = bit / 64;
     const unsigned int shift = bit % 64;

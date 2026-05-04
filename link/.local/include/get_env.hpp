@@ -29,8 +29,7 @@ std::println("{} = {}", name, get_env("SHELL").value_or("(none)"));
 std::println("{} = {}", name, get_env("FOO").value_or("(none)"));
 \endcode
 */
-[[nodiscard]]
-std::optional<std::string>
+[[nodiscard]] std::optional<std::string>
 get_env(const char* name) noexcept
 {
     const char* const value = std::getenv(name);

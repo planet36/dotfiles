@@ -23,7 +23,8 @@ pow_int_func()
         // https://mathworld.wolfram.com/DivisionbyZero.html
         static_assert(B != 0, "division by zero is undefined");
 
-        static_assert(E != std::numeric_limits<decltype(E)>::min(), "signed integer underflow");
+        static_assert(E != std::numeric_limits<decltype(E)>::min(),
+                      "signed integer underflow");
 
         // https://en.wikipedia.org/wiki/Exponentiation#Negative_exponents
         return 1 / pow_int_func<T, B, -E>();
