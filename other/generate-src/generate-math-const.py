@@ -373,7 +373,7 @@ def generate_math_const(x):
         print('Error: The value must be a gmpy2 type')
         raise
 
-    hex_str = f'{val:NA}'
+    hex_str = f'{val:Na}'
 
     expr_replaced = expr.replace('_', '')
     if name_in_comment:
