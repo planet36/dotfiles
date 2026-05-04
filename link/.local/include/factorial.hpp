@@ -5,6 +5,7 @@
 /**
 * \file
 * \author Steven Ward
+* \sa https://oeis.org/A000142
 */
 
 #pragma once
