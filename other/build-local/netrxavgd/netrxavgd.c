@@ -192,7 +192,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
     // Test if file is readable
     {
-        ACFILEPTR fp = fopen(net_iface_path, "r");
+        ACFILEPTR(fp) = fopen(net_iface_path, "r");
         if (fp == nullptr)
             err(EXIT_FAILURE, "%s", net_iface_path);
     }
@@ -204,7 +204,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         constexpr mode_t new_mask = 0133; // rw-r--r--
         (void)umask(new_mask);
 
-        ACFILEPTR dest_fp = fopen(dest_path, "wx");
+        ACFILEPTR(dest_fp) = fopen(dest_path, "wx");
         if (dest_fp == nullptr)
             err(EXIT_FAILURE, "%s", dest_path);
     }
@@ -302,7 +302,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
             if (dest_path != nullptr)
             {
-                ACFILEPTR dest_fp = fopen(dest_path, "w");
+                ACFILEPTR(dest_fp) = fopen(dest_path, "w");
                 if (dest_fp == nullptr)
                     err(EXIT_FAILURE, "%s", dest_path);
 
