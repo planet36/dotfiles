@@ -187,7 +187,10 @@ quote_shell_always(const std::string& s)
     {
         if (c == delim)
         {
-            result += SHELL_SINGLE_QUOTE_ESCAPED;
+            result += SINGLE_QUOTE;
+            result += BACKSLASH;
+            result += SINGLE_QUOTE;
+            result += SINGLE_QUOTE;
         }
         else
         {
