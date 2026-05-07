@@ -18,51 +18,51 @@
 
 union alignas(sizeof(__m128i)) simd128i
 {
-    std::array<std::byte, 16 / sizeof(std::byte)> bytes{};
-    std::array<uint8_t, 16 / sizeof(uint8_t)> u8;
-    std::array<uint16_t, 16 / sizeof(uint16_t)> u16;
-    std::array<uint32_t, 16 / sizeof(uint32_t)> u32;
-    std::array<uint64_t, 16 / sizeof(uint64_t)> u64;
+    std::array<std::byte, sizeof(__m128i) / sizeof(std::byte)> bytes{};
+    std::array<uint8_t, sizeof(__m128i) / sizeof(uint8_t)> u8;
+    std::array<uint16_t, sizeof(__m128i) / sizeof(uint16_t)> u16;
+    std::array<uint32_t, sizeof(__m128i) / sizeof(uint32_t)> u32;
+    std::array<uint64_t, sizeof(__m128i) / sizeof(uint64_t)> u64;
 #if defined(__SIZEOF_INT128__)
-    std::array<__uint128_t, 16 / sizeof(__uint128_t)> u128;
+    std::array<__uint128_t, sizeof(__m128i) / sizeof(__uint128_t)> u128;
 #endif
     __m128i xmm;
 };
 
-static_assert(sizeof(simd128i) == 16);
+static_assert(sizeof(simd128i) == sizeof(__m128i));
 
 union alignas(sizeof(__m256i)) simd256i
 {
-    std::array<std::byte, 32 / sizeof(std::byte)> bytes{};
-    std::array<uint8_t, 32 / sizeof(uint8_t)> u8;
-    std::array<uint16_t, 32 / sizeof(uint16_t)> u16;
-    std::array<uint32_t, 32 / sizeof(uint32_t)> u32;
-    std::array<uint64_t, 32 / sizeof(uint64_t)> u64;
+    std::array<std::byte, sizeof(__m256i) / sizeof(std::byte)> bytes{};
+    std::array<uint8_t, sizeof(__m256i) / sizeof(uint8_t)> u8;
+    std::array<uint16_t, sizeof(__m256i) / sizeof(uint16_t)> u16;
+    std::array<uint32_t, sizeof(__m256i) / sizeof(uint32_t)> u32;
+    std::array<uint64_t, sizeof(__m256i) / sizeof(uint64_t)> u64;
 #if defined(__SIZEOF_INT128__)
-    std::array<__uint128_t, 32 / sizeof(__uint128_t)> u128;
+    std::array<__uint128_t, sizeof(__m256i) / sizeof(__uint128_t)> u128;
 #endif
-    arr_m128i<32 / sizeof(__m128i)> xmm;
+    arr_m128i<sizeof(__m256i) / sizeof(__m128i)> xmm;
     __m256i ymm;
 };
 
-static_assert(sizeof(simd256i) == 32);
+static_assert(sizeof(simd256i) == sizeof(__m256i));
 
 union alignas(sizeof(__m512i)) simd512i
 {
-    std::array<std::byte, 64 / sizeof(std::byte)> bytes{};
-    std::array<uint8_t, 64 / sizeof(uint8_t)> u8;
-    std::array<uint16_t, 64 / sizeof(uint16_t)> u16;
-    std::array<uint32_t, 64 / sizeof(uint32_t)> u32;
-    std::array<uint64_t, 64 / sizeof(uint64_t)> u64;
+    std::array<std::byte, sizeof(__m512i) / sizeof(std::byte)> bytes{};
+    std::array<uint8_t, sizeof(__m512i) / sizeof(uint8_t)> u8;
+    std::array<uint16_t, sizeof(__m512i) / sizeof(uint16_t)> u16;
+    std::array<uint32_t, sizeof(__m512i) / sizeof(uint32_t)> u32;
+    std::array<uint64_t, sizeof(__m512i) / sizeof(uint64_t)> u64;
 #if defined(__SIZEOF_INT128__)
-    std::array<__uint128_t, 64 / sizeof(__uint128_t)> u128;
+    std::array<__uint128_t, sizeof(__m512i) / sizeof(__uint128_t)> u128;
 #endif
-    arr_m128i<64 / sizeof(__m128i)> xmm;
-    arr_m256i<64 / sizeof(__m256i)> ymm;
+    arr_m128i<sizeof(__m512i) / sizeof(__m128i)> xmm;
+    arr_m256i<sizeof(__m512i) / sizeof(__m256i)> ymm;
     __m512i zmm;
 };
 
-static_assert(sizeof(simd512i) == 64);
+static_assert(sizeof(simd512i) == sizeof(__m512i));
 
 template <size_t N>
 inline auto
