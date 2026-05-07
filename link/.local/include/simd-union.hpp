@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// Unions with data members that are standard integers and SIMD types
+/// Unions with data members that are standard unsigned integers and x86 SIMD types
 /**
 * \file
 * \author Steven Ward
