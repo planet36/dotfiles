@@ -65,7 +65,7 @@ union alignas(sizeof(__m512i)) simd512i
 static_assert(sizeof(simd512i) == sizeof(__m512i));
 
 template <size_t N>
-inline auto
+constexpr auto
 arr_m128i_to_simd128i(const arr_m128i<N>& x)
 {
     std::array<simd128i, N> y;
@@ -80,7 +80,7 @@ arr_m128i_to_simd128i(const arr_m128i<N>& x)
 }
 
 template <size_t N>
-inline auto
+constexpr auto
 arr_m256i_to_simd256i(const arr_m256i<N>& x)
 {
     std::array<simd256i, N> y;
@@ -95,7 +95,7 @@ arr_m256i_to_simd256i(const arr_m256i<N>& x)
 }
 
 template <size_t N>
-inline auto
+constexpr auto
 arr_m512i_to_simd512i(const arr_m512i<N>& x)
 {
     std::array<simd512i, N> y;
@@ -110,7 +110,7 @@ arr_m512i_to_simd512i(const arr_m512i<N>& x)
 }
 
 template <size_t N>
-inline auto
+constexpr auto
 arr_simd128i_to_m128i(const std::array<simd128i, N>& x)
 {
     arr_m128i<N> y;
@@ -125,7 +125,7 @@ arr_simd128i_to_m128i(const std::array<simd128i, N>& x)
 }
 
 template <size_t N>
-inline auto
+constexpr auto
 arr_simd256i_to_m256i(const std::array<simd256i, N>& x)
 {
     arr_m256i<N> y;
@@ -140,7 +140,7 @@ arr_simd256i_to_m256i(const std::array<simd256i, N>& x)
 }
 
 template <size_t N>
-inline auto
+constexpr auto
 arr_simd512i_to_m512i(const std::array<simd512i, N>& x)
 {
     arr_m512i<N> y;
