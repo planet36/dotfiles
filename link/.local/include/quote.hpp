@@ -22,9 +22,6 @@ inline constexpr char BACKSLASH = '\\';
 inline constexpr char SINGLE_QUOTE = '\'';
 inline constexpr char DOUBLE_QUOTE = '"';
 
-// single quote, backslash, single quote, single quote
-inline constexpr std::string_view SHELL_SINGLE_QUOTE_ESCAPED = R"('\'')";
-
 inline constexpr std::string_view OCT_DIGITS = "01234567";
 inline constexpr std::string_view HEX_DIGITS = "0123456789ABCDEF";
 
