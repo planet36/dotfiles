@@ -328,8 +328,7 @@ end
 vim.g.orig_colorscheme = get_colorscheme()
 vim.g.diff_colorscheme = 'wildcharm'
 
--- https://github.com/srcery-colors/srcery-vim/blob/master/autoload/srcery.vim#L17
--- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L326
+-- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L37
 -- Use yellow instead of bright magenta
 local srcery_yellow = '#FBB829'
 vim.cmd.highlight('Constant', 'guifg=' .. srcery_yellow)
