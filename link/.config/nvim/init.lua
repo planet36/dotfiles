@@ -299,6 +299,8 @@ vim.pack.add({
 -- Show plugins ":lua vim.pack.update(nil, { offline = true })"
 
 -- Update plugins ":lua vim.pack.update()"
+--   (:quit to discard updates)
+--   (:write to apply updates)
 
 -- }}}
 
