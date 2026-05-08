@@ -14,7 +14,7 @@ x = 2
 y = 2
 
 
-# https://github.com/srcery-colors/srcery-terminal/
+# https://github.com/srcery-colors/srcery-terminal/blob/master/alacritty/srcery_alacritty.toml
 
 [colors.primary]
 background = "#1c1b19"

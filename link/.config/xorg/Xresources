@@ -26,7 +26,6 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
 
 ! https://github.com/srcery-colors/srcery-terminal/blob/master/xresources/srcery.xresources
-! https://raw.githubusercontent.com/srcery-colors/srcery-terminal/master/xresources/srcery.xresources
 
 ! special
 *foreground:   #fce8c3
