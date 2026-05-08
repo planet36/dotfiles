@@ -16,26 +16,28 @@ y = 2
 
 # https://github.com/srcery-colors/srcery-terminal/blob/master/alacritty/srcery_alacritty.toml
 
+# https://github.com/srcery-colors/srcery-terminal/
+
 [colors.primary]
-background = "#1c1b19"
+background = "#121110"
 foreground = "#fce8c3"
 
 [colors.cursor]
 text = "CellBackground"
-cursor = "#fbb829"
+cursor = "#fed06e"
 
 [colors.normal]
-black = "#1c1b19"
+black = "#121110"
 red = "#ef2f27"
 green = "#519f50"
 yellow = "#fbb829"
 blue = "#2c78bf"
 magenta = "#e02c6d"
 cyan = "#0aaeb3"
-white = "#baa67f"
+white = "#c5b088"
 
 [colors.bright]
-black = "#918175"
+black = "#917e6b"
 red = "#f75341"
 green = "#98bc37"
 yellow = "#fed06e"
