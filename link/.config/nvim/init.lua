@@ -332,7 +332,6 @@ vim.g.diff_colorscheme = 'wildcharm'
 -- Use yellow instead of bright magenta
 local srcery_yellow = '#FBB829'
 vim.cmd.highlight('Constant', 'guifg=' .. srcery_yellow)
-vim.cmd.highlight('Character', 'guifg=' .. srcery_yellow)
 vim.cmd.highlight('Boolean', 'guifg=' .. srcery_yellow)
 vim.cmd.highlight('Number', 'guifg=' .. srcery_yellow)
 vim.cmd.highlight('Float', 'guifg=' .. srcery_yellow)
