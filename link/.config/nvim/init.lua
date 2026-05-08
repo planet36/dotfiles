@@ -191,75 +191,6 @@ require('abbrev')
 
 -- }}}
 
--- {{{ Diff
-
-function get_colorscheme()
-  -- https://neovim.io/doc/user/api.html#nvim_exec2()
-  -- XXX: vim.cmd.colorscheme() prints (not returns) the current colorscheme.
-  return vim.api.nvim_exec2('colorscheme', { output = true }).output
-end
-
--- Count the windows in the current tabpage for which diff is true.
-function count_tabpage_windows_diffed()
-  -- https://neovim.io/doc/user/api.html#nvim_tabpage_list_wins()
-  -- https://neovim.io/doc/user/api.html#nvim_win_get_option()
-
-  local windows_diffed = 0
-
-  for i, win_hndl in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-    if vim.api.nvim_win_get_option(win_hndl, 'diff') then windows_diffed = windows_diffed + 1 end
-  end
-
-  return windows_diffed
-end
-
--- https://vi.stackexchange.com/questions/39637/detect-when-a-diff-begins-and-ends
--- Change colorscheme when diff mode begins/ends.
-function handle_diff_change_colorscheme()
-  local num_windows_diffed = count_tabpage_windows_diffed()
-
-  if num_windows_diffed > 1 then
-    if get_colorscheme() ~= vim.g.diff_colorscheme then
-      vim.cmd.colorscheme(vim.g.diff_colorscheme)
-    end
-  else
-    if get_colorscheme() ~= vim.g.orig_colorscheme then
-      vim.cmd.colorscheme(vim.g.orig_colorscheme)
-    end
-  end
-end
-
-local change_colors_in_diff = vim.api.nvim_create_augroup('change_colors_in_diff', {})
-
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = change_colors_in_diff,
-  pattern = { '*' },
-  callback = function() vim.g.orig_colorscheme = get_colorscheme() end,
-})
-
--- https://vi.stackexchange.com/a/13395
-vim.api.nvim_create_autocmd({ 'VimEnter', 'BufWinEnter', 'BufWinLeave', 'TabEnter', 'TabLeave' }, {
-  group = change_colors_in_diff,
-  pattern = { '*' },
-  callback = function() handle_diff_change_colorscheme() end,
-})
-
--- https://vi.stackexchange.com/a/12852
-vim.api.nvim_create_autocmd('OptionSet', {
-  group = change_colors_in_diff,
-  pattern = { 'diff' },
-  callback = function() handle_diff_change_colorscheme() end,
-})
-
--- :help DiffOrig
-vim.api.nvim_create_user_command(
-  'DiffOrig',
-  'vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis | wincmd p | diffthis',
-  {}
-)
-
--- }}}
-
 -- {{{ Command to start Python 3
 
 vim.g.python3_host_prog = '/usr/bin/python3'
@@ -324,9 +255,6 @@ local colorscheme_list = {
 for i, c in ipairs(colorscheme_list) do
   if pcall(vim.cmd.colorscheme, c) then break end
 end
-
-vim.g.orig_colorscheme = get_colorscheme()
-vim.g.diff_colorscheme = 'wildcharm'
 
 -- https://github.com/srcery-colors/srcery-vim/blob/master/colors/srcery.vim#L37
 -- Use yellow instead of bright magenta
