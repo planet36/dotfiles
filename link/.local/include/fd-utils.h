@@ -42,7 +42,7 @@ is_seekable(const int fd)
 * \return    File size in bytes on success, or \c -1 if \c fstat(2) fails
 *            (with \c errno set by \c fstat).
 */
-static inline long
+static inline off_t
 get_file_size(const int fd)
 {
     struct stat statbuf;
