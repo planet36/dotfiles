@@ -5,10 +5,6 @@
 /**
 * \file
 * \author Steven Ward
-* \sa https://www.gnu.org/software/libc/manual/html_node/File-Locks.html
-* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks.html
-* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks-Example.html
-* \sa https://man7.org/linux/man-pages/man2/fcntl.2.html
 */
 
 #pragma once
@@ -41,6 +37,10 @@ extern "C" {
 *
 * \note OFD locks (\c F_OFD_SETLKW) require Linux 3.15 or later.
 * \sa acq_write_lock_fd(), rel_lock_fd()
+* \sa https://www.gnu.org/software/libc/manual/html_node/File-Locks.html
+* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks.html
+* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks-Example.html
+* \sa https://man7.org/linux/man-pages/man2/fcntl.2.html
 */
 static inline int
 acq_read_lock_fd(int fd)
@@ -83,6 +83,10 @@ acq_read_lock_fd(int fd)
 *
 * \note OFD locks (\c F_OFD_SETLKW) require Linux 3.15 or later.
 * \sa acq_read_lock_fd(), rel_lock_fd()
+* \sa https://www.gnu.org/software/libc/manual/html_node/File-Locks.html
+* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks.html
+* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks-Example.html
+* \sa https://man7.org/linux/man-pages/man2/fcntl.2.html
 */
 static inline int
 acq_write_lock_fd(int fd)
@@ -115,6 +119,10 @@ acq_write_lock_fd(int fd)
 *
 * \note OFD locks (\c F_OFD_SETLKW) require Linux 3.15 or later.
 * \sa acq_read_lock_fd(), acq_write_lock_fd()
+* \sa https://www.gnu.org/software/libc/manual/html_node/File-Locks.html
+* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks.html
+* \sa https://www.gnu.org/software/libc/manual/html_node/Open-File-Description-Locks-Example.html
+* \sa https://man7.org/linux/man-pages/man2/fcntl.2.html
 */
 static inline int
 rel_lock_fd(int fd)
