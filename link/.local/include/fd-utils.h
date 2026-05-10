@@ -258,8 +258,7 @@ fadvise_sequential_noreuse(const int fd)
     return false;
 }
 
-/// Advises the kernel that a memory-mapped region will be accessed
-/// sequentially and in the near future.
+/// Advises the kernel that a memory-mapped region will be read sequentially soon.
 /**
 * Issues two successive \c posix_madvise(3) hints over the mapping:
 *   - \c POSIX_MADV_SEQUENTIAL — expect sequential access, prompting
