@@ -52,7 +52,7 @@ get_mmap_size(const size_t file_size)
     return file_size + (page_size - (file_size % page_size));
 }
 
-static bool
+static inline bool
 fadvise_sequential_noreuse(const int fd)
 {
     int posix_fadvise_result = 0;
@@ -76,7 +76,7 @@ fadvise_sequential_noreuse(const int fd)
     return false;
 }
 
-static bool
+static inline bool
 madvise_sequential_willneed(void* mmap_addr, const size_t mmap_size)
 {
     int posix_madvise_result = 0;
