@@ -127,7 +127,9 @@ acq_read_lock_fd(int fd)
         .l_len = 0,
         .l_pid = 0,
     };
-    return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
+
+    // Use F_OFD_SETLK for non-blocking behavior.
+    return fcntl(fd, F_OFD_SETLKW, &lock);
 }
 
 /// Acquires a blocking OFD write (exclusive) lock on an entire file.
@@ -173,7 +175,9 @@ acq_write_lock_fd(int fd)
         .l_len = 0,
         .l_pid = 0,
     };
-    return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
+
+    // Use F_OFD_SETLK for non-blocking behavior.
+    return fcntl(fd, F_OFD_SETLKW, &lock);
 }
 
 /// Releases an OFD lock held on an entire file.
@@ -209,7 +213,9 @@ rel_lock_fd(int fd)
         .l_len = 0,
         .l_pid = 0,
     };
-    return fcntl(fd, F_OFD_SETLKW, &lock); // or F_OFD_SETLK
+
+    // Use F_OFD_SETLK for non-blocking behavior.
+    return fcntl(fd, F_OFD_SETLKW, &lock);
 }
 
 /// Advises the kernel that a file will be read sequentially and only once.
