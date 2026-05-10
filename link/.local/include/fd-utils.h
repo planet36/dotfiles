@@ -75,11 +75,13 @@ get_mmap_size(const size_t file_size)
     if (file_size == 0)
         return page_size;
 
-    if ((file_size % page_size) == 0)
+    const size_t remainder = file_size % page_size;
+
+    if (remainder == 0)
         return file_size;
 
     // align on page boundary
-    return file_size + (page_size - (file_size % page_size));
+    return file_size + (page_size - remainder);
 }
 
 /// Acquires a blocking OFD read (shared) lock on an entire file.
