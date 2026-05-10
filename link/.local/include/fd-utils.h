@@ -226,6 +226,7 @@ rel_lock_fd(int fd)
 * \param fd  Open file descriptor to advise on.
 * \return    \c true if either \c posix_fadvise call failed (with \c errno set
 *            to the error), \c false if both hints were accepted.
+* \sa https://man7.org/linux/man-pages/man2/posix_fadvise.2.html
 */
 static inline bool
 fadvise_sequential_noreuse(const int fd)
@@ -269,6 +270,7 @@ fadvise_sequential_noreuse(const int fd)
 * \return           \c true if either \c posix_madvise call failed (with
 *                   \c errno set to the error), \c false if both hints were
 *                   accepted.
+* \sa https://man7.org/linux/man-pages/man3/posix_madvise.3.html
 */
 static inline bool
 madvise_sequential_willneed(void* mmap_addr, const size_t mmap_size)
