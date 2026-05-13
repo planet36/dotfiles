@@ -39,7 +39,8 @@ inline constexpr uint64_t fnv_offset_basis = UINT64_C(14'695'981'039'346'656'037
 constexpr auto
 fnv1_32(const std::string_view s)
 {
-    using namespace fnv_const_32;
+    using fnv_const_32::fnv_offset_basis;
+    using fnv_const_32::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -57,7 +58,8 @@ fnv1_32(const std::string_view s)
 constexpr auto
 fnv1a_32(const std::string_view s)
 {
-    using namespace fnv_const_32;
+    using fnv_const_32::fnv_offset_basis;
+    using fnv_const_32::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -75,7 +77,8 @@ fnv1a_32(const std::string_view s)
 constexpr auto
 fnv1_64(const std::string_view s)
 {
-    using namespace fnv_const_64;
+    using fnv_const_64::fnv_offset_basis;
+    using fnv_const_64::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -93,7 +96,8 @@ fnv1_64(const std::string_view s)
 constexpr auto
 fnv1a_64(const std::string_view s)
 {
-    using namespace fnv_const_64;
+    using fnv_const_64::fnv_offset_basis;
+    using fnv_const_64::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -113,7 +117,8 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1_32(Iter first, const Iter last)
 {
-    using namespace fnv_const_32;
+    using fnv_const_32::fnv_offset_basis;
+    using fnv_const_32::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -133,7 +138,8 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1a_32(Iter first, const Iter last)
 {
-    using namespace fnv_const_32;
+    using fnv_const_32::fnv_offset_basis;
+    using fnv_const_32::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -153,7 +159,8 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1_64(Iter first, const Iter last)
 {
-    using namespace fnv_const_64;
+    using fnv_const_64::fnv_offset_basis;
+    using fnv_const_64::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -173,7 +180,8 @@ requires (sizeof(std::iter_value_t<Iter>) == 1)
 constexpr auto
 fnv1a_64(Iter first, const Iter last)
 {
-    using namespace fnv_const_64;
+    using fnv_const_64::fnv_offset_basis;
+    using fnv_const_64::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -191,7 +199,8 @@ fnv1a_64(Iter first, const Iter last)
 constexpr auto
 fnv1_32(const std::span<const std::byte> bytes)
 {
-    using namespace fnv_const_32;
+    using fnv_const_32::fnv_offset_basis;
+    using fnv_const_32::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -209,7 +218,8 @@ fnv1_32(const std::span<const std::byte> bytes)
 constexpr auto
 fnv1a_32(const std::span<const std::byte> bytes)
 {
-    using namespace fnv_const_32;
+    using fnv_const_32::fnv_offset_basis;
+    using fnv_const_32::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -227,7 +237,8 @@ fnv1a_32(const std::span<const std::byte> bytes)
 constexpr auto
 fnv1_64(const std::span<const std::byte> bytes)
 {
-    using namespace fnv_const_64;
+    using fnv_const_64::fnv_offset_basis;
+    using fnv_const_64::fnv_prime;
 
     auto result = fnv_offset_basis;
 
@@ -245,7 +256,8 @@ fnv1_64(const std::span<const std::byte> bytes)
 constexpr auto
 fnv1a_64(const std::span<const std::byte> bytes)
 {
-    using namespace fnv_const_64;
+    using fnv_const_64::fnv_offset_basis;
+    using fnv_const_64::fnv_prime;
 
     auto result = fnv_offset_basis;
 

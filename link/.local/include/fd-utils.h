@@ -45,7 +45,7 @@ is_seekable(const int fd)
 static inline off_t
 get_file_size(const int fd)
 {
-    struct stat statbuf;
+    struct stat statbuf = {};
 
     if (fstat(fd, &statbuf) < 0)
         return -1;
@@ -70,6 +70,7 @@ static inline size_t
 get_mmap_size(const size_t file_size)
 {
     // Presume that sysconf(_SC_PAGESIZE) will not fail.
+    // NOLINTNEXTLINE(hicpp-use-auto,modernize-use-auto)
     const size_t page_size = (size_t)sysconf(_SC_PAGESIZE);
 
     if (file_size == 0)
