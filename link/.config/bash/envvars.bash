@@ -14,6 +14,8 @@ export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export CC=gcc
 export CXX=g++
 
+export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME"/claude
+
 export EDITOR=nvim
 export VISUAL=nvim
 
