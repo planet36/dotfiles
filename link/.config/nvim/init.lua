@@ -277,15 +277,15 @@ require('highlight-undo').setup({})
 
 -- {{{ Statusline plugin
 
-require('lualine').setup {
+require('lualine').setup({
   options = {
-    theme = 'codedark'
+    theme = 'codedark',
   },
   sections = {
     lualine_a = {
       {
         'mode',
-        fmt = function(str) return str:sub(1,3) end,
+        fmt = function(str) return str:sub(1, 3) end,
       },
     },
     lualine_c = {
@@ -293,7 +293,7 @@ require('lualine').setup {
         'filename',
         path = 1,
         symbols = {
-          readonly = '[RO]'
+          readonly = '[RO]',
         },
       },
     },
@@ -304,11 +304,11 @@ require('lualine').setup {
         'filename',
         path = 1,
         symbols = {
-          readonly = '[RO]'
+          readonly = '[RO]',
         },
       },
     },
   },
-}
+})
 
 -- }}}
