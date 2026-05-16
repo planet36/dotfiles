@@ -266,6 +266,15 @@ vim.cmd.highlight('Number', 'guifg=' .. srcery_yellow)
 
 -- }}}
 
+-- {{{ highlight-undo plugin
+
+-- Copied from:
+-- https://github.com/tzachar/highlight-undo.nvim#setup
+
+require('highlight-undo').setup({})
+
+-- }}}
+
 -- {{{ Statusline plugin
 
 require('lualine').setup {
