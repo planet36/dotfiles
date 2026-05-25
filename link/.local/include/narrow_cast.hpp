@@ -25,7 +25,7 @@
 * \tparam From The source integral type
 * \param value The value to cast
 * \return \a value cast to \a To
-* \throw std::range_error if \a value is not representable in \a To
+* \exception std::range_error if \a value is not representable in \a To
 *
 * \note \c std::in_range is not used because it does not support character
 *       types or \c bool, which are included in the \c std::integral concept.
@@ -33,13 +33,13 @@
 *       comparisons correctly across all integral types.
 */
 template <std::integral To, std::integral From>
-constexpr To
+[[nodiscard]] constexpr To
 narrow_cast(const From value)
 {
     if (std::cmp_less(value, std::numeric_limits<To>::min()) ||
         std::cmp_greater(value, std::numeric_limits<To>::max()))
     {
-        throw std::range_error{"narrowing conversion"};
+        throw std::range_error{"narrowing error"};
     }
 
     return static_cast<To>(value);

@@ -18,14 +18,14 @@
 /**
 * \pre \a x is in the interval <code>[0, 15]</code>
 */
-static constexpr char
+[[nodiscard]] static constexpr char
 nibble_char(const uint8_t x) noexcept
 {
     return static_cast<char>(x + (x < 10 ? '0' : -10 + 'a'));
 }
 
 /// Convert a span of bytes to a hexadecimal string
-static std::string
+[[nodiscard]] static std::string
 bytes_to_hex(const std::span<const std::byte> byte_sp)
 {
     const size_t result_len = std::size(byte_sp) * 2;

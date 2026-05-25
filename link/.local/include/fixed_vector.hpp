@@ -277,7 +277,7 @@ public:
     { append_range(std::begin(il), std::end(il)); }
 
     template <std::ranges::input_range R>
-    constexpr void append_range(R&& rg)
+    constexpr void append_range(R&& rg) // NOLINT(cppcoreguidelines-missing-std-forward)
     {
         if constexpr (std::ranges::sized_range<R>)
         {
@@ -331,7 +331,7 @@ public:
     { return try_append_range(std::begin(il), std::end(il)); }
 
     template <std::ranges::input_range R>
-    [[nodiscard]] constexpr bool try_append_range(R&& rg)
+    [[nodiscard]] constexpr bool try_append_range(R&& rg) // NOLINT(cppcoreguidelines-missing-std-forward)
     {
         if constexpr (std::ranges::sized_range<R>)
         {
