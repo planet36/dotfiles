@@ -33,7 +33,7 @@
 *       comparisons correctly across all integral types.
 */
 template <std::integral To, std::integral From>
-[[nodiscard]] constexpr To
+[[nodiscard]] static constexpr To
 narrow_cast(const From value)
 {
     if (std::cmp_less(value, std::numeric_limits<To>::min()) ||
