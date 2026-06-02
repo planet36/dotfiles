@@ -285,7 +285,7 @@ public:
                 throw std::bad_alloc{};
         }
 
-        for (auto&& e : rg)
+        for (auto&& e : std::forward<R>(rg))
         {
             emplace_back(std::forward<decltype(e)>(e));
         }
@@ -339,7 +339,7 @@ public:
                 return false;
         }
 
-        for (auto&& e : rg)
+        for (auto&& e : std::forward<R>(rg))
         {
             if (!try_emplace_back(std::forward<decltype(e)>(e)))
                 return false;
