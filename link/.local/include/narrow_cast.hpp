@@ -14,10 +14,10 @@
 
 #pragma once
 
+#include "in_range.hpp"
+
 #include <concepts>
-#include <limits>
 #include <stdexcept>
-#include <utility>
 
 /// Cast \a value to integral type \a To, throwing if the value is out of range.
 /**
@@ -29,15 +29,12 @@
 *
 * \note \c std::in_range is not used because it does not support character
 *       types or \c bool, which are included in the \c std::integral concept.
-*       \c std::cmp_less and \c std::cmp_greater handle signed/unsigned
-*       comparisons correctly across all integral types.
 */
 template <std::integral To, std::integral From>
 [[nodiscard]] static constexpr To
 narrow_cast(const From value)
 {
-    if (std::cmp_less(value, std::numeric_limits<To>::min()) ||
-        std::cmp_greater(value, std::numeric_limits<To>::max()))
+    if (!in_range<To>(value))
     {
         throw std::range_error{"narrowing error"};
     }
