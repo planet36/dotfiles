@@ -272,6 +272,9 @@ transpose_8(uint16x8_t x[static restrict 8])
 }
 
 /// Transpose \a x (treating it as a 16x16 matrix of \c uint8_t) using ARM Neon intrinsics
+/**
+* \sa https://codereview.stackexchange.com/questions/301656/16x16-byte-matrix-transpose-using-arm-neon-intrinsics-in-c
+*/
 static void
 transpose_16(uint8x16_t x[static restrict 16])
 {

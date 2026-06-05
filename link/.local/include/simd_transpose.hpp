@@ -273,6 +273,9 @@ transpose(std::array<uint16x8_t, 8>& x)
 }
 
 /// Transpose \a x (treating it as a 16x16 matrix of \c uint8_t) using ARM Neon intrinsics
+/**
+* \sa https://codereview.stackexchange.com/questions/301656/16x16-byte-matrix-transpose-using-arm-neon-intrinsics-in-c
+*/
 static void
 transpose(std::array<uint8x16_t, 16>& x)
 {
