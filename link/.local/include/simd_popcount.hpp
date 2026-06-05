@@ -59,12 +59,6 @@ popcount(const uint8x16_t x)
     return vaddvq_u8(vcntq_u8(x));
 }
 
-static inline int
-popcount(const uint8x16x2_t x)
-{
-    return popcount(x.val[0]) + popcount(x.val[1]);
-}
-
 #else
 
 #error "Architecture not supported"
