@@ -50,6 +50,7 @@ combine_u64x2(const uint64_t hi, const uint64_t lo) noexcept
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 
+// NOLINTNEXTLINE(bugprone-throwing-static-initialization,cert-err58-cpp)
 const std::array<uint8x16_t, 128> simd_bitmask128_arr {
     // hi, lo
     combine_u64x2(0ULL, 1ULL <<  0),
