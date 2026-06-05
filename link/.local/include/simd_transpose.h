@@ -17,7 +17,7 @@
 
 #pragma once
 
-#if defined(__x86_64__) && defined(__SSE2__)
+#if defined(__x86_64__)
 
 #include <immintrin.h>
 
