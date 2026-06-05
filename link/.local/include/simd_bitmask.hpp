@@ -22,7 +22,7 @@ combine_u64x2(const uint64_t hi, const uint64_t lo)
 {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
-    return _mm_set_epi64x(hi, lo);
+    return _mm_set_epi64x(hi, lo); // NOLINT(cppcoreguidelines-narrowing-conversions)
 #pragma GCC diagnostic pop
 }
 
@@ -42,7 +42,9 @@ combine_u64x2(const uint64_t hi, const uint64_t lo)
 }
 
 #else
+
 #error "Architecture not supported"
+
 #endif
 
 #pragma GCC diagnostic push
