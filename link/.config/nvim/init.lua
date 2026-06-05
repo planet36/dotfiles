@@ -172,6 +172,17 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 
 -- }}}
 
+-- {{{ Automatically enable spell check in git editor
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+})
+
+-- }}}
+
 -- {{{ Folding
 
 vim.o.foldmethod = 'marker'
