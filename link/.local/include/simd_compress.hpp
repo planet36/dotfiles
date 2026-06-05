@@ -71,8 +71,8 @@ using uint8x16x2_t = __m256i;
 * \li diffusion rate of \a a = 50.3%
 * \li diffusion rate of \a b = 12.7%
 */
-static inline uint8x16_t
-compress_aesenc2(const uint8x16_t a, const uint8x16_t b)
+[[nodiscard]] static inline uint8x16_t
+compress_aesenc2(const uint8x16_t a, const uint8x16_t b) noexcept
 {
 #if defined(__x86_64__) && defined(__AES__)
     return _mm_aesenc_si128(
@@ -92,8 +92,8 @@ compress_aesenc2(const uint8x16_t a, const uint8x16_t b)
 * \li diffusion rate of \a a = 50.2%
 * \li diffusion rate of \a b = 50.0%
 */
-static inline uint8x16_t
-compress_aesenc3(const uint8x16_t a, const uint8x16_t b)
+[[nodiscard]] static inline uint8x16_t
+compress_aesenc3(const uint8x16_t a, const uint8x16_t b) noexcept
 {
 #if defined(__x86_64__) && defined(__AES__)
     return _mm_aesenc_si128(
@@ -117,8 +117,8 @@ compress_aesenc3(const uint8x16_t a, const uint8x16_t b)
 * \li diffusion rate of \a a = 50.0%
 * \li diffusion rate of \a b = 50.0%
 */
-static inline uint8x16_t
-compress_aesenc4(const uint8x16_t a, const uint8x16_t b)
+[[nodiscard]] static inline uint8x16_t
+compress_aesenc4(const uint8x16_t a, const uint8x16_t b) noexcept
 {
 #if defined(__x86_64__) && defined(__AES__)
     return _mm_aesenc_si128(
@@ -142,8 +142,8 @@ compress_aesenc4(const uint8x16_t a, const uint8x16_t b)
 
 /// Compress (via 2 rounds of AES encryption) 2 256-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
-static inline uint8x16x2_t
-compress_aesenc2(const uint8x16x2_t a, const uint8x16x2_t b)
+[[nodiscard]] static inline uint8x16x2_t
+compress_aesenc2(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
 {
 #if defined(__x86_64__) && defined(__VAES__)
     return _mm256_aesenc_epi128(
@@ -166,8 +166,8 @@ compress_aesenc2(const uint8x16x2_t a, const uint8x16x2_t b)
 
 /// Compress (via 3 rounds of AES encryption) 2 256-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
-static inline uint8x16x2_t
-compress_aesenc3(const uint8x16x2_t a, const uint8x16x2_t b)
+[[nodiscard]] static inline uint8x16x2_t
+compress_aesenc3(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
 {
 #if defined(__x86_64__) && defined(__VAES__)
     return _mm256_aesenc_epi128(
@@ -192,8 +192,8 @@ compress_aesenc3(const uint8x16x2_t a, const uint8x16x2_t b)
 
 /// Compress (via 4 rounds of AES encryption) 2 256-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
-static inline uint8x16x2_t
-compress_aesenc4(const uint8x16x2_t a, const uint8x16x2_t b)
+[[nodiscard]] static inline uint8x16x2_t
+compress_aesenc4(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
 {
 #if defined(__x86_64__) && defined(__VAES__)
     return _mm256_aesenc_epi128(
