@@ -77,7 +77,7 @@ vim.keymap.set('n', '<C-Left>', function() vim.cmd('vertical resize -1') end)
 vim.keymap.set('n', '<C-Right>', function() vim.cmd('vertical resize +1') end)
 
 vim.keymap.set('i', 'jj', '<Esc>')
-vim.keymap.set({ 'n', 'x' }, 'H', '0')
+vim.keymap.set({ 'n', 'x' }, 'H', '^')
 vim.keymap.set({ 'n', 'x' }, 'L', '$')
 
 vim.keymap.set({ 'n', 'x' }, '<Tab>', '%')
