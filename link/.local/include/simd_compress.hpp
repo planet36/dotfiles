@@ -51,6 +51,9 @@
 
 #pragma once
 
+#include <array>
+#include <cstddef>
+
 #if defined(__x86_64__) && defined(__AES__)
 
 #include <immintrin.h>
@@ -181,3 +184,112 @@ simd_compress_aes_enc_r4(const __m256i a, const __m256i b) noexcept
 }
 
 #endif
+
+#if defined(__x86_64__) && defined(__VAES__)
+
+/// Perform \c simd_compress_aes_enc_r2 on corresponding elements of \a arr_1 and \a arr_2
+/**
+* \pre \a arr_2 points to \a N elements
+*/
+template <size_t N>
+requires (N > 0) && ((N % 2) == 0) // N must be positive and even
+static void
+simd_compress_aes_enc_r2_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t* arr_2) noexcept
+{
+    for (unsigned int i = 0; i < N; i += 2)
+    {
+        // Cast adjacent pairs of elements to __m256i.
+        __m256i v_1 = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&arr_1[i]));
+        __m256i v_2 = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&arr_2[i]));
+
+        v_1 = simd_compress_aes_enc_r2(v_1, v_2);
+
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(&arr_1[i]), v_1);
+    }
+}
+
+/// Perform \c simd_compress_aes_enc_r3 on corresponding elements of \a arr_1 and \a arr_2
+/**
+* \pre \a arr_2 points to \a N elements
+*/
+template <size_t N>
+requires (N > 0) && ((N % 2) == 0) // N must be positive and even
+static void
+simd_compress_aes_enc_r3_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t* arr_2) noexcept
+{
+    for (unsigned int i = 0; i < N; i += 2)
+    {
+        // Cast adjacent pairs of elements to __m256i.
+        __m256i v_1 = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&arr_1[i]));
+        __m256i v_2 = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&arr_2[i]));
+
+        v_1 = simd_compress_aes_enc_r3(v_1, v_2);
+
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(&arr_1[i]), v_1);
+    }
+}
+
+/// Perform \c simd_compress_aes_enc_r4 on corresponding elements of \a arr_1 and \a arr_2
+/**
+* \pre \a arr_2 points to \a N elements
+*/
+template <size_t N>
+requires (N > 0) && ((N % 2) == 0) // N must be positive and even
+static void
+simd_compress_aes_enc_r4_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t* arr_2) noexcept
+{
+    for (unsigned int i = 0; i < N; i += 2)
+    {
+        // Cast adjacent pairs of elements to __m256i.
+        __m256i v_1 = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&arr_1[i]));
+        __m256i v_2 = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&arr_2[i]));
+
+        v_1 = simd_compress_aes_enc_r4(v_1, v_2);
+
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(&arr_1[i]), v_1);
+    }
+}
+
+#endif
+
+/// Perform \c simd_compress_aes_enc_r2 on corresponding elements of \a arr_1 and \a arr_2
+/**
+* \pre \a arr_2 points to \a N elements
+*/
+template <size_t N>
+static void
+simd_compress_aes_enc_r2_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t* arr_2) noexcept
+{
+    for (unsigned int i = 0; i < N; ++i)
+    {
+        arr_1[i] = simd_compress_aes_enc_r2(arr_1[i], arr_2[i]);
+    }
+}
+
+/// Perform \c simd_compress_aes_enc_r3 on corresponding elements of \a arr_1 and \a arr_2
+/**
+* \pre \a arr_2 points to \a N elements
+*/
+template <size_t N>
+static void
+simd_compress_aes_enc_r3_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t* arr_2) noexcept
+{
+    for (unsigned int i = 0; i < N; ++i)
+    {
+        arr_1[i] = simd_compress_aes_enc_r3(arr_1[i], arr_2[i]);
+    }
+}
+
+/// Perform \c simd_compress_aes_enc_r4 on corresponding elements of \a arr_1 and \a arr_2
+/**
+* \pre \a arr_2 points to \a N elements
+*/
+template <size_t N>
+static void
+simd_compress_aes_enc_r4_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t* arr_2) noexcept
+{
+    for (unsigned int i = 0; i < N; ++i)
+    {
+        arr_1[i] = simd_compress_aes_enc_r4(arr_1[i], arr_2[i]);
+    }
+}
