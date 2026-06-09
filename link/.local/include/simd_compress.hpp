@@ -57,10 +57,6 @@
 
 using uint8x16_t = __m128i;
 
-#if defined(__AVX__)
-using uint8x16x2_t = __m256i;
-#endif
-
 #elif defined(__aarch64__) && defined(__ARM_FEATURE_AES)
 
 #include <arm_neon.h>
@@ -150,8 +146,8 @@ simd_compress_aes_enc_r4(const uint8x16_t a, const uint8x16_t b) noexcept
 
 /// Compress (via 2 rounds of AES encryption) 2 256-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
-[[nodiscard]] static inline uint8x16x2_t
-simd_compress_aes_enc_r2(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
+[[nodiscard]] static inline __m256i
+simd_compress_aes_enc_r2(const __m256i a, const __m256i b) noexcept
 {
     return _mm256_aesenc_epi128(
                 _mm256_aesenc_epi128(a, b),
@@ -160,8 +156,8 @@ simd_compress_aes_enc_r2(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
 
 /// Compress (via 3 rounds of AES encryption) 2 256-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
-[[nodiscard]] static inline uint8x16x2_t
-simd_compress_aes_enc_r3(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
+[[nodiscard]] static inline __m256i
+simd_compress_aes_enc_r3(const __m256i a, const __m256i b) noexcept
 {
     return _mm256_aesenc_epi128(
                 _mm256_aesenc_epi128(
@@ -172,8 +168,8 @@ simd_compress_aes_enc_r3(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
 
 /// Compress (via 4 rounds of AES encryption) 2 256-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
-[[nodiscard]] static inline uint8x16x2_t
-simd_compress_aes_enc_r4(const uint8x16x2_t a, const uint8x16x2_t b) noexcept
+[[nodiscard]] static inline __m256i
+simd_compress_aes_enc_r4(const __m256i a, const __m256i b) noexcept
 {
     return _mm256_aesenc_epi128(
                 _mm256_aesenc_epi128(
