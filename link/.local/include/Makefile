@@ -20,6 +20,7 @@ CFLAGS += -Wconversion
 
 CXXFLAGS += $(OPTIMIZE_OPTIONS)
 CXXFLAGS += -Werror
+CXXFLAGS += -Wno-error=ignored-attributes
 CXXFLAGS += -Wno-error=pedantic
 CXXFLAGS += -Wno-error=useless-cast
 CXXFLAGS += -Wno-unused-function
