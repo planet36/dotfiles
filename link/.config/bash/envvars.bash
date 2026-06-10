@@ -271,7 +271,7 @@ LATEST_CXX_STD="$(COLUMNS=200 gcc -v --help 2>/dev/null | command grep -E -- '^\
 # shellcheck disable=SC2034
 LATEST_GNUXX_STD="$(COLUMNS=200 gcc -v --help 2>/dev/null | command grep -E -- '^\s*-std=gnu\+\+2' | command grep -v -F 'Same as' | tail -n 1 | awk '{print $1}')"
 
-export CXXFLAGS="$GCC_COMMON_OPTIONS $LATEST_GNUXX_STD -fchar8_t -fdiagnostics-show-template-tree -fstrict-enums -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
+export CXXFLAGS="$GCC_COMMON_OPTIONS $LATEST_GNUXX_STD -fchar8_t -fdiagnostics-show-template-tree -fmodules -fstrict-enums -Wctor-dtor-privacy -Wextra-semi -Wmismatched-tags -Wmultiple-inheritance -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-tags -Wsign-promo -Wstrict-null-sentinel -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wuseless-cast -Wzero-as-null-pointer-constant"
 
 # }}}
 
