@@ -73,7 +73,7 @@ using uint8x16_t = __m128i;
 /// Compress (via 2 rounds of AES encryption) 2 128-bit SIMD registers into 1,
 /// non-symmetrically and non-linearly
 /**
-* \li diffusion rate of \a a = 50.3%
+* \li diffusion rate of \a a = 50.2%
 * \li diffusion rate of \a b = 12.7%
 */
 [[nodiscard]] static inline uint8x16_t
