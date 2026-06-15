@@ -1,0 +1,15 @@
+#!/usr/bin/env -S bash --noprofile --norc --restricted
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: MPL-2.0
+
+set -euo pipefail
+
+declare -i bytes="${1:-20}"
+
+if ((bytes <= 0))
+then
+    bytes=20
+fi
+
+head -c "$bytes" /dev/urandom | basenc --wrap=0 --base58
+echo
