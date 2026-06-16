@@ -46,6 +46,8 @@ print(fr'''// SPDX-FileCopyrightText: {__author__}
 #include <array>
 #include <string>
 #include <string_view>
+
+// NOLINTBEGIN(bugprone-throwing-static-initialization,cert-err58-cpp)
 ''')
 
 '''
@@ -249,3 +251,6 @@ for c in range(128, 256):
     s = 'R"(' + fr'\x{c:02X}' + ')"'
     print(f'    {s:9},')
 print("};")
+
+print('''
+// NOLINTEND(bugprone-throwing-static-initialization,cert-err58-cpp)''')

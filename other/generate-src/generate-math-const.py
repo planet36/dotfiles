@@ -407,8 +407,13 @@ print(fr'''// SPDX-FileCopyrightText: {__author__}
 
 #pragma once
 
-#include <concepts>''')
+#include <concepts>
+
+// NOLINTBEGIN(modernize-use-std-numbers)''')
 
 for math_expr in math_expr_list:
     print()
     generate_math_const(math_expr)
+
+print('''
+// NOLINTEND(modernize-use-std-numbers)''')
