@@ -15,11 +15,11 @@
 #include <concepts>
 #include <type_traits>
 
-inline constexpr unsigned int seconds_per_minute = 60;
-inline constexpr unsigned int minutes_per_hour = 60;
-inline constexpr unsigned int hours_per_day = 24;
-inline constexpr unsigned int days_per_week = 7;
-inline constexpr unsigned int months_per_year = 12;
+inline constexpr int seconds_per_minute = 60;
+inline constexpr int minutes_per_hour = 60;
+inline constexpr int hours_per_day = 24;
+inline constexpr int days_per_week = 7;
+inline constexpr int months_per_year = 12;
 
 template <std::floating_point T>
 inline constexpr T days_per_year{365.2425L}; // Gregorian calendar
@@ -33,17 +33,17 @@ inline constexpr T weeks_per_month{4.348125L}; // days_per_month / days_per_week
 template <std::floating_point T>
 inline constexpr T weeks_per_year{52.1775L}; // days_per_year / days_per_week
 
-inline constexpr unsigned int seconds_per_hour = 3600;
-inline constexpr unsigned int seconds_per_day = 86'400;
-inline constexpr unsigned int seconds_per_week = 604'800;
-inline constexpr unsigned int seconds_per_year = 31'556'952;
-inline constexpr unsigned int seconds_per_month = 2'629'746;
+inline constexpr int seconds_per_hour = 3600;
+inline constexpr int seconds_per_day = 86'400;
+inline constexpr int seconds_per_week = 604'800;
+inline constexpr int seconds_per_year = 31'556'952;
+inline constexpr int seconds_per_month = 2'629'746;
 
 static_assert(seconds_per_hour == seconds_per_minute * minutes_per_hour);
 static_assert(seconds_per_day == seconds_per_hour * hours_per_day);
 static_assert(seconds_per_week == seconds_per_day * days_per_week);
 static_assert(seconds_per_year ==
-              static_cast<unsigned int>(days_per_year<long double> * seconds_per_day));
+              static_cast<int>(days_per_year<long double> * seconds_per_day));
 static_assert(seconds_per_month == seconds_per_year / months_per_year);
 
 constexpr auto
