@@ -13,7 +13,6 @@
 #include "number.hpp"
 
 #include <concepts>
-#include <type_traits>
 
 inline constexpr int seconds_per_minute = 60;
 inline constexpr int minutes_per_hour = 60;
@@ -120,7 +119,7 @@ years_from_seconds(std::integral auto x_seconds_abs)
 
 constexpr auto
 minutes_from_seconds(std::integral auto x_seconds_abs,
-                     std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
+                     decltype(x_seconds_abs)& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_minute;
     return x_seconds_abs / seconds_per_minute;
@@ -128,7 +127,7 @@ minutes_from_seconds(std::integral auto x_seconds_abs,
 
 constexpr auto
 hours_from_seconds(std::integral auto x_seconds_abs,
-                   std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
+                   decltype(x_seconds_abs)& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_hour;
     return x_seconds_abs / seconds_per_hour;
@@ -136,7 +135,7 @@ hours_from_seconds(std::integral auto x_seconds_abs,
 
 constexpr auto
 days_from_seconds(std::integral auto x_seconds_abs,
-                  std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
+                  decltype(x_seconds_abs)& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_day;
     return x_seconds_abs / seconds_per_day;
@@ -144,7 +143,7 @@ days_from_seconds(std::integral auto x_seconds_abs,
 
 constexpr auto
 weeks_from_seconds(std::integral auto x_seconds_abs,
-                   std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
+                   decltype(x_seconds_abs)& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_week;
     return x_seconds_abs / seconds_per_week;
@@ -152,7 +151,7 @@ weeks_from_seconds(std::integral auto x_seconds_abs,
 
 constexpr auto
 months_from_seconds(std::integral auto x_seconds_abs,
-                    std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
+                    decltype(x_seconds_abs)& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_month;
     return x_seconds_abs / seconds_per_month;
@@ -160,7 +159,7 @@ months_from_seconds(std::integral auto x_seconds_abs,
 
 constexpr auto
 years_from_seconds(std::integral auto x_seconds_abs,
-                   std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
+                   decltype(x_seconds_abs)& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_year;
     return x_seconds_abs / seconds_per_year;
