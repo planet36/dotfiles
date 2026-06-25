@@ -83,43 +83,43 @@ seconds_from_years(const number auto x_years)
 }
 
 constexpr auto
-minutes_from_seconds(const std::unsigned_integral auto x_seconds_abs)
+minutes_from_seconds(const std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_minute;
 }
 
 constexpr auto
-hours_from_seconds(const std::unsigned_integral auto x_seconds_abs)
+hours_from_seconds(const std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_hour;
 }
 
 constexpr auto
-days_from_seconds(const std::unsigned_integral auto x_seconds_abs)
+days_from_seconds(const std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_day;
 }
 
 constexpr auto
-weeks_from_seconds(const std::unsigned_integral auto x_seconds_abs)
+weeks_from_seconds(const std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_week;
 }
 
 constexpr auto
-months_from_seconds(const std::unsigned_integral auto x_seconds_abs)
+months_from_seconds(const std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_month;
 }
 
 constexpr auto
-years_from_seconds(const std::unsigned_integral auto x_seconds_abs)
+years_from_seconds(const std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_year;
 }
 
 constexpr auto
-minutes_from_seconds(const std::unsigned_integral auto x_seconds_abs,
+minutes_from_seconds(const std::integral auto x_seconds_abs,
                      std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_minute;
@@ -127,7 +127,7 @@ minutes_from_seconds(const std::unsigned_integral auto x_seconds_abs,
 }
 
 constexpr auto
-hours_from_seconds(const std::unsigned_integral auto x_seconds_abs,
+hours_from_seconds(const std::integral auto x_seconds_abs,
                    std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_hour;
@@ -135,7 +135,7 @@ hours_from_seconds(const std::unsigned_integral auto x_seconds_abs,
 }
 
 constexpr auto
-days_from_seconds(const std::unsigned_integral auto x_seconds_abs,
+days_from_seconds(const std::integral auto x_seconds_abs,
                   std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_day;
@@ -143,7 +143,7 @@ days_from_seconds(const std::unsigned_integral auto x_seconds_abs,
 }
 
 constexpr auto
-weeks_from_seconds(const std::unsigned_integral auto x_seconds_abs,
+weeks_from_seconds(const std::integral auto x_seconds_abs,
                    std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_week;
@@ -151,7 +151,7 @@ weeks_from_seconds(const std::unsigned_integral auto x_seconds_abs,
 }
 
 constexpr auto
-months_from_seconds(const std::unsigned_integral auto x_seconds_abs,
+months_from_seconds(const std::integral auto x_seconds_abs,
                     std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_month;
@@ -159,7 +159,7 @@ months_from_seconds(const std::unsigned_integral auto x_seconds_abs,
 }
 
 constexpr auto
-years_from_seconds(const std::unsigned_integral auto x_seconds_abs,
+years_from_seconds(const std::integral auto x_seconds_abs,
                    std::remove_const_t<decltype(x_seconds_abs)>& remainder_seconds)
 {
     remainder_seconds = x_seconds_abs % seconds_per_year;
