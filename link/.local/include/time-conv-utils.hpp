@@ -45,79 +45,79 @@ static_assert(seconds_per_year ==
               static_cast<int>(days_per_year<double> * seconds_per_day));
 static_assert(seconds_per_month == seconds_per_year / months_per_year);
 
-constexpr auto
+[[nodiscard]] constexpr auto
 seconds_from_minutes(number auto x_minutes)
 {
     return x_minutes * seconds_per_minute;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 seconds_from_hours(number auto x_hours)
 {
     return x_hours * seconds_per_hour;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 seconds_from_days(number auto x_days)
 {
     return x_days * seconds_per_day;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 seconds_from_weeks(number auto x_weeks)
 {
     return x_weeks * seconds_per_week;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 seconds_from_months(number auto x_months)
 {
     return x_months * seconds_per_month;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 seconds_from_years(number auto x_years)
 {
     return x_years * seconds_per_year;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 minutes_from_seconds(std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_minute;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 hours_from_seconds(std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_hour;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 days_from_seconds(std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_day;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 weeks_from_seconds(std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_week;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 months_from_seconds(std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_month;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 years_from_seconds(std::integral auto x_seconds_abs)
 {
     return i_to_f(x_seconds_abs) / seconds_per_year;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 minutes_from_seconds(std::integral auto x_seconds_abs,
                      decltype(x_seconds_abs)& remainder_seconds)
 {
@@ -125,7 +125,7 @@ minutes_from_seconds(std::integral auto x_seconds_abs,
     return x_seconds_abs / seconds_per_minute;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 hours_from_seconds(std::integral auto x_seconds_abs,
                    decltype(x_seconds_abs)& remainder_seconds)
 {
@@ -133,7 +133,7 @@ hours_from_seconds(std::integral auto x_seconds_abs,
     return x_seconds_abs / seconds_per_hour;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 days_from_seconds(std::integral auto x_seconds_abs,
                   decltype(x_seconds_abs)& remainder_seconds)
 {
@@ -141,7 +141,7 @@ days_from_seconds(std::integral auto x_seconds_abs,
     return x_seconds_abs / seconds_per_day;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 weeks_from_seconds(std::integral auto x_seconds_abs,
                    decltype(x_seconds_abs)& remainder_seconds)
 {
@@ -149,7 +149,7 @@ weeks_from_seconds(std::integral auto x_seconds_abs,
     return x_seconds_abs / seconds_per_week;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 months_from_seconds(std::integral auto x_seconds_abs,
                     decltype(x_seconds_abs)& remainder_seconds)
 {
@@ -157,7 +157,7 @@ months_from_seconds(std::integral auto x_seconds_abs,
     return x_seconds_abs / seconds_per_month;
 }
 
-constexpr auto
+[[nodiscard]] constexpr auto
 years_from_seconds(std::integral auto x_seconds_abs,
                    decltype(x_seconds_abs)& remainder_seconds)
 {
