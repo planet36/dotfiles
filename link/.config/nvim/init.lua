@@ -181,6 +181,15 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- }}}
 
+-- {{{ Disable expandtab in Makefiles
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'make',
+  callback = function() vim.opt_local.expandtab = false end,
+})
+
+-- }}}
+
 -- {{{ Folding
 
 vim.o.foldmethod = 'marker'
