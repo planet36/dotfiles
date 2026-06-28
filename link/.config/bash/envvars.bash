@@ -247,6 +247,18 @@ DEBUG_OPTIONS+=' -D_FORTIFY_SOURCE=3'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fhardened
 DEBUG_OPTIONS+=' -fhardened'
 
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fsanitize_003daddress
+# The option cannot be combined with -fsanitize=thread or -fsanitize=hwaddress.
+DEBUG_OPTIONS+=' -fsanitize=address'
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fsanitize_003dthread
+# The option cannot be combined with -fsanitize=address, -fsanitize=leak.
+#DEBUG_OPTIONS+=' -fsanitize=thread'
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fsanitize_003dleak
+# The option cannot be combined with -fsanitize=thread.
+#DEBUG_OPTIONS+=' -fsanitize=leak'
+# https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fsanitize_003dundefined
+DEBUG_OPTIONS+=' -fsanitize=undefined'
+
 export PERF_TEST_OPTIONS="$OPTIMIZE_OPTIONS -fno-allocation-dce -fno-dce -fno-dse -fno-gcse -fno-split-paths -fno-tree-builtin-call-dce -fno-tree-copy-prop -fno-tree-dce -fno-tree-dse -fno-tree-fre -fno-tree-partial-pre -fno-tree-pre"
 
 export PROFILE_OPTIONS="$PERF_TEST_OPTIONS -pg"
