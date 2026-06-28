@@ -52,7 +52,7 @@ aes_next_rcon(uint8_t rcon_i, const uint8_t i)
 
 /// Do \c _mm_aeskeygenassist_si128 with the key \a key for round number \a round
 inline __m128i
-aes_keygenassist_round(const __m128i key, const unsigned int round)
+aes_keygenassist_round(const __m128i key, const int round)
 {
     // the last argument of _mm_aeskeygenassist_si128 must be an 8-bit immediate
 
@@ -118,9 +118,9 @@ aes_keygenassist_round(const __m128i key, const unsigned int round)
     std::unreachable();
 }
 
-constexpr unsigned int aes128_num_rounds = 10;
-constexpr unsigned int aes192_num_rounds = 12;
-constexpr unsigned int aes256_num_rounds = 14;
+constexpr int aes128_num_rounds = 10;
+constexpr int aes192_num_rounds = 12;
+constexpr int aes256_num_rounds = 14;
 
 /**
 * \pre \a tmp_assist is the result of \c _mm_aeskeygenassist_si128
@@ -149,7 +149,7 @@ requires (Nk >= 2)
 void
 aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc)
 {
-    for (unsigned int round = 1; round < Nk; ++round)
+    for (int round = 1; round < Nk; ++round)
     {
         const __m128i tmp_assist = aes_keygenassist_round(round_keys_enc[round-1], round);
         round_keys_enc[round] = aes128_expand_key(round_keys_enc[round-1], tmp_assist);
@@ -167,7 +167,7 @@ aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc, arr_m128i<Nk>& ro
     // See "Intel Advanced Encryption Standard (AES) New Instructions Set"
     // Figure 6. Preparing the Decryption Round Keys
     round_keys_dec[0] = round_keys_enc[Nk-1];
-    for (unsigned int round = 1; round < Nk-1; ++round)
+    for (int round = 1; round < Nk-1; ++round)
     {
         round_keys_dec[round] = _mm_aesimc_si128(round_keys_enc[Nk-1 - round]);
     }
@@ -181,7 +181,7 @@ __m128i
 aes128_enc(__m128i data, const arr_m128i<Nk>& round_keys_enc)
 {
     data = _mm_xor_si128(data, round_keys_enc[0]);
-    for (unsigned int round = 1; round < Nk-1; ++round)
+    for (int round = 1; round < Nk-1; ++round)
     {
         data = _mm_aesenc_si128(data, round_keys_enc[round]);
     }
@@ -196,7 +196,7 @@ __m128i
 aes128_dec(__m128i data, const arr_m128i<Nk>& round_keys_dec)
 {
     data = _mm_xor_si128(data, round_keys_dec[0]);
-    for (unsigned int round = 1; round < Nk-1; ++round)
+    for (int round = 1; round < Nk-1; ++round)
     {
         data = _mm_aesdec_si128(data, round_keys_dec[round]);
     }
@@ -258,11 +258,11 @@ aesdec(const __m512i a, const __m512i key)
 /// Do \c aesenc \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
-aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
+aesenc_array(std::array<T, N>& arr, const T key, const int num_rounds)
 {
     for (size_t i = 0; i < N; ++i)
     {
-        for (unsigned int round = 0; round < num_rounds; ++round)
+        for (int round = 0; round < num_rounds; ++round)
         {
             arr[i] = aesenc(arr[i], key);
         }
@@ -277,11 +277,11 @@ aesenc_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
 /// Do \c aesdec \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
 inline void
-aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
+aesdec_array(std::array<T, N>& arr, const T key, const int num_rounds)
 {
     for (size_t i = 0; i < N; ++i)
     {
-        for (unsigned int round = 0; round < num_rounds; ++round)
+        for (int round = 0; round < num_rounds; ++round)
         {
             arr[i] = aesdec(arr[i], key);
         }
@@ -299,14 +299,14 @@ aesdec_array(std::array<T, N>& arr, const T key, const unsigned int num_rounds)
 * \param m the block of the message
 * \return the next hash value
 */
-template <simd_int_t T, unsigned int Nr = 3>
+template <simd_int_t T, int Nr = 3>
 requires (Nr >= 1)
 inline auto
 aesenc_davies_meyer(const T H, const T m)
 {
     auto a = H;
 
-    for (unsigned int round = 0; round < Nr; ++round)
+    for (int round = 0; round < Nr; ++round)
     {
         a = aesenc(a, m);
     }
@@ -322,14 +322,14 @@ aesenc_davies_meyer(const T H, const T m)
 * \param m the block of the message
 * \return the next hash value
 */
-template <simd_int_t T, unsigned int Nr = 3>
+template <simd_int_t T, int Nr = 3>
 requires (Nr >= 1)
 inline auto
 aesdec_davies_meyer(const T H, const T m)
 {
     auto a = H;
 
-    for (unsigned int round = 0; round < Nr; ++round)
+    for (int round = 0; round < Nr; ++round)
     {
         a = aesdec(a, m);
     }
