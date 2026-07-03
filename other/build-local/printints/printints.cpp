@@ -60,16 +60,23 @@ read_write_int()
 {
     for (std::string line; std::getline(std::cin, line); line.clear())
     {
+        if (line.find_first_not_of(" \f\n\r\t\v") == std::string::npos)
+            continue;
+
         try
         {
             if constexpr (std::is_unsigned_v<T>)
             {
                 const unsigned long long big_i = std::stoull(line, nullptr, 0);
+                if (big_i > std::numeric_limits<T>::max())
+                    throw std::out_of_range("value out of range for TYPE");
                 print_uint(static_cast<T>(big_i));
             }
             else
             {
                 const long long big_i = std::stoll(line, nullptr, 0);
+                if (big_i < std::numeric_limits<T>::min() || big_i > std::numeric_limits<T>::max())
+                    throw std::out_of_range("value out of range for TYPE");
                 using U = std::make_unsigned_t<T>;
                 print_uint(static_cast<U>(static_cast<T>(big_i)));
             }
