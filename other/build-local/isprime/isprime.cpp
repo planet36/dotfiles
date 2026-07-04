@@ -40,7 +40,8 @@ print_usage()
     std::cout << '\n';
 
     std::cout << "Read decimal numbers from stdin, and print whether they are prime or not.\n";
-    std::cout << "Invalid trailing characters of the input are ignored.\n";
+    std::cout << "Reading stops silently at the first invalid token; the exit status\n";
+    std::cout << "becomes non-zero and any later input is not processed.\n";
     std::cout << "The GNU MP function mpz_probab_prime_p is used to test primality.\n";
     std::cout << '\n';
 
