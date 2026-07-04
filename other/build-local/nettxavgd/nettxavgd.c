@@ -13,9 +13,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
-#include <math.h>
 #include <signal.h>
-#include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -85,6 +83,8 @@ set_default_net_iface()
     n = scandir("/sys/class/net/", &namelist, scandir_filter, alphasort);
     if (n == -1)
         err(EXIT_FAILURE, "scandir");
+    if (n == 0)
+        errx(EXIT_FAILURE, "no network interface found in /sys/class/net/");
 
     (void)strncpy(default_net_iface, namelist[0]->d_name, sizeof(default_net_iface));
     default_net_iface[sizeof(default_net_iface) - 1] = '\0';
@@ -178,6 +178,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         }
     }
 
+    if (strchr(net_iface, '/') != nullptr)
+        errx(EXIT_FAILURE, "invalid network interface: '%s'", net_iface);
+
     // {{{ Adapted from my slstatus
     // https://github.com/planet36/slstatus/blob/main/components/netspeeds.c
     char net_iface_path[PATH_MAX] = {'\0'};
@@ -185,10 +188,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
                      "/sys/class/net/%s/statistics/tx_bytes", net_iface);
 
     if (n < 0 || (size_t)n >= sizeof(net_iface_path))
-    {
         errx(EXIT_FAILURE, "snprintf");
-        return -1;
-    }
     // }}}
 
     // Test if file is readable
@@ -299,7 +299,11 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
             uintmax_t tx_bytes_per_s = 0;
 
-            if (delta_time_s != 0)
+            // tx_bytes can be less than prev_tx_bytes if the interface's
+            // counter was reset (e.g. link down/up); treat that tick as 0
+            // instead of letting the unsigned subtraction wrap around to a
+            // huge value that could overflow the cast back to uintmax_t.
+            if (delta_time_s != 0 && tx_bytes >= prev_tx_bytes)
                 // round to nearest int
                 tx_bytes_per_s =
                     (uintmax_t)((double)(tx_bytes - prev_tx_bytes) / delta_time_s + 0.5);
