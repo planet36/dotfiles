@@ -9,6 +9,8 @@
 // https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/tools/lib/string.c#n118
 // https://elixir.bootlin.com/linux/latest/source/tools/lib/string.c#L118
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
 /**
  * skip_spaces - Removes leading whitespace from @str.
  * @str: The string to be stripped.
@@ -24,6 +26,7 @@ skip_spaces(const char* str)
     }
     return (char*)str;
 }
+#pragma GCC diagnostic pop
 
 /**
  * strim - Removes leading and trailing whitespace from @s.
