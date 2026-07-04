@@ -106,6 +106,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         {
             result = EXIT_FAILURE;
         }
+        // else: any other non-empty string is truthy
     } // else: vacuous truth
 
     return result;
