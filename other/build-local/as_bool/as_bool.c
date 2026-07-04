@@ -75,7 +75,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         strtolower(s);
 
         // https://docs.python.org/3/library/configparser.html#configparser.ConfigParser.getboolean
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean#boolean_coercion
         if (*s == '\0') // empty
         {
             result = EXIT_FAILURE;
