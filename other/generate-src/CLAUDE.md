@@ -29,8 +29,10 @@ to the path `generate-files.bash` uses for it (see the table below) — each scr
 also documents its `Usage:` invocation.
 
 There is no lint config (`.pylintrc`, `Makefile`) in this directory — inline `# pylint: disable=...`
-comments per-file are how false positives are suppressed, and there's no test suite; verification
-is "the script runs and produces a diff that looks right."
+comments per-file are how false positives are suppressed, and there's no test suite. In practice,
+verification is: the script runs, the diff looks right, and `ruff check`, `mypy
+--ignore-missing-imports`, and `pylint` (all installed, no project config) run clean against
+whatever `.py` file(s) changed.
 
 `generate-scaled-const.py` and `generate-math-const.py` require the `gmpy2` package (GMP/MPFR
 bindings) to be installed for the `python3` that runs them.
