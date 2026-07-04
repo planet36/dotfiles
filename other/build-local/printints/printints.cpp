@@ -27,9 +27,9 @@
 #include <cstdint>
 #include <cstdlib>
 #include <err.h>
-#include <fmt/format.h>
 #include <iostream>
 #include <limits>
+#include <print>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -45,15 +45,15 @@ print_uint(const T x)
     // For all standard T, digits2 is always evenly divisible by 4
     constexpr std::size_t digits16 = digits2 / 4;
 
-    fmt::print("0b{:0{}b}", x, digits2);
-    fmt::print("\t0{:0{}o}", x, digits8);
-    fmt::print("\t0x{:0{}x}", x, digits16);
-    fmt::print("\t{:d}", x);
+    std::print("0b{:0{}b}", x, digits2);
+    std::print("\t0{:0{}o}", x, digits8);
+    std::print("\t0x{:0{}x}", x, digits16);
+    std::print("\t{:d}", x);
 
     if (const auto i = static_cast<std::make_signed_t<T>>(x); i < 0)
-        fmt::print("\t({:d})", i);
+        std::print("\t({:d})", i);
 
-    fmt::println("");
+    std::println("");
 }
 
 template <std::integral T>

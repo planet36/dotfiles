@@ -7,7 +7,7 @@ MANDIR ?= $(PREFIX)/share/man
 
 CPPFLAGS += -MMD -MP
 #CXXFLAGS +=
-LDLIBS += -lfmt
+#LDLIBS +=
 
 SRCS = $(wildcard *.cpp)
 DEPS = $(SRCS:.cpp=.d)
