@@ -2,9 +2,12 @@
 // SPDX-License-Identifier: MPL-2.0
 
 #include <array>
+#include <cerrno>
+#include <cstdlib>
 #include <err.h>
 #include <gmpxx.h>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <unistd.h>
