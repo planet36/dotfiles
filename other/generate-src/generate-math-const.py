@@ -350,8 +350,7 @@ def generate_math_const(x):
     else:
         raise Warning('The list must contain dicts or strings')
 
-    #if type(val) is gmpy2.mpc:
-    if isinstance(val, gmpy2.mpc().__class__):
+    if isinstance(val, gmpy2.mpc):
         if gmpy2.is_zero(val.imag):
             val = val.real
         else:
