@@ -98,7 +98,7 @@ If the string contains special characters specified by the POSIX standard, then 
 
     pattern = re.compile(r'''[\t\n "#$%&'()*;<=>?[\\`|~]''')
 
-    if pattern.search(s):
+    if not s or pattern.search(s):
         return shell_always(s)
     else:
         return s
