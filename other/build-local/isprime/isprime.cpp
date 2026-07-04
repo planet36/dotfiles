@@ -107,5 +107,8 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         std::cout << bn << " is " << ppc_descriptions.at(ppc) << "prime\n";
     }
 
+    if (std::cin.bad() || (std::cin.fail() && !std::cin.eof()))
+        return EXIT_FAILURE;
+
     return EXIT_SUCCESS;
 }
