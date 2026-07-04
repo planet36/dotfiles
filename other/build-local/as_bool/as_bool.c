@@ -11,6 +11,7 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-qual"
+
 /**
  * skip_spaces - Removes leading whitespace from @str.
  * @str: The string to be stripped.
@@ -26,6 +27,7 @@ skip_spaces(const char* str)
     }
     return (char*)str;
 }
+
 #pragma GCC diagnostic pop
 
 /**
@@ -59,7 +61,10 @@ strim(char* s)
 void
 strtolower(char* s)
 {
-    for (; *s; ++s) { *s = (char)tolower((unsigned char)*s); }
+    for (; *s; ++s)
+    {
+        *s = (char)tolower((unsigned char)*s);
+    }
 }
 
 // Evaluate the given string as a boolean

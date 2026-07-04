@@ -77,7 +77,8 @@ read_write_int()
             else
             {
                 const long long big_i = std::stoll(line, nullptr, 0);
-                if (big_i < std::numeric_limits<T>::min() || big_i > std::numeric_limits<T>::max())
+                if (big_i < std::numeric_limits<T>::min() ||
+                    big_i > std::numeric_limits<T>::max())
                     throw std::out_of_range("value out of range for TYPE");
                 using U = std::make_unsigned_t<T>;
                 print_uint(static_cast<U>(static_cast<T>(big_i)));
