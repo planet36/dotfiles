@@ -25,7 +25,7 @@ def real_digits(x: D, *, base: D=D(10), limit: int=100, context=None) -> tuple:
 
         (i_part, f_part) = divmod(x, 1) # split
 
-        i_digits = []
+        i_digits: list[int] = []
         while True:
             (i_part, digit) = divmod(i_part, base)
             i_digits.insert(0, int(digit)) # insert at front
@@ -33,7 +33,7 @@ def real_digits(x: D, *, base: D=D(10), limit: int=100, context=None) -> tuple:
             if i_part.is_zero():
                 break
 
-        f_digits = []
+        f_digits: list[int] = []
         while limit > 0:
             f_part *= base
             (digit, f_part) = divmod(f_part, 1) # split
