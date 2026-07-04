@@ -38,12 +38,12 @@ template <std::unsigned_integral T>
 void
 print_uint(const T x)
 {
-    constexpr size_t digits2 = std::numeric_limits<T>::digits;
+    constexpr std::size_t digits2 = std::numeric_limits<T>::digits;
     // Get the ceiling of the integer division.
     // For all standard T, digits2 is never evenly divisible by 3.
-    constexpr size_t digits8 = digits2 / 3 + 1; // == div_ceil(digits2, 3)
+    constexpr std::size_t digits8 = digits2 / 3 + 1; // == div_ceil(digits2, 3)
     // For all standard T, digits2 is always evenly divisible by 4
-    constexpr size_t digits16 = digits2 / 4;
+    constexpr std::size_t digits16 = digits2 / 4;
 
     fmt::print("0b{:0{}b}", x, digits2);
     fmt::print("\t0{:0{}o}", x, digits8);
