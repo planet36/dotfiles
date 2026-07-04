@@ -48,7 +48,8 @@ print_usage()
     std::cout << "OPTIONS\n";
     std::cout << "  -V       Print the version information, then exit.\n";
     std::cout << "  -h       Print this message, then exit.\n";
-    std::cout << "  -r REPS  Specify the number (less 24) of Miller-Rabin probabilistic primality tests to perform.\n";
+    std::cout << "  -r REPS  Specify the number of Miller-Rabin probabilistic primality tests to\n";
+    std::cout << "           perform (REPS - 24, after built-in trial division and a Baillie-PSW test).\n";
     std::cout << "           Reasonable values of REPS are between 15 and 50.\n";
     std::cout << "           The default value is " << default_reps << ".\n";
     std::cout << '\n';
