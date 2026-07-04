@@ -117,7 +117,7 @@ def to_hex_str(i: int, bits: int) -> str:
     return f'0x{i:0{nibbles}x}'
 
 
-def to_dec_thou_str(i: int, max_len: int = None, sep: str = None) -> str:
+def to_dec_thou_str(i: int, max_len: int | None = None, sep: str | None = None) -> str:
     '''Get the decimal representation of the int with padding and the given separator as the thousands separator.'''
     result = None
     if max_len is None:
@@ -129,7 +129,7 @@ def to_dec_thou_str(i: int, max_len: int = None, sep: str = None) -> str:
     return result.replace(',', sep)
 
 
-def to_dec_thou_str_cpp(i: int, max_len: int = None) -> str:
+def to_dec_thou_str_cpp(i: int, max_len: int | None = None) -> str:
     '''Get the decimal representation of the int with padding and single quotes as the thousands separator (for C++).'''
     return to_dec_thou_str(i, max_len, "'")
 
