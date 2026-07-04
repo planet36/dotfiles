@@ -101,7 +101,7 @@ set_default_net_iface()
     {
         free(namelist[n]);
     }
-    free(namelist);
+    free((void*)namelist);
 }
 
 void
