@@ -96,12 +96,13 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         {
             result = EXIT_FAILURE;
         }
-        else if (strcmp(s, "null") == 0 ||
+        else if (strcmp(s, "undefined") == 0 ||
+                 strcmp(s, "null") == 0 ||
                  strcmp(s, "nil") == 0 ||
                  strcmp(s, "none") == 0 ||
+                 strcmp(s, "-0") == 0 ||
                  strcmp(s, "nan") == 0 ||
-                 strcmp(s, "undefined") == 0 ||
-                 strcmp(s, "-0") == 0)
+                 strcmp(s, "0n") == 0)
         {
             result = EXIT_FAILURE;
         }
