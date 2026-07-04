@@ -13,6 +13,7 @@ python3 generate-bit-patterns.py > bit_patterns.hpp
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 
+from collections.abc import Iterator
 import datetime as dt
 import itertools
 import math
@@ -235,7 +236,7 @@ for bits in (16, 32, 64):
 
     if num_products_all <= max_iterations_allowed:
         print('// using itertools.product(sample_bytes_all, repeat=bytes_per_int)')
-        iterable = itertools.product(sample_bytes_all, repeat=bytes_per_int)
+        iterable: Iterator[tuple[int, ...]] = itertools.product(sample_bytes_all, repeat=bytes_per_int)
     elif num_permutations_all <= max_iterations_allowed:
         print('// using itertools.permutations(sample_bytes_all, bytes_per_int)')
         iterable = itertools.permutations(sample_bytes_all, bytes_per_int)
