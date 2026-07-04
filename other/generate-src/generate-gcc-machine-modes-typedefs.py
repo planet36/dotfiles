@@ -62,8 +62,7 @@ class GccMachineMode:
         test_program = f'int main() {{using alias = {self.type} [[gnu::mode({self.name})]]; return 0;}}'.encode()
 
         try:
-            # pylint: disable=unused-variable
-            completed_process = subprocess.run(command, input=test_program, stderr=subprocess.DEVNULL, check=True)
+            subprocess.run(command, input=test_program, stderr=subprocess.DEVNULL, check=True)
             self._exists = True
 
         except subprocess.CalledProcessError:
