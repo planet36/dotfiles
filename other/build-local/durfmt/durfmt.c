@@ -42,7 +42,7 @@ constexpr char ut_abbr[UT_MAX] = {
 bool
 valid_ut_abbr(const char c)
 {
-    switch (tolower(c))
+    switch (tolower((unsigned char)c))
     {
     case 's':
     case 'm':
@@ -59,7 +59,7 @@ valid_ut_abbr(const char c)
 enum UT
 ut_from_c(const char c)
 {
-    switch (tolower(c))
+    switch (tolower((unsigned char)c))
     {
     case 's': return UT_SECOND;
     case 'm': return UT_MINUTE;
