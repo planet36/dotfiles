@@ -2,9 +2,6 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: MPL-2.0
 
-# shellcheck disable=SC2034
-
-SCRIPT_NAME="$(basename -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "${BASH_SOURCE[0]}")"
 
 set -e
