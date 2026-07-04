@@ -12,7 +12,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 
-def as_bool(s: str) -> bool:
+def as_bool(s: str | bool | None) -> bool:
     '''Evaluate \a s as a bool.'''
 
     if s is None:
