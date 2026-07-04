@@ -43,16 +43,6 @@ print(fr'''// SPDX-FileCopyrightText: {__author__}
 # pylint: disable=missing-class-docstring
 class GccMachineMode:
 
-    def __init__(self):
-        self.name = None
-        self.description= None
-        self.type = None
-        self.alias = None
-        self.unsigned_type = None
-        self.unsigned_alias = None
-        self._exists = False
-
-    # pylint: disable=function-redefined
     def __init__(self,
         _name,
         _description,
