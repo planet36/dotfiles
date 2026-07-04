@@ -46,7 +46,9 @@ strim(char* s)
 
     size = strlen(s);
     if (!size)
+    {
         return s;
+    }
 
     end = s + size - 1;
     while (end >= s && isspace((unsigned char)*end))

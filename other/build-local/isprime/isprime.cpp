@@ -110,7 +110,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     }
 
     if (std::cin.bad() || (std::cin.fail() && !std::cin.eof()))
+    {
         return EXIT_FAILURE;
+    }
 
     return EXIT_SUCCESS;
 }

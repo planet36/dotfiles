@@ -70,8 +70,12 @@ void
 atexit_cleanup()
 {
     if (dest_path != nullptr && done)
+    {
         if (remove(dest_path) < 0)
+        {
             perror("remove");
+        }
+    }
 }
 
 void
@@ -82,9 +86,13 @@ set_default_net_iface()
 
     n = scandir("/sys/class/net/", &namelist, scandir_filter, alphasort);
     if (n == -1)
+    {
         err(EXIT_FAILURE, "scandir");
+    }
     if (n == 0)
+    {
         errx(EXIT_FAILURE, "no network interface found in /sys/class/net/");
+    }
 
     (void)strncpy(default_net_iface, namelist[0]->d_name, sizeof(default_net_iface));
     default_net_iface[sizeof(default_net_iface) - 1] = '\0';
@@ -163,7 +171,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         case 'i':
             interval_msec = strtou(optarg);
             if (interval_msec == 0)
+            {
                 errx(EXIT_FAILURE, "invalid interval: %u", interval_msec);
+            }
 
             // There is no option for specifying the initial delay.
             init_delay_msec = interval_msec;
@@ -179,7 +189,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     }
 
     if (strchr(net_iface, '/') != nullptr)
+    {
         errx(EXIT_FAILURE, "invalid network interface: '%s'", net_iface);
+    }
 
     // {{{ Adapted from my slstatus
     // https://github.com/planet36/slstatus/blob/main/components/netspeeds.c
@@ -188,14 +200,18 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
                      "/sys/class/net/%s/statistics/rx_bytes", net_iface);
 
     if (n < 0 || (size_t)n >= sizeof(net_iface_path))
+    {
         errx(EXIT_FAILURE, "snprintf");
+    }
     // }}}
 
     // Test if file is readable
     {
         ACFILEPTR(fp) = fopen(net_iface_path, "r");
         if (fp == nullptr)
+        {
             err(EXIT_FAILURE, "%s", net_iface_path);
+        }
     }
 
     assert(atexit(atexit_cleanup) == 0);
@@ -213,7 +229,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         // underlying inode, not the path.
         dest_fd = open(dest_path, O_WRONLY | O_CREAT | O_EXCL, 0o666);
         if (dest_fd < 0)
+        {
             err(EXIT_FAILURE, "%s", dest_path);
+        }
     }
 
     struct sigaction signal_action;
@@ -222,7 +240,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     signal_action.sa_handler = signal_handler;
 
     if (sigfillset(&signal_action.sa_mask) < 0)
+    {
         err(EXIT_FAILURE, "sigfillset");
+    }
 
     constexpr int signals_to_handle[] = {
         SIGALRM,
@@ -240,21 +260,29 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     for (size_t i = 0; i < num_signals_to_handle; ++i)
     {
         if (sigaction(signals_to_handle[i], &signal_action, nullptr) < 0)
+        {
             err(EXIT_FAILURE, "sigaction");
+        }
     }
 
     sigset_t empty_mask;
     if (sigemptyset(&empty_mask) < 0)
+    {
         err(EXIT_FAILURE, "sigemptyset");
+    }
 
     sigset_t full_mask;
     if (sigfillset(&full_mask) < 0)
+    {
         err(EXIT_FAILURE, "sigfillset");
+    }
 
     sigset_t orig_mask;
     // block everything and save current signal mask
     if (sigprocmask(SIG_BLOCK, &full_mask, &orig_mask) < 0)
+    {
         err(EXIT_FAILURE, "sigprocmask");
+    }
 
     const struct timeval init_delay = msec_to_timeval(init_delay_msec);
     const struct timeval interval = msec_to_timeval(interval_msec);
@@ -273,21 +301,27 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         if (reset_alarm)
         {
             if (setitimer(ITIMER_REAL, &itv, nullptr) < 0)
+            {
                 err(EXIT_FAILURE, "setitimer");
+            }
             reset_alarm = 0;
         }
 
         struct timespec now_ts;
 
         if (clock_gettime(CLOCK_MONOTONIC, &now_ts) < 0)
+        {
             err(EXIT_FAILURE, "clock_gettime");
+        }
 
         const double now_s = timespec_to_sec(&now_ts);
 
         uintmax_t rx_bytes = 0;
 
         if (pscanf(net_iface_path, "%ju", &rx_bytes) != 1)
+        {
             errx(EXIT_FAILURE, "error scanning '%s'", net_iface_path);
+        }
 
         if (first_iteration)
         {
@@ -304,9 +338,11 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             // instead of letting the unsigned subtraction wrap around to a
             // huge value that could overflow the cast back to uintmax_t.
             if (delta_time_s != 0 && rx_bytes >= prev_rx_bytes)
+            {
                 // round to nearest int
                 rx_bytes_per_s =
                     (uintmax_t)((double)(rx_bytes - prev_rx_bytes) / delta_time_s + 0.5);
+            }
 
             char dest_buf[32] = {'\0'};
             const int dest_len = snprintf(dest_buf, sizeof(dest_buf), "%ju", rx_bytes_per_s);
@@ -314,14 +350,20 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             if (dest_path != nullptr)
             {
                 if (lseek(dest_fd, 0, SEEK_SET) < 0)
+                {
                     err(EXIT_FAILURE, "lseek");
+                }
 
                 if (write(dest_fd, dest_buf, (size_t)dest_len) < 0)
+                {
                     err(EXIT_FAILURE, "write");
+                }
 
                 // Discard any leftover tail from a longer previous write.
                 if (ftruncate(dest_fd, (off_t)dest_len) < 0)
+                {
                     err(EXIT_FAILURE, "ftruncate");
+                }
             }
             else if (puts(dest_buf) < 0)
             {
@@ -333,12 +375,16 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         prev_rx_bytes = rx_bytes;
 
         if (!done)
+        {
             (void)sigsuspend(&empty_mask);
+        }
     }
     while (!done);
 
     if (sigprocmask(SIG_SETMASK, &orig_mask, nullptr) < 0)
+    {
         err(EXIT_FAILURE, "sigprocmask");
+    }
 
     return EXIT_SUCCESS;
 }

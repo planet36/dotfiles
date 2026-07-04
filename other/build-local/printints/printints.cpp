@@ -51,7 +51,9 @@ print_uint(const T x)
     std::print("\t{:d}", x);
 
     if (const auto i = static_cast<std::make_signed_t<T>>(x); i < 0)
+    {
         std::print("\t({:d})", i);
+    }
 
     std::println("");
 }
@@ -63,7 +65,9 @@ read_write_int()
     for (std::string line; std::getline(std::cin, line); line.clear())
     {
         if (line.find_first_not_of(" \f\n\r\t\v") == std::string::npos)
+        {
             continue;
+        }
 
         try
         {
@@ -71,7 +75,9 @@ read_write_int()
             {
                 const unsigned long long big_i = std::stoull(line, nullptr, 0);
                 if (big_i > std::numeric_limits<T>::max())
+                {
                     throw std::out_of_range("value out of range for TYPE");
+                }
                 print_uint(static_cast<T>(big_i));
             }
             else
@@ -79,7 +85,9 @@ read_write_int()
                 const long long big_i = std::stoll(line, nullptr, 0);
                 if (big_i < std::numeric_limits<T>::min() ||
                     big_i > std::numeric_limits<T>::max())
+                {
                     throw std::out_of_range("value out of range for TYPE");
+                }
                 using U = std::make_unsigned_t<T>;
                 print_uint(static_cast<U>(static_cast<T>(big_i)));
             }
@@ -105,16 +113,18 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         type_name = argv[1];
     }
 
-    if      (type_name == "int8"  ) read_write_int<int8_t>();
-    else if (type_name == "int16" ) read_write_int<int16_t>();
-    else if (type_name == "int32" ) read_write_int<int32_t>();
-    else if (type_name == "int64" ) read_write_int<int64_t>();
-    else if (type_name == "uint8" ) read_write_int<uint8_t>();
-    else if (type_name == "uint16") read_write_int<uint16_t>();
-    else if (type_name == "uint32") read_write_int<uint32_t>();
-    else if (type_name == "uint64") read_write_int<uint64_t>();
+    if      (type_name == "int8"  ) { read_write_int<int8_t  >(); }
+    else if (type_name == "int16" ) { read_write_int<int16_t >(); }
+    else if (type_name == "int32" ) { read_write_int<int32_t >(); }
+    else if (type_name == "int64" ) { read_write_int<int64_t >(); }
+    else if (type_name == "uint8" ) { read_write_int<uint8_t >(); }
+    else if (type_name == "uint16") { read_write_int<uint16_t>(); }
+    else if (type_name == "uint32") { read_write_int<uint32_t>(); }
+    else if (type_name == "uint64") { read_write_int<uint64_t>(); }
     else
+    {
         errx(EXIT_FAILURE, "invalid input integer type: %s", type_name.c_str());
+    }
 
     return EXIT_SUCCESS;
 }

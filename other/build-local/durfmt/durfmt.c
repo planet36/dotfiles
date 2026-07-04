@@ -110,12 +110,12 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
     bool printed_something = false;
 
     // Find the least significant unit of time to print.
-    if (opts->print[UT_YEAR  ]) last_ut = UT_YEAR  ;
-    if (opts->print[UT_WEEK  ]) last_ut = UT_WEEK  ;
-    if (opts->print[UT_DAY   ]) last_ut = UT_DAY   ;
-    if (opts->print[UT_HOUR  ]) last_ut = UT_HOUR  ;
-    if (opts->print[UT_MINUTE]) last_ut = UT_MINUTE;
-    if (opts->print[UT_SECOND]) last_ut = UT_SECOND;
+    if (opts->print[UT_YEAR  ]) { last_ut = UT_YEAR  ; }
+    if (opts->print[UT_WEEK  ]) { last_ut = UT_WEEK  ; }
+    if (opts->print[UT_DAY   ]) { last_ut = UT_DAY   ; }
+    if (opts->print[UT_HOUR  ]) { last_ut = UT_HOUR  ; }
+    if (opts->print[UT_MINUTE]) { last_ut = UT_MINUTE; }
+    if (opts->print[UT_SECOND]) { last_ut = UT_SECOND; }
 
     // the controlling expression must consider unsigned integer wrap around
     for (enum UT ut = UT_YEAR; ut >= UT_SECOND && ut <= UT_YEAR; --ut)
@@ -130,7 +130,9 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
                 ((printed_something || last_ut == ut) && opts->print_inter_zero_values))
             {
                 if (printed_something)
+                {
                     putchar(' ');
+                }
                 printf("%0*lu", opts->width[ut], dur_ut);
                 putchar(ut_abbr[ut]);
                 printed_something = true;
@@ -139,7 +141,9 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
     }
 
     if (printed_something && !opts->suppress_newline)
+    {
         putchar('\n');
+    }
 }
 
 void
@@ -222,9 +226,13 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         case 'w':
             width = strtol(optarg, nullptr, 0);
             if (width < 0)
+            {
                 width = 0;
+            }
             else if (width > max_width)
+            {
                 width = max_width;
+            }
             opts.width[UT_SECOND] = opts.width[UT_MINUTE] = opts.width[UT_HOUR] = (int)width;
             break;
 

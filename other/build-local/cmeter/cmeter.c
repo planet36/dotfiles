@@ -80,7 +80,9 @@ print_cmeter(double x, const struct cmeter_opts* opts)
     }
 
     if (!opts->suppress_newline)
+    {
         putchar('\n');
+    }
 }
 
 void
@@ -180,9 +182,13 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         case 'w':
             width = strtol(optarg, nullptr, 0);
             if (width < 0)
+            {
                 width = 0;
+            }
             if (width > max_width)
+            {
                 width = max_width;
+            }
             opts.width = (int)width;
             break;
 
@@ -202,7 +208,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     {
         double x = strtod(line, nullptr);
         if (!isfinite(x))
+        {
             continue;
+        }
         print_cmeter(clamp(x, 0, 1), &opts);
     }
     free(line);
