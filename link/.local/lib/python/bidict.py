@@ -11,14 +11,14 @@ Adapted from <https://stackoverflow.com/a/21894086>.
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 
+from collections import UserDict
+
 # pylint: disable=missing-class-docstring
-class bidict(dict):
+class bidict(UserDict):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.inverse = {}
-        for key, value in self.items():
-            self.inverse.setdefault(value, set()).add(key)
+        super().__init__(*args, **kwargs)
 
     def __setitem__(self, key, value):
         if key in self and self[key] in self.inverse:
@@ -36,3 +36,8 @@ class bidict(dict):
             if not self.inverse[self[key]]: # empty
                 del self.inverse[self[key]]
         super().__delitem__(key)
+
+    def __ior__(self, other): # type: ignore[misc]
+        # UserDict.__ior__ mutates self.data directly, bypassing __setitem__.
+        self.update(other)
+        return self
