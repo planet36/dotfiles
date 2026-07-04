@@ -92,15 +92,22 @@ consistent conventions worth matching in new code:
 These three share one design, factored by copy-paste rather than a shared source file:
 continuously sample a `/proc` or `/sys` metric (CPU idle ticks, network rx/tx byte counters) at a
 configurable interval (`-i MSEC`), compute a rate/ratio since the last sample, and either `puts()`
-it to stdout or atomically rewrite a `-f FILE` destination file each tick (used for shoveling a
-live value into something like a status bar). They share:
+it to stdout or write it to a `-f FILE` destination file each tick (used for shoveling a live
+value into something like a status bar). They share:
 
 - `SIGALRM`-driven sampling via `setitimer`, with `sigsuspend` idling between ticks.
 - `SIGUSR1`/`SIGUSR2` to force an alarm/interval reset; any other terminating signal sets a
   `done` flag, and an `atexit` handler removes the `-f` destination file on clean exit.
-- The local headers noted above (`acfile.h` for scope-guarded `FILE*`, `pscanf.h` for scanf'ing a
-  file by path, `strtou.h`, `timeval.h`/`timespec.h`) that live outside this repo in
-  `link/.local/include/` — see the build-environment note above before touching these.
+- `-f FILE` handling: the file is opened once at startup (`O_CREAT | O_EXCL`, so it must not
+  already exist) and the fd is kept open for the daemon's lifetime. Each tick seeks to the start,
+  writes, and `ftruncate`s to the new length, rather than reopening the path — a long-lived fd is
+  bound to the inode, not the path, which avoids a TOCTOU window where the path could be swapped
+  for a symlink between writes. This is *not* an atomic rename-based rewrite; readers can observe
+  a transient short/truncated read mid-write.
+- The local headers noted above (`acfile.h` for scope-guarded `FILE*`/fd cleanup — `ACFILEPTR`
+  and `ACFD` respectively —, `pscanf.h` for scanf'ing a file by path, `strtou.h`,
+  `timeval.h`/`timespec.h`) that live outside this repo in `link/.local/include/` — see the build
+  environment note above before touching these.
 
 `netrxavgd`/`nettxavgd` are near-identical (rx vs tx byte counter from
 `/sys/class/net/<iface>/statistics/{rx,tx}_bytes`); when fixing a bug in one, check whether the
