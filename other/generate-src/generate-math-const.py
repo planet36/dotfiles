@@ -342,7 +342,7 @@ def generate_math_const(x):
         expr = x
         try:
             val = eval(expr)
-        except (NameError, SyntaxError):
+        except Exception:
             print(f'# {x=}')
             print(f'# {name=}')
             print(f'# {expr=}')
