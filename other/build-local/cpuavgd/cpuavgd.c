@@ -9,10 +9,7 @@
 #include <assert.h>
 #include <err.h>
 #include <errno.h>
-#include <limits.h>
-#include <math.h>
 #include <signal.h>
-#include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -20,7 +17,6 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/time.h>
-#include <time.h>
 #include <unistd.h>
 
 // {{{ Copied from my slstatus
