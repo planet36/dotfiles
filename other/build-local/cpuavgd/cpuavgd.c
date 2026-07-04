@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <err.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -250,12 +251,15 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
             if (dest_path != nullptr)
             {
-                ACFILEPTR(dest_fp) = fopen(dest_path, "w");
-                if (dest_fp == nullptr)
+                // O_NOFOLLOW guards against dest_path being replaced with a
+                // symlink between iterations (this file is reopened every
+                // tick, unlike the initial O_EXCL creation above).
+                ACFD(dest_fd) = open(dest_path, O_WRONLY | O_TRUNC | O_NOFOLLOW);
+                if (dest_fd < 0)
                     err(EXIT_FAILURE, "%s", dest_path);
 
-                if (fputs(dest_buf, dest_fp) < 0)
-                    err(EXIT_FAILURE, "fputs");
+                if (write(dest_fd, dest_buf, strlen(dest_buf)) < 0)
+                    err(EXIT_FAILURE, "write");
             }
             else if (puts(dest_buf) < 0)
             {
