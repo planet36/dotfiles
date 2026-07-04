@@ -99,9 +99,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
     std::string type_name = "int32";
 
-    for (int i = 1; i < argc; ++i)
+    if (argc > 1)
     {
-        type_name = argv[i];
+        type_name = argv[1];
     }
 
     if      (type_name == "int8"  ) read_write_int<int8_t>();
