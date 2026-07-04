@@ -26,6 +26,7 @@ wttr() {
   for p in $WTTR_PARAMS "$@"; do
     args+=" --data-urlencode $p "
   done
+  # shellcheck disable=SC2086
   curl -fGsS -H "Accept-Language: ${LANG%_*}" $args --compressed "wttr.in/${location}"
 }
 

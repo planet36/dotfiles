@@ -7,6 +7,7 @@ declare -r LOCATION_SH="$XDG_RUNTIME_DIR"/location.sh
 if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
 then
     update-location || exit
+    # shellcheck disable=SC1090
     source "$LOCATION_SH" || exit
 
     if [[ -z "$LAT" ]] || [[ -z "$LON" ]]
