@@ -8,7 +8,7 @@ curl --fail --silent --show-error https://gitlab.freedesktop.org/xorg/xserver/-/
 sed -n -e '/static const BuiltinColor BuiltinColors\[\] = {/, /};/ p' | \
 python3 filter-oscolor.py
 
-cat <<EOT
+cat <<'EOT'
 
 rgb_vals = [0] + list(range(95, 255+1, 40))
 
