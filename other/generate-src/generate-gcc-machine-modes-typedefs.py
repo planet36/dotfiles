@@ -13,6 +13,7 @@ python3 generate-gcc-machine-modes-typedefs.py > gcc-machine-modes-typedefs.hpp
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 
+from dataclasses import dataclass, field
 import datetime as dt
 import os.path
 import platform
@@ -41,23 +42,17 @@ print(fr'''// SPDX-FileCopyrightText: {__author__}
 ''')
 
 # pylint: disable=missing-class-docstring
+@dataclass
 class GccMachineMode:
+    name: str
+    description: str
+    type: str
+    alias: str
+    unsigned_type: str | None = None
+    unsigned_alias: str | None = None
+    _exists: bool = field(default=False, init=False)
 
-    def __init__(self,
-        _name,
-        _description,
-        _type,
-        _alias,
-        _unsigned_type = None,
-        _unsigned_alias = None):
-
-        self.name = _name
-        self.description= _description
-        self.type = _type
-        self.alias = _alias
-        self.unsigned_type = _unsigned_type
-        self.unsigned_alias = _unsigned_alias
-        self._exists = False
+    def __post_init__(self):
         self.determine_exists()
 
     def determine_exists(self):
@@ -74,7 +69,8 @@ class GccMachineMode:
         except subprocess.CalledProcessError:
             self._exists = False
 
-    def exists(self):
+    @property
+    def exists(self) -> bool:
         return self._exists
 
     def print_c_decl_str(self):
@@ -147,7 +143,7 @@ GccMachineMode('COI' , 'octa complex integer'          , '_Complex int'   , 'cmp
 )
 
 for mode in modes:
-    if mode.exists():
+    if mode.exists:
         print(f"// YES {mode.description} ({mode.name})")
         print(f"#define HAVE_{mode.name}_MODE")
     else:
