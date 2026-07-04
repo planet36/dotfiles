@@ -28,7 +28,7 @@ clamp(double x, double min, double max)
     //return fmin(fmax(x, min), max);
 }
 
-struct meter_opts
+struct cmeter_opts
 {
     int width;
     char fill;
@@ -38,7 +38,7 @@ struct meter_opts
 };
 
 void
-meter_opts_init(struct meter_opts* opts)
+cmeter_opts_init(struct cmeter_opts* opts)
 {
     opts->width = default_width;
     opts->fill = default_fill;
@@ -50,7 +50,7 @@ meter_opts_init(struct meter_opts* opts)
 // x is within the interval [0, 1].
 // opts->width is non-negative
 void
-print_cmeter(double x, const struct meter_opts* opts)
+print_cmeter(double x, const struct cmeter_opts* opts)
 {
     // round to nearest int
     const int num_filled = (int)(x * opts->width + 0.5);
@@ -105,12 +105,12 @@ print_usage()
     printf("\n");
     printf("  -h        Print this message, then exit.\n");
     printf("\n");
-    printf("  -l        Specify that the meter grows from left to right.\n");
-    printf("            This is the default behavior.\n");
-    printf("\n");
     printf("  -f CHAR   Specify the fill character of the meter.\n");
     printf("            CHAR must be a printable character.\n");
     printf("            The default value is '%c'.\n", default_fill);
+    printf("\n");
+    printf("  -l        Specify that the meter grows from left to right.\n");
+    printf("            This is the default behavior.\n");
     printf("\n");
     printf("  -n        Do not print a trailing newline character.\n");
     printf("\n");
@@ -122,15 +122,15 @@ print_usage()
     printf("\n");
     printf("  -w WIDTH  Specify the width of the meter.\n");
     printf("            WIDTH must be a non-negative integer.\n");
-    printf("            The default value is %hu.\n", default_width);
+    printf("            The default value is %d.\n", default_width);
     printf("\n");
 }
 
 int
 main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
-    struct meter_opts opts;
-    meter_opts_init(&opts);
+    struct cmeter_opts opts;
+    cmeter_opts_init(&opts);
 
     int oc = 0;
     const char* short_options = "+:Vhf:lnru:w:";
@@ -147,15 +147,6 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             print_usage();
             return EXIT_SUCCESS;
 
-        case 'w':
-            width = strtol(optarg, nullptr, 0);
-            if (width < 0)
-                width = 0;
-            if (width > max_width)
-                width = max_width;
-            opts.width = (int)width;
-            break;
-
         case 'f':
             opts.fill = optarg[0];
             if (!isprint(opts.fill))
@@ -163,6 +154,18 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
                 errx(EXIT_FAILURE, "option '%c' received invalid option value: '\\x%x'", oc,
                      opts.fill);
             }
+            break;
+
+        case 'l':
+            opts.left_to_right = true;
+            break;
+
+        case 'n':
+            opts.suppress_newline = true;
+            break;
+
+        case 'r':
+            opts.left_to_right = false;
             break;
 
         case 'u':
@@ -174,16 +177,13 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
             }
             break;
 
-        case 'l':
-            opts.left_to_right = true;
-            break;
-
-        case 'r':
-            opts.left_to_right = false;
-            break;
-
-        case 'n':
-            opts.suppress_newline = true;
+        case 'w':
+            width = strtol(optarg, nullptr, 0);
+            if (width < 0)
+                width = 0;
+            if (width > max_width)
+                width = max_width;
+            opts.width = (int)width;
             break;
 
         default:
