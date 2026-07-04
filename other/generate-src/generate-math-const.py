@@ -348,7 +348,7 @@ def generate_math_const(x):
             print(f'# {expr=}')
             raise
     else:
-        raise Warning('The list must contain dicts or strings')
+        raise TypeError('The list must contain dicts or strings')
 
     if isinstance(val, gmpy2.mpc):
         if gmpy2.is_zero(val.imag):
