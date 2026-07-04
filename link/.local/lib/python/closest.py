@@ -7,6 +7,8 @@
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 
-def closest(x, iterable):
+from collections.abc import Iterable
+
+def closest(x: int | float, iterable: Iterable[int | float]) -> int | float:
     '''Find the closest value to x in iterable.'''
     return min(iterable, key=lambda y:abs(y - x))

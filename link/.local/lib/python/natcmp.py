@@ -14,7 +14,7 @@ import re
 # https://unicode.org/reports/tr18/#Categories
 # https://unicode.org/reports/tr44/#GC_Values_Table
 
-def str_to_int(s):
+def str_to_int(s: str) -> tuple[int, str] | str:
     '''Convert the string to an int if possible.'''
     # See 'isdecimal-isdigit-isnumeric.py' for why isdecimal is used.
 
@@ -25,7 +25,7 @@ def str_to_int(s):
     else:
         return s
 
-def split_ints(s, pattern):
+def split_ints(s: str, pattern: re.Pattern[str]) -> tuple[tuple[int, str] | str, ...]:
     '''Split the string about groups of decimal characters.'''
     #return [str_to_int(c) for c in regex.split(pattern, s)]
     #return [str_to_int(c) for c in pattern.split(s)]
@@ -38,5 +38,5 @@ def split_ints(s, pattern):
 capture_many_decimal_pattern = re.compile(r'(\d+)')
 
 # pylint: disable=missing-function-docstring
-def key(s):
+def key(s: str) -> tuple[tuple[tuple[int, str] | str, ...], str]:
     return (split_ints(s.strip().casefold(), capture_many_decimal_pattern), s)

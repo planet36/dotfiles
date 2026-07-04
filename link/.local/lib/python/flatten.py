@@ -10,7 +10,11 @@ https://stackoverflow.com/questions/2158395/flatten-an-irregular-arbitrarily-nes
 https://stackoverflow.com/questions/10823877/what-is-the-fastest-way-to-flatten-arbitrarily-nested-lists-in-python/10824420#10824420
 https://stackoverflow.com/questions/952914/how-do-i-make-a-flat-list-out-of-a-list-of-lists/40857703#40857703
 '''
-def flatten(iterable):
+
+from collections.abc import Iterable, Iterator
+from typing import Any
+
+def flatten(iterable: Iterable[Any]) -> Iterator[Any]:
     '''Flatten the iterable'''
     if isinstance(iterable, dict):
         yield from flatten(iterable.values())
