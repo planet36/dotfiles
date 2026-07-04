@@ -2,9 +2,9 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: MPL-2.0
 
-set -e
+set -euo pipefail
 
-curl --silent --show-error https://gitlab.freedesktop.org/xorg/xserver/-/raw/master/dix/color.c | \
+curl --fail --silent --show-error https://gitlab.freedesktop.org/xorg/xserver/-/raw/master/dix/color.c | \
 sed -n -e '/static const BuiltinColor BuiltinColors\[\] = {/, /};/ p' | \
 python3 filter-oscolor.py
 
