@@ -78,13 +78,14 @@ def has_forbidden_substring(s: str) -> bool:
 def has_forbidden_prefix(s: str) -> bool:
     '''Determine if the string has a forbidden prefix.'''
 
-    for prefix in (
+    forbidden_prefixes: tuple[str, ...] = (
             #'0b0',
             #'0b00',
             #'0b100',
             #'0b11',
             #'0b100100',
-            ):
+            )
+    for prefix in forbidden_prefixes:
         if s.startswith(prefix):
             return True
 
@@ -94,13 +95,14 @@ def has_forbidden_prefix(s: str) -> bool:
 def has_forbidden_suffix(s: str) -> bool:
     '''Determine if the string has a forbidden suffix.'''
 
-    for suffix in (
+    forbidden_suffixes: tuple[str, ...] = (
             #'0',
             #'00',
             #'11',
             #'001',
             #'001001',
-            ):
+            )
+    for suffix in forbidden_suffixes:
         if s.endswith(suffix):
             return True
 

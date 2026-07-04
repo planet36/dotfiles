@@ -52,10 +52,10 @@ class GccMachineMode:
     unsigned_alias: str | None = None
     _exists: bool = field(default=False, init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.determine_exists()
 
-    def determine_exists(self):
+    def determine_exists(self) -> None:
         # gcc -c -x c++ -o /dev/null -
         command = ['gcc', '-c', '-x', 'c++', '-o', '/dev/null', '-']
         #test_program = f'int main() {{typedef {self.type} alias [[gnu::mode({self.name})]]; return 0;}}'.encode()
@@ -73,7 +73,7 @@ class GccMachineMode:
     def exists(self) -> bool:
         return self._exists
 
-    def print_c_decl_str(self):
+    def print_c_decl_str(self) -> None:
         print(f"#ifdef HAVE_{self.name}_MODE")
         print(f"// {self.description} ({self.name})")
         #print(f"typedef {self.type} {self.alias} [[gnu::mode({self.name})]];")
