@@ -143,7 +143,7 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
     char* net_iface = default_net_iface;
 
     int oc = 0;
-    const char* short_options = "+:Vhf:i:";
+    const char* short_options = "+:Vhf:i:n:";
     while ((oc = getopt(argc, argv, short_options)) != -1)
     {
         switch (oc)
