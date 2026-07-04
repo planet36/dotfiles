@@ -20,7 +20,7 @@
 char*
 skip_spaces(const char* str)
 {
-    while (isspace(*str))
+    while (isspace((unsigned char)*str))
     {
         ++str;
     }
@@ -47,7 +47,7 @@ strim(char* s)
         return s;
 
     end = s + size - 1;
-    while (end >= s && isspace(*end))
+    while (end >= s && isspace((unsigned char)*end))
     {
         end--;
     }
@@ -59,7 +59,7 @@ strim(char* s)
 void
 strtolower(char* s)
 {
-    for (; *s; ++s) { *s = (char)tolower(*s); }
+    for (; *s; ++s) { *s = (char)tolower((unsigned char)*s); }
 }
 
 // Evaluate the given string as a boolean
