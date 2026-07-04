@@ -215,7 +215,7 @@ for i in sample_bytes_limited:
 
 max_iterations_allowed = 10_000_000
 
-bit_patterns = {}
+bit_patterns: dict[int, list[int]] = {}
 
 for bits in (16, 32, 64):
     bit_patterns[bits] = []
