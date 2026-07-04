@@ -23,7 +23,9 @@
 */
 
 #include <concepts>
+#include <cstddef>
 #include <cstdint>
+#include <cstdlib>
 #include <err.h>
 #include <fmt/format.h>
 #include <iostream>
