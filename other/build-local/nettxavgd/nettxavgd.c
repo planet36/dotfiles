@@ -11,6 +11,7 @@
 #include <dirent.h>
 #include <err.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <math.h>
 #include <signal.h>
@@ -199,13 +200,19 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
     assert(atexit(atexit_cleanup) == 0);
 
+    ACFD(dest_fd) = -1;
+
     if (dest_path != nullptr)
     {
         constexpr mode_t new_mask = 0133; // rw-r--r--
         (void)umask(new_mask);
 
-        ACFILEPTR(dest_fp) = fopen(dest_path, "wx");
-        if (dest_fp == nullptr)
+        // Opened once and kept open for the life of the daemon: writing
+        // through this fd every tick (below) is immune to dest_path being
+        // later replaced with a symlink, since a fd is bound to the
+        // underlying inode, not the path.
+        dest_fd = open(dest_path, O_WRONLY | O_CREAT | O_EXCL, 0666);
+        if (dest_fd < 0)
             err(EXIT_FAILURE, "%s", dest_path);
     }
 
@@ -298,18 +305,21 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
                     (uintmax_t)((double)(tx_bytes - prev_tx_bytes) / delta_time_s + 0.5);
 
             char dest_buf[32] = {'\0'};
-            (void)snprintf(dest_buf, sizeof(dest_buf), "%ju", tx_bytes_per_s);
+            const int dest_len = snprintf(dest_buf, sizeof(dest_buf), "%ju", tx_bytes_per_s);
 
             if (dest_path != nullptr)
             {
-                ACFILEPTR(dest_fp) = fopen(dest_path, "w");
-                if (dest_fp == nullptr)
-                    err(EXIT_FAILURE, "%s", dest_path);
+                if (lseek(dest_fd, 0, SEEK_SET) < 0)
+                    err(EXIT_FAILURE, "lseek");
 
-                if (fputs(dest_buf, dest_fp) < 0)
+                if (write(dest_fd, dest_buf, (size_t)dest_len) < 0)
                 {
-                    err(EXIT_FAILURE, "fputs");
+                    err(EXIT_FAILURE, "write");
                 }
+
+                // Discard any leftover tail from a longer previous write.
+                if (ftruncate(dest_fd, (off_t)dest_len) < 0)
+                    err(EXIT_FAILURE, "ftruncate");
             }
             else if (puts(dest_buf) < 0)
             {
