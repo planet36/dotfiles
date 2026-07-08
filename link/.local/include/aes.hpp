@@ -31,8 +31,8 @@
 * \sa https://engineering.purdue.edu/kak/compsec/NewLectures/Lecture8.pdf
 * \sa https://crypto.stackexchange.com/a/2420/110486
 */
-inline uint8_t
-aes_next_rcon(uint8_t rcon_i, const uint8_t i)
+[[nodiscard]] static inline uint8_t
+aes_next_rcon(uint8_t rcon_i, const uint8_t i) noexcept
 {
     if (i == 1)
     {
@@ -51,8 +51,8 @@ aes_next_rcon(uint8_t rcon_i, const uint8_t i)
 }
 
 /// Do \c _mm_aeskeygenassist_si128 with the key \a key for round number \a round
-inline __m128i
-aes_keygenassist_round(const __m128i key, const int round)
+[[nodiscard]] static inline __m128i
+aes_keygenassist_round(const __m128i key, const int round) noexcept
 {
     // the last argument of _mm_aeskeygenassist_si128 must be an 8-bit immediate
 
@@ -125,8 +125,8 @@ constexpr int aes256_num_rounds = 14;
 /**
 * \pre \a tmp_assist is the result of \c _mm_aeskeygenassist_si128
 */
-inline __m128i
-aes128_expand_key(__m128i key, __m128i tmp_assist)
+[[nodiscard]] static inline __m128i
+aes128_expand_key(__m128i key, __m128i tmp_assist) noexcept
 {
     // get the most significant element (3)
     const int e3 = _mm_extract_epi32(tmp_assist, 3);
@@ -146,8 +146,8 @@ aes128_expand_key(__m128i key, __m128i tmp_assist)
 */
 template <size_t Nk>
 requires (Nk >= 2)
-void
-aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc)
+static void
+aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc) noexcept
 {
     for (int round = 1; round < Nk; ++round)
     {
@@ -161,8 +161,8 @@ aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc)
 */
 template <size_t Nk>
 requires (Nk >= 2)
-void
-aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc, arr_m128i<Nk>& round_keys_dec)
+static void
+aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc, arr_m128i<Nk>& round_keys_dec) noexcept
 {
     // See "Intel Advanced Encryption Standard (AES) New Instructions Set"
     // Figure 6. Preparing the Decryption Round Keys
@@ -177,8 +177,8 @@ aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc, arr_m128i<Nk>& ro
 /// Do AES-128 encryption
 template <size_t Nk>
 requires (Nk >= 2)
-__m128i
-aes128_enc(__m128i data, const arr_m128i<Nk>& round_keys_enc)
+[[nodiscard]] static __m128i
+aes128_enc(__m128i data, const arr_m128i<Nk>& round_keys_enc) noexcept
 {
     data = _mm_xor_si128(data, round_keys_enc[0]);
     for (int round = 1; round < Nk-1; ++round)
@@ -192,8 +192,8 @@ aes128_enc(__m128i data, const arr_m128i<Nk>& round_keys_enc)
 /// Do AES-128 decryption
 template <size_t Nk>
 requires (Nk >= 2)
-__m128i
-aes128_dec(__m128i data, const arr_m128i<Nk>& round_keys_dec)
+[[nodiscard]] static __m128i
+aes128_dec(__m128i data, const arr_m128i<Nk>& round_keys_dec) noexcept
 {
     data = _mm_xor_si128(data, round_keys_dec[0]);
     for (int round = 1; round < Nk-1; ++round)
@@ -205,15 +205,15 @@ aes128_dec(__m128i data, const arr_m128i<Nk>& round_keys_dec)
 }
 
 /// Wrapper for \c _mm_aesenc_si128
-inline auto
-aesenc(const __m128i a, const __m128i key)
+[[nodiscard]] static inline auto
+aesenc(const __m128i a, const __m128i key) noexcept
 {
     return _mm_aesenc_si128(a, key);
 }
 
 /// Wrapper for \c _mm_aesdec_si128
-inline auto
-aesdec(const __m128i a, const __m128i key)
+[[nodiscard]] static inline auto
+aesdec(const __m128i a, const __m128i key) noexcept
 {
     return _mm_aesdec_si128(a, key);
 }
@@ -221,30 +221,30 @@ aesdec(const __m128i a, const __m128i key)
 #if defined(__VAES__)
 
 /// Wrapper for \c _mm256_aesenc_epi128
-inline auto
-aesenc(const __m256i a, const __m256i key)
+[[nodiscard]] static inline auto
+aesenc(const __m256i a, const __m256i key) noexcept
 {
     return _mm256_aesenc_epi128(a, key);
 }
 
 /// Wrapper for \c _mm256_aesdec_epi128
-inline auto
-aesdec(const __m256i a, const __m256i key)
+[[nodiscard]] static inline auto
+aesdec(const __m256i a, const __m256i key) noexcept
 {
     return _mm256_aesdec_epi128(a, key);
 }
 
 #if defined(__AVX512F__)
 /// Wrapper for \c _mm512_aesenc_epi128
-inline auto
-aesenc(const __m512i a, const __m512i key)
+[[nodiscard]] static inline auto
+aesenc(const __m512i a, const __m512i key) noexcept
 {
     return _mm512_aesenc_epi128(a, key);
 }
 
 /// Wrapper for \c _mm512_aesdec_epi128
-inline auto
-aesdec(const __m512i a, const __m512i key)
+[[nodiscard]] static inline auto
+aesdec(const __m512i a, const __m512i key) noexcept
 {
     return _mm512_aesdec_epi128(a, key);
 }
@@ -257,8 +257,8 @@ aesdec(const __m512i a, const __m512i key)
 
 /// Do \c aesenc \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
-inline void
-aesenc_array(std::array<T, N>& arr, const T key, const int num_rounds)
+static inline void
+aesenc_array(std::array<T, N>& arr, const T key, const int num_rounds) noexcept
 {
     for (size_t i = 0; i < N; ++i)
     {
@@ -276,8 +276,8 @@ aesenc_array(std::array<T, N>& arr, const T key, const int num_rounds)
 
 /// Do \c aesdec \a num_rounds times on all elements of array \a arr with key \a key
 template <simd_int_t T, size_t N>
-inline void
-aesdec_array(std::array<T, N>& arr, const T key, const int num_rounds)
+static inline void
+aesdec_array(std::array<T, N>& arr, const T key, const int num_rounds) noexcept
 {
     for (size_t i = 0; i < N; ++i)
     {
@@ -301,8 +301,8 @@ aesdec_array(std::array<T, N>& arr, const T key, const int num_rounds)
 */
 template <simd_int_t T, int Nr = 3>
 requires (Nr >= 1)
-inline auto
-aesenc_davies_meyer(const T H, const T m)
+[[nodiscard]] static inline auto
+aesenc_davies_meyer(const T H, const T m) noexcept
 {
     auto a = H;
 
@@ -324,8 +324,8 @@ aesenc_davies_meyer(const T H, const T m)
 */
 template <simd_int_t T, int Nr = 3>
 requires (Nr >= 1)
-inline auto
-aesdec_davies_meyer(const T H, const T m)
+[[nodiscard]] static inline auto
+aesdec_davies_meyer(const T H, const T m) noexcept
 {
     auto a = H;
 
