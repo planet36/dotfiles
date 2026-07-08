@@ -190,6 +190,7 @@ simd_compress_aes_enc_r4(const __m256i a, const __m256i b) noexcept
 /// Perform \c simd_compress_aes_enc_r2 on corresponding elements of \a arr_1 and \a arr_2
 /**
 * \pre \a arr_2 points to \a N elements
+* \note \a arr_2 need not be aligned.
 */
 template <size_t N>
 requires (N > 0) && ((N % 2) == 0) // N must be positive and even
@@ -211,6 +212,7 @@ simd_compress_aes_enc_r2_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t*
 /// Perform \c simd_compress_aes_enc_r3 on corresponding elements of \a arr_1 and \a arr_2
 /**
 * \pre \a arr_2 points to \a N elements
+* \note \a arr_2 need not be aligned.
 */
 template <size_t N>
 requires (N > 0) && ((N % 2) == 0) // N must be positive and even
@@ -232,6 +234,7 @@ simd_compress_aes_enc_r3_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t*
 /// Perform \c simd_compress_aes_enc_r4 on corresponding elements of \a arr_1 and \a arr_2
 /**
 * \pre \a arr_2 points to \a N elements
+* \note \a arr_2 need not be aligned.
 */
 template <size_t N>
 requires (N > 0) && ((N % 2) == 0) // N must be positive and even
@@ -255,6 +258,7 @@ simd_compress_aes_enc_r4_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t*
 /// Perform \c simd_compress_aes_enc_r2 on corresponding elements of \a arr_1 and \a arr_2
 /**
 * \pre \a arr_2 points to \a N elements
+* \note \a arr_2 need not be aligned.
 */
 template <size_t N>
 static void
@@ -269,6 +273,7 @@ simd_compress_aes_enc_r2_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t*
 /// Perform \c simd_compress_aes_enc_r3 on corresponding elements of \a arr_1 and \a arr_2
 /**
 * \pre \a arr_2 points to \a N elements
+* \note \a arr_2 need not be aligned.
 */
 template <size_t N>
 static void
@@ -283,6 +288,7 @@ simd_compress_aes_enc_r3_arr(std::array<uint8x16_t, N>& arr_1, const uint8x16_t*
 /// Perform \c simd_compress_aes_enc_r4 on corresponding elements of \a arr_1 and \a arr_2
 /**
 * \pre \a arr_2 points to \a N elements
+* \note \a arr_2 need not be aligned.
 */
 template <size_t N>
 static void

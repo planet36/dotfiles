@@ -16,13 +16,13 @@
 template <typename T>
 requires (!std::ranges::contiguous_range<T>)
 [[nodiscard]] constexpr auto
-as_byte_span(const T& x)
+as_byte_span(const T& x) noexcept
 {
     return std::as_bytes(std::span(std::addressof(x), 1));
 }
 
 [[nodiscard]] constexpr auto
-as_byte_span(const std::ranges::contiguous_range auto& container)
+as_byte_span(const std::ranges::contiguous_range auto& container) noexcept
 {
     return std::as_bytes(std::span{container});
 }

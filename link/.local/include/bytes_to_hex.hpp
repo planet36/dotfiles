@@ -14,8 +14,10 @@
 #include <span>
 #include <string>
 
-/// nibble to char
+/// Convert a nibble to a character
 /**
+* \param x the nibble value to convert
+* \return the lowercase hexadecimal character representing \a x
 * \pre \a x is in the interval <code>[0, 15]</code>
 */
 [[nodiscard]] static constexpr char
@@ -25,6 +27,10 @@ nibble_char(const uint8_t x) noexcept
 }
 
 /// Convert a span of bytes to a hexadecimal string
+/**
+* \param byte_sp the bytes to convert
+* \return a lowercase hexadecimal string representing \a byte_sp
+*/
 [[nodiscard]] static std::string
 bytes_to_hex(const std::span<const std::byte> byte_sp)
 {

@@ -31,5 +31,5 @@ template <std::integral R, std::integral T>
 in_range(T t) noexcept
 {
     return std::cmp_greater_equal(t, std::numeric_limits<R>::min()) &&
-        std::cmp_less_equal(t, std::numeric_limits<R>::max());
+           std::cmp_less_equal(t, std::numeric_limits<R>::max());
 }

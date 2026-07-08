@@ -40,14 +40,14 @@
 * \sa https://cppreference.com/w/cpp/container/inplace_vector.html
 * \sa https://www.boost.org/doc/libs/latest/doc/html/doxygen/boost_container_header_reference/classboost_1_1container_1_1static__vector.html
 */
-template <typename T, std::size_t N, std::size_t Align = std::max(alignof(std::size_t), alignof(T))>
+template <typename T,
+          std::size_t N,
+          std::size_t Align = std::max(alignof(std::size_t), alignof(T))>
 requires (N > 0) && std::default_initializable<T> && std::movable<T> &&
-         std::is_trivially_destructible_v<T> &&
-         (std::has_single_bit(Align))
+         std::is_trivially_destructible_v<T> && (std::has_single_bit(Align))
 class fixed_vector
 {
 private:
-
     std::size_t size_{};
     alignas(Align) std::array<T, N> data_{};
 
@@ -75,7 +75,6 @@ private:
     }
 
 public:
-
     constexpr fixed_vector() noexcept = default;
     fixed_vector(const fixed_vector&) noexcept(std::is_nothrow_copy_constructible_v<T>) = default;
     fixed_vector(fixed_vector&&) noexcept(std::is_nothrow_move_constructible_v<T>) = default;
@@ -84,7 +83,9 @@ public:
     ~fixed_vector() = default;
 
     constexpr explicit fixed_vector(const std::size_t count, const T& value)
-    { resize(count, value); }
+    {
+        resize(count, value);
+    }
 
     constexpr explicit fixed_vector(const std::size_t count)
     {
@@ -95,26 +96,33 @@ public:
         size_ = count;
     }
 
-    constexpr explicit fixed_vector(const std::span<const T> spn)
-    { append_range(spn); }
+    constexpr explicit fixed_vector(const std::span<const T> spn) { append_range(spn); }
 
     template <std::input_iterator It, std::sentinel_for<It> S>
     constexpr explicit fixed_vector(It first, S last)
-    { append_range(first, last); }
+    {
+        append_range(first, last);
+    }
 
     template <std::input_iterator It>
     constexpr explicit fixed_vector(It first, const std::size_t count)
-    { append_range(first, count); }
+    {
+        append_range(first, count);
+    }
 
-    constexpr fixed_vector(const std::initializer_list<T> il)
-    { append_range(il); }
+    constexpr fixed_vector(const std::initializer_list<T> il) { append_range(il); }
 
     template <std::ranges::input_range R>
     constexpr explicit fixed_vector(std::from_range_t, R&& rg)
-    { append_range(std::forward<R>(rg)); }
+    {
+        append_range(std::forward<R>(rg));
+    }
 
     constexpr fixed_vector& operator=(const std::initializer_list<T> il)
-    { assign_range(il); return *this; }
+    {
+        assign_range(il);
+        return *this;
+    }
 
     [[nodiscard]] static constexpr std::size_t capacity() noexcept { return N; }
 
@@ -123,7 +131,9 @@ public:
     [[nodiscard]] constexpr std::size_t size() const noexcept { return size_; }
 
     [[nodiscard]] constexpr std::size_t remaining_space() const noexcept
-    { return max_size() - size(); }
+    {
+        return max_size() - size();
+    }
 
     [[nodiscard]] constexpr bool is_empty() const noexcept { return size() == 0; }
 
@@ -216,7 +226,10 @@ public:
     */
     constexpr void unchecked_push_back(const T& value) { unchecked_emplace_back(value); }
 
-    constexpr void unchecked_push_back(T&& value) { unchecked_emplace_back(std::move(value)); }
+    constexpr void unchecked_push_back(T&& value)
+    {
+        unchecked_emplace_back(std::move(value));
+    }
 
     /**
     * \sa https://cppreference.com/w/cpp/container/inplace_vector/push_back.html
@@ -229,15 +242,23 @@ public:
     * \sa https://cppreference.com/w/cpp/container/inplace_vector/try_push_back.html
     */
     [[nodiscard]] constexpr bool try_push_back(const T& value)
-    { return try_emplace_back(value); }
+    {
+        return try_emplace_back(value);
+    }
 
     [[nodiscard]] constexpr bool try_push_back(T&& value)
-    { return try_emplace_back(std::move(value)); }
+    {
+        return try_emplace_back(std::move(value));
+    }
 
     /**
     * \sa https://cppreference.com/w/cpp/container/array/fill.html
     */
-    constexpr void fill_capacity(const T& value) { data_.fill(value); size_ = max_size(); }
+    constexpr void fill_capacity(const T& value)
+    {
+        data_.fill(value);
+        size_ = max_size();
+    }
 
     /**
     * \sa https://cppreference.com/w/cpp/algorithm/ranges/fill
@@ -274,7 +295,9 @@ public:
     }
 
     constexpr void append_range(const std::initializer_list<T> il)
-    { append_range(std::begin(il), std::end(il)); }
+    {
+        append_range(std::begin(il), std::end(il));
+    }
 
     template <std::ranges::input_range R>
     constexpr void append_range(R&& rg)
@@ -328,7 +351,9 @@ public:
     }
 
     [[nodiscard]] constexpr bool try_append_range(const std::initializer_list<T> il)
-    { return try_append_range(std::begin(il), std::end(il)); }
+    {
+        return try_append_range(std::begin(il), std::end(il));
+    }
 
     template <std::ranges::input_range R>
     [[nodiscard]] constexpr bool try_append_range(R&& rg)
@@ -352,27 +377,52 @@ public:
     * \note Does not destroy elements.
     * \sa https://cppreference.com/w/cpp/container/inplace_vector/assign_range.html
     */
-    constexpr void assign_range(const std::span<const T> spn) { clear(); append_range(spn); }
+    constexpr void assign_range(const std::span<const T> spn)
+    {
+        clear();
+        append_range(spn);
+    }
 
     template <std::input_iterator It, std::sentinel_for<It> S>
-    constexpr void assign_range(It first, S last) { clear(); append_range(first, last); }
+    constexpr void assign_range(It first, S last)
+    {
+        clear();
+        append_range(first, last);
+    }
 
     template <std::input_iterator It>
     constexpr void assign_range(It first, const std::size_t count)
-    { clear(); append_range(first, count); }
+    {
+        clear();
+        append_range(first, count);
+    }
 
-    constexpr void assign_range(const std::initializer_list<T> il) { clear(); append_range(il); }
+    constexpr void assign_range(const std::initializer_list<T> il)
+    {
+        clear();
+        append_range(il);
+    }
 
     template <std::ranges::input_range R>
-    constexpr void assign_range(R&& rg) { clear(); append_range(std::forward<R>(rg)); }
+    constexpr void assign_range(R&& rg)
+    {
+        clear();
+        append_range(std::forward<R>(rg));
+    }
 
     [[nodiscard]] constexpr std::span<T> span() noexcept { return {data(), size()}; }
 
-    [[nodiscard]] constexpr std::span<const T> span() const noexcept { return {data(), size()}; }
+    [[nodiscard]] constexpr std::span<const T> span() const noexcept
+    {
+        return {data(), size()};
+    }
 
     [[nodiscard]] constexpr explicit operator std::span<T>() noexcept { return span(); }
 
-    [[nodiscard]] constexpr explicit operator std::span<const T>() const noexcept { return span(); }
+    [[nodiscard]] constexpr explicit operator std::span<const T>() const noexcept
+    {
+        return span();
+    }
 
     [[nodiscard]] constexpr T* data() noexcept { return std::data(data_); }
 
@@ -399,12 +449,21 @@ public:
     [[nodiscard]] constexpr T& operator[](const std::size_t i) noexcept { return data_[i]; }
 
     [[nodiscard]] constexpr const T& operator[](const std::size_t i) const noexcept
-    { return data_[i]; }
+    {
+        return data_[i];
+    }
 
-    [[nodiscard]] constexpr T& at(const std::size_t i) { check_idx_(i); return data_[i]; }
+    [[nodiscard]] constexpr T& at(const std::size_t i)
+    {
+        check_idx_(i);
+        return data_[i];
+    }
 
     [[nodiscard]] constexpr const T& at(const std::size_t i) const
-    { check_idx_(i); return data_[i]; }
+    {
+        check_idx_(i);
+        return data_[i];
+    }
 
     [[nodiscard]] constexpr T* begin() noexcept { return data(); }
 
@@ -419,28 +478,44 @@ public:
     [[nodiscard]] constexpr const T* cend() const noexcept { return data() + size(); }
 
     [[nodiscard]] constexpr std::reverse_iterator<T*> rbegin() noexcept
-    { return std::reverse_iterator(end()); }
+    {
+        return std::reverse_iterator(end());
+    }
 
     [[nodiscard]] constexpr std::reverse_iterator<const T*> rbegin() const noexcept
-    { return std::reverse_iterator(end()); }
+    {
+        return std::reverse_iterator(end());
+    }
 
     [[nodiscard]] constexpr std::reverse_iterator<const T*> crbegin() const noexcept
-    { return std::reverse_iterator(cend()); }
+    {
+        return std::reverse_iterator(cend());
+    }
 
     [[nodiscard]] constexpr std::reverse_iterator<T*> rend() noexcept
-    { return std::reverse_iterator(begin()); }
+    {
+        return std::reverse_iterator(begin());
+    }
 
     [[nodiscard]] constexpr std::reverse_iterator<const T*> rend() const noexcept
-    { return std::reverse_iterator(begin()); }
+    {
+        return std::reverse_iterator(begin());
+    }
 
     [[nodiscard]] constexpr std::reverse_iterator<const T*> crend() const noexcept
-    { return std::reverse_iterator(cbegin()); }
+    {
+        return std::reverse_iterator(cbegin());
+    }
 
     [[nodiscard]] constexpr bool operator==(const fixed_vector& rhs) const
     requires std::equality_comparable<T>
-    { return std::ranges::equal(span(), rhs.span()); }
+    {
+        return std::ranges::equal(span(), rhs.span());
+    }
 
     [[nodiscard]] constexpr auto operator<=>(const fixed_vector& rhs) const
     requires std::three_way_comparable<T>
-    { return std::lexicographical_compare_three_way(begin(), end(), rhs.begin(), rhs.end()); }
+    {
+        return std::lexicographical_compare_three_way(begin(), end(), rhs.begin(), rhs.end());
+    }
 };
