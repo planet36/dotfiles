@@ -4,12 +4,12 @@
 
 # pylint: disable=invalid-name
 # pylint: disable=missing-module-docstring
-# pylint: disable=redefined-outer-name
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 __version__ = '2025-10-02'
 
+import argparse
 import math
 import os
 import signal
@@ -35,12 +35,37 @@ arrows = ('🢃', '🢇', '🢀', '🢄', '🢁', '🢅', '🢂', '🢆')
 assert len(card_dir) == 8
 assert len(card_dir) == len(arrows)
 
-for line in sys.stdin:
-    try:
-        degrees = float(line.rstrip(os.linesep))
-    except ValueError:
-        continue
-    if not math.isfinite(degrees):
-        continue
-    cardinal_dir_index = degrees_to_cardinal_dir_index(degrees)
-    print(arrows[cardinal_dir_index])
+
+# pylint: disable=missing-function-docstring
+def main():
+
+    description_lines = (
+            'Read a wind direction in degrees from each line of stdin.',
+            'Print an arrow pointing in the direction the wind blows toward.'
+            )
+
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
+
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
+
+    parser.parse_args()
+
+    for line in sys.stdin:
+        try:
+            degrees = float(line.rstrip(os.linesep))
+        except ValueError:
+            continue
+        if not math.isfinite(degrees):
+            continue
+        cardinal_dir_index = degrees_to_cardinal_dir_index(degrees)
+        print(arrows[cardinal_dir_index])
+
+
+if __name__ == '__main__':
+    main()
