@@ -62,7 +62,7 @@ def main(argv = None):
     if argv is None:
         argv = sys.argv
 
-    in_delim = re.compile(r' +|\t')
+    in_delim = re.compile(r'\s+')
     out_delim = '\t'
 
     choices = tuple(Choice(arg) for arg in argv[1:])
