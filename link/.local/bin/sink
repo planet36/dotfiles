@@ -97,6 +97,18 @@ OPTIONS
 -a
     Open FILE for writing, appending to the end of it if it exists.
 
+EXIT STATUS
+
+0
+    Success.
+
+1
+    A usage error (invalid option or missing FILE), or an error opening
+    or writing FILE (for example, -x when FILE already exists).
+
+128+N
+    Terminated by signal N (for example, 130 for SIGINT).
+
 NOTES
 
 This was inspired by the 'sink' program by Bernhard Voelker.
