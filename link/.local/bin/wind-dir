@@ -37,7 +37,7 @@ assert len(card_dir) == len(arrows)
 
 
 # pylint: disable=missing-function-docstring
-def main():
+def main(argv=None):
 
     description_lines = (
             'Read a wind direction in degrees from each line of stdin.',
@@ -57,7 +57,7 @@ def main():
     parser.add_argument('-t', '--text', action='store_true',
             help='print the cardinal direction (e.g. NE) instead of an arrow')
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     labels = card_dir if args.text else arrows
 
@@ -71,6 +71,8 @@ def main():
         cardinal_dir_index = degrees_to_cardinal_dir_index(degrees)
         print(labels[cardinal_dir_index])
 
+    return 0
+
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
