@@ -195,10 +195,10 @@ OPTIONS
         print_error(err)
         return 1
 
-    print_verbose(f'hash_algorithm={hash_algorithm}')
-    print_verbose(f'fmt={fmt}')
-    print_verbose(f'iterations={iterations}')
-    print_verbose(f'silent={silent}')
+    print_verbose(f'{hash_algorithm=}')
+    print_verbose(f'{fmt=}')
+    print_verbose(f'{iterations=}')
+    print_verbose(f'{silent=}')
 
     # https://pymotw.com/3/getpass/index.html
     # "It is up to the caller to detect when the input stream is not a tty and
@@ -219,8 +219,8 @@ OPTIONS
         print(salt_prompt, end='', flush=True)
         salt = sys.stdin.readline().rstrip(os.linesep)
 
-    print_verbose(f"password={password}")
-    print_verbose(f"salt={salt}")
+    print_verbose(f"{password=}")
+    print_verbose(f"{salt=}")
 
     try:
         result = hashlib.pbkdf2_hmac(hash_algorithm, password.encode(), salt.encode(), iterations)
