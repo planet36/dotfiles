@@ -12,11 +12,13 @@ __version__ = '2022-09-08'
 
 import sys
 
-def sink(out_file_name, mode, encoding='utf-8'):
+def sink(out_file_name, mode):
     # Soak up all of stdin before opening (and possibly truncating) the output
-    # file, so reading from and writing to the same file works.
-    data = sys.stdin.read()
-    with open(out_file_name, mode=mode, encoding=encoding) as out_file:
+    # file, so reading from and writing to the same file works.  Operate on raw
+    # bytes so the passthrough is encoding-agnostic and binary-faithful.
+    data = sys.stdin.buffer.read()
+    # pylint: disable=unspecified-encoding
+    with open(out_file_name, mode=mode + 'b') as out_file:
         out_file.write(data)
 
 # pylint: disable=too-many-locals
