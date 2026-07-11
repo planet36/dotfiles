@@ -65,7 +65,14 @@ def main(argv = None):
     in_delim = re.compile(r'\s+')
     out_delim = '\t'
 
-    choices = tuple(Choice(arg) for arg in argv[1:])
+    parsed = []
+    for arg in argv[1:]:
+        try:
+            parsed.append(Choice(arg))
+        except ValueError:
+            print(f'{argv[0]}: invalid choice: {arg!r}', file=sys.stderr)
+            return 1
+    choices = tuple(parsed)
 
     # Choose fields from each line from stdin.
     for line in sys.stdin:
