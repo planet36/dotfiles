@@ -85,6 +85,7 @@ Calculate the distance (in meters) between geodetic coordinates (in decimal degr
 Pairs of geodetic coordinates, separated by whitespace on the same line, are read from stdin.
 The coordinates are in the following order:
 LAT1 LON1 LAT2 LON2
+Any fields after the first four are ignored.
 
 OPTIONS
 
