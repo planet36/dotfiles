@@ -54,7 +54,12 @@ def main():
 
     parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    parser.parse_args()
+    parser.add_argument('-t', '--text', action='store_true',
+            help='print the cardinal direction (e.g. NE) instead of an arrow')
+
+    args = parser.parse_args()
+
+    labels = card_dir if args.text else arrows
 
     for line in sys.stdin:
         try:
@@ -64,7 +69,7 @@ def main():
         if not math.isfinite(degrees):
             continue
         cardinal_dir_index = degrees_to_cardinal_dir_index(degrees)
-        print(arrows[cardinal_dir_index])
+        print(labels[cardinal_dir_index])
 
 
 if __name__ == '__main__':
