@@ -57,13 +57,13 @@ def main():
         if not line: # empty
             continue
 
-        result = is_pangram(line)
+        missing = pangram_missing(line)
+        result = not missing
 
         output = [str(result), ascii(line)]
 
-        if not result:
-            missing_letters = ''.join(sorted(pangram_missing(line)))
-            output.append(missing_letters)
+        if missing:
+            output.append(''.join(sorted(missing)))
 
         print('\t'.join(output))
 
