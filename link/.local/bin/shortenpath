@@ -17,6 +17,9 @@ import sys
 # Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
+# Falsy (None if unset, '' if empty) disables the "~" substitution below.
+HOME = os.environ.get('HOME')
+
 def shortenpath(path: str, maxlen: int, repl: str = '…') -> str:
     '''
     Shorten `path` by trimming its longest components.
@@ -25,16 +28,16 @@ def shortenpath(path: str, maxlen: int, repl: str = '…') -> str:
     could not be trimmed below a minimum length.
     '''
 
-    HOME = os.environ['HOME']
     sep = os.sep
 
     path = re.sub(r'/+', '/', path)
 
-    if path == HOME:
-        return '~'
+    if HOME:
+        if path == HOME:
+            return '~'
 
-    if path.startswith(HOME + sep):
-        path = '~' + path[len(HOME):]
+        if path.startswith(HOME + sep):
+            path = '~' + path[len(HOME):]
 
     num_to_remove = len(path) - maxlen
 
