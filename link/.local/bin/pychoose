@@ -31,28 +31,27 @@ Slices have the same syntax as in Python.'''
 
     def __init__(self, s: str):
         '''Convert s to a Choice.'''
-        t = tuple(None if not i else int(i) for i in s.split(':', maxsplit=2))
-        if len(t) == 1:
-            self.is_index = True
-            self.value = t[0]
+        parts = s.split(':', maxsplit=2)
+        if len(parts) == 1:
+            self.value: int | slice = int(parts[0])
         else:
-            self.is_index = False
-            self.value = slice(*t)
+            self.value = slice(*(None if not p else int(p) for p in parts))
 
 
 def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
     '''Choose elements from in_fields according to the choices.'''
 
-    out_fields = []
+    out_fields: list[str] = []
 
     for choice in choices:
-        if choice.is_index:
+        v = choice.value
+        if isinstance(v, slice):
+            out_fields.extend(in_fields[v])
+        else:
             try:
-                out_fields.append(in_fields[choice.value])
+                out_fields.append(in_fields[v])
             except IndexError:
                 pass
-        else:
-            out_fields.extend(in_fields[choice.value])
 
     return out_fields
 
