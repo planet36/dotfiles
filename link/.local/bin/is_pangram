@@ -10,9 +10,13 @@ __version__ = '2024-12-30'
 
 import argparse
 import os
+import signal
 import string
 import sys
 
+
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 alphabet_set = frozenset(string.ascii_lowercase)
 

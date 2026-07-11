@@ -11,7 +11,11 @@ __license__ = 'MPL-2.0'
 __version__ = '2025-10-02'
 
 import os
+import signal
 import sys
+
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 # https://en.wikipedia.org/wiki/Wind_direction
 
