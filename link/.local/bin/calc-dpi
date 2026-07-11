@@ -19,6 +19,7 @@ def calcdpi(width_px: int, height_px: int, diagonal_in: float) -> float:
 # pylint: disable=inconsistent-return-statements
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
 def main(argv = None):
 
@@ -147,42 +148,50 @@ EXAMPLES
         print_error(err)
         return 1
 
-    for (option, value) in options:
-        # pylint: disable=no-else-return
-        if option in ['-V', '--version']:
-            print_version()
-            return 0
-        elif option in ['-h', '--help']:
-            print_help()
-            return 0
-        elif option in ['-v', '--verbose']:
-            verbose = True
-        elif option in ['--width']:
-            width_px = int(value)
-        elif option in ['--height']:
-            height_px = int(value)
-        elif option in ['-s', '--scale']:
-            scale_factor = float(value)
-        elif option in ['--min']:
-            min_dpi = int(value)
-        elif option in ['--max']:
-            max_dpi = int(value)
+    try:
+        for (option, value) in options:
+            # pylint: disable=no-else-return
+            if option in ['-V', '--version']:
+                print_version()
+                return 0
+            elif option in ['-h', '--help']:
+                print_help()
+                return 0
+            elif option in ['-v', '--verbose']:
+                verbose = True
+            elif option in ['--width']:
+                width_px = int(value)
+            elif option in ['--height']:
+                height_px = int(value)
+            elif option in ['-s', '--scale']:
+                scale_factor = float(value)
+            elif option in ['--min']:
+                min_dpi = int(value)
+            elif option in ['--max']:
+                max_dpi = int(value)
+            else:
+                print_error(f"Unhandled option: {option}")
+                return 1
+
+        if not remaining_args: # empty
+            diagonal_in = input('Enter the diagonal size (in inches) of the display: ')
         else:
-            print_error(f"Unhandled option: {option}")
+            for s in remaining_args:
+                if 'x' in s: # resolution given
+                    (w, h) = s.split('x')
+                    width_px = int(w)
+                    height_px = int(h)
+                else: # diagonal given
+                    diagonal_in = s
+
+        if diagonal_in is None:
+            print_error('DIAGONAL_INCHES is required')
             return 1
 
-    if not remaining_args: # empty
-        diagonal_in = input('Enter the diagonal size (in inches) of the display: ')
-    else:
-        for s in remaining_args:
-            if 'x' in s: # resolution given
-                (w, h) = s.split('x')
-                width_px = int(w)
-                height_px = int(h)
-            else: # diagonal given
-                diagonal_in = s
-
-    diagonal_in = float(diagonal_in)
+        diagonal_in = float(diagonal_in)
+    except ValueError as err:
+        print_error(err)
+        return 1
 
     print_verbose(f'{width_px=}')
     print_verbose(f'{height_px=}')
@@ -191,13 +200,27 @@ EXAMPLES
     print_verbose(f'{min_dpi=}')
     print_verbose(f'{max_dpi=}')
 
-    assert width_px > 0, f'{width_px=} must be > 0'
-    assert height_px > 0, f'{height_px=} must be > 0'
-    assert diagonal_in > 0, f'{diagonal_in=} must be > 0'
-    assert scale_factor > 0, f'{scale_factor=} must be > 0'
-    assert min_dpi > 0, f'{min_dpi=} must be > 0'
-    assert max_dpi > 0, f'{max_dpi=} must be > 0'
-    assert min_dpi <= max_dpi, f'{min_dpi=} must be <= {max_dpi=}'
+    if width_px <= 0:
+        print_error(f'{width_px=} must be > 0')
+        return 1
+    if height_px <= 0:
+        print_error(f'{height_px=} must be > 0')
+        return 1
+    if diagonal_in <= 0:
+        print_error(f'{diagonal_in=} must be > 0')
+        return 1
+    if scale_factor <= 0:
+        print_error(f'{scale_factor=} must be > 0')
+        return 1
+    if min_dpi <= 0:
+        print_error(f'{min_dpi=} must be > 0')
+        return 1
+    if max_dpi <= 0:
+        print_error(f'{max_dpi=} must be > 0')
+        return 1
+    if min_dpi > max_dpi:
+        print_error(f'{min_dpi=} must be <= {max_dpi=}')
+        return 1
 
     dpi = calcdpi(width_px, height_px, diagonal_in)
     print_verbose(f'{dpi=}')
