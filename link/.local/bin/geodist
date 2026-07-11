@@ -153,9 +153,16 @@ EOT
     dist_func = possible_dist_funcs[method]
 
     for line in sys.stdin:
-        (lat1_deg, lon1_deg, lat2_deg, lon2_deg) = map(float, line.strip(os.linesep).split()[0:4])
-        p1 = geopy.Point(lat1_deg, lon1_deg)
-        p2 = geopy.Point(lat2_deg, lon2_deg)
+        fields = line.split()
+        if not fields: # skip blank lines
+            continue
+        try:
+            (lat1_deg, lon1_deg, lat2_deg, lon2_deg) = map(float, fields[0:4])
+            p1 = geopy.Point(lat1_deg, lon1_deg)
+            p2 = geopy.Point(lat2_deg, lon2_deg)
+        except ValueError as err:
+            print_error(err)
+            return 1
 
         print_verbose(f'{p1=} {p2=}')
 
