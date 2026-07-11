@@ -26,7 +26,7 @@ def is_pangram(s: str) -> bool:
     return alphabet_set.issubset(s.lower())
 
 
-def pangram_missing(s: str) -> type(alphabet_set):
+def pangram_missing(s: str) -> frozenset[str]:
     '''Return the letters missing from the string needed to make a pangram.'''
     return alphabet_set.difference(s.lower())
 
