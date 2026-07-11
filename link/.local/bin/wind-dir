@@ -10,6 +10,7 @@ __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 __version__ = '2025-10-02'
 
+import math
 import os
 import signal
 import sys
@@ -38,6 +39,8 @@ for line in sys.stdin:
     try:
         degrees = float(line.rstrip(os.linesep))
     except ValueError:
+        continue
+    if not math.isfinite(degrees):
         continue
     cardinal_dir_index = degrees_to_cardinal_dir_index(degrees)
     print(arrows[cardinal_dir_index])
