@@ -125,7 +125,7 @@ OPTIONS
 -a, --hash-algorithm=ALGORITHM
     Use hash algorithm ALGORITHM to hash the string.
     (default: {default_hash_algorithm})
-    (valid: {','.join(sorted(valid_hash_algorithms))})
+    (valid: {','.join(valid_hash_algorithms)})
     <https://docs.python.org/3/library/hashlib.html>
 
 -f, --format=FORMAT
