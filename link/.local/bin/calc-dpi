@@ -176,13 +176,21 @@ EXAMPLES
         if not remaining_args: # empty
             diagonal_in = input('Enter the diagonal size (in inches) of the display: ')
         else:
+            resolution_given = False
             for s in remaining_args:
                 if 'x' in s: # resolution given
+                    if resolution_given:
+                        print_error(f"Unexpected argument: {s}")
+                        return 1
                     (w, h) = s.split('x')
                     width_px = int(w)
                     height_px = int(h)
-                else: # diagonal given
+                    resolution_given = True
+                elif diagonal_in is None: # diagonal given
                     diagonal_in = s
+                else:
+                    print_error(f"Unexpected argument: {s}")
+                    return 1
 
         if diagonal_in is None:
             print_error('DIAGONAL_INCHES is required')
