@@ -16,7 +16,6 @@ import sys
 def calcdpi(width_px: int, height_px: int, diagonal_in: float) -> float:
     return math.hypot(width_px, height_px) / diagonal_in
 
-# pylint: disable=inconsistent-return-statements
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-return-statements
@@ -248,6 +247,8 @@ EXAMPLES
         dpi = max_dpi
 
     print(dpi)
+
+    return 0
 
 if __name__ == '__main__':
     sys.exit(main())
