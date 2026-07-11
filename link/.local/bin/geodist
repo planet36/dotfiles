@@ -20,6 +20,7 @@ import geopy.distance
 import geopy.point
 
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-statements
 def main(argv = None):
 
     # pylint: disable=import-outside-toplevel
@@ -138,6 +139,10 @@ EOT
         elif option in ['-v', '--verbose']:
             verbose = True
         elif option in ['-m', '--method']:
+            if value not in possible_dist_funcs:
+                print_error(f"Invalid method: {value!r} "
+                    f"(valid: {', '.join(possible_dist_funcs)})")
+                return 1
             method = value
         else:
             print_error(f"Unhandled option: {option}")
