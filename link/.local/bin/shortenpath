@@ -10,6 +10,7 @@ __license__ = 'MPL-2.0'
 __version__ = '2025-10-02'
 
 import os
+import re
 import signal
 import sys
 
@@ -27,8 +28,7 @@ def shortenpath(path: str, maxlen: int, repl: str = '…') -> str:
     HOME = os.environ['HOME']
     sep = os.sep
 
-    while '//' in path:
-        path = path.replace('//', '/')
+    path = re.sub(r'/+', '/', path)
 
     if path == HOME:
         return '~'
