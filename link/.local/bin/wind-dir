@@ -7,7 +7,7 @@
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2025-10-02'
+__version__ = '2026-07-11'
 
 import argparse
 import math
