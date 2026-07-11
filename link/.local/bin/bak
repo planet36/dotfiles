@@ -50,7 +50,6 @@ def main(argv = None):
 
     # pylint: disable=import-outside-toplevel
     import getopt
-    #import signal
     import shlex
 
     if argv is None:
@@ -67,14 +66,6 @@ def main(argv = None):
     verbose = default_verbose
     move = default_move
     unbak = default_unbak
-
-    # pylint: disable=unused-argument
-    #def signal_handler(signal_num, execution_frame):
-    #    print()
-    #    sys.exit(128 + signal_num)
-
-    #signal.signal(signal.SIGINT, signal_handler)
-    #signal.signal(signal.SIGTERM, signal_handler)
 
     def print_version():
         """Print the version information"""
