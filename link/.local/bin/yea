@@ -43,92 +43,102 @@ def non_empty_str(s: str) -> str:
         raise argparse.ArgumentTypeError("may not be empty")
     return s
 
-description_lines = [
-        'Print a string repeatedly until the optional limit is reached.',
-        '',
-        'yea (pronounced like "yay") is similar to the \'yes\' command except:',
-        '  1) an output limit may be given',
-        '  2) trailing newlines may be omitted',
-    ]
 
-epilog_lines = [
-        'If NUM is negative, it is considered unlimited.',
-    ]
+# pylint: disable=missing-function-docstring
+def main(argv=None):
 
-if imported_module_number_str_to_decimal:
-    epilog_lines.extend([
-        '',
-        'NUM may have a multiplier suffix:',
-        'k=10**3, M=10**6, G=10**9, Ki=2**10, Mi=2**20, Gi=2**30, etc.'
-    ])
+    description_lines = [
+            'Print a string repeatedly until the optional limit is reached.',
+            '',
+            'yea (pronounced like "yay") is similar to the \'yes\' command except:',
+            '  1) an output limit may be given',
+            '  2) trailing newlines may be omitted',
+        ]
 
-parser = argparse.ArgumentParser(
-    description='\n'.join(description_lines),
-    epilog='\n'.join(epilog_lines),
-    formatter_class=argparse.RawTextHelpFormatter)
+    epilog_lines = [
+            'If NUM is negative, it is considered unlimited.',
+        ]
 
-parser.add_argument('-V', '--version', action='version', version='\n'.join((
-    f'%(prog)s {__version__}',
-    f'License: {__license__}',
-    f'Written by {__author__}')))
+    if imported_module_number_str_to_decimal:
+        epilog_lines.extend([
+            '',
+            'NUM may have a multiplier suffix:',
+            'k=10**3, M=10**6, G=10**9, Ki=2**10, Mi=2**20, Gi=2**30, etc.'
+        ])
 
-group = parser.add_mutually_exclusive_group()
+    parser = argparse.ArgumentParser(
+        description='\n'.join(description_lines),
+        epilog='\n'.join(epilog_lines),
+        formatter_class=argparse.RawTextHelpFormatter)
 
-# --bytes and --lines are mutually exclusive
+    parser.add_argument('-V', '--version', action='version', version='\n'.join((
+        f'%(prog)s {__version__}',
+        f'License: {__license__}',
+        f'Written by {__author__}')))
 
-group.add_argument('-c', '--bytes',
-                   metavar='NUM', type=number_str_to_int, default=-1,
-                   help='print NUM bytes (including appended newlines, unless -o given)')
+    group = parser.add_mutually_exclusive_group()
 
-group.add_argument('-n', '--lines',
-                   metavar='NUM', type=number_str_to_int, default=-1,
-                   help='print NUM lines (or NUM copies of STRING if -o given)')
+    # --bytes and --lines are mutually exclusive
 
-parser.add_argument('-o',
-                    action='store_true',
-                    help='do not append trailing newlines')
+    group.add_argument('-c', '--bytes',
+                       metavar='NUM', type=number_str_to_int, default=-1,
+                       help='print NUM bytes (including appended newlines, unless -o given)')
 
-parser.add_argument('STRING',
-                    nargs='*', type=non_empty_str, default='y',
-                    help='the string to be repeated')
+    group.add_argument('-n', '--lines',
+                       metavar='NUM', type=number_str_to_int, default=-1,
+                       help='print NUM lines (or NUM copies of STRING if -o given)')
 
-args = parser.parse_args()
+    parser.add_argument('-o',
+                        action='store_true',
+                        help='do not append trailing newlines')
 
-b = ' '.join(args.STRING).encode()
+    parser.add_argument('STRING',
+                        nargs='*', type=non_empty_str, default='y',
+                        help='the string to be repeated')
 
-if not args.o:
-    b += b'\n'
+    args = parser.parse_args(argv)
 
-m = max(MAX_BUF_SIZE // len(b), 1)  # ensure it's positive
+    b = ' '.join(args.STRING).encode()
 
-buf = bytearray(b * m)
+    if not args.o:
+        b += b'\n'
 
-count_bytes = False
-count_lines = False
-items_in_buffer = 0
-items_remaining = 0
+    m = max(MAX_BUF_SIZE // len(b), 1)  # ensure it's positive
 
-if args.bytes >= 0:
-    count_bytes = True
-    items_in_buffer = len(buf)
-    items_remaining = args.bytes
-elif args.lines >= 0:
-    count_lines = True
-    items_in_buffer = m
-    items_remaining = args.lines
+    buf = bytearray(b * m)
 
-try:
-    if not count_bytes and not count_lines:  # unlimited
-        while True:
-            sys.stdout.buffer.write(buf)
-    else:
-        while items_remaining > items_in_buffer:
-            sys.stdout.buffer.write(buf)
-            items_remaining -= items_in_buffer
+    count_bytes = False
+    count_lines = False
+    items_in_buffer = 0
+    items_remaining = 0
 
-        if items_remaining > 0:
-            partial_buf = b * items_remaining if count_lines else buf[:items_remaining]
-            sys.stdout.buffer.write(partial_buf)
+    if args.bytes >= 0:
+        count_bytes = True
+        items_in_buffer = len(buf)
+        items_remaining = args.bytes
+    elif args.lines >= 0:
+        count_lines = True
+        items_in_buffer = m
+        items_remaining = args.lines
 
-except KeyboardInterrupt:
-    pass
+    try:
+        if not count_bytes and not count_lines:  # unlimited
+            while True:
+                sys.stdout.buffer.write(buf)
+        else:
+            while items_remaining > items_in_buffer:
+                sys.stdout.buffer.write(buf)
+                items_remaining -= items_in_buffer
+
+            if items_remaining > 0:
+                partial_buf = b * items_remaining if count_lines else buf[:items_remaining]
+                sys.stdout.buffer.write(partial_buf)
+
+    except KeyboardInterrupt:
+        pass
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
