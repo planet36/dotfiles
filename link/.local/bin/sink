@@ -20,6 +20,7 @@ def sink(out_file_name, mode, encoding='utf-8'):
         out_file.write(data)
 
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-statements
 def main(argv = None):
 
     # pylint: disable=import-outside-toplevel
@@ -143,7 +144,11 @@ https://joeyh.name/code/moreutils/
 
     print_verbose(f'{mode=}')
 
-    sink(out_file_name, mode)
+    try:
+        sink(out_file_name, mode)
+    except OSError as err:
+        print('Error:', err, file=sys.stderr)
+        return 1
 
 if __name__ == '__main__':
     sys.exit(main())
