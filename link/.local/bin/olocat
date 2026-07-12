@@ -4,9 +4,12 @@
 
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
-# pylint: disable=missing-module-docstring
 # pylint: disable=no-else-return
 # pylint: disable=redefined-outer-name
+
+'''
+Python version of lolcat: colorize stdin with a cycling color palette.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

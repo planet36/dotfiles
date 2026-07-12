@@ -3,7 +3,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
+
+'''
+Print stdin lines that match none of the given regular expressions.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

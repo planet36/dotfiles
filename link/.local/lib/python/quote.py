@@ -4,9 +4,12 @@
 # pylint: disable=invalid-name
 # pylint: disable=line-too-long
 # pylint: disable=missing-function-docstring
-# pylint: disable=missing-module-docstring
 # pylint: disable=no-else-return
 # pylint: disable=pointless-string-statement
+
+'''
+Quote and escape strings for various styles (shell, C string literal, CSV, PCRE, octal/hex escapes).
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

@@ -2,7 +2,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
+
+'''
+Scale numbers to SI (decimal) or IEC (binary) metric prefixes, plus bisect search helpers.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

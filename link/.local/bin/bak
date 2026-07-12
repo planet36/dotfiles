@@ -4,10 +4,13 @@
 
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
-# pylint: disable=missing-module-docstring
 
 # inspired by
 # https://github.com/bakfile/bak
+
+'''
+Print a command to create or restore a numbered backup of a file.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

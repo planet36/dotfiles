@@ -3,7 +3,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
+
+'''
+Derive a key from a password and salt using PBKDF2 and print its digest.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

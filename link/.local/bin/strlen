@@ -2,7 +2,9 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: MPL-2.0
 
-# pylint: disable=missing-module-docstring
+'''
+Prefix each line of stdin with its character length.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

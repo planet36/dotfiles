@@ -3,7 +3,10 @@
 
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
-# pylint: disable=missing-module-docstring
+
+'''
+Round numbers half away from zero using Decimal.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

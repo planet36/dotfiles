@@ -5,9 +5,12 @@
 # pylint: disable=fixme
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
-# pylint: disable=missing-module-docstring
 
 # All circular angles are in degrees.
+
+'''
+Calculate the distance between pairs of geodetic coordinates read from stdin.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

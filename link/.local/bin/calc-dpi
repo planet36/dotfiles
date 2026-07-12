@@ -4,7 +4,10 @@
 
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
-# pylint: disable=missing-module-docstring
+
+'''
+Calculate the DPI of a display from its resolution and diagonal size.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'

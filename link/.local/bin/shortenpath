@@ -3,7 +3,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # pylint: disable=invalid-name
-# pylint: disable=missing-module-docstring
+
+'''
+Shorten filesystem paths read from stdin to fit a maximum length.
+'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
