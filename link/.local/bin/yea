@@ -31,9 +31,14 @@ except ModuleNotFoundError:
 # Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-# Output buffer size (bytes). The default was determined empirically via benchmarking;
-# override it at runtime with $YEA_MAX_BUF_SIZE.
-DEFAULT_MAX_BUF_SIZE = 4096 * 7
+# Output buffer size (bytes). The default was chosen empirically: benchmark
+# throughput across candidate sizes with the command below and pick the fastest.
+# Override it at runtime with $YEA_MAX_BUF_SIZE.
+#
+#   $ hyperfine --time-unit millisecond --warmup=5 \
+#       --parameter-scan YEA_MAX_BUF_SIZE 4096 40960 --parameter-step-size 4096 \
+#       'YEA_MAX_BUF_SIZE="{YEA_MAX_BUF_SIZE}" yea --no-newline --bytes=10Gi'
+DEFAULT_MAX_BUF_SIZE = 4096 * 4
 
 
 def number_str_to_int(s: str) -> int:
