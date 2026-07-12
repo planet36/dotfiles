@@ -11,197 +11,112 @@ Calculate the DPI of a display from its resolution and diagonal size.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-11'
+__version__ = '2026-07-12'
 
+import argparse
 import math
+import signal
 import sys
+
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
 
 def calcdpi(width_px: int, height_px: int, diagonal_in: float) -> float:
     return math.hypot(width_px, height_px) / diagonal_in
 
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-statements
+
+def resolution_arg(s: str) -> tuple[int, int]:
+    parts = s.split('x')
+    if len(parts) != 2:
+        raise argparse.ArgumentTypeError(f"invalid resolution {s!r} (expected WIDTHxHEIGHT)")
+    try:
+        width, height = int(parts[0]), int(parts[1])
+    except ValueError as err:
+        raise argparse.ArgumentTypeError(f"invalid resolution {s!r}: {err}") from err
+    if width <= 0 or height <= 0:
+        raise argparse.ArgumentTypeError(
+            f"invalid resolution {s!r} (width and height must be positive)")
+    return (width, height)
+
+
+def positive_int(s: str) -> int:
+    value = int(s)
+    if value <= 0:
+        raise argparse.ArgumentTypeError("must be > 0")
+    return value
+
+
+def positive_float(s: str) -> float:
+    value = float(s)
+    if value <= 0:
+        raise argparse.ArgumentTypeError("must be > 0")
+    return value
+
+
 def main(argv: list[str] | None = None) -> int | None:
 
-    # pylint: disable=import-outside-toplevel
-    import getopt
-    import os.path
-    #import signal
+    description_lines = (
+            'Calculate the DPI from the given display dimensions.',
+            '',
+            'RESOLUTION is the display resolution in pixels, formatted as WIDTHxHEIGHT',
+            '(default 1920x1080).  DIAGONAL_INCHES is the diagonal size in inches.',
+            )
 
-    if argv is None:
-        argv = sys.argv
+    epilog_lines = (
+            'EXAMPLES',
+            '',
+            'calc-dpi 16',
+            'calc-dpi 1920x1200 16',
+            'calc-dpi --scale=1.1 1920x1200 24',
+            "calc-dpi $(xdpyinfo | awk '/dimensions/{print $2}') 18",
+            )
 
-    program_name = os.path.basename(argv[0])
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
 
-    # default values
-    default_verbose = False
-    default_width_px = 1920
-    default_height_px = 1080
-    default_scale_factor = 1.0
-    default_min_dpi = 72
-    default_max_dpi = 400
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            epilog='\n'.join(epilog_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
 
-    # mutable values
-    verbose = default_verbose
-    width_px = default_width_px
-    height_px = default_height_px
-    diagonal_in = None
-    scale_factor = default_scale_factor
-    min_dpi = default_min_dpi
-    max_dpi = default_max_dpi
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    # pylint: disable=unused-variable
-    #def signal_handler(signal_num, execution_frame):
-    #    print()
-    #    sys.exit(128 + signal_num)
+    parser.add_argument('-v', '--verbose', action='store_true',
+            help='print diagnostics')
 
-    #signal.signal(signal.SIGINT, signal_handler)
-    #signal.signal(signal.SIGTERM, signal_handler)
+    parser.add_argument('-s', '--scale', type=positive_float, default=1.0, metavar='SCALE_FACTOR',
+            help='scale factor to apply to the DPI (default: %(default)s)')
 
-    def print_version():
-        """Print the version information"""
-        print(program_name, __version__)
-        print("License:", __license__)
-        print("Written by", __author__)
+    parser.add_argument('--min', type=positive_int, default=72, metavar='MIN_DPI',
+            help='minimum DPI (default: %(default)s)')
+
+    parser.add_argument('--max', type=positive_int, default=400, metavar='MAX_DPI',
+            help='maximum DPI (default: %(default)s)')
+
+    parser.add_argument('resolution', nargs='?', type=resolution_arg, default=(1920, 1080),
+            metavar='RESOLUTION',
+            help='display resolution as WIDTHxHEIGHT (default: 1920x1080)')
+
+    parser.add_argument('diagonal', type=positive_float, metavar='DIAGONAL_INCHES',
+            help='diagonal display size in inches')
+
+    args = parser.parse_args(argv)
+
+    if args.min > args.max:
+        parser.error(f"--min ({args.min}) must be <= --max ({args.max})")
+
+    width_px, height_px = args.resolution
+    diagonal_in = args.diagonal
+    scale_factor = args.scale
+    min_dpi = args.min
+    max_dpi = args.max
 
     def print_verbose(s):
         """Print the message if verbose mode is on"""
-        if verbose:
+        if args.verbose:
             print('#', s)
-
-    # pylint: disable=unused-variable
-    def print_warning(s):
-        """Print the warning message"""
-        print('Warning:', s, file=sys.stderr)
-
-    def print_error(s):
-        """Print the error message"""
-        print('Error:', s, file=sys.stderr)
-        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
-    def print_help():
-        """Print the help message"""
-        print(f"""Usage: {program_name} [OPTION]... [RESOLUTION] DIAGONAL_INCHES
-Calculate the DPI from the given display dimensions.
-
-RESOLUTION is the resolution (in pixels) of the display.
-The format of RESOLUTION is "<WIDTH>x<HEIGHT>".
-WIDTH and HEIGHT must be positive integers.
-(default: {default_width_px}x{default_height_px})
-
-DIAGONAL_INCHES is the diagonal size (in inches) of the display.
-It must be a positive real number.
-If absent, you will be prompted to enter a value for it.
-
-OPTIONS
-
--V, --version
-    Print the version information, then exit.
-
--h, --help
-    Print this message, then exit.
-
--v, --verbose
-    Print diagnostics.
-
---width WIDTH_PX
-    Specify the width (in pixels) of the display.
-    It must be a positive integer.
-    (default: {default_width_px})
-
---height HEIGHT_PX
-    Specify the height (in pixels) of the display.
-    It must be a positive integer.
-    (default: {default_height_px})
-
--s, --scale SCALE_FACTOR
-    Specify the scale factor to apply to the DPI.
-    It must be a positive real number.
-    (default: {default_scale_factor})
-
---min MIN_DPI
-    Specify the minimum DPI.
-    It must be a positive integer not greater than the maximum DPI.
-    (default: {default_min_dpi})
-
---max MAX_DPI
-    Specify the maximum DPI.
-    It must be a positive integer not less than the minimum DPI.
-    (default: {default_max_dpi})
-
-EXAMPLES
-    calc-dpi 27
-    calc-dpi 1920x1200 16
-    calc-dpi --scale=1.1 --width 1920 --height 1200 24
-    calc-dpi $(xdpyinfo | awk '/dimensions/{{print $2}}') 18
-""")
-
-    short_options = 'Vhvs:'
-    long_options = ['version', 'help', 'verbose',
-        'width=', 'height=',
-        'scale=', 'min=', 'max=',
-        ]
-
-    try:
-        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
-        print_error(err)
-        return 1
-
-    try:
-        for (option, value) in options:
-            # pylint: disable=no-else-return
-            if option in ['-V', '--version']:
-                print_version()
-                return 0
-            elif option in ['-h', '--help']:
-                print_help()
-                return 0
-            elif option in ['-v', '--verbose']:
-                verbose = True
-            elif option in ['--width']:
-                width_px = int(value)
-            elif option in ['--height']:
-                height_px = int(value)
-            elif option in ['-s', '--scale']:
-                scale_factor = float(value)
-            elif option in ['--min']:
-                min_dpi = int(value)
-            elif option in ['--max']:
-                max_dpi = int(value)
-            else:
-                print_error(f"Unhandled option: {option}")
-                return 1
-
-        if not remaining_args: # empty
-            diagonal_in = input('Enter the diagonal size (in inches) of the display: ')
-        else:
-            resolution_given = False
-            for s in remaining_args:
-                if 'x' in s: # resolution given
-                    if resolution_given:
-                        print_error(f"Unexpected argument: {s}")
-                        return 1
-                    (w, h) = s.split('x')
-                    width_px = int(w)
-                    height_px = int(h)
-                    resolution_given = True
-                elif diagonal_in is None: # diagonal given
-                    diagonal_in = s
-                else:
-                    print_error(f"Unexpected argument: {s}")
-                    return 1
-
-        if diagonal_in is None:
-            print_error('DIAGONAL_INCHES is required')
-            return 1
-
-        diagonal_in = float(diagonal_in)
-    except ValueError as err:
-        print_error(err)
-        return 1
 
     print_verbose(f'{width_px=}')
     print_verbose(f'{height_px=}')
@@ -209,28 +124,6 @@ EXAMPLES
     print_verbose(f'{scale_factor=}')
     print_verbose(f'{min_dpi=}')
     print_verbose(f'{max_dpi=}')
-
-    if width_px <= 0:
-        print_error(f'{width_px=} must be > 0')
-        return 1
-    if height_px <= 0:
-        print_error(f'{height_px=} must be > 0')
-        return 1
-    if diagonal_in <= 0:
-        print_error(f'{diagonal_in=} must be > 0')
-        return 1
-    if scale_factor <= 0:
-        print_error(f'{scale_factor=} must be > 0')
-        return 1
-    if min_dpi <= 0:
-        print_error(f'{min_dpi=} must be > 0')
-        return 1
-    if max_dpi <= 0:
-        print_error(f'{max_dpi=} must be > 0')
-        return 1
-    if min_dpi > max_dpi:
-        print_error(f'{min_dpi=} must be <= {max_dpi=}')
-        return 1
 
     dpi = calcdpi(width_px, height_px, diagonal_in)
     print_verbose(f'{dpi=}')
@@ -241,7 +134,6 @@ EXAMPLES
     # round() does round-half-even
     # Round-half-up is preferred, but this adequate
     dpi = round(dpi)
-    #dpi = math.ceil(dpi)
     print_verbose(f'{dpi=}')
 
     if dpi < min_dpi:
@@ -252,6 +144,7 @@ EXAMPLES
     print(dpi)
 
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())
