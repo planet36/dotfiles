@@ -103,15 +103,20 @@ Descend at most max_depth levels of directories below path."""
 
     return file_size_to_file_path_map
 
-def get_file_info(file_path: pathlib.Path, hash_algorithm: str) -> FileInfo:
+def get_file_info(file_path: pathlib.Path, hash_algorithm: str) -> FileInfo | None:
     file_basename = file_path.name
     file_path_quoted = shlex.quote(str(file_path))
-    file_stat = file_path.stat()
+    try:
+        file_stat = file_path.stat()
+        with open(file_path, mode='rb') as f:
+            file_hash = hashlib.file_digest(f, hash_algorithm).digest()
+    except OSError as err:
+        # The file may have vanished or become unreadable since it was scanned.
+        print(f"Warning: skipping {file_path_quoted}: {err}", file=sys.stderr)
+        return None
     file_size = file_stat.st_size
     file_mtime = file_stat.st_mtime
     file_ctime = file_stat.st_ctime
-    with open(file_path, mode='rb') as f:
-        file_hash = hashlib.file_digest(f, hash_algorithm).digest()
 
     return FileInfo(
         file_path,
@@ -135,7 +140,9 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 
     file_hash_to_file_info_map = collections.defaultdict(list)
     for file_info in file_info_list:
-        file_hash_to_file_info_map[file_info.hash].append(file_info)
+        # Skip files that could not be read (get_file_info returned None).
+        if file_info is not None:
+            file_hash_to_file_info_map[file_info.hash].append(file_info)
 
     return file_hash_to_file_info_map
 
