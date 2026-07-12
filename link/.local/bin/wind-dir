@@ -40,7 +40,7 @@ assert len(card_dir) == len(arrows)
 
 
 # pylint: disable=missing-function-docstring
-def main(argv=None):
+def main(argv: list[str] | None = None) -> int | None:
 
     description_lines = (
             'Read a wind direction in degrees from each line of stdin.',

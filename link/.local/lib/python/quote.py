@@ -209,7 +209,7 @@ def quote(s, quoting_style):
 
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
-def main(argv = None):
+def main(argv: list[str] | None = None) -> int | None:
 
     # pylint: disable=import-outside-toplevel
     # pylint: disable=too-many-locals

@@ -75,7 +75,7 @@ def non_empty_str(s: str) -> str:
 
 
 # pylint: disable=missing-function-docstring
-def main(argv=None):
+def main(argv: list[str] | None = None) -> int | None:
 
     description_lines = [
             'Print a string repeatedly until the optional limit is reached.',

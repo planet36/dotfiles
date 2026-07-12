@@ -34,7 +34,7 @@ def pangram_missing(s: str) -> frozenset[str]:
 
 
 # pylint: disable=missing-function-docstring
-def main():
+def main(argv: list[str] | None = None) -> int | None:
 
     description_lines = (
             'Read from stdin and determine if each line is a pangram.',

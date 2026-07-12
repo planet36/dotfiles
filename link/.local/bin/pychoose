@@ -57,7 +57,7 @@ def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
 
 
 # pylint: disable=missing-function-docstring
-def main(argv = None):
+def main(argv: list[str] | None = None) -> int | None:
 
     if argv is None:
         argv = sys.argv

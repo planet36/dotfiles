@@ -127,7 +127,7 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements
-def main(argv = None):
+def main(argv: list[str] | None = None) -> int | None:
 
     # pylint: disable=import-outside-toplevel
     import datetime as dt
