@@ -32,13 +32,12 @@ When this skill is triggered, execute the following steps systematically:
 * Identify dead code, overly complex nested logic, or redundant loops.
 
 ### 3. Performance & Resource Efficiency
-* Flags N+1 queries, unindexed lookups, or heavy I/O operations inside loops.
+* Flags heavy I/O operations inside loops.
 * Recommend generators (`yield`) instead of large list instantiations for large datasets.
 * Watch for inefficient string concatenations or unnecessary object duplications.
 
 ### 4. Security & Safety
-* Scan for vulnerabilities (e.g., hardcoded secrets, `eval()`, unsafe `pickle` loading, SQL injection vectors).
-* Verify that user input is properly sanitized or parameterized.
+* Scan for vulnerabilities (e.g., hardcoded secrets, `eval()`/`exec()` on untrusted input).
 
 ## Output Format
 
