@@ -72,8 +72,8 @@ suite exists) and respects existing inline `# pylint: disable=` / `# noqa` suppr
 - Every file carries an SPDX header: `SPDX-FileCopyrightText: Steven Ward` /
   `SPDX-License-Identifier: MPL-2.0`.
 - Python scripts define `__author__`/`__license__`/`__version__` (version is an ISO date string),
-  a module docstring, and a `main(argv=None)` that returns an exit code, called via
-  `sys.exit(main())`.
+  a module docstring, and — unless the script is a trivial stdin filter — a `main(argv=None)` that
+  returns an exit code, called via `sys.exit(main())`.
 - bash scripts use `set -euo pipefail`, factor logic into functions, and parse options with
   `getopts` (`-V` version / `-h` help are near-universal).
 - A few files are vendored copies kept in sync with upstream (e.g. `lib/python/hsluv.py`,
