@@ -16,7 +16,7 @@ __license__ = 'MPL-2.0'
 __version__ = '2026-07-12'
 
 import argparse
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
 import enum
 import io
 import math
@@ -25,6 +25,7 @@ import random
 import re
 import signal
 import sys
+import typing
 
 import hsluv
 
@@ -358,6 +359,12 @@ def main(argv: list[str] | None = None) -> int | None:
             # When the RGB colors are converted to hsluv, the gamma is unapplied
             hsluv_colors = tuple(map(hsluv.rgb_to_hsluv, sRGB_colors))
 
+    # colors holds upscaled RGB tuples (true color) or ANSI color numbers
+    # (8-bit), and ansi_sgr is the matching formatter.  The code below is
+    # written to handle either, so give both variables a widened static type.
+    colors: tuple
+    ansi_sgr: Callable[..., str]
+
     if use_true_color:
         sRGBup_colors = tuple(map(upscale_RGB, sRGB_colors))
         colors = sRGBup_colors
@@ -366,6 +373,10 @@ def main(argv: list[str] | None = None) -> int | None:
         color_nums = tuple(map(get_closest_ansi_color_num_from_hsluv, hsluv_colors))
         colors = color_nums
         ansi_sgr = ansi_sgr_8bit
+
+    # Undo mypy's per-branch narrowing back to the declared widened types.
+    colors = typing.cast('tuple', colors)
+    ansi_sgr = typing.cast('Callable[..., str]', ansi_sgr)
 
     print_verbose(f'{len(colors)=}')
     print_verbose(f'{colors=}')
@@ -391,8 +402,11 @@ def main(argv: list[str] | None = None) -> int | None:
     # bytes_read is appended to this
     bytes_buf = bytearray()
 
+    # sys.stdin.buffer is typed as BinaryIO, which does not declare readinto1.
+    stdin_buffer = typing.cast(io.BufferedReader, sys.stdin.buffer)
+
     # bytes_read is not cleared in subsequent calls to readinto1
-    while (num_bytes_read := sys.stdin.buffer.readinto1(bytes_read)) is not None:
+    while (num_bytes_read := stdin_buffer.readinto1(bytes_read)) is not None:
 
         if num_bytes_read == 0:
             # EOF
