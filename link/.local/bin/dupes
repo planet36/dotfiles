@@ -8,7 +8,6 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
-# pylint: disable=pointless-string-statement
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
@@ -53,39 +52,14 @@ Descend at most max_depth levels of directories below path."""
 
     file_size_to_file_path_map = collections.defaultdict(list)
 
-    # https://docs.python.org/3.8/library/os.html#os.scandir
-    ##### if shallow, use os.scandir (3.5+)
-    ##### it would be better to give a max-depth option
-    # https://github.com/python/cpython/issues/70968
-
-    '''
-    https://stackoverflow.com/questions/28200287/python-walk-directory-max-depth/28200572#28200572
-    def contained_dirs(dir):
-    return filter(os.path.isdir,
-                  [os.path.join(dir, f) for f in os.listdir(dir)])
-
-    filter(os.path.isfile, [os.path.join(path, f) for f in os.listdir(path)])
-    filter(lambda x: os.path.isfile(x) and not os.path.islink(x), [os.path.join(path, f) for f in os.listdir(path)])
-
-    https://docs.python.org/3/library/os.html#os.walk
-
-    When topdown is True, the caller can modify the dirnames list in-place
-    (perhaps using del or slice assignment), and walk() will only recurse into
-    the subdirectories whose names remain in dirnames; this can be used to prune
-    the search, impose a specific order of visiting, or even to inform walk()
-    about directories the caller creates or renames before it resumes walk()
-    again. Modifying dirnames when topdown is False is ineffective, because in
-    bottom-up mode the directories in dirnames are generated before dirpath
-    itself is generated.
-    '''
-
-    # https://docs.python.org/dev/library/os.html#os.walk
     for (dir_path, dir_names, file_basenames) in os.walk(path):
 
         dir_path = pathlib.Path(dir_path)
 
         cur_depth = len(dir_path.relative_to(path).parts)+1
 
+        # Prune deeper directories: with topdown=True, clearing dir_names
+        # in place stops os.walk from recursing into them.
         if cur_depth >= max_depth:
             dir_names.clear()
 
@@ -94,6 +68,7 @@ Descend at most max_depth levels of directories below path."""
             file_path_joined = dir_path.joinpath(file_basename)
 
             # Ignore symbolic links.
+            # TODO: maybe make an option to follow links?
             if file_path_joined.is_symlink():
                 continue
 
@@ -235,8 +210,6 @@ OPTIONS
 -v, --verbose
     Print diagnostics.
 
-##### TODO: maybe make an option to follow links?
-
 -d, --maxdepth MAX_DEPTH
     This behaves like the '-maxdepth' option of the 'find' command.
     Descend at most MAX_DEPTH levels of directories below DIR.
@@ -253,7 +226,6 @@ OPTIONS
 -m, --sort-by-mtime
     Sort duplicate files by their modification times.
 
-##### TODO: change -f to -1, maybe
 -f, --only-comment-first
     Only comment the first entry in a group of duplicates.
 
