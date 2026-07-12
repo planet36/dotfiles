@@ -10,10 +10,20 @@ Derive a key from a password and salt using PBKDF2 and print its digest.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-11'
+__version__ = '2026-07-12'
 
+import argparse
+import base64
+import getpass
 import hashlib
+import os
+import signal
 import sys
+from collections.abc import Callable
+
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
 
 def get_pbkdf2_algorithms_available():
     '''<https://docs.python.org/3/library/hashlib.html#hashlib.pbkdf2_hmac>'''
@@ -24,179 +34,78 @@ def get_pbkdf2_algorithms_available():
     for hash_algorithm in hashlib.algorithms_available:
         try:
             hashlib.pbkdf2_hmac(hash_algorithm, password, salt, iterations)
-        # pylint: disable=unused-variable
         except ValueError:
             pass
         else:
             yield hash_algorithm
 
+
+valid_hash_algorithms = sorted(get_pbkdf2_algorithms_available())
+
+# https://docs.python.org/3/library/base64.html
+valid_formats: dict[str, Callable[[bytes], bytes]] = {
+        'b16' : base64.b16encode,
+        'b32' : base64.b32encode,
+        'b32hex' : base64.b32hexencode,
+        'b64-std' : base64.standard_b64encode,
+        'b64-url' : base64.urlsafe_b64encode,
+        'a85' : base64.a85encode,
+        'b85' : base64.b85encode,
+        'z85' : base64.z85encode,
+    }
+
+
 # pylint: disable=missing-function-docstring
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-statements
 def main(argv: list[str] | None = None) -> int | None:
 
-    # pylint: disable=import-outside-toplevel
-    import base64
-    import getopt
-    import getpass
-    import os.path
-    import signal
-
-    if argv is None:
-        argv = sys.argv
-
-    program_name = os.path.basename(argv[0])
-
-    # valid values
-    valid_hash_algorithms = sorted(get_pbkdf2_algorithms_available())
-
-    # https://docs.python.org/3/library/base64.html
-    valid_formats = {
-            'b16' : base64.b16encode,
-            'b32' : base64.b32encode,
-            'b32hex' : base64.b32hexencode,
-            'b64-std' : base64.standard_b64encode,
-            'b64-url' : base64.urlsafe_b64encode,
-            'a85' : base64.a85encode,
-            'b85' : base64.b85encode,
-            'z85' : base64.z85encode,
-        }
-
-    # default values
-    default_verbose = False
     default_hash_algorithm = 'sha256'
     default_format = 'b64-url'
     default_iterations = 1_000_000
-    default_silent = False
 
-    # mutable values
-    verbose = default_verbose
-    hash_algorithm = default_hash_algorithm
-    fmt = default_format
-    iterations = default_iterations
-    silent = default_silent
+    description_lines = (
+            'Hash a string from standard input and print its hash digest.',
+            )
 
-    # pylint: disable=unused-argument
-    # pylint: disable=unused-variable
-    def signal_handler(signal_num, execution_frame):
-        print()
-        sys.exit(128 + signal_num)
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
 
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
 
-    def print_version():
-        """Print the version information"""
-        print(program_name, __version__)
-        print("License:", __license__)
-        print("Written by", __author__)
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
+
+    parser.add_argument('-v', '--verbose', action='store_true',
+            help='print diagnostics')
+
+    parser.add_argument('-a', '--hash-algorithm', choices=valid_hash_algorithms,
+            default=default_hash_algorithm, metavar='ALGORITHM',
+            help='hash algorithm used to hash the string (default: %(default)s)\n'
+                 '<https://docs.python.org/3/library/hashlib.html>')
+
+    parser.add_argument('-f', '--format', choices=sorted(valid_formats),
+            default=default_format, metavar='FORMAT',
+            help='encoding of the printed hash (default: %(default)s)\n'
+                 '<https://docs.python.org/3/library/base64.html>')
+
+    parser.add_argument('-n', '--num-iterations', type=int, default=default_iterations,
+            metavar='N', help='iteratively hash the string N times (default: %(default)s)')
+
+    parser.add_argument('-s', '--silent', action='store_true',
+            help="don't echo terminal input")
+
+    args = parser.parse_args(argv)
 
     def print_verbose(s):
-        """Print the message if verbose mode is on"""
-        if verbose:
+        if args.verbose:
             print(f"# {s}", file=sys.stderr)
 
-    def print_warning(s):
-        """Print the warning message"""
-        print(f"Warning: {s}", file=sys.stderr)
-
-    def print_error(s):
-        """Print the error message"""
-        print(f"Error: {s}", file=sys.stderr)
-        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
-    def print_help():
-        """Print the help message"""
-
-        print(f"""Usage: {program_name} [OPTION]...
-Hash a string from standard input and print its hash digest.
-
-OPTIONS
-
--V, --version
-    Print the version information, then exit.
-
--h, --help
-    Print this message, then exit.
-
--v, --verbose
-    Print diagnostics.
-    (default: {default_verbose})
-
--a, --hash-algorithm=ALGORITHM
-    Use hash algorithm ALGORITHM to hash the string.
-    (default: {default_hash_algorithm})
-    (valid: {','.join(valid_hash_algorithms)})
-    <https://docs.python.org/3/library/hashlib.html>
-
--f, --format=FORMAT
-    Print the hash in FORMAT encoding.
-    (default: {default_format})
-    (valid: {','.join(sorted(valid_formats.keys()))})
-    <https://docs.python.org/3/library/base64.html>
-
--n, --num-iterations=N
-    Iteratively hash the string N times.
-    (default: {default_iterations})
-
--s, --silent
-    Don't echo terminal input.
-    (default: {default_silent})
-""")
-
-    short_options = 'Vhva:f:n:s'
-    long_options = ['version', 'help', 'verbose', 'hash-algorithm=', 'format=',
-                    'num-iterations=', 'silent']
-
-    try:
-        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
-        print_error(err)
-        return 1
-
-    # pylint: disable=no-else-return
-    for (option, value) in options:
-        if option in ['-V', '--version']:
-            print_version()
-            return 0
-        elif option in ['-h', '--help']:
-            print_help()
-            return 0
-        elif option in ['-v', '--verbose']:
-            verbose = True
-        elif option in ['-a', '--hash-algorithm']:
-            hash_algorithm = value
-        elif option in ['-f', '--format']:
-            fmt = value
-        elif option in ['-n', '--num-iterations']:
-            iterations = value
-        elif option in ['-s', '--silent']:
-            silent = True
-        else:
-            print_error(f"Unhandled option: {option}")
-            return 1
-
-    # Validate hash_algorithm.
-
-    if hash_algorithm not in valid_hash_algorithms:
-        print_error(f"{hash_algorithm} is not a valid hash algorithm.")
-        return 1
-
-    # Validate fmt.
-
-    if fmt not in valid_formats:
-        print_error(f"{fmt} is not a valid format.")
-        return 1
-
-    # Validate iterations.
-
-    try:
-        iterations = int(iterations)
-    except ValueError as err:
-        print_error(err)
-        return 1
+    hash_algorithm = args.hash_algorithm
+    fmt = args.format
+    iterations = args.num_iterations
+    silent = args.silent
 
     print_verbose(f'{hash_algorithm=}')
     print_verbose(f'{fmt=}')
@@ -209,18 +118,22 @@ OPTIONS
 
     password_prompt = ''
     salt_prompt = ''
-    if verbose:
+    if args.verbose:
         password_prompt = 'Password: '
         salt_prompt = 'Salt: '
 
-    if sys.stdin.isatty() and silent:
-        password = getpass.getpass(prompt=password_prompt)
-        salt = getpass.getpass(prompt=salt_prompt)
-    else:
-        print(password_prompt, end='', flush=True)
-        password = sys.stdin.readline().rstrip(os.linesep)
-        print(salt_prompt, end='', flush=True)
-        salt = sys.stdin.readline().rstrip(os.linesep)
+    try:
+        if sys.stdin.isatty() and silent:
+            password = getpass.getpass(prompt=password_prompt)
+            salt = getpass.getpass(prompt=salt_prompt)
+        else:
+            print(password_prompt, end='', flush=True)
+            password = sys.stdin.readline().rstrip(os.linesep)
+            print(salt_prompt, end='', flush=True)
+            salt = sys.stdin.readline().rstrip(os.linesep)
+    except KeyboardInterrupt:
+        print()
+        return 130
 
     print_verbose(f"{password=}")
     print_verbose(f"{salt=}")
@@ -229,10 +142,11 @@ OPTIONS
         result = hashlib.pbkdf2_hmac(hash_algorithm, password.encode(), salt.encode(), iterations)
         print(valid_formats[fmt](result).decode())
     except ValueError as err:
-        print_error(err)
+        print(f"Error: {err}", file=sys.stderr)
         return 1
 
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())
