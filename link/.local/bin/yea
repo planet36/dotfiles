@@ -124,7 +124,7 @@ def main(argv=None):
                         help='do not append trailing newlines')
 
     parser.add_argument('STRING',
-                        nargs='*', type=non_empty_str, default='y',
+                        nargs='*', type=non_empty_str, default=['y'],
                         help='the string to be repeated')
 
     args = parser.parse_args(argv)
