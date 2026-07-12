@@ -13,9 +13,12 @@ Quote and escape strings for various styles (shell, C string literal, CSV, PCRE,
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2022-09-08'
+__version__ = '2026-07-12'
 
+import argparse
+import os
 import re
+import signal
 import string
 import sys
 
@@ -207,20 +210,12 @@ def quote(s, quoting_style):
     else:
         return s
 
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-statements
+# pylint: disable=too-many-locals
 def main(argv: list[str] | None = None) -> int | None:
 
-    # pylint: disable=import-outside-toplevel
-    # pylint: disable=too-many-locals
-    import getopt
-    import os.path
-    import signal
-
-    if argv is None:
-        argv = sys.argv
-
-    program_name = os.path.basename(argv[0])
+    # Restore default SIGPIPE handling so broken pipes terminate silently.
+    # Done here rather than at module level to avoid side effects on import.
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
     # valid values
     valid_quoting_styles = sorted(quoting_style_to_function_map.keys())
@@ -229,96 +224,49 @@ def main(argv: list[str] | None = None) -> int | None:
     default_quoting_style = 'literal'
     default_delimiter = os.linesep
 
-    # mutable values
-    quoting_style = default_quoting_style
-    delimiter = default_delimiter
+    description_lines = (
+            'Quote the lines of FILE according to a quoting style.',
+            '',
+            "If FILE is absent, or if FILE is '-', read standard input.",
+            )
 
-    # pylint: disable=unused-argument
-    def signal_handler(signal_num, execution_frame):
-        print()
-        sys.exit(128 + signal_num)
+    epilog_lines = ['quoting styles:', '']
+    for key in valid_quoting_styles:
+        epilog_lines.append(f'  {key}')
+        epilog_lines.append(f'    {quoting_style_to_function_map[key].__doc__}')
+        epilog_lines.append('')
 
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
 
-    def print_version():
-        """Print the version information"""
-        print(program_name, __version__)
-        print("License:", __license__)
-        print("Written by", __author__)
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            epilog='\n'.join(epilog_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
 
-    # pylint: disable=unused-variable
-    def print_warning(s):
-        """Print the warning message"""
-        print(f"Warning: {s}", file=sys.stderr)
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
+
+    parser.add_argument('-q', '--quoting-style', choices=valid_quoting_styles,
+            default=default_quoting_style, metavar='STYLE',
+            help='quoting style used to quote lines (default: %(default)s)\n'
+                 'see below for descriptions of all quoting styles')
+
+    parser.add_argument('-0', '--null', dest='delimiter', action='store_const',
+            const='\0', default=default_delimiter,
+            help='use NUL as the line delimiter instead of NEWLINE')
+
+    parser.add_argument('FILE', nargs='*', default=['-'],
+            help="the file(s) whose lines to quote (default: standard input)")
+
+    args = parser.parse_args(argv)
+
+    quoting_style = args.quoting_style
+    delimiter = args.delimiter
 
     def print_error(s):
         """Print the error message"""
         print(f"Error: {s}", file=sys.stderr)
-        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
-    def print_help():
-        """Print the help message"""
-
-        print(f"""Usage: {program_name} [OPTION]... [FILE]...
-Quote the lines of FILE according to a quoting style.
-
-If FILE is absent, or if FILE is '-', read standard input.
-
-OPTIONS
-
--V, --version
-    Print the version information, then exit.
-
--h, --help
-    Print this message, then exit.
-
--q, --quoting-style=STYLE
-    Use quoting style STYLE to quote lines. See below for descriptions of all quoting styles.
-    (default: {default_quoting_style})
-    (valid: {','.join(valid_quoting_styles)})
-
--0, --null
-    Use NULL as the line delimiter instead of NEWLINE.
-""")
-
-        print("QUOTING STYLES")
-        print()
-        for key in sorted(quoting_style_to_function_map):
-            value = quoting_style_to_function_map[key]
-            #print("'{}' : {}".format(key, value.__doc__))
-            print(f"    {key} : {value.__doc__}")
-            print()
-
-    short_options = 'Vhq:0'
-    long_options = ['version', 'help', 'quoting-style=', 'null']
-
-    try:
-        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
-        print_error(err)
-        return 1
-
-    for (option, value) in options:
-        if option in ['-V', '--version']:
-            print_version()
-            return 0
-        elif option in ['-h', '--help']:
-            print_help()
-            return 0
-        elif option in ['-q', '--quoting-style']:
-            quoting_style = value
-        elif option in ['-0', '--null']:
-            delimiter = '\0'
-        else:
-            print_error(f"Unhandled option: {option}")
-            return 1
-
-    # Validate quoting_style.
-
-    if quoting_style not in valid_quoting_styles:
-        print_error(f"{quoting_style} is not a valid quoting style.")
-        return 1
 
     def quote_lines(lines):
 
@@ -337,11 +285,7 @@ OPTIONS
 
         quote_lines(lines)
 
-    # No file was given.
-    if not remaining_args: # empty
-        remaining_args.append('-')
-
-    for file_name in remaining_args:
+    for file_name in args.FILE:
 
         try:
             if file_name == '-':
