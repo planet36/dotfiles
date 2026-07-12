@@ -14,11 +14,18 @@ Print a command to create or restore a numbered backup of a file.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-11'
+__version__ = '2026-07-12'
 
+import argparse
 import os.path
 import re
+import shlex
+import signal
 import sys
+
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
 
 def get_bak_path(path: str) -> str:
 
@@ -38,6 +45,7 @@ def get_bak_path(path: str) -> str:
 
     return bak_path
 
+
 def get_unbak_path(path: str) -> str:
 
     basename, ext = os.path.splitext(path)
@@ -48,112 +56,39 @@ def get_unbak_path(path: str) -> str:
     else:
         return path
 
-# pylint: disable=too-many-locals
+
 def main(argv: list[str] | None = None) -> int | None:
 
-    # pylint: disable=import-outside-toplevel
-    import getopt
-    import shlex
+    description_lines = (
+            'Print a command to create a backup of the given input file.',
+            'The extension ".bakN" (where "N" is a positive integer) is appended to',
+            'the backup file name.',
+            )
 
-    if argv is None:
-        argv = sys.argv
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
 
-    program_name = os.path.basename(argv[0])
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
 
-    # default values
-    default_verbose = False
-    default_move = False
-    default_unbak = False
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    # mutable values
-    verbose = default_verbose
-    move = default_move
-    unbak = default_unbak
+    parser.add_argument('-m', '--move', action='store_true',
+            help="print 'mv' instead of 'cp'")
 
-    def print_version():
-        """Print the version information"""
-        print(program_name, __version__)
-        print("License:", __license__)
-        print("Written by", __author__)
+    parser.add_argument('-u', '--unbak', action='store_true',
+            help='print a command to restore the original file from the given backup file')
 
-    # pylint: disable=unused-variable
-    def print_verbose(s):
-        """Print the message if verbose mode is on"""
-        if verbose:
-            print(f'# {s}')
+    parser.add_argument('FILE', nargs='+', help='the file to back up')
 
-    # pylint: disable=unused-variable
-    def print_warning(s):
-        """Print the warning message"""
-        print(f'Warning: {s}', file=sys.stderr)
+    args = parser.parse_args(argv)
 
-    def print_error(s):
-        """Print the error message"""
-        print(f'Error: {s}', file=sys.stderr)
-        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+    cmd = 'mv' if args.move else 'cp'
+    bak_func = get_unbak_path if args.unbak else get_bak_path
 
-    def print_help():
-        """Print the help message"""
-        print(f"""Usage: {program_name} [OPTION]... FILE...
-Print a command to create a backup of the given input file.
-The extension ".bakN" (where "N" is a positive integer) is appended to the backup file name.
-
-OPTIONS
-
--V, --version
-    Print the version information, then exit.
-
---help
-    Print this message, then exit.
-
--v, --verbose
-    Print diagnostics.
-
--m, --move
-    Print 'mv' instead of 'cp'.
-
--u, --unbak
-    Print a command to restore the original file from the given backup file.
-""")
-
-    short_options = 'Vhvmu'
-    long_options = ['version', 'help', 'verbose',
-        'move', 'unbak'
-        ]
-
-    try:
-        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
-        print_error(err)
-        return 1
-
-    # pylint: disable=unused-variable
-    for (option, value) in options:
-        # pylint: disable=no-else-return
-        if option in ['-V', '--version']:
-            print_version()
-            return 0
-        elif option in ['--help']:
-            print_help()
-            return 0
-        elif option in ['-v', '--verbose']:
-            verbose = True
-        elif option in ['-m', '--move']:
-            move = True
-        elif option in ['-u', '--unbak']:
-            unbak = True
-        else:
-            print_error(f"Unhandled option: {option}")
-            return 1
-
-    if not remaining_args: # empty
-        print_error('Must give FILE')
-        return 1
-
-    cmd = 'mv' if move else 'cp'
-    bak_func = get_unbak_path if unbak else get_bak_path
-
-    for in_file_name in remaining_args:
+    for in_file_name in args.FILE:
 
         out_file_name = bak_func(in_file_name)
 
@@ -162,6 +97,7 @@ OPTIONS
                               in_file_name, out_file_name)))
 
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())
