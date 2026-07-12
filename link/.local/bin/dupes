@@ -239,7 +239,8 @@ OPTIONS
 
 -d, --maxdepth MAX_DEPTH
     This behaves like the '-maxdepth' option of the 'find' command.
-    #Descend at most MAX_DEPTH levels of directories below DIR. ##### TODO-DOC
+    Descend at most MAX_DEPTH levels of directories below DIR.
+    (A MAX_DEPTH less than 1 is treated as 1.)
     If not given, descend the full directory tree.
 
 -c, --stdout
