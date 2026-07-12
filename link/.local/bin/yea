@@ -17,6 +17,7 @@ __version__ = '2026-03-09'
 
 import argparse
 import decimal
+import enum
 import signal
 import sys
 try:
@@ -30,6 +31,13 @@ except ModuleNotFoundError:
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 MAX_BUF_SIZE = 4096 * 7
+
+
+class Mode(enum.Enum):
+    '''How the output limit (if any) is counted.'''
+    UNLIMITED = enum.auto()
+    BYTES = enum.auto()
+    LINES = enum.auto()
 
 
 def number_str_to_int(s: str) -> int:
@@ -108,32 +116,27 @@ def main(argv=None):
 
     buf = bytearray(b * m)
 
-    count_bytes = False
-    count_lines = False
-    items_in_buffer = 0
-    items_remaining = 0
-
     if args.bytes >= 0:
-        count_bytes = True
-        items_in_buffer = len(buf)
-        items_remaining = args.bytes
+        mode, items_remaining, items_in_buffer = Mode.BYTES, args.bytes, len(buf)
     elif args.lines >= 0:
-        count_lines = True
-        items_in_buffer = m
-        items_remaining = args.lines
+        mode, items_remaining, items_in_buffer = Mode.LINES, args.lines, m
+    else:
+        mode, items_remaining, items_in_buffer = Mode.UNLIMITED, 0, 0
 
     try:
-        if not count_bytes and not count_lines:  # unlimited
-            while True:
-                sys.stdout.buffer.write(buf)
-        else:
-            while items_remaining > items_in_buffer:
-                sys.stdout.buffer.write(buf)
-                items_remaining -= items_in_buffer
+        match mode:
+            case Mode.UNLIMITED:
+                while True:
+                    sys.stdout.buffer.write(buf)
+            case Mode.BYTES | Mode.LINES:
+                while items_remaining > items_in_buffer:
+                    sys.stdout.buffer.write(buf)
+                    items_remaining -= items_in_buffer
 
-            if items_remaining > 0:
-                partial_buf = b * items_remaining if count_lines else buf[:items_remaining]
-                sys.stdout.buffer.write(partial_buf)
+                if items_remaining > 0:
+                    partial_buf = (b * items_remaining if mode is Mode.LINES
+                                   else buf[:items_remaining])
+                    sys.stdout.buffer.write(partial_buf)
 
     except KeyboardInterrupt:
         pass
