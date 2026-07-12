@@ -11,9 +11,15 @@ Redirect an input stream to a file (usable even when it is the same file).
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-11'
+__version__ = '2026-07-12'
 
+import argparse
+import signal
 import sys
+
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
 
 def sink(out_file_name, mode):
     # Soak up all of stdin before opening (and possibly truncating) the output
@@ -24,150 +30,62 @@ def sink(out_file_name, mode):
     with open(out_file_name, mode=mode + 'b') as out_file:
         out_file.write(data)
 
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-statements
+
 def main(argv: list[str] | None = None) -> int | None:
 
-    # pylint: disable=import-outside-toplevel
-    import getopt
-    import os.path
-    import signal
+    description_lines = (
+            'Redirect an input stream to a file.',
+            '',
+            'Usable even when the output file is the same as the input,',
+            'because stdin is fully read before the file is opened.',
+            )
 
-    if argv is None:
-        argv = sys.argv
+    epilog_lines = (
+            "This was inspired by the 'sink' program by Bernhard Voelker.",
+            'https://lists.gnu.org/archive/html/coreutils/2021-01/msg00067.html',
+            '',
+            "This is similar to the 'sponge' program from moreutils.",
+            'https://joeyh.name/code/moreutils/',
+            )
 
-    program_name = os.path.basename(argv[0])
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
 
-    # default values
-    default_verbose = False
-    default_mode = 'w'
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            epilog='\n'.join(epilog_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
 
-    # mutable values
-    verbose = default_verbose
-    mode = default_mode
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    # pylint: disable=unused-argument
-    def signal_handler(signal_num, execution_frame):
-        print()
-        sys.exit(128 + signal_num)
+    parser.add_argument('-v', '--verbose', action='store_true',
+            help='print diagnostics')
 
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    parser.add_argument('-w', dest='mode', action='store_const', const='w', default='w',
+            help='open FILE for writing, truncating it first (default)')
 
-    def print_version():
-        """Print the version information"""
-        print(program_name, __version__)
-        print("License:", __license__)
-        print("Written by", __author__)
+    parser.add_argument('-x', dest='mode', action='store_const', const='x',
+            help='open FILE for exclusive creation, failing if it already exists')
 
-    def print_verbose(s):
-        """Print the message if verbose mode is on"""
-        if verbose:
-            print('#', s)
+    parser.add_argument('-a', dest='mode', action='store_const', const='a',
+            help='open FILE for writing, appending to the end of it if it exists')
 
-    # pylint: disable=unused-variable
-    def print_warning(s):
-        """Print the warning message"""
-        print('Warning:', s, file=sys.stderr)
+    parser.add_argument('FILE', help='the file to write the input stream to')
 
-    def print_error(s):
-        """Print the error message"""
-        print('Error:', s, file=sys.stderr)
-        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
+    args = parser.parse_args(argv)
 
-    def print_help():
-        """Print the help message"""
-        print(f"""Usage: {program_name} [OPTION]... FILE
-
-Redirect an input stream to a file.
-
-OPTIONS
-
--V, --version
-    Print the version information, then exit.
-
--h, --help
-    Print this message, then exit.
-
--v, --verbose
-    Print diagnostics.
-
--w
-    Open FILE for writing, truncating it first.
-    (This is the default behavior.)
-
--x
-    Open FILE for exclusive creation, failing if it already exists.
-
--a
-    Open FILE for writing, appending to the end of it if it exists.
-
-EXIT STATUS
-
-0
-    Success.
-
-1
-    A usage error (invalid option or missing FILE), or an error opening
-    or writing FILE (for example, -x when FILE already exists).
-
-128+N
-    Terminated by signal N (for example, 130 for SIGINT).
-
-NOTES
-
-This was inspired by the 'sink' program by Bernhard Voelker.
-https://lists.gnu.org/archive/html/coreutils/2021-01/msg00067.html
-
-This is similar to the 'sponge' program from moreutils.
-https://joeyh.name/code/moreutils/
-""")
-
-    short_options = 'Vhvwxa'
-    long_options = ['version', 'help', 'verbose',
-        ]
+    if args.verbose:
+        print(f'# mode={args.mode!r}')
 
     try:
-        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
-        print_error(err)
-        return 1
-
-    for (option, value) in options:
-        # pylint: disable=no-else-return
-        if option in ['-V', '--version']:
-            print_version()
-            return 0
-        elif option in ['-h', '--help']:
-            print_help()
-            return 0
-        elif option in ['-v', '--verbose']:
-            verbose = True
-        elif option in ['-w']:
-            mode = 'w'
-        elif option in ['-x']:
-            mode = 'x'
-        elif option in ['-a']:
-            mode = 'a'
-        else:
-            print_error(f"Unhandled option: {option}")
-            return 1
-
-    if not remaining_args: # empty
-        print_error('Must give FILE')
-        return 1
-
-    out_file_name = remaining_args[0]
-
-    print_verbose(f'{mode=}')
-
-    try:
-        sink(out_file_name, mode)
+        sink(args.FILE, args.mode)
     except OSError as err:
         print('Error:', err, file=sys.stderr)
         return 1
 
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())
