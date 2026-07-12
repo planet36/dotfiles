@@ -136,7 +136,7 @@ def main(argv=None):
 
     m = max(get_max_buf_size() // len(b), 1)  # ensure it's positive
 
-    buf = bytearray(b * m)
+    buf = b * m
 
     if args.bytes >= 0:
         mode, items_remaining, items_in_buffer = Mode.BYTES, args.bytes, len(buf)
