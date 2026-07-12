@@ -20,9 +20,6 @@ import sys
 # Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-#if not sys.argv[1:]: # empty
-#    sys.exit(1)
-
 try:
     patterns = tuple(re.compile(arg) for arg in sys.argv[1:])
 except re.PatternError as e:
