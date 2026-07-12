@@ -2,7 +2,6 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: MPL-2.0
 
-# pylint: disable=fixme
 # pylint: disable=invalid-name
 # pylint: disable=missing-function-docstring
 
@@ -14,147 +13,77 @@ Calculate the distance between pairs of geodetic coordinates read from stdin.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-11'
+__version__ = '2026-07-12'
 
+import argparse
+import signal
 import sys
 
 # https://geopy.readthedocs.io/en/stable/#module-geopy.distance
 import geopy.distance
 import geopy.point
 
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+possible_dist_funcs = {
+        'geodesic': geopy.distance.geodesic,
+        'great_circle': geopy.distance.great_circle,
+        }
+
+
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-statements
 def main(argv: list[str] | None = None) -> int | None:
 
-    # pylint: disable=import-outside-toplevel
-    import getopt
-    import os.path
-    import signal
+    description_lines = (
+            'Calculate the distance (in meters) between geodetic coordinates'
+            ' (in decimal degrees).',
+            '',
+            'Pairs of geodetic coordinates, separated by whitespace on the same line,',
+            'are read from stdin.  The coordinates are in the following order:',
+            'LAT1 LON1 LAT2 LON2',
+            'Any fields after the first four are ignored.',
+            )
 
-    if argv is None:
-        argv = sys.argv
+    epilog_lines = (
+            'EXAMPLES',
+            '',
+            'cat <<EOT | geodist --method geodesic',
+            '40.056667 -78.905833 38.889722 -77.008889',
+            '40.056667 -78.905833 38.8977 -77.0365',
+            '38.889722 -77.008889 38.8977 -77.0365',
+            'EOT',
+            '',
+            'cat <<EOT | geodist --method great_circle',
+            '40.056667 -78.905833 38.889722 -77.008889',
+            '40.056667 -78.905833 38.8977 -77.0365',
+            '38.889722 -77.008889 38.8977 -77.0365',
+            'EOT',
+            )
 
-    program_name = os.path.basename(argv[0])
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
 
-    # possible values
-    possible_dist_funcs = {
-            'geodesic': geopy.distance.geodesic,
-            'great_circle': geopy.distance.great_circle,
-            }
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            epilog='\n'.join(epilog_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
 
-    # default values
-    default_verbose = False
-    default_method = 'geodesic'
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    # mutable values
-    verbose = default_verbose
-    method = default_method
+    parser.add_argument('-v', '--verbose', action='store_true',
+            help='print diagnostics')
 
-    # pylint: disable=unused-argument
-    def signal_handler(signal_num, execution_frame):
-        print()
-        sys.exit(128 + signal_num)
+    parser.add_argument('-m', '--method', choices=possible_dist_funcs, default='geodesic',
+            help='method for calculating distance (default: %(default)s)')
 
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    args = parser.parse_args(argv)
 
-    def print_version():
-        """Print the version information"""
-        print(program_name, __version__)
-        print("License:", __license__)
-        print("Written by", __author__)
+    if args.verbose:
+        print(f'# method={args.method!r}')
 
-    def print_verbose(s):
-        """Print the message if verbose mode is on"""
-        if verbose:
-            print('#', s)
-
-    # pylint: disable=unused-variable
-    def print_warning(s):
-        """Print the warning message"""
-        print('Warning:', s, file=sys.stderr)
-
-    def print_error(s):
-        """Print the error message"""
-        print('Error:', s, file=sys.stderr)
-        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
-
-    def print_help():
-        """Print the help message"""
-        print(f"""Usage: {program_name} [OPTION]...
-
-Calculate the distance (in meters) between geodetic coordinates (in decimal degrees).
-
-Pairs of geodetic coordinates, separated by whitespace on the same line, are read from stdin.
-The coordinates are in the following order:
-LAT1 LON1 LAT2 LON2
-Any fields after the first four are ignored.
-
-OPTIONS
-
--V, --version
-    Print the version information, then exit.
-
--h, --help
-    Print this message, then exit.
-
--v, --verbose
-    Print diagnostics.
-
--m, --method METHOD
-    Specify the method for calculating distance.
-    (valid: {', '.join(possible_dist_funcs.keys())})
-    (default: {default_method})
-
-EXAMPLES
-
-cat <<EOT | geodist --method geodesic
-40.056667 -78.905833 38.889722 -77.008889
-40.056667 -78.905833 38.8977 -77.0365
-38.889722 -77.008889 38.8977 -77.0365
-EOT
-
-cat <<EOT | geodist --method great_circle
-40.056667 -78.905833 38.889722 -77.008889
-40.056667 -78.905833 38.8977 -77.0365
-38.889722 -77.008889 38.8977 -77.0365
-EOT
-""")
-
-    short_options = 'Vhvm:'
-    long_options = ['version', 'help', 'verbose',
-        'method=',
-        ]
-
-    try:
-        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
-        print_error(err)
-        return 1
-
-    for (option, value) in options:
-        # pylint: disable=no-else-return
-        if option in ['-V', '--version']:
-            print_version()
-            return 0
-        elif option in ['-h', '--help']:
-            print_help()
-            return 0
-        elif option in ['-v', '--verbose']:
-            verbose = True
-        elif option in ['-m', '--method']:
-            if value not in possible_dist_funcs:
-                print_error(f"Invalid method: {value!r} "
-                    f"(valid: {', '.join(possible_dist_funcs)})")
-                return 1
-            method = value
-        else:
-            print_error(f"Unhandled option: {option}")
-            return 1
-
-    print_verbose(f'{method=}')
-
-    dist_func = possible_dist_funcs[method]
+    dist_func = possible_dist_funcs[args.method]
 
     for line in sys.stdin:
         fields = line.split()
@@ -165,15 +94,17 @@ EOT
             p1 = geopy.Point(lat1_deg, lon1_deg)
             p2 = geopy.Point(lat2_deg, lon2_deg)
         except ValueError as err:
-            print_error(err)
+            print('Error:', err, file=sys.stderr)
             return 1
 
-        print_verbose(f'{p1=} {p2=}')
+        if args.verbose:
+            print(f'# p1={p1!r} p2={p2!r}')
 
         distance = dist_func(p1, p2).meters
         print(f'{distance:.1f}')
 
     return 0
+
 
 if __name__ == '__main__':
     sys.exit(main())
