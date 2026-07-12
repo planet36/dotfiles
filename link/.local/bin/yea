@@ -18,6 +18,7 @@ __version__ = '2026-03-09'
 import argparse
 import decimal
 import enum
+import os
 import signal
 import sys
 try:
@@ -30,7 +31,27 @@ except ModuleNotFoundError:
 # Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-MAX_BUF_SIZE = 4096 * 7
+# Output buffer size (bytes), tuned empirically. Override with $YEA_MAX_BUF_SIZE.
+DEFAULT_MAX_BUF_SIZE = 4096 * 7
+
+
+def number_str_to_int(s: str) -> int:
+    '''Convert the number string to an int.'''
+    return int(number_str_to_decimal(s))
+
+
+def get_max_buf_size() -> int:
+    '''Get the output buffer size, overridable via $YEA_MAX_BUF_SIZE.'''
+    s = os.environ.get('YEA_MAX_BUF_SIZE')
+    if not s:
+        return DEFAULT_MAX_BUF_SIZE
+    try:
+        result = int(s)
+    except ValueError as e:
+        raise SystemExit(f'invalid YEA_MAX_BUF_SIZE {s!r}: not an integer') from e
+    if result <= 0:
+        raise SystemExit(f'invalid YEA_MAX_BUF_SIZE {s!r}: must be positive')
+    return result
 
 
 class Mode(enum.Enum):
@@ -38,11 +59,6 @@ class Mode(enum.Enum):
     UNLIMITED = enum.auto()
     BYTES = enum.auto()
     LINES = enum.auto()
-
-
-def number_str_to_int(s: str) -> int:
-    '''Convert the number string to an int.'''
-    return int(number_str_to_decimal(s))
 
 
 def non_empty_str(s: str) -> str:
@@ -73,6 +89,12 @@ def main(argv=None):
             'NUM may have a multiplier suffix:',
             'k=10**3, M=10**6, G=10**9, Ki=2**10, Mi=2**20, Gi=2**30, etc.'
         ])
+
+    epilog_lines.extend([
+        '',
+        f'The output buffer size (default {DEFAULT_MAX_BUF_SIZE} bytes) may be set with the',
+        'YEA_MAX_BUF_SIZE environment variable. It tunes throughput but not output.',
+    ])
 
     parser = argparse.ArgumentParser(
         description='\n'.join(description_lines),
@@ -112,7 +134,7 @@ def main(argv=None):
     if not args.no_newline:
         b += b'\n'
 
-    m = max(MAX_BUF_SIZE // len(b), 1)  # ensure it's positive
+    m = max(get_max_buf_size() // len(b), 1)  # ensure it's positive
 
     buf = bytearray(b * m)
 
