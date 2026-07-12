@@ -31,7 +31,8 @@ except ModuleNotFoundError:
 # Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-# Output buffer size (bytes), tuned empirically. Override with $YEA_MAX_BUF_SIZE.
+# Output buffer size (bytes). The default was determined empirically via benchmarking;
+# override it at runtime with $YEA_MAX_BUF_SIZE.
 DEFAULT_MAX_BUF_SIZE = 4096 * 7
 
 
@@ -107,8 +108,6 @@ def main(argv=None):
         f'Written by {__author__}')))
 
     group = parser.add_mutually_exclusive_group()
-
-    # --bytes and --lines are mutually exclusive
 
     group.add_argument('-c', '--bytes',
                        metavar='NUM', type=number_str_to_int, default=-1,
