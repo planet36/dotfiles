@@ -364,9 +364,8 @@ OPTIONS
 
             elif option in ['-n']:
                 num_colors = int(value)
-                assert num_colors > 0
-                #if not num_colors > 0:
-                    #raise ValueError("num_colors must be > 0")
+                if num_colors <= 0:
+                    raise ValueError("num_colors must be > 0")
 
             elif option in ['-c']:
                 color_space = ColorSpace[value.upper()]
@@ -388,8 +387,9 @@ OPTIONS
 
             elif option in ['-l']:
                 lightness = float(value)
-                assert lightness >= min_lightness
-                assert lightness <= max_lightness
+                if not min_lightness <= lightness <= max_lightness:
+                    raise ValueError(
+                        f"lightness must be within [{min_lightness}, {max_lightness}]")
 
             else:
                 print_error(f"Unhandled option '{option}'.")
