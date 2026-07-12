@@ -411,24 +411,15 @@ OPTIONS
     print_verbose(f'{debug=}')
     print_verbose(f'{lightness=}')
 
-    if color_space == ColorSpace.HSLUV:
-
-        saturation = 100
-        hsluv_colors = generate_hsluv_colors(num_colors, saturation, lightness)
-
-        if use_true_color:
+    match color_space:
+        case ColorSpace.HSLUV:
+            saturation = 100
+            hsluv_colors = generate_hsluv_colors(num_colors, saturation, lightness)
             sRGB_colors = tuple(map(hsluv.hsluv_to_rgb, hsluv_colors))
-        else:
-            pass
 
-    elif color_space == ColorSpace.LOLCAT:
-
-        # When the RGB colors are converted to hsluv, the gamma is unapplied
-        sRGB_colors = generate_RGB_colors(num_colors, lightness / 100)
-
-        if use_true_color:
-            pass
-        else:
+        case ColorSpace.LOLCAT:
+            sRGB_colors = generate_RGB_colors(num_colors, lightness / 100)
+            # When the RGB colors are converted to hsluv, the gamma is unapplied
             hsluv_colors = tuple(map(hsluv.rgb_to_hsluv, sRGB_colors))
 
     if use_true_color:
