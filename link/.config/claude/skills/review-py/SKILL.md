@@ -45,7 +45,7 @@ Structure your final response exactly as follows:
 
 ### Python Review Summary
 * **Files Reviewed:** [List of files]
-* **Overall Status:** [Pass / Needs Minor Tweaks / Critical Issues Found]
+* **Overall Status:** [Pass / Minor Issues / Major Issues / Critical Issues] — the highest severity found below
 
 ### Detailed Findings
 
