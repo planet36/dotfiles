@@ -76,8 +76,9 @@ suite exists) and respects existing inline `# pylint: disable=` / `# noqa` suppr
   `sys.exit(main())`.
 - bash scripts use `set -euo pipefail`, factor logic into functions, and parse options with
   `getopts` (`-V` version / `-h` help are near-universal).
-- A few `lib/python` modules are vendored copies kept in sync with upstream (e.g. `hsluv.py`) — make
-  only upstream-reconciliation edits there, never local lint/style fixes.
+- A few files are vendored copies kept in sync with upstream (e.g. `lib/python/hsluv.py`,
+  `bin/unimatrix`) — make only upstream-reconciliation edits there, never local lint/style fixes,
+  and exclude them from repo-wide sweeps.
 
 ## Commits
 
