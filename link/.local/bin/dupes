@@ -247,7 +247,8 @@ OPTIONS
     Write the output to standard output.
 
 -r, --reverse-sort
-    Reverse the sort order within each group of duplicates. ##### TODO-DOC
+    Reverse the sort order within each group of duplicates.
+    (Each group is sorted by basename, or by mtime with -m.)
 
 -m, --sort-by-mtime
     Sort duplicate files by their modification times.
