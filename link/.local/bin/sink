@@ -167,5 +167,7 @@ https://joeyh.name/code/moreutils/
         print('Error:', err, file=sys.stderr)
         return 1
 
+    return 0
+
 if __name__ == '__main__':
     sys.exit(main())

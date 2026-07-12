@@ -173,5 +173,7 @@ EOT
         distance = dist_func(p1, p2).meters
         print(f'{distance:.1f}')
 
+    return 0
+
 if __name__ == '__main__':
     sys.exit(main())

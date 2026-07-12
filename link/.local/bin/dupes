@@ -394,5 +394,7 @@ OPTIONS
                 print_error(err)
                 return err.errno
 
+    return 0
+
 if __name__ == '__main__':
     sys.exit(main())

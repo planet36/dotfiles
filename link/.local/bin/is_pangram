@@ -69,6 +69,7 @@ def main():
 
         print('\t'.join(output))
 
+    return 0
 
 if __name__ == '__main__':
     main()
