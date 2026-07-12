@@ -1,7 +1,7 @@
 ---
 name: review-py
 description: Run a structured code quality, security, and performance review on modified or target Python (.py) files. Use this whenever the user requests a code review, PR check, or Python analysis.
-argument-hint: <file-path>
+argument-hint: <file-path>...
 disable-model-invocation: true
 ---
 
@@ -13,7 +13,7 @@ You are an expert Senior Python Core Developer and Security Engineer. Your goal 
 
 When this skill is triggered, execute the following steps systematically:
 
-1. **Locate Target Files**: Identify the files to review. If no specific file is provided, ask the user which file to review.
+1. **Locate Target Files**: Identify the files to review. If no specific file is provided, ask the user which file(s) to review.
 
 2. **Static Analysis**: If available in the environment, run the repo's checks on the target file(s) to gather baseline diagnostic data before manual inspection: `ruff check`, `mypy --ignore-missing-imports`, and `pylint` (and `pytest` if the project has a test suite). Respect existing inline `# pylint: disable=` / `# noqa` suppressions — they mark known false positives; don't re-raise them.
 3. **Analyze Code**: Evaluate the targeted code against the core assessment pillars.
