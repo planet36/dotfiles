@@ -82,13 +82,14 @@ def main(argv=None):
 
     group.add_argument('-c', '--bytes',
                        metavar='NUM', type=number_str_to_int, default=-1,
-                       help='print NUM bytes (including appended newlines, unless -o given)')
+                       help='print NUM bytes (including appended newlines,'
+                            ' unless --no-newline given)')
 
     group.add_argument('-n', '--lines',
                        metavar='NUM', type=number_str_to_int, default=-1,
-                       help='print NUM lines (or NUM copies of STRING if -o given)')
+                       help='print NUM lines (or NUM copies of STRING if --no-newline given)')
 
-    parser.add_argument('-o',
+    parser.add_argument('-o', '--no-newline',
                         action='store_true',
                         help='do not append trailing newlines')
 
@@ -100,7 +101,7 @@ def main(argv=None):
 
     b = ' '.join(args.STRING).encode()
 
-    if not args.o:
+    if not args.no_newline:
         b += b'\n'
 
     m = max(MAX_BUF_SIZE // len(b), 1)  # ensure it's positive
