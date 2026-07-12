@@ -106,9 +106,10 @@ Descend at most max_depth levels of directories below path."""
 def get_file_info(file_path: pathlib.Path, hash_algorithm: str) -> FileInfo:
     file_basename = file_path.name
     file_path_quoted = shlex.quote(str(file_path))
-    file_size = file_path.stat().st_size
-    file_mtime = file_path.stat().st_mtime
-    file_ctime = file_path.stat().st_ctime
+    file_stat = file_path.stat()
+    file_size = file_stat.st_size
+    file_mtime = file_stat.st_mtime
+    file_ctime = file_stat.st_ctime
     with open(file_path, mode='rb') as f:
         file_hash = hashlib.file_digest(f, hash_algorithm).digest()
 
