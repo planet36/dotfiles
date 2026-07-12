@@ -37,7 +37,16 @@ When this skill is triggered, execute the following steps systematically:
 * Watch for inefficient string concatenations or unnecessary object duplications.
 
 ### 4. Security & Safety
-* Scan for vulnerabilities (e.g., hardcoded secrets, `eval()`/`exec()` on untrusted input).
+
+Focus on the sinks that matter when data crosses a trust boundary — for a script that boundary is argv/env/files; for a library module it is the arguments callers pass in, which the code cannot assume are trusted.
+
+* **Shell injection**: `subprocess(..., shell=True)` or `os.system(...)` with any argument built from a filename, CLI/env value, function parameter, or other caller-supplied data. Prefer a list argv with `shell=False`.
+* **Unsafe deserialization**: `pickle.load`, `yaml.load` without `SafeLoader`, or `marshal` on data the code did not itself produce.
+* **Insecure temp files**: `tempfile.mktemp()` or hand-rolled predictable `/tmp` paths (TOCTOU / symlink races); prefer `mkstemp` / `NamedTemporaryFile`.
+* **Path traversal**: untrusted filenames joined into a path without normalization (`../` escapes), or blindly following symlinks; `tarfile`/`zipfile` `extractall` on untrusted archives.
+* **Code execution**: `eval`/`exec`/`compile`, or a hardcoded secret that is genuinely a credential.
+
+Do not flag these when the command and all arguments are fully literal, or when a hardcoded string is a default path/format rather than a secret. A value from a function parameter is not literal — for library code, treat it as potentially untrusted rather than waving it through.
 
 ## Output Format
 
