@@ -472,7 +472,7 @@ OPTIONS
 
         bytes_buf += bytes_read[0:num_bytes_read]
 
-        if not can_be_decoded(bytes_buf) or incomplete_escape.search(bytes_read):
+        if not can_be_decoded(bytes_buf) or incomplete_escape.search(bytes_buf):
             # Keep reading bytes
             continue
 
