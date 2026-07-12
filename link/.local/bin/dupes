@@ -14,19 +14,28 @@ Find duplicate files and generate a shell script to remove them.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-11'
+__version__ = '2026-07-12'
 
+import argparse
 import collections
 import concurrent.futures
+import datetime as dt
 import hashlib
 import itertools
 import os
 import pathlib
 import shlex
+import signal
+import stat
 import sys
 import typing
 
 from flatten import flatten
+import natcmp
+import number_prefix
+
+# Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 class FileInfo(typing.NamedTuple):
     path: pathlib.Path
@@ -129,61 +138,62 @@ def get_file_hash_to_file_info_map(file_size_to_file_path_map, hash_algorithm: s
 # pylint: disable=too-many-statements
 def main(argv: list[str] | None = None) -> int | None:
 
-    # pylint: disable=import-outside-toplevel
-    import datetime as dt
-    import getopt
-    import natcmp
-    import number_prefix
-    import signal
-    import stat
+    description_lines = (
+            "Find duplicate files in DIR.  Output is written to a file named",
+            "'remove-duplicates.sh' in DIR.",
+            '',
+            'If DIR is absent, the current directory is used.',
+            )
 
-    if argv is None:
-        argv = sys.argv
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
 
-    program_name = os.path.basename(argv[0])
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
 
-    # valid values
-    valid_hash_algorithms = hashlib.algorithms_guaranteed
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    # default values
-    default_verbose = False
-    default_max_depth = sys.maxsize
-    default_write_to_stdout = False
-    default_reverse_sort = False
-    default_sort_by_mtime = False
-    default_only_comment_first = False
-    default_print_size = False
-    default_hash_algorithm = 'md5'
-    default_interactive_rm = False
+    parser.add_argument('-v', '--verbose', action='store_true',
+            help='print diagnostics')
 
-    # mutable values
-    verbose = default_verbose
-    max_depth = default_max_depth
-    write_to_stdout = default_write_to_stdout
-    reverse_sort = default_reverse_sort
-    sort_by_mtime = default_sort_by_mtime
-    only_comment_first = default_only_comment_first
-    print_size = default_print_size
-    hash_algorithm = default_hash_algorithm
-    interactive_rm = default_interactive_rm
+    parser.add_argument('-d', '--maxdepth', type=int, default=sys.maxsize, metavar='MAX_DEPTH',
+            help="descend at most MAX_DEPTH levels of directories below DIR,\n"
+                 "like the '-maxdepth' option of find\n"
+                 "(a MAX_DEPTH less than 1 is treated as 1)")
 
-    # pylint: disable=unused-argument
-    def signal_handler(signal_num, execution_frame):
-        print()
-        sys.exit(128 + signal_num)
+    parser.add_argument('-c', '--stdout', action='store_true',
+            help='write the output to standard output')
 
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    parser.add_argument('-r', '--reverse-sort', action='store_true',
+            help='reverse the sort order within each group of duplicates')
 
-    def print_version():
-        """Print the version information"""
-        print(program_name, __version__)
-        print("License:", __license__)
-        print("Written by", __author__)
+    parser.add_argument('-m', '--sort-by-mtime', action='store_true',
+            help='sort duplicate files by their modification times')
+
+    parser.add_argument('-f', '--only-comment-first', action='store_true',
+            help='only comment the first entry in a group of duplicates')
+
+    parser.add_argument('-s', '--print-size', action='store_true',
+            help='print the file size above each group of duplicates')
+
+    parser.add_argument('-a', '--hash-algorithm', choices=sorted(hashlib.algorithms_guaranteed),
+            default='md5', metavar='ALGORITHM',
+            help='hash algorithm used to hash the files (default: %(default)s)\n'
+                 '<https://docs.python.org/3/library/hashlib.html>')
+
+    parser.add_argument('-i', '--interactive', action='store_true',
+            help="make the 'rm' command interactive")
+
+    parser.add_argument('DIR', nargs='*', default=['.'],
+            help='the directory(ies) to search for duplicates (default: current directory)')
+
+    args = parser.parse_args(argv)
 
     def print_verbose(s):
         """Print the message if verbose mode is on"""
-        if verbose:
+        if args.verbose:
             print(f"# {s}", file=sys.stderr)
 
     def print_warning(s):
@@ -193,106 +203,17 @@ def main(argv: list[str] | None = None) -> int | None:
     def print_error(s):
         """Print the error message"""
         print(f"Error: {s}", file=sys.stderr)
-        print(f"Try '{program_name} --help' for more information.", file=sys.stderr)
 
-    def print_help():
-        """Print the help message"""
-        print(f"""Usage: {program_name} [OPTION]... [DIR]...
-Find duplicate files in DIR.  Output is written to a file named 'remove-duplicates.sh' in DIR.
+    max_depth = args.maxdepth
+    write_to_stdout = args.stdout
+    reverse_sort = args.reverse_sort
+    sort_by_mtime = args.sort_by_mtime
+    only_comment_first = args.only_comment_first
+    print_size = args.print_size
+    hash_algorithm = args.hash_algorithm
+    interactive_rm = args.interactive
 
-If DIR is absent, the current directory is used.
-
-OPTIONS
-
--V, --version
-    Print the version information, then exit.
-
--h, --help
-    Print this message, then exit.
-
--v, --verbose
-    Print diagnostics.
-
--d, --maxdepth MAX_DEPTH
-    This behaves like the '-maxdepth' option of the 'find' command.
-    Descend at most MAX_DEPTH levels of directories below DIR.
-    (A MAX_DEPTH less than 1 is treated as 1.)
-    If not given, descend the full directory tree.
-
--c, --stdout
-    Write the output to standard output.
-
--r, --reverse-sort
-    Reverse the sort order within each group of duplicates.
-    (Each group is sorted by basename, or by mtime with -m.)
-
--m, --sort-by-mtime
-    Sort duplicate files by their modification times.
-
--f, --only-comment-first
-    Only comment the first entry in a group of duplicates.
-
--s, --print-size
-    Print the file size above each group of duplicates.
-
--a, --hash-algorithm=ALGORITHM
-    Use hash algorithm ALGORITHM to hash the files.
-    (default: {default_hash_algorithm})
-    (valid: {','.join(sorted(valid_hash_algorithms))})
-    <https://docs.python.org/3/library/hashlib.html>
-
--i, --interactive
-    Make the 'rm' command interactive.
-""")
-
-    short_options = 'Vhvd:crmfsa:i'
-    long_options = ['version', 'help', 'verbose',
-        'maxdepth=', 'stdout', 'reverse-sort', 'sort-by-mtime',
-        'only-comment-first', 'print-size', 'hash-algorithm=', 'interactive',
-        ]
-
-    try:
-        (options, remaining_args) = getopt.getopt(argv[1:], short_options, long_options)
-    except getopt.GetoptError as err:
-        print_error(err)
-        return 1
-
-    for (option, value) in options:
-        # pylint: disable=no-else-return
-        if option in ['-V', '--version']:
-            print_version()
-            return 0
-        elif option in ['-h', '--help']:
-            print_help()
-            return 0
-        elif option in ['-v', '--verbose']:
-            verbose = True
-        elif option in ['-d', '--maxdepth']:
-            max_depth = int(value)
-        elif option in ['-c', '--stdout']:
-            write_to_stdout = True
-        elif option in ['-r', '--reverse-sort']:
-            reverse_sort = True
-        elif option in ['-m', '--sort-by-mtime']:
-            sort_by_mtime = True
-        elif option in ['-f', '--only-comment-first']:
-            only_comment_first = True
-        elif option in ['-s', '--print-size']:
-            print_size = True
-        elif option in ['-a', '--hash-algorithm']:
-            hash_algorithm = value
-            assert hash_algorithm in valid_hash_algorithms
-        elif option in ['-i', '--interactive']:
-            interactive_rm = True
-        else:
-            print_error(f"Unhandled option: {option}")
-            return 1
-
-    # No path was given.
-    if len(remaining_args) == 0:
-        remaining_args.append('.')
-
-    for path in remaining_args:
+    for path in args.DIR:
 
         path_quoted = shlex.quote(path)
 
