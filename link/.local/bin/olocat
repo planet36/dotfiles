@@ -10,7 +10,7 @@
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2023-01-13'
+__version__ = '2026-07-12'
 
 from collections.abc import Sequence
 import enum
