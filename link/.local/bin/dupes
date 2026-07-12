@@ -84,8 +84,7 @@ Descend at most max_depth levels of directories below path."""
 
         dir_path = pathlib.Path(dir_path)
 
-        ##### TODO: test this
-        cur_depth = str(dir_path.relative_to(path)).count(os.sep)+1
+        cur_depth = len(dir_path.relative_to(path).parts)+1
 
         if cur_depth >= max_depth:
             dir_names.clear()
