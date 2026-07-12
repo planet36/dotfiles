@@ -51,7 +51,7 @@ def main(argv: list[str] | None = None) -> int | None:
 
     parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    parser.parse_args()
+    parser.parse_args(argv)
 
     for line in sys.stdin:
         line = line.rstrip(os.linesep)
