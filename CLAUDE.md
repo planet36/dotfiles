@@ -82,5 +82,5 @@ suite exists) and respects existing inline `# pylint: disable=` / `# noqa` suppr
 
 ## Commits
 
-End commit messages with the `Co-Authored-By` trailer. When only one file changed, omit its filename
-from the summary line.
+End commit messages with the `Co-Authored-By` trailer. Omit filenames from the summary line
+altogether — describe the change, not which files it touched.
