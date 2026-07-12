@@ -15,7 +15,7 @@ When this skill is triggered, execute the following steps systematically:
 
 1. **Locate Target Files**: Identify the files to review. If no specific file is provided, ask the user which file to review.
 
-2. **Static Analysis**: If available in the environment, use terminal tools to run validation checks (`ruff check`, `mypy`, or `pytest`) to gather baseline diagnostic data before manual inspection.
+2. **Static Analysis**: If available in the environment, run the repo's checks on the target file(s) to gather baseline diagnostic data before manual inspection: `ruff check`, `mypy --ignore-missing-imports`, and `pylint` (and `pytest` if the project has a test suite). Respect existing inline `# pylint: disable=` / `# noqa` suppressions — they mark known false positives; don't re-raise them.
 3. **Analyze Code**: Evaluate the targeted code against the core assessment pillars.
 4. **Generate Report**: Present findings using the structured output format below.
 
