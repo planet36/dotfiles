@@ -6,9 +6,11 @@
     dt = difftool
     f = fetch
     info = remote -v show
-    lg = log --color --decorate --oneline --graph
-    lgg = log --color --decorate --oneline --graph --all
-    lggg = log --color --decorate --oneline --graph --all --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset %s%Cred%d%Creset %Cgreen%an%Creset' --date=short
+    lg = log --graph --oneline
+    lga = lg --all
+    #lgg = log --graph --date=short --format=format:'%C(auto)%h%C(reset) %C(brightblue)%ad%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) %C(green)%an%C(reset)'
+    lgg = log --graph --date=short --format=format:'%C(brightblue)%h%C(reset) %C(brightgreen)%ad%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) %C(99)%an%C(reset)'
+    lgga = lgg --all
     pr = pull --rebase
     s = status
     ss = status -s
