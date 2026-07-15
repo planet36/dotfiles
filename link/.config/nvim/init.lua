@@ -190,6 +190,22 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- }}}
 
+-- {{{ Clear readonly on buffers opened in diff mode
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  desc = "Clear readonly on buffers opened in diff mode",
+  callback = function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.wo[win].diff then
+        local buf = vim.api.nvim_win_get_buf(win)
+        vim.bo[buf].readonly = false
+      end
+    end
+  end,
+})
+
+-- }}}
+
 -- {{{ Folding
 
 vim.o.foldmethod = 'marker'
