@@ -75,6 +75,8 @@ export LESSHISTFILE=/dev/null
 
 export MAXIMA_USERDIR="$XDG_CONFIG_HOME"/maxima
 
+export MYPY_CACHE_DIR="$XDG_CACHE_HOME"/mypy
+
 # Inhibit these dbind warnings: Couldn't register with accessibility bus
 # https://wiki.archlinux.de/title/GNOME#Tipps_und_Tricks
 # https://askubuntu.com/a/318997
