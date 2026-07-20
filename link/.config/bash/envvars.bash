@@ -116,6 +116,8 @@ export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME"/__pycache__
 
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME"/ripgrep/ripgreprc
 
+export RUFF_CACHE_DIR="$XDG_CACHE_HOME"/ruff
+
 #export RUST_BACKTRACE=1
 
 export SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
