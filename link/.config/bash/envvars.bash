@@ -250,6 +250,16 @@ DEBUG_OPTIONS+=' -D_GLIBCXX_SANITIZE_VECTOR'
 DEBUG_OPTIONS+=' -D_FORTIFY_SOURCE=3'
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fhardened
 DEBUG_OPTIONS+=' -fhardened'
+# -fhardened enables:
+#   -D_FORTIFY_SOURCE=3
+#   -D_GLIBCXX_ASSERTIONS
+#   -ftrivial-auto-var-init=zero
+#   -fPIE  -pie  -Wl,-z,relro,-z,now
+#   -fstack-protector-strong
+#   -fstack-clash-protection
+#   -fcf-protection=full (x86 GNU/Linux only)
+# Not supported in clang
+# https://github.com/llvm/llvm-project/issues/122687
 
 # https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html#index-fsanitize_003daddress
 # The option cannot be combined with -fsanitize=thread or -fsanitize=hwaddress.
