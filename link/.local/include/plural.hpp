@@ -11,7 +11,7 @@
 
 #include <array>
 #include <concepts>
-#include <string>
+#include <string_view>
 
 constexpr bool
 is_plural(const std::signed_integral auto n)
@@ -25,4 +25,4 @@ is_plural(const std::unsigned_integral auto n)
     return n != 1;
 }
 
-inline constexpr std::array<std::string, 2> plural_suffix{"", "s"};
+inline constexpr std::array<std::string_view, 2> plural_suffix{"", "s"};
