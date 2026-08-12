@@ -5,32 +5,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A personal dotfiles repo (`~/.dotfiles`, GitHub `planet36`). `install.bash` deploys it into a target
-directory (normally `$HOME`), run *from* that target directory:
-
-- Files under `copy/` are **copied** to the target.
-- Files under `link/` are **symlinked** to the target (unless `-c` copies them too).
-- Both preserve directory structure and create parent dirs. `-d` reverses the install (deletes only
-  files/links still identical to their source, and empty dirs it created), `-n` is a dry run, `-v`
-  is verbose. See `bash install.bash -h`.
+directory (normally `$HOME`), run *from* that target directory: files under `copy/` are copied,
+files under `link/` are symlinked. See `bash install.bash -h`.
 
 After a normal install it runs `fc-cache` and byte-compiles `~/.local/lib/python/` at all three
 optimization levels. It refuses to install into the dotfiles dir itself.
 
 ## Layout
 
-- `link/.local/bin/` — executable scripts on `$PATH` (16 Python, 18 bash, 7 POSIX sh). The current
-  working directory.
-- `link/.local/lib/python/` — hand-written Python modules `import`ed by the `bin/` scripts.
-- `link/.local/include/` — C/C++ headers (`.hpp`/`.h`) consumed by other projects via `-iquote`.
 - `link/.local/src/` — a `Makefile` that clones external repos (dwm, st, slstatus, PractRand, …) and
   builds the buildable ones. Not this repo's own source.
-- `link/.config/` — application configs (bash, fish, nvim, git, terminals, claude, …).
-- `link/.config/claude/skills/` — repo-local Claude Code slash-command skills: `review` (C/C++
-  file review), `review-py` (Python file review), `changes` (summarize recent commits).
-- `copy/` — files that are copied rather than linked.
-- `other/generate-src/` — source-file generators. **Has its own CLAUDE.md.**
-- `other/build-local/` — small C/C++ CLI utilities and daemons. **Has its own CLAUDE.md.**
-- `other/depot/` — plain lists (browser extensions).
+- `other/generate-src/` (source-file generators) and `other/build-local/` (small C/C++ CLI utilities
+  and daemons) **each have their own CLAUDE.md.**
 
 ## The load-bearing environment coupling
 
@@ -55,7 +41,7 @@ Verification is per-language, using tools installed globally with **no project c
 config files; false positives are suppressed with inline per-file comments (e.g. `# pylint:
 disable=...`).
 
-- **Python** (`bin/*.py`, `lib/python/*.py`): a change is clean when `ruff check`, `mypy
+- **Python** (`bin/` scripts, `lib/python/*.py`): a change is clean when `ruff check`, `mypy
   --ignore-missing-imports`, and `pylint` all pass on the changed file(s), plus the script runs.
 - **bash / sh** (`bin/*`, `install.bash`, `*.bash`): `shellcheck` and `shellharden` stay quiet.
 - **C/C++ headers** (`link/.local/include/`): `make` compiles every header as its own translation
