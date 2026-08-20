@@ -43,7 +43,7 @@ vim.opt.path:append({ vim.fs.normalize('~/.local/include') })
 
 -- }}}
 
--- {{{ ignore case when completing file names and directories
+-- {{{ Ignore case when completing file names and directories
 
 vim.o.fileignorecase = true
 vim.o.wildignorecase = true
