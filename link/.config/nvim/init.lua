@@ -56,6 +56,13 @@ vim.o.number = true
 
 -- }}}
 
+-- {{{ Wrap
+
+vim.o.wrap = true
+vim.opt.diffopt:append("followwrap") -- stop diff mode from forcing wrap off
+
+-- }}}
+
 -- {{{ File type
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
