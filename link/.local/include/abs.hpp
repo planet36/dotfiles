@@ -5,6 +5,9 @@
 /**
 * \file
 * \author Steven Ward
+*
+* \sa https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p3643r2.html
+* \sa https://eisenwave.github.io/cpp-proposals/to-signed-unsigned.html
 */
 
 #pragma once
