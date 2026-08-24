@@ -75,6 +75,9 @@ roundm_nearest(const T n, const T m)
 {
     const auto t = roundm_trunc(n, m);
 
+    if (n == t)
+        return t;
+
     if (n < 0)
     {
         return (n % m < -(m / 2)) ? t - m : t;
