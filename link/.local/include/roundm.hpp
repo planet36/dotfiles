@@ -62,26 +62,6 @@ roundm_ceil(const T x, const T m)
         return t + m;
 }
 
-// away from zero
-/**
-* \pre \a m > 0
-*/
-template <std::integral T>
-constexpr T
-roundm_up(const T x, const T m)
-{
-    const auto t = roundm_trunc(x, m);
-
-    //if (x % m == 0)
-    if (x == t)
-        return x;
-
-    if (x < 0)
-        return t - m;
-    else
-        return t + m;
-}
-
 /**
 * \pre \a m > 0
 */
