@@ -34,7 +34,7 @@ roundm_floor(const T n, const T m)
     // necessary for n < 0
     //if (n % m == 0)
     if (n == t)
-        return n;
+        return t;
 
     if (n < 0)
         return t - m;
@@ -54,7 +54,7 @@ roundm_ceil(const T n, const T m)
     // necessary for n > 0
     //if (n % m == 0)
     if (n == t)
-        return n;
+        return t;
 
     if (n < 0)
         return t;
