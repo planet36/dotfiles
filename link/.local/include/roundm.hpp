@@ -19,7 +19,6 @@ constexpr T
 roundm_trunc(const T n, const T m)
 {
     return n - n % m;
-    //return (n / m) * m;
 }
 
 /**
@@ -31,8 +30,6 @@ roundm_floor(const T n, const T m)
 {
     const auto t = roundm_trunc(n, m);
 
-    // necessary for n < 0
-    //if (n % m == 0)
     if (n == t)
         return t;
 
@@ -51,8 +48,6 @@ roundm_ceil(const T n, const T m)
 {
     const auto t = roundm_trunc(n, m);
 
-    // necessary for n > 0
-    //if (n % m == 0)
     if (n == t)
         return t;
 
