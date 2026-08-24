@@ -35,9 +35,13 @@ roundm_floor(const T n, const T m)
         return t;
 
     if (n < 0)
+    {
         return t - m;
+    }
     else
+    {
         return t;
+    }
 }
 
 /**
@@ -53,9 +57,13 @@ roundm_ceil(const T n, const T m)
         return t;
 
     if (n < 0)
+    {
         return t;
+    }
     else
+    {
         return t + m;
+    }
 }
 
 /**
@@ -68,7 +76,11 @@ roundm_nearest(const T n, const T m)
     const auto t = roundm_trunc(n, m);
 
     if (n < 0)
+    {
         return (n % m < -(m / 2)) ? t - m : t;
+    }
     else
+    {
         return (n % m >  (m / 2)) ? t + m : t;
+    }
 }
