@@ -80,10 +80,24 @@ roundm_nearest(const T n, const T m)
 
     if (n < 0)
     {
-        return (n % m < -(m / 2)) ? t - m : t;
+        if (n % m < -(m / 2))
+        {
+            return t - m;
+        }
+        else
+        {
+            return t;
+        }
     }
     else
     {
-        return (n % m >  (m / 2)) ? t + m : t;
+        if (n % m >  (m / 2))
+        {
+            return t + m;
+        }
+        else
+        {
+            return t;
+        }
     }
 }
