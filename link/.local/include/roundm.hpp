@@ -18,7 +18,8 @@ template <std::integral T>
 constexpr T
 roundm_trunc(const T n, const T m)
 {
-    return n - n % m;
+    const T r = n % m;
+    return n - r;
 }
 
 /**
