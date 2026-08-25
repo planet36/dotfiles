@@ -9,6 +9,9 @@
 
 #pragma once
 
+#if defined(DEBUG)
+#include <cassert>
+#endif
 #include <concepts>
 
 /**
@@ -18,6 +21,10 @@ template <std::integral T>
 constexpr T
 roundm_trunc(const T n, const T m)
 {
+#if defined(DEBUG)
+    assert(m > 0);
+#endif
+
     const T r = n % m;
     return n - r;
 }
