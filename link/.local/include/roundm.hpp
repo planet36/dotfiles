@@ -19,7 +19,7 @@
 * \pre \a m > 0
 */
 template <std::integral T>
-constexpr T
+[[nodiscard]] constexpr T
 roundm_trunc(const T n, const T m)
 {
 #if defined(DEBUG)
