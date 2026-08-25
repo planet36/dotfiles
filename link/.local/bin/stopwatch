@@ -1,0 +1,245 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: MPL-2.0
+
+r'''
+Signal-driven terminal stopwatch and Stopwatch class.
+
+Run as a script, timing starts immediately and continues until a signal
+ends it.  The keystrokes below work because the terminal turns them into
+signals.  Each signal is also deliverable with kill(1).
+
+    CTRL-z  SIGTSTP  stop if running, start if not
+    CTRL-\  SIGQUIT  close the current lap and print it
+    CTRL-c  SIGINT   stop, print the final time, and exit
+            SIGTERM  same as SIGINT
+
+A lap line is the lap number, the time since the previous lap, and the
+total time since the first start.  Time spent stopped counts toward
+neither, so a stopwatch stopped for an hour resumes where it left off.
+
+Times go to stdout and status markers go to stderr.  Redirecting
+stdout therefore captures the timings alone.
+
+    stopwatch.py > laps.txt
+
+A reader on the other end of a pipe may exit first, as head(1) does.
+The next write then ends the program with status 141.
+
+Catching SIGTSTP costs the usual CTRL-z suspend.  Send SIGSTOP from
+another terminal to suspend the process.  Timing uses a monotonic clock,
+so it is unaffected by changes to the system clock.
+
+Import Stopwatch to time something without the signal interface.
+'''
+
+__author__ = 'Steven Ward'
+__license__ = 'MPL-2.0'
+__version__ = '2026-08-25'
+
+
+import signal
+import sys
+import time
+from dataclasses import dataclass
+from types import FrameType
+from typing import NoReturn
+
+HANDLED_SIGNALS = frozenset({signal.SIGTSTP, signal.SIGQUIT,
+                             signal.SIGINT, signal.SIGTERM})
+
+# A finished lap is the lap number, the lap duration, and the split duration.
+type FinishedLap = tuple[int, float, float]
+
+
+@dataclass(slots=True)
+class Stopwatch:
+    '''Tracks elapsed active time in laps and splits using explicit timestamps.
+
+    A lap is the time since the previous lap.  A split is the total time
+    since the stopwatch first started.  Both advance only while
+    is_running, so the interval between a stop and the next start counts
+    toward neither.
+
+    Every method that advances the clock takes an optional now.  That lets
+    one caller apply a single time point to several updates, which is how
+    the signal handler reads the clock once per signal.  It also lets
+    tests drive the class without patching time.monotonic.
+
+    Nothing here writes to stdout or stderr.  lap() returns the finished
+    lap for the caller to present however it likes.
+    '''
+
+    lap_duration: float = 0.0
+    split_duration: float = 0.0
+
+    lap_time_point: float = 0.0
+    split_time_point: float = 0.0
+
+    lap_number: int = 1
+    is_running: bool = False
+
+    def start(self, now: float | None = None) -> None:
+        '''Begin timing from now, or do nothing if already running.
+
+        now defaults to the current time.
+        '''
+
+        if self.is_running:
+            return
+
+        if now is None:
+            now = time.monotonic()
+
+        self.is_running = True
+        self.lap_time_point = now
+        self.split_time_point = now
+
+    def stop(self, now: float | None = None) -> None:
+        '''Stop timing at now, or do nothing if already stopped.
+
+        Adds the time since the last start or lap to both accumulators.
+        '''
+
+        if not self.is_running:
+            return
+
+        if now is None:
+            now = time.monotonic()
+
+        self.is_running = False
+        self.lap_duration += now - self.lap_time_point
+        self.split_duration += now - self.split_time_point
+
+    def start_stop(self, now: float | None = None) -> None:
+        '''Stop if running, start if not.'''
+
+        if now is None:
+            now = time.monotonic()
+
+        if self.is_running:
+            self.stop(now)
+        else:
+            self.start(now)
+
+    def lap(self, now: float | None = None) -> FinishedLap | None:
+        '''Finish the current lap at now and start the next one.
+
+        Returns the finished lap as (number, lap duration, split
+        duration).  Returns None if the stopwatch is not running, in which
+        case nothing is recorded.
+        '''
+
+        if not self.is_running:
+            return None
+
+        if now is None:
+            now = time.monotonic()
+
+        self.lap_duration += now - self.lap_time_point
+        self.split_duration += now - self.split_time_point
+
+        self.lap_time_point = now
+        self.split_time_point = now
+
+        finished_lap = (self.lap_number, self.lap_duration,
+                        self.split_duration)
+
+        self.lap_duration = 0.0
+        self.lap_number += 1
+
+        return finished_lap
+
+
+def print_lap_split_times(lap_number: int, lap_duration: float,
+                          split_duration: float) -> None:
+    '''Print one timing line to stdout.'''
+
+    print(f'{lap_number:3d}: '
+          f'{lap_duration:8.3f} '
+          f'{split_duration:8.3f}', flush=True)
+
+
+def print_split_time(split_duration: float) -> None:
+    '''Print the split time alone to stdout, with no lap number.'''
+
+    print(f'{split_duration:.3f}', flush=True)
+
+
+def print_status(message: str) -> None:
+    '''Print a status marker to stderr, clear of the timings on stdout.'''
+
+    print(message, file=sys.stderr, flush=True)
+
+
+def main() -> NoReturn:
+    '''Run the stopwatch until a signal ends it.
+
+    Timing starts immediately.  The process then idles in signal.pause()
+    and does all of its work in the handler.  Never returns, because
+    SIGINT and SIGTERM exit from inside the handler.
+    '''
+
+    sw = Stopwatch()
+
+    def signal_handler(signum: int, _frame: FrameType | None) -> None:
+        '''Apply the stopwatch action bound to signum.'''
+
+        # Block the handled signals so a second one cannot interleave these
+        # state updates.  Python dispatches handlers between bytecodes, so a
+        # signal that arrives before this call can still nest.
+        old_mask = signal.pthread_sigmask(signal.SIG_BLOCK, HANDLED_SIGNALS)
+
+        try:
+            now = time.monotonic()
+
+            if sys.stderr.isatty():
+                # Erase terminal control characters (e.g. ^C, ^Z) echoed by TTY
+                # driver.
+                print('\r  \r', file=sys.stderr, flush=True, end='')
+
+            match signum:
+                case signal.SIGTSTP:
+                    print_status('(STOP)' if sw.is_running else '(START)')
+                    sw.start_stop(now)
+                case signal.SIGQUIT:
+                    finished_lap = sw.lap(now)
+                    if finished_lap is None:
+                        print_status('(STOPPED)')
+                    else:
+                        print_lap_split_times(*finished_lap)
+                case signal.SIGINT | signal.SIGTERM:
+                    # Ignore signals to allow clean exit without re-entry.
+                    for sig in HANDLED_SIGNALS:
+                        signal.signal(sig, signal.SIG_IGN)
+
+                    sw.stop(now)
+                    if sw.lap_number == 1:
+                        print_split_time(sw.split_duration)
+                    else:
+                        print_lap_split_times(sw.lap_number, sw.lap_duration,
+                                              sw.split_duration)
+                    sys.exit(0)
+                case _:
+                    print_status(f'({signal.Signals(signum).name} '
+                                 f'is not handled)')
+        finally:
+            # Restoring the signal mask unblocks signals while the OS coalesces
+            # pending duplicates.
+            signal.pthread_sigmask(signal.SIG_SETMASK, old_mask)
+
+    # Let broken pipe terminate with SIGPIPE default status (141) instead of
+    # Python exception.
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    for sig in HANDLED_SIGNALS:
+        signal.signal(sig, signal_handler)
+
+    sw.start()
+
+    while True:
+        signal.pause()
+
+
+if __name__ == '__main__':
+    sys.exit(main())
