@@ -36,7 +36,7 @@ template <std::integral T>
 constexpr T
 roundm_floor(const T n, const T m)
 {
-    const auto t = roundm_trunc(n, m);
+    const T t = roundm_trunc(n, m);
 
     if (n == t)
         return t;
@@ -58,7 +58,7 @@ template <std::integral T>
 constexpr T
 roundm_ceil(const T n, const T m)
 {
-    const auto t = roundm_trunc(n, m);
+    const T t = roundm_trunc(n, m);
 
     if (n == t)
         return t;
@@ -80,7 +80,7 @@ template <std::integral T>
 constexpr T
 roundm_nearest(const T n, const T m)
 {
-    const auto t = roundm_trunc(n, m);
+    const T t = roundm_trunc(n, m);
 
     if (n == t)
         return t;
