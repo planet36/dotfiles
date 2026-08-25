@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// round to a multiple of an integer
+/// Functions to round an integer to a multiple of an integer
 /**
 * \file
 * \author Steven Ward
@@ -14,6 +14,7 @@
 #endif
 #include <concepts>
 
+/// Round \a n to the nearest multiple of \a m (toward zero)
 /**
 * \pre \a m > 0
 */
@@ -29,6 +30,7 @@ roundm_trunc(const T n, const T m)
     return n - r;
 }
 
+/// Round \a n to the nearest multiple of \a m that's at most \a n (toward negative infinity)
 /**
 * \pre \a m > 0
 */
@@ -51,6 +53,7 @@ roundm_floor(const T n, const T m)
     }
 }
 
+/// Round \a n to the nearest multiple of \a m that's at least \a n (toward infinity)
 /**
 * \pre \a m > 0
 */
@@ -73,6 +76,7 @@ roundm_ceil(const T n, const T m)
     }
 }
 
+/// Round \a n to the nearest multiple of \a m (halfway cases rounded away from zero)
 /**
 * \pre \a m > 0
 */
