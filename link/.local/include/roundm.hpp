@@ -44,13 +44,9 @@ roundm_floor(const T n, const T m)
         return t;
 
     if (n < 0)
-    {
         return t - m;
-    }
     else
-    {
         return t;
-    }
 }
 
 /// Round \a n to the nearest multiple of \a m that's at least \a n (toward infinity)
@@ -67,13 +63,9 @@ roundm_ceil(const T n, const T m)
         return t;
 
     if (n < 0)
-    {
         return t;
-    }
     else
-    {
         return t + m;
-    }
 }
 
 /// Round \a n to the nearest multiple of \a m (halfway cases rounded away from zero)
@@ -92,23 +84,15 @@ roundm_nearest(const T n, const T m)
     if (n < 0)
     {
         if (n % m < -(m / 2))
-        {
             return t - m;
-        }
         else
-        {
             return t;
-        }
     }
     else
     {
         if (n % m >  (m / 2))
-        {
             return t + m;
-        }
         else
-        {
             return t;
-        }
     }
 }
