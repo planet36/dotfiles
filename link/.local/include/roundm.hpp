@@ -22,7 +22,7 @@
 namespace roundm
 {
 
-/// Round \a n to the nearest multiple of \a m (toward zero)
+/// Round \a n to the nearest multiple of \a m that's between \a n and zero (toward zero)
 /**
 * \pre \a m > 0
 */
@@ -98,7 +98,7 @@ floor(const T n, const T m) noexcept
         return t;
 }
 
-/// Round \a n to the nearest multiple of \a m that's at least \a n (toward infinity)
+/// Round \a n to the nearest multiple of \a m that's at least \a n (toward positive infinity)
 /**
 * \pre \a m > 0
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is greater than
@@ -119,7 +119,7 @@ ceil(const T n, const T m) noexcept
         return detail::above(t, m);
 }
 
-/// Round \a n to the nearest multiple of \a m that's at least \a n (toward infinity)
+/// Round a non-negative \a n up to the nearest multiple of a power-of-2 \a m
 /**
 * This is \c roundm::ceil for the case where \a n is non-negative and \a m is a power of 2.
 * \pre \a n >= 0
