@@ -28,7 +28,7 @@ namespace roundm
 */
 template <std::integral T>
 [[nodiscard]] constexpr T
-trunc(const T n, const T m)
+trunc(const T n, const T m) noexcept
 {
 #if defined(DEBUG)
     assert(m > 0);
@@ -50,7 +50,7 @@ namespace detail
 */
 template <std::integral T>
 constexpr std::expected<T, std::errc>
-below(const T t, const T m)
+below(const T t, const T m) noexcept
 {
     if (t < std::numeric_limits<T>::min() + m)
         return std::unexpected(std::errc::result_out_of_range);
@@ -67,7 +67,7 @@ below(const T t, const T m)
 */
 template <std::integral T>
 constexpr std::expected<T, std::errc>
-above(const T t, const T m)
+above(const T t, const T m) noexcept
 {
     if (t > std::numeric_limits<T>::max() - m)
         return std::unexpected(std::errc::result_out_of_range);
@@ -85,7 +85,7 @@ above(const T t, const T m)
 */
 template <std::integral T>
 constexpr std::expected<T, std::errc>
-floor(const T n, const T m)
+floor(const T n, const T m) noexcept
 {
     const T t = trunc(n, m);
 
@@ -106,7 +106,7 @@ floor(const T n, const T m)
 */
 template <std::integral T>
 constexpr std::expected<T, std::errc>
-ceil(const T n, const T m)
+ceil(const T n, const T m) noexcept
 {
     const T t = trunc(n, m);
 
@@ -129,7 +129,7 @@ ceil(const T n, const T m)
 */
 template <std::integral T>
 constexpr std::expected<T, std::errc>
-ceil_pow2(const T n, const T m)
+ceil_pow2(const T n, const T m) noexcept
 {
 #if defined(DEBUG)
     if constexpr (std::numeric_limits<T>::is_signed)
@@ -157,7 +157,7 @@ ceil_pow2(const T n, const T m)
 */
 template <std::integral T>
 constexpr std::expected<T, std::errc>
-nearest(const T n, const T m)
+nearest(const T n, const T m) noexcept
 {
     const T t = trunc(n, m);
 
