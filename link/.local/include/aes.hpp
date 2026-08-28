@@ -128,10 +128,8 @@ constexpr int aes256_num_rounds = 14;
 [[nodiscard]] static inline __m128i
 aes128_expand_key(__m128i key, __m128i tmp_assist) noexcept
 {
-    // get the most significant element (3)
-    const int e3 = _mm_extract_epi32(tmp_assist, 3);
     // copy the most significant element (3) to all elements (0, 1, 2, 3)
-    tmp_assist = _mm_set1_epi32(e3);
+    tmp_assist = _mm_shuffle_epi32(tmp_assist, _MM_SHUFFLE(3, 3, 3, 3));
 
     // inspired by
     // https://github.com/Tarsnap/tarsnap/blob/master/libcperciva/crypto/crypto_aes_aesni.c#L28
