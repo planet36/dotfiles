@@ -5,6 +5,9 @@
 /**
 * \file
 * \author Steven Ward
+*
+* \sa https://en.cppreference.com/cpp/numeric/bit_reverse
+* \sa https://eisenwave.github.io/cpp-proposals/bit-permutations.html
 */
 
 #pragma once
