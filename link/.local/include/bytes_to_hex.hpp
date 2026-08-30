@@ -9,6 +9,9 @@
 
 #pragma once
 
+#if defined(DEBUG)
+#include <cassert>
+#endif
 #include <cstddef>
 #include <cstdint>
 #include <span>
@@ -23,6 +26,10 @@
 [[nodiscard]] static constexpr char
 nibble_char(const uint8_t x) noexcept
 {
+#if defined(DEBUG)
+    assert(x <= 15);
+#endif
+
     return static_cast<char>(x + (x < 10 ? '0' : -10 + 'a'));
 }
 

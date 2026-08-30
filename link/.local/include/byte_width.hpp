@@ -13,12 +13,12 @@
 #include <concepts>
 
 /// Get the byte width of an unsigned integer
-[[nodiscard]] static constexpr unsigned int
+[[nodiscard]] static constexpr int
 byte_width(const std::unsigned_integral auto x) noexcept
 {
     // std::bit_width(0) returns 0, but we want it to be 1
     if (x == 0)
         return 1;
-    const auto w = static_cast<unsigned int>(std::bit_width(x));
+    const auto w = std::bit_width(x);
     return (w / 8) + (w % 8 != 0);
 }

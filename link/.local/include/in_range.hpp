@@ -20,7 +20,7 @@
 
 /// Returns \c true if \a t is representable as type \c R
 /**
-* \tparam R the integer type whose representable range is checked; may be const-qualified
+* \tparam R the integer type whose representable range is checked (may be const-qualified)
 * \tparam T the integer type of the value under test
 * \param t the value to test
 * \return \c true if \a t is within the interval <code>[std::numeric_limits<R>::min(), std::numeric_limits<R>::max()]</code>

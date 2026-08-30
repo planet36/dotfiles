@@ -8,7 +8,7 @@
 *
 * A \c narrow_cast function that safely converts between integral types,
 * throwing \c std::range_error if the value is not representable in the
-* target type. Unlike \c static_cast, this detects out-of-range values
+* target type.  Unlike \c static_cast, this detects out-of-range values
 * rather than silently truncating or wrapping them.
 */
 
