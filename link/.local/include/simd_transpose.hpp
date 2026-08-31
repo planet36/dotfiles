@@ -26,12 +26,6 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 
-static inline void
-simd_transpose([[maybe_unused]] std::array<__m128i, 1>& x) noexcept
-{
-    // NOP
-}
-
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using SSE2 intrinsics
 static void
 simd_transpose(std::array<__m128i, 2>& x) noexcept
