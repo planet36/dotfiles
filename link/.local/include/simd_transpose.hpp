@@ -172,47 +172,47 @@ simd_transpose(std::array<__m128i, 16>& x) noexcept
 
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using ARM Neon intrinsics
 static void
-simd_transpose(std::array<uint64x2_t, 2>& x) noexcept
+simd_transpose(std::array<uint8x16_t, 2>& x) noexcept
 {
-    const uint64x2_t AB_0 = vzip1q_u64(x[0], x[1]);
-    const uint64x2_t AB_1 = vzip2q_u64(x[0], x[1]);
+    const uint64x2_t AB_0 = vzip1q_u64(vreinterpretq_u64_u8(x[0]), vreinterpretq_u64_u8(x[1]));
+    const uint64x2_t AB_1 = vzip2q_u64(vreinterpretq_u64_u8(x[0]), vreinterpretq_u64_u8(x[1]));
 
-    x[0] = AB_0;
-    x[1] = AB_1;
+    x[0] = vreinterpretq_u8_u64(AB_0);
+    x[1] = vreinterpretq_u8_u64(AB_1);
 }
 
 /// Transpose \a x (treating it as a 4x4 matrix of \c uint32_t) using ARM Neon intrinsics
 static void
-simd_transpose(std::array<uint32x4_t, 4>& x) noexcept
+simd_transpose(std::array<uint8x16_t, 4>& x) noexcept
 {
-    const uint32x4_t AB_01 = vzip1q_u32(x[0], x[1]);
-    const uint32x4_t AB_23 = vzip2q_u32(x[0], x[1]);
-    const uint32x4_t CD_01 = vzip1q_u32(x[2], x[3]);
-    const uint32x4_t CD_23 = vzip2q_u32(x[2], x[3]);
+    const uint32x4_t AB_01 = vzip1q_u32(vreinterpretq_u32_u8(x[0]), vreinterpretq_u32_u8(x[1]));
+    const uint32x4_t AB_23 = vzip2q_u32(vreinterpretq_u32_u8(x[0]), vreinterpretq_u32_u8(x[1]));
+    const uint32x4_t CD_01 = vzip1q_u32(vreinterpretq_u32_u8(x[2]), vreinterpretq_u32_u8(x[3]));
+    const uint32x4_t CD_23 = vzip2q_u32(vreinterpretq_u32_u8(x[2]), vreinterpretq_u32_u8(x[3]));
 
     const uint64x2_t ABCD_0 = vzip1q_u64(vreinterpretq_u64_u32(AB_01), vreinterpretq_u64_u32(CD_01));
     const uint64x2_t ABCD_1 = vzip2q_u64(vreinterpretq_u64_u32(AB_01), vreinterpretq_u64_u32(CD_01));
     const uint64x2_t ABCD_2 = vzip1q_u64(vreinterpretq_u64_u32(AB_23), vreinterpretq_u64_u32(CD_23));
     const uint64x2_t ABCD_3 = vzip2q_u64(vreinterpretq_u64_u32(AB_23), vreinterpretq_u64_u32(CD_23));
 
-    x[0] = vreinterpretq_u32_u64(ABCD_0);
-    x[1] = vreinterpretq_u32_u64(ABCD_1);
-    x[2] = vreinterpretq_u32_u64(ABCD_2);
-    x[3] = vreinterpretq_u32_u64(ABCD_3);
+    x[0] = vreinterpretq_u8_u64(ABCD_0);
+    x[1] = vreinterpretq_u8_u64(ABCD_1);
+    x[2] = vreinterpretq_u8_u64(ABCD_2);
+    x[3] = vreinterpretq_u8_u64(ABCD_3);
 }
 
 /// Transpose \a x (treating it as a 8x8 matrix of \c uint16_t) using ARM Neon intrinsics
 static void
-simd_transpose(std::array<uint16x8_t, 8>& x) noexcept
+simd_transpose(std::array<uint8x16_t, 8>& x) noexcept
 {
-    const uint16x8_t AB_03 = vzip1q_u16(x[0], x[1]);
-    const uint16x8_t AB_47 = vzip2q_u16(x[0], x[1]);
-    const uint16x8_t CD_03 = vzip1q_u16(x[2], x[3]);
-    const uint16x8_t CD_47 = vzip2q_u16(x[2], x[3]);
-    const uint16x8_t EF_03 = vzip1q_u16(x[4], x[5]);
-    const uint16x8_t EF_47 = vzip2q_u16(x[4], x[5]);
-    const uint16x8_t GH_03 = vzip1q_u16(x[6], x[7]);
-    const uint16x8_t GH_47 = vzip2q_u16(x[6], x[7]);
+    const uint16x8_t AB_03 = vzip1q_u16(vreinterpretq_u16_u8(x[0]), vreinterpretq_u16_u8(x[1]));
+    const uint16x8_t AB_47 = vzip2q_u16(vreinterpretq_u16_u8(x[0]), vreinterpretq_u16_u8(x[1]));
+    const uint16x8_t CD_03 = vzip1q_u16(vreinterpretq_u16_u8(x[2]), vreinterpretq_u16_u8(x[3]));
+    const uint16x8_t CD_47 = vzip2q_u16(vreinterpretq_u16_u8(x[2]), vreinterpretq_u16_u8(x[3]));
+    const uint16x8_t EF_03 = vzip1q_u16(vreinterpretq_u16_u8(x[4]), vreinterpretq_u16_u8(x[5]));
+    const uint16x8_t EF_47 = vzip2q_u16(vreinterpretq_u16_u8(x[4]), vreinterpretq_u16_u8(x[5]));
+    const uint16x8_t GH_03 = vzip1q_u16(vreinterpretq_u16_u8(x[6]), vreinterpretq_u16_u8(x[7]));
+    const uint16x8_t GH_47 = vzip2q_u16(vreinterpretq_u16_u8(x[6]), vreinterpretq_u16_u8(x[7]));
 
     const uint32x4_t ABCD_01 = vzip1q_u32(vreinterpretq_u32_u16(AB_03), vreinterpretq_u32_u16(CD_03));
     const uint32x4_t ABCD_23 = vzip2q_u32(vreinterpretq_u32_u16(AB_03), vreinterpretq_u32_u16(CD_03));
@@ -232,14 +232,14 @@ simd_transpose(std::array<uint16x8_t, 8>& x) noexcept
     const uint64x2_t ABCDEFGH_6 = vzip1q_u64(vreinterpretq_u64_u32(ABCD_67), vreinterpretq_u64_u32(EFGH_67));
     const uint64x2_t ABCDEFGH_7 = vzip2q_u64(vreinterpretq_u64_u32(ABCD_67), vreinterpretq_u64_u32(EFGH_67));
 
-    x[0] = vreinterpretq_u16_u64(ABCDEFGH_0);
-    x[1] = vreinterpretq_u16_u64(ABCDEFGH_1);
-    x[2] = vreinterpretq_u16_u64(ABCDEFGH_2);
-    x[3] = vreinterpretq_u16_u64(ABCDEFGH_3);
-    x[4] = vreinterpretq_u16_u64(ABCDEFGH_4);
-    x[5] = vreinterpretq_u16_u64(ABCDEFGH_5);
-    x[6] = vreinterpretq_u16_u64(ABCDEFGH_6);
-    x[7] = vreinterpretq_u16_u64(ABCDEFGH_7);
+    x[0] = vreinterpretq_u8_u64(ABCDEFGH_0);
+    x[1] = vreinterpretq_u8_u64(ABCDEFGH_1);
+    x[2] = vreinterpretq_u8_u64(ABCDEFGH_2);
+    x[3] = vreinterpretq_u8_u64(ABCDEFGH_3);
+    x[4] = vreinterpretq_u8_u64(ABCDEFGH_4);
+    x[5] = vreinterpretq_u8_u64(ABCDEFGH_5);
+    x[6] = vreinterpretq_u8_u64(ABCDEFGH_6);
+    x[7] = vreinterpretq_u8_u64(ABCDEFGH_7);
 }
 
 /// Transpose \a x (treating it as a 16x16 matrix of \c uint8_t) using ARM Neon intrinsics
