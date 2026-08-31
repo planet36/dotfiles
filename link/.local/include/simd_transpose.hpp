@@ -55,28 +55,6 @@ simd_transpose(std::array<__m128i, 4>& x) noexcept
     x[3] = _mm_unpackhi_epi64(AB_23, CD_23); // ABCD_3
 }
 
-/// Transpose \a x (treating it as a 4x4 matrix of \c uint32_t) using the \c _MM_TRANSPOSE4_PS macro
-/**
-* \sa https://community.intel.com/t5/Intel-ISA-Extensions/4x4-matrix-transpose-using-sse2-intrinsics/m-p/785883#M353
-* > Cast your __m128i variables into __m128 variables (using _mm_castsi128_ps),
-* > use the macro _MM_TRANSPOSE_PS, then cast back using _mm_castps_si128.
-*/
-static void
-simd_transpose_macro(std::array<__m128i, 4>& x) noexcept
-{
-    __m128 A = _mm_castsi128_ps(x[0]);
-    __m128 B = _mm_castsi128_ps(x[1]);
-    __m128 C = _mm_castsi128_ps(x[2]);
-    __m128 D = _mm_castsi128_ps(x[3]);
-
-    _MM_TRANSPOSE4_PS(A, B, C, D);
-
-    x[0] = _mm_castps_si128(A);
-    x[1] = _mm_castps_si128(B);
-    x[2] = _mm_castps_si128(C);
-    x[3] = _mm_castps_si128(D);
-}
-
 /// Transpose \a x (treating it as an 8x8 matrix of \c uint16_t) using SSE2 intrinsics
 /**
 * \sa https://stackoverflow.com/a/4951060/1892784
