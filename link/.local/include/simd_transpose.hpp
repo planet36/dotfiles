@@ -17,11 +17,11 @@
 
 #pragma once
 
+#include "simd_types.hpp"
+
 #include <array>
 
-#if defined(__x86_64__)
-
-#include <immintrin.h>
+#if defined(__x86_64__) && defined(__SSE2__)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
@@ -192,8 +192,6 @@ simd_transpose(std::array<__m128i, 16>& x) noexcept
 
 #elif defined(__aarch64__) && defined(__ARM_NEON)
 
-#include <arm_neon.h>
-
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using ARM Neon intrinsics
 static void
 simd_transpose(std::array<uint64x2_t, 2>& x) noexcept
@@ -358,9 +356,5 @@ simd_transpose(std::array<uint8x16_t, 16>& x) noexcept
     x[0xe] = vreinterpretq_u8_u64(ABCDEFGHIJKLMNOP_e);
     x[0xf] = vreinterpretq_u8_u64(ABCDEFGHIJKLMNOP_f);
 }
-
-#else
-
-#error "Architecture not supported"
 
 #endif
