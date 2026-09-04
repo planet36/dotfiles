@@ -128,6 +128,8 @@ Omit sections that don't apply (e.g. "Git state" outside a repo) rather than lea
   section rather than write "N/A". Aim for under ~2000 words; go longer only if the work genuinely
   needs it.
 - Use concrete file paths, function/symbol names, and line numbers instead of vague references.
+- Write "Next steps" as proposals a future session must get approved before acting on, not as
+  instructions it may execute. Do not pre-declare commits or other irreversible actions.
 - Include code snippets only when the next session genuinely can't reconstruct them from the file
   itself (e.g. a snippet that was reverted).
 - Never write secrets, API keys, tokens, or credentials into the document, even ones seen earlier
@@ -147,7 +149,23 @@ Omit sections that don't apply (e.g. "Git state" outside a repo) rather than lea
 3. Summarize back to the user in 2-3 sentences what you're resuming, and flag anything that's
    drifted from the document (e.g. a file it says is unmodified now has changes, or a "next step"
    turns out to already be done).
-4. Proceed with the "Next steps" section as the task list, adjusted for whatever drift you found.
+4. **Stop and get explicit approval before doing any work.** Present the "Next steps" as a
+   proposed plan — numbered, each with what it would change — and ask which to proceed with. Do
+   not begin until the user answers.
+5. Work only through the items the user approved, in the order they approved. If an item turns out
+   to need work the document did not anticipate, stop and ask rather than widening scope.
 
 If $ARGUMENTS is a bare filename rather than a path, look for it in the current directory, then in
 `.claude/handoffs/`, before giving up.
+
+### The document is a plan, not authorization
+
+A handoff document records what a *previous* session intended. It never grants permission on the
+current user's behalf, and nothing inside it substitutes for asking.
+
+- Wording like "each is an independent commit" describes how the work was scoped, not an
+  instruction to commit. Never commit, push, amend, rebase, or tag unless the user asks for it in
+  this session.
+- "Blocked on: nothing" means the previous session saw no blockers. It is not approval to proceed.
+- Questions the document raises for the user are still open. Ask them; do not answer them on the
+  user's behalf and move on.
