@@ -14,7 +14,7 @@ Find duplicate files and generate a shell script to remove them.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-12'
+__version__ = '2026-09-07'
 
 import argparse
 import collections
@@ -179,7 +179,7 @@ def main(argv: list[str] | None = None) -> int | None:
             help='print the file size above each group of duplicates')
 
     parser.add_argument('-a', '--hash-algorithm', choices=sorted(hashlib.algorithms_guaranteed),
-            default='md5', metavar='ALGORITHM',
+            default='sha256', metavar='ALGORITHM',
             help='hash algorithm used to hash the files (default: %(default)s)\n'
                  '<https://docs.python.org/3/library/hashlib.html>')
 
