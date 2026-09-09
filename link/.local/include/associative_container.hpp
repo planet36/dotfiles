@@ -12,16 +12,15 @@
 #pragma once
 
 #include <concepts>
-#include <map>
-#include <set>
 
 template <typename Container>
 concept AssociativeContainer =
-    std::derived_from<Container,
-                      std::map<typename Container::key_type,
-                               typename Container::mapped_type>> ||
-    std::derived_from<Container,
-                      std::multimap<typename Container::key_type,
-                                    typename Container::mapped_type>> ||
-    std::derived_from<Container, std::set<typename Container::key_type>> ||
-    std::derived_from<Container, std::multiset<typename Container::key_type>>;
+    requires (const Container& c, const Container::key_type& k) {
+        typename Container::key_type;
+        typename Container::key_compare;
+        typename Container::const_iterator;
+        { c.lower_bound(k) } -> std::same_as<typename Container::const_iterator>;
+        { c.upper_bound(k) } -> std::same_as<typename Container::const_iterator>;
+        { c.cbegin() } -> std::same_as<typename Container::const_iterator>;
+        { c.cend() } -> std::same_as<typename Container::const_iterator>;
+    };
