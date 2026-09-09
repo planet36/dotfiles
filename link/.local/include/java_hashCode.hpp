@@ -19,7 +19,7 @@
 constexpr int32_t
 java_hashCode(const std::string_view s)
 {
-    int32_t result = 0;
+    uint32_t result = 0;
 
     for (const auto c : s)
     {
@@ -27,5 +27,5 @@ java_hashCode(const std::string_view s)
         result = 31 * result + octet;
     }
 
-    return result;
+    return static_cast<int32_t>(result);
 }
