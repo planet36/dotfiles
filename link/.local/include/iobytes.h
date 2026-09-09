@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-inline size_t
+static inline size_t
 fread_bytes(void* buf, const size_t buf_size, FILE* fp)
 {
     // https://www.gnu.org/software/libc/manual/html_node/Block-Input_002fOutput.html
@@ -29,7 +29,7 @@ fread_bytes(void* buf, const size_t buf_size, FILE* fp)
     return num_bytes_read;
 }
 
-inline size_t
+static inline size_t
 fwrite_bytes(const void* buf, const size_t buf_size, FILE* fp)
 {
     // https://www.gnu.org/software/libc/manual/html_node/Block-Input_002fOutput.html

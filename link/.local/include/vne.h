@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-inline int
+static inline int
 von_neumann_extractor(unsigned char x)
 {
     switch (x & 0b11)

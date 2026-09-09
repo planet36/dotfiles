@@ -26,21 +26,21 @@ extern "C" {
 
 // NOLINTBEGIN(hicpp-no-assembler)
 
-inline double
+static inline double
 sse_sqrt(double x)
 {
     __asm__ volatile ("sqrtsd %0, %0" : "+x" (x));
     return x;
 }
 
-inline float
+static inline float
 sse_sqrtf(float x)
 {
     __asm__ volatile ("sqrtss %0, %0" : "+x" (x));
     return x;
 }
 
-inline float
+static inline float
 sse_rsqrtf(float x)
 {
     __asm__ volatile ("rsqrtss %0, %0" : "+x" (x));
