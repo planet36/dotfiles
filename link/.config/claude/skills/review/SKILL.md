@@ -1,13 +1,13 @@
 ---
 name: review
-description: Review a C/C++ source file for memory leaks, include audit issues, API consistency, constexpr opportunities, performance, documentation, security issues, and README accuracy
-argument-hint: <file-path>
+description: Review C/C++ source files for memory leaks, include audit issues, API consistency, constexpr opportunities, performance, documentation, security issues, and README accuracy
+argument-hint: <file-path>...
 disable-model-invocation: true
 ---
 
 Re-read $ARGUMENTS fresh before doing anything else. Do not rely on any cached content.
 
-Review the file at $ARGUMENTS for the following, in order:
+Review the file(s) at $ARGUMENTS for the following, in order:
 
 1. **Memory leaks** — dynamic allocations without matching deallocation on all code paths; missing cleanup in destructors or error branches.
 
@@ -25,6 +25,6 @@ Review the file at $ARGUMENTS for the following, in order:
 
 8. **README** — Review the README files for accuracy, consistency, and completeness.
 
-Present all findings grouped by category before making any changes. For each finding include the line number and a brief explanation. After presenting the report, wait for confirmation before applying any fixes.
+Present all findings grouped by category before making any changes. For each finding include the file name, line number, and a brief explanation. After presenting the report, wait for confirmation before applying any fixes.
 
-If $ARGUMENTS is empty, ask the user which file to review.
+If $ARGUMENTS is empty, ask the user which file(s) to review.
