@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cassert>
+#include <new>
 #include <xxhash.h>
 
 class simple_xxh3_64
@@ -20,29 +21,42 @@ private:
     XXH3_state_t* state_ptr;
 
 public:
-    simple_xxh3_64()
+    simple_xxh3_64() : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_64bits_reset(state_ptr) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset(state_ptr);
+        assert(err == XXH_OK);
     }
 
-    explicit simple_xxh3_64(XXH64_hash_t seed)
+    explicit simple_xxh3_64(XXH64_hash_t seed) : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_64bits_reset_withSeed(state_ptr, seed) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset_withSeed(state_ptr, seed);
+        assert(err == XXH_OK);
     }
 
-    simple_xxh3_64(const void* secret, size_t secretSize)
+    simple_xxh3_64(const void* secret, size_t secretSize) : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_64bits_reset_withSecret(state_ptr, secret, secretSize) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
+        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset_withSecret(state_ptr, secret, secretSize);
+        assert(err == XXH_OK);
     }
 
 #if 0
-    simple_xxh3_64(const void* secret, size_t secretSize, XXH64_hash_t seed)
+    simple_xxh3_64(const void* secret, size_t secretSize, XXH64_hash_t seed) : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_64bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
+        assert(err == XXH_OK);
     }
 #endif
 
@@ -52,11 +66,18 @@ public:
     simple_xxh3_64(simple_xxh3_64&&) = delete;
     simple_xxh3_64& operator=(simple_xxh3_64&&) = delete;
 
-    ~simple_xxh3_64() { assert(XXH3_freeState(state_ptr) == XXH_OK); }
+    ~simple_xxh3_64()
+    {
+        [[maybe_unused]] const XXH_errorcode err = XXH3_freeState(state_ptr);
+        assert(err == XXH_OK);
+    }
 
+    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
     void update(const void* input, size_t len)
     {
-        assert(XXH3_64bits_update(state_ptr, input, len) == XXH_OK);
+        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
+        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_update(state_ptr, input, len);
+        assert(err == XXH_OK);
     }
 
     [[nodiscard]] XXH64_hash_t digest() const { return XXH3_64bits_digest(state_ptr); }
@@ -68,29 +89,42 @@ private:
     XXH3_state_t* state_ptr;
 
 public:
-    simple_xxh3_128()
+    simple_xxh3_128() : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_128bits_reset(state_ptr) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset(state_ptr);
+        assert(err == XXH_OK);
     }
 
-    explicit simple_xxh3_128(XXH64_hash_t seed)
+    explicit simple_xxh3_128(XXH64_hash_t seed) : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_128bits_reset_withSeed(state_ptr, seed) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset_withSeed(state_ptr, seed);
+        assert(err == XXH_OK);
     }
 
-    simple_xxh3_128(const void* secret, size_t secretSize)
+    simple_xxh3_128(const void* secret, size_t secretSize) : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_128bits_reset_withSecret(state_ptr, secret, secretSize) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
+        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset_withSecret(state_ptr, secret, secretSize);
+        assert(err == XXH_OK);
     }
 
 #if 0
-    simple_xxh3_128(const void* secret, size_t secretSize, XXH64_hash_t seed)
+    simple_xxh3_128(const void* secret, size_t secretSize, XXH64_hash_t seed) : state_ptr(XXH3_createState())
     {
-        assert((state_ptr = XXH3_createState()) != nullptr);
-        assert(XXH3_128bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed) == XXH_OK);
+        if (state_ptr == nullptr)
+            throw std::bad_alloc();
+
+        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
+        assert(err == XXH_OK);
     }
 #endif
 
@@ -100,11 +134,18 @@ public:
     simple_xxh3_128(simple_xxh3_128&&) = delete;
     simple_xxh3_128& operator=(simple_xxh3_128&&) = delete;
 
-    ~simple_xxh3_128() { assert(XXH3_freeState(state_ptr) == XXH_OK); }
+    ~simple_xxh3_128()
+    {
+        [[maybe_unused]] const XXH_errorcode err = XXH3_freeState(state_ptr);
+        assert(err == XXH_OK);
+    }
 
+    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
     void update(const void* input, size_t len)
     {
-        assert(XXH3_128bits_update(state_ptr, input, len) == XXH_OK);
+        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
+        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_update(state_ptr, input, len);
+        assert(err == XXH_OK);
     }
 
     [[nodiscard]] XXH128_hash_t digest() const { return XXH3_128bits_digest(state_ptr); }
