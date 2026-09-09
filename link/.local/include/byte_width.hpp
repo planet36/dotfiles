@@ -9,7 +9,12 @@
 
 #pragma once
 
+#include "to_unsigned.hpp"
+
 #include <bit>
+#if defined(DEBUG)
+#include <cassert>
+#endif
 #include <concepts>
 
 /// Get the byte width of an unsigned integer
@@ -21,4 +26,18 @@ byte_width(const std::unsigned_integral auto x) noexcept
         return 1;
     const auto w = std::bit_width(x);
     return (w / 8) + (w % 8 != 0);
+}
+
+/// Get the byte width of a non-negative signed integer
+/**
+* \pre \a x ≥ 0
+*/
+[[nodiscard]] static constexpr int
+byte_width(const std::signed_integral auto x) noexcept
+{
+#if defined(DEBUG)
+    assert(x >= 0);
+#endif
+
+    return byte_width(to_unsigned(x));
 }

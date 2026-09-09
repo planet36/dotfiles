@@ -22,7 +22,6 @@
 /// Cast \a value to integral type \a To, throwing if the value is out of range.
 /**
 * \tparam To   The target integral type
-* \tparam From The source integral type
 * \param value The value to cast
 * \return \a value cast to \a To
 * \exception std::range_error if \a value is not representable in \a To
@@ -30,9 +29,9 @@
 * \note \c std::in_range is not used because it does not support character
 *       types or \c bool, which are included in the \c std::integral concept.
 */
-template <std::integral To, std::integral From>
+template <std::integral To>
 [[nodiscard]] static constexpr To
-narrow_cast(const From value)
+narrow_cast(const std::integral auto value)
 {
     if (!in_range<To>(value))
     {
