@@ -75,7 +75,7 @@ extern "C" {
 _mm_xor_si128
 \endverbatim
 */
-inline __m128i
+static inline __m128i
 AddRoundKey(__m128i data, __m128i key)
 {
     data = _mm_xor_si128(data, key);
@@ -87,7 +87,7 @@ AddRoundKey(__m128i data, __m128i key)
 PSHUFB xmm0, 0x0b06010c07020d08030e09040f0a0500
 \endverbatim
 */
-inline __m128i
+static inline __m128i
 ShiftRows(__m128i data)
 {
     const __m128i ISOLATE_SROWS_MASK =
@@ -101,7 +101,7 @@ ShiftRows(__m128i data)
 PSHUFB xmm0, 0x0306090c0f0205080b0e0104070a0d00
 \endverbatim
 */
-inline __m128i
+static inline __m128i
 InvShiftRows(__m128i data)
 {
     const __m128i ISOLATE_SBOX_MASK =
@@ -116,7 +116,7 @@ AESDECLAST xmm0, 0x00000000000000000000000000000000
 AESENC xmm0, 0x00000000000000000000000000000000
 \endverbatim
 */
-inline __m128i
+static inline __m128i
 MixColumns(__m128i data)
 {
     const __m128i ZERO = _mm_setzero_si128();
@@ -131,7 +131,7 @@ AESENCLAST xmm0, 0x00000000000000000000000000000000
 AESDEC xmm0, 0x00000000000000000000000000000000
 \endverbatim
 */
-inline __m128i
+static inline __m128i
 InvMixColumns(__m128i data)
 {
     // the performance of these two is practically identical
@@ -151,7 +151,7 @@ PSHUFB xmm0, 0x0306090c0f0205080b0e0104070a0d00
 AESENCLAST xmm0, 0x00000000000000000000000000000000
 \endverbatim
 */
-inline __m128i
+static inline __m128i
 SubBytes(__m128i data)
 {
     const __m128i ZERO = _mm_setzero_si128();
@@ -168,7 +168,7 @@ PSHUFB xmm0, 0x0b06010c07020d08030e09040f0a0500
 AESDECLAST xmm0, 0x00000000000000000000000000000000
 \endverbatim
 */
-inline __m128i
+static inline __m128i
 InvSubBytes(__m128i data)
 {
     const __m128i ZERO = _mm_setzero_si128();
