@@ -34,6 +34,8 @@ wyhash32(uint32_t a, uint32_t b)
 constexpr uint64_t
 wyhash64(uint64_t a, uint64_t b)
 {
+    using wyprimes::_wyp;
+
     a ^= _wyp[0];
     b ^= _wyp[1];
     mul(a, b);

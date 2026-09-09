@@ -29,6 +29,8 @@ wyrand::init()
 inline wyrand::result_type
 wyrand::next()
 {
+    using wyprimes::_wyp;
+
     s += _wyp[0];
     return mumx(s, s ^ _wyp[1]);
 }
