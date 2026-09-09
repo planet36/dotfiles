@@ -16,6 +16,4 @@
 
 #include <type_traits>
 
-#if !defined(decltype_unqual)
 #define decltype_unqual(EXPR) std::remove_cvref_t<decltype(EXPR)>
-#endif
