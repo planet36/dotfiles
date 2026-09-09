@@ -18,12 +18,13 @@
 extern "C" {
 #endif
 
-#if !defined(_mulx_u32)
-// Note: _mulx_u32 is not defined if __x86_64__
+// GCC declares _mulx_u32 only when __x86_64__ is not defined, and clang
+// declares it always.
 // https://github.com/gcc-mirror/gcc/blob/dfe0d4389a3ce43179563a63046ad3e74d615a08/gcc/config/i386/bmi2intrin.h#L95
+#if defined(__x86_64__) && !defined(__clang__)
 static inline unsigned int
 _mulx_u32(unsigned int a, unsigned int b, unsigned int* hi)
-    [[gnu::nonnull]] // NOLINT(readability-inconsistent-declaration-parameter-name)
+    [[gnu::nonnull]]
 {
     unsigned long long r = (unsigned long long)a * (unsigned long long)b;
     *hi = (unsigned int)(r >> 32);
