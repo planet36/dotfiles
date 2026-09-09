@@ -12,16 +12,17 @@
 #pragma once
 
 #include <concepts>
-#include <unordered_map>
-#include <unordered_set>
 
 template <typename Container>
 concept UnorderedAssociativeContainer =
-    std::derived_from<Container,
-                      std::unordered_map<typename Container::key_type,
-                                         typename Container::mapped_type>> ||
-    std::derived_from<Container,
-                      std::unordered_multimap<typename Container::key_type,
-                                              typename Container::mapped_type>> ||
-    std::derived_from<Container, std::unordered_set<typename Container::key_type>> ||
-    std::derived_from<Container, std::unordered_multiset<typename Container::key_type>>;
+    requires (const Container& c, const Container::key_type& k) {
+        typename Container::key_type;
+        typename Container::hasher;
+        typename Container::key_equal;
+        typename Container::size_type;
+        typename Container::const_iterator;
+        { c.find(k) } -> std::same_as<typename Container::const_iterator>;
+        { c.bucket_count() } -> std::same_as<typename Container::size_type>;
+        { c.cbegin() } -> std::same_as<typename Container::const_iterator>;
+        { c.cend() } -> std::same_as<typename Container::const_iterator>;
+    };
