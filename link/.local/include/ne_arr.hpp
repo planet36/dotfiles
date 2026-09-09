@@ -10,6 +10,7 @@
 #pragma once
 
 #include <array>
+#include <cstddef>
 
 /// Alias template of \c std::array that requires \c N>0
 template <typename T, std::size_t N>
