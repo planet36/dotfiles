@@ -20,7 +20,11 @@ struct is_unsigned_integral_number : is_type_any_of<std::remove_cv_t<T>,
                                                     unsigned short,
                                                     unsigned int,
                                                     unsigned long,
-                                                    unsigned long long>
+                                                    unsigned long long
+#if defined(__SIZEOF_INT128__)
+                                                    , __uint128_t
+#endif
+                                                    >
 {};
 
 template <typename T>
