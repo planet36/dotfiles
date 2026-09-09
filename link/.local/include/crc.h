@@ -21,7 +21,7 @@ extern "C" {
 #endif
 
 // CRC-8-CCITT
-uint8_t
+static inline uint8_t
 crc8(const void* buf, size_t len)
 {
     typedef uint8_t T;
@@ -49,7 +49,7 @@ crc8(const void* buf, size_t len)
 }
 
 // CRC-16-CCITT
-uint16_t
+static inline uint16_t
 crc16(const void* buf, size_t len)
 {
     typedef uint16_t T;
@@ -77,7 +77,7 @@ crc16(const void* buf, size_t len)
 }
 
 // CRC-32
-uint32_t
+static inline uint32_t
 crc32(const void* buf, size_t len)
 {
     typedef uint32_t T;

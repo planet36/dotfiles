@@ -43,7 +43,7 @@ sample_n(const std::string& in, const size_t num_samples, URBG&& gen)
     return sample_n(in, num_samples, gen);
 }
 
-auto
+inline auto
 sample_n(const std::string& in, const size_t num_samples)
 {
     return sample_n(in, num_samples, per_thread_random_number_engine);

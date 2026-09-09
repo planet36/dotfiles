@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-uint8_t
+static inline uint8_t
 bytewise_parity(uint64_t x)
 {
     x ^= x >> 4;

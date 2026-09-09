@@ -144,7 +144,7 @@ rand_float(URBG&& gen)
     return rand_float(gen);
 }
 
-float
+inline float
 rand_float()
 {
     return rand_float(per_thread_random_number_engine);
@@ -185,7 +185,7 @@ rand_double(URBG&& gen)
     return rand_double(gen);
 }
 
-double
+inline double
 rand_double()
 {
     return rand_double(per_thread_random_number_engine);
@@ -226,7 +226,7 @@ rand_long_double(URBG&& gen)
     return rand_long_double(gen);
 }
 
-long double
+inline long double
 rand_long_double()
 {
     return rand_long_double(per_thread_random_number_engine);
@@ -252,7 +252,7 @@ rand_float(const float a, const float b, URBG&& gen)
     return rand_float(a, b, gen);
 }
 
-float
+inline float
 rand_float(const float a, const float b)
 {
     return rand_float(a, b, per_thread_random_number_engine);
@@ -278,7 +278,7 @@ rand_double(const double a, const double b, URBG&& gen)
     return rand_double(a, b, gen);
 }
 
-double
+inline double
 rand_double(const double a, const double b)
 {
     return rand_double(a, b, per_thread_random_number_engine);
@@ -304,7 +304,7 @@ rand_long_double(const long double a, const long double b, URBG&& gen)
     return rand_long_double(a, b, gen);
 }
 
-long double
+inline long double
 rand_long_double(const long double a, const long double b)
 {
     return rand_long_double(a, b, per_thread_random_number_engine);
@@ -339,7 +339,7 @@ rand_bool(URBG&& gen)
     return rand_bool(gen);
 }
 
-bool
+inline bool
 rand_bool()
 {
     return rand_bool(per_thread_random_number_engine);
