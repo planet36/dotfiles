@@ -36,6 +36,7 @@ fill_rand(std::ranges::contiguous_range auto& container)
 
 #elif defined(_GLIBCXX_HAVE_GETENTROPY)
 
+#include <cerrno>
 #include <system_error>
 #include <unistd.h>
 
@@ -69,9 +70,11 @@ fill_rand(std::ranges::contiguous_range auto& container)
 
 #include "int_join.hpp"
 
+#include <array>
 #include <concepts>
 #include <random>
 #include <utility>
+#include <vector>
 
 template <std::unsigned_integral T>
 void

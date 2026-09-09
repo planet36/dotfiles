@@ -16,6 +16,8 @@
 #include "mum.hpp"
 #include "wyprimes.hpp"
 
+#include <cstdint>
+
 constexpr uint32_t
 wyhash32(uint32_t a, uint32_t b)
 {

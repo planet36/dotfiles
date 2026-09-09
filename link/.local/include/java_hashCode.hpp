@@ -12,7 +12,7 @@
 #pragma once
 
 #include <cstdint>
-#include <string>
+#include <string_view>
 
 /// Java string.hashCode() hash
 /** NOTE: this operates on bytes, not characters */
