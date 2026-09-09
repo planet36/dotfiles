@@ -13,6 +13,7 @@
 
 #include <cassert>
 #include <new>
+#include <stdexcept>
 #include <xxhash.h>
 
 class simple_xxh3_64
@@ -39,14 +40,23 @@ public:
         assert(err == XXH_OK);
     }
 
+    /// Construct with the secret \a secret, of \a secretSize bytes
+    /**
+    * \exception std::bad_alloc the state could not be allocated
+    * \exception std::invalid_argument \a secretSize is less than \c XXH3_SECRET_SIZE_MIN
+    */
     simple_xxh3_64(const void* secret, size_t secretSize) : state_ptr(XXH3_createState())
     {
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
         // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
-        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset_withSecret(state_ptr, secret, secretSize);
-        assert(err == XXH_OK);
+        const XXH_errorcode err = XXH3_64bits_reset_withSecret(state_ptr, secret, secretSize);
+        if (err != XXH_OK)
+        {
+            XXH3_freeState(state_ptr);
+            throw std::invalid_argument("XXH3_64bits_reset_withSecret");
+        }
     }
 
 #if 0
@@ -107,14 +117,23 @@ public:
         assert(err == XXH_OK);
     }
 
+    /// Construct with the secret \a secret, of \a secretSize bytes
+    /**
+    * \exception std::bad_alloc the state could not be allocated
+    * \exception std::invalid_argument \a secretSize is less than \c XXH3_SECRET_SIZE_MIN
+    */
     simple_xxh3_128(const void* secret, size_t secretSize) : state_ptr(XXH3_createState())
     {
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
         // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
-        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset_withSecret(state_ptr, secret, secretSize);
-        assert(err == XXH_OK);
+        const XXH_errorcode err = XXH3_128bits_reset_withSecret(state_ptr, secret, secretSize);
+        if (err != XXH_OK)
+        {
+            XXH3_freeState(state_ptr);
+            throw std::invalid_argument("XXH3_128bits_reset_withSecret");
+        }
     }
 
 #if 0
