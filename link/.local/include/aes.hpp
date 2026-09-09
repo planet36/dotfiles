@@ -25,6 +25,8 @@
 #include <immintrin.h>
 #include <utility>
 
+#if defined(__AES__)
+
 /// Get the next AES round constant
 /**
 * \sa https://en.wikipedia.org/wiki/AES_key_schedule#Round_constants
@@ -333,3 +335,7 @@ aesdec_davies_meyer(const T H, const T m) noexcept
     }
     return H ^ a;
 }
+
+#else
+#warning "__AES__ not defined"
+#endif
