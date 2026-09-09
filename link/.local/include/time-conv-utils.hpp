@@ -21,16 +21,16 @@ inline constexpr int days_per_week = 7;
 inline constexpr int months_per_year = 12;
 
 template <std::floating_point T>
-inline constexpr T days_per_year{365.2425L}; // Gregorian calendar
+inline constexpr T days_per_year = static_cast<T>(365.2425L); // Gregorian calendar
 
 template <std::floating_point T>
-inline constexpr T days_per_month{30.436875L}; // days_per_year / months_per_year
+inline constexpr T days_per_month = static_cast<T>(30.436875L); // days_per_year / months_per_year
 
 template <std::floating_point T>
-inline constexpr T weeks_per_month{4.348125L}; // days_per_month / days_per_week
+inline constexpr T weeks_per_month = static_cast<T>(4.348125L); // days_per_month / days_per_week
 
 template <std::floating_point T>
-inline constexpr T weeks_per_year{52.1775L}; // days_per_year / days_per_week
+inline constexpr T weeks_per_year = static_cast<T>(52.1775L); // days_per_year / days_per_week
 
 inline constexpr int seconds_per_hour = 3600;
 inline constexpr int seconds_per_day = 86'400;
