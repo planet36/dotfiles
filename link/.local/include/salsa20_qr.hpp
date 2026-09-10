@@ -11,11 +11,10 @@
 #pragma once
 
 #include <bit>
-#include <concepts>
+#include <cstdint>
 
-template <std::unsigned_integral T>
 constexpr void
-salsa20_qr(T& a, T& b, T& c, T& d)
+salsa20_qr(uint32_t& a, uint32_t& b, uint32_t& c, uint32_t& d)
 {
     b ^= std::rotl(a + d, 7);
     c ^= std::rotl(a + b, 9);
