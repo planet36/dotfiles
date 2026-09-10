@@ -44,7 +44,9 @@ as_byte_span(const T& x) noexcept
 template <typename R>
 requires std::ranges::contiguous_range<const R> &&
          std::ranges::sized_range<const R> &&
-         std::is_trivially_copyable_v<std::ranges::range_value_t<const R>>
+         std::is_trivially_copyable_v<std::ranges::range_value_t<const R>> &&
+         (!std::is_pointer_v<std::ranges::range_value_t<const R>>) &&
+         (!std::ranges::borrowed_range<std::ranges::range_value_t<const R>>)
 [[nodiscard]] auto
 as_byte_span(const R& container) noexcept
 {
