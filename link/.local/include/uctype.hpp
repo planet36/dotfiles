@@ -165,8 +165,12 @@ inline constexpr uint8_t mask_alpha{mask_upper | mask_lower};
 inline constexpr uint8_t mask_alnum{mask_alpha | mask_digit};
 inline constexpr uint8_t mask_graph{mask_alnum | mask_punct};
 
+/**
+* \note In C++, glibc's \c \<ctype.h\> defines \c isascii as a function-like macro, which
+* only expands when its name is directly followed by (.
+*/
 constexpr bool
-isascii(const uint8_t c)
+(isascii)(const uint8_t c)
 {
     return (c & 0b1000'0000) == 0;
 }
