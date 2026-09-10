@@ -31,7 +31,7 @@ extern "C" {
 
 #if 1
 
-// this version calls fopen, stat, fread, fclose
+// this version calls fopen, fstat, fread, fclose
 int
 slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
@@ -43,10 +43,10 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
     }
 
     struct stat statbuf = {0};
-    if (stat(path, &statbuf) < 0)
+    if (fstat(fileno(fp), &statbuf) < 0)
     {
         (void)fclose(fp);
-        warn("stat \"%s\"", path);
+        warn("fstat \"%s\"", path);
         return -1;
     }
 
@@ -58,7 +58,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
         return -1;
     }
 
-    if (!S_ISREG(statbuf.st_mode) && !S_ISLNK(statbuf.st_mode))
+    if (!S_ISREG(statbuf.st_mode))
     {
         (void)fclose(fp);
         errno = EOPNOTSUPP;
@@ -74,28 +74,47 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
         return -1;
     }
 
-    const size_t expected_size_bytes = (size_t)statbuf.st_size;
+    size_t buf_size = (size_t)statbuf.st_size + 1;
 
-    unsigned char* buf = (unsigned char*)malloc(expected_size_bytes);
+    unsigned char* buf = (unsigned char*)malloc(buf_size);
     if (buf == nullptr)
     {
         (void)fclose(fp);
-        warn("malloc %zu ", expected_size_bytes);
+        warn("malloc %zu", buf_size);
         return -1;
     }
 
-    const size_t actual_size_bytes = fread_bytes(buf, expected_size_bytes, fp);
-    if (actual_size_bytes != expected_size_bytes)
+    size_t num_bytes_read = 0;
+
+    while (true)
+    {
+        num_bytes_read += fread_bytes(buf + num_bytes_read, buf_size - num_bytes_read, fp);
+        if (feof(fp) != 0 || ferror(fp) != 0)
+            break;
+
+        unsigned char* const new_buf = (unsigned char*)realloc(buf, buf_size * 2);
+        if (new_buf == nullptr)
+        {
+            (void)fclose(fp);
+            free(buf);
+            warn("realloc %zu", buf_size * 2);
+            return -1;
+        }
+
+        buf = new_buf;
+        buf_size *= 2;
+    }
+
+    if (ferror(fp) != 0)
     {
         (void)fclose(fp);
         free(buf);
-        buf = nullptr;
-        warn("fread %zu, returned %zu", expected_size_bytes, actual_size_bytes);
+        warn("fread \"%s\"", path);
         return -1;
     }
 
     *bytes = buf;
-    *num_bytes = expected_size_bytes;
+    *num_bytes = num_bytes_read;
 
     (void)fclose(fp);
     return 0;
@@ -130,7 +149,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
         return -1;
     }
 
-    if (!S_ISREG(statbuf.st_mode) && !S_ISLNK(statbuf.st_mode))
+    if (!S_ISREG(statbuf.st_mode))
     {
         (void)close(fd);
         errno = EOPNOTSUPP;
@@ -146,30 +165,57 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
         return -1;
     }
 
-    const size_t expected_size_bytes = (size_t)statbuf.st_size;
+    size_t buf_size = (size_t)statbuf.st_size + 1;
 
-    unsigned char* buf = (unsigned char*)malloc(expected_size_bytes);
+    unsigned char* buf = (unsigned char*)malloc(buf_size);
     if (buf == nullptr)
     {
         (void)close(fd);
-        warn("malloc %zu", expected_size_bytes);
+        warn("malloc %zu", buf_size);
         return -1;
     }
 
-    // https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
-    // read(3p) returns either an error code or the number of bytes read
-    const ssize_t actual_size_bytes = read(fd, buf, expected_size_bytes);
-    if (actual_size_bytes < 0 || (size_t)actual_size_bytes != expected_size_bytes)
+    size_t num_bytes_read = 0;
+
+    while (true)
     {
-        (void)close(fd);
-        free(buf);
-        buf = nullptr;
-        warn("read %zu, returned %zd", expected_size_bytes, actual_size_bytes);
-        return -1;
+        if (num_bytes_read == buf_size)
+        {
+            unsigned char* const new_buf = (unsigned char*)realloc(buf, buf_size * 2);
+            if (new_buf == nullptr)
+            {
+                (void)close(fd);
+                free(buf);
+                warn("realloc %zu", buf_size * 2);
+                return -1;
+            }
+
+            buf = new_buf;
+            buf_size *= 2;
+        }
+
+        // https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
+        // read(3p) returns the number of bytes read, 0 at end of file, or -1 on error
+        const ssize_t n = read(fd, buf + num_bytes_read, buf_size - num_bytes_read);
+        if (n < 0)
+        {
+            if (errno == EINTR)
+                continue;
+
+            (void)close(fd);
+            free(buf);
+            warn("read \"%s\"", path);
+            return -1;
+        }
+
+        if (n == 0)
+            break;
+
+        num_bytes_read += (size_t)n;
     }
 
     *bytes = buf;
-    *num_bytes = expected_size_bytes;
+    *num_bytes = num_bytes_read;
 
     (void)close(fd);
     return 0;

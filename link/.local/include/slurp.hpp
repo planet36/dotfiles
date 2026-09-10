@@ -27,7 +27,7 @@
 
 #if 1
 
-// this version calls fopen, stat, fread, fclose
+// this version calls fopen, fstat, fread, fclose
 std::vector<uint8_t>
 slurp(const std::filesystem::path& path)
 {
@@ -38,7 +38,7 @@ slurp(const std::filesystem::path& path)
     }
 
     struct stat statbuf{};
-    if (::stat(path.c_str(), &statbuf) < 0)
+    if (::fstat(::fileno(fp), &statbuf) < 0)
     {
         (void)std::fclose(fp);
         throw std::system_error(std::make_error_code(std::errc{errno}), path);
@@ -51,7 +51,7 @@ slurp(const std::filesystem::path& path)
         throw std::system_error(std::make_error_code(std::errc{errno}), path);
     }
 
-    if (!S_ISREG(statbuf.st_mode) && !S_ISLNK(statbuf.st_mode))
+    if (!S_ISREG(statbuf.st_mode))
     {
         (void)std::fclose(fp);
         errno = EOPNOTSUPP;
@@ -65,35 +65,37 @@ slurp(const std::filesystem::path& path)
         throw std::system_error(std::make_error_code(std::errc{errno}), path);
     }
 
-    const auto expected_size_bytes = static_cast<size_t>(statbuf.st_size);
-
     std::vector<uint8_t> result;
+    size_t num_bytes_read = 0;
 
-    if (expected_size_bytes == 0)
+    try
     {
-        result.clear();
+        result.resize(static_cast<size_t>(statbuf.st_size) + 1);
+
+        while (true)
+        {
+            num_bytes_read += fread_bytes(result.data() + num_bytes_read,
+                                          result.size() - num_bytes_read, fp);
+            if (std::feof(fp) != 0 || std::ferror(fp) != 0)
+                break;
+
+            result.resize(result.size() * 2);
+        }
     }
-    else
+    catch (...)
     {
-        try
-        {
-            result.resize(expected_size_bytes);
-        }
-        catch (...)
-        {
-            (void)std::fclose(fp);
-            throw;
-        }
+        (void)std::fclose(fp);
+        throw;
+    }
 
-        const size_t actual_size_bytes = fread_bytes(result.data(), result.size(), fp);
-        if (actual_size_bytes != expected_size_bytes)
-        {
-            (void)std::fclose(fp);
-            throw std::system_error(std::make_error_code(std::errc{errno}), path);
-        }
+    if (std::ferror(fp) != 0)
+    {
+        (void)std::fclose(fp);
+        throw std::system_error(std::make_error_code(std::errc{errno}), path);
     }
 
     (void)std::fclose(fp);
+    result.resize(num_bytes_read);
     return result;
 }
 
@@ -123,7 +125,7 @@ slurp(const std::filesystem::path& path)
         throw std::system_error(std::make_error_code(std::errc{errno}), path);
     }
 
-    if (!S_ISREG(statbuf.st_mode) && !S_ISLNK(statbuf.st_mode))
+    if (!S_ISREG(statbuf.st_mode))
     {
         (void)::close(fd);
         errno = EOPNOTSUPP;
@@ -137,38 +139,50 @@ slurp(const std::filesystem::path& path)
         throw std::system_error(std::make_error_code(std::errc{errno}), path);
     }
 
-    const size_t expected_size_bytes = static_cast<size_t>(statbuf.st_size);
-
     std::vector<uint8_t> result;
+    size_t num_bytes_read = 0;
+    int read_errno = 0;
 
-    if (expected_size_bytes == 0)
+    try
     {
-        result.clear();
+        result.resize(static_cast<size_t>(statbuf.st_size) + 1);
+
+        while (true)
+        {
+            if (num_bytes_read == result.size())
+                result.resize(result.size() * 2);
+
+            // https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
+            // read(3p) returns the number of bytes read, 0 at end of file, or -1 on error
+            const ssize_t n = ::read(fd, result.data() + num_bytes_read,
+                                     result.size() - num_bytes_read);
+            if (n < 0)
+            {
+                if (errno == EINTR)
+                    continue;
+
+                read_errno = errno;
+                break;
+            }
+
+            if (n == 0)
+                break;
+
+            num_bytes_read += static_cast<size_t>(n);
+        }
     }
-    else
+    catch (...)
     {
-        try
-        {
-            result.resize(expected_size_bytes);
-        }
-        catch (...)
-        {
-            (void)::close(fd);
-            throw;
-        }
-
-        // https://www.man7.org/linux/man-pages/man3/read.3p.html#RETURN_VALUE
-        // read(3p) returns either an error code or the number of bytes read
-        const ssize_t actual_size_bytes = ::read(fd, result.data(), result.size());
-        if (actual_size_bytes < 0 ||
-            static_cast<size_t>(actual_size_bytes) != expected_size_bytes)
-        {
-            (void)::close(fd);
-            throw std::system_error(std::make_error_code(std::errc{errno}), path);
-        }
+        (void)::close(fd);
+        throw;
     }
 
     (void)::close(fd);
+
+    if (read_errno != 0)
+        throw std::system_error(std::make_error_code(std::errc{read_errno}), path);
+
+    result.resize(num_bytes_read);
     return result;
 }
 
