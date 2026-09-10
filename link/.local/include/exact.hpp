@@ -66,7 +66,7 @@ addExact(const T x, const T y)
     return result;
 }
 
-/// This is similar to \c toIntExact in the Java \c Math class.
+/// This is similar to \c toIntExact in the Java \c Math class
 template <std::integral R, std::integral T>
 R
 castExact(const T x)

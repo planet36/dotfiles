@@ -16,7 +16,7 @@
 #include <cmath>
 #include <concepts>
 
-/// Round to the nearest integer, with halfway cases rounding away from zero.
+/// Round to the nearest integer, with halfway cases rounding away from zero
 /**
 * This is faster than \c std::round.
 * \sa https://en.cppreference.com/w/cpp/numeric/math/round

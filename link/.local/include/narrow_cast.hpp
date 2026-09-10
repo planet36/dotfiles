@@ -19,7 +19,7 @@
 #include <concepts>
 #include <stdexcept>
 
-/// Cast \a value to integral type \a To, throwing if the value is out of range.
+/// Cast \a value to integral type \a To, throwing if the value is out of range
 /**
 * \tparam To   The target integral type
 * \param value The value to cast

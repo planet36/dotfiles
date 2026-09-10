@@ -154,7 +154,7 @@ gfs_cyclic_p()
     else if constexpr (k == 16) return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
 }
 
-/// Get the optimal non-cyclic block shuffle permutation (π) for \a k.
+/// Get the optimal non-cyclic block shuffle permutation (π) for \a k
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
@@ -178,7 +178,7 @@ gfs2_noncyclic_p()
     else if constexpr (k == 16) return {1,2,9,4,15,6,5,8,13,10,7,14,11,12,3,0};
 }
 
-/// Get the optimal non-cyclic block shuffle permutation inverse (π⁻¹) for \a k.
+/// Get the optimal non-cyclic block shuffle permutation inverse (π⁻¹) for \a k
 /** Permutation No. 1 is chosen for each \a k. */
 template <unsigned int k>
 constexpr std::array<uint8_t, k>
