@@ -58,7 +58,6 @@ public:
     /// the maximum possible number of elements in the circular queue
     constexpr auto max_size() const { return N; }
 
-    // intentionally not thread-safe
     /// get information (which might be stale before the caller uses it) about the circular queue
     /*
     * https://codetrips.com/2020/07/26/modern-c-writing-a-thread-safe-queue/
@@ -96,6 +95,8 @@ public:
                         bool& empty_out,
                         bool& full_out) const
     {
+        std::shared_lock lock{mtx};
+
         head_out = head;
         tail_out = tail;
         size_out = size;
