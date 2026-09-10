@@ -20,8 +20,10 @@
 constexpr bool
 is_ascii(const char c)
 {
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wtype-limits"
     return (c >= 0x00) && (c <= 0x7F);
+#pragma GCC diagnostic pop
 }
 
 constexpr bool
@@ -106,7 +108,10 @@ is_printable(const char c)
 constexpr bool
 is_control(const char c)
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
     return ((c >= 0x00) && (c < ' ')) || (c == 0x7F);
+#pragma GCC diagnostic pop
 }
 
 constexpr bool
