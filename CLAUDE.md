@@ -62,6 +62,10 @@ suite exists) and respects existing inline `# pylint: disable=` / `# noqa` suppr
   returns an exit code, called via `sys.exit(main())`.
 - bash scripts use `set -euo pipefail`, factor logic into functions, and parse options with
   `getopts` (`-V` version / `-h` help are near-universal).
+- Headers in `link/.local/include/` wrap a debug `assert` and its `<cassert>` include in
+  `#if defined(DEBUG)`, so the check is off unless `DEBUG` is defined, whatever `NDEBUG` says.
+  `make` never defines `DEBUG`, so to check that code, instantiate it in a test program built with
+  `-DDEBUG`.
 - A few files are vendored copies kept in sync with upstream (e.g. `lib/python/hsluv.py`,
   `bin/unimatrix`) — make only upstream-reconciliation edits there, never local lint/style fixes,
   and exclude them from repo-wide sweeps.
