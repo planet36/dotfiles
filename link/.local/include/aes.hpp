@@ -21,6 +21,9 @@
 #include "simd-concepts.hpp"
 
 #include <array>
+#if defined(DEBUG)
+#include <cassert>
+#endif
 #include <cstdint>
 #include <immintrin.h>
 #include <utility>
@@ -53,9 +56,16 @@ aes_next_rcon(uint8_t rcon_i, const uint8_t i) noexcept
 }
 
 /// Do \c _mm_aeskeygenassist_si128 with the key \a key for round number \a round
+/**
+* \pre \a round must be at least \c 1.
+*/
 [[nodiscard]] inline __m128i
 aes_keygenassist_round(const __m128i key, const int round) noexcept
 {
+#if defined(DEBUG)
+    assert(round >= 1);
+#endif
+
     // the last argument of _mm_aeskeygenassist_si128 must be an 8-bit immediate
 
     // inspired by
