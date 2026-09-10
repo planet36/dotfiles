@@ -17,7 +17,7 @@ extern "C" {
 
 static_assert(__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__);
 
-uint16_t
+static inline uint16_t
 int_join_u8(const uint8_t hi, const uint8_t lo)
 {
     const union
@@ -29,7 +29,7 @@ int_join_u8(const uint8_t hi, const uint8_t lo)
     static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
-uint32_t
+static inline uint32_t
 int_join_u16(const uint16_t hi, const uint16_t lo)
 {
     const union
@@ -41,7 +41,7 @@ int_join_u16(const uint16_t hi, const uint16_t lo)
     static_assert(sizeof(u.whole) == sizeof(u.parts));
 }
 
-uint64_t
+static inline uint64_t
 int_join_u32(const uint32_t hi, const uint32_t lo)
 {
     const union
@@ -55,7 +55,7 @@ int_join_u32(const uint32_t hi, const uint32_t lo)
 
 #if defined(__SIZEOF_INT128__)
 // https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
-__uint128_t
+static inline __uint128_t
 int_join_u64(const uint64_t hi, const uint64_t lo)
 {
     const union
