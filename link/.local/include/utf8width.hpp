@@ -25,7 +25,6 @@ utf8width(const std::string& s)
 {
     // https://juliastrings.github.io/utf8proc/doc/utf8proc_8h.html#a0a18a541ba5bedeb5c3e150024063c2d
     static constexpr unsigned int options = 0
-        | UTF8PROC_NULLTERM
         | UTF8PROC_STABLE
         | UTF8PROC_COMPOSE
         //| UTF8PROC_IGNORE // removes 00AD
