@@ -12,16 +12,11 @@
 
 #pragma once
 
+#include "to_unsigned.hpp"
+
 #include <concepts>
 #include <cstdlib>
 #include <type_traits>
-
-/// Cast the int to unsigned int
-constexpr auto
-to_unsigned(const std::integral auto x)
-{
-    return static_cast<std::make_unsigned_t<decltype(x)>>(x);
-}
 
 /// Cast the int to signed int
 constexpr auto
