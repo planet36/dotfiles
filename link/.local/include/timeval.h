@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include <math.h>
 #include <sys/time.h>
 
 #if defined(__cplusplus)
@@ -36,7 +35,7 @@ msec_to_timeval(unsigned int msec)
 static double
 timeval_to_sec(const struct timeval* tv)
 {
-    return (double)tv->tv_sec + copysign((double)tv->tv_usec, (double)tv->tv_sec) / 1E6;
+    return (double)tv->tv_sec + (double)tv->tv_usec / 1E6;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132

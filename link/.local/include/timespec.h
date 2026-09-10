@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include <math.h>
 #include <time.h>
 
 #if defined(__cplusplus)
@@ -27,7 +26,7 @@ extern "C" {
 static double
 timespec_to_sec(const struct timespec* ts)
 {
-    return (double)ts->tv_sec + copysign((double)ts->tv_nsec, (double)ts->tv_sec) / 1E9;
+    return (double)ts->tv_sec + (double)ts->tv_nsec / 1E9;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n92
