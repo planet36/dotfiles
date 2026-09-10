@@ -23,7 +23,7 @@
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-const auto tn_hexdigits_m128i = std::to_array({
+inline const auto tn_hexdigits_m128i = std::to_array({
     // most significant byte first
     _mm_set_epi8( 36,   4, 110, 176, 147,  57, 158, 205, 167,  72, 159, 154, 183, 105,  77,  49),
     _mm_set_epi8(  5,  10, 191,   3, 143, 250, 189, 152, 117,  63,  29,  98, 184, 155, 133,  23),
@@ -69,7 +69,7 @@ const auto tn_hexdigits_m128i = std::to_array({
 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
-const auto tn_hexdigits_m256i = std::to_array({
+inline const auto tn_hexdigits_m256i = std::to_array({
     // most significant byte first
     _mm256_set_epi8( 36,   4, 110, 176, 147,  57, 158, 205, 167,  72, 159, 154, 183, 105,  77,  49, 250,  25, 110, 146,  46, 146, 215,  21,  37, 242,  43,  84,  98,  16,  31,  47),
     _mm256_set_epi8(  5,  10, 191,   3, 143, 250, 189, 152, 117,  63,  29,  98, 184, 155, 133,  23, 173, 125, 228, 111,  43, 227, 178,  18,  99,  56,  64,  12, 186,  28, 135,  18),
