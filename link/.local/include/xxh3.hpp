@@ -56,9 +56,8 @@ public:
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
-        const XXH_errorcode err = XXH3_64bits_reset_withSecret(state_ptr, secret, secretSize);
-        if (err != XXH_OK)
+        if (secretSize < XXH3_SECRET_SIZE_MIN ||
+            XXH3_64bits_reset_withSecret(state_ptr, secret, secretSize) != XXH_OK)
         {
             XXH3_freeState(state_ptr);
             throw std::invalid_argument("XXH3_64bits_reset_withSecret");
@@ -76,10 +75,8 @@ public:
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
-        const XXH_errorcode err =
-            XXH3_64bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
-        if (err != XXH_OK)
+        if (secretSize < XXH3_SECRET_SIZE_MIN ||
+            XXH3_64bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed) != XXH_OK)
         {
             XXH3_freeState(state_ptr);
             throw std::invalid_argument("XXH3_64bits_reset_withSecretandSeed");
@@ -152,9 +149,8 @@ public:
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
-        const XXH_errorcode err = XXH3_128bits_reset_withSecret(state_ptr, secret, secretSize);
-        if (err != XXH_OK)
+        if (secretSize < XXH3_SECRET_SIZE_MIN ||
+            XXH3_128bits_reset_withSecret(state_ptr, secret, secretSize) != XXH_OK)
         {
             XXH3_freeState(state_ptr);
             throw std::invalid_argument("XXH3_128bits_reset_withSecret");
@@ -172,10 +168,8 @@ public:
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
-        const XXH_errorcode err =
-            XXH3_128bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
-        if (err != XXH_OK)
+        if (secretSize < XXH3_SECRET_SIZE_MIN ||
+            XXH3_128bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed) != XXH_OK)
         {
             XXH3_freeState(state_ptr);
             throw std::invalid_argument("XXH3_128bits_reset_withSecretandSeed");
