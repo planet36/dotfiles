@@ -9,11 +9,11 @@
 
 #pragma once
 
-#include <cassert>
 #include <cerrno>
 #include <cstdlib>
 #include <mutex>
 #include <optional>
+#include <stdexcept>
 #include <string>
 #include <system_error>
 
@@ -23,13 +23,15 @@ namespace { std::mutex mtx; }
 
 /// similar to \c clearenv
 /**
+* \exception std::runtime_error if \c clearenv fails
 * \sa https://man7.org/linux/man-pages/man3/clearenv.3.html
 */
 void
 clear()
 {
     std::scoped_lock lock{mtx};
-    assert(clearenv() == 0);
+    if (::clearenv() != 0)
+        throw std::runtime_error("clearenv");
 }
 
 /// similar to \c getenv
