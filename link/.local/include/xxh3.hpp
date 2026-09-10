@@ -11,7 +11,9 @@
 
 #pragma once
 
+#if defined(DEBUG)
 #include <cassert>
+#endif
 #include <new>
 #include <stdexcept>
 #include <xxhash.h>
@@ -28,7 +30,9 @@ public:
             throw std::bad_alloc();
 
         [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset(state_ptr);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     explicit simple_xxh3_64(XXH64_hash_t seed) : state_ptr(XXH3_createState())
@@ -37,7 +41,9 @@ public:
             throw std::bad_alloc();
 
         [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset_withSeed(state_ptr, seed);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     /// Construct with the secret \a secret, of \a secretSize bytes
@@ -60,13 +66,24 @@ public:
     }
 
 #if 0
+    /// Construct with the secret \a secret, of \a secretSize bytes, and the seed \a seed
+    /**
+    * \exception std::bad_alloc the state could not be allocated
+    * \exception std::invalid_argument \a secretSize is less than \c XXH3_SECRET_SIZE_MIN
+    */
     simple_xxh3_64(const void* secret, size_t secretSize, XXH64_hash_t seed) : state_ptr(XXH3_createState())
     {
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
-        assert(err == XXH_OK);
+        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
+        const XXH_errorcode err =
+            XXH3_64bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
+        if (err != XXH_OK)
+        {
+            XXH3_freeState(state_ptr);
+            throw std::invalid_argument("XXH3_64bits_reset_withSecretandSeed");
+        }
     }
 #endif
 
@@ -79,7 +96,9 @@ public:
     ~simple_xxh3_64()
     {
         [[maybe_unused]] const XXH_errorcode err = XXH3_freeState(state_ptr);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
@@ -87,7 +106,9 @@ public:
     {
         // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
         [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_update(state_ptr, input, len);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     [[nodiscard]] XXH64_hash_t digest() const { return XXH3_64bits_digest(state_ptr); }
@@ -105,7 +126,9 @@ public:
             throw std::bad_alloc();
 
         [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset(state_ptr);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     explicit simple_xxh3_128(XXH64_hash_t seed) : state_ptr(XXH3_createState())
@@ -114,7 +137,9 @@ public:
             throw std::bad_alloc();
 
         [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset_withSeed(state_ptr, seed);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     /// Construct with the secret \a secret, of \a secretSize bytes
@@ -137,13 +162,24 @@ public:
     }
 
 #if 0
+    /// Construct with the secret \a secret, of \a secretSize bytes, and the seed \a seed
+    /**
+    * \exception std::bad_alloc the state could not be allocated
+    * \exception std::invalid_argument \a secretSize is less than \c XXH3_SECRET_SIZE_MIN
+    */
     simple_xxh3_128(const void* secret, size_t secretSize, XXH64_hash_t seed) : state_ptr(XXH3_createState())
     {
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
-        assert(err == XXH_OK);
+        // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
+        const XXH_errorcode err =
+            XXH3_128bits_reset_withSecretandSeed(state_ptr, secret, secretSize, seed);
+        if (err != XXH_OK)
+        {
+            XXH3_freeState(state_ptr);
+            throw std::invalid_argument("XXH3_128bits_reset_withSecretandSeed");
+        }
     }
 #endif
 
@@ -156,7 +192,9 @@ public:
     ~simple_xxh3_128()
     {
         [[maybe_unused]] const XXH_errorcode err = XXH3_freeState(state_ptr);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
@@ -164,7 +202,9 @@ public:
     {
         // NOLINTNEXTLINE(cppcoreguidelines-init-variables)
         [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_update(state_ptr, input, len);
+#if defined(DEBUG)
         assert(err == XXH_OK);
+#endif
     }
 
     [[nodiscard]] XXH128_hash_t digest() const { return XXH3_128bits_digest(state_ptr); }
