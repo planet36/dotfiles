@@ -49,7 +49,7 @@ bitmask_one(const unsigned int i)
     assert(i < static_cast<unsigned int>(std::numeric_limits<T>::digits));
 #endif
 
-    return T{1} << i;
+    return static_cast<T>(T{1} << i);
 }
 
 /// get a bitmask where bit \a i is not set (0) and the rest are set (1)
@@ -61,7 +61,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_zero(const unsigned int i)
 {
-    return ~bitmask_one<T>(i);
+    return static_cast<T>(~bitmask_one<T>(i));
 }
 
 /// get a bitmask where low-order bits (less significant than bit \a i) are set (1) and the rest are not set (0)
@@ -73,7 +73,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_lowpass(const unsigned int i)
 {
-    return bitmask_one<T>(i) - 1U;
+    return static_cast<T>(bitmask_one<T>(i) - 1U);
 }
 
 /// get a bitmask where high-order bits (not less significant than bit \a i) are set (1) and the rest are not set (0)
@@ -85,7 +85,7 @@ requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_highpass(const unsigned int i)
 {
-    return bitmask_zero<T>(i) + 1U;
+    return static_cast<T>(bitmask_zero<T>(i) + 1U);
 }
 
 /// get bit \a i in \a x
