@@ -19,10 +19,7 @@
 #include <system_error>
 #endif
 
-namespace
-{
-
-int
+inline int
 current_year_local()
 {
     const std::time_t now_time_t = std::time(nullptr);
@@ -41,7 +38,7 @@ current_year_local()
     return now_tm.tm_year + 1900;
 }
 
-int
+inline int
 current_year_utc()
 {
     const std::time_t now_time_t = std::time(nullptr);
@@ -56,6 +53,4 @@ current_year_utc()
     now_tm = *std::gmtime(&now_time_t);
 #endif
     return now_tm.tm_year + 1900;
-}
-
 }

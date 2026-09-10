@@ -31,13 +31,13 @@ typedef struct
     size_t num_elems;
 } circqueue;
 
-static bool
+static inline bool
 circqueue_is_empty(const circqueue* cq)
 {
     return cq->num_elems == 0;
 }
 
-static bool
+static inline bool
 circqueue_is_full(const circqueue* cq)
 {
     return cq->num_elems == cq->max_num_elems;
@@ -52,7 +52,7 @@ static const circqueue circqueue_default = {
     .num_elems = 0,
 };
 
-static circqueue
+static inline circqueue
 circqueue_init(size_t max_num_elems, size_t sizeof_elem)
 {
     return (circqueue){
@@ -65,7 +65,7 @@ circqueue_init(size_t max_num_elems, size_t sizeof_elem)
     };
 }
 
-static void
+static inline void
 circqueue_free(circqueue* cq)
 {
     (void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
@@ -83,7 +83,7 @@ circqueue_free(circqueue* cq)
     circqueue varname [[gnu::cleanup(circqueue_free)]] = \
         circqueue_init(max_num_elems, sizeof(type));
 
-static bool
+static inline bool
 circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
 {
     if (cq->max_num_elems == 0)
@@ -109,7 +109,7 @@ circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
     return true;
 }
 
-static bool
+static inline bool
 circqueue_push(circqueue* cq, const void* x)
 {
     if (circqueue_is_full(cq))
@@ -118,7 +118,7 @@ circqueue_push(circqueue* cq, const void* x)
     return circqueue_push_overwrite_if_full(cq, x);
 }
 
-static bool
+static inline bool
 circqueue_pop(circqueue* cq, void* x)
 {
     if (circqueue_is_empty(cq))
@@ -139,7 +139,7 @@ circqueue_pop(circqueue* cq, void* x)
     return true;
 }
 
-static void
+static inline void
 circqueue_reset(circqueue* cq)
 {
     (void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);

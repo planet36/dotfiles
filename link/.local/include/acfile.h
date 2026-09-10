@@ -22,7 +22,7 @@ extern "C" {
 
 #define ACFILEPTR(IDENTIFIER) FILE* IDENTIFIER [[gnu::cleanup(cleanup_close_file_ptr)]]
 
-static void
+static inline void
 cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 {
     if (*fp_ptr != nullptr)

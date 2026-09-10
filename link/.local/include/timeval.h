@@ -23,7 +23,7 @@ extern "C" {
 
 // Copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
-static struct timeval
+static inline struct timeval
 msec_to_timeval(unsigned int msec)
 {
     return (struct timeval){
@@ -32,14 +32,14 @@ msec_to_timeval(unsigned int msec)
     };
 }
 
-static double
+static inline double
 timeval_to_sec(const struct timeval* tv)
 {
     return (double)tv->tv_sec + (double)tv->tv_usec / 1E6;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n132
-static void
+static inline void
 timevalsub(const struct timeval* t1, const struct timeval* t0, struct timeval* diff)
 {
     diff->tv_sec = t1->tv_sec - t0->tv_sec;

@@ -23,14 +23,14 @@ extern "C" {
 
 // Copied from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
-static double
+static inline double
 timespec_to_sec(const struct timespec* ts)
 {
     return (double)ts->tv_sec + (double)ts->tv_nsec / 1E9;
 }
 
 // https://cgit.freedesktop.org/libbsd/tree/include/bsd/sys/time.h#n92
-static void
+static inline void
 timespecsub(const struct timespec* t1, const struct timespec* t0, struct timespec* diff)
 {
     diff->tv_sec = t1->tv_sec - t0->tv_sec;

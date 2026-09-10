@@ -55,7 +55,7 @@ to_string()
     std::unreachable();
 }
 
-std::string
+inline std::string
 to_string(const duration_unit unit)
 {
     switch (unit)
@@ -71,7 +71,7 @@ to_string(const duration_unit unit)
     }
 }
 
-std::ostream&
+inline std::ostream&
 operator<<(std::ostream& os, const duration_unit unit)
 {
     return os << to_string(unit);

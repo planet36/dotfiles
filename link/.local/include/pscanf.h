@@ -22,7 +22,7 @@ extern "C" {
 // Adapted from my slstatus
 // https://github.com/planet36/slstatus/blob/main/util.c
 
-static int
+static inline int
 pscanf(const char* path, const char* fmt, ...)
 {
     FILE* fp = nullptr;

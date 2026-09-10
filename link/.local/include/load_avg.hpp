@@ -15,12 +15,12 @@
 #include <cstdlib>
 #include <vector>
 
-namespace
+namespace load_avg_const
 {
 
 // XXX: Do not change
-constexpr int min_samples = 1;
-constexpr int max_samples = 3;
+inline constexpr int min_samples = 1;
+inline constexpr int max_samples = 3;
 
 static_assert(min_samples >= 1);
 static_assert(max_samples <= 3);
@@ -28,9 +28,12 @@ static_assert(min_samples <= max_samples);
 
 }
 
-auto
-get_load_avg(int num_samples = max_samples)
+inline auto
+get_load_avg(int num_samples = load_avg_const::max_samples)
 {
+    using load_avg_const::max_samples;
+    using load_avg_const::min_samples;
+
     if (num_samples < min_samples)
         num_samples = min_samples;
     else if (num_samples > max_samples)
@@ -48,8 +51,8 @@ get_load_avg(int num_samples = max_samples)
     return load_avg;
 }
 
-auto
-get_load_avg_int(int num_samples = max_samples)
+inline auto
+get_load_avg_int(int num_samples = load_avg_const::max_samples)
 {
     const std::vector<double> load_avg = get_load_avg(num_samples);
     std::vector<long int> load_avg_int;

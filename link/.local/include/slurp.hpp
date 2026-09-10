@@ -28,7 +28,7 @@
 #if 1
 
 // this version calls fopen, fstat, fread, fclose
-std::vector<uint8_t>
+inline std::vector<uint8_t>
 slurp(const std::filesystem::path& path)
 {
     std::FILE* fp = std::fopen(path.c_str(), "r");
@@ -102,7 +102,7 @@ slurp(const std::filesystem::path& path)
 #else
 
 // this version calls open, fstat, read, close
-std::vector<uint8_t>
+inline std::vector<uint8_t>
 slurp(const std::filesystem::path& path)
 {
     const int fd = ::open(path.c_str(), O_RDONLY);

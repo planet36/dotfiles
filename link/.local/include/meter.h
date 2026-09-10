@@ -153,7 +153,7 @@ static constexpr wchar_t right_blocks[] = {
 
 static constexpr size_t num_right_blocks = LEN(right_blocks);
 
-static void
+static inline void
 clamp(double* x)
 {
     if (isnan(*x) || *x < 0)
@@ -167,7 +167,7 @@ clamp(double* x)
 *
 * \pre \a b is at least \c 1.
 */
-static size_t
+static inline size_t
 map_to_uint(double x, size_t b)
 {
     clamp(&x);
@@ -186,7 +186,7 @@ map_to_uint(double x, size_t b)
 *
 * \a blocks_len is the length of the wide character array used for the meter.
 */
-static void
+static inline void
 calc_meter_segments(double x,
                     size_t meter_width,
                     size_t blocks_len,
@@ -225,7 +225,7 @@ calc_meter_segments(double x,
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
-static wchar_t
+static inline wchar_t
 lower_blocks_1(double x)
 {
     return lower_blocks[map_to_uint(x, num_lower_blocks)];
@@ -236,7 +236,7 @@ lower_blocks_1(double x)
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
-static wchar_t
+static inline wchar_t
 hor_lines_1(double x)
 {
     return hor_lines[map_to_uint(x, num_hor_lines)];
@@ -247,7 +247,7 @@ hor_lines_1(double x)
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
-static wchar_t
+static inline wchar_t
 upper_blocks_1(double x)
 {
     return upper_blocks[map_to_uint(x, num_upper_blocks)];
@@ -264,7 +264,7 @@ upper_blocks_1(double x)
 *
 * It is the caller's responsibility to null-terminate the \a meter buffer.
 */
-static void
+static inline void
 left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
     size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
@@ -301,7 +301,7 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 *
 * It is the caller's responsibility to null-terminate the \a meter buffer.
 */
-static void
+static inline void
 ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 {
     size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
@@ -351,7 +351,7 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 *
 * It is the caller's responsibility to null-terminate the \a meter buffer.
 */
-static void
+static inline void
 right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
     size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
@@ -389,7 +389,7 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 *
 * It is the caller's responsibility to null-terminate the \a meter buffer.
 */
-static void
+static inline void
 left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfill)
 {
     size_t i = 0;
@@ -424,7 +424,7 @@ left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfil
 *
 * It is the caller's responsibility to null-terminate the \a meter buffer.
 */
-static void
+static inline void
 right_char_meter(double x, char* meter, size_t meter_width, char fill, char unfill)
 {
     size_t i = 0;

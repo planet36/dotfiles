@@ -32,7 +32,7 @@ extern "C" {
 #if 1
 
 // this version calls fopen, fstat, fread, fclose
-int
+static inline int
 slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
     FILE* fp = fopen(path, "rb");
@@ -123,7 +123,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 #else
 
 // this version calls open, fstat, read, close
-int
+static inline int
 slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
     const int fd = open(path, O_RDONLY);

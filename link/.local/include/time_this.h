@@ -64,9 +64,9 @@ struct timerdata
 };
 
 #if defined(__cplusplus)
-static timerdata
+static inline timerdata
 #else
-static struct timerdata
+static inline struct timerdata
 #endif
 timerdata_now()
 {
@@ -89,7 +89,7 @@ timerdata_now()
     return now;
 }
 
-static void
+static inline void
 #if defined(__cplusplus)
 print_timerdata_now_diff(const timerdata* t0)
 #else
