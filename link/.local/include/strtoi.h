@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <errno.h>
 #include <inttypes.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -48,28 +49,41 @@ strtoi64(const char* s)
 static inline uint8_t
 strtou8(const char* s)
 {
-    const uintmax_t i = strtoumax(s, nullptr, 0);
-    return i > UINT8_MAX ? UINT8_MAX : (uint8_t)i;
+    const intmax_t i = strtoimax(s, nullptr, 0);
+    if (i < 0 || i > UINT8_MAX)
+        errno = ERANGE;
+    return i < 0 ? 0 : (i > UINT8_MAX ? UINT8_MAX : (uint8_t)i);
 }
 
 static inline uint16_t
 strtou16(const char* s)
 {
-    const uintmax_t i = strtoumax(s, nullptr, 0);
-    return i > UINT16_MAX ? UINT16_MAX : (uint16_t)i;
+    const intmax_t i = strtoimax(s, nullptr, 0);
+    if (i < 0 || i > UINT16_MAX)
+        errno = ERANGE;
+    return i < 0 ? 0 : (i > UINT16_MAX ? UINT16_MAX : (uint16_t)i);
 }
 
 static inline uint32_t
 strtou32(const char* s)
 {
-    const uintmax_t i = strtoumax(s, nullptr, 0);
-    return i > UINT32_MAX ? UINT32_MAX : (uint32_t)i;
+    const intmax_t i = strtoimax(s, nullptr, 0);
+    if (i < 0 || i > UINT32_MAX)
+        errno = ERANGE;
+    return i < 0 ? 0 : (i > UINT32_MAX ? UINT32_MAX : (uint32_t)i);
 }
 
 static inline uint64_t
 strtou64(const char* s)
 {
     const uintmax_t i = strtoumax(s, nullptr, 0);
+    while (*s == ' ' || (*s >= '\t' && *s <= '\r'))
+        ++s;
+    if (*s == '-' && i != 0)
+    {
+        errno = ERANGE;
+        return 0;
+    }
     return i > UINT64_MAX ? UINT64_MAX : (uint64_t)i;
 }
 

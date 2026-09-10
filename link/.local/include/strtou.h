@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
 
@@ -20,8 +21,10 @@ extern "C" {
 static inline unsigned int
 strtou(const char* s)
 {
-    const unsigned long i = strtoul(s, nullptr, 0);
-    return (i > UINT_MAX) ? UINT_MAX : (unsigned int)i;
+    const long i = strtol(s, nullptr, 0);
+    if (i < 0 || i > UINT_MAX)
+        errno = ERANGE;
+    return i < 0 ? 0 : (i > UINT_MAX ? UINT_MAX : (unsigned int)i);
 }
 
 #if defined(__cplusplus)
