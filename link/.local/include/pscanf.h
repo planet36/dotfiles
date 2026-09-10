@@ -23,7 +23,7 @@ extern "C" {
 // https://github.com/planet36/slstatus/blob/main/util.c
 
 static inline int
-pscanf(const char* path, const char* fmt, ...)
+pscanf(const char* path, const char* fmt, ...) [[gnu::format(scanf, 2, 3)]]
 {
     FILE* fp = nullptr;
     va_list ap;
