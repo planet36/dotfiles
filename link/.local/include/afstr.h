@@ -26,7 +26,7 @@ extern "C" {
 
 #define AFSTR(IDENTIFIER) char* IDENTIFIER [[gnu::cleanup(cleanup_free_str)]]
 
-static void
+static inline void
 cleanup_free_str(char** spp)
 {
     free(*spp);

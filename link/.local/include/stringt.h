@@ -39,7 +39,7 @@ extern "C" {
 * SEE ALSO
 *   \c memccpy(3)
 */
-[[nodiscard]] static char*
+[[nodiscard]] static inline char*
 strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
     [[gnu::returns_nonnull]]
 {
@@ -72,7 +72,7 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 * PREREQUISITES
 *   \a dst is NUL-terminated.
 */
-[[nodiscard]] static char*
+[[nodiscard]] static inline char*
 strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
     [[gnu::returns_nonnull]]
 {

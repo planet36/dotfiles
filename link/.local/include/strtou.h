@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-static unsigned int
+static inline unsigned int
 strtou(const char* s)
 {
     const unsigned long i = strtoul(s, nullptr, 0);
