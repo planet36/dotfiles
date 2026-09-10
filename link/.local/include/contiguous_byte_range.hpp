@@ -14,15 +14,7 @@
 #include <ranges>
 #include <type_traits>
 
-/// A type that is a byte
-/**
-* The types are named, not tested by size.  A size test would admit \c bool,
-* whose byte has only two valid values, and one-byte class types.  Naming
-* them leaves out one-byte enumerations too, though \c std::byte is one.
-*
-* \c std::int8_t and \c std::uint8_t need no entry, since a hosted
-* implementation spells them as character types.
-*/
+/// \c std::byte or a narrow character type, possibly cv-qualified
 template <typename T>
 concept byte_like =
     std::same_as<std::remove_cv_t<T>, std::byte>     ||
@@ -33,8 +25,7 @@ concept byte_like =
 
 /// A contiguous sized range of bytes
 /**
-* \c std::span needs \c std::ranges::sized_range, which contiguity does not
-* imply.  A \c std::views::take_while view is contiguous but not sized.
+* Contiguity does not imply size, as a \c std::views::take_while view shows.
 *
 * The const requirements reject a view that a const reference cannot iterate,
 * such as one from \c std::views::drop_while.  They strip the reference from
