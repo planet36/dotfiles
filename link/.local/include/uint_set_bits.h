@@ -10,6 +10,7 @@
 #pragma once
 
 #include <limits.h>
+#include <stdint.h>
 
 #if defined(__cplusplus)
 extern "C" {
