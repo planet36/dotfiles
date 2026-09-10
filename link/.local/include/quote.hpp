@@ -245,7 +245,7 @@ escape_c(const char c)
         return std::string{c};
     }
 
-    return to_hex_str(static_cast<uint8_t>(c));
+    return to_oct_str(static_cast<uint8_t>(c));
 }
 
 /// Quote the character for a C character literal
