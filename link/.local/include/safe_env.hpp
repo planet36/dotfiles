@@ -19,14 +19,14 @@
 
 namespace safe_env
 {
-namespace { std::mutex mtx; }
+inline std::mutex mtx;
 
 /// similar to \c clearenv
 /**
 * \exception std::runtime_error if \c clearenv fails
 * \sa https://man7.org/linux/man-pages/man3/clearenv.3.html
 */
-void
+inline void
 clear()
 {
     std::scoped_lock lock{mtx};
@@ -38,7 +38,7 @@ clear()
 /**
 * \sa https://man7.org/linux/man-pages/man3/getenv.3.html
 */
-std::optional<std::string>
+inline std::optional<std::string>
 get(const std::string& name)
 {
     std::scoped_lock lock{mtx};
@@ -50,7 +50,7 @@ get(const std::string& name)
 /**
 * \sa https://man7.org/linux/man-pages/man3/setenv.3.html
 */
-void
+inline void
 set(const std::string& name, const std::string& value, const bool overwrite = true)
 {
     std::scoped_lock lock{mtx};
@@ -62,7 +62,7 @@ set(const std::string& name, const std::string& value, const bool overwrite = tr
 /**
 * \sa https://man7.org/linux/man-pages/man3/unsetenv.3.html
 */
-void
+inline void
 unset(const std::string& name)
 {
     std::scoped_lock lock{mtx};
