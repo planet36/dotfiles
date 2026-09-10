@@ -12,15 +12,26 @@
 
 #include "make_negative.hpp"
 
+#if defined(DEBUG)
+#include <cassert>
+#endif
 #include <concepts>
 #include <cstdlib>
+#include <limits>
 
+/**
+* \pre \a mag must not be the minimum of its type, unless \a sgn is negative.
+*/
 constexpr auto
 icopysign(const std::signed_integral auto mag,
           const std::signed_integral auto sgn) -> decltype(mag)
 {
     if (sgn < 0)
         return make_negative(mag);
-    else
-        return static_cast<decltype(mag)>(std::abs(mag));
+
+#if defined(DEBUG)
+    assert(mag != std::numeric_limits<decltype(mag)>::min());
+#endif
+
+    return static_cast<decltype(mag)>(std::abs(mag));
 }
