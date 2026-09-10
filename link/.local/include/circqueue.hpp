@@ -164,7 +164,10 @@ public:
     {
         std::shared_lock lock{mtx};
 
-        return is_empty() ? std::nullopt : buf[head];
+        if (is_empty())
+            return std::nullopt;
+
+        return buf[head];
     }
 
     /// get the value at the back
@@ -172,7 +175,10 @@ public:
     {
         std::shared_lock lock{mtx};
 
-        return is_empty() ? std::nullopt : buf[tail];
+        if (is_empty())
+            return std::nullopt;
+
+        return buf[tail == 0 ? N - 1 : tail - 1];
     }
 
     void reset()
