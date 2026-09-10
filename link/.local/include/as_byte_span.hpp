@@ -29,7 +29,7 @@
 template <typename T>
 requires (!std::ranges::range<T>) && (!std::is_pointer_v<T>) &&
          std::is_trivially_copyable_v<T>
-[[nodiscard]] constexpr auto
+[[nodiscard]] auto
 as_byte_span(const T& x) noexcept
 {
     return std::as_bytes(std::span<const T, 1>(std::addressof(x), 1));
@@ -45,7 +45,7 @@ template <typename R>
 requires std::ranges::contiguous_range<const R> &&
          std::ranges::sized_range<const R> &&
          std::is_trivially_copyable_v<std::ranges::range_value_t<const R>>
-[[nodiscard]] constexpr auto
+[[nodiscard]] auto
 as_byte_span(const R& container) noexcept
 {
     return std::as_bytes(std::span{container});
