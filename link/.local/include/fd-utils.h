@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// POSIX fd and mmap utilities for size queries, page alignment, and access-pattern hints.
+/// POSIX fd and mmap utilities for file queries, OFD locks, and access-pattern hints.
 /**
 * \file
 * \author Steven Ward
@@ -158,7 +158,7 @@ acq_write_lock_fd(int fd)
 * \param fd Open file descriptor whose lock should be released.
 * \return \c 0 on success, \c -1 on error (with \c errno set by \c fcntl(2)).
 *
-* \note OFD locks (\c F_OFD_SETLKW) require Linux 3.15 or later.
+* \note OFD locks (\c F_OFD_SETLK) require Linux 3.15 or later.
 * \sa acq_read_lock_fd(), acq_write_lock_fd()
 * \sa https://sourceware.org/glibc/manual/latest/html_mono/libc.html#File-Locks-1
 * \sa https://sourceware.org/glibc/manual/latest/html_mono/libc.html#Open-File-Description-Locks-1
@@ -188,10 +188,10 @@ rel_lock_fd(int fd)
 /// Advises the kernel that a file will be read sequentially and only once.
 /**
 * Issues two successive \c posix_fadvise(2) hints over the entire file:
-*   - \c POSIX_FADV_SEQUENTIAL — expect sequential page references, prompting
-*     aggressive read-ahead.
-*   - \c POSIX_FADV_NOREUSE — pages are unlikely to be needed again, allowing
-*     the kernel to reclaim them sooner.
+*   - \c POSIX_FADV_SEQUENTIAL tells the kernel to expect sequential page
+*     references, prompting aggressive read-ahead
+*   - \c POSIX_FADV_NOREUSE says the pages are unlikely to be needed again,
+*     allowing the kernel to reclaim them sooner
 *
 * On failure of either call, \c errno is set to the returned error code and
 * the function returns immediately without issuing the remaining hint.
@@ -229,11 +229,11 @@ fadvise_sequential_noreuse(const int fd)
 /// Advises the kernel that a memory-mapped region will be read sequentially soon.
 /**
 * Issues two successive \c posix_madvise(3) hints over the mapping:
-*   - \c POSIX_MADV_SEQUENTIAL — expect sequential access, prompting
-*     aggressive read-ahead and allowing pages before the current position
-*     to be released.
-*   - \c POSIX_MADV_WILLNEED — the region will be needed soon; the kernel
-*     may begin faulting pages in proactively.
+*   - \c POSIX_MADV_SEQUENTIAL tells the kernel to expect sequential access,
+*     prompting aggressive read-ahead and allowing pages before the current
+*     position to be released
+*   - \c POSIX_MADV_WILLNEED says the region will be needed soon, so the
+*     kernel may begin faulting pages in proactively
 *
 * On failure of either call, \c errno is set to the returned error code and
 * the function returns immediately without issuing the remaining hint.

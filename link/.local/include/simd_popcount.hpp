@@ -5,8 +5,6 @@
 /**
 * \file
 * \author Steven Ward
-* \sa https://clang.llvm.org/docs/LanguageExtensions.html#builtin-popcountg
-* \sa https://gcc.gnu.org/onlinedocs/gcc/Bit-Operation-Builtins.html#index-_005f_005fbuiltin_005fpopcountg
 * \sa https://cppreference.com/w/cpp/numeric/popcount.html
 */
 

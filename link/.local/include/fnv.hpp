@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// constexpr FNV hash functions for \c std::string_view
+/// constexpr FNV-1 and FNV-1a hash functions for byte sequences
 /**
 * \file
 * \author Steven Ward
