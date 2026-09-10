@@ -14,19 +14,31 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <memory>
 #include <string>
 
 /**
 * \retval true success
 * \retval false failure
 * The return value matches the behavior of https://en.cppreference.com/w/cpp/io/basic_ios/operator_bool
+* \note Each thread keeps one buffer, as large as its longest line so far, until the thread
+* exits.
 */
 inline bool
 getdelim(std::string& line, const char delim, FILE* stream, const bool strip_delim = false)
 {
-    char* buf = nullptr;
-    size_t buf_size = 0;
+    struct free_deleter
+    {
+        void operator()(char* p) const noexcept { std::free(p); }
+    };
+
+    thread_local std::unique_ptr<char, free_deleter> buf_owner;
+    thread_local size_t buf_size = 0;
+
+    char* buf = buf_owner.release();
     const ssize_t bytes_read = ::getdelim(&buf, &buf_size, delim, stream);
+    buf_owner.reset(buf);
+
     if (bytes_read > 0)
     {
         const bool delim_at_end = (buf[bytes_read - 1] == delim);
@@ -37,7 +49,6 @@ getdelim(std::string& line, const char delim, FILE* stream, const bool strip_del
     {
         line.clear();
     }
-    std::free(buf);
     return bytes_read != -1;
 }
 
