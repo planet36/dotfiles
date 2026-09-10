@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// Get a view to the object as a span of bytes
+/// Get a view to an object or a contiguous range as a span of bytes
 /**
 * \file
 * \author Steven Ward
