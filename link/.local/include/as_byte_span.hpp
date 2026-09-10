@@ -61,9 +61,9 @@ as_byte_span(const T& x) noexcept
 * \return a \c std::span of <code>const std::byte</code> over the elements of
 *         \a container
 */
-template <std::ranges::contiguous_range R>
-requires std::ranges::sized_range<R> &&
-         std::is_trivially_copyable_v<std::ranges::range_value_t<R>>
+template <typename R>
+requires std::ranges::contiguous_range<const R> && std::ranges::sized_range<const R> &&
+         std::is_trivially_copyable_v<std::ranges::range_value_t<const R>>
 [[nodiscard]] constexpr auto
 as_byte_span(const R& container) noexcept
 {
