@@ -11,14 +11,21 @@
 
 #pragma once
 
-#include <limits>
+#include <stdexcept>
 #include <string>
+#include <utility>
 
+/// Convert \a s to <code>unsigned int</code>, similar to \c std::stoul
+/**
+* \exception std::invalid_argument no conversion could be performed
+* \exception std::out_of_range the value is negative or greater than the maximum of
+* <code>unsigned int</code>
+*/
 inline unsigned int
 stou(const std::string& s, std::size_t* pos = nullptr, int base = 10)
 {
-    const unsigned long i = std::stoul(s, pos, base);
-    return (i > std::numeric_limits<unsigned int>::max()) ?
-               std::numeric_limits<unsigned int>::max() :
-               static_cast<unsigned int>(i);
+    const long i = std::stol(s, pos, base);
+    if (!std::in_range<unsigned int>(i))
+        throw std::out_of_range("stou");
+    return static_cast<unsigned int>(i);
 }
