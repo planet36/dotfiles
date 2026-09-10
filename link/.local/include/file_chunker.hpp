@@ -13,7 +13,9 @@
 
 #include <algorithm>
 #include <array>
-#include <cassert> // DEBUG
+#if defined(DEBUG)
+#include <cassert>
+#endif
 #include <cerrno>
 #include <cstddef>
 #include <ios>
@@ -51,7 +53,9 @@ file_chunker(FILE* fp, const auto& func_process_chunk)
             if (std::ferror(fp) != 0)
                 throw std::system_error(std::make_error_code(std::errc{errno}));
 
-            assert(std::feof(fp) != 0); // DEBUG
+#if defined(DEBUG)
+            assert(std::feof(fp) != 0);
+#endif
         }
 
         const std::span<const std::byte> span_bytes(std::data(buf), num_bytes_read);
@@ -105,12 +109,16 @@ file_chunker_padded(FILE* fp, const auto& func_process_chunk)
             if (std::ferror(fp) != 0)
                 throw std::system_error(std::make_error_code(std::errc{errno}));
 
-            assert(std::feof(fp) != 0); // DEBUG
+#if defined(DEBUG)
+            assert(std::feof(fp) != 0);
+#endif
 
             // pad to the next chunk boundary
             const size_t num_bytes_to_pad = chunk_size - num_bytes_read % chunk_size;
 
-            assert(num_bytes_read + num_bytes_to_pad <= buf_size); // DEBUG
+#if defined(DEBUG)
+            assert(num_bytes_read + num_bytes_to_pad <= buf_size);
+#endif
 
             // The padding bytes are 1..num_bytes_to_pad
             for (size_t i = 1; i <= num_bytes_to_pad; ++i)
@@ -119,7 +127,9 @@ file_chunker_padded(FILE* fp, const auto& func_process_chunk)
             }
         }
 
-        assert((num_bytes_read % chunk_size) == 0); // DEBUG
+#if defined(DEBUG)
+        assert((num_bytes_read % chunk_size) == 0);
+#endif
 
         const std::span<const std::byte> span_bytes(std::data(buf), num_bytes_read);
 
