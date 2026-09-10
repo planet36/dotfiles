@@ -29,19 +29,33 @@ bitmask of 8 bits
 
 #pragma once
 
+#if defined(DEBUG)
+#include <cassert>
+#endif
 #include <concepts>
+#include <limits>
 #include <type_traits>
 
 /// get a bitmask where bit \a i is set (1) and the rest are not set (0)
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr T
 bitmask_one(const unsigned int i)
 {
+#if defined(DEBUG)
+    assert(i < static_cast<unsigned int>(std::numeric_limits<T>::digits));
+#endif
+
     return T{1} << i;
 }
 
 /// get a bitmask where bit \a i is not set (0) and the rest are set (1)
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr T
@@ -51,6 +65,9 @@ bitmask_zero(const unsigned int i)
 }
 
 /// get a bitmask where low-order bits (less significant than bit \a i) are set (1) and the rest are not set (0)
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr T
@@ -60,6 +77,9 @@ bitmask_lowpass(const unsigned int i)
 }
 
 /// get a bitmask where high-order bits (not less significant than bit \a i) are set (1) and the rest are not set (0)
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr T
@@ -69,6 +89,9 @@ bitmask_highpass(const unsigned int i)
 }
 
 /// get bit \a i in \a x
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr bool
@@ -78,6 +101,9 @@ get_bit(const T& x, const unsigned int i)
 }
 
 /// set bit \a i in \a x
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr void
@@ -87,6 +113,9 @@ set_bit(T& x, const unsigned int i)
 }
 
 /// reset bit \a i in \a x
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr void
@@ -96,6 +125,9 @@ reset_bit(T& x, const unsigned int i)
 }
 
 /// toggle bit \a i in \a x
+/**
+* \pre \a i must be less than the number of bits in \c T.
+*/
 template <std::unsigned_integral T>
 requires (!std::is_same_v<T, bool>)
 constexpr void
