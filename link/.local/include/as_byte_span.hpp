@@ -27,7 +27,8 @@
 *         representation of \a x
 */
 template <typename T>
-requires (!std::ranges::contiguous_range<T>) && std::is_trivially_copyable_v<T>
+requires (!std::ranges::range<T>) && (!std::is_pointer_v<T>) &&
+         std::is_trivially_copyable_v<T>
 [[nodiscard]] constexpr auto
 as_byte_span(const T& x) noexcept
 {
