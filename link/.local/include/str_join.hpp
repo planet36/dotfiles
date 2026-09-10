@@ -16,7 +16,7 @@
 
 template <std::ranges::input_range R>
 requires std::convertible_to<std::ranges::range_reference_t<R>, std::string_view>
-[[nodiscard]] static std::string
+[[nodiscard]] std::string
 str_join(R&& range_strings, std::string_view joiner)
 {
     std::string result;

@@ -90,7 +90,7 @@
 #include <cstdint>
 #include <immintrin.h>
 
-static inline uint64_t
+inline uint64_t
 rdtsc()
 {
     _mm_mfence();
@@ -100,7 +100,7 @@ rdtsc()
     return tsc;
 }
 
-static inline uint64_t
+inline uint64_t
 rdtscp(unsigned int* const aux)
 {
     _mm_mfence();
@@ -109,7 +109,7 @@ rdtscp(unsigned int* const aux)
     return tsc;
 }
 
-static inline uint64_t
+inline uint64_t
 rdtscp()
 {
     unsigned int aux = 0;

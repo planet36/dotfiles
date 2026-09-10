@@ -17,7 +17,7 @@
 #include <immintrin.h>
 using uint8x16_t = __m128i;
 
-[[nodiscard]] static inline uint8x16_t
+[[nodiscard]] inline uint8x16_t
 combine_u64x2(const uint64_t hi, const uint64_t lo) noexcept
 {
 #pragma GCC diagnostic push
@@ -35,7 +35,7 @@ combine_u64x2(const uint64_t hi, const uint64_t lo) noexcept
 * \sa https://developer.arm.com/architectures/instruction-sets/intrinsics/vcombine_u64
 * \sa https://developer.arm.com/architectures/instruction-sets/intrinsics/vreinterpretq_u8_u64
 */
-[[nodiscard]] static inline uint8x16_t
+[[nodiscard]] inline uint8x16_t
 combine_u64x2(const uint64_t hi, const uint64_t lo) noexcept
 {
     return vreinterpretq_u8_u64(vcombine_u64(vcreate_u64(lo), vcreate_u64(hi)));
