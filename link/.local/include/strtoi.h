@@ -22,6 +22,8 @@ static inline int8_t
 strtoi8(const char* s)
 {
     const intmax_t i = strtoimax(s, nullptr, 0);
+    if (i < INT8_MIN || i > INT8_MAX)
+        errno = ERANGE;
     return i < INT8_MIN ? INT8_MIN : (i > INT8_MAX ? INT8_MAX : (int8_t)i);
 }
 
@@ -29,6 +31,8 @@ static inline int16_t
 strtoi16(const char* s)
 {
     const intmax_t i = strtoimax(s, nullptr, 0);
+    if (i < INT16_MIN || i > INT16_MAX)
+        errno = ERANGE;
     return i < INT16_MIN ? INT16_MIN : (i > INT16_MAX ? INT16_MAX : (int16_t)i);
 }
 
@@ -36,6 +40,8 @@ static inline int32_t
 strtoi32(const char* s)
 {
     const intmax_t i = strtoimax(s, nullptr, 0);
+    if (i < INT32_MIN || i > INT32_MAX)
+        errno = ERANGE;
     return i < INT32_MIN ? INT32_MIN : (i > INT32_MAX ? INT32_MAX : (int32_t)i);
 }
 
