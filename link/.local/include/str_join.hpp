@@ -13,6 +13,7 @@
 #include <ranges>
 #include <string>
 #include <string_view>
+#include <type_traits>
 
 template <std::ranges::input_range R>
 requires std::convertible_to<std::ranges::range_reference_t<R>, std::string_view>
@@ -23,7 +24,7 @@ str_join(R&& range_strings, std::string_view joiner)
 
     bool first = true;
 
-    for (std::string_view s : std::forward<R>(range_strings))
+    for (auto&& s : std::forward<R>(range_strings))
     {
         if (first)
         {
@@ -33,7 +34,16 @@ str_join(R&& range_strings, std::string_view joiner)
         {
             result += joiner;
         }
-        result += s;
+
+        if constexpr (std::is_pointer_v<std::remove_cvref_t<decltype(s)>>)
+        {
+            if (s != nullptr)
+                result += s;
+        }
+        else
+        {
+            result += std::string_view{s};
+        }
     }
 
     return result;
