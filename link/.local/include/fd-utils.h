@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// POSIX fd and mmap utilities: size queries, page alignment, and access-pattern hints.
+/// POSIX fd and mmap utilities for size queries, page alignment, and access-pattern hints.
 /**
 * \file
 * \author Steven Ward
@@ -25,8 +25,8 @@ extern "C" {
 * This succeeds on regular files and block devices, and fails on pipes,
 * sockets, and other non-seekable descriptors.
 *
-* \param fd  Open file descriptor to test.
-* \return    \c true if \p fd is seekable, \c false otherwise.
+* \param fd Open file descriptor to test.
+* \return \c true if \a fd is seekable, \c false otherwise.
 */
 static inline bool
 is_seekable(const int fd)
@@ -38,9 +38,9 @@ is_seekable(const int fd)
 /**
 * Retrieves file metadata via \c fstat(2) and extracts \c st_size.
 *
-* \param fd  Open file descriptor.
-* \return    File size in bytes on success, or \c -1 if \c fstat(2) fails
-*            (with \c errno set by \c fstat).
+* \param fd Open file descriptor.
+* \return File size in bytes on success, or \c -1 if \c fstat(2) fails (with
+*         \c errno set by \c fstat).
 */
 static inline off_t
 get_file_size(const int fd)
@@ -53,57 +53,24 @@ get_file_size(const int fd)
     return statbuf.st_size;
 }
 
-/// Computes a page-aligned mapping size for a given file size.
-/**
-* Rounds \p file_size up to the nearest multiple of the system page size,
-* as returned by \c sysconf(_SC_PAGESIZE). If \p file_size is zero, returns
-* exactly one page so that the mapping is never empty.
-*
-* \note Assumes \c sysconf(_SC_PAGESIZE) succeeds and returns a positive
-*       power-of-two value.
-*
-* \param file_size  Logical size of the file in bytes.
-* \return           Smallest page-aligned size >= \p file_size, or one full
-*                   page if \p file_size is zero.
-*/
-static inline size_t
-get_mmap_size(const size_t file_size)
-{
-    // Presume that sysconf(_SC_PAGESIZE) will not fail.
-    // NOLINTNEXTLINE(hicpp-use-auto,modernize-use-auto)
-    const size_t page_size = (size_t)sysconf(_SC_PAGESIZE);
-
-    if (file_size == 0)
-        return page_size;
-
-    const size_t remainder = file_size % page_size;
-
-    if (remainder == 0)
-        return file_size;
-
-    // align on page boundary
-    return file_size + (page_size - remainder);
-}
-
 /// Acquires a blocking OFD read (shared) lock on an entire file.
 /**
 * Applies an \c F_RDLCK over the whole file (offset 0, length 0) using
 * \c F_OFD_SETLKW, blocking until the lock is available.
 *
-* The lock is an Open File Description (OFD) lock, associated with the
-* open file description rather than the process. Unlike traditional POSIX
-* advisory locks (\c F_SETLKW), OFD locks are:
-*   - not released when another file descriptor referring to the same
-*     open file description is closed;
-*   - not shared among threads of the same process — each thread acquires
-*     and releases independently.
+* The lock is an Open File Description (OFD) lock, associated with the open
+* file description rather than the process.  Unlike traditional POSIX advisory
+* locks (\c F_SETLKW), OFD locks are:
+*   - not released when another file descriptor referring to the same open
+*     file description is closed
+*   - not shared among threads of the same process, so each thread acquires
+*     and releases independently
 *
-* Multiple readers may hold the lock simultaneously; the call blocks only
-* if a write lock is currently held by another open file description.
+* Multiple readers may hold the lock simultaneously.  The call blocks only if
+* another open file description holds a write lock.
 *
-* \param fd  Open file descriptor to lock. Must be open for reading.
-* \return    \c 0 on success, \c -1 on error (with \c errno set by
-*            \c fcntl(2)).
+* \param fd Open file descriptor to lock.  Must be open for reading.
+* \return \c 0 on success, \c -1 on error (with \c errno set by \c fcntl(2)).
 *
 * \note OFD locks (\c F_OFD_SETLKW) require Linux 3.15 or later.
 * \sa acq_write_lock_fd(), rel_lock_fd()
@@ -129,6 +96,7 @@ acq_read_lock_fd(int fd)
         .l_pid = 0,
     };
 
+    // F_OFD_SETLKW blocks until the lock is acquired.
     // Use F_OFD_SETLK for non-blocking behavior.
     return fcntl(fd, F_OFD_SETLKW, &lock);
 }
@@ -138,20 +106,19 @@ acq_read_lock_fd(int fd)
 * Applies an \c F_WRLCK over the whole file (offset 0, length 0) using
 * \c F_OFD_SETLKW, blocking until the lock is available.
 *
-* The lock is an Open File Description (OFD) lock, associated with the
-* open file description rather than the process. Unlike traditional POSIX
-* advisory locks (\c F_SETLKW), OFD locks are:
-*   - not released when another file descriptor referring to the same
-*     open file description is closed;
-*   - not shared among threads of the same process — each thread acquires
-*     and releases independently.
+* The lock is an Open File Description (OFD) lock, associated with the open
+* file description rather than the process.  Unlike traditional POSIX advisory
+* locks (\c F_SETLKW), OFD locks are:
+*   - not released when another file descriptor referring to the same open
+*     file description is closed
+*   - not shared among threads of the same process, so each thread acquires
+*     and releases independently
 *
 * The call blocks until all read and write locks held by other open file
-* descriptions are released. Only one writer may hold the lock at a time.
+* descriptions are released.  Only one writer may hold the lock at a time.
 *
-* \param fd  Open file descriptor to lock. Must be open for writing.
-* \return    \c 0 on success, \c -1 on error (with \c errno set by
-*            \c fcntl(2)).
+* \param fd Open file descriptor to lock.  Must be open for writing.
+* \return \c 0 on success, \c -1 on error (with \c errno set by \c fcntl(2)).
 *
 * \note OFD locks (\c F_OFD_SETLKW) require Linux 3.15 or later.
 * \sa acq_read_lock_fd(), rel_lock_fd()
@@ -177,6 +144,7 @@ acq_write_lock_fd(int fd)
         .l_pid = 0,
     };
 
+    // F_OFD_SETLKW blocks until the lock is acquired.
     // Use F_OFD_SETLK for non-blocking behavior.
     return fcntl(fd, F_OFD_SETLKW, &lock);
 }
@@ -184,12 +152,11 @@ acq_write_lock_fd(int fd)
 /// Releases an OFD lock held on an entire file.
 /**
 * Applies \c F_UNLCK over the whole file (offset 0, length 0) using
-* \c F_OFD_SETLKW, unconditionally releasing any read or write OFD lock
+* \c F_OFD_SETLK, unconditionally releasing any read or write OFD lock
 * held by the current open file description.
 *
-* \param fd  Open file descriptor whose lock should be released.
-* \return    \c 0 on success, \c -1 on error (with \c errno set by
-*            \c fcntl(2)).
+* \param fd Open file descriptor whose lock should be released.
+* \return \c 0 on success, \c -1 on error (with \c errno set by \c fcntl(2)).
 *
 * \note OFD locks (\c F_OFD_SETLKW) require Linux 3.15 or later.
 * \sa acq_read_lock_fd(), acq_write_lock_fd()
@@ -229,9 +196,10 @@ rel_lock_fd(int fd)
 * On failure of either call, \c errno is set to the returned error code and
 * the function returns immediately without issuing the remaining hint.
 *
-* \param fd  Open file descriptor to advise on.
-* \return    \c true if either \c posix_fadvise call failed (with \c errno set
-*            to the error), \c false if both hints were accepted.
+* \param fd Open file descriptor to advise on.
+* \return \c true if either \c posix_fadvise call failed (with \c errno set to
+*         the error), \c false if both hints were accepted.
+*
 * \sa https://man7.org/linux/man-pages/man2/posix_fadvise.2.html
 */
 static inline bool
@@ -270,11 +238,11 @@ fadvise_sequential_noreuse(const int fd)
 * On failure of either call, \c errno is set to the returned error code and
 * the function returns immediately without issuing the remaining hint.
 *
-* \param mmap_addr  Base address of the memory-mapped region.
-* \param mmap_size  Length of the region in bytes.
-* \return           \c true if either \c posix_madvise call failed (with
-*                   \c errno set to the error), \c false if both hints were
-*                   accepted.
+* \param mmap_addr Base address of the memory-mapped region.
+* \param mmap_size Length of the region in bytes.
+* \return \c true if either \c posix_madvise call failed (with \c errno set to
+*         the error), \c false if both hints were accepted.
+*
 * \sa https://man7.org/linux/man-pages/man3/posix_madvise.3.html
 */
 static inline bool

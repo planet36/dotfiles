@@ -36,82 +36,6 @@ inline constexpr uint64_t fnv_offset_basis = UINT64_C(14'695'981'039'346'656'037
 }
 
 /// FNV-1 32-bit hash
-[[nodiscard]] constexpr auto
-fnv1_32(const std::string_view s) noexcept
-{
-    using fnv_const_32::fnv_offset_basis;
-    using fnv_const_32::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto c : s)
-    {
-        const auto octet = static_cast<uint8_t>(c);
-        result *= fnv_prime;
-        result ^= octet;
-    }
-
-    return result;
-}
-
-/// FNV-1a 32-bit hash
-[[nodiscard]] constexpr auto
-fnv1a_32(const std::string_view s) noexcept
-{
-    using fnv_const_32::fnv_offset_basis;
-    using fnv_const_32::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto c : s)
-    {
-        const auto octet = static_cast<uint8_t>(c);
-        result ^= octet;
-        result *= fnv_prime;
-    }
-
-    return result;
-}
-
-/// FNV-1 64-bit hash
-[[nodiscard]] constexpr auto
-fnv1_64(const std::string_view s) noexcept
-{
-    using fnv_const_64::fnv_offset_basis;
-    using fnv_const_64::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto c : s)
-    {
-        const auto octet = static_cast<uint8_t>(c);
-        result *= fnv_prime;
-        result ^= octet;
-    }
-
-    return result;
-}
-
-/// FNV-1a 64-bit hash
-[[nodiscard]] constexpr auto
-fnv1a_64(const std::string_view s) noexcept
-{
-    using fnv_const_64::fnv_offset_basis;
-    using fnv_const_64::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto c : s)
-    {
-        const auto octet = static_cast<uint8_t>(c);
-        result ^= octet;
-        result *= fnv_prime;
-    }
-
-    return result;
-}
-
-/// FNV-1 32-bit hash
 template <std::input_iterator Iter>
 requires (sizeof(std::iter_value_t<Iter>) == 1)
 [[nodiscard]] constexpr auto
@@ -197,76 +121,56 @@ fnv1a_64(Iter first, const Iter last) noexcept
 
 /// FNV-1 32-bit hash
 [[nodiscard]] constexpr auto
+fnv1_32(const std::string_view s) noexcept
+{
+    return fnv1_32(std::begin(s), std::end(s));
+}
+
+/// FNV-1a 32-bit hash
+[[nodiscard]] constexpr auto
+fnv1a_32(const std::string_view s) noexcept
+{
+    return fnv1a_32(std::begin(s), std::end(s));
+}
+
+/// FNV-1 64-bit hash
+[[nodiscard]] constexpr auto
+fnv1_64(const std::string_view s) noexcept
+{
+    return fnv1_64(std::begin(s), std::end(s));
+}
+
+/// FNV-1a 64-bit hash
+[[nodiscard]] constexpr auto
+fnv1a_64(const std::string_view s) noexcept
+{
+    return fnv1a_64(std::begin(s), std::end(s));
+}
+
+/// FNV-1 32-bit hash
+[[nodiscard]] constexpr auto
 fnv1_32(const std::span<const std::byte> bytes) noexcept
 {
-    using fnv_const_32::fnv_offset_basis;
-    using fnv_const_32::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto b : bytes)
-    {
-        const auto octet = static_cast<uint8_t>(b);
-        result *= fnv_prime;
-        result ^= octet;
-    }
-
-    return result;
+    return fnv1_32(std::begin(bytes), std::end(bytes));
 }
 
 /// FNV-1a 32-bit hash
 [[nodiscard]] constexpr auto
 fnv1a_32(const std::span<const std::byte> bytes) noexcept
 {
-    using fnv_const_32::fnv_offset_basis;
-    using fnv_const_32::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto b : bytes)
-    {
-        const auto octet = static_cast<uint8_t>(b);
-        result ^= octet;
-        result *= fnv_prime;
-    }
-
-    return result;
+    return fnv1a_32(std::begin(bytes), std::end(bytes));
 }
 
 /// FNV-1 64-bit hash
 [[nodiscard]] constexpr auto
 fnv1_64(const std::span<const std::byte> bytes) noexcept
 {
-    using fnv_const_64::fnv_offset_basis;
-    using fnv_const_64::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto b : bytes)
-    {
-        const auto octet = static_cast<uint8_t>(b);
-        result *= fnv_prime;
-        result ^= octet;
-    }
-
-    return result;
+    return fnv1_64(std::begin(bytes), std::end(bytes));
 }
 
 /// FNV-1a 64-bit hash
 [[nodiscard]] constexpr auto
 fnv1a_64(const std::span<const std::byte> bytes) noexcept
 {
-    using fnv_const_64::fnv_offset_basis;
-    using fnv_const_64::fnv_prime;
-
-    auto result = fnv_offset_basis;
-
-    for (const auto b : bytes)
-    {
-        const auto octet = static_cast<uint8_t>(b);
-        result ^= octet;
-        result *= fnv_prime;
-    }
-
-    return result;
+    return fnv1a_64(std::begin(bytes), std::end(bytes));
 }

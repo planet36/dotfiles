@@ -14,6 +14,7 @@
 
 #if defined(__x86_64__)
 
+#include <bit>
 #include <cstdint>
 #include <immintrin.h>
 
@@ -23,7 +24,7 @@ simd_popcount(const __m128i x) noexcept
 {
     const auto x0 = static_cast<uint64_t>(_mm_extract_epi64(x, 0));
     const auto x1 = static_cast<uint64_t>(_mm_extract_epi64(x, 1));
-    return __builtin_popcountg(x0) + __builtin_popcountg(x1);
+    return std::popcount(x0) + std::popcount(x1);
 }
 #endif
 
@@ -35,8 +36,7 @@ simd_popcount(const __m256i x) noexcept
     const auto x1 = static_cast<uint64_t>(_mm256_extract_epi64(x, 1));
     const auto x2 = static_cast<uint64_t>(_mm256_extract_epi64(x, 2));
     const auto x3 = static_cast<uint64_t>(_mm256_extract_epi64(x, 3));
-    return __builtin_popcountg(x0) + __builtin_popcountg(x1) +
-           __builtin_popcountg(x2) + __builtin_popcountg(x3);
+    return std::popcount(x0) + std::popcount(x1) + std::popcount(x2) + std::popcount(x3);
 }
 #endif
 
@@ -44,8 +44,9 @@ simd_popcount(const __m256i x) noexcept
 [[nodiscard]] inline int
 simd_popcount(const __m512i x) noexcept
 {
-    return simd_popcount(_mm512_extracti64x4_epi64(x, 0)) +
-           simd_popcount(_mm512_extracti64x4_epi64(x, 1));
+    const auto x0 = _mm512_extracti64x4_epi64(x, 0);
+    const auto x1 = _mm512_extracti64x4_epi64(x, 1);
+    return simd_popcount(x0) + simd_popcount(x1);
 }
 #endif
 
