@@ -19,7 +19,7 @@ extern "C" {
 #if defined(__cplusplus)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wold-style-cast"
-#pragma GCC diagnostic ignored "-Wno-redundant-tags"
+#pragma GCC diagnostic ignored "-Wredundant-tags"
 #endif
 
 /// Convert \a ts to nanoseconds
