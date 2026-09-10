@@ -16,10 +16,11 @@
 #include <cstdlib>
 
 constexpr auto
-icopysign(const std::signed_integral auto mag, const std::signed_integral auto sgn)
+icopysign(const std::signed_integral auto mag,
+          const std::signed_integral auto sgn) -> decltype(mag)
 {
     if (sgn < 0)
         return make_negative(mag);
     else
-        return std::abs(mag);
+        return static_cast<decltype(mag)>(std::abs(mag));
 }

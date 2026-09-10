@@ -13,12 +13,12 @@
 #include <concepts>
 
 constexpr auto
-make_negative(const std::signed_integral auto x)
+make_negative(const std::signed_integral auto x) -> decltype(x)
 {
     if (x < 0)
         return x;
     else
-        return -x;
+        return static_cast<decltype(x)>(-x);
 }
 
 constexpr auto
