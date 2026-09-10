@@ -130,9 +130,9 @@ aes_keygenassist_round(const __m128i key, const int round) noexcept
     std::unreachable();
 }
 
-constexpr int aes128_num_rounds = 10;
-constexpr int aes192_num_rounds = 12;
-constexpr int aes256_num_rounds = 14;
+inline constexpr int aes128_num_rounds = 10;
+inline constexpr int aes192_num_rounds = 12;
+inline constexpr int aes256_num_rounds = 14;
 
 /**
 * \pre \a tmp_assist is the result of \c _mm_aeskeygenassist_si128
