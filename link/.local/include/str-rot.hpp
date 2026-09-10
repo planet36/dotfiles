@@ -18,6 +18,9 @@
 inline void
 rotl(std::string& s, size_t n)
 {
+    if (std::empty(s))
+        return;
+
     n %= std::size(s);
     auto new_first = std::begin(s);
     std::advance(new_first, n);
@@ -36,6 +39,9 @@ rotl_copy(std::string s, size_t n) // intentionally pass by value
 inline void
 rotr(std::string& s, size_t n)
 {
+    if (std::empty(s))
+        return;
+
     n %= std::size(s);
     auto new_first = std::rbegin(s);
     std::advance(new_first, n);
