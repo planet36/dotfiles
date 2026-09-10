@@ -39,7 +39,7 @@ requires (!std::ranges::contiguous_range<T>) && std::is_trivially_copyable_v<T>
 [[nodiscard]] constexpr auto
 as_byte_span(const T& x) noexcept
 {
-    return std::as_bytes(std::span<const T, 1>{std::addressof(x), 1});
+    return std::as_bytes(std::span<const T, 1>(std::addressof(x), 1));
 }
 
 /// Get a view to the elements of a contiguous range as a span of bytes
