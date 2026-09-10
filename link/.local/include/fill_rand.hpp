@@ -11,6 +11,7 @@
 
 #include <ranges>
 #include <span>
+#include <type_traits>
 
 #if defined(_GLIBCXX_HAVE_ARC4RANDOM)
 
@@ -20,15 +21,17 @@
 // https://www.gnu.org/software/libc/manual/html_node/High-Quality-Random.html
 
 template <typename T>
-requires (!std::ranges::contiguous_range<T>)
+requires (!std::ranges::contiguous_range<T> && std::is_trivially_copyable_v<T>)
 void
 fill_rand(T& x) noexcept
 {
     arc4random_buf(&x, sizeof(T));
 }
 
+template <std::ranges::contiguous_range T>
+requires std::is_trivially_copyable_v<std::ranges::range_value_t<T>>
 void
-fill_rand(std::ranges::contiguous_range auto& container)
+fill_rand(T& container) noexcept
 {
     auto sp = std::span{container};
     arc4random_buf(std::data(sp), sp.size_bytes());
@@ -45,7 +48,8 @@ fill_rand(std::ranges::contiguous_range auto& container)
 // Max num bytes allowed is 256
 
 template <typename T>
-requires (!std::ranges::contiguous_range<T> && (sizeof(T) <= 256))
+requires (!std::ranges::contiguous_range<T> && std::is_trivially_copyable_v<T> &&
+          (sizeof(T) <= 256))
 void
 fill_rand(T& x)
 {
@@ -55,8 +59,10 @@ fill_rand(T& x)
     }
 }
 
+template <std::ranges::contiguous_range T>
+requires std::is_trivially_copyable_v<std::ranges::range_value_t<T>>
 void
-fill_rand(std::ranges::contiguous_range auto& container)
+fill_rand(T& container)
 {
     auto sp = std::span{container};
 
