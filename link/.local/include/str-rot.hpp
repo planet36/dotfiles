@@ -15,7 +15,7 @@
 #include <string>
 
 /// rotate \a s left by \a n places
-void
+inline void
 rotl(std::string& s, size_t n)
 {
     n %= std::size(s);
@@ -33,7 +33,7 @@ rotl_copy(std::string s, size_t n) // intentionally pass by value
 }
 
 /// rotate \a s right by \a n places
-void
+inline void
 rotr(std::string& s, size_t n)
 {
     n %= std::size(s);

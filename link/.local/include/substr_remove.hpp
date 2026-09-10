@@ -12,7 +12,7 @@
 #include <string>
 
 /// remove all occurrences of \a sub from \a s
-void
+inline void
 substr_remove(std::string& s, const std::string& sub)
 {
     if (s.empty() || sub.empty())

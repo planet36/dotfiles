@@ -20,7 +20,7 @@
 #include <utf8proc.h>
 
 /// Get the number of columns needed to represent a UTF-8 string
-size_t
+inline size_t
 utf8width(const std::string& s)
 {
     // https://juliastrings.github.io/utf8proc/doc/utf8proc_8h.html#a0a18a541ba5bedeb5c3e150024063c2d

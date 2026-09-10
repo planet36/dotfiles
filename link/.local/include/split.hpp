@@ -30,7 +30,7 @@
 /**
 * If \a limit is greater than \c 0, the result will have no more than \a limit strings.
 */
-std::vector<std::string>
+inline std::vector<std::string>
 split(const std::string& s, const char delim, const size_t limit = 0)
 {
     const auto begin = s.cbegin();
@@ -57,7 +57,7 @@ split(const std::string& s, const char delim, const size_t limit = 0)
 *
 * If \a delim is empty, the result is a vector with \a s as its only element.
 */
-std::vector<std::string>
+inline std::vector<std::string>
 split(const std::string& s, const std::string& delim, const size_t limit = 0)
 {
     const auto begin = s.cbegin();
@@ -88,7 +88,7 @@ split(const std::string& s, const std::string& delim, const size_t limit = 0)
 *
 * If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
-std::vector<std::string>
+inline std::vector<std::string>
 split_set(const std::string& s, const std::string& delim_set, const size_t limit = 0)
 {
     const auto begin = s.cbegin();
@@ -127,7 +127,7 @@ split_set(const std::string& s, const std::string& delim_set, const size_t limit
 *
 * If \a delim_set is empty, the result is a vector with \a s as its only element.
 */
-std::vector<std::string>
+inline std::vector<std::string>
 split_non_set(const std::string& s, const std::string& delim_set, const size_t limit = 0)
 {
     const auto begin = s.cbegin();
@@ -161,7 +161,7 @@ split_non_set(const std::string& s, const std::string& delim_set, const size_t l
 }
 
 /// split the string about ASCII whitespace characters
-std::vector<std::string>
+inline std::vector<std::string>
 split(const std::string& s)
 {
     return split_set(s, ascii_whitespace_s);

@@ -23,7 +23,7 @@ extern "C" {
 /**
 * \param strip_delim if the \a delim should be stripped from the result
 */
-ssize_t
+static inline ssize_t
 getdelim_strip(
     char** buf, size_t* buf_size, const int delim, FILE* stream, const bool strip_delim)
 {
@@ -45,7 +45,7 @@ getdelim_strip(
 /**
 * \param strip_delim if the \a delim should be stripped from the result
 */
-ssize_t
+static inline ssize_t
 getline_strip(char** buf, size_t* buf_size, FILE* stream, const bool strip_delim)
 {
     constexpr char delim = '\n';

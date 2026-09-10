@@ -24,7 +24,7 @@
 
 // {{{ trim spaces from a std::string using std::isspace
 
-void
+inline void
 rtrim(std::string& s)
 {
     (void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
@@ -34,7 +34,7 @@ rtrim(std::string& s)
                   s.end());
 }
 
-void
+inline void
 ltrim(std::string& s)
 {
     (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
@@ -43,28 +43,28 @@ ltrim(std::string& s)
                   [](const unsigned char c_i) { return std::isspace(c_i); }));
 }
 
-void
+inline void
 trim(std::string& s)
 {
     rtrim(s);
     ltrim(s);
 }
 
-auto
+inline auto
 rtrim_copy(std::string s)
 {
     rtrim(s);
     return s;
 }
 
-auto
+inline auto
 ltrim_copy(std::string s)
 {
     ltrim(s);
     return s;
 }
 
-auto
+inline auto
 trim_copy(std::string s)
 {
     trim(s);
@@ -75,7 +75,7 @@ trim_copy(std::string s)
 
 // {{{ trim spaces from a std::wstring using std::iswspace
 
-void
+inline void
 rtrim(std::wstring& s)
 {
     (void)s.erase(std::find_if_not(s.rbegin(), s.rend(),
@@ -84,7 +84,7 @@ rtrim(std::wstring& s)
                   s.end());
 }
 
-void
+inline void
 ltrim(std::wstring& s)
 {
     (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(),
@@ -92,28 +92,28 @@ ltrim(std::wstring& s)
                   [](const auto c_i) { return std::iswspace(static_cast<wint_t>(c_i)); }));
 }
 
-void
+inline void
 trim(std::wstring& s)
 {
     rtrim(s);
     ltrim(s);
 }
 
-auto
+inline auto
 rtrim_copy(std::wstring s)
 {
     rtrim(s);
     return s;
 }
 
-auto
+inline auto
 ltrim_copy(std::wstring s)
 {
     ltrim(s);
     return s;
 }
 
-auto
+inline auto
 trim_copy(std::wstring s)
 {
     trim(s);

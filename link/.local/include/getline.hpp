@@ -21,7 +21,7 @@
 * \retval false failure
 * The return value matches the behavior of https://en.cppreference.com/w/cpp/io/basic_ios/operator_bool
 */
-bool
+inline bool
 getdelim(std::string& line, const char delim, FILE* stream, const bool strip_delim = false)
 {
     char* buf = nullptr;
@@ -41,7 +41,7 @@ getdelim(std::string& line, const char delim, FILE* stream, const bool strip_del
     return bytes_read != -1;
 }
 
-bool
+inline bool
 getline(std::string& line, FILE* stream, const bool strip_delim = false)
 {
     constexpr char delim = '\n';

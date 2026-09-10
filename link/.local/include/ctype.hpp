@@ -158,7 +158,7 @@ to_othercase(const char c)
                              (is_lowercase(c) ? static_cast<char>(c - ('a' - 'A')) : c);
 }
 
-void
+inline void
 to_uppercase(std::string& s)
 {
     for (auto& c : s)
@@ -167,7 +167,7 @@ to_uppercase(std::string& s)
     }
 }
 
-void
+inline void
 to_lowercase(std::string& s)
 {
     for (auto& c : s)
@@ -176,7 +176,7 @@ to_lowercase(std::string& s)
     }
 }
 
-void
+inline void
 to_othercase(std::string& s)
 {
     for (auto& c : s)
@@ -185,21 +185,21 @@ to_othercase(std::string& s)
     }
 }
 
-std::string
+inline std::string
 to_uppercase_copy(std::string s)
 {
     to_uppercase(s);
     return s;
 }
 
-std::string
+inline std::string
 to_lowercase_copy(std::string s)
 {
     to_lowercase(s);
     return s;
 }
 
-std::string
+inline std::string
 to_othercase_copy(std::string s)
 {
     to_othercase(s);

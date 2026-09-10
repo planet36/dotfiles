@@ -26,7 +26,7 @@ inline constexpr std::string_view OCT_DIGITS = "01234567";
 inline constexpr std::string_view HEX_DIGITS = "0123456789ABCDEF";
 
 /// Convert the byte to its escaped octal representation
-std::string
+inline std::string
 to_oct_str(const uint8_t c)
 {
     const char d1 = OCT_DIGITS[(c & 0700) >> 6];
@@ -36,7 +36,7 @@ to_oct_str(const uint8_t c)
 }
 
 /// Convert the byte to its escaped hexadecimal representation
-std::string
+inline std::string
 to_hex_str(const uint8_t c)
 {
     const char d1 = HEX_DIGITS[(c & 0xF0) >> 4];
@@ -87,7 +87,7 @@ is_special_char_shell(const char c)
 }
 
 /// Does the string contain special characters for a POSIX shell?
-bool
+inline bool
 contains_special_chars_shell(const std::string& s)
 {
     for (const auto c : s)
@@ -105,7 +105,7 @@ contains_special_chars_shell(const std::string& s)
 /**
 * \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
-std::string
+inline std::string
 escape_shell(const char c)
 {
     switch (c)
@@ -147,7 +147,7 @@ escape_shell(const char c)
 /**
 * \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
-std::string
+inline std::string
 escape_shell(const std::string& s)
 {
     std::string result;
@@ -170,7 +170,7 @@ character within the quotes. A single quote may not occur between single
 quotes, even when preceded by a backslash.
 </blockquote>
 */
-std::string
+inline std::string
 quote_shell_always(const std::string& s)
 {
     constexpr char delim = SINGLE_QUOTE;
@@ -201,7 +201,7 @@ quote_shell_always(const std::string& s)
 }
 
 /// Conditionally quote the string for a POSIX shell
-std::string
+inline std::string
 quote_shell(const std::string& s)
 {
     if (s.empty() || contains_special_chars_shell(s))
@@ -220,7 +220,7 @@ quote_shell(const std::string& s)
 * \sa https://en.cppreference.com/w/cpp/language/escape
 * \sa https://eel.is/c++draft/lex.ccon#:simple-escape-sequence-char
 */
-std::string
+inline std::string
 escape_c(const char c)
 {
     // simple escape sequence
@@ -249,7 +249,7 @@ escape_c(const char c)
 }
 
 /// Quote the character for a C character literal
-std::string
+inline std::string
 quote_c(const char c)
 {
     constexpr char delim = SINGLE_QUOTE;
@@ -265,7 +265,7 @@ quote_c(const char c)
 }
 
 /// Quote the string for a C string literal
-std::string
+inline std::string
 quote_c(const std::string& s)
 {
     constexpr char delim = DOUBLE_QUOTE;
@@ -291,7 +291,7 @@ quote_c(const std::string& s)
 * \sa https://www.pcre.org/original/doc/html/pcrepattern.html
 * \sa https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
 */
-std::string
+inline std::string
 escape_pcre(const char c)
 {
     if (isword(c))
@@ -319,7 +319,7 @@ escape_pcre(const char c)
 }
 
 /// Escape the string for a Perl Compatible Regular Expression (PCRE)
-std::string
+inline std::string
 escape_pcre(const std::string& s)
 {
     std::string result;
@@ -343,7 +343,7 @@ quote(const std::string& s)
 /**
 * \sa https://en.cppreference.com/w/cpp/io/manip/quoted
 */
-std::string
+inline std::string
 quote_simple(const std::string& s,
              const char delim = DOUBLE_QUOTE,
              const char escape = BACKSLASH)

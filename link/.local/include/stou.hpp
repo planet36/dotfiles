@@ -14,7 +14,7 @@
 #include <limits>
 #include <string>
 
-unsigned int
+inline unsigned int
 stou(const std::string& s, std::size_t* pos = nullptr, int base = 10)
 {
     const unsigned long i = std::stoul(s, pos, base);
