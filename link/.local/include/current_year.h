@@ -26,7 +26,7 @@ static int
 current_year_local()
 {
     const time_t now_time_t = time(nullptr);
-    struct tm now_tm = {0};
+    struct tm now_tm = {};
 #ifdef DEBUG
     // https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
     tzset();
@@ -45,7 +45,7 @@ static int
 current_year_utc()
 {
     const time_t now_time_t = time(nullptr);
-    struct tm now_tm = {0};
+    struct tm now_tm = {};
 #ifdef DEBUG
     if (gmtime_r(&now_time_t, &now_tm) == nullptr)
     {
