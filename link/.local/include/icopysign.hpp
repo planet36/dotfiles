@@ -16,7 +16,6 @@
 #include <cassert>
 #endif
 #include <concepts>
-#include <cstdlib>
 #include <limits>
 
 /**
@@ -33,5 +32,5 @@ icopysign(const std::signed_integral auto mag,
     assert(mag != std::numeric_limits<decltype(mag)>::min());
 #endif
 
-    return static_cast<decltype(mag)>(std::abs(mag));
+    return (mag < 0) ? static_cast<decltype(mag)>(-mag) : mag;
 }
