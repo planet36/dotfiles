@@ -18,9 +18,21 @@ substr_remove(std::string& s, const std::string& sub)
     if (s.empty() || sub.empty())
         return;
 
-    std::string::size_type loc = 0;
-    while ((loc = s.find(sub, loc)) != std::string::npos)
+    std::string::size_type loc = s.find(sub);
+    if (loc == std::string::npos)
+        return;
+
+    std::string result;
+    result.reserve(s.size() - sub.size());
+    std::string::size_type pos = 0;
+
+    while (loc != std::string::npos)
     {
-        s.erase(loc, sub.size());
+        result.append(s, pos, loc - pos);
+        pos = loc + sub.size();
+        loc = s.find(sub, pos);
     }
+
+    result.append(s, pos);
+    s.swap(result);
 }
