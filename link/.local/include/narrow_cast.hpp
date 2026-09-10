@@ -26,8 +26,8 @@
 * \return \a value cast to \a To
 * \exception std::range_error if \a value is not representable in \a To
 *
-* \note \c std::in_range is not used because it does not support character
-*       types or \c bool, which are included in the \c std::integral concept.
+* \note \c std::in_range is not used because it rejects const-qualified
+*       template types.  See \c in_range.hpp.
 */
 template <std::integral To>
 [[nodiscard]] constexpr To
