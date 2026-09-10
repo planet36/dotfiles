@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <math.h>
 #include <wchar.h>
 
 #if defined(__cplusplus)
@@ -155,7 +156,7 @@ static constexpr size_t num_right_blocks = LEN(right_blocks);
 static void
 clamp(double* x)
 {
-    if (*x < 0)
+    if (isnan(*x) || *x < 0)
         *x = 0;
     else if (*x > 1)
         *x = 1;
