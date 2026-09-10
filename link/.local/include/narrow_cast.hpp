@@ -30,7 +30,7 @@
 *       types or \c bool, which are included in the \c std::integral concept.
 */
 template <std::integral To>
-[[nodiscard]] static constexpr To
+[[nodiscard]] constexpr To
 narrow_cast(const std::integral auto value)
 {
     if (!in_range<To>(value))

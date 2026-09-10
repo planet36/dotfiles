@@ -23,7 +23,7 @@
 * \return the lowercase hexadecimal character representing \a x
 * \pre \a x is in the interval <code>[0, 15]</code>
 */
-[[nodiscard]] static constexpr char
+[[nodiscard]] constexpr char
 nibble_char(const uint8_t x) noexcept
 {
 #if defined(DEBUG)
@@ -38,7 +38,7 @@ nibble_char(const uint8_t x) noexcept
 * \param byte_sp the bytes to convert
 * \return a lowercase hexadecimal string representing \a byte_sp
 */
-[[nodiscard]] static std::string
+[[nodiscard]] inline std::string
 bytes_to_hex(const std::span<const std::byte> byte_sp)
 {
     const size_t result_len = std::size(byte_sp) * 2;
