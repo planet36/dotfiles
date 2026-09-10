@@ -101,8 +101,10 @@ contains_special_chars_shell(const std::string& s)
     return false;
 }
 
-/// Escape the character for a POSIX shell
+/// Escape the character for display, using POSIX shell escapes
 /**
+* \note The result is not shell input.  Tab, newline, and nonprintable bytes become
+* \c \\t, \c \\n, and \c \\xHH.  Use \c quote_shell to build shell input.
 * \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
 inline std::string
@@ -143,8 +145,10 @@ escape_shell(const char c)
     return to_hex_str(static_cast<uint8_t>(c));
 }
 
-/// Escape the string for a POSIX shell
+/// Escape the string for display, using POSIX shell escapes
 /**
+* \note The result is not shell input.  Tab, newline, and nonprintable bytes become
+* \c \\t, \c \\n, and \c \\xHH.  Use \c quote_shell to build shell input.
 * \sa https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_02
 */
 inline std::string
