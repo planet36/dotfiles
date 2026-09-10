@@ -159,9 +159,10 @@ requires (Nk >= 2)
 void
 aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc) noexcept
 {
-    for (int round = 1; round < Nk; ++round)
+    for (size_t round = 1; round < Nk; ++round)
     {
-        const __m128i tmp_assist = aes_keygenassist_round(round_keys_enc[round-1], round);
+        const __m128i tmp_assist =
+            aes_keygenassist_round(round_keys_enc[round-1], static_cast<int>(round));
         round_keys_enc[round] = aes128_expand_key(round_keys_enc[round-1], tmp_assist);
     }
 }
@@ -177,7 +178,7 @@ aes128_gen_round_keys_dec(const arr_m128i<Nk>& round_keys_enc, arr_m128i<Nk>& ro
     // See "Intel Advanced Encryption Standard (AES) New Instructions Set"
     // Figure 6. Preparing the Decryption Round Keys
     round_keys_dec[0] = round_keys_enc[Nk-1];
-    for (int round = 1; round < Nk-1; ++round)
+    for (size_t round = 1; round < Nk-1; ++round)
     {
         round_keys_dec[round] = _mm_aesimc_si128(round_keys_enc[Nk-1 - round]);
     }
@@ -191,7 +192,7 @@ requires (Nk >= 2)
 aes128_enc(__m128i data, const arr_m128i<Nk>& round_keys_enc) noexcept
 {
     data = _mm_xor_si128(data, round_keys_enc[0]);
-    for (int round = 1; round < Nk-1; ++round)
+    for (size_t round = 1; round < Nk-1; ++round)
     {
         data = _mm_aesenc_si128(data, round_keys_enc[round]);
     }
@@ -206,7 +207,7 @@ requires (Nk >= 2)
 aes128_dec(__m128i data, const arr_m128i<Nk>& round_keys_dec) noexcept
 {
     data = _mm_xor_si128(data, round_keys_dec[0]);
-    for (int round = 1; round < Nk-1; ++round)
+    for (size_t round = 1; round < Nk-1; ++round)
     {
         data = _mm_aesdec_si128(data, round_keys_dec[round]);
     }
