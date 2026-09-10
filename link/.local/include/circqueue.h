@@ -86,6 +86,9 @@ circqueue_free(circqueue* cq)
 static bool
 circqueue_push_overwrite_if_full(circqueue* cq, const void* x)
 {
+    if (cq->max_num_elems == 0)
+        return false;
+
     // add to tail
     (void)memcpy((char*)cq->buf + cq->tail * cq->sizeof_elem, x, cq->sizeof_elem);
 

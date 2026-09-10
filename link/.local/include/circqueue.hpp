@@ -31,6 +31,8 @@ enum PUSH_RESULT
 template <typename T, size_t N>
 class circqueue
 {
+    static_assert(N >= 1);
+
 private:
     size_t head = 0; // remove from the front (head)
     size_t tail = 0; // add to the back (tail)
