@@ -15,7 +15,6 @@
 #endif
 #include <concepts>
 #include <cstddef>
-#include <type_traits>
 
 /// Verify that \a p is a permutation of the indices <code>[0, N)</code>
 template <size_t N, std::unsigned_integral I>
@@ -51,7 +50,7 @@ permute_from(std::array<T, N>& x, const std::array<I, N>& p)
     assert(is_index_permutation(p));
 #endif
 
-    std::remove_reference_t<decltype(x)> y;
+    std::array<T, N> y;
 
     for (size_t i = 0; i < N; ++i)
     {
@@ -75,7 +74,7 @@ permute_to(std::array<T, N>& x, const std::array<I, N>& p)
     assert(is_index_permutation(p));
 #endif
 
-    std::remove_reference_t<decltype(x)> y;
+    std::array<T, N> y;
 
     for (size_t i = 0; i < N; ++i)
     {
