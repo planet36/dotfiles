@@ -29,6 +29,11 @@ enum PUSH_RESULT
 };
 
 /// Thread-safe circular queue that uses a std::shared_mutex
+/**
+* \note \c for_each, \c all_of, \c any_of, and \c none_of call their function argument
+* while holding a shared lock.  That function must not call a member of the same queue
+* other than \c max_size.  A call to \c push, \c pop, or \c reset deadlocks.
+*/
 template <typename T, size_t N>
 class circqueue
 {
