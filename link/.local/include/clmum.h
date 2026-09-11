@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 #if defined(__PCLMUL__)
-static void
+static inline void
 clmul64(uint64_t* hi, uint64_t* lo) [[gnu::nonnull]]
 {
     // order of hi, lo doesn't matter
