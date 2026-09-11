@@ -200,8 +200,13 @@ quotient(const std::floating_point auto x, const std::floating_point auto y,
 {
     auto quo = std::round((x - rem) / y);
 
-    if (std::isfinite(quo) && std::isfinite(y))
+    if (std::isnan(rem))
+        quo = x / y;
+    else if (std::isfinite(quo) && std::isfinite(y))
         quo += std::round((std::fma(-quo, y, x) - rem) / y);
+
+    if (quo == 0)
+        quo = std::copysign(quo, x / y);
 
     return quo;
 }
@@ -230,7 +235,7 @@ div_mod_floor(const std::floating_point auto x, const std::floating_point auto y
     auto rem = std::fmod(x, y);
     auto quo = div_mod_detail::quotient(x, y, rem);
 
-    if (rem != 0 && (rem < 0) != (y < 0))
+    if (std::isfinite(y) && rem != 0 && (rem < 0) != (y < 0))
     {
         rem += y;
         quo -= 1;
@@ -249,7 +254,7 @@ div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
     auto rem = std::fmod(x, y);
     auto quo = div_mod_detail::quotient(x, y, rem);
 
-    if (rem != 0 && (rem < 0) == (y < 0))
+    if (std::isfinite(y) && rem != 0 && (rem < 0) == (y < 0))
     {
         rem -= y;
         quo += 1;
