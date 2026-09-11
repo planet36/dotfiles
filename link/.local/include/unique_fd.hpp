@@ -21,7 +21,6 @@
 class unique_fd final
 {
 public:
-
     static constexpr int invalid_fd = -1;
 
     constexpr unique_fd() noexcept = default;
@@ -55,7 +54,6 @@ public:
     [[nodiscard]] constexpr int release() noexcept { return std::exchange(fd_, invalid_fd); }
 
 private:
-
     int fd_{invalid_fd};
 
     // Ignore return value of `close`
