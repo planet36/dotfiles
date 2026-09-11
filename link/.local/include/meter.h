@@ -16,8 +16,6 @@
 extern "C" {
 #endif
 
-#define LEN(arr) (sizeof(arr) / sizeof((arr)[0]))
-
 // https://www.unicode.org/charts/PDF/U0000.pdf
 
 static constexpr wchar_t SPACE = 0x0020;
@@ -83,7 +81,7 @@ static constexpr wchar_t lower_blocks[] = {
     FULL_BLOCK,
 };
 
-static constexpr size_t num_lower_blocks = LEN(lower_blocks);
+static constexpr size_t num_lower_blocks = sizeof(lower_blocks) / sizeof(lower_blocks[0]);
 
 static constexpr wchar_t left_blocks[] = {
     SPACE,
@@ -97,7 +95,7 @@ static constexpr wchar_t left_blocks[] = {
     FULL_BLOCK,
 };
 
-static constexpr size_t num_left_blocks = LEN(left_blocks);
+static constexpr size_t num_left_blocks = sizeof(left_blocks) / sizeof(left_blocks[0]);
 
 static constexpr wchar_t ver_lines[] = {
     LEFT_ONE_EIGHTH_BLOCK,
@@ -110,7 +108,7 @@ static constexpr wchar_t ver_lines[] = {
     RIGHT_ONE_EIGHTH_BLOCK,
 };
 
-static constexpr size_t num_ver_lines = LEN(ver_lines);
+static constexpr size_t num_ver_lines = sizeof(ver_lines) / sizeof(ver_lines[0]);
 
 static constexpr wchar_t hor_lines[] = {
     LOWER_ONE_EIGHTH_BLOCK,
@@ -123,7 +121,7 @@ static constexpr wchar_t hor_lines[] = {
     UPPER_ONE_EIGHTH_BLOCK,
 };
 
-static constexpr size_t num_hor_lines = LEN(hor_lines);
+static constexpr size_t num_hor_lines = sizeof(hor_lines) / sizeof(hor_lines[0]);
 
 static constexpr wchar_t upper_blocks[] = {
     SPACE,
@@ -137,7 +135,7 @@ static constexpr wchar_t upper_blocks[] = {
     FULL_BLOCK,
 };
 
-static constexpr size_t num_upper_blocks = LEN(upper_blocks);
+static constexpr size_t num_upper_blocks = sizeof(upper_blocks) / sizeof(upper_blocks[0]);
 
 static constexpr wchar_t right_blocks[] = {
     SPACE,
@@ -151,7 +149,7 @@ static constexpr wchar_t right_blocks[] = {
     FULL_BLOCK,
 };
 
-static constexpr size_t num_right_blocks = LEN(right_blocks);
+static constexpr size_t num_right_blocks = sizeof(right_blocks) / sizeof(right_blocks[0]);
 
 static inline void
 clamp(double* x)
