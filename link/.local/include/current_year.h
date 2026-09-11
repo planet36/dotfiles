@@ -12,10 +12,8 @@
 
 #pragma once
 
-#ifdef DEBUG
 #include <limits.h>
 #include <stdio.h>
-#endif
 #include <time.h>
 
 #if defined(__cplusplus)
@@ -27,7 +25,6 @@ current_year_local()
 {
     const time_t now_time_t = time(nullptr);
     struct tm now_tm = {};
-#ifdef DEBUG
     // https://pubs.opengroup.org/onlinepubs/9699919799/functions/tzset.html
     tzset();
     if (localtime_r(&now_time_t, &now_tm) == nullptr)
@@ -35,9 +32,6 @@ current_year_local()
         perror("localtime_r");
         return INT_MIN;
     }
-#else
-    return localtime(&now_time_t)->tm_year + 1900;
-#endif
     return now_tm.tm_year + 1900;
 }
 
@@ -46,15 +40,11 @@ current_year_utc()
 {
     const time_t now_time_t = time(nullptr);
     struct tm now_tm = {};
-#ifdef DEBUG
     if (gmtime_r(&now_time_t, &now_tm) == nullptr)
     {
         perror("gmtime_r");
         return INT_MIN;
     }
-#else
-    now_tm = *gmtime(&now_time_t);
-#endif
     return now_tm.tm_year + 1900;
 }
 
