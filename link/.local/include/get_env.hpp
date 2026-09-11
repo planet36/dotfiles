@@ -28,8 +28,8 @@ else
 \endcode
 *
 * \code{.cpp}
-std::println("{} = {}", name, get_env("SHELL").value_or("(none)"));
-std::println("{} = {}", name, get_env("FOO").value_or("(none)"));
+std::println("SHELL = {}", get_env("SHELL").value_or("(none)"));
+std::println("FOO = {}", get_env("FOO").value_or("(none)"));
 \endcode
 */
 [[nodiscard]] inline std::optional<std::string>
