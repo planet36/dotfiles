@@ -63,8 +63,8 @@ get_file_size(const int fd)
 * locks (\c F_SETLKW), OFD locks are:
 *   - not released when another file descriptor referring to the same open
 *     file description is closed
-*   - not shared among threads of the same process, so each thread acquires
-*     and releases independently
+*   - independent between threads only when each thread opens the file itself,
+*     since threads that use one open file description share its lock
 *
 * Multiple readers may hold the lock simultaneously.  The call blocks only if
 * another open file description holds a write lock.
@@ -111,8 +111,8 @@ acq_read_lock_fd(int fd)
 * locks (\c F_SETLKW), OFD locks are:
 *   - not released when another file descriptor referring to the same open
 *     file description is closed
-*   - not shared among threads of the same process, so each thread acquires
-*     and releases independently
+*   - independent between threads only when each thread opens the file itself,
+*     since threads that use one open file description share its lock
 *
 * The call blocks until all read and write locks held by other open file
 * descriptions are released.  Only one writer may hold the lock at a time.
