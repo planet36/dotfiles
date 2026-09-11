@@ -180,6 +180,24 @@ div_mod_round(const std::integral auto x, const std::integral auto y)
     return std::make_pair(quo, rem);
 }
 
+namespace div_mod_detail
+{
+
+/// get the integral quotient of \a x and \a y that matches the remainder \a rem
+constexpr auto
+quotient(const std::floating_point auto x, const std::floating_point auto y,
+         const std::floating_point auto rem)
+{
+    auto quo = std::round((x - rem) / y);
+
+    if (std::isfinite(quo) && std::isfinite(y))
+        quo += std::round((std::fma(-quo, y, x) - rem) / y);
+
+    return quo;
+}
+
+} // namespace div_mod_detail
+
 /// get the quotient and remainder of the _truncated_ floating-point division
 /**
 * \pre \a y != 0
@@ -187,10 +205,8 @@ div_mod_round(const std::integral auto x, const std::integral auto y)
 constexpr auto
 div_mod_trunc(const std::floating_point auto x, const std::floating_point auto y)
 {
-    const auto quo = std::trunc(x / y);
-    const auto rem = x - quo * y;
-    // fmod is less accurate than division and trunc
-    //const auto rem = std::fmod(x, y);
+    const auto rem = std::fmod(x, y);
+    const auto quo = div_mod_detail::quotient(x, y, rem);
     return std::make_pair(quo, rem);
 }
 
@@ -201,8 +217,15 @@ div_mod_trunc(const std::floating_point auto x, const std::floating_point auto y
 constexpr auto
 div_mod_floor(const std::floating_point auto x, const std::floating_point auto y)
 {
-    const auto quo = std::floor(x / y);
-    const auto rem = x - quo * y;
+    auto rem = std::fmod(x, y);
+    auto quo = div_mod_detail::quotient(x, y, rem);
+
+    if (rem != 0 && (rem < 0) != (y < 0))
+    {
+        rem += y;
+        quo -= 1;
+    }
+
     return std::make_pair(quo, rem);
 }
 
@@ -213,8 +236,15 @@ div_mod_floor(const std::floating_point auto x, const std::floating_point auto y
 constexpr auto
 div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
 {
-    const auto quo = std::ceil(x / y);
-    const auto rem = x - quo * y;
+    auto rem = std::fmod(x, y);
+    auto quo = div_mod_detail::quotient(x, y, rem);
+
+    if (rem != 0 && (rem < 0) == (y < 0))
+    {
+        rem -= y;
+        quo += 1;
+    }
+
     return std::make_pair(quo, rem);
 }
 
@@ -225,8 +255,23 @@ div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
 constexpr auto
 div_mod_round(const std::floating_point auto x, const std::floating_point auto y)
 {
-    const auto quo = std::round(x / y);
-    const auto rem = x - quo * y;
+    auto rem = std::fmod(x, y);
+    auto quo = div_mod_detail::quotient(x, y, rem);
+
+    if (std::abs(rem) >= std::abs(y) - std::abs(rem))
+    {
+        if ((x < 0) == (y < 0))
+        {
+            rem -= y;
+            quo += 1;
+        }
+        else
+        {
+            rem += y;
+            quo -= 1;
+        }
+    }
+
     return std::make_pair(quo, rem);
 }
 
