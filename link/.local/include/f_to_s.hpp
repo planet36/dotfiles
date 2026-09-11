@@ -14,7 +14,7 @@
 #include <concepts>
 #include <string>
 
-void
+inline void
 resize_to_nul(std::string& s)
 {
     const std::string::size_type i = s.find('\0');
