@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "type_any_of.hpp"
+
 #include <chrono>
 #include <fmt/ostream.h>
 #include <ostream>
@@ -29,6 +31,14 @@ enum struct duration_unit : unsigned char
 
 //template <typename Rep, typename Period, std::chrono::duration<Rep, Period>>
 template <typename Period>
+requires type_any_of<Period,
+                     std::chrono::seconds::period,
+                     std::chrono::minutes::period,
+                     std::chrono::hours::period,
+                     std::chrono::days::period,
+                     std::chrono::weeks::period,
+                     std::chrono::months::period,
+                     std::chrono::years::period>
 constexpr duration_unit
 duration_unit_from()
 {
