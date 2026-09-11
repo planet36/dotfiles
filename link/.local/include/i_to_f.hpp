@@ -14,8 +14,6 @@
 #include <concepts>
 #include <limits>
 
-// XXX: Every uint64_t (digits=64) cannot be cast exactly to long double (digits=64)
-
 template <std::integral T>
 requires (std::numeric_limits<T>::digits <= std::numeric_limits<long double>::digits)
 constexpr auto
