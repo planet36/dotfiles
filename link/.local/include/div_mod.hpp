@@ -22,6 +22,7 @@
 */
 constexpr auto
 div_mod_trunc(const std::integral auto x, const std::integral auto y)
+requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 {
     const auto quo = x / y;
     const auto rem = x % y;
@@ -74,6 +75,7 @@ Mod[x, y] == x - y * Quotient[x, y]
 */
 constexpr auto
 div_mod_floor(const std::integral auto x, const std::integral auto y)
+requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 {
     auto quo = x / y;
     auto rem = x % y;
@@ -104,6 +106,7 @@ div_mod_floor(const std::integral auto x, const std::integral auto y)
 */
 constexpr auto
 div_mod_ceil(const std::integral auto x, const std::integral auto y)
+requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 {
     auto quo = x / y;
     auto rem = x % y;
@@ -134,6 +137,7 @@ div_mod_ceil(const std::integral auto x, const std::integral auto y)
 */
 constexpr auto
 div_mod_round(const std::integral auto x, const std::integral auto y)
+requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 {
     auto quo = x / y;
     auto rem = x % y;
