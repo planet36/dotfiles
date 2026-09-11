@@ -103,10 +103,13 @@ requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 /// get the quotient and remainder of the _ceiling_ integer division
 /**
 * \pre \a y != 0
+*
+* Unsigned types are not allowed, because the remainder can be negative even when \a x and
+* \a y are positive.  An unsigned remainder would wrap around.  For example,
+* <code>div_mod_ceil(9U, 5UL)</code> would give (2, 18446744073709551615) instead of (2, -1).
 */
 constexpr auto
-div_mod_ceil(const std::integral auto x, const std::integral auto y)
-requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
+div_mod_ceil(const std::signed_integral auto x, const std::signed_integral auto y)
 {
     auto quo = x / y;
     auto rem = x % y;
@@ -134,10 +137,13 @@ requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 /// get the quotient and remainder of the _rounded_ integer division
 /**
 * \pre \a y != 0
+*
+* Unsigned types are not allowed, because the remainder can be negative even when \a x and
+* \a y are positive.  An unsigned remainder would wrap around.  For example,
+* <code>div_mod_round(9U, 5UL)</code> would give (2, 18446744073709551615) instead of (2, -1).
 */
 constexpr auto
-div_mod_round(const std::integral auto x, const std::integral auto y)
-requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
+div_mod_round(const std::signed_integral auto x, const std::signed_integral auto y)
 {
     auto quo = x / y;
     auto rem = x % y;

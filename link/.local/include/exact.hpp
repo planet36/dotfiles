@@ -76,7 +76,7 @@ castExact(const T x)
     return static_cast<R>(x);
 }
 
-template <std::integral T>
+template <std::signed_integral T>
 T
 ceilDivExact(const T x, const T y)
 {
@@ -153,7 +153,7 @@ negateExact(const T x)
     std::unreachable();
 }
 
-template <std::integral T>
+template <std::signed_integral T>
 T
 roundDivExact(const T x, const T y)
 {
