@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <concepts>
 #include <cstdint>
 #include <limits>
 #include <type_traits>
@@ -49,7 +50,10 @@ pow_int_func()
     else
     {
         // https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-        return B * pow_int_func<T, B, E - 1>();
+        constexpr T prev = pow_int_func<T, B, E - 1>();
+        if constexpr (std::integral<T>)
+            static_assert(!__builtin_mul_overflow_p(B, prev, T{}), "integer overflow");
+        return T{B * prev};
     }
 }
 
@@ -80,7 +84,10 @@ pow_uint_func()
     else
     {
         // https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-        return B * pow_uint_func<T, B, E - 1>();
+        constexpr T prev = pow_uint_func<T, B, E - 1>();
+        if constexpr (std::integral<T>)
+            static_assert(!__builtin_mul_overflow_p(B, prev, T{}), "integer overflow");
+        return T{B * prev};
     }
 }
 
