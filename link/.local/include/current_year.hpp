@@ -16,7 +16,9 @@
 
 #include <ctime>
 #ifdef DEBUG
+#include <cerrno>
 #include <system_error>
+#include <time.h>
 #endif
 
 inline int

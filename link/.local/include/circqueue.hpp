@@ -14,6 +14,7 @@
 #include "unary_predicate_wrapper.hpp"
 
 #include <array>
+#include <cstddef>
 #include <functional>
 #include <mutex>
 #include <optional>

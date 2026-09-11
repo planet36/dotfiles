@@ -13,6 +13,7 @@
 #include <fmt/ostream.h>
 #include <ostream>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 enum struct duration_unit : unsigned char

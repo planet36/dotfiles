@@ -18,6 +18,8 @@
 #endif
 #include <cerrno>
 #include <cstddef>
+#include <cstdint>
+#include <cstdio>
 #include <ios>
 #include <ranges>
 #include <span>
