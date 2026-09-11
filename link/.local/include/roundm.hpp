@@ -34,8 +34,8 @@ trunc(const T n, const T m) noexcept
     assert(m > 0);
 #endif
 
-    const T r = n % m;
-    return n - r;
+    const auto r = static_cast<T>(n % m);
+    return static_cast<T>(n - r);
 }
 
 namespace detail
@@ -138,12 +138,12 @@ ceil_pow2(const T n, const T m) noexcept
     assert(std::has_single_bit(static_cast<std::make_unsigned_t<T>>(m)));
 #endif
 
-    const T r = n & (m - 1); // equivalent to n % m
+    const auto r = static_cast<T>(n & (m - 1)); // equivalent to n % m
 
     if (r == 0)
         return n;
 
-    const T t = n - r;
+    const auto t = static_cast<T>(n - r);
 
     return detail::above(t, m);
 }
@@ -165,7 +165,8 @@ nearest(const T n, const T m) noexcept
         return t;
 
     // n lies between t and the adjacent multiple away from zero.
-    const T d = (n < t) ? (t - n) : (n - t); // distance from n to t, in [1, m - 1]
+    // distance from n to t, in [1, m - 1]
+    const auto d = static_cast<T>((n < t) ? (t - n) : (n - t));
 
     // d == m - d is a halfway case
 

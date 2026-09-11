@@ -51,7 +51,7 @@ linspace(const T start, const T stop, const bool endpoint = true)
             * This is noticeable when start is negative.
             */
             //result[i] = div_round(i * delta, div) + start;
-            result[i] = div_round(i * delta + offset, div);
+            result[static_cast<size_t>(i)] = static_cast<T>(div_round(i * delta + offset, div));
         }
 
         if (endpoint)
@@ -82,7 +82,7 @@ linspace(const double start, const double stop, const bool endpoint = true)
 
         for (size_t i = 1; i < div; ++i)
         {
-            result[i] = i * delta / div + start;
+            result[i] = static_cast<double>(i) * delta / static_cast<double>(div) + start;
         }
 
         if (endpoint)
