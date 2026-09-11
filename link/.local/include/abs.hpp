@@ -26,6 +26,10 @@ to_signed(const std::integral auto x)
 
 /**
 \return the absolute value of \a x as an unsigned type
+
+\note C2Y adds \c uabs to the C standard library, and glibc 2.42 declares it in \c stdlib.h.
+When that declaration is visible, a call with an \c int argument resolves to that
+non-template function, which is not \c constexpr.
 */
 constexpr auto
 uabs(const std::signed_integral auto x)
