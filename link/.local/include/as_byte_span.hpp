@@ -9,6 +9,16 @@
 * Each overload returns a view that dangles once the referenced storage is
 * destroyed or reallocated.  A temporary argument is destroyed at the end of the
 * statement that creates it.
+*
+* This leaves \c s dangling:
+* \code{.cpp}
+auto s = as_byte_span(std::string{"abc"});
+\endcode
+*
+* But this is safe:
+* \code{.cpp}
+f(as_byte_span(std::string{"abc"}));
+\endcode
 */
 
 #pragma once
