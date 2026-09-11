@@ -63,7 +63,7 @@ circqueue_init(size_t max_num_elems, size_t sizeof_elem)
     if (buf == nullptr)
         return circqueue_default;
 
-    return (circqueue){
+    const circqueue cq = {
         .buf = buf,
         .max_num_elems = max_num_elems,
         .sizeof_elem = sizeof_elem,
@@ -71,6 +71,8 @@ circqueue_init(size_t max_num_elems, size_t sizeof_elem)
         .tail = 0,
         .num_elems = 0,
     };
+
+    return cq;
 }
 
 static inline void

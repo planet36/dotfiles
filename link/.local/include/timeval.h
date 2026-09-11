@@ -26,10 +26,12 @@ extern "C" {
 static inline struct timeval
 msec_to_timeval(unsigned int msec)
 {
-    return (struct timeval){
+    const struct timeval tv = {
         .tv_sec = msec / 1000U,
         .tv_usec = (msec % 1000U) * 1000L,
     };
+
+    return tv;
 }
 
 static inline double
