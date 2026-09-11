@@ -38,6 +38,9 @@ as_byte_span(const T& x) noexcept
 
 /// Get a view to the elements of a contiguous range as a span of bytes
 /**
+* A string literal is an array that includes its terminating null character, so
+* <code>as_byte_span("abc")</code> has 4 bytes.
+*
 * \param container the range to view
 * \return a \c std::span of <code>const std::byte</code> over the elements of
 *         \a container, with a static extent when \a container has one
