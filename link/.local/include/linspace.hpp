@@ -15,6 +15,8 @@
 
 #include <array>
 #include <concepts>
+#include <cstddef>
+#include <type_traits>
 
 /**
 * Return \a NUM evenly spaced samples, calculated over the interval <code>[\a start, \a stop]</code>.

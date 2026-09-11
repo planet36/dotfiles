@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <limits>
+#include <type_traits>
 
 /// Raise base \a B to the power of exponent \a E
 template <typename T, T B, int8_t E>

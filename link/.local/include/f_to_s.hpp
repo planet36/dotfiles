@@ -13,6 +13,7 @@
 #include <charconv>
 #include <concepts>
 #include <string>
+#include <system_error>
 
 inline void
 resize_to_nul(std::string& s)
