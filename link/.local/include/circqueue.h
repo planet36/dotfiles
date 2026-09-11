@@ -52,11 +52,19 @@ static const circqueue circqueue_default = {
     .num_elems = 0,
 };
 
+/// make an empty queue
+/**
+* If the allocation fails, \c buf is null and the queue has a capacity of 0.
+*/
 static inline circqueue
 circqueue_init(size_t max_num_elems, size_t sizeof_elem)
 {
+    void* const buf = calloc(max_num_elems, sizeof_elem);
+    if (buf == nullptr)
+        return circqueue_default;
+
     return (circqueue){
-        .buf = calloc(max_num_elems, sizeof_elem),
+        .buf = buf,
         .max_num_elems = max_num_elems,
         .sizeof_elem = sizeof_elem,
         .head = 0,
