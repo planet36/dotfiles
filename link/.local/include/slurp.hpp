@@ -27,13 +27,20 @@
 
 #if 1
 
-// this version calls fopen, fstat, fread, fclose
+// this version calls open, fdopen, fstat, fread, fclose
 inline std::vector<uint8_t>
 slurp(const std::filesystem::path& path)
 {
-    std::FILE* fp = std::fopen(path.c_str(), "r");
+    const int fd = ::open(path.c_str(), O_RDONLY | O_NONBLOCK);
+    if (fd < 0)
+    {
+        throw std::system_error(std::make_error_code(std::errc{errno}), path);
+    }
+
+    std::FILE* fp = ::fdopen(fd, "r");
     if (fp == nullptr)
     {
+        (void)::close(fd);
         throw std::system_error(std::make_error_code(std::errc{errno}), path);
     }
 
@@ -105,7 +112,7 @@ slurp(const std::filesystem::path& path)
 inline std::vector<uint8_t>
 slurp(const std::filesystem::path& path)
 {
-    const int fd = ::open(path.c_str(), O_RDONLY);
+    const int fd = ::open(path.c_str(), O_RDONLY | O_NONBLOCK);
     if (fd < 0)
     {
         throw std::system_error(std::make_error_code(std::errc{errno}), path);

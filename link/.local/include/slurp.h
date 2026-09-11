@@ -31,14 +31,22 @@ extern "C" {
 
 #if 1
 
-// this version calls fopen, fstat, fread, fclose
+// this version calls open, fdopen, fstat, fread, fclose
 static inline int
 slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
-    FILE* fp = fopen(path, "rb");
+    const int fd = open(path, O_RDONLY | O_NONBLOCK);
+    if (fd < 0)
+    {
+        warn("open \"%s\"", path);
+        return -1;
+    }
+
+    FILE* fp = fdopen(fd, "rb");
     if (fp == nullptr)
     {
-        warn("fopen \"%s\"", path);
+        (void)close(fd);
+        warn("fdopen \"%s\"", path);
         return -1;
     }
 
@@ -126,7 +134,7 @@ slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 static inline int
 slurp(const char* path, unsigned char** bytes, size_t* num_bytes)
 {
-    const int fd = open(path, O_RDONLY);
+    const int fd = open(path, O_RDONLY | O_NONBLOCK);
     if (fd < 0)
     {
         warn("open \"%s\"", path);
