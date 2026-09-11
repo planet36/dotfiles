@@ -22,7 +22,7 @@
 * \sa https://searchcode.com/file/98565256/PhysBAM_Tools/Math_Tools/ulp.h
 */
 template <std::floating_point T>
-requires std::numeric_limits<T>::is_iec559
+requires std::numeric_limits<T>::is_iec559 && (sizeof(T) == 4 || sizeof(T) == 8)
 T
 ulp(T x)
 {
