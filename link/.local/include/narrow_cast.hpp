@@ -30,7 +30,7 @@
 *       template types.  See \c in_range.hpp.
 */
 template <std::integral To>
-[[nodiscard]] constexpr To
+[[nodiscard]] static constexpr To
 narrow_cast(const std::integral auto value)
 {
     if (!in_range<To>(value))

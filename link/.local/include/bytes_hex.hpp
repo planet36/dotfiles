@@ -45,9 +45,9 @@ encode_nibble_to_hex(const uint8_t x) noexcept
 [[nodiscard]] static constexpr uint8_t
 decode_hex_to_nibble(const char c)
 {
-    if (c >= '0' && c <= '9') return c - '0';
-    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
-    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+    if (c >= '0' && c <= '9') return static_cast<uint8_t>(c - '0');
+    if (c >= 'A' && c <= 'F') return static_cast<uint8_t>(c - 'A' + 10);
+    if (c >= 'a' && c <= 'f') return static_cast<uint8_t>(c - 'a' + 10);
 
     throw std::invalid_argument("not a hex digit");
 }

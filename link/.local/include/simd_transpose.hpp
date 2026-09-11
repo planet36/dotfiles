@@ -19,7 +19,7 @@
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using SSE2 intrinsics
-inline void
+static void
 simd_transpose(std::array<__m128i, 2>& x) noexcept
 {
     const __m128i AB_0 = _mm_unpacklo_epi64(x[0], x[1]);
@@ -33,7 +33,7 @@ simd_transpose(std::array<__m128i, 2>& x) noexcept
 /**
 * \sa https://randombit.net/bitbashing/posts/integer_matrix_transpose_in_sse2.html
 */
-inline void
+static void
 simd_transpose(std::array<__m128i, 4>& x) noexcept
 {
     const __m128i AB_01 = _mm_unpacklo_epi32(x[0], x[1]);
@@ -51,7 +51,7 @@ simd_transpose(std::array<__m128i, 4>& x) noexcept
 /**
 * \sa https://stackoverflow.com/a/4951060/1892784
 */
-inline void
+static void
 simd_transpose(std::array<__m128i, 8>& x) noexcept
 {
     const __m128i AB_03 = _mm_unpacklo_epi16(x[0], x[1]);
@@ -86,7 +86,7 @@ simd_transpose(std::array<__m128i, 8>& x) noexcept
 /**
 * \sa https://codereview.stackexchange.com/questions/295941/16x16-integer-matrix-transpose-using-sse2-intrinsics-in-c
 */
-inline void
+static void
 simd_transpose(std::array<__m128i, 16>& x) noexcept
 {
     const __m128i AB_07 = _mm_unpacklo_epi8(x[0x0], x[0x1]);
@@ -167,7 +167,7 @@ simd_transpose(std::array<__m128i, 16>& x) noexcept
 * independent Castella states be permuted in lockstep, one per lane (see
 * \c Castella::permute_x2).
 */
-inline void
+static void
 simd_transpose(std::array<__m256i, 2>& x) noexcept
 {
     const __m256i AB_0 = _mm256_unpacklo_epi64(x[0], x[1]);
@@ -181,7 +181,7 @@ simd_transpose(std::array<__m256i, 2>& x) noexcept
 /**
 * The 4x4 SSE2 network above, lifted to ymm registers.  See the 2x2 overload.
 */
-inline void
+static void
 simd_transpose(std::array<__m256i, 4>& x) noexcept
 {
     const __m256i AB_01 = _mm256_unpacklo_epi32(x[0], x[1]);
@@ -199,7 +199,7 @@ simd_transpose(std::array<__m256i, 4>& x) noexcept
 /**
 * The 8x8 SSE2 network above, lifted to ymm registers.  See the 2x2 overload.
 */
-inline void
+static void
 simd_transpose(std::array<__m256i, 8>& x) noexcept
 {
     const __m256i AB_03 = _mm256_unpacklo_epi16(x[0], x[1]);
@@ -235,7 +235,7 @@ simd_transpose(std::array<__m256i, 8>& x) noexcept
 * The 16x16 SSE2 network above, lifted to ymm registers.  See the 2x2
 * overload.
 */
-inline void
+static void
 simd_transpose(std::array<__m256i, 16>& x) noexcept
 {
     const __m256i AB_07 = _mm256_unpacklo_epi8(x[0x0], x[0x1]);
@@ -314,7 +314,7 @@ simd_transpose(std::array<__m256i, 16>& x) noexcept
 * the qword permute ([q0 q1 | q2 q3] -> [q0 q2 | q1 q3]) that finishes the
 * larger folded overloads below.  No unpack levels are needed.
 */
-inline void
+static void
 simd_transpose_folded(std::array<__m256i, 1>& x) noexcept
 {
     constexpr int q0_q2_q1_q3 = 0b11'01'10'00;
@@ -332,7 +332,7 @@ simd_transpose_folded(std::array<__m256i, 1>& x) noexcept
 * qword unpacks pair column c with column c+2, and the final qword permute
 * rejoins each column's halves.  See the 16x16 overload for the rationale.
 */
-inline void
+static void
 simd_transpose_folded(std::array<__m256i, 2>& x) noexcept
 {
     // Low lanes: rows A-B; high lanes: rows C-D (same network per lane).
@@ -360,7 +360,7 @@ simd_transpose_folded(std::array<__m256i, 2>& x) noexcept
 * qword permute rejoins each column's halves.  See the 16x16 overload for the
 * rationale.
 */
-inline void
+static void
 simd_transpose_folded(std::array<__m256i, 4>& x) noexcept
 {
     // Rows A-D are in the low lanes and rows E-H in the high lanes.  The
@@ -406,7 +406,7 @@ simd_transpose_folded(std::array<__m256i, 4>& x) noexcept
 * That is 32 in-lane unpacks and 8 cross-lane permutes.  The plain 16-register
 * network needs 64 unpacks.
 */
-inline void
+static void
 simd_transpose_folded(std::array<__m256i, 8>& x) noexcept
 {
     // Rows A-H are in the low lanes and rows I-P in the high lanes.  The
@@ -472,7 +472,7 @@ simd_transpose_folded(std::array<__m256i, 8>& x) noexcept
 #elif defined(__aarch64__) && defined(__ARM_NEON)
 
 /// Transpose \a x (treating it as a 2x2 matrix of \c uint64_t) using ARM Neon intrinsics
-inline void
+static void
 simd_transpose(std::array<uint8x16_t, 2>& x) noexcept
 {
     const uint64x2_t AB_0 = vzip1q_u64(vreinterpretq_u64_u8(x[0]), vreinterpretq_u64_u8(x[1]));
@@ -483,7 +483,7 @@ simd_transpose(std::array<uint8x16_t, 2>& x) noexcept
 }
 
 /// Transpose \a x (treating it as a 4x4 matrix of \c uint32_t) using ARM Neon intrinsics
-inline void
+static void
 simd_transpose(std::array<uint8x16_t, 4>& x) noexcept
 {
     const uint32x4_t AB_01 = vzip1q_u32(vreinterpretq_u32_u8(x[0]), vreinterpretq_u32_u8(x[1]));
@@ -503,7 +503,7 @@ simd_transpose(std::array<uint8x16_t, 4>& x) noexcept
 }
 
 /// Transpose \a x (treating it as a 8x8 matrix of \c uint16_t) using ARM Neon intrinsics
-inline void
+static void
 simd_transpose(std::array<uint8x16_t, 8>& x) noexcept
 {
     const uint16x8_t AB_03 = vzip1q_u16(vreinterpretq_u16_u8(x[0]), vreinterpretq_u16_u8(x[1]));
@@ -547,7 +547,7 @@ simd_transpose(std::array<uint8x16_t, 8>& x) noexcept
 /**
 * \sa https://codereview.stackexchange.com/questions/301656/16x16-byte-matrix-transpose-using-arm-neon-intrinsics-in-c
 */
-inline void
+static void
 simd_transpose(std::array<uint8x16_t, 16>& x) noexcept
 {
     const uint8x16_t AB_07 = vzip1q_u8(x[0x0], x[0x1]);

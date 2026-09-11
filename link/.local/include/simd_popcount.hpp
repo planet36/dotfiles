@@ -17,7 +17,7 @@
 #include <immintrin.h>
 
 #if defined(__SSE4_1__)
-[[nodiscard]] inline int
+[[nodiscard]] static inline int
 simd_popcount(const __m128i x) noexcept
 {
     const auto x0 = static_cast<uint64_t>(_mm_extract_epi64(x, 0));
@@ -27,7 +27,7 @@ simd_popcount(const __m128i x) noexcept
 #endif
 
 #if defined(__AVX__)
-[[nodiscard]] inline int
+[[nodiscard]] static inline int
 simd_popcount(const __m256i x) noexcept
 {
     const auto x0 = static_cast<uint64_t>(_mm256_extract_epi64(x, 0));
@@ -39,7 +39,7 @@ simd_popcount(const __m256i x) noexcept
 #endif
 
 #if defined(__AVX512F__)
-[[nodiscard]] inline int
+[[nodiscard]] static inline int
 simd_popcount(const __m512i x) noexcept
 {
     const auto x0 = _mm512_extracti64x4_epi64(x, 0);
@@ -52,7 +52,7 @@ simd_popcount(const __m512i x) noexcept
 
 #include <arm_neon.h>
 
-[[nodiscard]] inline int
+[[nodiscard]] static inline int
 simd_popcount(const uint8x16_t x) noexcept
 {
     return vaddvq_u8(vcntq_u8(x));

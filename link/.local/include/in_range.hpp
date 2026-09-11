@@ -27,7 +27,7 @@
 * \note This is not as restrictive as \c std::in_range.
 */
 template <std::integral R, std::integral T>
-[[nodiscard]] constexpr bool
+[[nodiscard]] static constexpr bool
 in_range(T t) noexcept
 {
     return std::cmp_greater_equal(t, std::numeric_limits<R>::min()) &&

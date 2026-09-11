@@ -14,10 +14,20 @@
 #include <string>
 #include <string_view>
 #include <type_traits>
+#include <utility>
 
+/// Join a range of strings into a single string
+/**
+* A null pointer element joins as an empty string, so the separators around it
+* are kept.
+*
+* \param range_strings the strings to join
+* \param joiner the separator inserted between consecutive strings
+* \return the concatenation of all strings in \a range_strings, separated by \a joiner
+*/
 template <std::ranges::input_range R>
 requires std::convertible_to<std::ranges::range_reference_t<R>, std::string_view>
-[[nodiscard]] std::string
+[[nodiscard]] static std::string
 str_join(R&& range_strings, std::string_view joiner)
 {
     std::string result;
