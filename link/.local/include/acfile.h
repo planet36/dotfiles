@@ -12,6 +12,7 @@
 #pragma once
 
 #include <err.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -41,7 +42,12 @@ cleanup_close_file_ptr(FILE** fp_ptr) [[gnu::nonnull]]
 static inline void
 cleanup_close_fd(const int* fd_ptr) [[gnu::nonnull]]
 {
-    (void)close(*fd_ptr);
+    if (*fd_ptr >= 0)
+    {
+        const int saved_errno = errno;
+        (void)close(*fd_ptr);
+        errno = saved_errno;
+    }
 }
 
 #if defined(__cplusplus)
