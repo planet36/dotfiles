@@ -15,7 +15,6 @@
 #include "to_unsigned.hpp"
 
 #include <concepts>
-#include <cstdlib>
 #include <type_traits>
 
 /// Cast the int to signed int
@@ -31,7 +30,9 @@ to_signed(const std::integral auto x)
 constexpr auto
 uabs(const std::signed_integral auto x)
 {
-    return to_unsigned(std::abs(x));
+    using U = std::make_unsigned_t<decltype(x)>;
+    const U u = to_unsigned(x);
+    return x < 0 ? static_cast<U>(0U - u) : u;
 }
 
 /**
