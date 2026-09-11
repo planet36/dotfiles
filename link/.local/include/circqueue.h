@@ -76,7 +76,8 @@ circqueue_init(size_t max_num_elems, size_t sizeof_elem)
 static inline void
 circqueue_free(circqueue* cq)
 {
-    (void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
+    if (cq->buf != nullptr)
+        (void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
     free(cq->buf);
     cq->buf = nullptr;
     cq->max_num_elems = 0;
@@ -150,7 +151,8 @@ circqueue_pop(circqueue* cq, void* x)
 static inline void
 circqueue_reset(circqueue* cq)
 {
-    (void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
+    if (cq->buf != nullptr)
+        (void)memset(cq->buf, 0, cq->max_num_elems * cq->sizeof_elem);
     cq->head = 0;
     cq->tail = 0;
     cq->num_elems = 0;
