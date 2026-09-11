@@ -16,9 +16,11 @@
 
 // XXX: Every uint64_t (digits=64) cannot be cast exactly to long double (digits=64)
 
+template <std::integral T>
+requires (std::numeric_limits<T>::digits <= std::numeric_limits<long double>::digits)
 constexpr auto
-i_to_f(const std::integral auto x)
+i_to_f(const T x)
 {
-    using result_type = float_bits<std::numeric_limits<decltype(x)>::digits>;
+    using result_type = float_bits<std::numeric_limits<T>::digits>;
     return static_cast<result_type>(x);
 }
