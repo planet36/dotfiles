@@ -9,18 +9,12 @@
 
 #pragma once
 
-#include "simd-concepts.hpp"
-
 #include <cstring>
+#include <immintrin.h>
 
 /// Test if \a a and \a b have the same bytes
-/**
-* Floating-point lanes compare by representation, not by value.  So \c +0.0 and
-* \c -0.0 differ, and a NaN equals a NaN with the same bits.
-*/
-template <simd_t T>
 inline bool
-simd_equal(const T& a, const T& b)
+simd_equal(const __m128i& a, const __m128i& b)
 {
-    return std::memcmp(&a, &b, sizeof(T)) == 0;
+    return std::memcmp(&a, &b, sizeof(a)) == 0;
 }

@@ -18,7 +18,6 @@
 #pragma once
 
 #include "simd-array.hpp"
-#include "simd-concepts.hpp"
 
 #include <array>
 #if defined(DEBUG)
@@ -263,11 +262,9 @@ aesdec(const __m512i a, const __m512i key) noexcept
 
 #endif
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-
 /// Do \c aesenc \a num_rounds times on all elements of array \a arr with key \a key
-template <simd_int_t T, size_t N>
+template <typename T, size_t N>
+requires requires (const T x) { aesenc(x, x); }
 void
 aesenc_array(std::array<T, N>& arr, const T key, const int num_rounds) noexcept
 {
@@ -280,13 +277,9 @@ aesenc_array(std::array<T, N>& arr, const T key, const int num_rounds) noexcept
     }
 }
 
-#pragma GCC diagnostic pop
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wignored-attributes"
-
 /// Do \c aesdec \a num_rounds times on all elements of array \a arr with key \a key
-template <simd_int_t T, size_t N>
+template <typename T, size_t N>
+requires requires (const T x) { aesdec(x, x); }
 void
 aesdec_array(std::array<T, N>& arr, const T key, const int num_rounds) noexcept
 {
@@ -299,8 +292,6 @@ aesdec_array(std::array<T, N>& arr, const T key, const int num_rounds) noexcept
     }
 }
 
-#pragma GCC diagnostic pop
-
 /// Davies-Meyer single-block-length compression function that uses AES as the block cipher
 /**
 * \sa https://en.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer
@@ -310,9 +301,9 @@ aesdec_array(std::array<T, N>& arr, const T key, const int num_rounds) noexcept
 * \param m the block of the message
 * \return the next hash value
 */
-template <simd_int_t T, int Nr = 3>
-requires (Nr >= 1)
-[[nodiscard]] auto
+template <int Nr = 3, typename T>
+requires (Nr >= 1) && requires (const T x) { aesenc(x, x); }
+[[nodiscard]] T
 aesenc_davies_meyer(const T H, const T m) noexcept
 {
     auto a = H;
@@ -333,9 +324,9 @@ aesenc_davies_meyer(const T H, const T m) noexcept
 * \param m the block of the message
 * \return the next hash value
 */
-template <simd_int_t T, int Nr = 3>
-requires (Nr >= 1)
-[[nodiscard]] auto
+template <int Nr = 3, typename T>
+requires (Nr >= 1) && requires (const T x) { aesdec(x, x); }
+[[nodiscard]] T
 aesdec_davies_meyer(const T H, const T m) noexcept
 {
     auto a = H;
