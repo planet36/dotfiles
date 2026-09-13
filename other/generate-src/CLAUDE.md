@@ -46,7 +46,6 @@ generators and where each one's stdout is redirected:
 | generator | output (under `<repo-root>/link/.local/`) |
 |---|---|
 | `generate-ascii.py` | `include/ascii.hpp` |
-| `generate-bit-patterns.py` | `include/bit_patterns.hpp` |
 | `generate-gcc-machine-modes-typedefs.py` | `include/gcc-machine-modes-typedefs.hpp` |
 | `generate-math-const.py` | `include/math-const.hpp` |
 | `generate-scaled-const.py` | `include/scaled-const.h` |
