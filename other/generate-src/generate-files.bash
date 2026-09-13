@@ -11,7 +11,6 @@ cd "$SCRIPT_DIR"
 OUT_DIR="$(git rev-parse --show-toplevel)/link/.local"
 
 python3 generate-ascii.py                                > "$OUT_DIR"/include/ascii.hpp
-python3 generate-bit-patterns.py                         > "$OUT_DIR"/include/bit_patterns.hpp
 python3 generate-gcc-machine-modes-typedefs.py           > "$OUT_DIR"/include/gcc-machine-modes-typedefs.hpp
 python3 generate-math-const.py                           > "$OUT_DIR"/include/math-const.hpp
 python3 generate-scaled-const.py                         > "$OUT_DIR"/include/scaled-const.h
@@ -22,19 +21,19 @@ cat <<EOT
 # Run these commands:
 
 git diff \
-$OUT_DIR/include/{ascii,bit_patterns,gcc-machine-modes-typedefs,math-const}.hpp \
+$OUT_DIR/include/{ascii,gcc-machine-modes-typedefs,math-const}.hpp \
 $OUT_DIR/include/scaled-const.h \
 $OUT_DIR/lib/python/x11_colors.py
 
 git commit -m 'Update generated source code files' \
-$OUT_DIR/include/{ascii,bit_patterns,gcc-machine-modes-typedefs,math-const}.hpp \
+$OUT_DIR/include/{ascii,gcc-machine-modes-typedefs,math-const}.hpp \
 $OUT_DIR/include/scaled-const.h \
 $OUT_DIR/lib/python/x11_colors.py
 
 # Or reset the changes
 
 git checkout \
-$OUT_DIR/include/{ascii,bit_patterns,gcc-machine-modes-typedefs,math-const}.hpp \
+$OUT_DIR/include/{ascii,gcc-machine-modes-typedefs,math-const}.hpp \
 $OUT_DIR/include/scaled-const.h \
 $OUT_DIR/lib/python/x11_colors.py
 
