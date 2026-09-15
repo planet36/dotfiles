@@ -156,6 +156,7 @@ if vim.env.TMUX ~= nil then vim.o.mouse = '' end
 vim.o.whichwrap = '<,>,[,]'
 vim.opt.matchpairs:append({ '<:>' })
 vim.o.scrolloff = 6
+vim.o.sidescrolloff = 6
 
 -- }}}
 
