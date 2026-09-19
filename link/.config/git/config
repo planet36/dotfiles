@@ -22,7 +22,7 @@
     verbose = true
 [core]
     editor = nvim
-    fsmonitor = true
+    #fsmonitor = true
 [diff]
     algorithm = histogram
     colorMoved = plain
