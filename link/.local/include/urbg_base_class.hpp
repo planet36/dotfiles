@@ -23,6 +23,7 @@
 #include <cstring>
 #include <limits>
 #include <memory>
+#include <random>
 #include <stdlib.h> // arc4random_buf
 #include <string.h> // explicit_bzero
 #include <type_traits>
@@ -105,12 +106,14 @@ protected:
 };
 
 // https://stackoverflow.com/a/13842612
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #define SINGLE_ARG(...) __VA_ARGS__
 // Use SINGLE_ARG when a macro arg has a comma.
 
 // init and next are declared inline, so their definitions in a header can be
 // included in more than one translation unit without violating the
 // one-definition rule.
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 #define DEF_URBG_SUBCLASS(CLASS_NAME, STATE_TYPE, RESULT_TYPE)                              \
     struct CLASS_NAME : public URBG_base<STATE_TYPE, RESULT_TYPE>                           \
     {                                                                                       \
@@ -125,3 +128,12 @@ protected:
         [[nodiscard]] result_type operator()() { return next(); }                           \
     };                                                                                      \
     static_assert(std::uniform_random_bit_generator<CLASS_NAME>);
+
+/// A PRNG declared with \c DEF_URBG_SUBCLASS
+/**
+* Only these have \c seed_bytes_type.  The \c std engines do not.
+*/
+template <typename T>
+concept my_urbg = std::uniform_random_bit_generator<T> && requires {
+    typename T::seed_bytes_type;
+};
