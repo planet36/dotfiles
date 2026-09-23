@@ -221,6 +221,17 @@ vim.o.foldlevelstart = 99
 
 -- }}}
 
+-- {{{ Highlight on yank
+
+-- :h vim.hl.on_yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.hl.on_yank({ timeout = 500 })
+  end,
+})
+
+-- }}}
+
 -- {{{ Maps
 
 require('map')
