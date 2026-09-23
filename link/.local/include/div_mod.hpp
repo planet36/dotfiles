@@ -20,7 +20,7 @@
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_trunc(const std::integral auto x, const std::integral auto y)
 requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 {
@@ -73,7 +73,7 @@ x % y == x - y * (x / y)
 Mod[x, y] == x - y * Quotient[x, y]
 \endverbatim
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_floor(const std::integral auto x, const std::integral auto y)
 requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 {
@@ -108,7 +108,7 @@ requires (std::is_signed_v<decltype(x)> == std::is_signed_v<decltype(y)>)
 * \a y are positive.  An unsigned remainder would wrap around.  For example,
 * <code>div_mod_ceil(9U, 5UL)</code> would give (2, 18446744073709551615) instead of (2, -1).
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_ceil(const std::signed_integral auto x, const std::signed_integral auto y)
 {
     auto quo = x / y;
@@ -142,7 +142,7 @@ div_mod_ceil(const std::signed_integral auto x, const std::signed_integral auto 
 * \a y are positive.  An unsigned remainder would wrap around.  For example,
 * <code>div_mod_round(9U, 5UL)</code> would give (2, 18446744073709551615) instead of (2, -1).
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_round(const std::signed_integral auto x, const std::signed_integral auto y)
 {
     auto quo = x / y;
@@ -194,7 +194,7 @@ namespace div_mod_detail
 {
 
 /// get the integral quotient of \a x and \a y that matches the remainder \a rem
-constexpr auto
+[[nodiscard]] constexpr auto
 quotient(const std::floating_point auto x, const std::floating_point auto y,
          const std::floating_point auto rem)
 {
@@ -217,7 +217,7 @@ quotient(const std::floating_point auto x, const std::floating_point auto y,
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_trunc(const std::floating_point auto x, const std::floating_point auto y)
 {
     const auto rem = std::fmod(x, y);
@@ -229,7 +229,7 @@ div_mod_trunc(const std::floating_point auto x, const std::floating_point auto y
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_floor(const std::floating_point auto x, const std::floating_point auto y)
 {
     auto rem = std::fmod(x, y);
@@ -248,7 +248,7 @@ div_mod_floor(const std::floating_point auto x, const std::floating_point auto y
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
 {
     auto rem = std::fmod(x, y);
@@ -267,7 +267,7 @@ div_mod_ceil(const std::floating_point auto x, const std::floating_point auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_mod_round(const std::floating_point auto x, const std::floating_point auto y)
 {
     auto rem = std::fmod(x, y);
@@ -294,7 +294,7 @@ div_mod_round(const std::floating_point auto x, const std::floating_point auto y
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_trunc(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_trunc(x, y);
@@ -305,7 +305,7 @@ div_trunc(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_floor(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_floor(x, y);
@@ -316,7 +316,7 @@ div_floor(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_ceil(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_ceil(x, y);
@@ -327,7 +327,7 @@ div_ceil(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 div_round(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_round(x, y);
@@ -338,7 +338,7 @@ div_round(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 mod_trunc(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_trunc(x, y);
@@ -349,7 +349,7 @@ mod_trunc(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 mod_floor(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_floor(x, y);
@@ -360,7 +360,7 @@ mod_floor(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 mod_ceil(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_ceil(x, y);
@@ -371,7 +371,7 @@ mod_ceil(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 mod_round(const auto x, const auto y)
 {
     const auto [quo, rem] = div_mod_round(x, y);
@@ -382,7 +382,7 @@ mod_round(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 amod_trunc(const auto x, const auto y)
 {
     const auto result = mod_trunc(x, y);
@@ -393,7 +393,7 @@ amod_trunc(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 amod_floor(const auto x, const auto y)
 {
     const auto result = mod_floor(x, y);
@@ -404,7 +404,7 @@ amod_floor(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 amod_ceil(const auto x, const auto y)
 {
     const auto result = mod_ceil(x, y);
@@ -415,7 +415,7 @@ amod_ceil(const auto x, const auto y)
 /**
 * \pre \a y != 0
 */
-constexpr auto
+[[nodiscard]] constexpr auto
 amod_round(const auto x, const auto y)
 {
     const auto result = mod_round(x, y);
