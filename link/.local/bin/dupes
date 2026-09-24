@@ -80,7 +80,6 @@ Descend at most max_depth levels of directories below path."""
             file_path_joined = dir_path.joinpath(file_basename)
 
             # Ignore symbolic links.
-            # TODO: maybe make an option to follow links?
             if file_path_joined.is_symlink():
                 continue
 
