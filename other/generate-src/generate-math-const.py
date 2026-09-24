@@ -63,9 +63,6 @@ pi = gmpy2.mpfr('3.1415926535897932384626433832795028841971693993751058209749445
 # https://oeis.org/A001113/constant
 e = gmpy2.mpfr('2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746')
 
-# imaginary unit
-i = gmpy2.mpc(1j)
-
 # https://en.wikipedia.org/wiki/Mathematical_constant#Constants_in_advanced_mathematics
 
 # Feigenbaum constants
@@ -300,7 +297,6 @@ def math_expr_to_c_identifier(s: str) -> str:
 mpz integer
 mpq rational => std::ratio
 mpfr real
-mpc complex => std::complex
 '''
 
 '''
@@ -349,13 +345,6 @@ def generate_math_const(x: dict | str) -> None:
             raise
     else:
         raise TypeError('The list must contain dicts or strings')
-
-    if isinstance(val, gmpy2.mpc):
-        if gmpy2.is_zero(val.imag):
-            val = val.real
-        else:
-            # TODO: add support for complex numbers
-            pass
 
     #val64 = gmpy2.mpfr(val, precision=gmpy2.ieee(64).precision)
     #val128 = gmpy2.mpfr(val, precision=gmpy2.ieee(128).precision)
