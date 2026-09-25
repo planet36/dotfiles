@@ -71,7 +71,8 @@ ones' banner format rather than inventing a new one.
   `color.c` from the X.Org xserver GitLab mirror and pipes the `BuiltinColors[]` array through
   `filter-oscolor.py` (which regex-parses `{r, g, b, "name"},` lines into a Python dict literal,
   dropping "grey"-spelled duplicates), then appends a hand-written ANSI 256-color block. Re-running
-  it can pick up upstream color-table changes, so its diff is the least predictable of the six.
+  it can pick up upstream color-table changes, so its diff is the least predictable of the
+  generators.
 - **`generate-gcc-machine-modes-typedefs.py`**: queries the *installed* `gcc` via `subprocess` to
   derive machine-mode typedefs, rather than hardcoding them — its output is compiler/host-version
   dependent, so regenerate it after a GCC upgrade.

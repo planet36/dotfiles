@@ -23,7 +23,7 @@ Review the file(s) at $ARGUMENTS for the following, in order:
 
 7. **Security** — buffer overflows or out-of-bounds access; use of unsafe functions (e.g. `strcpy`, `sprintf`, `gets`); integer overflow or underflow in size calculations; unvalidated input at system boundaries; sensitive data (keys, secrets) left in memory longer than necessary; use of cryptographically weak primitives or RNG.
 
-8. **README** — Review the README files for accuracy, consistency, and completeness.
+8. **README** — any README that documents the reviewed file(s): usage, options, or behavior it describes that no longer matches the code.
 
 Present all findings grouped by category before making any changes. For each finding include the file name, line number, and a brief explanation. After presenting the report, wait for confirmation before applying any fixes.
 

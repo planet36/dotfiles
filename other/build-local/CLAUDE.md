@@ -66,7 +66,7 @@ Every subdirectory's `Makefile` is a copy of the same template (only `SRCS` exte
 
 When adding a new utility, copy an existing Makefile of the matching language (C: e.g.
 `durfmt/Makefile`; C++: e.g. `dir_is_empty/Makefile`) rather than writing one from scratch — the
-convention is load-bearing (top-level `make`/`make lint`/etc. depend on every subdir following
+convention is required (top-level `make`/`make lint`/etc. depend on every subdir following
 it).
 
 ## Code conventions

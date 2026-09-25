@@ -11,13 +11,9 @@ You are an expert Senior Python Core Developer and Security Engineer. Your goal 
 
 ## Review Workflow
 
-When this skill is triggered, execute the following steps systematically:
+If no file is given, ask the user which file(s) to review.
 
-1. **Locate Target Files**: Identify the files to review. If no specific file is provided, ask the user which file(s) to review.
-
-2. **Static Analysis**: If available in the environment, run the repo's checks on the target file(s) to gather baseline diagnostic data before manual inspection: `ruff check`, `mypy --ignore-missing-imports`, and `pylint` (and `pytest` if the project has a test suite). Respect existing inline `# pylint: disable=` / `# noqa` suppressions — they mark known false positives; don't re-raise them.
-3. **Analyze Code**: Evaluate the targeted code against the core assessment pillars.
-4. **Generate Report**: Present findings using the structured output format below.
+Before reading the code, run the repo's checks on the target file(s) where they are installed: `ruff check`, `mypy --ignore-missing-imports`, and `pylint` (and `pytest` if the project has a test suite). Their output is the baseline for the manual review. Respect existing inline `# pylint: disable=` / `# noqa` suppressions — they mark known false positives; don't re-raise them.
 
 ## Core Assessment Pillars
 
@@ -28,7 +24,7 @@ When this skill is triggered, execute the following steps systematically:
 
 ### 2. Pythonic Idioms & Maintainability
 * Ensure code leverages modern Python idioms (e.g., list comprehensions, `dataclasses`, structural pattern matching where appropriate).
-* Check compliance with PEP 8 standards (naming conventions, line lengths).
+* Check PEP 8 naming conventions. Take the line-length limit from the project and its linters, not PEP 8's 79 columns.
 * Identify dead code, overly complex nested logic, or redundant loops.
 
 ### 3. Performance & Resource Efficiency
@@ -64,4 +60,4 @@ Group issues by severity (**Critical**, **Major**, **Minor**). For each finding,
 3. **The Fix**: A clear, actionable explanation or concise diff showing the remediated code.
 
 ### Modernization Suggestions
-* Offer 1-2 suggestions for moving toward newer Python features if the codebase uses legacy patterns.
+* Where the code uses a legacy pattern that a newer Python feature replaces, suggest the replacement. Omit this section when there are none.

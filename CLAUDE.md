@@ -18,7 +18,7 @@ optimization levels. It refuses to install into the dotfiles dir itself.
 - `other/generate-src/` (source-file generators) and `other/build-local/` (small C/C++ CLI utilities
   and daemons) **each have their own CLAUDE.md.**
 
-## The load-bearing environment coupling
+## The environment coupling
 
 `link/.config/bash/envvars.bash` (symlinked to `~/.config/bash/envvars.bash` on install) is what
 ties the pieces together, and much of the code here only works once it is installed and sourced:

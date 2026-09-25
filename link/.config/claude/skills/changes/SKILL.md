@@ -78,7 +78,7 @@ Language-specific checks, applied to the changed code:
   resources opened without `with`; mutable default arguments; dead code or needless complexity
   where a modern idiom would be clearer.
 
-Ignore "TODO" in comments. Do not flag a TODO as unfinished work.
+Do not flag a TODO comment as unfinished work.
 
 Do not manufacture concerns. Honor inline suppressions (`# noqa`, `# pylint: disable=`,
 `// NOLINT`) and anything memory marks as intentional. If CLAUDE.md names a verification command

@@ -59,7 +59,7 @@ Save it with the Write tool — never just print the document into the conversat
 
 ## Summary
 
-<2-4 sentences: what was being worked on, why, and the state it's in now.>
+<What was being worked on, why, and the state it's in now.>
 
 ## Work completed
 
@@ -124,9 +124,8 @@ Omit sections that don't apply (e.g. "Git state" outside a repo) rather than lea
 
 ### Constraints
 
-- Be comprehensive but not padded — every sentence should help the next session act. Skip a
-  section rather than write "N/A". Aim for under ~2000 words; go longer only if the work genuinely
-  needs it.
+- Cover everything the next session needs and nothing it doesn't. Every sentence should help it
+  act.
 - Use concrete file paths, function/symbol names, and line numbers instead of vague references.
 - Write "Next steps" as proposals a future session must get approved before acting on, not as
   instructions it may execute. Do not pre-declare commits or other irreversible actions.
@@ -146,7 +145,7 @@ Omit sections that don't apply (e.g. "Git state" outside a repo) rather than lea
      may have passed; other work may have happened.
    - Spot-check a few of the files it lists as modified/created to confirm they're still in the
      state it describes.
-3. Summarize back to the user in 2-3 sentences what you're resuming, and flag anything that's
+3. Briefly summarize back to the user what you're resuming, and flag anything that's
    drifted from the document (e.g. a file it says is unmodified now has changes, or a "next step"
    turns out to already be done).
 4. **Stop and get explicit approval before doing any work.** Present the "Next steps" as a
