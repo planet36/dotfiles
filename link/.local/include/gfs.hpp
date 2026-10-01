@@ -211,7 +211,7 @@ gfs1_round(std::array<T, k>& x, const std::function<T(T)>& f)
 
     unsigned int i = 1;
     {
-        x[i] ^= f(x[i-1]);
+        x[i] ^= f(x[i - 1]);
     }
 }
 
@@ -230,7 +230,7 @@ gfs2_round(std::array<T, k>& x, const std::function<T(T)>& f)
 
     for (unsigned int i = 1; i <= k - 1; i += 2)
     {
-        x[i] ^= f(x[i-1]);
+        x[i] ^= f(x[i - 1]);
     }
 }
 
@@ -250,7 +250,7 @@ gfs3_round(std::array<T, k>& x, const std::function<T(T)>& f)
     // Reverse order
     for (unsigned int i = k - 1; i > 0; --i)
     {
-        x[i] ^= f(x[i-1]);
+        x[i] ^= f(x[i - 1]);
     }
 }
 

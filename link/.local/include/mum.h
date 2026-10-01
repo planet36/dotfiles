@@ -23,8 +23,7 @@ extern "C" {
 // https://github.com/gcc-mirror/gcc/blob/dfe0d4389a3ce43179563a63046ad3e74d615a08/gcc/config/i386/bmi2intrin.h#L95
 #if defined(__x86_64__) && !defined(__clang__)
 static inline unsigned int
-_mulx_u32(unsigned int a, unsigned int b, unsigned int* hi)
-    [[gnu::nonnull]]
+_mulx_u32(unsigned int a, unsigned int b, unsigned int* hi) [[gnu::nonnull]]
 {
     unsigned long long r = (unsigned long long)a * (unsigned long long)b;
     *hi = (unsigned int)(r >> 32);

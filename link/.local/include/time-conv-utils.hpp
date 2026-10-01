@@ -47,8 +47,7 @@ inline constexpr int seconds_per_month = 2'629'746;
 static_assert(seconds_per_hour == seconds_per_minute * minutes_per_hour);
 static_assert(seconds_per_day == seconds_per_hour * hours_per_day);
 static_assert(seconds_per_week == seconds_per_day * days_per_week);
-static_assert(seconds_per_year ==
-              static_cast<int>(days_per_year<double> * seconds_per_day));
+static_assert(seconds_per_year == static_cast<int>(days_per_year<double> * seconds_per_day));
 static_assert(seconds_per_month == seconds_per_year / months_per_year);
 
 [[nodiscard]] constexpr auto

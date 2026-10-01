@@ -195,7 +195,8 @@ namespace div_mod_detail
 
 /// get the integral quotient of \a x and \a y that matches the remainder \a rem
 [[nodiscard]] constexpr auto
-quotient(const std::floating_point auto x, const std::floating_point auto y,
+quotient(const std::floating_point auto x,
+         const std::floating_point auto y,
          const std::floating_point auto rem)
 {
     auto quo = std::round((x - rem) / y);

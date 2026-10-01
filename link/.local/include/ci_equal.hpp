@@ -24,7 +24,8 @@ ci_equal(const CharT& c1, const CharT& c2)
     const auto fold = [](const CharT c)
     {
         return (c >= CharT{'A'} && c <= CharT{'Z'}) ?
-                   static_cast<CharT>(c - CharT{'A'} + CharT{'a'}) : c;
+                   static_cast<CharT>(c - CharT{'A'} + CharT{'a'}) :
+                   c;
     };
     return fold(c1) == fold(c2);
 }

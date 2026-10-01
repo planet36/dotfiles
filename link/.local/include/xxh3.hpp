@@ -40,7 +40,8 @@ public:
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        [[maybe_unused]] const XXH_errorcode err = XXH3_64bits_reset_withSeed(state_ptr, seed);
+        [[maybe_unused]] const XXH_errorcode err =
+            XXH3_64bits_reset_withSeed(state_ptr, seed);
 #if defined(DEBUG)
         assert(err == XXH_OK);
 #endif
@@ -133,7 +134,8 @@ public:
         if (state_ptr == nullptr)
             throw std::bad_alloc();
 
-        [[maybe_unused]] const XXH_errorcode err = XXH3_128bits_reset_withSeed(state_ptr, seed);
+        [[maybe_unused]] const XXH_errorcode err =
+            XXH3_128bits_reset_withSeed(state_ptr, seed);
 #if defined(DEBUG)
         assert(err == XXH_OK);
 #endif
