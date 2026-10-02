@@ -335,6 +335,47 @@ div_round(const auto x, const auto y)
     return quo;
 }
 
+/// get the quotient of the _ceiling_ integer division
+/**
+* \pre \a y != 0
+* \sa div_mod_ceil
+*/
+[[nodiscard]] constexpr auto
+div_ceil(const std::unsigned_integral auto x, const std::unsigned_integral auto y)
+{
+    auto quo = x / y;
+    auto rem = x % y;
+
+    if (rem != 0)
+    {
+        quo++;
+    }
+
+    return quo;
+}
+
+/// get the quotient of the _rounded_ integer division
+/**
+* \pre \a y != 0
+* \sa div_mod_round
+*/
+[[nodiscard]] constexpr auto
+div_round(const std::unsigned_integral auto x, const std::unsigned_integral auto y)
+{
+    auto quo = x / y;
+    auto rem = x % y;
+
+    if (rem != 0)
+    {
+        if ((rem > (y / 2)) || ((rem == (y / 2)) && ((y % 2) == 0)))
+        {
+            quo++;
+        }
+    }
+
+    return quo;
+}
+
 /// get the remainder of the _truncated_ division
 /**
 * \pre \a y != 0
