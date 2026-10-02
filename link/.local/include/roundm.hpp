@@ -5,6 +5,8 @@
 /**
 * \file
 * \author Steven Ward
+*
+* Define \c DEBUG to check the preconditions with \c assert.  \c NDEBUG still disables them.
 */
 
 #pragma once
@@ -55,7 +57,7 @@ below(const T t, const T m) noexcept
     if (t < std::numeric_limits<T>::min() + m)
         return std::unexpected(std::errc::result_out_of_range);
 
-    return t - m;
+    return static_cast<T>(t - m);
 }
 
 /// Get the next multiple of \a m greater than \a t
@@ -72,7 +74,7 @@ above(const T t, const T m) noexcept
     if (t > std::numeric_limits<T>::max() - m)
         return std::unexpected(std::errc::result_out_of_range);
 
-    return t + m;
+    return static_cast<T>(t + m);
 }
 
 } // namespace detail
@@ -165,10 +167,11 @@ nearest(const T n, const T m) noexcept
         return t;
 
     // n lies between t and the adjacent multiple away from zero.
+
     // distance from n to t, in [1, m - 1]
     const auto d = static_cast<T>((n < t) ? (t - n) : (n - t));
 
-    // d == m - d is a halfway case
+    // d == m - d is a halfway case.
 
     if (d < m - d) // not 2 * d < m, which can overflow
     {
