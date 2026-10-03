@@ -297,6 +297,7 @@ div_mod_round(const std::floating_point auto x, const std::floating_point auto y
 */
 [[nodiscard]] constexpr auto
 div_trunc(const auto x, const auto y)
+requires requires { div_mod_trunc(x, y); }
 {
     const auto [quo, rem] = div_mod_trunc(x, y);
     return quo;
@@ -308,6 +309,7 @@ div_trunc(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 div_floor(const auto x, const auto y)
+requires requires { div_mod_floor(x, y); }
 {
     const auto [quo, rem] = div_mod_floor(x, y);
     return quo;
@@ -319,6 +321,7 @@ div_floor(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 div_ceil(const auto x, const auto y)
+requires requires { div_mod_ceil(x, y); }
 {
     const auto [quo, rem] = div_mod_ceil(x, y);
     return quo;
@@ -330,6 +333,7 @@ div_ceil(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 div_round(const auto x, const auto y)
+requires requires { div_mod_round(x, y); }
 {
     const auto [quo, rem] = div_mod_round(x, y);
     return quo;
@@ -382,6 +386,7 @@ div_round(const std::unsigned_integral auto x, const std::unsigned_integral auto
 */
 [[nodiscard]] constexpr auto
 mod_trunc(const auto x, const auto y)
+requires requires { div_mod_trunc(x, y); }
 {
     const auto [quo, rem] = div_mod_trunc(x, y);
     return rem;
@@ -393,6 +398,7 @@ mod_trunc(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 mod_floor(const auto x, const auto y)
+requires requires { div_mod_floor(x, y); }
 {
     const auto [quo, rem] = div_mod_floor(x, y);
     return rem;
@@ -404,6 +410,7 @@ mod_floor(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 mod_ceil(const auto x, const auto y)
+requires requires { div_mod_ceil(x, y); }
 {
     const auto [quo, rem] = div_mod_ceil(x, y);
     return rem;
@@ -415,6 +422,7 @@ mod_ceil(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 mod_round(const auto x, const auto y)
+requires requires { div_mod_round(x, y); }
 {
     const auto [quo, rem] = div_mod_round(x, y);
     return rem;
@@ -426,6 +434,7 @@ mod_round(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 amod_trunc(const auto x, const auto y)
+requires requires { mod_trunc(x, y); }
 {
     const auto result = mod_trunc(x, y);
     return result == 0 ? y : result;
@@ -437,6 +446,7 @@ amod_trunc(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 amod_floor(const auto x, const auto y)
+requires requires { mod_floor(x, y); }
 {
     const auto result = mod_floor(x, y);
     return result == 0 ? y : result;
@@ -448,6 +458,7 @@ amod_floor(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 amod_ceil(const auto x, const auto y)
+requires requires { mod_ceil(x, y); }
 {
     const auto result = mod_ceil(x, y);
     return result == 0 ? y : result;
@@ -459,6 +470,7 @@ amod_ceil(const auto x, const auto y)
 */
 [[nodiscard]] constexpr auto
 amod_round(const auto x, const auto y)
+requires requires { mod_round(x, y); }
 {
     const auto result = mod_round(x, y);
     return result == 0 ? y : result;
