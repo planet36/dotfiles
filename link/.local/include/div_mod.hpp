@@ -6,7 +6,8 @@
 * \file
 * \author Steven Ward
 * \note Division by zero is not checked.
-* \note Overflow is not checked.
+* \note Overflow is not checked.  For integer types, the only case that overflows is a signed
+* \a x equal to the minimum value of the common type and \a y equal to -1.
 */
 
 #pragma once
