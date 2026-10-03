@@ -367,14 +367,11 @@ div_ceil(const std::unsigned_integral auto x, const std::unsigned_integral auto 
 div_round(const std::unsigned_integral auto x, const std::unsigned_integral auto y)
 {
     auto quo = x / y;
-    auto rem = x % y;
+    const auto rem = x % y;
 
-    if (rem != 0)
+    if (rem >= y - rem)
     {
-        if ((rem > (y / 2)) || ((rem == (y / 2)) && ((y % 2) == 0)))
-        {
-            quo++;
-        }
+        quo++;
     }
 
     return quo;
