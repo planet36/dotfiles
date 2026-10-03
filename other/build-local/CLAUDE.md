@@ -35,11 +35,11 @@ defined elsewhere in the dotfiles repo, in `link/.config/bash/envvars.bash`, whi
 to `~/.config/bash/envvars.bash` by the repo's `install.bash`. Notably:
 
 - `CPPFLAGS` includes `-iquote $HOME/.local/include`. Several utilities here (`cpuavgd`,
-  `netrxavgd`, `nettxavgd`) `#include` local headers (e.g. `acfile.h`, `pscanf.h`, `strtou.h`,
-  `timeval.h`, `timespec.h`) that live in `../../link/.local/include/` and are only resolvable
-  via that flag. **These will fail to compile unless the dotfiles are installed** (so
-  `~/.local/include` is populated with symlinks into `link/.local/include`) and the shell has
-  sourced `envvars.bash`.
+  `netrxavgd`, `nettxavgd`, `printints`) `#include` local headers (e.g. `acfile.h`, `pscanf.h`,
+  `strtou.h`, `timeval.h`, `timespec.h`, `div_mod.hpp`) that live in
+  `../../link/.local/include/` and are only resolvable via that flag. **These will fail to
+  compile unless the dotfiles are installed** (so `~/.local/include` is populated with symlinks
+  into `link/.local/include`) and the shell has sourced `envvars.bash`.
 - `CFLAGS`/`CXXFLAGS` auto-detect and pin to the *latest* `-std=gnu2y` / `-std=gnu++26` the
   installed GCC supports, plus a large, deliberately strict warning set (`-Wall -Wextra
   -Wpedantic -Wshadow -Wcast-qual -Wc++-compat` for C, plus various `-W...` C++ hardening flags
