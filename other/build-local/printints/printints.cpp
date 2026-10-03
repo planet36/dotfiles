@@ -22,6 +22,8 @@
 * The default TYPE is int32.
 */
 
+#include "div_mod.hpp"
+
 #include <concepts>
 #include <cstddef>
 #include <cstdint>
@@ -39,9 +41,7 @@ void
 print_uint(const T x)
 {
     constexpr std::size_t digits2 = std::numeric_limits<T>::digits;
-    // Get the ceiling of the integer division.
-    // For all standard T, digits2 is never evenly divisible by 3.
-    constexpr std::size_t digits8 = digits2 / 3 + 1; // == div_ceil(digits2, 3)
+    constexpr std::size_t digits8 = div_ceil(digits2, 3UZ);
     // For all standard T, digits2 is always evenly divisible by 4
     constexpr std::size_t digits16 = digits2 / 4;
 
