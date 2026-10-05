@@ -1,0 +1,507 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: MPL-2.0
+
+# pylint: disable=invalid-name
+
+"""Print sparklines made of Unicode block characters.
+
+It is modeled on the Bash script spark (https://github.com/holman/spark).
+"""
+
+import argparse
+import io
+import math
+import os
+import signal
+import sys
+from collections.abc import Callable, Iterable, Sequence
+from types import FrameType
+
+__version__ = '2026-10-03'
+
+__author__ = 'Steven Ward'
+__license__ = 'MPL-2.0'
+
+# The style of the bars, unless one is given.  The --help epilog marks this style as the
+# default by hand, so change that line along with this one.
+DEFAULT_STYLE = 'lower'
+
+# The width of each bar in a horizontal style, unless one is given.
+DEFAULT_WIDTH = 10
+
+# These glyphs draw vertical bars, one character per value.  None of them is a space, so the
+# minimum value is still visible.
+
+lower_blocks = "▁▂▃▄▅▆▇█"
+
+upper_blocks = "▔🮂🮃▀🮄🮅🮆█"
+
+hor_lines = "▁🭻🭺🭹🭸🭷🭶▔"
+
+# These glyphs draw horizontal bars, n characters per value.  The space in left_blocks and
+# right_blocks pads the empty part of a bar.
+
+left_blocks = " ▏▎▍▌▋▊▉█"
+
+right_blocks = " ▕🮇🮈▐🮉🮊🮋█"
+
+# Unlike left_blocks and right_blocks, this has no space glyph, so the minimum value still
+# draws a line.
+ver_lines = "▏🭰🭱🭲🭳🭴🭵▕"
+
+
+def clamp(x: float, min_val: float, max_val: float) -> float:
+    """Clamp x to [min_val, max_val]."""
+
+    return max(min(x, max_val), min_val)
+
+
+def round_half_up(y: float) -> int:
+    """Round y to the nearest int, with halves rounded up.
+
+    Do not replace this with round().  It rounds halves to even, which makes
+    some glyphs cover wider ranges of values than others.
+    """
+
+    return math.floor(y + 0.5)
+
+
+def get_glyph(glyphs: str, x: float) -> str:
+    """Get the glyph in glyphs for x, clamped to [0, 1].
+
+    Raise ValueError if x is NaN.
+    """
+
+    x = clamp(x, 0, 1)
+
+    # clamp() passes a NaN through, and math.floor() would then raise a less helpful error.
+    # Check after clamping, because math.isnan() raises OverflowError for a huge int.
+    if math.isnan(x):
+        raise ValueError('x is NaN')
+
+    return glyphs[round_half_up(x * (len(glyphs)-1))]
+
+
+def get_lower_blocks(x: float) -> str:
+    """Get the lower block for x (clamped to [0, 1])."""
+
+    return get_glyph(lower_blocks, x)
+
+
+def get_upper_blocks(x: float) -> str:
+    """Get the upper block for x (clamped to [0, 1])."""
+
+    return get_glyph(upper_blocks, x)
+
+
+def get_hor_lines(x: float) -> str:
+    """Get the horizontal line for x (clamped to [0, 1])."""
+
+    return get_glyph(hor_lines, x)
+
+
+def split_cells(x: float, n: int, levels: int) -> tuple[int, int]:
+    """Split the fraction x of n cells into whole cells and a partial level.
+
+    x is clamped to [0, 1].  The result is (whole, level), where whole is in
+    [0, n] and level is in [0, levels).  The level is 0 when whole is n.
+
+    Raise ValueError if x is NaN, as get_glyph() does.
+    """
+
+    x = clamp(x, 0, 1)
+
+    if math.isnan(x):
+        raise ValueError('x is NaN')
+
+    return divmod(round_half_up(x * n * levels), levels)
+
+
+def get_left_blocks(x: float, n: int = 1) -> str:
+    """Get the n-wide bar, filled from the left, for x (clamped to [0, 1])."""
+
+    n = int(n)
+
+    if n < 1:
+        return ""
+
+    (whole, part) = split_cells(x, n, len(left_blocks)-1)
+
+    if whole == n:
+        return left_blocks[-1] * n
+
+    return (left_blocks[-1] * whole + left_blocks[part]).ljust(n)
+
+
+def get_right_blocks(x: float, n: int = 1) -> str:
+    """Get the n-wide bar, filled from the right, for x (clamped to [0, 1])."""
+
+    n = int(n)
+
+    if n < 1:
+        return ""
+
+    (whole, part) = split_cells(x, n, len(right_blocks)-1)
+
+    if whole == n:
+        return right_blocks[-1] * n
+
+    return (right_blocks[part] + right_blocks[-1] * whole).rjust(n)
+
+
+def get_ver_lines(x: float, n: int = 1) -> str:
+    """Get the n-wide vertical line, positioned from the left, for x (clamped to [0, 1])."""
+
+    n = int(n)
+
+    if n < 1:
+        return ""
+
+    (whole, part) = split_cells(x, n, len(ver_lines)-1)
+
+    if whole == n:
+        return ver_lines[-1].rjust(n)
+
+    return (' ' * whole + ver_lines[part]).ljust(n)
+
+
+# A vertical style draws one glyph per value, so the values share one line.
+vertical_styles: dict[str, Callable[[float], str]] = {
+    'lower': get_lower_blocks,
+    'upper': get_upper_blocks,
+    'hline': get_hor_lines,
+}
+
+# A horizontal style draws a bar of a given width per value, so each value gets its own line.
+horizontal_styles: dict[str, Callable[[float, int], str]] = {
+    'left': get_left_blocks,
+    'right': get_right_blocks,
+    'vline': get_ver_lines,
+}
+
+
+def draw(norm_vals: Iterable[float],
+        style: str = DEFAULT_STYLE,
+        width: int = DEFAULT_WIDTH) -> str:
+    """Draw norm_vals, each clamped to [0, 1], in the given style.
+
+    A vertical style puts every glyph on one line and ignores width.  A
+    horizontal style puts each width-wide bar on its own line.  Raise
+    ValueError if style is not in vertical_styles or horizontal_styles.
+    """
+
+    if style in vertical_styles:
+        get_vertical = vertical_styles[style]
+        return ''.join(get_vertical(x) for x in norm_vals)
+
+    if style in horizontal_styles:
+        get_horizontal = horizontal_styles[style]
+        return '\n'.join(get_horizontal(x, width) for x in norm_vals)
+
+    raise ValueError(f'unknown style: {style!r}')
+
+
+def normalize_val(x: float, min_val: float, max_val: float) -> float:
+    """Map x, clamped to [min_val, max_val], onto [0, 1].
+
+    min_val must be less than max_val.  Otherwise the result is wrong, or
+    ZeroDivisionError is raised.
+    """
+
+    x = clamp(x, min_val, max_val)
+
+    span = max_val - min_val
+
+    if math.isinf(span):
+        # The span of two finite floats can overflow, but the span of their halves cannot.
+        return (x/2 - min_val/2) / (max_val/2 - min_val/2)
+
+    return (x - min_val) / span
+
+
+def normalize_list(l: Iterable[float], min_val: float, max_val: float) -> list[float]:
+    """Map each value of l onto [0, 1], as normalize_val() does.
+
+    Raise ValueError unless min_val is less than max_val.
+    """
+
+    if not min_val < max_val:
+        raise ValueError(f'min_val ({min_val}) must be less than max_val ({max_val})')
+
+    return [normalize_val(x, min_val, max_val) for x in l]
+
+
+def data_range(vals: Sequence[float],
+        min_val: float | None = None,
+        max_val: float | None = None) -> tuple[float, float]:
+    """Get the (min, max) range of vals.
+
+    A given bound is used as is.  An absent bound is taken from vals, or is
+    NaN if vals is empty.
+    """
+
+    if min_val is None:
+        min_val = min(vals, default=math.nan)
+
+    if max_val is None:
+        max_val = max(vals, default=math.nan)
+
+    return (min_val, max_val)
+
+
+def to_finite_float(name: str, x: float) -> float:
+    """Convert x to a float.
+
+    Raise ValueError if x is not finite or is an int too large for a float.
+    """
+
+    try:
+        finite = math.isfinite(x)
+    except OverflowError:
+        # Leave out x, because str() raises ValueError for an int with too many digits.
+        raise ValueError(f'{name} is too large for a float') from None
+
+    if not finite:
+        raise ValueError(f'{name} is not finite: {x}')
+
+    return float(x)
+
+
+def normalize_data(vals: Sequence[float],
+        min_val: float | None = None,
+        max_val: float | None = None) -> list[float]:
+    """Normalize vals to [0, 1], clamping values outside the range.
+
+    The range comes from data_range().  Raise ValueError if a value or a
+    given bound is not finite or is an int too large for a float, or if both
+    bounds are given and min_val is not less than max_val.
+
+    If the range is empty, every value maps to the same number.  It is 0 when
+    min_val is given, because every value is at or below it.  It is 1 when
+    only max_val is given, because every value is at or above it.  Otherwise
+    the data is constant, and it is 0.5.
+    """
+
+    # A NaN would make min() and max() depend on where it sits in vals.  Converting every
+    # number to a float also keeps the span of two big ints from overflowing in
+    # normalize_val(), which handles only a float span that overflows to inf.
+    vals = [to_finite_float('value', x) for x in vals]
+
+    if min_val is not None:
+        min_val = to_finite_float('min_val', min_val)
+
+    if max_val is not None:
+        max_val = to_finite_float('max_val', max_val)
+
+    if min_val is not None and max_val is not None and min_val >= max_val:
+        raise ValueError(f'min ({min_val}) must be less than max ({max_val})')
+
+    if not vals:
+        return []
+
+    (lo, hi) = data_range(vals, min_val, max_val)
+
+    if lo < hi:
+        return normalize_list(vals, lo, hi)
+
+    if min_val is not None:
+        fill = 0.0
+    elif max_val is not None:
+        fill = 1.0
+    else:
+        fill = 0.5
+
+    return [fill] * len(vals)
+
+
+def sparkline(vals: Sequence[float],
+        min_val: float | None = None,
+        max_val: float | None = None,
+        style: str = DEFAULT_STYLE,
+        width: int = DEFAULT_WIDTH) -> str:
+    """Get the sparkline of vals.
+
+    The bounds work as they do in normalize_data(), and the style and width
+    work as they do in draw().
+    """
+
+    return draw(normalize_data(vals, min_val, max_val), style, width)
+
+
+def parse_values(texts: Iterable[str]) -> list[float]:
+    """Parse the numbers in texts, which are separated by commas and/or whitespace.
+
+    Raise ValueError for a token that is not a finite number.
+    """
+
+    return [parse_value(token)
+        for text in texts
+        for token in text.replace(',', ' ').split()]
+
+
+def parse_value(s: str) -> float:
+    """Parse s as a finite number.
+
+    Raise ValueError if s is not a finite number.
+    """
+
+    try:
+        x = float(s)
+    except ValueError:
+        raise ValueError(f'invalid value: {s!r}') from None
+
+    if not math.isfinite(x):
+        raise ValueError(f'value is not finite: {s!r}')
+
+    return x
+
+
+def finite_float(s: str) -> float:
+    """Parse s as a finite number, for use as an argparse type."""
+
+    # argparse would replace the message of a ValueError with its own.
+    try:
+        return parse_value(s)
+    except ValueError as err:
+        raise argparse.ArgumentTypeError(str(err)) from None
+
+
+def positive_int(s: str) -> int:
+    """Parse s as a positive int, for use as an argparse type."""
+
+    try:
+        n = int(s)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f'invalid int value: {s!r}') from None
+
+    if n < 1:
+        raise argparse.ArgumentTypeError(f'value is not positive: {s!r}')
+
+    return n
+
+
+def make_parser(prog: str) -> argparse.ArgumentParser:
+    """Make the command-line argument parser."""
+
+    parser = argparse.ArgumentParser(
+        prog=prog,
+        description='Print the normalized values as a sparkline of Unicode block glyphs.',
+        epilog="""\
+If VALUES are absent, read them from stdin.
+If VALUES are absent and stdin is a terminal or is closed, print this message.
+
+VALUES may be separated by commas and/or whitespace.
+Use "--" before VALUES that look like options (e.g. "-1e3" or "-1,2").
+
+STYLE is one of these:
+  lower  vertical bars that rise from the bottom (the default)
+  upper  vertical bars that hang from the top
+  hline  horizontal lines that rise from the bottom
+  left   horizontal bars that grow from the left, one value per line
+  right  horizontal bars that grow from the right, one value per line
+  vline  vertical lines that move from left to right, one value per line
+
+examples:
+  %(prog)s 1 5 22 13 53
+  %(prog)s 0,30,55,80,33,150
+  echo 9 13 5 17 1 | %(prog)s
+  %(prog)s --min 0 --max 100 25 50 75
+  %(prog)s --style upper 1 5 22 13 53
+  %(prog)s --style left --width 20 1 5 22 13 53
+  %(prog)s -- -1e3 0 1e3""",
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+
+    parser.add_argument('-V', '--version', action='version',
+        version=f'%(prog)s {__version__}\nLicense: {__license__}\nWritten by {__author__}',
+        help='Print the version information, then exit.')
+
+    parser.add_argument('-v', '--verbose', action='store_true',
+        help='Print diagnostics to stderr.')
+
+    parser.add_argument('--min', type=finite_float, metavar='VALUE',
+        help='Specify the minimum value.  The default is the minimum of VALUES.')
+
+    parser.add_argument('--max', type=finite_float, metavar='VALUE',
+        help='Specify the maximum value.  The default is the maximum of VALUES.')
+
+    parser.add_argument('-s', '--style', choices=[*vertical_styles, *horizontal_styles],
+        default=DEFAULT_STYLE, metavar='STYLE',
+        help='Specify the style of the bars.  The default is %(default)s.')
+
+    parser.add_argument('-w', '--width', type=positive_int, default=DEFAULT_WIDTH, metavar='N',
+        help='Specify the width of each horizontal bar.  The default is %(default)s.')
+
+    parser.add_argument('values', nargs='*', metavar='VALUES',
+        help='The values to plot.')
+
+    return parser
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """Run the program with argv (like sys.argv) and return the exit status.
+
+    Invalid arguments, --help, and --version exit through SystemExit instead
+    of returning.
+    """
+
+    if argv is None:
+        argv = sys.argv
+
+    parser = make_parser(os.path.basename(argv[0]) if argv else 'spark.py')
+
+    args = parser.parse_intermixed_args(argv[1:])
+
+    def print_verbose(s: str) -> None:
+        """Print the message if verbose mode is on."""
+        if args.verbose:
+            print(f"# {s}", file=sys.stderr)
+
+    if args.min is not None and args.max is not None and not args.min < args.max:
+        parser.error(f'--min ({args.min}) must be less than --max ({args.max})')
+
+    # sys.stdin is None when the script starts with file descriptor 0 closed.
+    if not args.values and (sys.stdin is None or sys.stdin.isatty()):
+        parser.print_help()
+        return 0
+
+    try:
+        vals = parse_values(args.values if args.values else sys.stdin)
+    except ValueError as err:
+        parser.error(str(err))
+
+    (min_val, max_val) = data_range(vals, args.min, args.max)
+
+    print_verbose(f'{min_val=}')
+    print_verbose(f'{max_val=}')
+    print_verbose(f'{vals=}')
+
+    norm_vals = normalize_data(vals, args.min, args.max)
+
+    print_verbose(f'{norm_vals=}')
+
+    print(draw(norm_vals, args.style, args.width))
+
+    return 0
+
+
+if __name__ == '__main__':
+
+    # Write UTF-8, as spark does, even when the locale selects an encoding such as ASCII or
+    # Latin-1 that cannot encode the glyphs.  Otherwise print() raises UnicodeEncodeError.
+    if isinstance(sys.stdout, io.TextIOWrapper):
+        sys.stdout.reconfigure(encoding='utf-8')
+
+    # pylint: disable=unused-argument
+    def signal_handler(signal_num: int, execution_frame: FrameType | None) -> None:
+        """End any partial line, then exit with the status a shell would report."""
+        print()
+        sys.exit(128 + signal_num)
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    # Exit quietly, as other filters do, when the reader of stdout goes away.
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    sys.exit(main())
