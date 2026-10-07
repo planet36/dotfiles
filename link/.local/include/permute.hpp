@@ -25,7 +25,7 @@ is_index_permutation(const std::array<I, N>& p)
 
     for (size_t i = 0; i < N; ++i)
     {
-        const size_t j = static_cast<size_t>(p[i]);
+        const auto j = static_cast<size_t>(p[i]);
 
         if (j >= N || seen[j])
             return false;
