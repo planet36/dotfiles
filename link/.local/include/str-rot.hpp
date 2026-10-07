@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <ranges>
 #include <string>
 
 /// rotate \a s left by \a n places
@@ -24,7 +25,7 @@ rotl(std::string& s, size_t n)
     n %= std::size(s);
     auto new_first = std::begin(s);
     std::advance(new_first, n);
-    (void)std::rotate(std::begin(s), new_first, std::end(s));
+    (void)std::ranges::rotate(s, new_first);
 }
 
 /// rotate \a s left by \a n places
@@ -45,7 +46,7 @@ rotr(std::string& s, size_t n)
     n %= std::size(s);
     auto new_first = std::rbegin(s);
     std::advance(new_first, n);
-    (void)std::rotate(std::rbegin(s), new_first, std::rend(s));
+    (void)std::ranges::rotate(std::views::reverse(s), new_first);
 }
 
 /// rotate \a s right by \a n places

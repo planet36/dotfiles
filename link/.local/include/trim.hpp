@@ -18,6 +18,7 @@
 #include <cctype>
 #include <cwctype>
 #include <locale>
+#include <ranges>
 #include <string>
 #include <type_traits>
 
@@ -34,7 +35,7 @@ rtrim(std::string& s)
     {
         return std::isspace(c_i);
     };
-    (void)s.erase(std::find_if_not(s.rbegin(), s.rend(), is_space).base(), s.end());
+    (void)s.erase(std::ranges::find_if_not(std::views::reverse(s), is_space).base(), s.end());
 }
 
 inline void
@@ -46,7 +47,7 @@ ltrim(std::string& s)
     {
         return std::isspace(c_i);
     };
-    (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), is_space));
+    (void)s.erase(s.begin(), std::ranges::find_if_not(s, is_space));
 }
 
 inline void
@@ -89,7 +90,7 @@ rtrim(std::wstring& s)
     {
         return std::iswspace(static_cast<wint_t>(c_i));
     };
-    (void)s.erase(std::find_if_not(s.rbegin(), s.rend(), is_space).base(), s.end());
+    (void)s.erase(std::ranges::find_if_not(std::views::reverse(s), is_space).base(), s.end());
 }
 
 inline void
@@ -100,7 +101,7 @@ ltrim(std::wstring& s)
     {
         return std::iswspace(static_cast<wint_t>(c_i));
     };
-    (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), is_space));
+    (void)s.erase(s.begin(), std::ranges::find_if_not(s, is_space));
 }
 
 inline void
@@ -146,7 +147,7 @@ rtrim(std::basic_string<CharT, Traits, Allocator>& s, const std::locale& loc)
     {
         return std::isspace(c_i, loc);
     };
-    (void)s.erase(std::find_if_not(s.rbegin(), s.rend(), is_space).base(), s.end());
+    (void)s.erase(std::ranges::find_if_not(std::views::reverse(s), is_space).base(), s.end());
 }
 
 template <class CharT,
@@ -160,7 +161,7 @@ ltrim(std::basic_string<CharT, Traits, Allocator>& s, const std::locale& loc)
     {
         return std::isspace(c_i, loc);
     };
-    (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), is_space));
+    (void)s.erase(s.begin(), std::ranges::find_if_not(s, is_space));
 }
 
 template <class CharT,
@@ -215,7 +216,7 @@ rtrim(StringT& s, const typename StringT::value_type delim_char)
     {
         return c_i == delim_char;
     };
-    (void)s.erase(std::find_if_not(s.rbegin(), s.rend(), is_delim).base(), s.end());
+    (void)s.erase(std::ranges::find_if_not(std::views::reverse(s), is_delim).base(), s.end());
 }
 
 template <typename StringT>
@@ -226,7 +227,7 @@ ltrim(StringT& s, const typename StringT::value_type delim_char)
     {
         return c_i == delim_char;
     };
-    (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), is_delim));
+    (void)s.erase(s.begin(), std::ranges::find_if_not(s, is_delim));
 }
 
 template <typename StringT>
@@ -273,7 +274,7 @@ rtrim_not(StringT& s, const typename StringT::value_type delim_char)
     {
         return c_i == delim_char;
     };
-    (void)s.erase(std::find_if(s.rbegin(), s.rend(), is_delim).base(), s.end());
+    (void)s.erase(std::ranges::find_if(std::views::reverse(s), is_delim).base(), s.end());
 }
 
 template <typename StringT>
@@ -284,7 +285,7 @@ ltrim_not(StringT& s, const typename StringT::value_type delim_char)
     {
         return c_i == delim_char;
     };
-    (void)s.erase(s.begin(), std::find_if(s.begin(), s.end(), is_delim));
+    (void)s.erase(s.begin(), std::ranges::find_if(s, is_delim));
 }
 
 template <typename StringT>
@@ -331,7 +332,7 @@ rtrim(StringT& s, const std::type_identity_t<StringT>& delim_set)
     {
         return delim_set.contains(c_i);
     };
-    (void)s.erase(std::find_if_not(s.rbegin(), s.rend(), is_delim).base(), s.end());
+    (void)s.erase(std::ranges::find_if_not(std::views::reverse(s), is_delim).base(), s.end());
 }
 
 template <typename StringT>
@@ -342,7 +343,7 @@ ltrim(StringT& s, const std::type_identity_t<StringT>& delim_set)
     {
         return delim_set.contains(c_i);
     };
-    (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), is_delim));
+    (void)s.erase(s.begin(), std::ranges::find_if_not(s, is_delim));
 }
 
 template <typename StringT>
@@ -389,7 +390,7 @@ rtrim_not(StringT& s, const std::type_identity_t<StringT>& delim_set)
     {
         return delim_set.contains(c_i);
     };
-    (void)s.erase(std::find_if(s.rbegin(), s.rend(), is_delim).base(), s.end());
+    (void)s.erase(std::ranges::find_if(std::views::reverse(s), is_delim).base(), s.end());
 }
 
 template <typename StringT>
@@ -400,7 +401,7 @@ ltrim_not(StringT& s, const std::type_identity_t<StringT>& delim_set)
     {
         return delim_set.contains(c_i);
     };
-    (void)s.erase(s.begin(), std::find_if(s.begin(), s.end(), is_delim));
+    (void)s.erase(s.begin(), std::ranges::find_if(s, is_delim));
 }
 
 template <typename StringT>
@@ -443,14 +444,14 @@ template <typename StringT>
 void
 rtrim(StringT& s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
-    (void)s.erase(std::find_if_not(s.rbegin(), s.rend(), pred).base(), s.end());
+    (void)s.erase(std::ranges::find_if_not(std::views::reverse(s), pred).base(), s.end());
 }
 
 template <typename StringT>
 void
 ltrim(StringT& s, const unary_predicate_wrapper<typename StringT::value_type>& pred)
 {
-    (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), pred));
+    (void)s.erase(s.begin(), std::ranges::find_if_not(s, pred));
 }
 
 template <typename StringT>

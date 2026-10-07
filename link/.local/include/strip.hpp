@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <functional>
+#include <ranges>
 #include <string>
 
 // {{{ strip a character from a std::string
@@ -120,13 +121,13 @@ strip_copy(std::string s, const std::string& delim_set)
 inline void
 rstrip(std::string& s, const unary_predicate_wrapper<char>& pred)
 {
-    (void)s.erase(std::find_if_not(s.rbegin(), s.rend(), pred).base(), s.end());
+    (void)s.erase(std::ranges::find_if_not(std::views::reverse(s), pred).base(), s.end());
 }
 
 inline void
 lstrip(std::string& s, const unary_predicate_wrapper<char>& pred)
 {
-    (void)s.erase(s.begin(), std::find_if_not(s.begin(), s.end(), pred));
+    (void)s.erase(s.begin(), std::ranges::find_if_not(s, pred));
 }
 
 inline void
