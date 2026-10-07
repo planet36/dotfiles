@@ -33,14 +33,14 @@ static inline uint32_t
 rotl32(uint32_t x, unsigned int r)
 {
     r %= 32U;
-    return (r == 0) ? x : (uint32_t)((x << r) | (x >> (32U - r)));
+    return (r == 0) ? x : ((x << r) | (x >> (32U - r)));
 }
 
 static inline uint64_t
 rotl64(uint64_t x, unsigned int r)
 {
     r %= 64U;
-    return (r == 0) ? x : (uint64_t)((x << r) | (x >> (64U - r)));
+    return (r == 0) ? x : ((x << r) | (x >> (64U - r)));
 }
 
 static inline uint8_t
@@ -61,14 +61,14 @@ static inline uint32_t
 rotr32(uint32_t x, unsigned int r)
 {
     r %= 32U;
-    return (r == 0) ? x : (uint32_t)((x >> r) | (x << (32U - r)));
+    return (r == 0) ? x : ((x >> r) | (x << (32U - r)));
 }
 
 static inline uint64_t
 rotr64(uint64_t x, unsigned int r)
 {
     r %= 64U;
-    return (r == 0) ? x : (uint64_t)((x >> r) | (x << (64U - r)));
+    return (r == 0) ? x : ((x >> r) | (x << (64U - r)));
 }
 
 #if defined(__cplusplus)
