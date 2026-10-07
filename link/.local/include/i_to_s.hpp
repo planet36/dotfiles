@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <array>
 #include <charconv>
 #include <climits>
 #include <concepts>
@@ -31,7 +32,7 @@ i_to_s(const std::integral auto x, const int base = 10)
     constexpr unsigned int buf_size =
         CHAR_BIT * sizeof(x) + std::numeric_limits<decltype(x)>::is_signed;
 
-    char buf[buf_size] = {'\0'};
-    const std::to_chars_result r = std::to_chars(buf, buf + buf_size, x, base);
-    return std::string(buf, r.ptr);
+    std::array<char, buf_size> buf{};
+    const std::to_chars_result r = std::to_chars(buf.data(), buf.data() + buf.size(), x, base);
+    return std::string(buf.data(), r.ptr);
 }
