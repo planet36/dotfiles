@@ -16,6 +16,7 @@
 #include "wyrand.hpp"
 
 #include <concepts>
+#include <cstdint>
 #include <limits>
 #include <random>
 
@@ -199,7 +200,7 @@ rand_long_double(URBG& gen)
     static_assert(std::numeric_limits<typename URBG::result_type>::digits >=
                       std::numeric_limits<T>::digits,
                   "PRNG does not provide sufficient bits");
-    return make_unit_long_double(static_cast<uint_bytes<sizeof(T)>>(gen()));
+    return make_unit_long_double(static_cast<uint64_t>(gen()));
 #else
     if constexpr (std::numeric_limits<T>::digits <=
                   std::numeric_limits<typename URBG::result_type>::digits)
