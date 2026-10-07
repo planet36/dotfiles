@@ -13,13 +13,14 @@
 #include <concepts>
 #include <cstdint>
 #include <limits>
-#include <type_traits>
 
 /// Raise base \a B to the power of exponent \a E
-template <typename T, T B, int8_t E>
-consteval T
-pow_int_func()
+template <auto B, int8_t E>
+consteval decltype(B)
+pow_int()
 {
+    using T = decltype(B);
+
     if constexpr (E < 0)
     {
         // https://mathworld.wolfram.com/DivisionbyZero.html
@@ -29,7 +30,7 @@ pow_int_func()
                       "signed integer underflow");
 
         // https://en.wikipedia.org/wiki/Exponentiation#Negative_exponents
-        return 1 / pow_int_func<T, B, -E>();
+        return 1 / pow_int<B, -E>();
     }
     else if constexpr (E == 0)
     {
@@ -50,21 +51,20 @@ pow_int_func()
     else
     {
         // https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-        constexpr T prev = pow_int_func<T, B, E - 1>();
+        constexpr T prev = pow_int<B, E - 1>();
         if constexpr (std::integral<T>)
             static_assert(!__builtin_mul_overflow_p(B, prev, T{}), "integer overflow");
         return T{B * prev};
     }
 }
 
-/// Helper macro
-#define POW_INT(BASE, EXPONENT) pow_int_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
-
 /// Raise base \a B to the power of exponent \a E
-template <typename T, T B, uint8_t E>
-consteval T
-pow_uint_func()
+template <auto B, uint8_t E>
+consteval decltype(B)
+pow_uint()
 {
+    using T = decltype(B);
+
     if constexpr (E == 0)
     {
         // define 0**0 == 1
@@ -84,12 +84,9 @@ pow_uint_func()
     else
     {
         // https://en.wikipedia.org/wiki/Exponentiation#Positive_exponents
-        constexpr T prev = pow_uint_func<T, B, E - 1>();
+        constexpr T prev = pow_uint<B, E - 1>();
         if constexpr (std::integral<T>)
             static_assert(!__builtin_mul_overflow_p(B, prev, T{}), "integer overflow");
         return T{B * prev};
     }
 }
-
-/// Helper macro
-#define POW_UINT(BASE, EXPONENT) pow_uint_func<std::decay_t<decltype(BASE)>, BASE, EXPONENT>()
