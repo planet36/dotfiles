@@ -21,7 +21,7 @@
 #include <shared_mutex>
 #include <vector>
 
-enum PUSH_RESULT
+enum class PUSH_RESULT
 {
     NOT_PUSHED,
     PUSHED_BUT_SIZE_UNCHANGED,
@@ -114,15 +114,16 @@ public:
 
     /// add \a x to the back
     /**
-    * \retval NOT_PUSHED if \a x was not pushed
-    * \retval PUSHED_BUT_SIZE_UNCHANGED if \a x was pushed but the size did not change because the queue was full
-    * \retval PUSHED_AND_SIZE_INCREASED if \a x was pushed and the size increased
+    * \retval PUSH_RESULT::NOT_PUSHED if \a x was not pushed
+    * \retval PUSH_RESULT::PUSHED_BUT_SIZE_UNCHANGED if \a x was pushed but the size did not
+    * change because the queue was full
+    * \retval PUSH_RESULT::PUSHED_AND_SIZE_INCREASED if \a x was pushed and the size increased
     */
     [[nodiscard]] PUSH_RESULT push(const T& x, const bool overwrite_if_full = false)
     {
         std::unique_lock lock{mtx};
 
-        PUSH_RESULT ret = NOT_PUSHED;
+        PUSH_RESULT ret = PUSH_RESULT::NOT_PUSHED;
 
         if (is_full() && !overwrite_if_full)
             return ret;
@@ -134,13 +135,13 @@ public:
             if (++head == N) // inc head
                 head = 0;    // head rollover
 
-            ret = PUSHED_BUT_SIZE_UNCHANGED;
+            ret = PUSH_RESULT::PUSHED_BUT_SIZE_UNCHANGED;
         }
         else
         {
             ++size;
 
-            ret = PUSHED_AND_SIZE_INCREASED;
+            ret = PUSH_RESULT::PUSHED_AND_SIZE_INCREASED;
         }
 
         if (++tail == N) // inc tail
