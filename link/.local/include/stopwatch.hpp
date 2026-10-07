@@ -59,7 +59,7 @@ public:
     [[nodiscard]] bool is_running() const noexcept { return running; }
 
 private:
-    std::chrono::time_point<stopwatch_clock> t0{};
+    std::chrono::time_point<stopwatch_clock> t0;
     std::chrono::duration<double> dt{};
     bool running{};
 };
