@@ -13,6 +13,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cctype>
 #include <cstdint>
 #include <string>
@@ -90,15 +91,12 @@ is_special_char_shell(const char c)
 inline bool
 contains_special_chars_shell(const std::string& s)
 {
-    for (const auto c : s)
+    const auto is_special = [](const char c)
     {
-        if (is_special_char_shell(c) || !std::isprint(static_cast<unsigned char>(c)))
-        {
-            return true;
-        }
-    }
+        return is_special_char_shell(c) || !std::isprint(static_cast<unsigned char>(c));
+    };
 
-    return false;
+    return std::ranges::any_of(s, is_special);
 }
 
 /// Escape the character for display, using POSIX shell escapes
