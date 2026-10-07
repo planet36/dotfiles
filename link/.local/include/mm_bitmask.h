@@ -21,8 +21,10 @@
 extern "C" {
 #endif
 
+#if defined(__cplusplus)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#endif
 
 #if defined(__SSE2__)
 /// Create a bitmask of a \c __m128i with bit \a bit set
@@ -43,7 +45,7 @@ mm_bitmask(const unsigned int bit)
 
     vals[lane] = UINT64_C(1) << shift;
 
-    return _mm_set_epi64x(vals[1], vals[0]);
+    return _mm_set_epi64x((long long int)vals[1], (long long int)vals[0]);
 }
 #endif
 
@@ -66,7 +68,9 @@ mm256_bitmask(const unsigned int bit)
 
     vals[lane] = UINT64_C(1) << shift;
 
-    return _mm256_set_epi64x(vals[3], vals[2], vals[1], vals[0]);
+    return _mm256_set_epi64x(
+            (long long int)vals[3], (long long int)vals[2],
+            (long long int)vals[1], (long long int)vals[0]);
 }
 #endif
 
@@ -90,12 +94,16 @@ mm512_bitmask(const unsigned int bit)
     vals[lane] = UINT64_C(1) << shift;
 
     return _mm512_set_epi64(
-            vals[7], vals[6], vals[5], vals[4],
-            vals[3], vals[2], vals[1], vals[0]);
+            (long long int)vals[7], (long long int)vals[6],
+            (long long int)vals[5], (long long int)vals[4],
+            (long long int)vals[3], (long long int)vals[2],
+            (long long int)vals[1], (long long int)vals[0]);
 }
 #endif
 
+#if defined(__cplusplus)
 #pragma GCC diagnostic pop
+#endif
 
 #if defined(__cplusplus)
 } // extern "C"
