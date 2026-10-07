@@ -30,6 +30,10 @@ CXXFLAGS += -Wconversion
 #CXXFLAGS += -Wfloat-conversion # enabled by -Wconversion
 CXXFLAGS += -Wsign-conversion
 
+LINT_CFLAGS += -Wno-unknown-warning-option
+
+LINT_CXXFLAGS += -Wno-unknown-warning-option
+
 #LDFLAGS +=
 
 #LDLIBS +=
@@ -67,8 +71,8 @@ clean:
 	@$(RM) --verbose -- $(DEPS) $(OBJS) $(BINS)
 
 lint:
-	-clang-tidy --quiet $(C_HDRS) -- $(CPPFLAGS) $(CFLAGS)
-	-clang-tidy --quiet $(CXX_HDRS) -- $(CPPFLAGS) $(CXXFLAGS)
+	-clang-tidy --quiet $(C_HDRS) -- $(CPPFLAGS) $(CFLAGS) $(LINT_CFLAGS)
+	-clang-tidy --quiet $(CXX_HDRS) -- $(CPPFLAGS) $(CXXFLAGS) $(LINT_CXXFLAGS)
 
 # https://www.gnu.org/software/make/manual/make.html#Phony-Targets
 .PHONY: all bins objs clean lint
