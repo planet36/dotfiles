@@ -24,21 +24,21 @@
 extern "C" {
 #endif
 
-static inline double
+[[nodiscard]] static inline double
 sse_sqrt(double x)
 {
     __asm__ ("sqrtsd %0, %0" : "+x" (x));
     return x;
 }
 
-static inline float
+[[nodiscard]] static inline float
 sse_sqrtf(float x)
 {
     __asm__ ("sqrtss %0, %0" : "+x" (x));
     return x;
 }
 
-static inline float
+[[nodiscard]] static inline float
 sse_rsqrtf(float x)
 {
     __asm__ ("rsqrtss %0, %0" : "+x" (x));

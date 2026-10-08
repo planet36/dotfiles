@@ -20,7 +20,7 @@
 // NOLINTNEXTLINE(modernize-deprecated-headers)
 #include <time.h> // gmtime_r, localtime_r, tzset
 
-inline int
+[[nodiscard]] inline int
 current_year_local()
 {
     const std::time_t now_time_t = std::time(nullptr);
@@ -35,7 +35,7 @@ current_year_local()
     return now_tm.tm_year + 1900;
 }
 
-inline int
+[[nodiscard]] inline int
 current_year_utc()
 {
     const std::time_t now_time_t = std::time(nullptr);

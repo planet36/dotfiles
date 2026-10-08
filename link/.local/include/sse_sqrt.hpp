@@ -14,19 +14,19 @@
 namespace sse
 {
 
-inline float
+[[nodiscard]] inline float
 sqrt(float x)
 {
     return sse_sqrtf(x);
 }
 
-inline double
+[[nodiscard]] inline double
 sqrt(double x)
 {
     return sse_sqrt(x);
 }
 
-inline float
+[[nodiscard]] inline float
 rsqrt(float x)
 {
     return sse_rsqrtf(x);

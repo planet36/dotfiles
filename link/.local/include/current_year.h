@@ -20,7 +20,7 @@
 extern "C" {
 #endif
 
-static inline int
+[[nodiscard]] static inline int
 current_year_local()
 {
     const time_t now_time_t = time(nullptr);
@@ -35,7 +35,7 @@ current_year_local()
     return now_tm.tm_year + 1900;
 }
 
-static inline int
+[[nodiscard]] static inline int
 current_year_utc()
 {
     const time_t now_time_t = time(nullptr);
