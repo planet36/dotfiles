@@ -35,9 +35,9 @@ signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 # throughput across candidate sizes with the command below and pick the fastest.
 # Override it at runtime with $YEA_MAX_BUF_SIZE.
 #
-#   $ hyperfine --time-unit millisecond --warmup=5 \
+#   $ hyperfine --metrics=time_wall_clock:ms --style=color --warmup=5 \
 #       --parameter-scan YEA_MAX_BUF_SIZE 4096 40960 --parameter-step-size 4096 \
-#       'YEA_MAX_BUF_SIZE="{YEA_MAX_BUF_SIZE}" yea --no-newline --bytes=10Gi'
+#       --env 'YEA_MAX_BUF_SIZE="{YEA_MAX_BUF_SIZE}"' 'yea --no-newline --bytes=10Gi'
 DEFAULT_MAX_BUF_SIZE = 4096 * 4
 
 
