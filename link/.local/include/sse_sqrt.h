@@ -24,8 +24,6 @@
 extern "C" {
 #endif
 
-// NOLINTBEGIN(hicpp-no-assembler)
-
 static inline double
 sse_sqrt(double x)
 {
@@ -46,8 +44,6 @@ sse_rsqrtf(float x)
     __asm__ ("rsqrtss %0, %0" : "+x" (x));
     return x;
 }
-
-// NOLINTEND(hicpp-no-assembler)
 
 #if defined(__cplusplus)
 } // extern "C"

@@ -17,7 +17,7 @@
 #include <cerrno>
 #include <ctime>
 #include <system_error>
-// NOLINTNEXTLINE(hicpp-deprecated-headers,modernize-deprecated-headers)
+// NOLINTNEXTLINE(modernize-deprecated-headers)
 #include <time.h> // gmtime_r, localtime_r, tzset
 
 inline int
