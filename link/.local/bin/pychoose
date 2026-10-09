@@ -13,6 +13,7 @@ __license__ = 'MPL-2.0'
 __version__ = '2026-10-08'
 
 import argparse
+import io
 import os
 import re
 import signal
@@ -152,6 +153,11 @@ def main(argv: list[str] | None = None) -> int | None:
             help='an index or a slice of the fields to print')
 
     args = parser.parse_args(argv)
+
+    # Pass bytes that are not valid in the locale's encoding through unchanged.
+    for stream in (sys.stdin, sys.stdout):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(errors='surrogateescape')
 
     choices = parse_choices(parser, args.CHOICE)
 
