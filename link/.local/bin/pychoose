@@ -10,8 +10,9 @@ Inspired by <https://github.com/theryangeary/choose>.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-11'
+__version__ = '2026-10-08'
 
+import argparse
 import os
 import re
 import signal
@@ -59,20 +60,44 @@ def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
 # pylint: disable=missing-function-docstring
 def main(argv: list[str] | None = None) -> int | None:
 
-    if argv is None:
-        argv = sys.argv
+    description_lines = (
+            'Choose fields from each line of stdin.',
+            'Input fields are separated by whitespace.',
+            'Output fields are separated by a tab.',
+            )
+
+    epilog_lines = (
+            'Each CHOICE is an index or a slice, with the same syntax as in Python.',
+            'Indexes are 0-based, and negative values count from the end.',
+            'An index out of range is ignored.',
+            '',
+            'Examples:',
+            '  %(prog)s 0 2      first and third fields',
+            '  %(prog)s -1       last field',
+            '  %(prog)s 1:       all but the first field',
+            '  %(prog)s ::-1     all fields in reverse order',
+            )
+
+    version_lines = (f'%(prog)s {__version__}',
+                    f'License: {__license__}',
+                    f'Written by {__author__}')
+
+    parser = argparse.ArgumentParser(
+            description='\n'.join(description_lines),
+            epilog='\n'.join(epilog_lines),
+            formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
+
+    parser.add_argument('CHOICE', nargs='*', type=Choice,
+            help='an index or a slice of the fields to print')
+
+    args = parser.parse_args(argv)
 
     in_delim = re.compile(r'\s+')
     out_delim = '\t'
 
-    parsed = []
-    for arg in argv[1:]:
-        try:
-            parsed.append(Choice(arg))
-        except ValueError:
-            print(f'{argv[0]}: invalid choice: {arg!r}', file=sys.stderr)
-            return 1
-    choices = tuple(parsed)
+    choices = tuple(args.CHOICE)
 
     # Choose fields from each line from stdin.
     for line in sys.stdin:
