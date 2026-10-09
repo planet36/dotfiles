@@ -13,7 +13,6 @@ __license__ = 'MPL-2.0'
 __version__ = '2026-10-08'
 
 import argparse
-import os
 import re
 import signal
 import sys
@@ -65,6 +64,7 @@ def main(argv: list[str] | None = None) -> int | None:
     description_lines = (
             'Choose fields from each line of stdin.',
             'Input fields are separated by whitespace.',
+            'Leading and trailing whitespace is ignored.',
             'Output fields are separated by a tab.',
             )
 
@@ -104,7 +104,7 @@ def main(argv: list[str] | None = None) -> int | None:
     # Choose fields from each line from stdin.
     for line in sys.stdin:
 
-        line = line.rstrip(os.linesep)
+        line = line.strip()
 
         in_fields = in_delim.split(line)
 
