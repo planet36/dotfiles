@@ -119,7 +119,7 @@ def main(argv: list[str] | None = None) -> int | None:
             'An index out of range is ignored.',
             '',
             'Options must come before any CHOICE.',
-            'Use -f=REGEX if REGEX starts with "-".',
+            'Use -f=REGEX or -o=STRING if the value starts with "-".',
             '',
             'Examples:',
             '  %(prog)s 0 2              first and third fields',
