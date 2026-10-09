@@ -5,6 +5,8 @@
 # pylint: disable=invalid-name
 
 '''
+Choose fields from each line of stdin.
+
 Inspired by <https://github.com/theryangeary/choose>.
 '''
 
