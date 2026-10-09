@@ -13,6 +13,7 @@ __license__ = 'MPL-2.0'
 __version__ = '2026-10-08'
 
 import argparse
+import os
 import re
 import signal
 import sys
@@ -40,6 +41,31 @@ Slices have the same syntax as in Python.'''
                 raise ValueError('slice step cannot be zero')
 
 
+def field_separator(s: str) -> re.Pattern[str]:
+    '''Compile the field separator regex.'''
+    if not s:
+        raise argparse.ArgumentTypeError('may not be empty')
+    try:
+        return re.compile(s)
+    except re.error as e:
+        raise argparse.ArgumentTypeError(f'invalid regex: {e}') from e
+
+
+def split_fields(in_delim: re.Pattern[str], line: str) -> list[str]:
+    '''Split line around the matches of in_delim.'''
+
+    fields: list[str] = []
+    pos = 0
+
+    for m in in_delim.finditer(line):
+        fields.append(line[pos:m.start()])
+        pos = m.end()
+
+    fields.append(line[pos:])
+
+    return fields
+
+
 def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
     '''Choose elements from in_fields according to the choices.'''
 
@@ -58,14 +84,32 @@ def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
     return out_fields
 
 
+def parse_choices(parser: argparse.ArgumentParser,
+                  choice_args: list[str]) -> tuple[Choice, ...]:
+    '''Convert choice_args to Choices, after an optional leading "--".'''
+
+    if choice_args[:1] == ['--']:
+        choice_args = choice_args[1:]
+
+    choices: list[Choice] = []
+
+    for arg in choice_args:
+        try:
+            choices.append(Choice(arg))
+        except ValueError:
+            parser.error(f'argument CHOICE: invalid Choice value: {arg!r}')
+
+    return tuple(choices)
+
+
 # pylint: disable=missing-function-docstring
 def main(argv: list[str] | None = None) -> int | None:
 
     description_lines = (
             'Choose fields from each line of stdin.',
-            'Input fields are separated by whitespace.',
-            'Leading and trailing whitespace is ignored.',
-            'Output fields are separated by a tab.',
+            'Input fields are separated by whitespace, unless -f is given.',
+            'Leading and trailing whitespace is ignored, unless -f is given.',
+            'Output fields are separated by a tab, unless -o is given.',
             )
 
     epilog_lines = (
@@ -73,11 +117,17 @@ def main(argv: list[str] | None = None) -> int | None:
             'Indexes are 0-based, and negative values count from the end.',
             'An index out of range is ignored.',
             '',
+            'Options must come before any CHOICE.',
+            'Use -f=REGEX if REGEX starts with "-".',
+            '',
             'Examples:',
-            '  %(prog)s 0 2      first and third fields',
-            '  %(prog)s -1       last field',
-            '  %(prog)s 1:       all but the first field',
-            '  %(prog)s ::-1     all fields in reverse order',
+            '  %(prog)s 0 2              first and third fields',
+            '  %(prog)s -1               last field',
+            '  %(prog)s 1:               all but the first field',
+            '  %(prog)s ::-1             all fields in reverse order',
+            '  %(prog)s -f , 0 2         first and third comma-separated fields',
+            "  %(prog)s -o ' ' 0 2       first and third fields, joined by a space",
+            r"  %(prog)s -f '\s*:\s*' 1   second field, split on colons and nearby whitespace",
             )
 
     version_lines = (f'%(prog)s {__version__}',
@@ -85,28 +135,36 @@ def main(argv: list[str] | None = None) -> int | None:
                     f'Written by {__author__}')
 
     parser = argparse.ArgumentParser(
+            usage='%(prog)s [OPTION]... [--] [CHOICE]...',
             description='\n'.join(description_lines),
             epilog='\n'.join(epilog_lines),
             formatter_class=argparse.RawTextHelpFormatter)
 
     parser.add_argument('-V', '--version', action='version', version='\n'.join(version_lines))
 
-    parser.add_argument('CHOICE', nargs='*', type=Choice,
+    parser.add_argument('-f', '--field-separator', metavar='REGEX', type=field_separator,
+            help='split input fields on matches of REGEX')
+
+    parser.add_argument('-o', '--output-field-separator', metavar='STRING', default='\t',
+            help='join output fields with STRING, used as is')
+
+    parser.add_argument('CHOICE', nargs=argparse.REMAINDER,
             help='an index or a slice of the fields to print')
 
     args = parser.parse_args(argv)
 
-    in_delim = re.compile(r'\s+')
-    out_delim = '\t'
+    choices = parse_choices(parser, args.CHOICE)
 
-    choices = tuple(args.CHOICE)
+    strip_line = args.field_separator is None
+    in_delim = re.compile(r'\s+') if strip_line else args.field_separator
+    out_delim = args.output_field_separator
 
     # Choose fields from each line from stdin.
     for line in sys.stdin:
 
-        line = line.strip()
+        line = line.strip() if strip_line else line.rstrip(os.linesep)
 
-        in_fields = in_delim.split(line)
+        in_fields = split_fields(in_delim, line)
 
         out_fields = choose(choices, in_fields)
 
