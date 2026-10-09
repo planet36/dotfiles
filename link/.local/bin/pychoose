@@ -165,7 +165,7 @@ def main(argv: list[str] | None = None) -> int | None:
     in_delim = re.compile(r'\s+') if strip_line else args.field_separator
     out_delim = args.output_field_separator
 
-    # Choose fields from each line from stdin.
+    # Choose fields from each line of stdin.
     for line in sys.stdin:
 
         line = line.strip() if strip_line else line.rstrip(os.linesep)
