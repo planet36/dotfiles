@@ -46,12 +46,13 @@ Slices have the same syntax as in Python.'''
 
 def field_separator(s: str) -> re.Pattern[str]:
     '''Compile the field separator regex.'''
-    if not s:
-        raise argparse.ArgumentTypeError('may not be empty')
     try:
-        return re.compile(s)
+        pattern = re.compile(s)
     except re.error as e:
         raise argparse.ArgumentTypeError(f'invalid regex: {e}') from e
+    if pattern.match(''):
+        raise argparse.ArgumentTypeError('may not match an empty string')
+    return pattern
 
 
 def split_fields(in_delim: re.Pattern[str], line: str) -> list[str]:
