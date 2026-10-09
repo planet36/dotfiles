@@ -37,6 +37,8 @@ Slices have the same syntax as in Python.'''
             self.value: int | slice = int(parts[0])
         else:
             self.value = slice(*(None if not p else int(p) for p in parts))
+            if self.value.step == 0:
+                raise ValueError('slice step cannot be zero')
 
 
 def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
