@@ -25,21 +25,20 @@ signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 # https://docs.python.org/3/library/functions.html#slice
 # https://docs.python.org/3/reference/expressions.html#slicings
 # https://docs.python.org/3/tutorial/introduction.html#strings
-# pylint: disable=too-few-public-methods
-class Choice:
-    '''A Choice is either an index or a slice.
+type Choice = int | slice
+
+
+def parse_choice(s: str) -> Choice:
+    '''Convert s to a Choice, which is either an index or a slice.
 Indexes are 0-based, just like in Python.
 Slices have the same syntax as in Python.'''
-
-    def __init__(self, s: str):
-        '''Convert s to a Choice.'''
-        parts = s.split(':', maxsplit=2)
-        if len(parts) == 1:
-            self.value: int | slice = int(parts[0])
-        else:
-            self.value = slice(*(None if not p else int(p) for p in parts))
-            if self.value.step == 0:
-                raise ValueError('slice step cannot be zero')
+    parts = s.split(':', maxsplit=2)
+    if len(parts) == 1:
+        return int(parts[0])
+    result = slice(*(None if not p else int(p) for p in parts))
+    if result.step == 0:
+        raise ValueError('slice step cannot be zero')
+    return result
 
 
 def field_separator(s: str) -> re.Pattern[str]:
@@ -73,12 +72,11 @@ def choose(choices: tuple[Choice, ...], in_fields: list[str]) -> list[str]:
     out_fields: list[str] = []
 
     for choice in choices:
-        v = choice.value
-        if isinstance(v, slice):
-            out_fields.extend(in_fields[v])
+        if isinstance(choice, slice):
+            out_fields.extend(in_fields[choice])
         else:
             try:
-                out_fields.append(in_fields[v])
+                out_fields.append(in_fields[choice])
             except IndexError:
                 pass
 
@@ -96,7 +94,7 @@ def parse_choices(parser: argparse.ArgumentParser,
 
     for arg in choice_args:
         try:
-            choices.append(Choice(arg))
+            choices.append(parse_choice(arg))
         except ValueError:
             parser.error(f'argument CHOICE: invalid Choice value: {arg!r}')
 
