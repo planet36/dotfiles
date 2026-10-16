@@ -452,11 +452,6 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     args = parser.parse_intermixed_args(argv[1:])
 
-    def print_verbose(s: str) -> None:
-        """Print the message if verbose mode is on."""
-        if args.verbose:
-            print(f"# {s}", file=sys.stderr)
-
     if args.min is not None and args.max is not None and not args.min < args.max:
         parser.error(f'--min ({args.min}) must be less than --max ({args.max})')
 
@@ -470,15 +465,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     except ValueError as err:
         parser.error(str(err))
 
-    (min_val, max_val) = data_range(vals, args.min, args.max)
-
-    print_verbose(f'{min_val=}')
-    print_verbose(f'{max_val=}')
-    print_verbose(f'{vals=}')
-
     norm_vals = normalize_data(vals, args.min, args.max)
 
-    print_verbose(f'{norm_vals=}')
+    # Build the diagnostics only when they are printed, because the reprs of vals and
+    # norm_vals grow with the input.
+    if args.verbose:
+        (min_val, max_val) = data_range(vals, args.min, args.max)
+        for s in (f'{min_val=}', f'{max_val=}', f'{vals=}', f'{norm_vals=}'):
+            print(f'# {s}', file=sys.stderr)
 
     print(draw(norm_vals, args.style, args.width))
 
