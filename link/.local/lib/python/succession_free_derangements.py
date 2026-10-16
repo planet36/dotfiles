@@ -183,6 +183,12 @@ def _search_matrices(n: int) -> Iterator[Matrix]:
             return
         unused = set(identity) - set(fixed)
 
+        # The fixed entries after the middle are reached only once the middle is filled.  If two
+        # adjacent ones already form a used pair, every way of filling it fails, so this rules
+        # the row out before trying any.
+        if any(frozenset(row[i - 1:i + 1]) in used for i in range(n - k + 1, n)):
+            return
+
         def extend(i: int) -> Iterator[list[int]]:
             if i == n:
                 yield list(row)
