@@ -30,6 +30,10 @@ DEFAULT_STYLE = 'lower'
 # The width of each bar in a horizontal style, unless one is given.
 DEFAULT_WIDTH = 10
 
+# The widest bar that --width allows.  Each bar is a string this long, so a huge width would
+# exhaust memory instead of failing with a usage error.
+MAX_WIDTH = 10_000
+
 # These glyphs draw vertical bars, one character per value.  None of them is a space, so the
 # minimum value is still visible.
 
@@ -367,16 +371,16 @@ def finite_float(s: str) -> float:
         raise argparse.ArgumentTypeError(str(err)) from None
 
 
-def positive_int(s: str) -> int:
-    """Parse s as a positive int, for use as an argparse type."""
+def bar_width(s: str) -> int:
+    """Parse s as an int in [1, MAX_WIDTH], for use as an argparse type."""
 
     try:
         n = int(s)
     except ValueError:
         raise argparse.ArgumentTypeError(f'invalid int value: {s!r}') from None
 
-    if n < 1:
-        raise argparse.ArgumentTypeError(f'value is not positive: {s!r}')
+    if not 1 <= n <= MAX_WIDTH:
+        raise argparse.ArgumentTypeError(f'value is not in [1, {MAX_WIDTH}]: {s!r}')
 
     return n
 
@@ -429,8 +433,9 @@ examples:
         default=DEFAULT_STYLE, metavar='STYLE',
         help='Specify the style of the bars.  The default is %(default)s.')
 
-    parser.add_argument('-w', '--width', type=positive_int, default=DEFAULT_WIDTH, metavar='N',
-        help='Specify the width of each horizontal bar.  The default is %(default)s.')
+    parser.add_argument('-w', '--width', type=bar_width, default=DEFAULT_WIDTH, metavar='N',
+        help='Specify the width of each horizontal bar.  The default is %(default)s,'
+            f' and the maximum is {MAX_WIDTH}.')
 
     parser.add_argument('values', nargs='*', metavar='VALUES',
         help='The values to plot.')
