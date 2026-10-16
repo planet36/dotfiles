@@ -111,6 +111,7 @@ alias only-files='find . -maxdepth 1 -type f -not -name ".*" -printf "%f\0" | xa
 alias only-files-all='find . -maxdepth 1 -type f -not -name "." -printf "%f\0" | xargs --null --no-run-if-empty ls --human-readable -o --file-type --color --directory'
 alias optijpg='jpegoptim --preserve --strip-none'
 alias optipng='optipng -fix -preserve -quiet -o 2 -i 0'
+alias oxipng='oxipng --preserve --opt 4 --zopfli'
 alias palindromes='paste --delimiters="\n" /usr/share/dict/words <(rev /usr/share/dict/words) | uniq --repeated'
 alias pcal='python3 -m calendar -f 6'
 alias prettyjson='python3 -m json.tool'
