@@ -71,9 +71,14 @@ def is_succession_free_derangement(p: Sequence[int]) -> bool:
 
 def succession_free_derangements(n: int) -> Iterator[tuple[int, ...]]:
     """Yield every succession-free derangement of ``0..n-1`` in lexicographic order."""
+    # This checks n outside the generator so that a bad n raises here at the call.  Inside the
+    # generator, it would raise only at the first next(), and never under islice(..., 0).
     if n < 0:
         raise ValueError(f'n must be nonnegative, not {n}')
+    return _succession_free_derangements(n)
 
+
+def _succession_free_derangements(n: int) -> Iterator[tuple[int, ...]]:
     if n == 0:
         yield ()
         return
@@ -150,7 +155,12 @@ def search_matrices(n: int) -> Iterator[Matrix]:
     ``n``.  Every matrix for n = 10 takes under a second, and the first one for n = 12 takes
     several seconds.
     """
+    # As in succession_free_derangements, the check stays outside the generator.
     _check_even(n)
+    return _search_matrices(n)
+
+
+def _search_matrices(n: int) -> Iterator[Matrix]:
     half = n // 2
     identity = list(range(n))
     top = [identity]
