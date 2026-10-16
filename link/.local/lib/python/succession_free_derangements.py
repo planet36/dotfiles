@@ -311,6 +311,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.modular and args.command != 'matrices':
         parser.error('--modular applies only to "matrices"')
+    if args.modular and args.limit is not None:
+        parser.error('--limit does not apply to --modular, which prints one matrix')
 
     try:
         if args.command == 'permutations':
