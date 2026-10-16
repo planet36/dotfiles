@@ -38,6 +38,7 @@ __license__ = 'MPL-2.0'
 import argparse
 import itertools
 import math
+import os
 import re
 import sys
 from collections.abc import Iterator, Sequence
@@ -325,6 +326,11 @@ def main(argv: list[str] | None = None) -> int:
                 print(format_matrix(m), flush=True)
     except ValueError as e:
         parser.error(str(e))
+    except BrokenPipeError:
+        # Python flushes stdout again at exit, which would raise a second time, so stdout has to
+        # point somewhere that accepts the write.
+        os.dup2(os.open(os.devnull, os.O_WRONLY), sys.stdout.fileno())
+        return 1
 
     return 0
 
