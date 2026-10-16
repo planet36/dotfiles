@@ -11,12 +11,13 @@
 
 #pragma once
 
+#include "integral_number.hpp"
+
 #if defined(DEBUG)
 #include <bit>
 #include <cassert>
 #include <type_traits>
 #endif
-#include <concepts>
 #include <expected>
 #include <limits>
 #include <system_error>
@@ -28,7 +29,7 @@ namespace roundm
 /**
 * \pre \a m > 0
 */
-template <std::integral T>
+template <integral_number T>
 [[nodiscard]] constexpr T
 trunc(const T n, const T m) noexcept
 {
@@ -50,7 +51,7 @@ namespace detail
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is less than
 *         <code>std::numeric_limits<T>::min()</code>
 */
-template <std::integral T>
+template <integral_number T>
 constexpr std::expected<T, std::errc>
 below(const T t, const T m) noexcept
 {
@@ -67,7 +68,7 @@ below(const T t, const T m) noexcept
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is greater than
 *         <code>std::numeric_limits<T>::max()</code>
 */
-template <std::integral T>
+template <integral_number T>
 constexpr std::expected<T, std::errc>
 above(const T t, const T m) noexcept
 {
@@ -85,7 +86,7 @@ above(const T t, const T m) noexcept
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is less than
 *         <code>std::numeric_limits<T>::min()</code>
 */
-template <std::integral T>
+template <integral_number T>
 constexpr std::expected<T, std::errc>
 floor(const T n, const T m) noexcept
 {
@@ -106,7 +107,7 @@ floor(const T n, const T m) noexcept
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is greater than
 *         <code>std::numeric_limits<T>::max()</code>
 */
-template <std::integral T>
+template <integral_number T>
 constexpr std::expected<T, std::errc>
 ceil(const T n, const T m) noexcept
 {
@@ -129,7 +130,7 @@ ceil(const T n, const T m) noexcept
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is greater than
 *         <code>std::numeric_limits<T>::max()</code>
 */
-template <std::integral T>
+template <integral_number T>
 constexpr std::expected<T, std::errc>
 ceil_pow2(const T n, const T m) noexcept
 {
@@ -157,7 +158,7 @@ ceil_pow2(const T n, const T m) noexcept
 *         <code>std::numeric_limits<T>::min()</code> or greater than
 *         <code>std::numeric_limits<T>::max()</code>
 */
-template <std::integral T>
+template <integral_number T>
 constexpr std::expected<T, std::errc>
 nearest(const T n, const T m) noexcept
 {
