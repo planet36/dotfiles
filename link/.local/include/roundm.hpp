@@ -123,7 +123,7 @@ ceil(const T n, const T m) noexcept
 
 /// Round a non-negative \a n up to the nearest multiple of a power-of-2 \a m
 /**
-* This is \c roundm::ceil for the case where \a n is non-negative and \a m is a power of 2.
+* Return the same result as \c roundm::ceil.
 * \pre \a n >= 0
 * \pre \a m is a positive power of 2
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is greater than
