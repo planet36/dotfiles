@@ -8,7 +8,8 @@ dwm \
 PractRand \
 slstatus \
 st \
-stw
+stw \
+succession-free-derangements
 
 # These will be cloned but not built
 CLONE_ONLY_DIRS = \
@@ -33,7 +34,7 @@ clone: | $(SUBDIRS)
 clean install uninstall lint: clone
 	$(foreach DIR, $(BUILD_DIRS), $(MAKE) -C $(DIR) $@;)
 
-arch-install Castella ecef-geodetic PractRand prng-test-bench randp:
+arch-install Castella ecef-geodetic PractRand prng-test-bench randp succession-free-derangements:
 	git clone --quiet https://github.com/planet36/$@.git
 
 cpp-httplib:
