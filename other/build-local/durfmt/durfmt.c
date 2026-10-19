@@ -92,7 +92,7 @@ struct durfmt_opts
 void
 durfmt_opts_init(struct durfmt_opts* opts)
 {
-    for (enum UT ut = UT_SECOND; ut <= UT_YEAR; ++ut)
+    for (unsigned int ut = UT_SECOND; ut <= UT_YEAR; ++ut)
     {
         opts->width[ut] = default_width;
         opts->print[ut] = false;
@@ -117,8 +117,7 @@ durfmt(unsigned long dur_secs, const struct durfmt_opts* opts)
     if (opts->print[UT_MINUTE]) { last_ut = UT_MINUTE; }
     if (opts->print[UT_SECOND]) { last_ut = UT_SECOND; }
 
-    // the controlling expression must consider unsigned integer wrap around
-    for (enum UT ut = UT_YEAR; ut >= UT_SECOND && ut <= UT_YEAR; --ut)
+    for (unsigned int ut = UT_YEAR + 1; ut-- > UT_SECOND;)
     {
         if (opts->print[ut])
         {
