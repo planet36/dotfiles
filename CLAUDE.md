@@ -85,9 +85,9 @@ review.
   `#if defined(DEBUG)`.  The check is off unless `DEBUG` is defined, whatever `NDEBUG` says.
   `make` never defines `DEBUG`, so to check that code, instantiate it in a test program built
   with `-DDEBUG`.
-- A few files are vendored copies kept in sync with upstream, such as `lib/python/hsluv.py`
-  and `bin/unimatrix`.  Make only upstream-reconciliation edits there, never local lint or
-  style fixes, and exclude them from repo-wide sweeps.
+- A few files are vendored copies kept in sync with upstream, such as `lib/python/hsluv.py`,
+  `bin/unimatrix`, `bin/wttr`, and `bin/dseq`.  Make only upstream-reconciliation edits there,
+  never local lint or style fixes, and exclude them from repo-wide sweeps.
 - Some headers in `link/.local/include/` are copies of headers in the Castella,
   prng-test-bench, and randp repos, which `link/.local/src/Makefile` clones into
   `~/.local/src/`.  Treat them like the vendored copies.  The other repo's copy wins, so fix a
