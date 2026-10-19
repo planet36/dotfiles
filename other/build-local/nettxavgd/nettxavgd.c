@@ -7,7 +7,6 @@
 #include "timespec.h"
 #include "timeval.h"
 
-#include <assert.h>
 #include <dirent.h>
 #include <err.h>
 #include <errno.h>
@@ -214,7 +213,10 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         }
     }
 
-    assert(atexit(atexit_cleanup) == 0);
+    if (atexit(atexit_cleanup) != 0)
+    {
+        errx(EXIT_FAILURE, "atexit");
+    }
 
     ACFD(dest_fd) = -1;
 
