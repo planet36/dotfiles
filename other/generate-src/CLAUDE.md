@@ -12,17 +12,18 @@ rather than imported.
 
 ## Regenerating
 
-`bash generate-files.bash` runs every generator and redirects each one's output into
+`bash generate-files.bash` runs every generator and writes each one's output into
 `link/.local/`.  It works from any directory, because it changes to its own directory first and
 finds the repo root with `git rev-parse`.  It then prints `git diff`, `git commit`, and
 `git checkout` commands for the user to choose from.  Leave the commit to the user.
 
 `generate-files.bash` is the one list of every generator and the path its output goes to.  To
-regenerate one output, run its generator with the same redirect.
+regenerate one output, run its generator and redirect its output to that path.  A redirect
+typed by hand empties the file even when the generator fails.
 
-A generator that fails still truncates its output, because the shell opens the redirect first.
-`generate-files.bash` stops at the first failure without printing its commands, so restore the
-outputs with `git checkout` before trying again.
+`generate-files.bash` replaces an output only when its generator succeeds, and it stops at the
+first failure without printing its commands.  The outputs written before the failure are
+already regenerated, so discard them with `git checkout` if a partial run is not wanted.
 
 Regeneration is not expected to be diff-free.  Every banner carries a timestamp, and some
 outputs depend on the host or on upstream data.

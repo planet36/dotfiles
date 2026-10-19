@@ -10,11 +10,30 @@ cd "$SCRIPT_DIR"
 
 OUT_DIR="$(git rev-parse --show-toplevel)/link/.local"
 
-python3 generate-ascii.py                                > "$OUT_DIR"/include/ascii.hpp
-python3 generate-gcc-machine-modes-typedefs.py           > "$OUT_DIR"/include/gcc-machine-modes-typedefs.hpp
-python3 generate-math-const.py                           > "$OUT_DIR"/include/math-const.hpp
-python3 generate-scaled-const.py                         > "$OUT_DIR"/include/scaled-const.h
-bash generate-x11_colors.bash                            > "$OUT_DIR"/lib/python/x11_colors.py
+# Write the output of a command to a file only if the command succeeds.
+function generate
+{
+    local OUT_FILE="$1"
+    shift
+
+    local TMP_FILE
+    TMP_FILE="$(mktemp)"
+
+    if "$@" > "$TMP_FILE"
+    then
+        cat -- "$TMP_FILE" > "$OUT_FILE"
+        rm -- "$TMP_FILE"
+    else
+        rm -- "$TMP_FILE"
+        return 1
+    fi
+}
+
+generate "$OUT_DIR"/include/ascii.hpp                       python3 generate-ascii.py
+generate "$OUT_DIR"/include/gcc-machine-modes-typedefs.hpp  python3 generate-gcc-machine-modes-typedefs.py
+generate "$OUT_DIR"/include/math-const.hpp                  python3 generate-math-const.py
+generate "$OUT_DIR"/include/scaled-const.h                  python3 generate-scaled-const.py
+generate "$OUT_DIR"/lib/python/x11_colors.py                bash generate-x11_colors.bash
 
 cat <<EOT
 
