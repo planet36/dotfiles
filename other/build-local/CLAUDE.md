@@ -1,114 +1,77 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this
+directory.
 
 ## What this is
 
-`other/build-local` is a subdirectory of a personal dotfiles repo (`~/.dotfiles`). It holds a
-collection of small, independent single-purpose C/C++ command-line utilities and daemons, each
-in its own directory with exactly one source file and a boilerplate `Makefile`.
+`other/build-local` holds small, independent C and C++ command-line utilities and daemons.
+Each lives in its own directory with exactly one source file and a `Makefile`, and the binary
+takes the directory's name.
 
-## Build commands
+## Building and verifying
 
-Run from this directory (`other/build-local`) or from a single utility's subdirectory:
+Run these from this directory to act on every utility, or from one utility's directory to act
+on that one alone.
 
 ```sh
-make            # build all utilities (or the one in cwd)
-make clean      # remove built binaries, .o, and .d files
-make lint       # run clang-tidy over the sources (uses .clang-tidy in this dir)
+make            # build
+make clean      # remove what the build wrote
+make lint       # run clang-tidy with the .clang-tidy in this directory
 make install    # install to $DESTDIR$PREFIX/bin (PREFIX defaults to /usr/local)
 make uninstall
 ```
 
-The top-level `Makefile` just fans `all`/`clean`/`install`/`uninstall`/`lint` out to every
-subdirectory (`$(wildcard */.)`). There is no top-level test target and no test suite in this
-directory — verification is: it builds cleanly, `make lint` is quiet, and manual invocation
-behaves per the program's `-h` usage text.
+The flags come from the environment, as the top-level CLAUDE.md describes.  The Makefiles add
+only `-MMD -MP`, so a shell that has not sourced `envvars.bash` builds with the wrong standard
+and warning set.  `cpuavgd`, `netrxavgd`, `nettxavgd`, and `printints` also include headers
+from `link/.local/include/`, which only the `-iquote` in `CPPFLAGS` can find.  To compile one
+file by hand, use `$CC $CPPFLAGS $CFLAGS` or `$CXX $CPPFLAGS $CXXFLAGS` rather than a bare
+`gcc`.
 
-To build/lint/test a single utility, `cd` into its directory and run `make`/`make lint` there.
+There is no test suite.  A change is verified when it adds no compiler warning and no
+clang-tidy diagnostic, and the program still behaves as its `-h` text says.  Neither check is
+clean today, and neither one fails the command, so compare the output before and after the
+change.  Fix the code rather than adding flags to a Makefile.
 
-### Build environment dependency (important)
+## The per-utility Makefile
 
-Every per-utility `Makefile` is intentionally minimal and leaves `CFLAGS`/`CXXFLAGS`/`CPPFLAGS`
-unset (commented out) so they are inherited from the shell environment. That environment is
-defined elsewhere in the dotfiles repo, in `link/.config/bash/envvars.bash`, which is symlinked
-to `~/.config/bash/envvars.bash` by the repo's `install.bash`. Notably:
-
-- `CPPFLAGS` includes `-iquote $HOME/.local/include`. Several utilities here (`cpuavgd`,
-  `netrxavgd`, `nettxavgd`, `printints`) `#include` local headers (e.g. `acfile.h`, `pscanf.h`,
-  `strtou.h`, `timeval.h`, `timespec.h`, `div_mod.hpp`) that live in
-  `../../link/.local/include/` and are only resolvable via that flag. **These will fail to
-  compile unless the dotfiles are installed** (so `~/.local/include` is populated with symlinks
-  into `link/.local/include`) and the shell has sourced `envvars.bash`.
-- `CFLAGS`/`CXXFLAGS` auto-detect and pin to the *latest* `-std=gnu2y` / `-std=gnu++26` the
-  installed GCC supports, plus a large, deliberately strict warning set (`-Wall -Wextra
-  -Wpedantic -Wshadow -Wcast-qual -Wc++-compat` for C, plus various `-W...` C++ hardening flags
-  for C++). Don't add flags to individual Makefiles to work around warnings from this shared set
-  — fix the code instead, matching the existing style in these files.
-- `CC=gcc`, `CXX=g++` are also exported there.
-
-If you need to build/lint a single file outside `make` (e.g. to check a warning), reproduce these
-flags rather than guessing at a plain `gcc file.c -o file`, or the local-header includes and
-warning set won't match.
-
-## Per-utility Makefile pattern
-
-Every subdirectory's `Makefile` is a copy of the same template (only `SRCS` extension — `.c` vs
-`.cpp` — and occasional extra `LDLIBS` differ):
-
-- `BIN = $(notdir $(CURDIR))` — the binary name is always the directory name.
-- `SRCS = $(wildcard *.c)` (or `*.cpp`) — each directory has exactly one source file compiled by
-  the implicit pattern rule.
-- `-MMD -MP` generate `.d` dependency files that are `-include`d for incremental rebuilds.
-- `lint:` runs `clang-tidy --quiet $(SRCS) -- $(CPPFLAGS) $(CFLAGS|CXXFLAGS)`, using the same
-  `.clang-tidy` config at the top of this directory for every utility.
-- One utility adds its own `LDLIBS`: `isprime` links GMP via `pkg-config --libs gmpxx`.
-
-When adding a new utility, copy an existing Makefile of the matching language (C: e.g.
-`durfmt/Makefile`; C++: e.g. `dir_is_empty/Makefile`) rather than writing one from scratch — the
-convention is required (top-level `make`/`make lint`/etc. depend on every subdir following
-it).
+Every utility's `Makefile` is a copy of one template.  The C and C++ versions differ only in the
+source extension and in which compiler and flags they name, and `isprime` adds `LDLIBS` for GMP.
+The top-level `Makefile` runs each goal in every subdirectory, so a new utility must support
+`all`, `clean`, `install`, `uninstall`, and `lint`.  Start a new one from `durfmt/Makefile` for
+C or `dir_is_empty/Makefile` for C++.
 
 ## Code conventions
 
-These are small, self-contained CLI tools reading from stdin/argv and writing to stdout, following
-consistent conventions worth matching in new code:
-
-- SPDX header on every file: `// SPDX-FileCopyrightText: Steven Ward` /
+- Every source file starts with the SPDX header, `// SPDX-FileCopyrightText: Steven Ward` and
   `// SPDX-License-Identifier: MPL-2.0`.
-- Programs that take options define `program_author`/`program_version`/`program_license`
-  constants and `print_version()`/`print_usage()` functions, parsed via `getopt` with a
-  `"+:..."` short-option string (`-V` version, `-h` help are near-universal). Usage text lists
-  `OPTIONS` (and sometimes `SEE ALSO`) in a fixed style — see `cmeter/cmeter.c` or
-  `cpuavgd/cpuavgd.c` for the fullest examples.
-- C sources use modern C (`constexpr`, `nullptr`, `[[maybe_unused]]`) via the pinned
-  `-std=gnu2y`; C++ sources target `-std=gnu++26`.
-- Exit codes follow the Unix convention (0 success / boolean-true, 1 failure /
-  boolean-false), e.g. `as_bool` and `dir_is_empty` are predicates meant for use in shell
-  conditionals.
+- A program that takes options defines `program_author`, `program_version`, and
+  `program_license`, plus `print_version()` and `print_usage()`.  It parses options with
+  `getopt` and a short-option string that starts with `"+:"`, and it always offers `-V` and
+  `-h`.  The usage text has an `OPTIONS` section and sometimes a `SEE ALSO` section.
+  `cpuavgd/cpuavgd.c` is the fullest example, and `isprime/isprime.cpp` shows `SEE ALSO`.
+- C sources use C23 features such as `constexpr`, `nullptr`, and `[[maybe_unused]]`.
+- `as_bool` and `dir_is_empty` are predicates for shell conditionals.  They exit 0 for true and
+  1 for false.
 
-## Daemon utilities (`cpuavgd`, `netrxavgd`, `nettxavgd`)
+## The daemons
 
-These three share one design, factored by copy-paste rather than a shared source file:
-continuously sample a `/proc` or `/sys` metric (CPU idle ticks, network rx/tx byte counters) at a
-configurable interval (`-i MSEC`), compute a rate/ratio since the last sample, and either `puts()`
-it to stdout or write it to a `-f FILE` destination file each tick (used for shoveling a live
-value into something like a status bar). They share:
+`cpuavgd`, `netrxavgd`, and `nettxavgd` share one design by copy rather than by a shared source
+file.  Each samples a counter in `/proc` or `/sys` every `-i MSEC` milliseconds and computes a
+rate since the previous sample.  It prints the rate with `puts()`, or with `-f FILE` writes it
+to a file that something like a status bar reads.
 
-- `SIGALRM`-driven sampling via `setitimer`, with `sigsuspend` idling between ticks.
-- `SIGUSR1`/`SIGUSR2` to force an alarm/interval reset; any other terminating signal sets a
-  `done` flag, and an `atexit` handler removes the `-f` destination file on clean exit.
-- `-f FILE` handling: the file is opened once at startup (`O_CREAT | O_EXCL`, so it must not
-  already exist) and the fd is kept open for the daemon's lifetime. Each tick seeks to the start,
-  writes, and `ftruncate`s to the new length, rather than reopening the path — a long-lived fd is
-  bound to the inode, not the path, which avoids a TOCTOU window where the path could be swapped
-  for a symlink between writes. This is *not* an atomic rename-based rewrite; readers can observe
-  a transient short/truncated read mid-write.
-- The local headers noted above (`acfile.h` for scope-guarded `FILE*`/fd cleanup — `ACFILEPTR`
-  and `ACFD` respectively —, `pscanf.h` for scanf'ing a file by path, `strtou.h`,
-  `timeval.h`/`timespec.h`) that live outside this repo in `link/.local/include/` — see the build
-  environment note above before touching these.
+- `setitimer` raises `SIGALRM` for each sample, and the loop waits in `sigsuspend` between
+  samples.
+- `SIGUSR1` and `SIGUSR2` restart the timer.  `SIGHUP`, `SIGINT`, `SIGPIPE`, `SIGQUIT`, and
+  `SIGTERM` set `done`, which ends the loop.
+- The `atexit` handler removes the `-f` file only after one of those signals ends the loop.  An
+  exit through `err()` leaves the file behind.
+- The `-f` file is created with `O_CREAT | O_EXCL`, so it must not already exist.  The daemon
+  keeps that descriptor open and rewrites the file in place each tick with `lseek`, `write`, and
+  `ftruncate`.  Reopening the path instead would let the path be swapped for a symlink between
+  writes.  The rewrite is not atomic, so a reader can see a short or empty value mid-write.
 
-`netrxavgd`/`nettxavgd` are near-identical (rx vs tx byte counter from
-`/sys/class/net/<iface>/statistics/{rx,tx}_bytes`); when fixing a bug in one, check whether the
-same bug exists in the other.
+`netrxavgd` and `nettxavgd` differ only in reading `rx_bytes` or `tx_bytes` from
+`/sys/class/net/<iface>/statistics/`.  A fix to one almost always belongs in the other.
