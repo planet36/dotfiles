@@ -1,86 +1,64 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this
+directory.
 
 ## What this is
 
-`other/generate-src` is a subdirectory of a personal dotfiles repo (`~/.dotfiles`). It holds a
-collection of independent, single-purpose Python/bash *generator* scripts. Each one prints a
-complete, ready-to-commit source file to stdout; none of them write files directly. There is no
-shared library code between them — each generator is self-contained (copy-paste, not `import`,
-is how common structure is shared across them).
+`other/generate-src` holds the generators for the generated headers and modules under
+`link/.local/`.  Each generator prints one complete source file to stdout and writes no file
+itself.  The generators share no code, so a structure common to several of them is copied
+rather than imported.
 
-## Commands
+## Regenerating
 
-Regenerate everything and get copy-pasteable follow-up commands:
+`bash generate-files.bash` runs every generator and redirects each one's output into
+`link/.local/`.  It works from any directory, because it changes to its own directory first and
+finds the repo root with `git rev-parse`.  It then prints `git diff`, `git commit`, and
+`git checkout` commands for the user to choose from.  Leave the commit to the user.
 
-```sh
-bash generate-files.bash
-```
+`generate-files.bash` is the one list of every generator and the path its output goes to.  To
+regenerate one output, run its generator with the same redirect.
 
-This must be run with cwd resolvable to a git repo (it does `git rev-parse --show-toplevel` to
-find `$OUT_DIR`, i.e. `<repo-root>/link/.local`), and does `cd "$SCRIPT_DIR"` first, so it's safe
-to invoke from anywhere. It does **not** commit — it writes the regenerated files in place, then
-prints ready-to-copy `git diff` / `git commit` / `git checkout` commands (the last to discard the
-regeneration) for the human to choose from. Don't auto-commit generated output on its behalf.
+A generator that fails still truncates its output, because the shell opens the redirect first.
+`generate-files.bash` stops at the first failure without printing its commands, so restore the
+outputs with `git checkout` before trying again.
 
-To regenerate a single output instead of all of them, run that one generator directly and redirect
-to the path `generate-files.bash` uses for it (see the table below) — each script's own docstring
-also documents its `Usage:` invocation.
+Regeneration is not expected to be diff-free.  Every banner carries a timestamp, and some
+outputs depend on the host or on upstream data.
 
-There is no lint config (`.pylintrc`, `Makefile`) in this directory — inline `# pylint: disable=...`
-comments per-file are how false positives are suppressed, and there's no test suite. In practice,
-verification is: the script runs, the diff looks right, and `ruff check`, `mypy
---ignore-missing-imports`, and `pylint` (all installed, no project config) run clean against
-whatever `.py` file(s) changed. For the two `.bash` files, the equivalent is `shellcheck` and
-`shellharden` (also installed, no project config) — both should stay clean.
+## Requirements
 
-`generate-scaled-const.py` and `generate-math-const.py` require the `gmpy2` package (GMP/MPFR
-bindings) to be installed for the `python3` that runs them.
+- `generate-math-const.py` and `generate-scaled-const.py` need the `gmpy2` package for the
+  `python3` that runs them.
+- `generate-ascii.py` imports `ascii_const` from `link/.local/lib/python/`, a hand-written
+  module, so it needs the dotfiles installed and `envvars.bash` sourced.
+- `generate-x11_colors.bash` needs network access.
 
-## Architecture: generator → output mapping
+## Verifying
 
-`generate-files.bash` is the orchestrator; it's the only place that knows the full set of
-generators and where each one's stdout is redirected:
+Verify a changed generator with the checks the top-level CLAUDE.md gives for Python and shell,
+then run it and read the diff of its output.  There is no test suite.
 
-| generator | output (under `<repo-root>/link/.local/`) |
-|---|---|
-| `generate-ascii.py` | `include/ascii.hpp` |
-| `generate-gcc-machine-modes-typedefs.py` | `include/gcc-machine-modes-typedefs.hpp` |
-| `generate-math-const.py` | `include/math-const.hpp` |
-| `generate-scaled-const.py` | `include/scaled-const.h` |
-| `generate-x11_colors.bash` | `lib/python/x11_colors.py` |
+## Conventions
 
-Those output paths are themselves symlinked from `~/.local/{include,lib/python}` by the repo's
-top-level `install.bash`, and are then consumed elsewhere — e.g. C/C++ utilities in
-`other/build-local` `#include` the generated headers via `-iquote $HOME/.local/include`, and
-Python scripts (including generators in this very directory) `import` generated modules via
-`PYTHONPATH=$HOME/.local/lib/python` — both set in `link/.config/bash/envvars.bash`. Concretely,
-`generate-ascii.py` itself `import ascii_const` from `link/.local/lib/python/ascii_const.py`
-(hand-written, not generated) — that import only resolves if the dotfiles are installed and
-`envvars.bash` has been sourced.
+Every output starts with the SPDX header and a banner comment, `Generated by "<script>" on
+<UTC ISO timestamp>` followed by `system information: <platform.platform()>`.  Each generator
+writes the banner itself, so a new generator copies the format from an existing one.
 
-Every generated output file carries the same banner convention (SPDX header, then a `Generated by
-"<script>" on <UTC ISO timestamp> / system information: <platform.platform()>` comment) — written
-by each script individually, not shared code, so keep new generators consistent with the existing
-ones' banner format rather than inventing a new one.
+## Generator notes
 
-### Notable generator-specific behavior
-
-- **`generate-x11_colors.bash`**: the only generator that hits the network — it `curl`s the live
-  `color.c` from the X.Org xserver GitLab mirror and pipes the `BuiltinColors[]` array through
-  `filter-oscolor.py` (which regex-parses `{r, g, b, "name"},` lines into a Python dict literal,
-  dropping "grey"-spelled duplicates), then appends a hand-written ANSI 256-color block. Re-running
-  it can pick up upstream color-table changes, so its diff is the least predictable of the
-  generators.
-- **`generate-gcc-machine-modes-typedefs.py`**: queries the *installed* `gcc` via `subprocess` to
-  derive machine-mode typedefs, rather than hardcoding them — its output is compiler/host-version
-  dependent, so regenerate it after a GCC upgrade.
-- **`generate-scaled-const.py`** / **`generate-math-const.py`**: both set a 256-bit IEEE `gmpy2`
-  context and compute high-precision math constants (e.g. `⌊2ⁿ × frac(√p)⌋` for the first primes),
-  emitting them as `#define`/`constexpr` with a `(popcount = ...)` comment — match this
-  compute-then-print-with-provenance-comment pattern if extending either.
-- **`generate-ascii.py`**: builds C++ `std::string_view`/`std::array` tables from the `ascii_const`
-  module's Python string constants (e.g. `ascii_uppercase`, `ascii_non_whitespace`), escaping via a
-  `str.maketrans` table into C/C++ escape sequences — if `ascii_const.py` gains a new constant, add
-  a corresponding `var_name_to_var_value[...]` entry here to emit it.
+- **`generate-x11_colors.bash`.**  It downloads `dix/color.c` from the X.Org xserver repo on
+  GitLab and pipes its `BuiltinColors[]` table through `filter-oscolor.py`, which emits a
+  Python dict and drops the names spelled with "grey."  The script then appends a hand-written
+  table of the ANSI 256 colors.  Its output follows upstream changes, so its diff is the least
+  predictable.
+- **`generate-gcc-machine-modes-typedefs.py`.**  It compiles a test program with the installed
+  `gcc` for each machine mode and emits only the modes that compile, so its output depends on
+  the compiler.  Regenerate it after a GCC upgrade.
+- **`generate-math-const.py` and `generate-scaled-const.py`.**  Both compute their constants in
+  a 256-bit IEEE `gmpy2` context.  `generate-scaled-const.py` emits `⌊2ⁿ × frac(√p)⌋` for the
+  first primes, each with a `(popcount = ...)` comment.
+- **`generate-ascii.py`.**  It builds `std::string_view` and `std::array` tables from the
+  string constants in `ascii_const`, escaping them through a `str.maketrans` table.  A new
+  constant in `ascii_const.py` needs its own `var_name_to_var_value[...]` entry here.
