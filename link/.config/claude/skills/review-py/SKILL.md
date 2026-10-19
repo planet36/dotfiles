@@ -1,63 +1,85 @@
 ---
 name: review-py
-description: Run a structured code quality, security, and performance review on modified or target Python (.py) files. Use this whenever the user requests a code review, PR check, or Python analysis.
+description: Review Python (.py) files for correctness, type safety, maintainability, performance, security, and documentation, using the repo's linters as a baseline
 argument-hint: <file-path>...
 disable-model-invocation: true
 ---
 
-# Python Code Reviewer Skill
+# Python review
 
-You are an expert Senior Python Core Developer and Security Engineer. Your goal is to review Python code for correctness, performance, security, type safety, and idiomatic "Pythonic" patterns.
+## Workflow
 
-## Review Workflow
+If $ARGUMENTS is empty, ask the user which files to review, and wait for the answer.
 
-If no file is given, ask the user which file(s) to review.
+Re-read each file in $ARGUMENTS before doing anything else.  Do not rely on any cached content.
 
-Before reading the code, run the repo's checks on the target file(s) where they are installed: `ruff check`, `mypy --ignore-missing-imports`, and `pylint` (and `pytest` if the project has a test suite). Their output is the baseline for the manual review. Respect existing inline `# pylint: disable=` / `# noqa` suppressions — they mark known false positives; don't re-raise them.
+Check CLAUDE.md and memory before reviewing.  Skip a vendored file, or report a defect in one as a fix to make upstream.  Do not re-raise anything memory marks as intentional.
 
-## Core Assessment Pillars
+Before reading the code, run the repo's checks on each file where they are installed, and use their output as the baseline for the review.
 
-### 1. Correctness & Type Safety
-* Check for missing or incorrect type hints (`typing` or PEP 585/604 syntax).
-* Look for proper exception handling (avoid bare `except:`, ensure resources use `with` context managers).
-* Identify edge cases (e.g., mutable default arguments like `def append_to(element, to=[])`).
+- Run `ruff check`, `mypy --ignore-missing-imports`, and `pylint`, and `pytest` if the project has a test suite.
+- Run a script, at least with `-h`, to confirm that it starts.
+- Respect existing inline `# pylint: disable=` and `# noqa` suppressions.  They mark known false positives, so do not re-raise them.
 
-### 2. Pythonic Idioms & Maintainability
-* Ensure code leverages modern Python idioms (e.g., list comprehensions, `dataclasses`, structural pattern matching where appropriate).
-* Check PEP 8 naming conventions. Take the line-length limit from the project and its linters, not PEP 8's 79 columns.
-* Identify dead code, overly complex nested logic, or redundant loops.
+## What to look for
 
-### 3. Performance & Resource Efficiency
-* Flags heavy I/O operations inside loops.
-* Recommend generators (`yield`) instead of large list instantiations for large datasets.
-* Watch for inefficient string concatenations or unnecessary object duplications.
+### 1. Correctness and type safety
 
-### 4. Security & Safety
+- Logic errors, off-by-one errors, and input the code does not handle, such as an empty file, an empty string, or a missing argument.  Prove each one before reporting it, with a run that shows the wrong output.
+- Missing or incorrect type hints, in `typing` or PEP 585 and PEP 604 syntax.
+- A bare `except:` or overly broad exception handling.
+- A resource opened without a `with` block.
+- A mutable default argument, such as `def append_to(element, to=[])`.
 
-Focus on the sinks that matter when data crosses a trust boundary — for a script that boundary is argv/env/files; for a library module it is the arguments callers pass in, which the code cannot assume are trusted.
+### 2. Maintainability and conventions
 
-* **Shell injection**: `subprocess(..., shell=True)` or `os.system(...)` with any argument built from a filename, CLI/env value, function parameter, or other caller-supplied data. Prefer a list argv with `shell=False`.
-* **Unsafe deserialization**: `pickle.load`, `yaml.load` without `SafeLoader`, or `marshal` on data the code did not itself produce.
-* **Insecure temp files**: `tempfile.mktemp()` or hand-rolled predictable `/tmp` paths (TOCTOU / symlink races); prefer `mkstemp` / `NamedTemporaryFile`.
-* **Path traversal**: untrusted filenames joined into a path without normalization (`../` escapes), or blindly following symlinks; `tarfile`/`zipfile` `extractall` on untrusted archives.
-* **Code execution**: `eval`/`exec`/`compile`, or a hardcoded secret that is genuinely a credential.
+- PEP 8 naming.  Take the line-length limit from the project and its linters, not PEP 8's 79 columns.
+- The conventions in CLAUDE.md, such as the module-level metadata and the shape of `main()`.
+- Dead code, overly complex nested logic, or redundant loops.
 
-Do not flag these when the command and all arguments are fully literal, or when a hardcoded string is a default path/format rather than a secret. A value from a function parameter is not literal — for library code, treat it as potentially untrusted rather than waving it through.
+### 3. Performance and resource use
 
-## Output Format
+- Heavy I/O inside a loop.
+- A large list built where a generator would do.
+- Inefficient string concatenation or unnecessary copies of objects.
 
-Structure your final response exactly as follows:
+### 4. Security
 
-### Python Review Summary
-* **Files Reviewed:** [List of files]
-* **Overall Status:** [Pass / Minor Issues / Major Issues / Critical Issues] — the highest severity found below
+Focus on the sinks that matter when data crosses a trust boundary.  For a script, that boundary is argv, the environment, and files.  For a library module, it is the arguments callers pass in, which the code cannot assume are trusted.
 
-### Detailed Findings
+- **Shell injection.**  `subprocess(..., shell=True)` or `os.system(...)` with any argument built from a filename, a command-line or environment value, a function parameter, or other caller-supplied data.  Prefer a list argv with `shell=False`.
+- **Unsafe deserialization.**  `pickle.load`, `yaml.load` without `SafeLoader`, or `marshal` on data the code did not itself produce.
+- **Insecure temp files.**  `tempfile.mktemp()` or a hand-rolled, predictable `/tmp` path, which invites TOCTOU and symlink races.  Prefer `mkstemp` or `NamedTemporaryFile`.
+- **Path traversal.**  An untrusted filename joined into a path without normalization, so that `../` escapes, or symlinks followed blindly.  Also `extractall` from `tarfile` or `zipfile` on an untrusted archive.
+- **Code execution.**  `eval`, `exec`, or `compile` on data that is not literal.
+- **Hardcoded secrets.**  A string in the code that is genuinely a credential.
 
-Group issues by severity (**Critical**, **Major**, **Minor**). For each finding, provide:
-1. **File & Line Number**: Locatable context.
-2. **The Problem**: A short explanation of the underlying flaw.
-3. **The Fix**: A clear, actionable explanation or concise diff showing the remediated code.
+Do not flag these when the command and all its arguments are fully literal, or when a hardcoded string is a default path or format rather than a secret.  A value from a function parameter is not literal.  In library code, treat it as potentially untrusted rather than waving it through.
 
-### Modernization Suggestions
-* Where the code uses a legacy pattern that a newer Python feature replaces, suggest the replacement. Omit this section when there are none.
+### 5. Documentation
+
+- A module docstring, `-h` text, or usage string that no longer matches the behavior.
+- Any README or CLAUDE.md that documents the file and has gone stale.
+
+## Report
+
+Present the report before making any changes, structured as follows.
+
+### Python review summary
+
+- **Files reviewed.**  The list of files.
+- **Overall status.**  Pass, Minor Issues, Major Issues, or Critical Issues, which is the highest severity found below.
+
+### Detailed findings
+
+Group the findings by severity, as **Critical**, **Major**, and **Minor**.  Give each finding the following.
+
+1. **Location.**  The `path:line`.
+2. **Problem.**  A short explanation of the underlying flaw.
+3. **Fix.**  A clear, actionable explanation, or a concise diff showing the remedied code.
+
+### Modernization suggestions
+
+Where the code uses a legacy pattern that a newer Python feature clearly improves on, suggest the replacement.  Omit this section when there are none.
+
+After presenting the report, wait for confirmation before applying any fixes.
