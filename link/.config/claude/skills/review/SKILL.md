@@ -1,30 +1,72 @@
 ---
 name: review
-description: Review C/C++ source files for memory leaks, include audit issues, API consistency, constexpr opportunities, performance, documentation, security issues, and README accuracy
+description: Review C/C++ source files for bugs, memory leaks, include audit issues, API consistency, constexpr and noexcept opportunities, performance, documentation, security issues, and stale README or CLAUDE.md text
 argument-hint: <file-path>...
 disable-model-invocation: true
 ---
 
-Re-read $ARGUMENTS fresh before doing anything else. Do not rely on any cached content.
+If $ARGUMENTS is empty, ask the user which files to review, and wait for the answer.
 
-Review the file(s) at $ARGUMENTS for the following, in order:
+Re-read each file in $ARGUMENTS before doing anything else.  Do not rely on any cached content.
 
-1. **Memory leaks** — dynamic allocations without matching deallocation on all code paths; missing cleanup in destructors or error branches.
+Check CLAUDE.md and memory before reviewing.  A vendored file, or a copy synced from another repo, is fixed upstream, so report a defect in one as a fix to make there.  Honor inline suppressions such as `// NOLINT`, and do not re-raise anything memory marks as intentional.
 
-2. **Include audit** — unused `#include` directives (nothing from the header is directly used in this file); missing `#include` directives (symbols are used but their header is not included, relying on transitive inclusion).
+## Baseline
 
-3. **API consistency** — naming conventions, parameter ordering, and return type conventions relative to the rest of the file and the project.
+Run the repo's checks on each file before reading the code, and use their output as the baseline for the review.
 
-4. **constexpr opportunities** — functions, variables, or constructors that could be marked `constexpr` or `constexpr static`, considering whether the types involved (e.g. SIMD intrinsics, mutexes, heap allocation) actually permit compile-time evaluation.
+- If CLAUDE.md names a build or lint command for the file, use it.
+- Otherwise, from the header's directory, compile it as its own translation unit with `printf '#include "%s"\n' <file> | $CXX $CPPFLAGS $CXXFLAGS -x c++ -fsyntax-only -`, using `$CC`, `$CFLAGS`, and `-x c` for a `.h` file.  Then run `clang-tidy <file> -- $CPPFLAGS $CXXFLAGS`, or `$CFLAGS` for C.
+- Judge each check by its output, not its exit status, since a Makefile recipe may ignore errors.
+- Report only the diagnostics that memory does not already record as accepted.
 
-5. **Performance** — unnecessary copies where a reference, move, or `std::move` would suffice; missing `noexcept` on non-throwing functions; heap allocations that could be stack-allocated or avoided; expensive operations inside tight loops that could be hoisted out; missing `reserve()` on containers that grow incrementally.
+## Review
 
-6. **Documentation** — public functions, methods, or types that lack doc comments; doc comments that are inconsistent with the current signature or behavior (wrong parameter names, stale descriptions, missing `\param` / `\return` / `\pre` entries relative to other documented symbols in the file).
+Review each file for the following, in order.  The C++-only checks, such as constructors, `noexcept`, `std::move`, and `reserve()`, do not apply to C, where `constexpr` covers objects only.
 
-7. **Security** — buffer overflows or out-of-bounds access; use of unsafe functions (e.g. `strcpy`, `sprintf`, `gets`); integer overflow or underflow in size calculations; unvalidated input at system boundaries; sensitive data (keys, secrets) left in memory longer than necessary; use of cryptographically weak primitives or RNG.
+1. **Bugs.**  Look for the following.
+   - Logic errors and broken edge cases, such as an empty range, a zero, or the extreme values of a type.
+   - Undefined behavior, such as signed overflow, a shift by the width of the type or more, an out-of-range conversion, or a strict-aliasing violation.
 
-8. **README** — any README that documents the reviewed file(s): usage, options, or behavior it describes that no longer matches the code.
+   Prove each bug before reporting it, with a test program that shows the wrong result.  An assertion inside `#if defined(DEBUG)` runs only when the program is built with `-DDEBUG`.
 
-Present all findings grouped by category before making any changes. For each finding include the file name, line number, and a brief explanation. After presenting the report, wait for confirmation before applying any fixes.
+2. **Memory leaks.**
+   - A dynamic allocation without a matching release on every code path.
+   - Missing cleanup in a destructor or an error branch.
 
-If $ARGUMENTS is empty, ask the user which file(s) to review.
+3. **Include audit.**
+   - An unused `#include`, where nothing from the header is used directly in this file.
+   - A missing `#include`, where a symbol is used but its header is reached only through transitive inclusion.
+
+4. **API consistency.**  Compare naming conventions, parameter ordering, and return-type conventions with the rest of the file and the project.
+
+5. **Stronger declarations.**
+   - A function, variable, or constructor that could be `constexpr` or `static constexpr`, if the types involved permit compile-time evaluation.  SIMD intrinsics, mutexes, and heap allocation often do not.
+   - A non-throwing C++ function that lacks `noexcept`.
+
+6. **Performance.**
+   - An unnecessary copy where a reference or `std::move` would do.
+   - A heap allocation that could be on the stack or avoided.
+   - An expensive operation inside a tight loop that could be hoisted out of it.
+   - A container that grows incrementally without a `reserve()`.
+
+7. **Documentation.**
+   - A public function, method, or type with no doc comment.
+   - A doc comment that no longer matches the signature or behavior, such as a wrong parameter name, a stale description, or a missing `\param`, `\return`, or `\pre` that other documented symbols in the file have.
+   - A doc comment that breaks the repo's prose style guide, such as COMMENT-STYLE.md, if it has one.
+
+8. **Security.**
+   - A buffer overflow or out-of-bounds access.
+   - An unsafe function, such as `strcpy`, `sprintf`, or `gets`.
+   - Integer overflow or underflow in a size calculation.
+   - Unvalidated input at a system boundary.
+   - Sensitive data, such as a key or secret, left in memory longer than necessary.
+   - A cryptographically weak primitive or RNG.
+
+9. **Stale documentation elsewhere.**  Look for any README or CLAUDE.md that documents the reviewed files and describes usage, options, or behavior that no longer matches the code.
+
+## Report
+
+Present all findings before making any changes, grouped by category in the order above, and omit an empty category.  For each finding, give `path:line`, the problem, and a suggested fix.  If nothing survives, say so plainly.
+
+After presenting the report, wait for confirmation before applying any fixes.
