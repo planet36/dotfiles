@@ -364,7 +364,9 @@ function parse_options
 
 function main
 {
-    if [[ "$PWD" == "$(realpath -- "$SCRIPT_DIR")"* ]]
+    DOTFILES_DIR="$(realpath -- "$SCRIPT_DIR")"
+
+    if [[ "$(pwd -P)"/ == "$DOTFILES_DIR"/* ]]
     then
         print_error 'May not install dotfiles within itself'
     fi
