@@ -15,7 +15,7 @@ yourself, clone https://github.com/hsluv/hsluv and run:
     haxe -cp haxe/src hsluv.Hsluv -python hsluv.py
 """
 
-__version__ = '5.0.4'
+__version__ = '5.0.5'
 
 from functools import wraps, partial
 import math
