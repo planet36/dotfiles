@@ -12,9 +12,9 @@ do
     cd "$DIR" || break
     if [[ "$(git rev-parse --is-bare-repository)" == 'false' ]]
     then
-      git pull --no-all || break
+      git pull --no-all --prune || break
     else
-      git fetch --no-all || break
+      git fetch --no-all --prune || break
     fi
     #git fsck || break
     #git gc || break
