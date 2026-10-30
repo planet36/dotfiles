@@ -13,8 +13,12 @@ Unless it is a dry run (`-n`), an install also runs `fc-cache` and byte-compiles
 `~/.local/lib/python/` at all three optimization levels.  The script refuses to run from the
 dotfiles directory or anywhere under it.
 
-Prose in comments, doc blocks, commit messages, and documentation files follows
-`COMMENT-STYLE.md`.  Read it before writing any of them.
+Prose in comments, doc blocks, commit messages, and documentation files follows this guide:
+
+@COMMENT-STYLE.md
+
+A session started below the repo root may not have that import.  If the guide's rules are not
+in context, read `COMMENT-STYLE.md` before writing any of that prose.
 
 ## Layout
 
@@ -97,5 +101,4 @@ review.
 ## Commits
 
 End commit messages with the `Co-Authored-By` trailer.  Leave filenames out of the summary
-line, and describe the change rather than which files it touched.  Wrap the body at 72
-columns.
+line, and describe the change rather than which files it touched.
