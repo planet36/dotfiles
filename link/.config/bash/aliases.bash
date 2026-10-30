@@ -122,7 +122,7 @@ alias pstree='pstree -ahlnp'
 alias rdiff='diff --recursive --new-file'
 # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=42501
 alias rm='rm --preserve-root --interactive'
-alias split='split --verbose --suffix-length=3 --numeric-suffixes'
+alias split='split --verbose --suffix-length=3 --numeric-suffixes=1'
 alias ssh_my='TERM=xterm-256color ssh_to $MY_WEBSITE'
 alias ssh_to='ssh -Y -o ServerAliveInterval=60'
 alias swp='exch'
