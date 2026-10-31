@@ -89,6 +89,9 @@
 
 #include <cstdint>
 #include <immintrin.h>
+#if defined(__clang__)
+#include <x86intrin.h> // __rdtscp
+#endif
 
 inline uint64_t
 rdtsc()
