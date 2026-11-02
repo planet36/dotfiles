@@ -46,7 +46,8 @@ def parse_duration(duration: str) -> timedelta:
     and they must be given in descending order of significance.
     <https://docs.python.org/3/library/datetime.html#datetime.timedelta>
 
-    Time-like strings with ":" delimiters are not supported.
+    Time-like strings with ":" delimiters are supported only in the format of
+    str(datetime.timedelta), such as '1:02:03' or '11 days, 22:33:44.555666'.
 
     Examples:
         '1 week, 2 days 3hrs, 4minute 5 s 6 milliseconds 7 microseconds' =>
