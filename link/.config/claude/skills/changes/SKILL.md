@@ -1,6 +1,6 @@
 ---
 name: changes
-description: Review the committed changes since (and including) a given commit — bugs, inconsistencies, and documentation left stale
+description: Review the committed changes since (and including) a given commit for bugs, inconsistencies, and documentation left stale
 argument-hint: <commit> | <N>
 disable-model-invocation: true
 ---
@@ -46,7 +46,7 @@ project.  These sources identify them.
 
 - The project's CLAUDE.md files, root and nested, and memory may name vendored files or files
   synced from other repos.
-- A commit message in the range may say "Sync with <repo>" or "Update from upstream."
+- A commit message in the range may say "Sync with <repo>" or "Update from upstream".
 - A file header may name another author, license, or upstream source.
 
 A change to such a file is still worth one check, which is whether a file in this repo that
@@ -66,57 +66,59 @@ the report.
 ### Bugs
 
 - Broken edge cases, wrong error paths, and behavior changes the commit message does not
-  account for.
+  account for
 - In C and C++, a memory leak, meaning an allocation without a matching release on every path,
-  including error branches.
+  including error branches
 - In Python, a bare `except:` or overly broad exception handling, a resource opened without
-  `with`, or a mutable default argument.
+  `with`, or a mutable default argument
 - In shell, an unquoted expansion that splits or globs, including one inside `[ ]`, or a path
-  argument with no `--` before it.
+  argument with no `--` before it
 
 ### Inconsistencies
 
 - The change against the rest of the file and the repo, such as naming, parameter ordering,
-  return conventions, and the conventions in CLAUDE.md.
-- Sibling files that do the same thing but were not updated to match.
+  return conventions, and the conventions in CLAUDE.md
+- Sibling files that do the same thing but were not updated to match
 - Changed comments and doc blocks, and the commit messages in the range, checked against the
-  repo's prose style guide, such as COMMENT-STYLE.md, if it has one.
-- In C and C++, `constexpr` and `noexcept` opportunities where the types involved permit them.
+  repo's prose style guide, such as COMMENT-STYLE.md, if it has one
+- In C and C++, `constexpr` and `noexcept` opportunities where the types involved permit them
 - In Python, missing or wrong type hints, and dead code or needless complexity where a modern
-  idiom would be clearer.
+  idiom would be clearer
 
 ### Security
 
 - Shell injection built from caller-supplied data, through `shell=True`, `os.system`, or an
-  unquoted shell expansion.
-- Unsafe deserialization.
-- Predictable temp files.
-- Path traversal.
+  unquoted shell expansion
+- Unsafe deserialization
+- Predictable temp files
+- Path traversal
 - Buffer overflows, out-of-bounds access, unsafe C functions such as `strcpy`, `sprintf`, and
-  `gets`, and integer overflow in size calculations.
-- A weak cryptographic primitive or RNG where it matters.
+  `gets`, and integer overflow in size calculations
+- A weak cryptographic primitive or RNG where it matters
 
 ### Performance
 
-- Unnecessary copies, including a copy where a reference or `std::move` would do.
-- Expensive work inside a loop that could be hoisted out of it.
+- Unnecessary copies, including a copy where a reference or `std::move` would do
+- Expensive work inside a loop that could be hoisted out of it
 - Allocations that could be avoided, including a missing `reserve()` on a container that grows
-  incrementally.
-- Repeated I/O or subprocess calls that could be batched.
+  incrementally
+- Repeated I/O or subprocess calls that could be batched
 
 ### Loose ends
 
 - References to removed or renamed files, functions, options, or variables that survive
-  elsewhere in the repo.  Grep the committed tree with `git grep <pattern> HEAD` to confirm.
-- In C and C++, an `#include` nothing uses, or a symbol used without including its header.
+  elsewhere in the repo, confirmed by grepping the committed tree with `git grep <pattern> HEAD`
+- In C and C++, an `#include` nothing uses, or a symbol used without including its header
 
 ### Documentation to update
 
 - README files, CLAUDE.md files, doc comments, `-h` help text, usage strings, and comments that
-  no longer match the committed behavior.  Include documentation outside the changed files.
-  Report these even when the code itself is fine.
+  no longer match the committed behavior
 - In C and C++, a doc comment whose `\param`, `\return`, or `\pre` no longer matches the
-  signature or behavior.
+  signature or behavior
+
+Include documentation outside the changed files.  Report stale documentation even when the code
+itself is fine.
 
 ### Ground rules
 
@@ -133,9 +135,9 @@ shell script, it may be run.  Run it only when that file has no uncommitted chan
 
 Start with the scope.
 
-- The range and the commits in it, as `git log --oneline` prints them.
-- The files reviewed.
-- The files skipped, each with its reason, such as external, generated, or binary.
+- The range and the commits in it, as `git log --oneline` prints them
+- The files reviewed
+- The files skipped, each with its reason, such as external, generated, or binary
 
 Then list the findings under the step 4 headings, in that order, omitting any empty group.  For
 each finding, give `path:line` for the line in the committed file, the commit that introduced it

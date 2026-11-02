@@ -51,7 +51,7 @@ writes the banner itself, so a new generator copies the format from an existing 
 
 - **`generate-x11_colors.bash`.**  It downloads `dix/color.c` from the X.Org xserver repo on
   GitLab and pipes its `BuiltinColors[]` table through `filter-oscolor.py`, which emits a
-  Python dict and drops the names spelled with "grey."  The script then appends a hand-written
+  Python dict and drops the names spelled with "grey".  The script then appends a hand-written
   table of the ANSI 256 colors.  Its output follows upstream changes, so its diff is the least
   predictable.
 - **`generate-gcc-machine-modes-typedefs.py`.**  It compiles a test program with the installed

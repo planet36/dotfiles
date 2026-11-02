@@ -28,22 +28,22 @@ it is the current directory.
 
 Review the whole conversation and the current state of the repo, and determine the following.
 
-- The task, feature, or bug being worked on, and why.
-- Every file created, modified, read for context, or deleted, and why each mattered.
-- Key decisions made, with their rationale and any rejected alternatives worth remembering.
-- Problems hit, and how they were resolved or why they weren't.
-- What is done and what is still pending.
-- Open questions or blockers that need a human or a future session to resolve.
+- The task, feature, or bug being worked on, and why
+- Every file created, modified, read for context, or deleted, and why each mattered
+- Key decisions made, with their rationale and any rejected alternatives worth remembering
+- Problems hit, and how they were resolved or why they weren't
+- What is done and what is still pending
+- Open questions or blockers that need a human or a future session to resolve
 
 ### 2. Git analysis
 
 If the working directory is a git repo, capture the following.
 
-- The current branch, and whether it is ahead of or behind its upstream, if it has one.
-- `git status`, covering staged, unstaged, and untracked changes.
-- `git log` for the commits made during this session, if they can be identified.
-- Whether the working tree is dirty, stated explicitly.  That detail is easy to lose across a
-  handoff.
+- The current branch, and whether it is ahead of or behind its upstream, if it has one
+- `git status`, covering staged, unstaged, and untracked changes
+- `git log` for the commits made during this session, if they can be identified
+- Whether the working tree is dirty, stated explicitly, since that detail is easy to lose across
+  a handoff
 
 ### 3. Write the document
 
@@ -141,7 +141,7 @@ placeholder.
   such as a snippet that was reverted.
 - Never write secrets, API keys, tokens, or credentials into the document, even ones seen
   earlier in the conversation.  Say where to find them instead, such as "see `.env`,
-  `AUTH_TOKEN` var."
+  `AUTH_TOKEN` var".
 - After saving, tell the user the file path and give a one-paragraph summary of what is in it.
 
 ## Resume mode (file path argument)
