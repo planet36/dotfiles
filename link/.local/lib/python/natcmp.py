@@ -19,9 +19,8 @@ import re
 
 def str_to_int(s: str) -> tuple[int, str] | str:
     '''Convert the string to an int if possible.'''
-    # See 'isdecimal-isdigit-isnumeric.py' for why isdecimal is used.
-
-    # Strings that are True for isdigit() and isnumeric() aren't always convertible to int.
+    # Strings that are True for isdigit() and isnumeric() aren't always convertible to int,
+    # such as '²'.
     # pylint: disable=no-else-return
     if s.isdecimal():
         return (int(s), s)
