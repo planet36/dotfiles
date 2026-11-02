@@ -13,8 +13,7 @@
 *
 * There is a possibility of modulo bias.  See the links above for an explanation.
 * The portion of random values which should be discarded is <code>discard / (2**L)</code>.
-* The terms in that expression are these:
-*
+* Where
 * - <code>discard = 2**L mod s</code> is the number of discarded values in the random pool.
 * - \c L is the bit space of the random pool (typically \c 32 or \c 64).
 * - \c s is the interval range (<code>b - a + 1</code>).
