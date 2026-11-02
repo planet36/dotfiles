@@ -73,7 +73,7 @@ file_chunker(FILE* fp, const auto& func_process_chunk)
 * \pre \a chunk_size is at least \c 1.
 * \pre \a chunk_size is at most \a buf_size.
 * \pre \a chunk_size is at most \c 255.
-* \pre \a buf_size must be an even multiple of \a chunk_size.
+* \pre \a buf_size must be a whole multiple of \a chunk_size.
 *
 * Each chunk is padded to \a chunk_size bytes.
 *
@@ -93,7 +93,7 @@ file_chunker_padded(FILE* fp, const auto& func_process_chunk)
     static_assert(chunk_size <= buf_size);
     static_assert(chunk_size <= UINT8_MAX, "The maximum value of a padding byte is 255.");
     static_assert((buf_size % chunk_size) == 0,
-                  "buf_size must be an even multiple of chunk_size.");
+                  "buf_size must be a whole multiple of chunk_size.");
 
     std::array<std::byte, buf_size> buf;
 
