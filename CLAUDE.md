@@ -92,11 +92,13 @@ review.
 - A few files are vendored copies kept in sync with upstream, such as `lib/python/hsluv.py`,
   `bin/unimatrix`, `bin/wttr`, and `bin/dseq`.  Make only upstream-reconciliation edits there,
   never local lint or style fixes, and exclude them from repo-wide sweeps.
-- Some headers in `link/.local/include/` are copies of headers in the Castella,
-  prng-test-bench, and randp repos, which `link/.local/src/Makefile` clones into
-  `~/.local/src/`.  Treat them like the vendored copies.  The other repo's copy wins, so fix a
-  defect there and sync it back.  A shared header stays here only while another header here
-  includes it.
+- Some headers in `link/.local/include/` are copies of headers in the Castella and
+  prng-test-bench repos, which `link/.local/src/Makefile` clones into `~/.local/src/`.  Treat
+  them like the vendored copies.  The other repo's copy wins, so fix a defect there and sync it
+  back.  A shared header stays here only while another header here includes it.
+- Other repos, such as split-seconds and rdtsc_jitter_entropy, copy some headers from
+  `link/.local/include/`.  The copy here is the original, so it stays whether or not another
+  header here includes it.
 
 ## Commits
 
