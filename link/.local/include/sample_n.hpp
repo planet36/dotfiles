@@ -5,7 +5,9 @@
 /**
 * \file
 * \author Steven Ward
-* \c sample_n works on types that satisfy both \c AllocatorAwareContainer and \c ContiguousContainer.
+*
+* \c sample_n works on types that satisfy both \c AllocatorAwareContainer and
+* \c ContiguousContainer.
 */
 
 #pragma once

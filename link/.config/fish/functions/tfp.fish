@@ -10,9 +10,9 @@ function tfp --argument-names DST --description 'tar format patch'
 
     mkdir --verbose -- "$PATCHES_DIR" || return
 
-    # NOTE: If git format-patch gives this error
-    # "fatal: base commit should be the ancestor of revision list"
-    # Then remove "--base=auto" from the command.
+    # NOTE: If git format-patch gives the error
+    # "fatal: base commit should be the ancestor of revision list",
+    # then remove "--base=auto" from the command.
     if not git format-patch -o "$PATCHES_DIR" --keep-subject --base=auto --progress $(git rev-parse --abbrev-ref HEAD@{upstream})..HEAD
         rmdir --verbose -- "$PATCHES_DIR" || return
         return 1

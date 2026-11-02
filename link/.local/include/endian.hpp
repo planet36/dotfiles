@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// functions to reverse bytes and determine machine endianness (i.e. big endian, little endian)
+/// functions to reverse bytes and determine machine endianness (i.e., big endian, little
+/// endian)
 /**
 * \file
 * \author Steven Ward

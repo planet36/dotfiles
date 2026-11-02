@@ -13,7 +13,7 @@ __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
 
 def as_bool(s: str | bool | None) -> bool:
-    '''Evaluate \a s as a bool.'''
+    '''Evaluate s as a bool.'''
 
     if s is None:
         return False

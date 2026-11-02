@@ -19,7 +19,7 @@
 extern "C" {
 #endif
 
-/// Determine if the both of the given __m128i are equal
+/// Determine if both of the given __m128i are equal
 static inline bool
 mm_equal(const __m128i a, const __m128i b)
 {

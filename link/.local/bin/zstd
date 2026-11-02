@@ -13,7 +13,8 @@
 # https://github.com/facebook/zstd/issues/1132
 # https://github.com/facebook/zstd/issues/1442
 #
-# This wrapper script aims to make it more compatible with traditional compression programs (e.g. gzip, bzip2, xz).
+# This wrapper script aims to make it more compatible with traditional compression programs
+# (e.g., gzip, bzip2, xz).
 #
 # If a normal compression level is given, it's mapped to a comparable zstd compression level.
 #

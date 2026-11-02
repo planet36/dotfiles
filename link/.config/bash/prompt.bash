@@ -109,7 +109,8 @@ function preexec_timer_begin
 
 function precmd_timer_end
 {
-    # If this is called before opt_ex_st, need to preserve the exit status of the previous command.
+    # If this is called before opt_ex_st, it must preserve the exit status of the previous
+    # command.
     local -r -i EXIT_STATUS=$?
 
     local TIME0
@@ -147,7 +148,8 @@ function opt_ex_st
 
 function opt_jobs
 {
-    # If this is called before opt_ex_st, need to preserve the exit status of the previous command.
+    # If this is called before opt_ex_st, it must preserve the exit status of the previous
+    # command.
     local -r -i EXIT_STATUS=$?
 
     #local -r -a JOBS=($(jobs -p))
@@ -165,7 +167,8 @@ function opt_jobs
 
 function opt_shlvl
 {
-    # If this is called before opt_ex_st, need to preserve the exit status of the previous command.
+    # If this is called before opt_ex_st, it must preserve the exit status of the previous
+    # command.
     local -r -i EXIT_STATUS=$?
 
     ((SHLVL > 1)) && printf -- '(%d) ' "$SHLVL"

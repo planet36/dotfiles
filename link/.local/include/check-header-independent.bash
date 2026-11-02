@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# Check that the given C/C++ header is independent (i.e. can be compiled on its own).
+# Check that the given C/C++ header is independent (i.e., can be compiled on its own).
 
 for HEADER
 do

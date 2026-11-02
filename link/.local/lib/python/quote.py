@@ -122,7 +122,7 @@ def escape(s):
     pattern2 = re.compile('([^\x20-\x7E])')
 
     def replacement2(match_object):
-        '''Replacement function'''
+        '''Replacement function.'''
         return escape_char_to_octal(match_object.group(1))
 
     s = pattern2.sub(replacement2, s)
@@ -143,7 +143,7 @@ Escape non-printable characters, double quotes, and backslashes, and surround th
     pattern2 = re.compile('([^\x20-\x7E])')
 
     def replacement2(match_object):
-        '''Replacement function'''
+        '''Replacement function.'''
         return escape_char_to_octal(match_object.group(1))
 
     s = pattern2.sub(replacement2, s)
@@ -181,7 +181,7 @@ If the string contains a double quote, then escape double quotes, and surround t
 If the string contains a field separator, contains a record separator, begins with whitespace, or ends with whitespace, then surround the result with double quotes."""
 
     if '"' in s:
-        # Replace double quotes with 2 double quotes.
+        # Replace double quotes with two double quotes.
         # Surround the result with double quotes.
         return '"' + s.replace('"', '""') + '"'
 
@@ -214,7 +214,7 @@ def quote(s, quoting_style):
 def main(argv: list[str] | None = None) -> int | None:
 
     # Restore default SIGPIPE handling so broken pipes terminate silently.
-    # Done here rather than at module level to avoid side effects on import.
+    # This is done here rather than at module level to avoid side effects on import.
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
     # valid values
@@ -265,7 +265,7 @@ def main(argv: list[str] | None = None) -> int | None:
     delimiter = args.delimiter
 
     def print_error(s):
-        """Print the error message"""
+        """Print the error message."""
         print(f"Error: {s}", file=sys.stderr)
 
     def quote_lines(lines):

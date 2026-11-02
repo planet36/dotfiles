@@ -4,7 +4,7 @@
 # pylint: disable=invalid-name
 
 '''
-Bidirectional dictionary
+Bidirectional dictionary.
 Adapted from <https://stackoverflow.com/a/21894086>.
 '''
 

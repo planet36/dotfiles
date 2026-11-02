@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// Convert between binary and gray code
+/// Convert between binary and Gray code
 /**
 * \file
 * \author Steven Ward

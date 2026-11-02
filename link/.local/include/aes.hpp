@@ -12,6 +12,7 @@
 * > Two rounds of Rijndael provide 'full diffusion' in the following sense:
 * > every state bit depends on all state bits two rounds ago, or a change in
 * > one state bit is likely to affect half of the state bits after two rounds.
+*
 * \sa https://crypto.stackexchange.com/questions/44532/how-2-rounds-in-aes-achieve-full-diffusion
 */
 
@@ -134,7 +135,7 @@ inline constexpr int aes192_num_rounds = 12;
 inline constexpr int aes256_num_rounds = 14;
 
 /**
-* \pre \a tmp_assist is the result of \c _mm_aeskeygenassist_si128
+* \pre \a tmp_assist is the result of \c _mm_aeskeygenassist_si128.
 */
 [[nodiscard]] inline __m128i
 aes128_expand_key(__m128i key, __m128i tmp_assist) noexcept
@@ -151,7 +152,7 @@ aes128_expand_key(__m128i key, __m128i tmp_assist) noexcept
 }
 
 /**
-* \pre <code>round_keys_enc[0]</code> has the cipher key
+* \pre <code>round_keys_enc[0]</code> has the cipher key.
 */
 template <size_t Nk>
 requires (Nk >= 2)
@@ -167,7 +168,7 @@ aes128_gen_round_keys_enc(arr_m128i<Nk>& round_keys_enc) noexcept
 }
 
 /**
-* \pre \a round_keys_enc have been properly prepared
+* \pre \a round_keys_enc have been properly prepared.
 */
 template <size_t Nk>
 requires (Nk >= 2)

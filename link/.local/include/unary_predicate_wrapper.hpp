@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// Alias template for \c std::function that takes 1 arg and returns \c bool
+/// Alias template for \c std::function that takes one arg and returns \c bool
 /**
 * \file
 * \author Steven Ward

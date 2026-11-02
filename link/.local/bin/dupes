@@ -70,7 +70,7 @@ Descend at most max_depth levels of directories below path."""
 
         cur_depth = len(dir_path.relative_to(path).parts)+1
 
-        # Prune deeper directories: with topdown=True, clearing dir_names
+        # Prune deeper directories.  With topdown=True, clearing dir_names
         # in place stops os.walk from recursing into them.
         if cur_depth >= max_depth:
             dir_names.clear()
@@ -191,16 +191,16 @@ def main(argv: list[str] | None = None) -> int | None:
     args = parser.parse_args(argv)
 
     def print_verbose(s):
-        """Print the message if verbose mode is on"""
+        """Print the message if verbose mode is on."""
         if args.verbose:
             print(f"# {s}", file=sys.stderr)
 
     def print_warning(s):
-        """Print the warning message"""
+        """Print the warning message."""
         print(f"Warning: {s}", file=sys.stderr)
 
     def print_error(s):
-        """Print the error message"""
+        """Print the error message."""
         print(f"Error: {s}", file=sys.stderr)
 
     max_depth = args.maxdepth
@@ -254,7 +254,8 @@ def main(argv: list[str] | None = None) -> int | None:
         output_lines.append('#!/usr/bin/sh')
         output_lines.append('')
 
-        # The keys of file_hash_to_file_info_map are sorted to maintain order among subsequent calls to this script.
+        # The keys of file_hash_to_file_info_map are sorted to maintain order among subsequent
+        # calls to this script.
         for file_hash in sorted(file_hash_to_file_info_map):
 
             max_file_path_quoted_len = 0
@@ -263,7 +264,8 @@ def main(argv: list[str] | None = None) -> int | None:
             first_iteration = True
 
             # Get the longest file path (including quotes).
-            # This will be used to get the right amount of padding to align the comments after the rm command.
+            # This will be used to get the right amount of padding to align the comments after
+            # the rm command.
             for file_info in file_hash_to_file_info_map[file_hash]:
 
                 max_file_path_quoted_len = max(len(file_info.path_quoted) - (only_comment_first and not first_iteration), max_file_path_quoted_len)
@@ -307,7 +309,7 @@ def main(argv: list[str] | None = None) -> int | None:
                 with open(output_file_name, mode='w', encoding='utf-8') as output_file:
                     output_file.write('\n'.join(output_lines))
 
-                # Make the file executable (i.e. mode 0700).
+                # Make the file executable (i.e., mode 0700).
                 os.chmod(output_file_name, stat.S_IRWXU)
 
             except OSError as err:

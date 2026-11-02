@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Steven Ward
 // SPDX-License-Identifier: MPL-2.0
 
-/// Absolute difference between 2 integers as an unsigned integer
+/// Absolute difference between two integers as an unsigned integer
 /**
 * \file
 * \author Steven Ward

@@ -19,7 +19,7 @@ namespace uctype
 /// Character type attribute masks
 /**
 * All ASCII characters that are not printable are control characters.
-* All visible characters that are not alpha-numeric are punctuation characters.
+* All visible characters that are not alphanumeric are punctuation characters.
 */
 inline constexpr uint8_t mask_cntrl  {0b0000'0001};
 inline constexpr uint8_t mask_space  {0b0000'0010};

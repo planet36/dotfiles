@@ -172,9 +172,9 @@ main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
         constexpr mode_t new_mask = 0o133; // rw-r--r--
         (void)umask(new_mask);
 
-        // Opened once and kept open for the life of the daemon: writing
-        // through this fd every tick (below) is immune to dest_path being
-        // later replaced with a symlink, since a fd is bound to the
+        // The file is opened once and kept open for the life of the daemon.
+        // Writing through this fd every tick (below) is immune to dest_path
+        // being later replaced with a symlink, since a fd is bound to the
         // underlying inode, not the path.
         dest_fd = open(dest_path, O_WRONLY | O_CREAT | O_EXCL, 0o666);
         if (dest_fd < 0)

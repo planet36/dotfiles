@@ -114,7 +114,7 @@ def main(argv: list[str] | None = None) -> int | None:
     max_dpi = args.max
 
     def print_verbose(s):
-        """Print the message if verbose mode is on"""
+        """Print the message if verbose mode is on."""
         if args.verbose:
             print('#', s)
 
@@ -131,8 +131,8 @@ def main(argv: list[str] | None = None) -> int | None:
     dpi *= scale_factor
     print_verbose(f'{dpi=}')
 
-    # round() does round-half-even
-    # Round-half-up is preferred, but this adequate
+    # round() does round-half-even.
+    # Round-half-up is preferred, but this is adequate.
     dpi = round(dpi)
     print_verbose(f'{dpi=}')
 

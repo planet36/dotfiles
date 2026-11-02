@@ -46,7 +46,7 @@ namespace detail
 
 /// Get the next multiple of \a m less than \a t
 /**
-* \pre \a t is a multiple of \a m
+* \pre \a t is a multiple of \a m.
 * \pre \a m > 0
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is less than
 *         <code>std::numeric_limits<T>::min()</code>
@@ -63,7 +63,7 @@ below(const T t, const T m) noexcept
 
 /// Get the next multiple of \a m greater than \a t
 /**
-* \pre \a t is a multiple of \a m
+* \pre \a t is a multiple of \a m.
 * \pre \a m > 0
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is greater than
 *         <code>std::numeric_limits<T>::max()</code>
@@ -126,7 +126,7 @@ ceil(const T n, const T m) noexcept
 /**
 * Return the same result as \c roundm::ceil.
 * \pre \a n >= 0
-* \pre \a m is a positive power of 2
+* \pre \a m is a positive power of 2.
 * \return \c std::unexpected(std::errc::result_out_of_range) if the result is greater than
 *         <code>std::numeric_limits<T>::max()</code>
 */

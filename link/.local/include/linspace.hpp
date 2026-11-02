@@ -19,7 +19,8 @@
 #include <type_traits>
 
 /**
-* Return \a NUM evenly spaced samples, calculated over the interval <code>[\a start, \a stop]</code>.
+* Return \a NUM evenly spaced samples, calculated over the interval
+* <code>[\a start, \a stop]</code>.
 * The endpoint of the interval can optionally be excluded.
 * \sa https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 */
@@ -63,7 +64,8 @@ linspace(const T start, const T stop, const bool endpoint = true)
 }
 
 /**
-* Return \a NUM evenly spaced samples, calculated over the interval <code>[\a start, \a stop]</code>.
+* Return \a NUM evenly spaced samples, calculated over the interval
+* <code>[\a start, \a stop]</code>.
 * The endpoint of the interval can optionally be excluded.
 * \sa https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
 */

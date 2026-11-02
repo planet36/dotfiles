@@ -31,7 +31,7 @@ int_part(const T x)
     return i;
 }
 
-/// get the fractional part of a floating-pointing point number
+/// get the fractional part of a floating-point number
 template <std::floating_point T>
 constexpr T
 frac_part(const T x)

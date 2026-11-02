@@ -95,7 +95,7 @@ if command -v setxkbmap > /dev/null
 then
     # command grep 'ctrl:nocaps' /usr/share/X11/xkb/rules/base.lst
     setxkbmap -option ctrl:nocaps
-    # difference between "caps:ctrl_modifier" and "ctrl:nocaps" explained here:
+    # The difference between "caps:ctrl_modifier" and "ctrl:nocaps" is explained here:
     # https://www.reddit.com/r/commandline/comments/4gusjx/comment/d2lvni3/
 fi
 

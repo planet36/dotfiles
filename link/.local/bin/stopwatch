@@ -194,8 +194,8 @@ def main() -> NoReturn:
             now = time.monotonic()
 
             if sys.stderr.isatty():
-                # Erase terminal control characters (e.g. ^C, ^Z) echoed by TTY
-                # driver.
+                # Erase terminal control characters (e.g., ^C, ^Z) echoed by the
+                # TTY driver.
                 print('\r  \r', file=sys.stderr, flush=True, end='')
 
             match signum:
@@ -228,8 +228,8 @@ def main() -> NoReturn:
             # pending duplicates.
             signal.pthread_sigmask(signal.SIG_SETMASK, old_mask)
 
-    # Let broken pipe terminate with SIGPIPE default status (141) instead of
-    # Python exception.
+    # Let a broken pipe terminate with the SIGPIPE default status (141)
+    # instead of a Python exception.
     signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
     for sig in HANDLED_SIGNALS:

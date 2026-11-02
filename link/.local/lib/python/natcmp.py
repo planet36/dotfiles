@@ -4,7 +4,7 @@
 # pylint: disable=invalid-name
 
 '''
-Natural (human) sort key: order strings so embedded numbers compare numerically.
+Natural (human) sort key that orders strings so embedded numbers compare numerically.
 '''
 
 __author__ = 'Steven Ward'

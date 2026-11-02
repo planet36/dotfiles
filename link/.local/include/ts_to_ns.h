@@ -24,13 +24,16 @@ extern "C" {
 
 /// Convert \a ts to nanoseconds
 /**
-* \pre \a ts is non-negative
+* \pre \a ts is non-negative.
 *
 * \sa https://en.cppreference.com/w/c/chrono/timespec
-* \c tv_sec is only valid >= 0
-* Signed seconds will overflow after approx. 292 years
+*
+* \c tv_sec is only valid >= 0.
+*
+* Signed seconds will overflow after approx. 292 years.
 * > (2**63 - 1) / 1_000_000_000 / 60 / 60 / 24 / 365.2425 = 292.27702462692775
-* Unsigned seconds will overflow after approx. 584 years
+*
+* Unsigned seconds will overflow after approx. 584 years.
 * > (2**64 - 1) / 1_000_000_000 / 60 / 60 / 24 / 365.2425 = 584.5540492538555
 */
 inline static uint64_t

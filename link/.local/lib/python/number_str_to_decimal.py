@@ -49,8 +49,8 @@ def number_str_to_decimal(s: str) -> decimal.Decimal:
     Convert a numeric string to a decimal.Decimal, interpreting optional SI or binary unit prefixes.
 
     This function parses a string representing a number, which may optionally include
-    a unit prefix that scales the value. Both SI (base-10) and binary (base-2) prefixes
-    are supported. The prefix may be separated from the number by optional whitespace.
+    a unit prefix that scales the value.  Both SI (base-10) and binary (base-2) prefixes
+    are supported.  The prefix may be separated from the number by optional whitespace.
     Lowercase binary prefixes (e.g., "ki", "mi") are not supported.
 
     Supported SI prefixes (base 10): k, M, G, T, P, E, Z, Y, R, Q

@@ -8,8 +8,10 @@
 *
 * For the "one" bitmasks, one bit is set (1) and the rest are not set (0).
 * For the "zero" bitmasks, one bit is not set (0) and the rest are set (1).
-* For the "lowpass" bitmasks, the low-order bits are set (1) and the high-order bits are not set (0).
-* For the "highpass" bitmasks, the high-order bits are set (1) and the low-order bits are not set (0).
+* For the "lowpass" bitmasks, the low-order bits are set (1) and the high-order bits are
+* not set (0).
+* For the "highpass" bitmasks, the high-order bits are set (1) and the low-order bits are
+* not set (0).
 *
 * Example:
 * \verbatim
@@ -64,7 +66,8 @@ bitmask_zero(const unsigned int i)
     return static_cast<T>(~bitmask_one<T>(i));
 }
 
-/// get a bitmask where low-order bits (less significant than bit \a i) are set (1) and the rest are not set (0)
+/// get a bitmask where low-order bits (less significant than bit \a i) are set (1) and the rest
+/// are not set (0)
 /**
 * \pre \a i must be less than the number of bits in \c T.
 */
@@ -76,7 +79,8 @@ bitmask_lowpass(const unsigned int i)
     return static_cast<T>(bitmask_one<T>(i) - 1U);
 }
 
-/// get a bitmask where high-order bits (not less significant than bit \a i) are set (1) and the rest are not set (0)
+/// get a bitmask where high-order bits (not less significant than bit \a i) are set (1) and the
+/// rest are not set (0)
 /**
 * \pre \a i must be less than the number of bits in \c T.
 */

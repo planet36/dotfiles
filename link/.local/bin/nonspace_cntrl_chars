@@ -4,7 +4,7 @@
 
 # Find and print characters that are not space characters but are control characters.
 
-# space characters are:
+# Space characters are:
 # space, form-feed ('\f'), newline ('\n'), carriage return ('\r'),
 # horizontal tab ('\t'), and vertical tab ('\v').
 declare -r PATTERN='\\0|00[1-6]|\\a|\\b|01[67]|0[23][0-7]|177'

@@ -206,7 +206,7 @@ export MANPAGER='less -s -M +Gg --color=d+B --color=u+y'
 
 # {{{ compile options
 
-# Too many benign warnings:
+# These give too many benign warnings:
 # -Wpadded
 # -Wfloat-equal
 GCC_COMMON_OPTIONS='-O2 -pipe -Wall -Wextra -Wpedantic -Wfatal-errors'
@@ -227,7 +227,8 @@ export OPTIMIZE_OPTIONS='-O3 -flto=auto -march=native'
 #OPTIMIZE_OPTIONS+='-fno-math-errno'
 
 #OPTIMIZE_OPTIONS+=' -fassociative-math -fno-signed-zeros -fno-trapping-math'
-# Do not use -freciprocal-math (enabled with -funsafe-math-optimizations (enabled with -ffast-math (enabled with -Ofast)))
+# Do not use -freciprocal-math (enabled with -funsafe-math-optimizations (enabled with
+# -ffast-math (enabled with -Ofast)))
 # Do not use -ffinite-math-only (enabled with -ffast-math (enabled with -Ofast))
 
 # In a VirtualBox guest, lscpu doesn't report all CPU flags available to my processors.

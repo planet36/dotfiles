@@ -1,7 +1,8 @@
 # SPDX-FileCopyrightText: Steven Ward
 # SPDX-License-Identifier: MPL-2.0
 
-# Determine if the tar file would create files outside of a root folder without the basename of itself.
+# Determine if the tar file would create files outside of a root folder without the
+# basename of itself.
 function messy_tar_file
 {
     if (( $# != 1 ))
@@ -24,7 +25,8 @@ function messy_tar_file
         exit 1
     }
 
-    # It must not begin with "/".  In this case, the tar file was created with the --absolute-names (-P) option.
+    # It must not begin with "/".  If it does, the tar file was created with the
+    # --absolute-names (-P) option.
     # It must not have intermediate directories.
     # It must end with "/".
 

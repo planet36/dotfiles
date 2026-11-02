@@ -66,7 +66,8 @@ public:
     /// the maximum possible number of elements in the circular queue
     constexpr auto max_size() const { return N; }
 
-    /// get information (which might be stale before the caller uses it) about the circular queue
+    /// get information (which might be stale before the caller uses it) about the circular
+    /// queue
     /*
     * https://codetrips.com/2020/07/26/modern-c-writing-a-thread-safe-queue/
     * """

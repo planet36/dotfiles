@@ -6,6 +6,7 @@
 * \file
 * \author Steven Ward
 * \sa https://reference.wolfram.com/language/guide/MathematicalConstants.html
+*
 * These scaled constants are coprime with their integer range.
 */
 

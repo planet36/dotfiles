@@ -15,7 +15,7 @@ from collections.abc import Iterable, Iterator
 from typing import Any
 
 def flatten(iterable: Iterable[Any]) -> Iterator[Any]:
-    '''Flatten the iterable'''
+    '''Flatten the iterable.'''
     if isinstance(iterable, dict):
         yield from flatten(iterable.values())
     else:

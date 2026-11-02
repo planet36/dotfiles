@@ -8,7 +8,7 @@
 *
 * \note The \c seconds_from_* functions multiply their argument by an \c int
 * constant, so the result has the argument's type, or \c int for a narrower one.
-* An \c int argument overflows past 68 years, 816 months, 3,550 weeks, 24,855
+* An \c int argument overflows past 68 years, 816 months, 3550 weeks, 24,855
 * days, 596,523 hours, or 35,791,394 minutes.  Pass a wider type for larger
 * values.
 */

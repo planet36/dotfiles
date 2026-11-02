@@ -11,7 +11,7 @@ import decimal
 D = decimal.Decimal
 
 def real_digits(x: D, *, base: D=D(10), limit: int=100, context=None) -> tuple:
-    '''Get 2 lists of the digits of the integral and the fractional parts of the number.'''
+    '''Get two lists of the digits of the integral and the fractional parts of the number.'''
 
     with decimal.localcontext(context) as _:
 

@@ -48,7 +48,7 @@ cmeter_opts_init(struct cmeter_opts* opts)
 }
 
 // x is within the interval [0, 1].
-// opts->width is non-negative
+// opts->width is non-negative.
 void
 print_cmeter(double x, const struct cmeter_opts* opts)
 {

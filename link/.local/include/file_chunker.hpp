@@ -82,7 +82,8 @@ file_chunker(FILE* fp, const auto& func_process_chunk)
 * \sa https://en.wikipedia.org/wiki/Padding_(cryptography)#PKCS#5_and_PKCS#7
 * > If the length of the original data is an integer multiple of the block size B, then an extra block of bytes with value B is added.
 *
-* This function is only different in that the value of the padding bytes increases, starting with \c 1 and ending with (at most) \a chunk_size.
+* This function is only different in that the value of the padding bytes increases, starting
+* with \c 1 and ending with (at most) \a chunk_size.
 */
 template <size_t chunk_size, size_t buf_size = 32 * 1024>
 void

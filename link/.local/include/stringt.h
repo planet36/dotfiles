@@ -22,7 +22,7 @@ extern "C" {
 /**
 * DESCRIPTION
 *   Copy \a src to \a dst, including the terminating NUL character.
-*   If \a src cannot be copied completely to \a dst (i.e. truncation happens)
+*   If \a src cannot be copied completely to \a dst (i.e., truncation happens)
 *   and \a trunc_at is not \c nullptr, then \a *trunc_at will point to the
 *   first character in \a src that was not copied to \a dst.
 *
@@ -55,8 +55,8 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
     if (after_nul != nullptr)
         return after_nul - 1;
 
-    // truncation happened: NUL character not found within gap characters
-    // in src
+    // No NUL character was found within gap characters in src, so
+    // truncation happened.
 
     if (trunc_at != nullptr)
         *trunc_at = &src[gap - 1];

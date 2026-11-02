@@ -42,8 +42,8 @@ bind Space:magic-space
 # https://unix.stackexchange.com/a/353407
 
 shopt -s autocd
-# When changing directory small typos can be ignored by bash
-# for example, cd /vr/lgo/apaache would find /var/log/apache
+# When changing directory, small typos can be ignored by bash.
+# For example, cd /vr/lgo/apaache would find /var/log/apache.
 shopt -s cdspell
 shopt -s cmdhist
 ((BASH_VERSINFO[0] >= 4 && BASH_VERSINFO[1] >= 3)) && shopt -s direxpand

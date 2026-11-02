@@ -75,8 +75,8 @@
 
 /**
 * DRmax = 2k-1
-* \pre \a k is even
-* \pre \a k is >= 2
+* \pre \a k is even.
+* \pre \a k is >= 2.
 */
 constexpr unsigned int
 gfs1_cyclic_drmax(unsigned int k)
@@ -86,8 +86,8 @@ gfs1_cyclic_drmax(unsigned int k)
 
 /**
 * DRmax = k+1
-* \pre \a k is even
-* \pre \a k is >= 2
+* \pre \a k is even.
+* \pre \a k is >= 2.
 */
 constexpr unsigned int
 gfs2_cyclic_drmax(unsigned int k)
@@ -97,8 +97,8 @@ gfs2_cyclic_drmax(unsigned int k)
 
 /**
 * DRmax = k+1
-* \pre \a k is even
-* \pre \a k is >= 2
+* \pre \a k is even.
+* \pre \a k is >= 2.
 */
 constexpr unsigned int
 gfs3_cyclic_drmax(unsigned int k)
@@ -106,7 +106,8 @@ gfs3_cyclic_drmax(unsigned int k)
     return k + 1;
 }
 
-/// Get the maximum diffusion round (DRmax) when using the optimal non-cyclic block shuffle permutation
+/// Get the maximum diffusion round (DRmax) when using the optimal non-cyclic block shuffle
+/// permutation
 /**
 * DRmax ≅ ⌈2×log₂(k)⌉
 */

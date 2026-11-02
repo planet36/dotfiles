@@ -8,7 +8,7 @@
 # pylint: disable=redefined-outer-name
 
 '''
-Python version of lolcat: colorize stdin with a cycling color palette.
+A Python version of lolcat that colorizes stdin with a cycling color palette.
 '''
 
 __author__ = 'Steven Ward'
@@ -229,7 +229,7 @@ def ansi_sgr_24bit(s: str, sRGBup, do_bg: bool = False, do_inv: bool = False) ->
 
 def generate_hsluv_colors(num_colors: int, S: float, L: float) -> tuple:
     '''
-    S, L in [0, 100]
+    S, L in [0, 100].
     '''
 
     start = 0
@@ -238,7 +238,7 @@ def generate_hsluv_colors(num_colors: int, S: float, L: float) -> tuple:
 
 def generate_RGB_colors(num_colors: int, lightness: float) -> tuple:
     '''
-    lightness in [0, 1]
+    lightness in [0, 1].
     '''
 
     start = 0
@@ -335,7 +335,7 @@ def main(argv: list[str] | None = None) -> int | None:
         lightness = default_lightness_dict[color_space]
 
     def print_verbose(s):
-        """Print the message if verbose mode is on"""
+        """Print the message if verbose mode is on."""
         if verbose:
             print(f"# {s}", file=sys.stderr)
 
@@ -417,7 +417,7 @@ def main(argv: list[str] | None = None) -> int | None:
         try:
             text = bytes_buf.decode()
         except UnicodeDecodeError:
-            # Incomplete multi-byte character at the end; keep reading bytes
+            # An incomplete multi-byte character is at the end, so keep reading bytes
             continue
 
         if incomplete_escape.search(bytes_buf):

@@ -13,17 +13,15 @@
 *
 * There is a possibility of modulo bias.  See the links above for an explanation.
 * The portion of random values which should be discarded is <code>discard / (2**L)</code>.
+* The terms in that expression are these:
 *
-* Where
-* <code>discard = 2**L mod s</code> is the number of discarded values in the random pool
-* \c L is the bit space of the random pool (typically \c 32 or \c 64)
-* \c s is the interval range (<code>b - a + 1</code>)
+* - <code>discard = 2**L mod s</code> is the number of discarded values in the random pool.
+* - \c L is the bit space of the random pool (typically \c 32 or \c 64).
+* - \c s is the interval range (<code>b - a + 1</code>).
 *
 * When <code>2**L mod s</code> is \c 0, there is no modulo bias.
 *
-* Python script that shows how many discarded values:
-*
-* Python snippet
+* This Python snippet shows how many values are discarded.
 * \code{.py}
 for L in (3, 4, 5, 8, 16, 32, 64):
     print(f'{L=}')
@@ -121,7 +119,7 @@ L=64
 #include <concepts>
 #include <limits>
 
-/// map \a x to the inverval <code>[0, s)</code>
+/// map \a x to the interval <code>[0, s)</code>
 /**
 * \retval x if <code>s == 0</code>
 */
@@ -137,7 +135,7 @@ map_int(const T x, const T s)
     return static_cast<T>(product >> std::numeric_limits<T>::digits);
 }
 
-/// map \a x to the inverval <code>[a, b]</code>
+/// map \a x to the interval <code>[a, b]</code>
 /**
 * \pre \a a <= \a b
 * \retval x if <code>a == MIN</code> and <code>b == MAX</code>

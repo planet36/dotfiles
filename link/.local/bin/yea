@@ -31,8 +31,9 @@ except ModuleNotFoundError:
 # Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
-# Output buffer size (bytes). The default was chosen empirically: benchmark
-# throughput across candidate sizes with the command below and pick the fastest.
+# Output buffer size (bytes).  The default was chosen empirically by
+# benchmarking throughput across candidate sizes with the command below and
+# picking the fastest.
 # Override it at runtime with $YEA_MAX_BUF_SIZE.
 #
 #   $ hyperfine --metrics=time_wall_clock:ms --style=color --warmup=5 \

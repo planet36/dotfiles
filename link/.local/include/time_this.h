@@ -11,9 +11,9 @@
 * time, user CPU time, and system CPU time elapsed/used during the lifetime of
 * the timer object.
 *
-* When the timer object is automatically destroyed, stdout is flushed, the times
-* (to the nearest hundredth of a second) are printed on a single line (with a
-* trailing newline) to stderr.
+* When the timer object is automatically destroyed, stdout is flushed, and the
+* times (to the nearest hundredth of a second) are printed on a single line (with
+* a trailing newline) to stderr.
 */
 
 #pragma once

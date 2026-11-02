@@ -268,7 +268,7 @@ the C/C++ defines won't work.  The constants must have different names.
 '''
 
 def math_expr_to_c_identifier(s: str) -> str:
-    '''Convert a math expression to a valid C/C++ identifier'''
+    '''Convert a math expression to a valid C/C++ identifier.'''
 
     pattern_replacement_map = (
         (r'\(-', '(negative_'),
@@ -323,7 +323,7 @@ binary64_digits10 = int(gmpy2.ceil(log10_of_2 * gmpy2.ieee(64).precision))
 # 16
 
 def generate_math_const(x: dict | str) -> None:
-    '''Generate a C/C++ declaration of a math constant'''
+    '''Generate a C/C++ declaration of a math constant.'''
     name_in_comment = False
     if isinstance(x, dict):
         name_in_comment = True

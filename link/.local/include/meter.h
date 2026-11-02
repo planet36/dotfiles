@@ -160,9 +160,9 @@ clamp(double* x)
         *x = 1;
 }
 
-/** Map the real number \a x within the interval <code>[0, 1]</code> to an
-* integer within the interval <code>[0, b)</code>.
-*
+/// Map the real number \a x within the interval <code>[0, 1]</code> to an integer within the
+/// interval <code>[0, b)</code>
+/**
 * \pre \a b is at least \c 1.
 */
 static inline size_t
@@ -174,8 +174,8 @@ map_to_uint(double x, size_t b)
     return (size_t)(x * (double)(b - 1U) + 0.5);
 }
 
-/** Calculate values of the meter segments.
-*
+/// Calculate values of the meter segments
+/**
 * \pre \a x is within the interval <code>[0, 1]</code>.
 *
 * \pre \a blocks_len is at least \c 1.
@@ -218,9 +218,8 @@ calc_meter_segments(double x,
     *right_width = meter_width - *left_width - 1U;
 }
 
-/** Return a Unicode lower block character (whose height is proportional to \a
-* x).
-*
+/// Return a Unicode lower block character (whose height is proportional to \a x)
+/**
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
 static inline wchar_t
@@ -229,9 +228,8 @@ lower_blocks_1(double x)
     return lower_blocks[map_to_uint(x, num_lower_blocks)];
 }
 
-/** Return a Unicode horizontal 1/8 block character (whose height is
-* proportional to \a x).
-*
+/// Return a Unicode horizontal 1/8 block character (whose height is proportional to \a x)
+/**
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
 static inline wchar_t
@@ -240,9 +238,8 @@ hor_lines_1(double x)
     return hor_lines[map_to_uint(x, num_hor_lines)];
 }
 
-/** Return a Unicode upper block character (whose height is proportional to \a
-* x).
-*
+/// Return a Unicode upper block character (whose height is proportional to \a x)
+/**
 * \pre \a x is within the interval <code>[0, 1]</code>.
 */
 static inline wchar_t
@@ -251,8 +248,8 @@ upper_blocks_1(double x)
     return upper_blocks[map_to_uint(x, num_upper_blocks)];
 }
 
-/** Fill a meter with Unicode left block characters.
-*
+/// Fill a meter with Unicode left block characters
+/**
 * The filled region is proportional to \a x, starting at the left.
 *
 * \pre \a x is within the interval [0, 1].
@@ -287,8 +284,8 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
     }
 }
 
-/** Fill a meter with a Unicode vertical 1/8 block character.
-*
+/// Fill a meter with a Unicode vertical 1/8 block character
+/**
 * The position of the filled character is proportional to \a x, starting at the
 * left.
 *
@@ -338,8 +335,8 @@ ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
     }
 }
 
-/** Fill a meter with Unicode right block characters.
-*
+/// Fill a meter with Unicode right block characters
+/**
 * The filled region is proportional to \a x, starting at the right.
 *
 * \pre \a x is within the interval [0, 1].
@@ -376,13 +373,13 @@ right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
     }
 }
 
-/** Fill a meter with ASCII characters.
-*
+/// Fill a meter with ASCII characters
+/**
 * The filled region is proportional to \a x, starting at the left.
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 *
-* \pre meter is a buffer capable of holding \a meter_width characters
+* \pre \a meter is a buffer capable of holding \a meter_width characters
 * (not including the terminating null character).
 *
 * It is the caller's responsibility to null-terminate the \a meter buffer.
@@ -411,13 +408,13 @@ left_char_meter(double x, char* meter, size_t meter_width, char fill, char unfil
     }
 }
 
-/** Fill a meter with ASCII characters.
-*
+/// Fill a meter with ASCII characters
+/**
 * The filled region is proportional to \a x, starting at the right.
 *
 * \pre \a x is within the interval <code>[0, 1]</code>.
 *
-* \pre meter is a buffer capable of holding \a meter_width characters
+* \pre \a meter is a buffer capable of holding \a meter_width characters
 * (not including the terminating null character).
 *
 * It is the caller's responsibility to null-terminate the \a meter buffer.

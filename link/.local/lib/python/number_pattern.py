@@ -3,7 +3,7 @@
 
 # pylint: disable=invalid-name
 
-'''Regular expression patterns for numbers'''
+'''Regular expression patterns for numbers.'''
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
