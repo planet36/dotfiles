@@ -262,7 +262,7 @@ def main(argv: list[str] | None = None) -> int | None:
     default_lightness_dict = {ColorSpace.LOLCAT: 100, ColorSpace.HSLUV: 70}
 
     description_lines = (
-            'Python version of lolcat: colorize stdin with a cycling color palette.',
+            'A Python version of lolcat that colorizes stdin with a cycling color palette.',
             )
 
     epilog_lines = (
