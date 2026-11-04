@@ -16,6 +16,7 @@ __license__ = 'MPL-2.0'
 __version__ = '2026-11-04'
 
 import argparse
+import atexit
 import codecs
 from collections.abc import Callable, Sequence
 import enum
@@ -400,6 +401,13 @@ def main(argv: list[str] | None = None) -> int | None:
 
     bytes_read = bytearray(io.DEFAULT_BUFFER_SIZE)
 
+    # The blocking flag belongs to the open file, which other processes can share, so it is
+    # put back at exit.
+    stdin_fd = sys.stdin.fileno()
+    if not os.get_blocking(stdin_fd):
+        os.set_blocking(stdin_fd, True)
+        atexit.register(os.set_blocking, stdin_fd, False)
+
     # sys.stdin.buffer is typed as BinaryIO, which does not declare readinto1.
     stdin_buffer = typing.cast(io.BufferedReader, sys.stdin.buffer)
 
@@ -415,8 +423,9 @@ def main(argv: list[str] | None = None) -> int | None:
     pending_escape = ''
 
     # bytes_read is not cleared in subsequent calls to readinto1
-    while (num_bytes_read := stdin_buffer.readinto1(bytes_read)) is not None:
+    while True:
 
+        num_bytes_read = stdin_buffer.readinto1(bytes_read)
         at_eof = num_bytes_read == 0
 
         text = pending_escape + decoder.decode(bytes_read[0:num_bytes_read], final=at_eof)
