@@ -422,6 +422,9 @@ def main(argv: list[str] | None = None) -> int | None:
     # An escape sequence cut off at the end of a read, held back until the rest arrives
     pending_escape = ''
 
+    # The column where the last read left its unfinished line
+    column = 0
+
     # bytes_read is not cleared in subsequent calls to readinto1
     while True:
 
@@ -439,7 +442,9 @@ def main(argv: list[str] | None = None) -> int | None:
 
             # lolcat does this
             if '\t' in line:
-                line = line.expandtabs()
+                line = (' ' * column + line).expandtabs()[column:]
+
+            column = column + len(line) if line.splitlines()[0] == line else 0
 
             for (esc_seq, c) in ansi_escape.findall(line):
                 out.append(esc_seq)
