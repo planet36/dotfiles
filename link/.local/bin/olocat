@@ -16,7 +16,6 @@ __license__ = 'MPL-2.0'
 __version__ = '2026-11-04'
 
 import argparse
-import atexit
 import codecs
 from collections.abc import Callable, Sequence
 import enum
@@ -25,6 +24,7 @@ import math
 import os
 import random
 import re
+import select
 import signal
 import sys
 import typing
@@ -44,6 +44,13 @@ def cycle_seq(seq: Sequence, i: int=0):
         i %= len(seq)
         yield seq[i]
         i += 1
+
+def read_stdin(stdin_buffer: io.BufferedReader, buf: bytearray) -> int:
+    '''Read into buf from stdin, waiting for data if stdin is non-blocking.'''
+    # The parent shares stdin's blocking flag, so wait here rather than change the flag.
+    while (num_bytes_read := stdin_buffer.readinto1(buf)) is None:
+        select.select([stdin_buffer], [], [])
+    return num_bytes_read
 
 def reset_term():
     # Adapted from:
@@ -401,18 +408,11 @@ def main(argv: list[str] | None = None) -> int | None:
 
     bytes_read = bytearray(io.DEFAULT_BUFFER_SIZE)
 
-    # The blocking flag belongs to the open file, which other processes can share, so it is
-    # put back at exit.
-    stdin_fd = sys.stdin.fileno()
-    if not os.get_blocking(stdin_fd):
-        os.set_blocking(stdin_fd, True)
-        atexit.register(os.set_blocking, stdin_fd, False)
-
     # sys.stdin.buffer is typed as BinaryIO, which does not declare readinto1.
     stdin_buffer = typing.cast(io.BufferedReader, sys.stdin.buffer)
 
     if not (sys.stdout.isatty() or force_color_output):
-        while num_bytes_read := stdin_buffer.readinto1(bytes_read):
+        while num_bytes_read := read_stdin(stdin_buffer, bytes_read):
             sys.stdout.buffer.write(bytes_read[0:num_bytes_read])
             sys.stdout.buffer.flush()
         return 0
@@ -428,7 +428,7 @@ def main(argv: list[str] | None = None) -> int | None:
     # bytes_read is not cleared in subsequent calls to readinto1
     while True:
 
-        num_bytes_read = stdin_buffer.readinto1(bytes_read)
+        num_bytes_read = read_stdin(stdin_buffer, bytes_read)
         at_eof = num_bytes_read == 0
 
         text = pending_escape + decoder.decode(bytes_read[0:num_bytes_read], final=at_eof)
