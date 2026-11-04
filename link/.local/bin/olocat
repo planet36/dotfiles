@@ -13,7 +13,7 @@ A Python version of lolcat that colorizes stdin with a cycling color palette.
 
 __author__ = 'Steven Ward'
 __license__ = 'MPL-2.0'
-__version__ = '2026-07-12'
+__version__ = '2026-11-04'
 
 import argparse
 from collections.abc import Callable, Sequence
@@ -425,6 +425,7 @@ def main(argv: list[str] | None = None) -> int | None:
             continue
 
         if sys.stdout.isatty() or force_color_output:
+            out = []
             for line in text.splitlines(keepends=True):
 
                 # lolcat does this
@@ -432,16 +433,19 @@ def main(argv: list[str] | None = None) -> int | None:
                     line = line.expandtabs()
 
                 for (esc_seq, c) in ansi_escape.findall(line):
-                    print(esc_seq, end='')
+                    out.append(esc_seq)
                     if len(c) > 0:
-                        print(ansi_sgr(c, next(color_cycle), do_bg, do_inv), end='')
+                        out.append(ansi_sgr(c, next(color_cycle), do_bg, do_inv))
 
                 if line.endswith(os.linesep):
                     i += 1
                     color_cycle = cycle_seq(colors, i)
-                    print(end=os.linesep)
-        else:
-            print(text, end='')
+                    out.append(os.linesep)
+            text = ''.join(out)
+
+        # stdout holds text until a newline on a terminal and until EOF on a pipe.
+        sys.stdout.write(text)
+        sys.stdout.flush()
 
         bytes_buf.clear()
 
