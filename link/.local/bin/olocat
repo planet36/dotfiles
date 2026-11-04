@@ -400,13 +400,19 @@ def main(argv: list[str] | None = None) -> int | None:
 
     bytes_read = bytearray(io.DEFAULT_BUFFER_SIZE)
 
+    # sys.stdin.buffer is typed as BinaryIO, which does not declare readinto1.
+    stdin_buffer = typing.cast(io.BufferedReader, sys.stdin.buffer)
+
+    if not (sys.stdout.isatty() or force_color_output):
+        while num_bytes_read := stdin_buffer.readinto1(bytes_read):
+            sys.stdout.buffer.write(bytes_read[0:num_bytes_read])
+            sys.stdout.buffer.flush()
+        return 0
+
     decoder = codecs.getincrementaldecoder('utf-8')(errors='replace')
 
     # An escape sequence cut off at the end of a read, held back until the rest arrives
     pending_escape = ''
-
-    # sys.stdin.buffer is typed as BinaryIO, which does not declare readinto1.
-    stdin_buffer = typing.cast(io.BufferedReader, sys.stdin.buffer)
 
     # bytes_read is not cleared in subsequent calls to readinto1
     while (num_bytes_read := stdin_buffer.readinto1(bytes_read)) is not None:
@@ -419,24 +425,23 @@ def main(argv: list[str] | None = None) -> int | None:
         if not at_eof and (match := incomplete_escape.search(text)):
             (text, pending_escape) = (text[:match.start()], text[match.start():])
 
-        if sys.stdout.isatty() or force_color_output:
-            out = []
-            for line in text.splitlines(keepends=True):
+        out = []
+        for line in text.splitlines(keepends=True):
 
-                # lolcat does this
-                if '\t' in line:
-                    line = line.expandtabs()
+            # lolcat does this
+            if '\t' in line:
+                line = line.expandtabs()
 
-                for (esc_seq, c) in ansi_escape.findall(line):
-                    out.append(esc_seq)
-                    if len(c) > 0:
-                        out.append(ansi_sgr(c, next(color_cycle), do_bg, do_inv))
+            for (esc_seq, c) in ansi_escape.findall(line):
+                out.append(esc_seq)
+                if len(c) > 0:
+                    out.append(ansi_sgr(c, next(color_cycle), do_bg, do_inv))
 
-                if line.endswith(os.linesep):
-                    i += 1
-                    color_cycle = cycle_seq(colors, i)
-                    out.append(os.linesep)
-            text = ''.join(out)
+            if line.endswith(os.linesep):
+                i += 1
+                color_cycle = cycle_seq(colors, i)
+                out.append(os.linesep)
+        text = ''.join(out)
 
         # stdout holds text until a newline on a terminal and until EOF on a pipe.
         sys.stdout.write(text)
