@@ -16,6 +16,7 @@ __license__ = 'MPL-2.0'
 __version__ = '2026-11-04'
 
 import argparse
+import codecs
 from collections.abc import Callable, Sequence
 import enum
 import io
@@ -35,7 +36,7 @@ import hsluv
 # Adapted from:
 # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
 ansi_escape = re.compile(r'((?:\x1B(?:[ -\/]+.|[\]PX^_][^\x07\x1B]*|\[[0-?]*.|.))*)(.?)', re.ASCII)
-incomplete_escape = re.compile(br'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$', re.ASCII)
+incomplete_escape = re.compile(r'\x1B(?:[ -\/]*|[\]PX^_][^\x07\x1B]*|\[[0-?]*)$', re.ASCII)
 
 def cycle_seq(seq: Sequence, i: int=0):
     while True:
@@ -399,8 +400,10 @@ def main(argv: list[str] | None = None) -> int | None:
 
     bytes_read = bytearray(io.DEFAULT_BUFFER_SIZE)
 
-    # bytes_read is appended to this
-    bytes_buf = bytearray()
+    decoder = codecs.getincrementaldecoder('utf-8')(errors='replace')
+
+    # An escape sequence cut off at the end of a read, held back until the rest arrives
+    pending_escape = ''
 
     # sys.stdin.buffer is typed as BinaryIO, which does not declare readinto1.
     stdin_buffer = typing.cast(io.BufferedReader, sys.stdin.buffer)
@@ -408,21 +411,13 @@ def main(argv: list[str] | None = None) -> int | None:
     # bytes_read is not cleared in subsequent calls to readinto1
     while (num_bytes_read := stdin_buffer.readinto1(bytes_read)) is not None:
 
-        if num_bytes_read == 0:
-            # EOF
-            break
+        at_eof = num_bytes_read == 0
 
-        bytes_buf += bytes_read[0:num_bytes_read]
+        text = pending_escape + decoder.decode(bytes_read[0:num_bytes_read], final=at_eof)
+        pending_escape = ''
 
-        try:
-            text = bytes_buf.decode()
-        except UnicodeDecodeError:
-            # An incomplete multi-byte character is at the end, so keep reading bytes
-            continue
-
-        if incomplete_escape.search(bytes_buf):
-            # Keep reading bytes
-            continue
+        if not at_eof and (match := incomplete_escape.search(text)):
+            (text, pending_escape) = (text[:match.start()], text[match.start():])
 
         if sys.stdout.isatty() or force_color_output:
             out = []
@@ -447,7 +442,8 @@ def main(argv: list[str] | None = None) -> int | None:
         sys.stdout.write(text)
         sys.stdout.flush()
 
-        bytes_buf.clear()
+        if at_eof:
+            break
 
     reset_term()
 
