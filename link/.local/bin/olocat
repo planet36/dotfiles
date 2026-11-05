@@ -66,7 +66,7 @@ def reset_term():
     # Adapted from:
     # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
     if sys.stdout.isatty():
-        print('\x1B[m\x1B[?25h\x1B[?1;5;2004l', end='')
+        write_stdout(b'\x1B[m\x1B[?25h\x1B[?1;5;2004l')
 
 # Restore default SIGPIPE handling so broken pipes terminate silently, as in C.
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
@@ -75,7 +75,9 @@ signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 def signal_handler(signal_num, execution_frame):
     # Reset the terminal so an interrupt does not leave it in a colored state.
     reset_term()
-    print()
+    # A write through sys.stdout would be flushed at exit, which blocks on a full pipe.
+    if sys.stdout.isatty():
+        write_stdout(os.linesep.encode())
     sys.exit(128 + signal_num)
 
 signal.signal(signal.SIGINT, signal_handler)
