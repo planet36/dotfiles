@@ -52,6 +52,16 @@ def read_stdin(stdin_buffer: io.BufferedReader, buf: bytearray) -> int:
         select.select([stdin_buffer], [], [])
     return num_bytes_read
 
+def write_stdout(data: bytes | bytearray | memoryview) -> None:
+    '''Write all of data to stdout, waiting for room if stdout is non-blocking.'''
+    stdout_fd = sys.stdout.fileno()
+    view = memoryview(data)
+    while view:
+        try:
+            view = view[os.write(stdout_fd, view):]
+        except BlockingIOError:
+            select.select([], [stdout_fd], [])
+
 def reset_term():
     # Adapted from:
     # https://github.com/busyloop/lolcat/blob/master/lib/lolcat/lol.rb
@@ -413,8 +423,7 @@ def main(argv: list[str] | None = None) -> int | None:
 
     if not (sys.stdout.isatty() or force_color_output):
         while num_bytes_read := read_stdin(stdin_buffer, bytes_read):
-            sys.stdout.buffer.write(bytes_read[0:num_bytes_read])
-            sys.stdout.buffer.flush()
+            write_stdout(bytes_read[0:num_bytes_read])
         return 0
 
     decoder = codecs.getincrementaldecoder('utf-8')(errors='replace')
@@ -455,11 +464,7 @@ def main(argv: list[str] | None = None) -> int | None:
                 i += 1
                 color_cycle = cycle_seq(colors, i)
                 out.append(os.linesep)
-        text = ''.join(out)
-
-        # stdout holds text until a newline on a terminal and until EOF on a pipe.
-        sys.stdout.write(text)
-        sys.stdout.flush()
+        write_stdout(''.join(out).encode(sys.stdout.encoding))
 
         if at_eof:
             break
