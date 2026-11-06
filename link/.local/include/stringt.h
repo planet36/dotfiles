@@ -39,9 +39,8 @@ extern "C" {
 * SEE ALSO
 *   \c memccpy(3)
 */
-[[nodiscard]] static inline char*
+[[nodiscard, gnu::returns_nonnull]] static inline char*
 strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
-    [[gnu::returns_nonnull]]
 {
     //[[assume(dst != nullptr)]];
     //[[assume(src != nullptr)]];
@@ -58,8 +57,10 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
     // No NUL character was found within gap characters in src, so
     // truncation happened.
 
+    // src holds at least gap characters here, but the clang analyzer does not model memccpy,
+    // so it assumes src can be shorter.
     if (trunc_at != nullptr)
-        *trunc_at = &src[gap - 1];
+        *trunc_at = &src[gap - 1]; // NOLINT(clang-analyzer-security.ArrayBound)
 
     *buf_last = '\0';
     return buf_last;
@@ -69,15 +70,30 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 /**
 * See docs of \c strtcpy for details.
 *
-* PREREQUISITES
-*   \a dst is NUL-terminated.
+* CAVEATS
+*   If \a dst has no NUL character at or before \a buf_last, then nothing is
+*   copied, and \a *buf_last is set to NUL.  Truncation is reported as though
+*   no character of \a src fit, so \a *trunc_at will point to \a src.
 */
-[[nodiscard]] static inline char*
+[[nodiscard, gnu::returns_nonnull]] static inline char*
 strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
-    [[gnu::returns_nonnull]]
 {
-    dst += strlen(dst);
-    return strtcpy(dst, buf_last, src, trunc_at);
+    const size_t gap = (size_t)(buf_last - dst + 1);
+
+    // An unbounded search could find a NUL character past buf_last, and the gap that strtcpy
+    // computes from there would wrap to a huge size.
+    char* nul = (char*)memchr(dst, '\0', gap);
+
+    if (nul == nullptr)
+    {
+        if (trunc_at != nullptr)
+            *trunc_at = src;
+
+        *buf_last = '\0';
+        return buf_last;
+    }
+
+    return strtcpy(nul, buf_last, src, trunc_at);
 }
 
 #if defined(__cplusplus)
