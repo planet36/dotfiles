@@ -22,19 +22,29 @@ extern "C" {
 /**
 * DESCRIPTION
 *   Copy \a src to \a dst, including the terminating NUL character.
-*   If \a src cannot be copied completely to \a dst (i.e., truncation happens)
-*   and \a trunc_at is not \c nullptr, then \a *trunc_at will point to the
-*   first character in \a src that was not copied to \a dst.
+*   If \a src cannot be copied completely to \a dst (i.e., truncation happens),
+*   \a trunc_at is not \c nullptr, and \a *trunc_at is \c nullptr, then
+*   \a *trunc_at will point to the first character in \a src that was not
+*   copied to \a dst.  Otherwise, \a *trunc_at is left unchanged.
+*
+*   In a chain of calls that share \a trunc_at, \a *trunc_at therefore records
+*   the first truncation.  A later call cannot move it to a string that was
+*   never copied at all.
 *
 * PREREQUISITES
 *   \a buf_last points to the last character in the buffer containing \a dst.
 *   \a src is NUL-terminated.
+*   If \a trunc_at is not \c nullptr, \a *trunc_at is \c nullptr before the
+*   first call of a chain.
 *
 * CAVEATS
 *   If memory areas \a dst and \a src overlap, the results are undefined.
 *
 * RETURN VALUE
 *   Return a pointer to the new terminating NUL character of \a dst.
+*   That pointer is \a buf_last both when \a src exactly fills the buffer and
+*   when truncation happens, so only \a *trunc_at tells the two apart.  With a
+*   \c nullptr \a trunc_at, truncation cannot be detected.
 *
 * SEE ALSO
 *   \c memccpy(3)
@@ -59,7 +69,7 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 
     // src holds at least gap characters here, but the clang analyzer does not model memccpy,
     // so it assumes src can be shorter.
-    if (trunc_at != nullptr)
+    if (trunc_at != nullptr && *trunc_at == nullptr)
         *trunc_at = &src[gap - 1]; // NOLINT(clang-analyzer-security.ArrayBound)
 
     *buf_last = '\0';
@@ -73,7 +83,8 @@ strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 * CAVEATS
 *   If \a dst has no NUL character at or before \a buf_last, then nothing is
 *   copied, and \a *buf_last is set to NUL.  Truncation is reported as though
-*   no character of \a src fit, so \a *trunc_at will point to \a src.
+*   no character of \a src fit, so under the rules of \c strtcpy, \a *trunc_at
+*   will point to \a src if it was \c nullptr.
 */
 [[nodiscard, gnu::returns_nonnull]] static inline char*
 strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
@@ -86,7 +97,7 @@ strtcat(char* dst, char* buf_last, const char* src, const char** trunc_at)
 
     if (nul == nullptr)
     {
-        if (trunc_at != nullptr)
+        if (trunc_at != nullptr && *trunc_at == nullptr)
             *trunc_at = src;
 
         *buf_last = '\0';
