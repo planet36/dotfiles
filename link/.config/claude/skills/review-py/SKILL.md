@@ -26,7 +26,7 @@ Before reading the code, run the repo's checks on each file where they are insta
 ### 1. Correctness and type safety
 
 - Logic errors, off-by-one errors, and input the code does not handle, such as an empty file, an empty string, or a missing argument
-- Missing or incorrect type hints, in `typing` or PEP 585 and PEP 604 syntax
+- Missing or incorrect type hints, in `typing` or PEP 585 and PEP 604 syntax, including a hint that disagrees with what the code accepts or returns at run time
 - A bare `except:` or overly broad exception handling
 - A resource opened without a `with` block
 - A mutable default argument, such as `def append_to(element, to=[])`
@@ -36,6 +36,8 @@ Prove each logic error, off-by-one error, or unhandled input before reporting it
 ### 2. Maintainability and conventions
 
 - PEP 8 naming
+- Parameter order, or the choice of positional or keyword-only parameters, that departs from the rest of the file and the project
+- A return value that signals "no result" with `None` in one place and an empty list or dict in another
 - Line length, judged by the limit the project and its linters set rather than PEP 8's 79 columns
 - The conventions in CLAUDE.md, such as the module-level metadata and the shape of `main()`
 - Dead code, overly complex nested logic, or redundant loops
@@ -43,6 +45,9 @@ Prove each logic error, off-by-one error, or unhandled input before reporting it
 ### 3. Performance and resource use
 
 - Heavy I/O inside a loop
+- Repeated work inside a loop that could be hoisted out of it
+- A pure function called repeatedly with the same arguments and not memoized with `functools.cache` or `functools.lru_cache`
+- A constant recomputed on every call rather than once at module level
 - A large list built where a generator would do
 - Inefficient string concatenation or unnecessary copies of objects
 
@@ -62,6 +67,7 @@ Do not flag these when the command and all its arguments are fully literal, or w
 ### 5. Documentation
 
 - A module docstring, `-h` text, or usage string that no longer matches the behavior
+- A function, class, or method docstring that disagrees with its signature or behavior, such as a wrong parameter name or a stale description
 - Any README or CLAUDE.md that documents the file and has gone stale
 
 ## Report
