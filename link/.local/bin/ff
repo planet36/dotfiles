@@ -3,4 +3,4 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # shellcheck disable=SC2086
-command find $VCS_REPOS_PRUNE -type f | fzf
+command find . $VCS_REPOS_PRUNE -type f | fzf
