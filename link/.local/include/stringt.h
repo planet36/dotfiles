@@ -52,10 +52,12 @@ extern "C" {
 [[nodiscard, gnu::returns_nonnull]] static inline char*
 strtcpy(char* dst, char* buf_last, const char* src, const char** trunc_at)
 {
-    //[[assume(dst != nullptr)]];
-    //[[assume(src != nullptr)]];
-    //[[assume(buf_last != nullptr)]];
-    //[[assume(dst <= buf_last)]];
+#if defined(__cplusplus) && (__cplusplus >= 202302L)
+    [[assume(dst != nullptr)]];
+    [[assume(src != nullptr)]];
+    [[assume(buf_last != nullptr)]];
+    [[assume(dst <= buf_last)]];
+#endif
 
     const size_t gap = (size_t)(buf_last - dst + 1); // includes the terminating NUL character
 
