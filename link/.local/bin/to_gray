@@ -455,7 +455,7 @@ def exit_on_signal(signum: int, _frame: FrameType | None) -> None:
     sys.exit(128 + signum)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int | None:
     signal.signal(signal.SIGHUP, exit_on_signal)
     signal.signal(signal.SIGTERM, exit_on_signal)
     parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0],
@@ -474,7 +474,7 @@ def main() -> int:
                         help="refuse a color image of more than N pixels, counting every"
                         " frame (default: %(default)s; 0 for no limit)")
     parser.add_argument("images", metavar="IMG", nargs="+", help="an image to convert")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if args.max_pixels < 0:
         parser.error("--max-pixels cannot be negative")
 
