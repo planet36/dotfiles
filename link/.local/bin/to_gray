@@ -1,0 +1,538 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Steven Ward
+# SPDX-License-Identifier: MPL-2.0
+"""Convert each image to grayscale with Pillow, writing NAME.gray.EXT beside it.
+
+An image that already stores a luminance channel has that channel extracted rather than
+computed, so the gray values are the ones the file holds.  A JPEG's Y channel is decoded
+alone and re-encoded with the file's own quantization tables, which leaves all but a few
+pixels unchanged.  A TIFF in Lab gives up its L channel, and an uncompressed TIFF in YCbCr
+its Y channel.  A gray image is copied unchanged.  Any other image gets Rec709 luma, which
+matches magick -colorspace Gray.
+
+An alpha channel is kept, since dropping it would expose the colors under transparent
+pixels.  EXIF is kept and an ICC profile is dropped, since an RGB profile does not describe
+a gray image.  The text chunks of a PNG are copied unchanged, and they include its XMP.
+Every frame of a multi-frame image is converted, with its duration and the loop count kept.
+A multi-frame image in a format that Pillow cannot write more than one frame of is reported
+as an error rather than cut down to its first frame.  A WebP or AVIF is always written
+lossless.  Pillow's animated WebP writer cannot keep the gray under a fully transparent pixel,
+which is never shown, so only that may change.
+
+Pillow reads a color image with more than 8 bits per channel as 8-bit, so such an image is
+reported as an error rather than cut down.  That covers PNG, TIFF, PPM, SGI, JPEG 2000, and
+AVIF.  A gray image of any depth is copied intact.  A color image in a format that Pillow
+reads but cannot write, such as PSD, is reported as an error.  So is an ICO or ICNS file of
+more than one size, since Pillow opens the largest and would write the rest as shrunk copies
+of it.  An ICO of one size keeps that size alone.
+
+A color image with more pixels than --max-pixels allows, counting every frame, is reported as
+an error before it is decoded.  That guards against a small file that decodes to gigabytes,
+since a conversion takes about 9 bytes for each RGB pixel and 14 for each RGBA one.  A gray
+image is copied whatever its size, since copying decodes nothing.
+
+An existing output file is left alone unless -f is given, and that includes a symlink, even
+a dangling one.  Each output is written to a temporary file beside it and renamed into place.
+A rename replaces a symlink rather than following it, so even -f never writes to the file a
+link points to, and a failed conversion leaves nothing behind.  The output gets the input's
+permission bits minus the umask, as a copy made by cp does.
+
+A name that starts with "-" has to follow "--" on the command line.  When two inputs would
+write the same output file, the later one is skipped.
+"""
+
+import argparse
+import os
+import shutil
+import signal
+import struct
+import sys
+import tempfile
+from collections.abc import Iterator
+from pathlib import Path
+from types import FrameType
+from typing import IO, Any
+
+from PIL import (
+    GifImagePlugin,
+    Image,
+    ImageFile,
+    ImageSequence,
+    JpegImagePlugin,
+    PngImagePlugin,
+    TiffImagePlugin,
+)
+
+REC709 = (0.2126, 0.7152, 0.0722, 0)
+GRAY_MODES = {"1", "L", "LA", "I", "I;16", "I;16B", "I;16L", "F"}
+KEPT_INFO = ("exif", "xmp", "dpi", "comment", "progressive", "compression")
+
+# Pillow refuses an image of more pixels than this, twice its MAX_IMAGE_PIXELS.  to_gray.py
+# turns off that check and makes this the default of --max-pixels instead.
+DEFAULT_MAX_PIXELS = 178_956_970
+
+# The keys under which ImageMagick stores an ICC profile in a PNG text chunk
+ICC_TEXT_KEYS = (b"Raw profile type icc", b"Raw profile type icm")
+
+# The component IDs "R", "G", and "B" mark a JPEG stored as RGB rather than YCbCr.
+RGB_COMPONENT_IDS = [ord("R"), ord("G"), ord("B")]
+
+
+def stores_y(im: JpegImagePlugin.JpegImageFile) -> bool:
+    """Return whether JPEG im holds a Y channel that draft mode can decode alone.
+
+    Draft mode does not fail on a JPEG stored as RGB.  libjpeg computes a Rec601 gray from
+    it instead, so that case has to be caught here.
+    """
+    return (im.mode == "RGB"
+            and im.info.get("adobe_transform") != 0
+            and [layer[0] for layer in im.layer] != RGB_COMPONENT_IDS)
+
+
+def rawmode(im: Image.Image) -> str:
+    """Return the rawmode that the current frame of im is decoded from, or "" if unknown.
+
+    Pillow empties the tile list once a frame is loaded, so this works only before then.
+    """
+    tile = getattr(im, "tile", None)
+    if not tile:
+        return ""
+    args = tile[0].args
+    if isinstance(args, tuple) and args:
+        args = args[0]
+    return args if isinstance(args, str) else ""
+
+
+def boxes(f: IO[bytes], end: int) -> Iterator[tuple[bytes, int, int]]:
+    """Yield the type, content start, and end of each box from the position of f to end.
+
+    JPEG 2000 and AVIF both use this box layout.  A caller may move f while it handles a box.
+    """
+    while (start := f.tell()) + 8 <= end:
+        header = f.read(8)
+        size, kind, content = int.from_bytes(header[:4]), header[4:], start + 8
+        if size == 1:
+            size = int.from_bytes(f.read(8))
+            content += 8
+        elif size == 0:
+            size = end - start
+        if size < content - start:
+            return
+        yield kind, content, start + size
+        f.seek(start + size)
+
+
+def jpeg2000_bits(f: IO[bytes], end: int) -> int:
+    """Return the most bits per component that the JPEG 2000 file f declares."""
+    soc_siz = b"\xff\x4f\xff\x51"
+    if f.read(4) != soc_siz:
+        f.seek(0)
+        for kind, content, _ in boxes(f, end):
+            if kind == b"jp2c":
+                f.seek(content)
+                break
+        if f.read(4) != soc_siz:
+            return 8
+
+    # The SIZ marker holds 36 bytes of sizes, the component count, and then 3 bytes for each
+    # component, the first of which is its bit depth minus 1, with a sign flag on top.
+    f.seek(36, os.SEEK_CUR)
+    count = int.from_bytes(f.read(2))
+    siz = f.read(3 * count)
+    return max(((siz[i] & 0x7F) + 1 for i in range(0, len(siz), 3)), default=8)
+
+
+def avif_bits(f: IO[bytes], end: int) -> int:
+    """Return the most bits per channel that an AV1 configuration in the AVIF file f declares.
+
+    The third byte of an av1C box flags 10 bits and, on top of that, 12 bits.  The alpha plane
+    of an image has its own av1C, so it counts too.
+    """
+    bits = 8
+    for kind, content, meta_end in boxes(f, end):
+        if kind != b"meta":
+            continue
+        f.seek(content + 4)
+        for kind, content, iprp_end in boxes(f, meta_end):
+            if kind != b"iprp":
+                continue
+            for kind, content, ipco_end in boxes(f, iprp_end):
+                if kind != b"ipco":
+                    continue
+                for kind, content, _ in boxes(f, ipco_end):
+                    if kind == b"av1C":
+                        f.seek(content + 2)
+                        flags = f.read(1)[0]
+                        bits = max(bits, 12 if flags & 0x20 else 10 if flags & 0x40 else 8)
+    return bits
+
+
+def png_text(src: Path) -> PngImagePlugin.PngInfo:
+    """Return the text chunks of PNG file src, to be written unchanged into the gray PNG.
+
+    Pillow decodes the text it reads but forgets how each chunk was stored, so the raw chunks
+    are copied instead, which keeps tEXt, zTXt, and iTXt apart and keeps their order.  Pillow
+    writes every text chunk ahead of the image data, so one that followed the data moves
+    ahead of it.  ImageMagick can store an ICC profile as text under a "Raw profile type"
+    key, and that chunk is dropped, as an iCCP chunk is.
+    """
+    info = PngImagePlugin.PngInfo()
+    with open(src, "rb") as f:
+        f.seek(8)
+        while len(header := f.read(8)) == 8:
+            size, kind = int.from_bytes(header[:4]), header[4:]
+            if kind in (b"tEXt", b"zTXt", b"iTXt"):
+                data = f.read(size)
+                if data.split(b"\0", 1)[0] not in ICC_TEXT_KEYS:
+                    info.add(kind, data)
+                f.seek(4, os.SEEK_CUR)
+            elif kind == b"IEND":
+                break
+            else:
+                f.seek(size + 4, os.SEEK_CUR)
+    return info
+
+
+def header_bits(src: Path, image_format: str | None) -> int:
+    """Return the most bits per channel that the header of image file src declares.
+
+    Pillow says nothing of the depth of a JPEG 2000 or AVIF image it decodes to 8 bits, so
+    those headers are read here.  Any other format gives 8.
+    """
+    readers = {"JPEG2000": jpeg2000_bits, "AVIF": avif_bits}
+    if image_format not in readers:
+        return 8
+    with open(src, "rb") as f:
+        return readers[image_format](f, os.fstat(f.fileno()).st_size)
+
+
+def frame_bits(im: Image.Image) -> int:
+    """Return the most bits per channel that the current frame of im holds in its file.
+
+    It has to run before the frame is loaded, since it reads the rawmode.  A TIFF records its
+    depth in a tag.  A 16-bit PNG or SGI shows it in the rawmode, and a PPM in its maximum
+    value.  A BMP rawmode such as "BGR;16" counts the bits of a whole pixel, so only the
+    formats named here are trusted.
+    """
+    if isinstance(im, TiffImagePlugin.TiffImageFile):
+        bits = im.tag_v2.get(TiffImagePlugin.BITSPERSAMPLE, 1)
+        return max(bits) if isinstance(bits, tuple) else int(bits)
+    if not isinstance(im, ImageFile.ImageFile) or not im.tile:
+        return 8
+    tile = im.tile[0]
+    if im.format == "PPM" and tile.codec_name == "ppm" and isinstance(tile.args, tuple):
+        return max(8, int(tile.args[1]).bit_length())
+    if im.format in ("PNG", "SGI") and (tile.codec_name == "SGI16" or ";16" in rawmode(im)):
+        return 16
+    return 8
+
+
+def bmp_alpha(src: Path, im: Image.Image) -> Image.Image | None:
+    """Return the alpha in the fourth byte of each pixel of BMP file src, opened as im.
+
+    A 32-bit BMP without bitfields calls that byte reserved, and Pillow reads such a file as
+    RGB.  Many writers store alpha there anyway, Pillow's among them, and ImageMagick reads it.
+    A writer that keeps the byte reserved leaves it 0, so a file whose fourth bytes are all 0
+    is opaque, as ImageMagick takes it.  This has to run before im is loaded, since it reads
+    the tile.  It gives None when there is no such alpha.
+    """
+    if (not isinstance(im, ImageFile.ImageFile) or im.format != "BMP"
+            or im.info.get("compression") != 0 or rawmode(im) != "BGRX"):
+        return None
+    tile = im.tile[0]
+    if not isinstance(tile.args, tuple) or len(tile.args) != 3:
+        return None
+    _, stride, direction = tile.args
+    with open(src, "rb") as f:
+        f.seek(tile.offset)
+        data = f.read(int(stride) * im.height)
+    rgba = Image.frombuffer("RGBA", im.size, data, "raw", "BGRA", stride, direction)
+    alpha = rgba.getchannel("A")
+    return None if alpha.getextrema() == (0, 0) else alpha
+
+
+def declare_bmp_alpha(path: Path) -> None:
+    """Give the 32-bit BMP that Pillow wrote at path a header that declares its alpha.
+
+    Pillow writes RGBA with the 40-byte header, which calls the fourth byte reserved, so a
+    strict reader, Pillow's among them, drops the alpha.  A 108-byte V4 header with bitfields
+    names that byte as alpha, which needs 68 more bytes.  The image data moves along with it.
+    A header of any other size is left alone, since the offsets below fit only the 40-byte one,
+    and a Pillow that writes a bigger header may already declare the alpha itself.
+    """
+    with open(path, "r+b") as f:
+        data = f.read()
+        if struct.unpack("<I", data[14:18])[0] != 40:
+            return
+        size, offset = len(data) + 68, struct.unpack("<I", data[10:14])[0] + 68
+
+        # The V4 fields are the bitfield masks of red, green, blue, and alpha, then the color
+        # space, where "BGRs" is LCS_sRGB stored little-endian.  The endpoints and gamma
+        # that follow apply only to a calibrated space, so they are left 0.
+        info = (struct.pack("<I", 108) + data[18:30] + struct.pack("<I", 3) + data[34:54]
+                + struct.pack("<4I", 0xFF0000, 0xFF00, 0xFF, 0xFF000000) + b"BGRs" + bytes(48))
+        f.seek(0)
+        f.write(b"BM" + struct.pack("<I", size) + data[6:10] + struct.pack("<I", offset) + info
+                + data[54:])
+
+
+def gray_frame(im: Image.Image) -> Image.Image:
+    """Return the current frame of im in gray, keeping its alpha."""
+    if im.mode in GRAY_MODES:
+        return im.copy()
+    if im.mode == "LAB":
+        return im.getchannel("L")
+    if im.mode == "YCbCr":
+        return im.getchannel("Y")
+    if "A" in im.getbands() or "transparency" in im.info:
+        rgba = im.convert("RGBA")
+        gray = rgba.convert("RGB").convert("L", REC709)
+        gray.putalpha(rgba.getchannel("A"))
+        return gray
+
+    # Lab L would not do here.  It is CIE lightness scaled to 0-255 rather than a value on
+    # the sRGB curve that a gray image is read with, so even a neutral gray would change, as
+    # 128 becomes 137.
+    return im.convert("RGB").convert("L", REC709)
+
+
+def is_gray(im: Image.Image) -> bool:
+    """Return whether the current frame of im is gray.
+
+    Pillow opens a 16-bit PNG of gray and alpha as RGBA, so the rawmode that a frame is
+    decoded from counts as well as its mode.
+    """
+    return im.mode in GRAY_MODES or rawmode(im).split(";")[0] in GRAY_MODES
+
+
+def icon_sizes(im: Image.Image) -> int:
+    """Return how many sizes the ICO or ICNS im holds, or 0 if it is neither."""
+    return len(im.info.get("sizes", ())) if im.format in ("ICO", "ICNS") else 0
+
+
+def survey(src: Path) -> tuple[bool, int]:
+    """Return whether every frame of image file src is gray, and its pixels in all frames.
+
+    The file is opened for this alone.  Seeking back afterward would fail on a PSD, whose
+    frames are numbered from 1.  Seeking to a GIF or APNG frame decodes it, since Pillow
+    composites it onto the frames before, so neither is sought through.  Every frame of either
+    one fills the canvas, and an APNG has one mode for all its frames.  Pillow reads each GIF
+    frame after the first as color, so a GIF of more than one frame is never gray.  Pillow
+    opens the largest size of an icon, so an icon of more than one size is never gray either.
+    """
+    with Image.open(src) as im:
+        n_frames = getattr(im, "n_frames", 1)
+        if icon_sizes(im) > 1:
+            return False, im.width * im.height
+        if im.format in ("GIF", "PNG"):
+            gray = is_gray(im) and (im.format == "PNG" or n_frames == 1)
+            return gray, im.width * im.height * n_frames
+        frames = [(is_gray(frame), frame.width * frame.height)
+                  for frame in ImageSequence.Iterator(im)]
+        return all(gray for gray, _ in frames), sum(pixels for _, pixels in frames)
+
+
+def to_gray(src: Path, dst: Path, max_pixels: int) -> None:
+    """Write the grayscale version of image file src to dst, in the format of src.
+
+    A max_pixels of 0 sets no limit.
+    """
+    already_gray, pixels = survey(src)
+    if already_gray:
+        shutil.copyfile(src, dst)
+        return
+    if max_pixels != 0 and pixels > max_pixels:
+        raise ValueError(f"its {pixels} pixels exceed the limit of {max_pixels}, which"
+                         " --max-pixels can raise")
+
+    with Image.open(src) as im:
+        n_frames = getattr(im, "n_frames", 1)
+
+        # Image.open loads only the plugins it needs, so SAVE and SAVE_ALL list every
+        # writable format only after init.
+        Image.init()
+        if im.format not in Image.SAVE:
+            raise ValueError(f"Pillow can read {im.format} but cannot write it")
+        if n_frames > 1 and im.format not in Image.SAVE_ALL:
+            raise ValueError(f"Pillow can read {n_frames} frames of {im.format} but can write"
+                             " only one")
+        if icon_sizes(im) > 1:
+            raise ValueError(f"Pillow opens only the largest of its {icon_sizes(im)} icon"
+                             " sizes")
+
+        kept: dict[str, Any] = {key: im.info[key] for key in KEPT_INFO if key in im.info}
+
+        if isinstance(im, JpegImagePlugin.JpegImageFile):
+            if n_frames == 1 and stores_y(im):
+                im.draft("L", im.size)
+                im.save(dst, format=im.format, quality="keep", **kept)
+                return
+
+            # quality="keep" works only on the JPEG that was opened, not on a converted copy,
+            # so a converted JPEG takes the same tables explicitly.
+            kept["qtables"] = im.quantization
+
+        if im.format == "PNG":
+            kept["pnginfo"] = png_text(src)
+
+        # Pillow writes a lossy WebP unless told otherwise, whatever the source was.  As with
+        # an AVIF below, every WebP output is lossless.  Lossless libwebp still rewrites the
+        # gray under a fully transparent pixel unless exact is given, which Pillow's animated
+        # WebP writer ignores.
+        if im.format == "WEBP":
+            kept.update(lossless=True, exact=True)
+
+        # Pillow writes an AVIF at quality 75 unless told otherwise.  At 100, libavif encodes
+        # losslessly, and a gray image needs no lossy conversion to YUV, so its gray and alpha
+        # come back exact.  The container does not say whether the source was lossless, so
+        # every output is, and one from a lossy source can come out larger than it.
+        if im.format == "AVIF":
+            kept["quality"] = 100
+
+        # The ICO writer adds every standard size below the image's own unless told its sizes.
+        if im.format == "ICO":
+            kept["sizes"] = [im.size]
+
+        file_bits = header_bits(src, im.format)
+        alpha = bmp_alpha(src, im)
+        grays = []
+        durations = []
+        disposals = []
+        for frame in ImageSequence.Iterator(im):
+            bits = max(file_bits, frame_bits(frame))
+            if bits > 8:
+                raise ValueError(f"Pillow would cut its {bits}-bit channels to 8 bits")
+            if alpha is not None:
+                frame = frame.convert("RGBA")
+                frame.putalpha(alpha)
+            gray = gray_frame(frame)
+
+            # The GIF writer flattens LA to an opaque palette.  It turns RGBA into a palette
+            # with a transparent index instead.  The BMP writer has no LA at all.
+            if im.format in ("GIF", "BMP") and gray.mode == "LA":
+                gray = gray.convert("RGBA")
+
+            # A converted frame keeps the source's info, and the TIFF and AVIF writers fall
+            # back on it for an ICC profile, which would put an RGB profile on a gray image.
+            gray.info.pop("icc_profile", None)
+            grays.append(gray)
+            durations.append(frame.info.get("duration"))
+            if isinstance(im, GifImagePlugin.GifImageFile):
+                disposals.append(im.disposal_method)
+
+        if n_frames > 1:
+            kept.update(save_all=True, append_images=grays[1:])
+            if None not in durations:
+                kept["duration"] = durations
+            if "loop" in im.info:
+                kept["loop"] = im.info["loop"]
+
+            # Pillow hands back each frame already composited onto the ones before it, and its
+            # writers store only what changed from the previous frame.  A GIF frame needs its
+            # own disposal back, since that decides whether a transparent pixel in the next
+            # frame shows this one or the background.  An APNG frame instead replaces what it
+            # covers and leaves the canvas alone afterward, which suits a composited frame
+            # whatever the source did.  Left to inherit the source's blend, it could be drawn
+            # over the previous frame, and then an opaque pixel could never turn transparent.
+            if disposals:
+                kept["disposal"] = disposals
+            if im.format == "PNG":
+                kept["disposal"] = PngImagePlugin.Disposal.OP_NONE
+                kept["blend"] = PngImagePlugin.Blend.OP_SOURCE
+        grays[0].save(dst, format=im.format, **kept)
+        if im.format == "BMP" and grays[0].mode == "RGBA":
+            declare_bmp_alpha(dst)
+
+
+def exit_on_signal(signum: int, _frame: FrameType | None) -> None:
+    """Exit as a shell reports a signal, so that each finally block removes its temp file."""
+    sys.exit(128 + signum)
+
+
+def main() -> int:
+    signal.signal(signal.SIGTERM, exit_on_signal)
+    parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
+    parser.add_argument("-f", "--force", action="store_true",
+                        help="overwrite an existing output file")
+    parser.add_argument("-p", "--preserve-mtime", action="store_true",
+                        help="preserve the input's modification time")
+    parser.add_argument("-t", "--target-directory", metavar="DIRECTORY",
+                        help="write the output files into DIRECTORY")
+    parser.add_argument("--max-pixels", metavar="N", type=int, default=DEFAULT_MAX_PIXELS,
+                        help="refuse a color image of more than N pixels, counting every"
+                        " frame (default: %(default)s; 0 for no limit)")
+    parser.add_argument("images", metavar="IMG", nargs="+", help="an image to convert")
+    args = parser.parse_args()
+    if args.max_pixels < 0:
+        parser.error("--max-pixels cannot be negative")
+
+    # Pillow's own limit applies when a file is opened, which would stop a gray image from
+    # being copied, and it counts only one frame.  Below twice its value, it only warns.
+    Image.MAX_IMAGE_PIXELS = None
+
+    target = Path(args.target_directory) if args.target_directory else None
+    if target is not None:
+        try:
+            target.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            parser.error(f"cannot create {args.target_directory!r}: {e.strerror}")
+
+    # The output's permission bits are the input's minus the umask, which can only be read
+    # by setting it.
+    umask = os.umask(0)
+    os.umask(umask)
+
+    status = 0
+    written: dict[Path, str] = {}  # The canonical path of each output, mapped to its input.
+    for img in args.images:
+        # Path drops a trailing slash, which would turn a directory's name into a file's.
+        src = Path(img)
+        if img.endswith("/") or not src.stem or len(src.suffix) < 2:
+            print(f"Skipping {img!r}, which has no extension.", file=sys.stderr)
+            status = 1
+            continue
+
+        out = (target or src.parent) / f"{src.stem}.gray{src.suffix}"
+
+        # The directory is resolved but the name is not, since the rename below replaces a
+        # symlink at out rather than writing to its target.
+        key = out.parent.resolve() / out.name
+        if key in written:
+            print(f"Skipping {img!r}, since {written[key]!r} already wrote {str(out)!r}.",
+                  file=sys.stderr)
+            status = 1
+            continue
+
+        if not args.force and out.exists(follow_symlinks=False):
+            print(f"Skipping {str(out)!r}, which already exists.  Use -f to overwrite it.",
+                  file=sys.stderr)
+            continue
+
+        tmp = None
+        try:
+            fd, name = tempfile.mkstemp(suffix=src.suffix, prefix=".to_gray.", dir=out.parent)
+            tmp = Path(name)
+            os.close(fd)
+            to_gray(src, tmp, args.max_pixels)
+            st = src.stat()
+            tmp.chmod(st.st_mode & 0o777 & ~umask)
+            if args.preserve_mtime:
+                os.utime(tmp, ns=(tmp.stat().st_atime_ns, st.st_mtime_ns))
+            tmp.replace(out)
+            tmp = None
+            written[key] = img
+        except (OSError, ValueError) as e:
+            print(f"{img}: {e}", file=sys.stderr)
+            status = 1
+        finally:
+            if tmp is not None:
+                tmp.unlink(missing_ok=True)
+
+    return status
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        sys.exit(128 + signal.SIGINT)
