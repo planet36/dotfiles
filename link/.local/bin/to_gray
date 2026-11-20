@@ -17,7 +17,8 @@ Every frame of a multi-frame image is converted, with its duration and the loop 
 A multi-frame image in a format that Pillow cannot write more than one frame of is reported
 as an error rather than cut down to its first frame.  A WebP or AVIF is always written
 lossless.  Pillow's animated WebP writer cannot keep the gray under a fully transparent pixel,
-which is never shown, so only that may change.
+which is never shown, so only that may change.  QOI has no gray mode, so a QOI is written as
+RGB or RGBA with its red, green, and blue equal.
 
 Pillow reads a color image with more than 8 bits per channel as 8-bit, so such an image is
 reported as an error rather than cut down.  That covers PNG, TIFF, PPM, SGI, JPEG 2000, and
@@ -416,6 +417,10 @@ def to_gray(src: Path, dst: Path, max_pixels: int) -> None:
             # with a transparent index instead.  The BMP writer has no LA at all.
             if im.format in ("GIF", "BMP") and gray.mode == "LA":
                 gray = gray.convert("RGBA")
+
+            # QOI stores only RGB and RGBA.
+            if im.format == "QOI":
+                gray = gray.convert("RGBA" if gray.mode == "LA" else "RGB")
 
             # A converted frame keeps the source's info, and the TIFF and AVIF writers fall
             # back on it for an ICC profile, which would put an RGB profile on a gray image.
