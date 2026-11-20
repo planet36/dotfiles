@@ -41,6 +41,10 @@ A name that starts with "-" has to follow "--" on the command line.  When two in
 write the same output file, the later one is skipped.
 """
 
+__author__ = 'Steven Ward'
+__license__ = 'MPL-2.0'
+__version__ = '2026-11-19'
+
 import argparse
 import os
 import shutil
@@ -451,7 +455,12 @@ def exit_on_signal(signum: int, _frame: FrameType | None) -> None:
 
 def main() -> int:
     signal.signal(signal.SIGTERM, exit_on_signal)
-    parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
+    parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0],
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('-V', '--version', action='version', version='\n'.join((
+        f'%(prog)s {__version__}',
+        f'License: {__license__}',
+        f'Written by {__author__}')))
     parser.add_argument("-f", "--force", action="store_true",
                         help="overwrite an existing output file")
     parser.add_argument("-p", "--preserve-mtime", action="store_true",
