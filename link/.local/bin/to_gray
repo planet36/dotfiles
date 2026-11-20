@@ -38,8 +38,8 @@ link points to, and a failed conversion leaves nothing behind.  The output gets 
 permission bits minus the umask, as a copy made by cp does.
 
 A name that starts with "-" has to follow "--" on the command line.  When two inputs would
-write the same output file, the later one is skipped.  An input whose output would replace a
-later input is skipped too, even with -f, since that input would be gone before it was read.
+write the same output file, the later one is skipped.  An input whose name already ends in
+".gray" before its extension, such as a.gray.png, is taken for an earlier output and skipped.
 """
 
 __author__ = 'Steven Ward'
@@ -53,7 +53,6 @@ import signal
 import struct
 import sys
 import tempfile
-from collections import Counter
 from collections.abc import Iterator
 from pathlib import Path
 from types import FrameType
@@ -496,17 +495,16 @@ def main(argv: list[str] | None = None) -> int | None:
 
     status = 0
     written: dict[Path, str] = {}  # The canonical path of each output, mapped to its input.
-
-    # pending counts each input not yet read by its canonical path, in the same form as key
-    # below.
-    pending = Counter(Path(img).parent.resolve() / Path(img).name for img in args.images)
     for img in args.images:
         # Path drops a trailing slash, which would turn a directory's name into a file's.
         src = Path(img)
-        pending[src.parent.resolve() / src.name] -= 1
         if img.endswith("/") or not src.stem or len(src.suffix) < 2:
             print(f"Skipping {img!r}, which has no extension.", file=sys.stderr)
             status = 1
+            continue
+
+        if src.stem.endswith(".gray"):
+            print(f"Skipping {img!r}, whose name marks it as an output.", file=sys.stderr)
             continue
 
         out = (target or src.parent) / f"{src.stem}.gray{src.suffix}"
@@ -523,12 +521,6 @@ def main(argv: list[str] | None = None) -> int | None:
         if not args.force and out.exists(follow_symlinks=False):
             print(f"Skipping {str(out)!r}, which already exists.  Use -f to overwrite it.",
                   file=sys.stderr)
-            continue
-
-        if pending[key] > 0:
-            print(f"Skipping {img!r}, since its output {str(out)!r} is a later input.",
-                  file=sys.stderr)
-            status = 1
             continue
 
         tmp = None
