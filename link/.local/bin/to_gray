@@ -23,9 +23,11 @@ RGB or RGBA with its red, green, and blue equal.
 Pillow reads a color image with more than 8 bits per channel as 8-bit, so such an image is
 reported as an error rather than cut down.  That covers PNG, TIFF, PPM, SGI, JPEG 2000, and
 AVIF.  A gray image of any depth is copied intact.  A color image in a format that Pillow
-reads but cannot write, such as PSD, is reported as an error.  So is an ICO or ICNS file of
-more than one size, since Pillow opens the largest and would write the rest as shrunk copies
-of it.  An ICO of one size keeps that size alone.
+reads but cannot write, such as PSD, is reported as an error.  So is an ICO of more than one
+size, since Pillow opens the largest and would write the rest as shrunk copies of it.  An ICO
+of one size keeps that size alone.  Every ICNS is reported as an error too, since Pillow's
+ICNS writer fills every standard size from one image, enlarging it if need be.  Pillow opens
+an ICNS as RGBA even when it stores gray, so none is copied as gray.
 
 A color image with more pixels than --max-pixels allows, counting every frame, is reported as
 an error before it is decoded.  That guards against a small file that decodes to gigabytes,
@@ -362,6 +364,8 @@ def to_gray(src: Path, dst: Path, max_pixels: int) -> None:
         if n_frames > 1 and im.format not in Image.SAVE_ALL:
             raise ValueError(f"Pillow can read {n_frames} frames of {im.format} but can write"
                              " only one")
+        if im.format == "ICNS":
+            raise ValueError("Pillow would write every standard ICNS size, resized from one")
         if icon_sizes(im) > 1:
             raise ValueError(f"Pillow opens only the largest of its {icon_sizes(im)} icon"
                              " sizes")
