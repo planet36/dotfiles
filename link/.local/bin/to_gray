@@ -539,6 +539,11 @@ def main(argv: list[str] | None = None) -> int | None:
         except (OSError, ValueError) as e:
             print(f"{img}: {e}", file=sys.stderr)
             status = 1
+
+        # Pillow reports a malformed file with many other types, SyntaxError among them.
+        except Exception as e:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+            print(f"{img}: {type(e).__name__}: {e}", file=sys.stderr)
+            status = 1
         finally:
             if tmp is not None:
                 tmp.unlink(missing_ok=True)
