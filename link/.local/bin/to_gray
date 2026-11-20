@@ -454,6 +454,7 @@ def exit_on_signal(signum: int, _frame: FrameType | None) -> None:
 
 
 def main() -> int:
+    signal.signal(signal.SIGHUP, exit_on_signal)
     signal.signal(signal.SIGTERM, exit_on_signal)
     parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0],
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
