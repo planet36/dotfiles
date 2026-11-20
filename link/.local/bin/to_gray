@@ -13,12 +13,16 @@ matches magick -colorspace Gray.
 An alpha channel is kept, since dropping it would expose the colors under transparent
 pixels.  EXIF is kept and an ICC profile is dropped, since an RGB profile does not describe
 a gray image.  The text chunks of a PNG are copied unchanged, and they include its XMP.
+
 Every frame of a multi-frame image is converted, with its duration and the loop count kept.
 A multi-frame image in a format that Pillow cannot write more than one frame of is reported
-as an error rather than cut down to its first frame.  A WebP or AVIF is always written
-lossless.  Pillow's animated WebP writer cannot keep the gray under a fully transparent pixel,
-which is never shown, so only that may change.  QOI has no gray mode, so a QOI is written as
-RGB or RGBA with its red, green, and blue equal.
+as an error rather than cut down to its first frame.  Pillow's GIF, APNG, and WebP writers
+merge a frame that matches the one before it into that one and add up their durations, so an
+image in one of those formats can come out with fewer frames that play the same.
+
+A WebP or AVIF is always written lossless.  Pillow's animated WebP writer cannot keep the gray
+under a fully transparent pixel, which is never shown, so only that may change.  QOI has no
+gray mode, so a QOI is written as RGB or RGBA with its red, green, and blue equal.
 
 Pillow reads a color image with more than 8 bits per channel as 8-bit, so such an image is
 reported as an error rather than cut down.  That covers PNG, TIFF, PPM, SGI, JPEG 2000, and
