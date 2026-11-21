@@ -277,9 +277,6 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
     size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
 
-    if (meter_width == 0)
-        return;
-
     calc_meter_segments(x, meter_width, num_left_blocks, &left_width, &blocks_index,
                         &right_width);
 
@@ -350,9 +347,6 @@ static inline void
 right_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 {
     size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
-
-    if (meter_width == 0)
-        return;
 
     calc_meter_segments(x, meter_width, num_right_blocks, &left_width, &blocks_index,
                         &right_width);
