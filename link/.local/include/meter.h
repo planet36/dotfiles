@@ -309,39 +309,26 @@ left_blocks_meter(double x, wchar_t* meter, size_t meter_width)
 static inline void
 ver_lines_meter(double x, wchar_t* meter, size_t meter_width)
 {
-    size_t left_width = 0, blocks_index = 0, right_width = 0, i = 0;
+    size_t i = 0;
 
     if (meter_width == 0)
         return;
 
-    calc_meter_segments(x, meter_width, num_ver_lines, &left_width, &blocks_index,
-                        &right_width);
+    // This rounds over every line position in the meter, not per cell as
+    // calc_meter_segments does, so only the two end positions get half a step.
+    const size_t pos = map_to_uint(x, meter_width * num_ver_lines);
+    const size_t cell = pos / num_ver_lines;
 
-    if (left_width == meter_width)
+    for (i = 0; i < cell; ++i)
     {
-        // Special case when the vertical line will be at the right end
-
-        for (i = 1; i < left_width; ++i)
-        {
-            *meter++ = SPACE;
-        }
-
-        *meter++ = RIGHT_ONE_EIGHTH_BLOCK;
+        *meter++ = SPACE;
     }
-    else
+
+    *meter++ = ver_lines[pos % num_ver_lines];
+
+    for (i = cell + 1; i < meter_width; ++i)
     {
-        for (i = 0; i < left_width; ++i)
-        {
-            *meter++ = SPACE;
-        }
-
-        if (blocks_index != (size_t)-1)
-            *meter++ = ver_lines[blocks_index];
-
-        for (i = 0; i < right_width; ++i)
-        {
-            *meter++ = SPACE;
-        }
+        *meter++ = SPACE;
     }
 }
 
