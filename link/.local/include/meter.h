@@ -218,8 +218,11 @@ calc_meter_segments(double x,
         return;
 
     const double frac = x * (double)meter_width - (double)((size_t)(x * (double)meter_width));
-    // This produces a preferred distribution at the ends of the meter.
-    // round to nearest int
+    // Rounding over "blocks_len - 1" gives the first and last glyphs half a step each.  In a
+    // fill meter, the full glyph at the end of one cell looks the same as the empty glyph at
+    // the start of the next.  Those two halves make one step, so every visible step covers an
+    // equal share of x.  The line glyphs have no such pair, which is why ver_lines_meter does
+    // not use this function.
     *blocks_index = (size_t)(frac * (double)(blocks_len - 1U) + 0.5);
     // Use this to get an alternative distribution.
     // truncate
