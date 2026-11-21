@@ -165,9 +165,13 @@ clamp(double* x)
         *x = 0;
     }
     else if (*x < 0)
+    {
         *x = 0;
+    }
     else if (*x > 1)
+    {
         *x = 1;
+    }
 }
 
 /// Map the real number \a x within the interval <code>[0, 1]</code> to an integer within the
