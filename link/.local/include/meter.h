@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <errno.h>
 #include <math.h>
 #include <wchar.h>
 
@@ -151,10 +152,19 @@ static constexpr wchar_t right_blocks[] = {
 
 static constexpr size_t num_right_blocks = sizeof(right_blocks) / sizeof(right_blocks[0]);
 
+/// Clamp \a x to the interval <code>[0, 1]</code>
+/**
+* A NaN becomes \c 0 and sets \c errno to \c EDOM.
+*/
 static inline void
 clamp(double* x)
 {
-    if (isnan(*x) || *x < 0)
+    if (isnan(*x))
+    {
+        errno = EDOM;
+        *x = 0;
+    }
+    else if (*x < 0)
         *x = 0;
     else if (*x > 1)
         *x = 1;
